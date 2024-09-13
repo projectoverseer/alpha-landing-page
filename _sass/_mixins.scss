@@ -15,10 +15,10 @@
 
 @mixin button-variant($color, $background)
 {
-	$btn-border-width: 1px;
+	$btn-border-width: 0px; // either 0px or 3px
 	$btn-padding-vertical: 18px;
 	$btn-padding-horizontal: 31px;
-	$border: $color; // same color as text
+	$border: $background; // same color as bg (when border-width is 0)
 
 	color: $color;
 	background-color: $background;

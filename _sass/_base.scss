@@ -70,8 +70,10 @@ aside {
 // Navigation
 
 .navbar-default {
+    $navbar-border-color: rgba(black, .16);
     background-color: white;
-    border-color: rgba($theme-dark, .5); // Navigation bar's border
+    border-color: $navbar-border-color; // Navigation bar's border
+    border-width: 0 0 1px 0;
     @include sans-serif-font;
     @include transition-all;
     .navbar-header .navbar-brand {
@@ -126,8 +128,12 @@ aside {
             }
         }
         &.affix {
+            // The following two lines help making the border opaque
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+
             background-color: white;
-            border-color: rgba($theme-dark, .5);
+            border-color: $navbar-border-color;
             .navbar-header .navbar-brand {
                 color: $theme-primary;
                 font-size: 18px;
@@ -311,7 +317,6 @@ header {
 
 .btn {
     @include sans-serif-font;
-    border: none;
     border-radius: 300px;
     font-weight: 700;
     // text-transform: uppercase;
