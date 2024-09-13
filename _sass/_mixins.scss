@@ -13,11 +13,18 @@
     -o-background-size: cover;
 }
 
-@mixin button-variant($color, $background, $border)
+@mixin button-variant($color, $background)
 {
+	$btn-border-width: 1px;
+	$btn-padding-vertical: 18px;
+	$btn-padding-horizontal: 31px;
+	$border: $color; // same color as text
+
 	color: $color;
 	background-color: $background;
-	border-color: $border;
+	box-sizing: content-box;
+    border-radius: 980px;
+    border: $btn-border-width solid $border;
 	@include transition-all;
 
 	&:hover,
