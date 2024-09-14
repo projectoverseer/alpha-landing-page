@@ -4,8 +4,19 @@ html {
   font-size: 18px;
 }
 
-:root,
-[data-bs-theme=light] {
+:root{
+/* theme-color-variables */
+--bs-blue:      rgb(0, 113, 227);
+--bs-indigo:    rgb(102, 16, 242);
+--bs-purple:    rgb(111, 66, 193);
+--bs-pink:      rgb(214, 51, 132);
+--bs-red:       rgb(175, 30, 45);
+--bs-orange:    rgb(255, 92, 13);
+--bs-yellow:    rgb(255, 224, 69);
+--bs-green:     rgb(3, 161, 14);
+--bs-teal:      rgb(32, 201, 151);
+--bs-cyan:      rgb(13, 202, 240);
+
 /* gray-color-variables */
 --bs-white:     rgb(255, 255, 255);
 --bs-gray-100:  rgb(249, 249, 251);
@@ -31,15 +42,14 @@ html {
 --bs-teal:      rgb(32, 201, 151);
 --bs-cyan:      rgb(13, 202, 240);
 
-/* theme-color-variables */
---bs-primary:   --bs-orange;
---bs-secondary: --bs-gray-900;
---bs-success:   --bs-green;
---bs-info:      --bs-blue;
---bs-warning:   --bs-yellow;
---bs-danger:    --bs-red;
---bs-light:     --bs-gray-100;
---bs-dark:      --bs-gray-900;
+--bs-primary:   var(--bs-orange);
+--bs-secondary: var(--bs-gray-900);
+--bs-success:   var(--bs-green);
+--bs-info:      var(--bs-blue);
+--bs-warning:   var(--bs-yellow);
+--bs-danger:    var(--bs-red);
+--bs-light:     var(--bs-gray-100);
+--bs-dark:      var(--bs-gray-900);
 
 --bs-primary-rgb: 255, 92, 13;
 --bs-secondary-rgb: 29, 29, 31;
