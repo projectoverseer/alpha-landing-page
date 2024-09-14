@@ -9,7 +9,7 @@ body {
 }
 
 hr {
-    border-color: $theme-primary;
+    border-color: $primary;
     border-width: 3px;
     max-width: 50px;
 }
@@ -20,10 +20,10 @@ hr.light {
 
 a {
     @include transition-all;
-    color: $theme-primary;
+    color: $primary;
     &:hover,
     &:focus {
-        color: darken($theme-primary, 10%);
+        color: darken($primary, 10%);
     }
 }
 
@@ -43,7 +43,7 @@ p {
 }
 
 .bg-primary {
-    background-color: $theme-primary;
+    background-color: $primary;
 }
 
 .bg-dark {
@@ -77,13 +77,13 @@ aside {
     @include sans-serif-font;
     @include transition-all;
     .navbar-header .navbar-brand {
-        color: $theme-primary;
+        color: $primary;
         @include sans-serif-font;
         font-weight: 700;
         text-transform: uppercase;
         &:hover,
         &:focus {
-            color: darken($theme-primary, 10%);
+            color: darken($primary, 10%);
         }
     }
     .nav {
@@ -95,13 +95,13 @@ aside {
                 font-size: 13px;
                 color: $theme-dark;
                 &:hover {
-                    color: $theme-primary;
+                    color: $primary;
                 }
             }
             &.active {
                 > a,
                 > a:focus {
-                    color: $theme-primary !important;
+                    color: $primary !important;
                     background-color: transparent;
                     &:hover {
                         background-color: transparent;
@@ -135,18 +135,18 @@ aside {
             background-color: white;
             border-color: $navbar-border-color;
             .navbar-header .navbar-brand {
-                color: $theme-primary;
+                color: $primary;
                 font-size: 18px;
                 &:hover,
                 &:focus {
-                    color: darken($theme-primary, 10%);
+                    color: darken($primary, 10%);
                 }
             }
             .nav > li > a,
             .nav > li > a:focus {
                 color: $theme-dark;
                 &:hover {
-                    color: $theme-primary;
+                    color: $primary;
                 }
             }
         }
@@ -243,7 +243,7 @@ header {
         color: white;
         opacity: 0;
         display: block;
-        background: rgba( $theme-primary, .9 );
+        background: rgba( $primary, .9 );
         position: absolute;
         bottom: 0;
         text-align: center;
@@ -298,7 +298,7 @@ header {
 
 // Bootstrap Overrides
 .text-primary {
-    color: $theme-primary;
+    color: $primary;
 }
 
 .no-gutter > [class*='col-'] {
@@ -312,7 +312,7 @@ header {
 }
 
 .btn-primary {
-    @include button-variant(white, $theme-primary);
+    @include button-variant(white, $primary);
 }
 
 .btn {
@@ -359,4 +359,3 @@ img::-moz-selection {
 body {
     -webkit-tap-highlight-color: $theme-dark;
 }
-

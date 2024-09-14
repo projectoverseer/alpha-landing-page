@@ -1,0 +1,70 @@
+/* This file serves as a personal note and does not relate to any other files. */
+
+html {
+  font-size: 18px;
+}
+
+:root,
+[data-bs-theme=light] {
+/* gray-color-variables */
+--bs-white:     rgb(255, 255, 255);
+--bs-gray-100:  rgb(249, 249, 251);
+--bs-gray-200:  rgb(245, 245, 247);
+--bs-gray-300:  transparent;
+--bs-gray-400:  transparent;
+--bs-gray-500:  transparent;
+--bs-gray-600:  rgb(232, 232, 237);
+--bs-gray-700:  rgb(210, 210, 215);
+--bs-gray-800:  rgb(134, 134, 139);
+--bs-gray-900:  rgb(29, 29, 31);
+--bs-black:     rgb(0, 0, 0);
+
+/* color-variables */
+--bs-blue:      rgb(0, 113, 227);
+--bs-indigo:    rgb(102, 16, 242);
+--bs-purple:    rgb(111, 66, 193);
+--bs-pink:      rgb(214, 51, 132);
+--bs-red:       rgb(175, 30, 45);
+--bs-orange:    rgb(255, 92, 13);
+--bs-yellow:    rgb(255, 224, 69);
+--bs-green:     rgb(3, 161, 14);
+--bs-teal:      rgb(32, 201, 151);
+--bs-cyan:      rgb(13, 202, 240);
+
+/* theme-color-variables */
+--bs-primary:   --bs-orange;
+--bs-secondary: --bs-gray-900;
+--bs-success:   --bs-green;
+--bs-info:      --bs-blue;
+--bs-warning:   --bs-yellow;
+--bs-danger:    --bs-red;
+--bs-light:     --bs-gray-100;
+--bs-dark:      --bs-gray-900;
+
+--bs-primary-rgb: 255, 92, 13;
+--bs-secondary-rgb: 29, 29, 31;
+--bs-success-rgb: 3, 161, 14;
+--bs-info-rgb: 0, 113, 227;
+--bs-warning-rgb: 255, 224, 69;
+--bs-danger-rgb: 175, 30, 45;
+--bs-light-rgb: 249, 249, 251;
+--bs-dark-rgb: 29, 29, 31;
+
+--bs-body-font-size: 1rem;
+--bs-body-font-weight: 400; /* do some research */
+--bs-body-line-height: 1.5;
+--bs-body-color: rgb(29, 29, 31);
+--bs-body-color-rgb: 29, 29, 31;
+--bs-body-bg: #fff;
+--bs-body-bg-rgb: 255, 255, 255;
+--bs-emphasis-color: #000;
+--bs-emphasis-color-rgb: 0, 0, 0;
+--bs-secondary-color: rgba(0, 0, 0, 0.48);
+--bs-secondary-color-rgb: 134, 134, 139;
+--bs-secondary-bg: rgb(250, 250, 252);
+--bs-secondary-bg-rgb: 250, 250, 252;
+--bs-tertiary-color: rgba(0, 0, 0, 0.16);
+--bs-tertiary-color-rgb: rgb(210, 210, 215);
+--bs-tertiary-bg: rgb(245, 245, 247);
+--bs-tertiary-bg-rgb: 245, 245, 247;
+}
