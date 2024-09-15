@@ -9,6 +9,21 @@ body {
     @include serif-font;
 }
 
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
 :root {
     /* theme-color-variables */
     --theme-blue: rgb(0, 113, 227);
@@ -58,6 +73,41 @@ body {
 }
 
 // Bootstrap 5.3.3 font size configurations
+body,
+button,
+input,
+select,
+textarea {
+    font-synthesis: none;
+    font-synthesis-weight: none;
+    font-synthesis-style: none;
+    font-synthesis-small-caps: none;
+    -moz-font-feature-settings: "kern";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+abbr[title] {
+    border-bottom: none !important;
+    text-decoration: none !important;
+}
+
+.highlight-hero {
+    color: var(--theme-white);
+    text-decoration: underline solid var(--theme-primary);
+    text-decoration-thickness: 5px;
+    text-underline-offset: 0.76rem;
+
+    // Hover effect
+    background: linear-gradient(var(--theme-primary) 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+    transition: .4s, background-position 0s;
+
+    &:hover {
+        --p: 100%;
+        color: var(--theme-dark);
+    }
+}
+
 hr {
     margin: 28px auto;
 }
@@ -79,10 +129,12 @@ h1,
     line-height: 1.2;
     color: var(--bs-heading-color);
 }
+
 h3,
 .h3 {
     margin-top: 1.4rem;
 }
+
 h2,
 .h2,
 h1,
@@ -339,7 +391,7 @@ header {
         linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
         url('../img/partnership.webp');
     text-align: center;
-    color: white;
+    color: var(--theme-white);
 
     .header-content {
         position: relative;
@@ -352,7 +404,8 @@ header {
                 font-weight: 600;
                 // text-transform: uppercase;
                 margin-top: 0;
-                margin-bottom: 0;
+                margin-bottom: 35px;
+                cursor: default;
             }
 
             hr {
@@ -511,6 +564,7 @@ header {
     border-radius: 300px;
     font-weight: 600;
     font-size: 1rem;
+    // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     // text-transform: uppercase;
 }
 
