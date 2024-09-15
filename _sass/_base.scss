@@ -213,6 +213,7 @@ p {
     font-size: 1.25rem;
     text-decoration: none;
     white-space: nowrap;
+    padding: 0;
 }
 
 // End: Bootstrap 5.3.3 font size configurations
@@ -296,6 +297,12 @@ aside {
         &:focus {
             color: darken($theme-primary, 10%);
         }
+    }
+
+    .navbar-logo {
+        --logo-padding: 8px;
+        height: calc(52px - 2*var(--logo-padding));
+        margin: var(--logo-padding) calc(2*var(--logo-padding));
     }
 
     .nav {

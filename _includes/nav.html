@@ -8,8 +8,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <!-- TODO: Replace with logo -->
-            <a class="navbar-brand page-scroll notranslate" href="#page-top">Alpha Software</a> 
+            <a class="navbar-brand page-scroll notranslate" href="#page-top">
+                <!-- TODO: Please optimize the SVG. -->
+                <!-- 52px is the height of the navbar on desktop and 50px on mobile. -->
+                <object data="img\alpha-full-vector.svg" class="navbar-logo" height="48" type="image/svg+xml">
+                    <!-- Fallback PNG. Only loads when SVG fails. -->
+                    <img src="img\alpha-full-white-transparent.png" />
+                </object>
+            </a> 
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
