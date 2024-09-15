@@ -59,7 +59,7 @@ body {
 
 // Bootstrap 5.3.3 font size configurations
 hr {
-    margin: 1rem auto;
+    margin: 28px auto;
 }
 
 h6,
@@ -75,10 +75,19 @@ h2,
 h1,
 .h1 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 1.4rem;
     line-height: 1.2;
     color: var(--bs-heading-color);
+}
+h3,
+.h3 {
+    margin-top: 1.4rem;
+}
+h2,
+.h2,
+h1,
+.h1 {
+    font-weight: 600;
 }
 
 h1,
@@ -159,7 +168,7 @@ p {
 hr {
     border-color: $theme-primary;
     border-width: 3px;
-    max-width: 50px;
+    max-width: 52px;
 }
 
 hr.light {
@@ -186,9 +195,8 @@ h6 {
 }
 
 p {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.4705882353;
-    margin-bottom: 20px;
 }
 
 .bg-primary {
@@ -229,8 +237,8 @@ aside {
     .navbar-header .navbar-brand {
         color: $theme-primary;
         @include sans-serif-font;
-        font-weight: 700;
-        text-transform: uppercase;
+        font-weight: 500;
+        // text-transform: uppercase;
 
         &:hover,
         &:focus {
@@ -243,9 +251,9 @@ aside {
 
             >a,
             >a:focus {
-                text-transform: uppercase;
-                font-weight: 700;
-                font-size: 13px;
+                // text-transform: uppercase;
+                font-weight: 500;
+                font-size: 16px;
                 color: $theme-dark;
 
                 &:hover {
@@ -341,14 +349,14 @@ header {
 
         .header-content-inner {
             h1 {
-                font-weight: 700;
-                text-transform: uppercase;
+                font-weight: 600;
+                // text-transform: uppercase;
                 margin-top: 0;
                 margin-bottom: 0;
             }
 
             hr {
-                margin: 30px auto;
+                margin: 35px auto;
             }
 
             // p {
@@ -501,7 +509,7 @@ header {
 .btn {
     @include sans-serif-font;
     border-radius: 300px;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1rem;
     // text-transform: uppercase;
 }
