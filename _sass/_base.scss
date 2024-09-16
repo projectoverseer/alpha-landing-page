@@ -3,6 +3,7 @@ body {
     height: 100%;
     width: 100%;
     font-size: 18px;
+    text-wrap: balance;
 }
 
 body {
@@ -94,17 +95,49 @@ abbr[title] {
 
 .highlight-hero {
     color: var(--theme-white);
-    text-decoration: underline solid var(--theme-primary);
-    text-decoration-thickness: 5px;
-    text-underline-offset: 0.76rem;
+    // text-decoration: underline solid var(--theme-primary);
+    // text-decoration-thickness: 7px;
+    // text-underline-offset: 0.76rem;
+    position: relative;
+    border-radius: 7px;
+    background: rgba($theme-primary, .78);
+    -webkit-backdrop-filter: saturate(180%) blur(50px);
+    backdrop-filter: saturate(180%) blur(50px);
+    
+    &:before {
+        // Highlight effect
+        position: absolute;
+        content: "";
+        top: 0;
+        background: linear-gradient(var(--theme-primary) 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+        width: 100%;
+        // height: calc(100% + 6.75px);
+        height: 100%;
+        border-radius: 7px;
+        z-index: -1;
+        transition: .4s, background-position 0s;
+    }
 
-    // Hover effect
-    background: linear-gradient(var(--theme-primary) 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+    // &:after {
+    //     position: absolute;
+    //     content: "";
+    //     bottom: -6.75px;
+    //     left: 0;
+    //     right: 0;
+    //     margin: auto;
+    //     background: var(--theme-primary);
+    //     width: calc(100% - 1px);
+    //     height: 7px;
+    //     border-radius: 3.5px;
+    //     z-index: -1;
+    // }
+
     transition: .4s, background-position 0s;
 
     &:hover {
         --p: 100%;
         color: var(--theme-dark);
+        background: rgba($theme-primary, .5);
     }
 }
 
@@ -136,7 +169,10 @@ h3,
 }
 
 h2,
-.h2,
+.h2 {
+    font-weight: 600;
+}
+
 h1,
 .h1 {
     font-weight: 600;
@@ -164,7 +200,7 @@ h2,
 
     h2,
     .h2 {
-        font-size: 2rem;
+        font-size: 2.3rem;
     }
 }
 
@@ -300,9 +336,19 @@ aside {
     }
 
     .navbar-logo {
-        --logo-padding: 7.7px;
+        --logo-padding: -6px;
         height: calc(52px - 2*var(--logo-padding));
         margin: var(--logo-padding) 16px;
+        position: absolute;
+        transition: all 0.35s;
+    }
+
+    .logo-vector {
+        opacity: 1;
+    }
+
+    .logo-default {
+        opacity: 0;
     }
 
     .nav {
@@ -364,6 +410,14 @@ aside {
 
             background-color: white;
             border-color: $navbar-border-color;
+
+            .logo-vector {
+                opacity: 0;
+            }
+
+            .logo-default {
+                opacity: 1;
+            }
 
             .navbar-header .navbar-brand {
                 color: $theme-primary;
@@ -568,7 +622,7 @@ header {
 
 .btn {
     @include sans-serif-font;
-    border-radius: 300px;
+    border-radius: 980px;
     font-weight: 600;
     font-size: 1rem;
     // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
@@ -577,6 +631,7 @@ header {
 
 .btn-xl {
     padding: 17px 30px;
+    border-radius: 980px;
 }
 
 // Contact
