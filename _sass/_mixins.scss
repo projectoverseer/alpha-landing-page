@@ -64,10 +64,11 @@
 
 @mixin sans-serif-font()
 {
-	font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+	font-family: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
 }
 
 @mixin serif-font()
 {
 	font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 20px;
 }

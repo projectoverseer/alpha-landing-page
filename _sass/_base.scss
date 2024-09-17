@@ -10,35 +10,31 @@ body {
     @include serif-font;
 }
 
+img {
+    border-radius: 7px;
+}
+
 .noselect {
     -webkit-touch-callout: none;
-    /* iOS Safari */
     -webkit-user-select: none;
-    /* Safari */
     -khtml-user-select: none;
-    /* Konqueror HTML */
     -moz-user-select: none;
-    /* Old versions of Firefox */
     -ms-user-select: none;
-    /* Internet Explorer/Edge */
     user-select: none;
-    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
 :root {
-    /* theme-color-variables */
     --theme-blue: rgb(0, 113, 227);
     --theme-indigo: rgb(102, 16, 242);
     --theme-purple: rgb(111, 66, 193);
     --theme-pink: rgb(214, 51, 132);
     --theme-red: rgb(175, 30, 45);
-    --theme-orange: rgb(255, 92, 13);
+    --theme-orange: rgb(255, 84, 10);
     --theme-yellow: rgb(255, 224, 69);
     --theme-green: rgb(3, 161, 14);
     --theme-teal: rgb(32, 201, 151);
     --theme-cyan: rgb(13, 202, 240);
 
-    /* gray-color-variables */
     --theme-white: rgb(255, 255, 255);
     --theme-gray-100: rgb(249, 249, 251);
     --theme-gray-200: rgb(245, 245, 247);
@@ -51,7 +47,7 @@ body {
     --theme-gray-900: rgb(29, 29, 31);
     --theme-black: rgb(0, 0, 0);
 
-    --theme-primary: rgb(255, 92, 13);
+    --theme-primary: rgb(255, 84, 10);
     --theme-secondary: var(--theme-gray-900);
     --theme-success: var(--theme-green);
     --theme-info: var(--theme-blue);
@@ -62,7 +58,7 @@ body {
 
     --theme-body-font-size: 1rem;
     --theme-body-font-weight: 400;
-    /* do some research */
+    /* Do some research */
     --theme-body-line-height: 1.5;
     --theme-body-color: rgb(29, 29, 31);
     --theme-body-bg: #fff;
@@ -94,50 +90,56 @@ abbr[title] {
 }
 
 .highlight-hero {
-    color: var(--theme-white);
+    color: var(--theme-gray-100);
     // text-decoration: underline solid var(--theme-primary);
     // text-decoration-thickness: 7px;
     // text-underline-offset: 0.76rem;
     position: relative;
-    border-radius: 7px;
-    background: rgba($theme-primary, .8);
-    -webkit-backdrop-filter: saturate(180%) blur(50px);
-    backdrop-filter: saturate(180%) blur(50px);
+    border-radius: 6px;
+    // background: rgba($theme-primary, .8);
+    // -webkit-backdrop-filter: saturate(180%) blur(50px);
+    // backdrop-filter: saturate(180%) blur(50px);
     
-    &:before {
+    &:after {
         // Highlight effect
         position: absolute;
         content: "";
         top: 0;
+        left: 0;
+        right: 0;
         background: linear-gradient(var(--theme-primary) 0 0) var(--p, 0) / var(--p, 0) no-repeat;
         width: 100%;
         // height: calc(100% + 6.75px);
         height: 100%;
         border-radius: 7px;
         z-index: -1;
-        transition: .4s, background-position 0s;
+        transition: .2s, background-position 0s;
     }
 
-    // &:after {
-    //     position: absolute;
-    //     content: "";
-    //     bottom: -6.75px;
-    //     left: 0;
-    //     right: 0;
-    //     margin: auto;
-    //     background: var(--theme-primary);
-    //     width: calc(100% - 1px);
-    //     height: 7px;
-    //     border-radius: 3.5px;
-    //     z-index: -1;
-    // }
+    &:before {
+        position: absolute;
+        content: "";
+        bottom: -3.75px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: var(--theme-primary);
+        width: 100%;
+        height: 4px;
+        z-index: -1;
+        transition: .2s;
+    }
 
-    transition: .4s, background-position 0s;
+    transition: .4s, background-position 0s; // TODO: Adjust bezier curve
 
     &:hover {
         --p: 100%;
         color: var(--theme-dark);
-        background: rgba($theme-primary, .5);
+
+        &:before {
+            opacity: 0;
+        }
+        // background: rgba(white, 0.01);
     }
 }
 
@@ -166,16 +168,17 @@ h1,
 h3,
 .h3 {
     margin-top: 1.4rem;
+    font-weight: 600;
 }
 
 h2,
 .h2 {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 h1,
 .h1 {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 h1,
@@ -326,7 +329,7 @@ aside {
     .navbar-header .navbar-brand {
         color: $theme-primary;
         @include sans-serif-font;
-        font-weight: 500;
+        font-weight: 600;
         // text-transform: uppercase;
 
         &:hover,
@@ -357,7 +360,7 @@ aside {
             >a,
             >a:focus {
                 // text-transform: uppercase;
-                font-weight: 500;
+                font-weight: 600;
                 font-size: 16px;
                 color: $theme-dark;
 
@@ -462,7 +465,7 @@ header {
 
         .header-content-inner {
             h1 {
-                font-weight: 600;
+                font-weight: 700;
                 // text-transform: uppercase;
                 margin-top: 0;
                 margin-bottom: 35px;
@@ -511,10 +514,16 @@ header {
 
 .section-heading {
     margin-top: 0;
+    // TODO: Adjust margins for all headings and content
+    margin-left: 50px;
+    margin-right: 50px;
     color: black;
 
     .bg-primary & {
-        color: white;
+        color: var(--theme-gray-100);
+    }
+    .bg-dark & {
+        color: var(--theme-white);
     }
 }
 
@@ -621,6 +630,7 @@ header {
 }
 
 .btn {
+    // TODO: Make CTA buttons more attractive.
     @include sans-serif-font;
     border-radius: 980px;
     font-weight: 600;
@@ -642,18 +652,6 @@ header {
 
 // Extras
 // -- Highlight Color Customization
-::-moz-selection {
-    color: white;
-    text-shadow: none;
-    background: $theme-dark;
-}
-
-::selection {
-    color: white;
-    text-shadow: none;
-    background: $theme-dark;
-}
-
 img::selection {
     color: white;
     background: transparent;
@@ -662,8 +660,4 @@ img::selection {
 img::-moz-selection {
     color: white;
     background: transparent;
-}
-
-body {
-    -webkit-tap-highlight-color: $theme-dark;
 }

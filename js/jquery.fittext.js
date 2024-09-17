@@ -1,4 +1,4 @@
-/*global jQuery */
+
 /*!
 * FitText.js 1.2
 *
