@@ -6,12 +6,20 @@ body {
     text-wrap: balance;
 }
 
+@media screen and (min-width: 1400px) {
+
+    html,
+    body {
+        font-size: 16px;
+    }
+}
+
 body {
     @include serif-font;
 }
 
 img {
-    border-radius: 7px;
+    border-radius: var(--fs-xs);
 }
 
 .noselect {
@@ -67,6 +75,46 @@ img {
     --theme-secondary-bg: rgb(250, 250, 252);
     --theme-tertiary-color: rgba(0, 0, 0, 0.16);
     --theme-tertiary-bg: rgb(245, 245, 247);
+
+    --phi: calc(0.5*(sqrt(5) + 1))
+}
+
+
+/* For browsers that support clamp  */
+@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+    :root {
+        --fs-thin: 0.236rem;
+        --fs-xs: 0.382rem;
+        --fs-small: 0.618rem;
+        --fs-p: 1rem;
+        --fs-h3: clamp(1.2rem, 0.669vi + 1.033rem, 1.618rem);
+        --fs-h2: clamp(1.44rem, 1.885vi + 0.969rem, 2.618rem);
+        --fs-h1: clamp(1.728rem, 4.013vi + 0.725rem, 4.236rem);
+        --fs-xl: clamp(2.074rem, 7.649vi + 0.161rem, 6.854rem);
+    }
+}
+
+/* For browsers that don't support clamp */
+@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
+    :root {
+        --fs-thin: 0.236rem;
+        --fs-xs: 0.382rem;
+        --fs-small: 0.618rem;
+        --fs-p: 1rem;
+        --fs-h3: 1.2rem;
+        --fs-h2: 1.44rem;
+        --fs-h1: 1.728rem;
+        --fs-xl: 2.074rem;
+    }
+
+    @media screen and (min-width: 1400px) {
+        :root {
+            --fs-h3: 1.618rem;
+            --fs-h2: 2.618rem;
+            --fs-h1: 4.236rem;
+            --fs-xl: 6.854rem;
+        }
+    }
 }
 
 // Bootstrap 5.3.3 font size configurations
@@ -95,11 +143,11 @@ abbr[title] {
     // text-decoration-thickness: 7px;
     // text-underline-offset: 0.76rem;
     position: relative;
-    border-radius: 6px;
+    border-radius: var(--fs-xs);
     // background: rgba($theme-primary, .8);
     // -webkit-backdrop-filter: saturate(180%) blur(50px);
     // backdrop-filter: saturate(180%) blur(50px);
-    
+
     &:after {
         // Highlight effect
         position: absolute;
@@ -107,30 +155,32 @@ abbr[title] {
         top: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(var(--theme-primary) 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+        background: linear-gradient(to left, var(--theme-primary) 0 0) var(--p, 0) / var(--p, 0) no-repeat;
         width: 100%;
-        // height: calc(100% + 6.75px);
-        height: 100%;
-        border-radius: 7px;
+        height: calc(100% + var(--fs-thin));
+        // height: 100%;
+        border-radius: var(--fs-xs);
         z-index: -1;
         transition: .2s, background-position 0s;
     }
 
     &:before {
+        // Underline
         position: absolute;
         content: "";
-        bottom: -3.75px;
+        bottom: calc(-1*var(--fs-thin));
         left: 0;
         right: 0;
         margin: auto;
         background: var(--theme-primary);
-        width: 100%;
-        height: 4px;
+        width: calc(100%);
+        height: var(--fs-thin);
         z-index: -1;
         transition: .2s;
     }
 
-    transition: .4s, background-position 0s; // TODO: Adjust bezier curve
+    transition: .4s,
+    background-position 0s; // TODO: Adjust bezier curve
 
     &:hover {
         --p: 100%;
@@ -139,12 +189,9 @@ abbr[title] {
         &:before {
             opacity: 0;
         }
+
         // background: rgba(white, 0.01);
     }
-}
-
-hr {
-    margin: 28px auto;
 }
 
 h6,
@@ -168,79 +215,6 @@ h1,
 h3,
 .h3 {
     margin-top: 1.4rem;
-    font-weight: 600;
-}
-
-h2,
-.h2 {
-    font-weight: 700;
-}
-
-h1,
-.h1 {
-    font-weight: 700;
-}
-
-h1,
-.h1 {
-    font-size: calc(1.375rem + 1.5vw);
-}
-
-@media (min-width: 1200px) {
-
-    h1,
-    .h1 {
-        font-size: 2.5rem;
-    }
-}
-
-h2,
-.h2 {
-    font-size: calc(1.325rem + 0.9vw);
-}
-
-@media (min-width: 1200px) {
-
-    h2,
-    .h2 {
-        font-size: 2.3rem;
-    }
-}
-
-h3,
-.h3 {
-    font-size: calc(1.3rem + 0.6vw);
-}
-
-@media (min-width: 1200px) {
-
-    h3,
-    .h3 {
-        font-size: 1.75rem;
-    }
-}
-
-h4,
-.h4 {
-    font-size: calc(1.275rem + 0.3vw);
-}
-
-@media (min-width: 1200px) {
-
-    h4,
-    .h4 {
-        font-size: 1.5rem;
-    }
-}
-
-h5,
-.h5 {
-    font-size: 1.25rem;
-}
-
-h6,
-.h6 {
-    font-size: 1rem;
 }
 
 p {
@@ -248,8 +222,32 @@ p {
     margin-bottom: 28px;
 }
 
+h1,
+.h1 {
+    font-size: var(--fs-h1);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+h2,
+.h2 {
+    font-size: var(--fs-h2);
+    font-weight: 700;
+}
+
+h3,
+.h3 {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.4705882353;
+}
+
 .navbar-brand {
-    font-size: 1.25rem;
+    font-size: var(--fs-p);
     text-decoration: none;
     white-space: nowrap;
     padding: 0;
@@ -259,8 +257,9 @@ p {
 
 hr {
     border-color: $theme-primary;
-    border-width: 3px;
-    max-width: 52px;
+    border-width: var(--fs-thin);
+    width: calc(10*var(--phi)*var(--fs-thin));
+    margin: var(--fs-h3) auto;
 }
 
 hr.light {
@@ -286,11 +285,6 @@ h6 {
     @include sans-serif-font;
 }
 
-p {
-    font-size: 1rem;
-    line-height: 1.4705882353;
-}
-
 .bg-primary {
     background-color: $theme-primary;
 }
@@ -305,7 +299,7 @@ p {
 }
 
 section {
-    padding: 128px 0;
+    padding: var(--fs-xl) 0;
 }
 
 aside {
@@ -339,10 +333,12 @@ aside {
     }
 
     .navbar-logo {
-        --logo-padding: -6px;
-        height: calc(52px - 2*var(--logo-padding));
-        margin: var(--logo-padding) 16px;
+        --logo-height: calc(2*var(--fs-p));
+        --logo-padding: calc((3*var(--fs-p) + 3px - var(--logo-height)) / 2);
+        height: var(--logo-height);
+        margin: var(--logo-padding) var(--fs-p);
         position: absolute;
+        border-radius: 0;
         transition: all 0.35s;
     }
 
@@ -361,8 +357,13 @@ aside {
             >a:focus {
                 // text-transform: uppercase;
                 font-weight: 600;
-                font-size: 16px;
+                font-size: var(--fs-p);
+                letter-spacing: 0.04em;
+                line-height: 1;
                 color: $theme-dark;
+
+                padding: var(--fs-p);
+                margin-top: 3px;
 
                 &:hover {
                     color: $theme-primary;
@@ -500,7 +501,7 @@ header {
                 margin-right: auto;
 
                 p {
-                    font-size: 18px;
+                    // font-size: 18px;
                     max-width: 80%;
                     margin-left: auto;
                     margin-right: auto;
@@ -522,6 +523,7 @@ header {
     .bg-primary & {
         color: var(--theme-gray-100);
     }
+
     .bg-dark & {
         color: var(--theme-white);
     }
@@ -574,11 +576,11 @@ header {
             .project-category {
                 text-transform: uppercase;
                 font-weight: 600;
-                font-size: 18px;
+                // font-size: 18px; TODO
             }
 
             .project-name {
-                font-size: 18px;
+                // font-size: 18px; TODO
             }
         }
     }
@@ -589,19 +591,19 @@ header {
         }
     }
 
-    @media (min-width: 768px) {
-        .portfolio-box-caption {
-            .portfolio-box-caption-content {
-                .project-category {
-                    font-size: 16px;
-                }
+    // @media (min-width: 768px) {
+    //     .portfolio-box-caption {
+    //         .portfolio-box-caption-content {
+    //             .project-category {
+    //                 font-size: 16px; TODO
+    //             }
 
-                .project-name {
-                    font-size: 22px;
-                }
-            }
-        }
-    }
+    //             .project-name {
+    //                 font-size: 22px;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 .call-to-action {
@@ -630,11 +632,10 @@ header {
 }
 
 .btn {
-    // TODO: Make CTA buttons more attractive.
     @include sans-serif-font;
-    border-radius: 980px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: var(--fs-p);
+    letter-spacing: 0.04em;
     // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     // text-transform: uppercase;
 }

@@ -23,7 +23,6 @@
 	color: $color;
 	background-color: $background;
 	box-sizing: content-box;
-    border-radius: 980px;
     border: $btn-border-width solid $border;
 	@include transition-all;
 
