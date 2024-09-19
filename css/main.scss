@@ -31,8 +31,10 @@
 //     }
 // }
 
-$theme-primary:   rgb(255, 100, 23); // 255, 92, 13
-$theme-dark:      rgb(7, 2, 31);
+$theme-primary-light: #ec7849;
+$theme-primary: #FF671F;
+$theme-primary-dark: #c14513;
+$theme-dark:      #222223;
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
