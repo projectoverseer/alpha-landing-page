@@ -5,6 +5,10 @@ body {
     text-wrap: balance;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     @include serif-font;
 }
@@ -28,7 +32,7 @@ img {
     --theme-purple: rgb(111, 66, 193);
     --theme-pink: rgb(214, 51, 132);
     --theme-red: rgb(175, 30, 45);
-    --theme-orange: rgb(255, 84, 10);
+    --theme-orange: rgb(255, 100, 23);
     --theme-yellow: rgb(255, 224, 69);
     --theme-green: rgb(3, 161, 14);
     --theme-teal: rgb(32, 201, 151);
@@ -43,23 +47,23 @@ img {
     --theme-gray-600: rgb(232, 232, 237);
     --theme-gray-700: rgb(210, 210, 215);
     --theme-gray-800: rgb(134, 134, 139);
-    --theme-gray-900: rgb(29, 29, 31);
+    --theme-gray-900: rgb(7, 2, 31);
     --theme-black: rgb(0, 0, 0);
 
-    --theme-primary: rgb(255, 84, 10);
+    --theme-primary: rgb(255, 100, 23);
     --theme-secondary: var(--theme-gray-900);
     --theme-success: var(--theme-green);
     --theme-info: var(--theme-blue);
     --theme-warning: var(--theme-yellow);
     --theme-danger: var(--theme-red);
     --theme-light: var(--theme-gray-100);
-    --theme-dark: rgb(29, 29, 31);
+    --theme-dark: rgb(7, 2, 31);
 
     --theme-body-font-size: 1rem;
     --theme-body-font-weight: 400;
     /* Do some research */
     --theme-body-line-height: 1.5;
-    --theme-body-color: rgb(29, 29, 31);
+    --theme-body-color: rgb(7, 2, 31);
     --theme-body-bg: #fff;
     --theme-emphasis-color: #000;
     --theme-secondary-color: rgb(110, 110, 115);
@@ -74,28 +78,28 @@ img {
 /* For browsers that support clamp  */
 @supports (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: clamp(0.512rem, -0.5016945864vi + 0.6374236466rem, 0.2360679775rem);
-        --fs-xs: clamp(0.64rem, -0.4691527068vi + 0.7572881767rem, 0.3819660113rem);
-        --fs-small: clamp(0.8rem, -0.3308472932vi + 0.8827118233rem, 0.6180339887rem);
+        --fs-thin: clamp(0.4221915645rem, -0.3384065219vi + 0.506793195rem, 0.2360679775rem);
+        --fs-xs: clamp(0.5627813555rem, -0.3287551714vi + 0.6449701483rem, 0.3819660113rem);
+        --fs-small: clamp(0.7501875469rem, -0.2402791966vi + 0.810257346rem, 0.6180339887rem);
         --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
-        --fs-h3: clamp(1.25rem, 0.6691527068vi + 1.0827118233rem, 1.6180339887rem);
-        --fs-h2: clamp(1.5625rem, 1.9191527068vi + 1.0827118233rem, 2.6180339887rem);
-        --fs-h1: clamp(1.953125rem, 4.1508054136vi + 0.9154236466rem, 4.2360679775rem);
-        --fs-xl: clamp(2.44140625rem, 8.0230831205vi + 0.4356354699rem, 6.8541019662rem);
+        --fs-h3: clamp(1.333rem, 0.5182436159vi + 1.203439096rem, 1.6180339887rem);
+        --fs-h2: clamp(1.776889rem, 1.529354525vi + 1.3945503688rem, 2.6180339887rem);
+        --fs-h1: clamp(2.368593037rem, 3.3954089827vi + 1.5197407913rem, 4.2360679775rem);
+        --fs-xl: clamp(3.1573345183rem, 6.7213953599vi + 1.4769856784rem, 6.8541019662rem);
     }
 }
 
 /* For browsers that don't support clamp */
 @supports not (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: 0.512rem;
-        --fs-xs: 0.64rem;
-        --fs-small: 0.8rem;
+        --fs-thin: 0.4221915645rem;
+        --fs-xs: 0.5627813555rem;
+        --fs-small: 0.7501875469rem;
         --fs-p: 1rem;
-        --fs-h3: 1.25rem;
-        --fs-h2: 1.5625rem;
-        --fs-h1: 1.953125rem;
-        --fs-xl: 2.44140625rem;
+        --fs-h3: 1.333rem;
+        --fs-h2: 1.776889rem;
+        --fs-h1: 2.368593037rem;
+        --fs-xl: 3.1573345183rem;
     }
 
     @media screen and (min-width: 1280px) {
@@ -358,7 +362,7 @@ aside {
         //         = 2*(var(--fs-p) - Margin)
         --toggle-margin: calc(3*var(--fs-p) / (4*var(--phi) + 2));
         // --toggle-padding: calc(2*(var(--fs-p) - var(--toggle-margin)));
-        margin: var(--toggle-margin);
+        margin: var(--toggle-margin) var(--fs-p);
         // padding: var(--toggle-padding);
         line-height: 1;
     }
@@ -417,7 +421,7 @@ aside {
         .logo-vector {
             opacity: 1;
         }
-    
+
         .logo-default {
             opacity: 0;
         }
@@ -474,6 +478,7 @@ header {
     position: relative;
     width: 100%;
     min-height: 100%;
+    height: max-content;
     @include background-cover;
     background-position: center;
     background-image:
@@ -569,6 +574,10 @@ header {
     display: block;
     max-width: 650px;
     margin: 0 auto;
+
+    img {
+        border-radius: 0;
+    }
 
     .portfolio-box-caption {
         color: white;
