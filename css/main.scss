@@ -1,43 +1,103 @@
 ---
 ---
-
 @charset "utf-8";
 
-// Example Defaults
-// $base-font-family: Helvetica, Arial, sans-serif;
-// $base-line-height: 1.5;
+@import "functions.scss";
 
-// $spacing-unit:     30px;
 
-// $text-color:       #111;
-// $background-color: #fdfdfd;
-// $brand-color:      #2a7ae2;
+$blue: #0069AA;
+$indigo: #472F91;
+$purple: #781D7D;
+$pink: #D90961;
+$red: #E21A22;
+$orange: #FE6C2D;
+$yellow: #FDEF40;
+$green: #008751;
+$teal: #00B194;
+$cyan: #0FB5EA;
+$white: #fff;
+$gray-100: #EFEFF0;
+$gray-200: #DCDDDF;
+$gray-300: #C5C5C7;
+$gray-400: #B6B7BA;
+$gray-500: #A0A1A4;
+$gray-600: #706F72;
+$gray-700: #5E5F61;
+$gray-800: #252223;
+$gray-900: #221E1F;
+$gray: $gray-400;
+$gray-dark: $gray-800;
+$black: #241903;
+$primary-light: #EC7849;
+$primary: $orange;
+$primary-dark: #C14513;
+$dark: #221e1f;  // #0069AA
+$secondary: $dark;
+$tertiary: $blue;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
 
-// $grey-color:       #828282;
-// $grey-color-light: lighten($grey-color, 40%);
-// $grey-color-dark:  darken($grey-color, 25%);
+$border-width: 4px;
+// $grid-gutter-width: 20px;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  // xxl: 1320px,
+);
 
-// // Width of the content area
-// $content-width:    800px;
+@import "variables.scss";
+@import "mixins.scss";
 
-// $on-palm:          600px;
-// $on-laptop:        800px;
+$custom-colors: map-merge($theme-colors, (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray-100": $gray-100,
+  "gray-200": $gray-200,
+  "gray-300": $gray-300,
+  "gray-400": $gray-400,
+  "gray-500": $gray-500,
+  "gray-600": $gray-600,
+  "gray-700": $gray-700,
+  "gray-800": $gray-800,
+  "gray-900": $gray-900,
+  "gray": $gray,
+  "gray-dark": $gray-dark,
+  "black": $black,
+  "primary-light": $primary-light,
+  "primary": $primary,
+  "primary-dark": $primary-dark,
+  "dark": $dark,
+  "secondary": $secondary,
+  "tertiary": $tertiary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+));
 
-// Using media queries with like this:
-// @include media-query($on-palm) {
-//     .wrapper {
-//         padding-right: $spacing-unit / 2;
-//         padding-left: $spacing-unit / 2;
-//     }
-// }
-
-$theme-primary-light: #ec7849;
-$theme-primary: #FE6C2D;
-$theme-primary-dark: #c14513;
-$theme-dark:      #221E1F; // #0069AA
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
+$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text");
+$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg");
 
 // Import partials from `sass_dir` (defaults to `_sass`)
-@import
-        "mixins",
-        "base"
-;
+@import "bootstrap.scss";
+
+
+@import "base";
