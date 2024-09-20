@@ -52,40 +52,68 @@ $primary-darker: #D8531D;
 /* For browsers that support clamp  */
 @supports (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: clamp(0.2962962963rem, -0.1095060342vi + 0.3236728048rem, 0.2360679775rem);
-        --fs-xs: clamp(0.4444444444rem, -0.1135971513vi + 0.4728437323rem, 0.3819660113rem);
-        --fs-small: clamp(0.6666666667rem, -0.0884230508vi + 0.6887724294rem, 0.6180339887rem);
-        --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
-        --fs-h3: clamp(1.5rem, 0.2146072523vi + 1.4463481869rem, 1.6180339887rem);
-        --fs-h2: clamp(2.25rem, 0.6691527068vi + 2.0827118233rem, 2.6180339887rem);
-        --fs-h1: clamp(3.375rem, 1.5655781409vi + 2.9836054648rem, 4.2360679775rem);
-        --fs-xl: clamp(5.0625rem, 3.2574581205vi + 4.2481354699rem, 6.8541019662rem);
+        --fs-thin: clamp(0.2773896606rem, 0.0693474151vi + 0.2600528068rem, 0.3120633681rem);
+        --fs-xs: clamp(0.4253308129rem, 0.1063327032vi + 0.3987476371rem, 0.4784971645rem);
+        --fs-small: clamp(0.652173913rem, 0.1630434783vi + 0.6114130435rem, 0.7336956522rem);
+        --fs-p: clamp(1rem, 0.25vi + 0.9375rem, 1.125rem);
+        --fs-h3: clamp(1.5333333333rem, 0.3833333333vi + 1.4375rem, 1.725rem);
+        --fs-h2: clamp(2.3511111111rem, 0.5877777778vi + 2.2041666667rem, 2.645rem);
+        --fs-h1: clamp(3.605037037rem, 0.9012592593vi + 3.3797222222rem, 4.0556666667rem);
+        --fs-xl: clamp(5.5277234568rem, 1.3819308642vi + 5.1822407407rem, 6.2186888889rem);
+    }
+}
+
+/* For browsers that support clamp  */
+@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+    :root {
+        --fs-thin: clamp(0.2773896606rem, 0.0346737076vi + 0.2687212337rem, 0.2947265143rem);
+        --fs-xs: clamp(0.4253308129rem, 0.0531663516vi + 0.412039225rem, 0.4519139887rem);
+        --fs-small: clamp(0.652173913rem, 0.0815217391vi + 0.6317934783rem, 0.6929347826rem);
+        --fs-p: clamp(1rem, 0.125vi + 0.96875rem, 1.0625rem);
+        --fs-h3: clamp(1.5333333333rem, 0.1916666667vi + 1.4854166667rem, 1.6291666667rem);
+        --fs-h2: clamp(2.3511111111rem, 0.2938888889vi + 2.2776388889rem, 2.4980555556rem);
+        --fs-h1: clamp(3.605037037rem, 0.4506296296vi + 3.4923796296rem, 3.8303518519rem);
+        --fs-xl: clamp(5.5277234568rem, 0.6909654321vi + 5.3549820988rem, 5.8732061728rem);
+    }
+}
+
+/* For browsers that support clamp  */
+@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+    :root {
+        --fs-thin: clamp(0.2947265143rem, 0vi + 0.2947265143rem, 0.2947265143rem);
+        --fs-xs: clamp(0.4519139887rem, 0vi + 0.4519139887rem, 0.4519139887rem);
+        --fs-small: clamp(0.6929347826rem, 0vi + 0.6929347826rem, 0.6929347826rem);
+        --fs-p: clamp(1.0625rem, 0vi + 1.0625rem, 1.0625rem);
+        --fs-h3: clamp(1.6291666667rem, 0vi + 1.6291666667rem, 1.6291666667rem);
+        --fs-h2: clamp(2.4980555556rem, 0vi + 2.4980555556rem, 2.4980555556rem);
+        --fs-h1: clamp(3.8303518519rem, 0vi + 3.8303518519rem, 3.8303518519rem);
+        --fs-xl: clamp(5.8732061728rem, 0vi + 5.8732061728rem, 5.8732061728rem);
     }
 }
 
 /* For browsers that don't support clamp */
 @supports not (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: 0.2962962963rem;
-        --fs-xs: 0.4444444444rem;
-        --fs-small: 0.6666666667rem;
-        --fs-p: 1rem;
-        --fs-h3: 1.5rem;
-        --fs-h2: 2.25rem;
-        --fs-h1: 3.375rem;
-        --fs-xl: 5.0625rem;
+        --fs-thin: 0.2947265143rem;
+        --fs-xs: 0.4519139887rem;
+        --fs-small: 0.6929347826rem;
+        --fs-p: 1.0625rem;
+        --fs-h3: 1.6291666667rem;
+        --fs-h2: 2.4980555556rem;
+        --fs-h1: 3.8303518519rem;
+        --fs-xl: 5.8732061728rem;
     }
 
-    @media screen and (min-width: 1280px) {
+    @media screen and (min-width: 1200px) {
         :root {
-            --fs-thin: 0.2360679775rem;
-            --fs-xs: 0.3819660113rem;
-            --fs-small: 0.6180339887rem;
-            --fs-p: 1rem;
-            --fs-h3: 1.6180339887rem;
-            --fs-h2: 2.6180339887rem;
-            --fs-h1: 4.2360679775rem;
-            --fs-xl: 6.8541019662rem;
+            --fs-thin: 0.2947265143rem;
+            --fs-xs: 0.4519139887rem;
+            --fs-small: 0.6929347826rem;
+            --fs-p: 1.0625rem;
+            --fs-h3: 1.6291666667rem;
+            --fs-h2: 2.4980555556rem;
+            --fs-h1: 3.8303518519rem;
+            --fs-xl: 5.8732061728rem;
         }
     }
 }
@@ -132,7 +160,7 @@ abbr[title] {
         height: calc(100% + 0.1em);
         border-radius: 0.1em; // TODO
         z-index: -1;
-        transition: .2s, background-position 0s;
+        transition: .35s, background-position 0s;
     }
 
     &:before {
@@ -300,7 +328,21 @@ aside {
 
 // Navigation
 
-.navbar-default {
+.navbar {
+    // Navbar's height = H
+    // Element's height = h
+    // Element's padding (one side) = p
+
+    // H = 3*var(--fs-p)
+    // h + 2m = H = 3*var(--fs-p)
+    // h/m = 2 * 2*var(--phi)   <-- This is the key!
+
+    // Do the math, and we'll eventually get
+    // m = 3*var(--fs-p) / (4*var(--phi) + 2)
+    // h = 12*var(--phi)*var(--fs-p) / (4*var(--phi) + 2)
+
+    --navbar-padding: calc(3*var(--fs-p) / (4*var(--phi) + 2));
+    padding: var(--navbar-padding);
     --navbar-height: 0;
     $navbar-border-color: rgba(0, 0, 0, .16);
     background-color: $white;
@@ -309,36 +351,18 @@ aside {
     @include sans-serif-font;
     @include transition-all;
 
-    .navbar-header .navbar-brand {
+
+    .navbar-brand {
         color: $theme-primary;
         @include sans-serif-font;
         font-weight: 600;
-        // text-transform: uppercase;
-
-        // &:hover,
-        // &:focus {
-        //     color: $primary-dark;
-        // }
     }
 
     .navbar-logo {
-        // Navbar's height = H
-        // Element's height = h
-        // Element's padding (one side) = p
-
-        // H = 3*var(--fs-p)
-        // h + 2m = H = 3*var(--fs-p)
-        // h/m = 2 * 2*var(--phi)   <-- This is the key!
-
-        // Do the math, and we'll eventually get
-        // m = 3*var(--fs-p) / (4*var(--phi) + 2)
-        // h = 12*var(--phi)*var(--fs-p) / (4*var(--phi) + 2)
-
-        --logo-padding: calc(3*var(--fs-p) / (4*var(--phi) + 2));
-        --logo-height: calc(3*var(--fs-p) - 2*var(--logo-padding));
-
-        height: var(--logo-height);
-        margin: var(--logo-padding) var(--fs-p);
+        // --logo-height: calc(3*var(--fs-p) - 2*var(--navbar-padding));
+        top: var(--navbar-padding);
+        height: calc(100% - 2*var(--navbar-padding));
+        margin-left: calc(var(--fs-p) - var(--navbar-padding));
         position: absolute;
         border-radius: 0;
         transition: all 0.35s;
@@ -358,35 +382,56 @@ aside {
         opacity: 0;
     }
 
-    .nav {
-        >li {
+    .nav-item {
+        padding: 0;
 
-            >a,
-            >a:focus {
-                // text-transform: uppercase;
-                font-weight: 600;
-                font-size: var(--fs-p);
-                letter-spacing: 0.04em;
-                line-height: 1;
-                color: $theme-dark;
+        // &,
+        // &:focus {
+        //     // text-transform: uppercase;
+        //     font-weight: 600;
+        //     font-size: var(--fs-p);
+        //     letter-spacing: 0.04em;
+        //     line-height: 1;
+        //     color: $theme-dark;
 
-                padding: var(--fs-p);
+        //     padding: var(--fs-p);
+
+        //     &:hover {
+        //         color: $theme-primary;
+        //     }
+        // }
+
+        // &.active {
+
+        //     &>a,
+        //     &>a:focus {
+        //         color: $theme-primary !important;
+        //         background-color: transparent;
+
+        //         &:hover {
+        //             background-color: transparent;
+        //         }
+        //     }
+        // }
+        .nav-link,
+        .nav-link:focus {
+            font-weight: 600;
+            font-size: var(--fs-p);
+            letter-spacing: 0.04em;
+            line-height: 1;
+            color: $theme-dark;
+            padding: calc(var(--fs-p) - var(--navbar-padding));
+        }
+
+        &.active {
+
+            .nav-link,
+            .nav-link:focus {
+                color: $theme-primary !important;
+                background-color: transparent;
 
                 &:hover {
-                    color: $theme-primary;
-                }
-            }
-
-            &.active {
-
-                >a,
-                >a:focus {
-                    color: $theme-primary !important;
                     background-color: transparent;
-
-                    &:hover {
-                        background-color: transparent;
-                    }
                 }
             }
         }
@@ -394,9 +439,9 @@ aside {
 
     @media (min-width: 768px) {
         background-color: transparent;
-        border-color: transparent; //rgba($white, .3);
+        border-color: transparent; // rgba($white, .3);
 
-        .navbar-header .navbar-brand {
+        .navbar-brand {
             color: $white;
 
             &:hover,
@@ -409,12 +454,12 @@ aside {
             opacity: 1;
         }
 
-        .logo-default {
+        .logo-dark {
             opacity: 0;
         }
 
-        .nav>li>a,
-        .nav>li>a:focus {
+        .nav-item .nav-link,
+        .nav-item .nav-link:focus {
             color: $white;
 
             &:hover {
@@ -422,7 +467,7 @@ aside {
             }
         }
 
-        &.affix {
+        &.nav-active {
             // The following two lines help making the border opaque
             -webkit-background-clip: padding-box;
             background-clip: padding-box;
@@ -434,11 +479,11 @@ aside {
                 opacity: 0;
             }
 
-            .logo-default {
+            .logo-dark {
                 opacity: 1;
             }
 
-            .navbar-header .navbar-brand {
+            .navbar-brand {
                 color: $theme-primary;
 
                 // &:hover,
@@ -447,8 +492,8 @@ aside {
                 // }
             }
 
-            .nav>li>a,
-            .nav>li>a:focus {
+            .nav-item .nav-link,
+            .nav-item .nav-link:focus {
                 color: $theme-dark;
 
                 &:hover {
@@ -641,58 +686,58 @@ header {
 }
 
 // Button Styles
-@mixin button-variant($color, $background)
-{
-	$btn-padding-vertical: 18px;
-	$btn-padding-horizontal: 31px;
+@mixin button-variant($color, $background) {
+    $btn-padding-vertical: 18px;
+    $btn-padding-horizontal: 31px;
 
-	color: $color;
-	background-color: $background;
-	box-sizing: content-box;
+    color: $color;
+    background-color: $background;
+    box-sizing: content-box;
     border: none;
-	// @include transition-all;
+    box-shadow: none !important;
+    // @include transition-all;
     transition: none;
 }
 
-.btn-default {
+#introduction .btn-secondary {
     @include button-variant($black, $white);
 
     &:focus {
         background-color: $white;
     }
 
-	&:hover:active {
-		color: $white;
-		background-color: $black;
+    &:hover:active {
+        color: $white;
+        background-color: $black;
         box-shadow: none;
-	}
+    }
 
-	&:hover {
-		color: $white;
-		background-color: var(--theme-gray-800);
+    &:hover {
+        color: $white;
+        background-color: var(--theme-gray-800);
     }
 }
 
-.btn-primary {
+#introduction .btn-primary {
     @include button-variant($white, $theme-primary);
 
-    &:focus{
+    &:focus {
         background-color: $theme-primary;
     }
-    
+
     // &:hover:focus {
-	// 	background-color: $primary-dark;
+    // 	background-color: $primary-dark;
     // }
 
-	&:hover:active {
-		color: $white;
-		background-color: $primary-darker;
+    &:hover:active {
+        color: $white;
+        background-color: $primary-darker;
         box-shadow: none;
-	}
+    }
 
-	&:hover {
-		color: $white;
-		background-color: $primary-dark;
+    &:hover {
+        color: $white;
+        background-color: $primary-dark;
     }
 }
 
