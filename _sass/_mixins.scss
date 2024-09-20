@@ -13,54 +13,6 @@
     -o-background-size: cover;
 }
 
-@mixin button-variant($color, $background)
-{
-	$btn-border-width: 0px; // either 0px or 3px
-	$btn-padding-vertical: 18px;
-	$btn-padding-horizontal: 31px;
-	$border: $background; // same color as bg (when border-width is 0)
-
-	color: $color;
-	background-color: $background;
-	box-sizing: content-box;
-    border: $btn-border-width solid $border;
-	@include transition-all;
-
-	&:hover,
-	&:focus,
-	&.focus,
-	&:active,
-	&.active,
-	.open > .dropdown-toggle & {
-		color: $color;
-		background-color: darken($background, 5%);
-    border-color: darken($border, 7%);
-	}
-	&:active,
-	&.active,
-	.open > .dropdown-toggle & {
-		background-image: none;
-	}
-	&.disabled,
-	&[disabled],
-	fieldset[disabled] & {
-		&,
-		&:hover,
-		&:focus,
-		&.focus,
-		&:active,
-		&.active {
-			background-color: $background;
-			border-color: $border;
-		}
-	}
-
-	.badge {
-		color: $background;
-		background-color: $color;
-	}
-}
-
 @mixin sans-serif-font()
 {
 	font-family: 'Raleway', 'Helvetica Neue', Arial, sans-serif;

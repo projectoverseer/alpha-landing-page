@@ -27,78 +27,53 @@ img {
 }
 
 :root {
-    --theme-blue: rgb(0, 113, 227);
-    --theme-indigo: rgb(102, 16, 242);
-    --theme-purple: rgb(111, 66, 193);
-    --theme-pink: rgb(214, 51, 132);
-    --theme-red: rgb(175, 30, 45);
-    --theme-orange: rgb(232, 69, 5);
-    --theme-yellow: rgb(255, 224, 69);
-    --theme-green: rgb(3, 161, 14);
-    --theme-teal: rgb(32, 201, 151);
-    --theme-cyan: rgb(13, 202, 240);
-
-    --theme-white: rgb(255, 255, 255);
-    --theme-gray-100: rgb(249, 249, 251);
-    --theme-gray-200: rgb(245, 245, 247);
-    --theme-gray-300: transparent;
-    --theme-gray-400: transparent;
-    --theme-gray-500: transparent;
-    --theme-gray-600: rgb(232, 232, 237);
-    --theme-gray-700: rgb(210, 210, 215);
-    --theme-gray-800: rgb(134, 134, 139);
-    --theme-gray-900: rgb(1, 8, 15);
-    --theme-black: rgb(0, 0, 0);
-
-    --theme-secondary: var(--theme-gray-900);
-    --theme-success: var(--theme-green);
-    --theme-info: var(--theme-blue);
-    --theme-warning: var(--theme-yellow);
-    --theme-danger: var(--theme-red);
-    --theme-light: var(--theme-gray-100);
-    --theme-dark: rgb(1, 8, 15);
-
-    --theme-body-font-size: 1rem;
-    --theme-body-font-weight: 400;
-    /* Do some research */
-    --theme-body-line-height: 1.5;
-    --theme-body-color: rgb(1, 8, 15);
-    --theme-body-bg: #fff;
-    --theme-emphasis-color: #000;
-    --theme-secondary-color: rgb(110, 110, 115);
-    --theme-secondary-bg: rgb(250, 250, 252);
-    --theme-tertiary-color: rgba(0, 0, 0, 0.16);
-    --theme-tertiary-bg: rgb(245, 245, 247);
+    --theme-white: #FFFFFF;
+    --theme-gray-100: #EFEFF0;
+    --theme-gray-200: #E7E7E9;
+    --theme-gray-300: #D7D8DA;
+    --theme-gray-400: #C8C9CB;
+    --theme-gray-500: #BEBFC1;
+    --theme-gray-600: #7E7F83;
+    --theme-gray-700: #5E5F61;
+    --theme-gray-800: #252223;
+    --theme-gray-900: #221E1F;
+    --theme-black: #241903;
 
     --phi: calc(0.5*(sqrt(5) + 1))
 }
+
+$black: var(--theme-black);
+$white: var(--theme-white);
+
+$primary-dark: #F15C22;
+$primary-darker: #D8531D;
 
 
 /* For browsers that support clamp  */
 @supports (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: clamp(0.4221915645rem, -0.3384065219vi + 0.506793195rem, 0.2360679775rem);
-        --fs-xs: clamp(0.5627813555rem, -0.3287551714vi + 0.6449701483rem, 0.3819660113rem);
-        --fs-small: clamp(0.7501875469rem, -0.2402791966vi + 0.810257346rem, 0.6180339887rem);
+        --fs-thin: clamp(0.2962962963rem, -0.1095060342vi + 0.3236728048rem, 0.2360679775rem);
+        --fs-xs: clamp(0.4444444444rem, -0.1135971513vi + 0.4728437323rem, 0.3819660113rem);
+        --fs-small: clamp(0.6666666667rem, -0.0884230508vi + 0.6887724294rem, 0.6180339887rem);
         --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
-        --fs-h3: clamp(1.333rem, 0.5182436159vi + 1.203439096rem, 1.6180339887rem);
-        --fs-h2: clamp(1.776889rem, 1.529354525vi + 1.3945503688rem, 2.6180339887rem);
-        --fs-h1: clamp(2.368593037rem, 3.3954089827vi + 1.5197407913rem, 4.2360679775rem);
-        --fs-xl: clamp(3.1573345183rem, 6.7213953599vi + 1.4769856784rem, 6.8541019662rem);
+        --fs-h3: clamp(1.5rem, 0.2146072523vi + 1.4463481869rem, 1.6180339887rem);
+        --fs-h2: clamp(2.25rem, 0.6691527068vi + 2.0827118233rem, 2.6180339887rem);
+        --fs-h1: clamp(3.375rem, 1.5655781409vi + 2.9836054648rem, 4.2360679775rem);
+        --fs-xl: clamp(5.0625rem, 3.2574581205vi + 4.2481354699rem, 6.8541019662rem);
     }
 }
 
 /* For browsers that don't support clamp */
 @supports not (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: 0.4221915645rem;
-        --fs-xs: 0.5627813555rem;
-        --fs-small: 0.7501875469rem;
+        --fs-thin: 0.2962962963rem;
+        --fs-xs: 0.4444444444rem;
+        --fs-small: 0.6666666667rem;
         --fs-p: 1rem;
-        --fs-h3: 1.333rem;
-        --fs-h2: 1.776889rem;
-        --fs-h1: 2.368593037rem;
-        --fs-xl: 3.1573345183rem;
+        --fs-h3: 1.5rem;
+        --fs-h2: 2.25rem;
+        --fs-h1: 3.375rem;
+        --fs-xl: 5.0625rem;
     }
 
     @media screen and (min-width: 1280px) {
@@ -136,7 +111,7 @@ abbr[title] {
 }
 
 .highlight-hero {
-    color: var(--theme-gray-100);
+    // color: $white;
     // text-decoration: underline solid $theme-primary;
     // text-decoration-thickness: 7px;
     // text-underline-offset: 0.76rem;
@@ -180,13 +155,14 @@ abbr[title] {
 
     &:hover {
         --p: 100%;
-        color: var(--theme-dark);
+        color: $black;
 
         &:before {
+            background: $primary-dark;
             opacity: 0;
         }
 
-        // background: rgba(white, 0.01);
+        // background: rgba($white, 0.01);
     }
 }
 
@@ -205,7 +181,19 @@ h1,
     margin-top: 0;
     margin-bottom: 1.4rem;
     line-height: 1.2;
-    color: var(--bs-heading-color);
+    color: var($black);
+
+    .bg-primary & {
+        color: $white;
+    }
+
+    .bg-dark & {
+        color: $white;
+    }
+
+    .header-content-inner & {
+        color: $white;
+    }
 }
 
 h3,
@@ -263,7 +251,7 @@ hr {
 }
 
 hr.light {
-    border-color: white;
+    border-color: $white;
 }
 
 a {
@@ -272,7 +260,7 @@ a {
 
     &:hover,
     &:focus {
-        color: darken($theme-primary, 10%);
+        color: $primary-dark;
     }
 }
 
@@ -291,11 +279,11 @@ h6 {
 
 .bg-dark {
     background-color: $theme-dark;
-    color: white;
+    color: $white;
 }
 
 .text-faded {
-    color: white;
+    color: var(--theme-gray-100);
 }
 
 section {
@@ -314,8 +302,8 @@ aside {
 
 .navbar-default {
     --navbar-height: 0;
-    $navbar-border-color: rgba(black, .16);
-    background-color: white;
+    $navbar-border-color: rgba(0, 0, 0, .16);
+    background-color: $white;
     border-color: $navbar-border-color; // Navigation bar's border
     border-width: 0 0 1px 0;
     @include sans-serif-font;
@@ -327,10 +315,10 @@ aside {
         font-weight: 600;
         // text-transform: uppercase;
 
-        &:hover,
-        &:focus {
-            color: darken($theme-primary, 10%);
-        }
+        // &:hover,
+        // &:focus {
+        //     color: $primary-dark;
+        // }
     }
 
     .navbar-logo {
@@ -406,14 +394,14 @@ aside {
 
     @media (min-width: 768px) {
         background-color: transparent;
-        border-color: transparent; //rgba(white, .3);
+        border-color: transparent; //rgba($white, .3);
 
         .navbar-header .navbar-brand {
-            color: white;
+            color: $white;
 
             &:hover,
             &:focus {
-                color: white;
+                color: $white;
             }
         }
 
@@ -427,10 +415,10 @@ aside {
 
         .nav>li>a,
         .nav>li>a:focus {
-            color: white;
+            color: $white;
 
             &:hover {
-                color: white;
+                color: $white;
             }
         }
 
@@ -439,7 +427,7 @@ aside {
             -webkit-background-clip: padding-box;
             background-clip: padding-box;
 
-            background-color: white;
+            background-color: $white;
             border-color: $navbar-border-color;
 
             .logo-vector {
@@ -453,10 +441,10 @@ aside {
             .navbar-header .navbar-brand {
                 color: $theme-primary;
 
-                &:hover,
-                &:focus {
-                    color: darken($theme-primary, 10%);
-                }
+                // &:hover,
+                // &:focus {
+                //     color: $primary-dark;
+                // }
             }
 
             .nav>li>a,
@@ -484,7 +472,7 @@ header {
         linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
         url('../img/partnership.webp');
     text-align: center;
-    color: var(--theme-gray-100);
+    color: $white;
 
     .header-content {
         position: relative;
@@ -507,7 +495,7 @@ header {
 
             // p {
             //     font-weight: 300;
-            //     color: white;
+            //     color: $white;
             //     margin-bottom: 50px;
             // } // TODO: Apply to all p
         }
@@ -544,14 +532,14 @@ header {
     // TODO: Adjust margins for all headings and content
     margin-left: 50px;
     margin-right: 50px;
-    color: black;
+    color: var($black);
 
     .bg-primary & {
-        color: var(--theme-gray-100);
+        color: $white;
     }
 
     .bg-dark & {
-        color: var(--theme-white);
+        color: $white;
     }
 }
 
@@ -579,7 +567,7 @@ header {
     }
 
     .portfolio-box-caption {
-        color: white;
+        color: $white;
         opacity: 0;
         display: block;
         background: rgba($theme-primary, .9);
@@ -653,12 +641,59 @@ header {
 }
 
 // Button Styles
+@mixin button-variant($color, $background)
+{
+	$btn-padding-vertical: 18px;
+	$btn-padding-horizontal: 31px;
+
+	color: $color;
+	background-color: $background;
+	box-sizing: content-box;
+    border: none;
+	// @include transition-all;
+    transition: none;
+}
+
 .btn-default {
-    @include button-variant(black, white);
+    @include button-variant($black, $white);
+
+    &:focus {
+        background-color: $white;
+    }
+
+	&:hover:active {
+		color: $white;
+		background-color: $black;
+        box-shadow: none;
+	}
+
+	&:hover {
+		color: $white;
+		background-color: var(--theme-gray-800);
+    }
 }
 
 .btn-primary {
-    @include button-variant(white, $theme-primary);
+    @include button-variant($white, $theme-primary);
+
+    &:focus{
+        background-color: $theme-primary;
+    }
+    
+    // &:hover:focus {
+	// 	background-color: $primary-dark;
+    // }
+
+	&:hover:active {
+		color: $white;
+		background-color: $primary-darker;
+        box-shadow: none;
+	}
+
+	&:hover {
+		color: $white;
+		background-color: $theme-dark;
+    }
 }
 
 .btn {
@@ -684,11 +719,11 @@ header {
 // Extras
 // -- Highlight Color Customization
 img::selection {
-    color: white;
+    color: $white;
     background: transparent;
 }
 
 img::-moz-selection {
-    color: white;
+    color: $white;
     background: transparent;
 }
