@@ -54,26 +54,8 @@ img {
 }
 
 :root {
-    --theme-white: #FFFFFF;
-    --theme-gray-100: #EFEFF0;
-    --theme-gray-200: #E7E7E9;
-    --theme-gray-300: #D7D8DA;
-    --theme-gray-400: #C8C9CB;
-    --theme-gray-500: #BEBFC1;
-    --theme-gray-600: #7E7F83;
-    --theme-gray-700: #5E5F61;
-    --theme-gray-800: #252223;
-    --theme-gray-900: #221E1F;
-    --theme-black: #241903;
-
     --phi: calc(0.5*(sqrt(5) + 1))
 }
-
-$black: var(--theme-black);
-$white: var(--theme-white);
-
-$primary-dark: #F15C22;
-$primary-darker: #D8531D;
 
 
 /* For browsers that support clamp  */
@@ -104,61 +86,6 @@ $primary-darker: #D8531D;
     }
 }
 
-/* For browsers that support clamp  */
-@supports (font-size: clamp(1rem, 1vi, 1rem)) {
-    :root {
-        --fs-thin: clamp(0.2947265143rem, 0vi + 0.2947265143rem, 0.2947265143rem);
-        --fs-xs: clamp(0.4519139887rem, 0vi + 0.4519139887rem, 0.4519139887rem);
-        --fs-small: clamp(0.6929347826rem, 0vi + 0.6929347826rem, 0.6929347826rem);
-        --fs-p: clamp(1.0625rem, 0vi + 1.0625rem, 1.0625rem);
-        --fs-h3: clamp(1.6291666667rem, 0vi + 1.6291666667rem, 1.6291666667rem);
-        --fs-h2: clamp(2.4980555556rem, 0vi + 2.4980555556rem, 2.4980555556rem);
-        --fs-h1: clamp(3.8303518519rem, 0vi + 3.8303518519rem, 3.8303518519rem);
-        --fs-xl: clamp(5.8732061728rem, 0vi + 5.8732061728rem, 5.8732061728rem);
-    }
-}
-
-/* For browsers that don't support clamp */
-@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
-    :root {
-        --fs-thin: 0.2947265143rem;
-        --fs-xs: 0.4519139887rem;
-        --fs-small: 0.6929347826rem;
-        --fs-p: 1.0625rem;
-        --fs-h3: 1.6291666667rem;
-        --fs-h2: 2.4980555556rem;
-        --fs-h1: 3.8303518519rem;
-        --fs-xl: 5.8732061728rem;
-    }
-
-    @media screen and (min-width: 1200px) {
-        :root {
-            --fs-thin: 0.2947265143rem;
-            --fs-xs: 0.4519139887rem;
-            --fs-small: 0.6929347826rem;
-            --fs-p: 1.0625rem;
-            --fs-h3: 1.6291666667rem;
-            --fs-h2: 2.4980555556rem;
-            --fs-h1: 3.8303518519rem;
-            --fs-xl: 5.8732061728rem;
-        }
-    }
-}
-
-// Bootstrap 5.3.3 font size configurations
-body,
-button,
-input,
-select,
-textarea {
-    font-synthesis: none;
-    font-synthesis-weight: none;
-    font-synthesis-style: none;
-    font-synthesis-small-caps: none;
-    -moz-font-feature-settings: "kern";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 
 abbr[title] {
     border-bottom: none !important;
@@ -216,8 +143,6 @@ abbr[title] {
             background: $primary-dark;
             opacity: 0;
         }
-
-        // background: rgba($white, 0.01);
     }
 }
 
@@ -235,8 +160,8 @@ h1,
 .h1 {
     margin-top: 0;
     margin-bottom: 1.4rem;
-    line-height: 1.2;
-    color: var($black);
+    // line-height: 1.2;
+    color: $black;
 
     .bg-primary & {
         color: $white;
@@ -265,7 +190,6 @@ h1,
 .h1 {
     font-size: var(--fs-h1);
     font-weight: 700;
-    letter-spacing: -0.01em;
 }
 
 h2,
@@ -282,7 +206,7 @@ h3,
 
 p {
     font-size: var(--fs-p);
-    line-height: 1.5;
+    letter-spacing: 0.01618em;
 }
 
 .navbar {
@@ -296,11 +220,7 @@ p {
     padding: 0;
 }
 
-// End: Bootstrap 5.3.3 font size configurations
-
 hr {
-    // border-color: $primary;
-    // border-width: 4px;
     width: calc(10*var(--phi)*4px);
     margin: 32px auto;
     opacity: 1;
@@ -339,7 +259,7 @@ h6 {
 }
 
 .text-faded {
-    color: var(--theme-gray-100);
+    color: $gray-100;
 }
 
 section {
@@ -372,38 +292,30 @@ aside {
     --navbar-padding: calc(3*var(--fs-p) / (4*var(--phi) + 2));
     padding: var(--navbar-padding);
     --navbar-height: 0;
-    $navbar-border-color: rgba(0, 0, 0, .16);
     background-color: $white;
-    border-color: $navbar-border-color; // Navigation bar's border
+    border-style: solid;
+    $navbar-border-color: rgba(0, 0, 0, .16);
+    border-color: $navbar-border-color;
     border-width: 0 0 1px 0;
-    @include sans-serif-font;
+    @include serif-font;
     @include transition-all;
 
 
     .navbar-brand {
         color: $primary;
-        @include sans-serif-font;
+        @include serif-font;
         font-weight: 600;
     }
 
     .navbar-logo {
-        // --logo-height: calc(3*var(--fs-p) - 2*var(--navbar-padding));
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
         top: var(--navbar-padding);
         height: calc(100% - 2*var(--navbar-padding));
         margin-left: calc(var(--fs-p) - var(--navbar-padding));
         position: absolute;
         border-radius: 0;
         transition: all 0.35s;
-    }
-
-    .navbar-toggle {
-        // Padding = 3*var(--fs-p) - 2*Margin - var(--fs-p)
-        //         = 2*(var(--fs-p) - Margin)
-        --toggle-margin: calc(3*var(--fs-p) / (4*var(--phi) + 2));
-        // --toggle-padding: calc(2*(var(--fs-p) - var(--toggle-margin)));
-        margin: var(--toggle-margin) var(--fs-p);
-        // padding: var(--toggle-padding);
-        line-height: 1;
     }
 
     .logo-vector {
@@ -413,39 +325,11 @@ aside {
     .nav-item {
         padding: 0;
 
-        // &,
-        // &:focus {
-        //     // text-transform: uppercase;
-        //     font-weight: 600;
-        //     font-size: var(--fs-p);
-        //     letter-spacing: 0.04em;
-        //     line-height: 1;
-        //     color: $dark;
-
-        //     padding: var(--fs-p);
-
-        //     &:hover {
-        //         color: $primary;
-        //     }
-        // }
-
-        // &.active {
-
-        //     &>a,
-        //     &>a:focus {
-        //         color: $primary !important;
-        //         background-color: transparent;
-
-        //         &:hover {
-        //             background-color: transparent;
-        //         }
-        //     }
-        // }
         .nav-link,
         .nav-link:focus {
-            font-weight: 600;
+            font-weight: 400;
             font-size: var(--fs-p);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.01618em;
             line-height: 1;
             color: $dark;
             padding: calc(var(--fs-p) - var(--navbar-padding));
@@ -465,9 +349,9 @@ aside {
         }
     }
 
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(md) {
         background-color: transparent;
-        border-color: transparent; // rgba($white, .3);
+        border-color: transparent;
 
         .navbar-brand {
             color: $white;
@@ -513,11 +397,6 @@ aside {
 
             .navbar-brand {
                 color: $primary;
-
-                // &:hover,
-                // &:focus {
-                //     color: $primary-dark;
-                // }
             }
 
             .nav-item .nav-link,
@@ -542,7 +421,7 @@ header {
     @include background-cover;
     background-position: center;
     background-image:
-        linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
+        linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
         url('../img/partnership.webp');
     text-align: center;
     color: $white;
@@ -556,25 +435,14 @@ header {
         .header-content-inner {
             h1 {
                 font-weight: 700;
-                // text-transform: uppercase;
                 margin-top: 0;
                 margin-bottom: 35px;
                 cursor: default;
             }
-
-            // hr {
-            //     margin: 35px auto;
-            // }
-
-            // p {
-            //     font-weight: 300;
-            //     color: $white;
-            //     margin-bottom: 50px;
-            // } // TODO: Apply to all p
         }
     }
 
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(md) {
         .header-content {
             position: absolute;
             top: 50%;
@@ -603,9 +471,9 @@ header {
 .section-heading {
     margin-top: 0;
     // TODO: Adjust margins for all headings and content
-    margin-left: 50px;
-    margin-right: 50px;
-    color: var($black);
+    // margin-left: 50px;
+    // margin-right: 50px;
+    color: $black;
 
     .bg-primary & {
         color: $white;
@@ -620,7 +488,7 @@ header {
     max-width: 400px;
     margin: 50px auto 0;
 
-    @media (min-width: 992px) {
+    @include media-breakpoint-up(lg) {
         margin: 20px auto 0;
     }
 
@@ -682,7 +550,7 @@ header {
         }
     }
 
-    // @media (min-width: 768px) {
+    // @include media-breakpoint-up(md) {
     //     .portfolio-box-caption {
     //         .portfolio-box-caption-content {
     //             .project-category {
@@ -742,7 +610,7 @@ header {
 
     &:hover {
         color: $white;
-        background-color: var(--theme-gray-800);
+        background-color: $gray-800;
     }
 }
 
@@ -773,7 +641,7 @@ header {
     @include sans-serif-font;
     font-weight: 600;
     font-size: var(--fs-p);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01618em;
     // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     // text-transform: uppercase;
 }

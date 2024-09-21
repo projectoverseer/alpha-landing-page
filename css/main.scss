@@ -5,33 +5,33 @@
 @import "functions.scss";
 
 
-$blue: #0069AA;
+$blue: #071D49;
 $indigo: #472F91;
 $purple: #781D7D;
 $pink: #D90961;
 $red: #E21A22;
-$orange: #FE6C2D;
+$orange: #FF6A13;
 $yellow: #FDEF40;
 $green: #008751;
 $teal: #00B194;
 $cyan: #0FB5EA;
 $white: #fff;
-$gray-100: #EFEFF0;
-$gray-200: #DCDDDF;
-$gray-300: #C5C5C7;
-$gray-400: #B6B7BA;
-$gray-500: #A0A1A4;
-$gray-600: #706F72;
-$gray-700: #5E5F61;
-$gray-800: #252223;
-$gray-900: #221E1F;
+$gray-100: #FBFBFD;
+$gray-200: #F5F5F7;
+$gray-300: #D2D2D4;
+$gray-400: #C4C4C6;
+$gray-500: #AAAAAC;
+$gray-600: #878789;
+$gray-700: #333333;
+$gray-800: #222223;
+$gray-900: #1d1d1f;
 $gray: $gray-400;
 $gray-dark: $gray-800;
-$black: #241903;
-$primary-light: #EC7849;
+$black: #000000;
 $primary: $orange;
-$primary-dark: #C14513;
-$dark: #221e1f;  // #0069AA
+$primary-dark: #FF5E00;
+$primary-darker: #FE5000;
+$dark: #1d1d1f;  // #0069AA
 $secondary: $dark;
 $tertiary: $blue;
 $success: $green;
@@ -41,14 +41,7 @@ $danger: $red;
 $light: $gray-100;
 
 $border-width: 4px;
-// $grid-gutter-width: 20px;
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-  // xxl: 1320px,
-);
+// $grid-gutter-width: 20px;a
 
 @import "variables.scss";
 @import "mixins.scss";
@@ -77,9 +70,9 @@ $custom-colors: map-merge($theme-colors, (
   "gray": $gray,
   "gray-dark": $gray-dark,
   "black": $black,
-  "primary-light": $primary-light,
   "primary": $primary,
   "primary-dark": $primary-dark,
+  "primary-darker": $primary-darker,
   "dark": $dark,
   "secondary": $secondary,
   "tertiary": $tertiary,
