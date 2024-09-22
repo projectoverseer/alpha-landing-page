@@ -29,9 +29,10 @@ $gray: $gray-400;
 $gray-dark: $gray-800;
 $black: #000000;
 $primary: $orange;
-$primary-dark: #FF5E00; // TODO: Consider changing primary color to primary dark for better contrast
-$primary-darker: #FE5000;
-$dark: #1d1d1f;  // #0069AA
+$primary-contrast: #FF5E00;
+$primary-darker: darken($primary, 7%);
+$primary-darkest: darken($primary-darker, 10%);
+$dark: #1d1d1f;
 $secondary: $dark;
 $tertiary: $blue;
 $success: $green;
@@ -41,7 +42,7 @@ $danger: $red;
 $light: $gray-100;
 
 $border-width: 4px;
-// $grid-gutter-width: 20px;a
+// $grid-gutter-width: 20px;
 
 @import "variables.scss";
 @import "mixins.scss";
@@ -71,8 +72,9 @@ $custom-colors: map-merge($theme-colors, (
   "gray-dark": $gray-dark,
   "black": $black,
   "primary": $primary,
-  "primary-dark": $primary-dark,
+  "primary-contrast": $primary-contrast,
   "primary-darker": $primary-darker,
+  "primary-darkest": $primary-darkest,
   "dark": $dark,
   "secondary": $secondary,
   "tertiary": $tertiary,
