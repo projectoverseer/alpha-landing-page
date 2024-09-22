@@ -93,14 +93,7 @@ abbr[title] {
 }
 
 .highlight-hero {
-    // color: $white;
-    // text-decoration: underline solid $primary;
-    // text-decoration-thickness: 7px;
-    // text-underline-offset: 0.76rem;
     position: relative;
-    // background: rgba($primary, .8);
-    // -webkit-backdrop-filter: saturate(180%) blur(50px);
-    // backdrop-filter: saturate(180%) blur(50px);
 
     &:after {
         // Highlight effect
@@ -125,7 +118,7 @@ abbr[title] {
         left: 0;
         right: 0;
         margin: auto;
-        background: $primary;
+        background: $primary-dark;
         width: calc(100%);
         height: 0.1em;
         z-index: -1;
@@ -140,7 +133,6 @@ abbr[title] {
         color: $black;
 
         &:before {
-            background: $primary-dark;
             opacity: 0;
         }
     }
@@ -206,7 +198,7 @@ h3,
 
 p {
     font-size: var(--fs-p);
-    letter-spacing: 0.01618em;
+    letter-spacing: 0.014em;
 }
 
 .navbar {
@@ -249,12 +241,11 @@ h6 {
     @include sans-serif-font;
 }
 
-.bg-primary {
-    background-color: $primary;
+section.bg-primary {
+    background-color: rgba($primary-dark, var(--bs-bg-opacity)) !important;
 }
 
-.bg-dark {
-    background-color: $dark;
+section.bg-dark {
     color: $white;
 }
 
@@ -329,7 +320,7 @@ aside {
         .nav-link:focus {
             font-weight: 400;
             font-size: var(--fs-p);
-            letter-spacing: 0.01618em;
+            letter-spacing: 0.014em;
             line-height: 1;
             color: $dark;
             padding: calc(var(--fs-p) - var(--navbar-padding));
@@ -339,7 +330,7 @@ aside {
 
             .nav-link,
             .nav-link:focus {
-                color: $primary !important;
+                color: $primary-dark !important;
                 background-color: transparent;
 
                 &:hover {
@@ -403,8 +394,8 @@ aside {
             .nav-item .nav-link:focus {
                 color: $dark;
 
-                &:hover {
-                    color: $primary;
+                &:hover, &.active {
+                    color: $primary-dark;
                 }
             }
         }
@@ -549,20 +540,6 @@ header {
             opacity: 1;
         }
     }
-
-    // @include media-breakpoint-up(md) {
-    //     .portfolio-box-caption {
-    //         .portfolio-box-caption-content {
-    //             .project-category {
-    //                 font-size: 16px; TODO
-    //             }
-
-    //             .project-name {
-    //                 font-size: 22px;
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 .call-to-action {
@@ -572,10 +549,6 @@ header {
 }
 
 // Bootstrap Overrides
-.text-primary {
-    color: $primary;
-}
-
 .no-gutter>[class*='col-'] {
     padding-right: 0;
     padding-left: 0;
@@ -615,25 +588,21 @@ header {
 }
 
 #introduction .btn-primary {
-    @include button-variant($white, $primary);
+    @include button-variant($white, $primary-dark);
 
     &:focus {
-        background-color: $primary;
+        background-color: $primary-dark;
     }
-
-    // &:hover:focus {
-    // 	background-color: $primary-dark;
-    // }
 
     &:hover:active {
         color: $white;
-        background-color: $primary-darker;
+        background-color: darken($primary-darker, 10%);
         box-shadow: none;
     }
 
     &:hover {
         color: $white;
-        background-color: $primary-dark;
+        background-color: $primary-darker;
     }
 }
 
@@ -641,9 +610,7 @@ header {
     @include sans-serif-font;
     font-weight: 600;
     font-size: var(--fs-p);
-    letter-spacing: 0.01618em;
-    // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    // text-transform: uppercase;
+    letter-spacing: 0.014em;
 }
 
 .btn-xl {
