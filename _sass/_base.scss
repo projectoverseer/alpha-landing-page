@@ -95,21 +95,6 @@ abbr[title] {
 .highlight-hero {
     position: relative;
 
-    &:after {
-        // Highlight effect
-        position: absolute;
-        content: "";
-        top: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to left, $primary 0 0) var(--p, 0) / var(--p, 0) no-repeat;
-        width: 100%;
-        height: calc(100% + 0.1em);
-        border-radius: 0.1em; // TODO
-        z-index: -1;
-        transition: .35s, background-position 0s;
-    }
-
     &:before {
         // Underline
         position: absolute;
@@ -121,21 +106,39 @@ abbr[title] {
         background-color: $primary;
         width: calc(100%);
         height: 0.1em;
-        z-index: -1;
-        transition: .2s;
+        z-index: -2;
+        transition: .35s ease-in-out;
     }
 
-    transition: .4s,
+    &:after {
+        // Highlight effect
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to left, $primary-highlight 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+        width: 100%;
+        height: calc(100% + 0.1em);
+        border-radius: 0.1em; // TODO
+        z-index: -1;
+        transition: .35s ease-in-out, background-position 0s;
+    }
+    transition: .35s ease-in-out,
     background-position 0s; // TODO: Adjust bezier curve
 
     &:hover {
         --p: 100%;
-        color: $black;
+        color: $gray-900;
 
         &:before {
-            // background-color: $primary;
+            background-color: $primary-highlight;
             opacity: 0;
         }
+
+        // &:after {
+        //     background-color: $primary-highlight;
+        // }
     }
 }
 
@@ -161,7 +164,7 @@ h1,
     }
 
     .bg-dark & {
-        color: $white;
+        color: $gray-100;
     }
 
     .header-content-inner & {
@@ -230,10 +233,10 @@ a {
     }
 
     &:hover {
-        color: $primary-darker;
+        color: $primary-highlight;
         
         &:active {
-            color: $primary-darkest
+            color: $primary-dark;
         }
     }
 }
@@ -248,15 +251,16 @@ h6 {
 }
 
 section.bg-primary {
-    background-color: rgba($primary-contrast, var(--bs-bg-opacity)) !important;
+    background-color: rgba($primary-fill, var(--bs-bg-opacity)) !important;
 }
 
 .bg-primary {
+    background-color: $primary-fill !important;
     color: $gray-100 !important;
 }
 
 section.bg-dark {
-    color: $white;
+    color: $gray-100;
 }
 
 .text-faded {
@@ -324,14 +328,21 @@ aside {
     .nav-item {
         padding: 0;
 
-        .nav-link,
-        .nav-link:focus {
-            font-weight: 400;
-            font-size: var(--fs-p);
-            letter-spacing: 0.014em;
-            line-height: 1;
-            color: $dark;
-            padding: calc(var(--fs-p) - var(--navbar-padding));
+        .nav-link {
+            transition: none;
+
+            &, &:focus {
+                font-weight: 400;
+                font-size: var(--fs-p);
+                letter-spacing: 0.014em;
+                line-height: 1;
+                color: $gray-900;
+                padding: calc(var(--fs-p) - var(--navbar-padding));
+            }
+
+            &:active, &:hover:focus {
+                color: $primary-highlight; // TODO
+            }
         }
     }
 
@@ -378,15 +389,21 @@ aside {
 
             .nav-item .nav-link,
             .nav-item .nav-link:focus {
+                transition: none;
+
                 &, &:focus {
-                    color: $black;
+                    color: $gray-900;
+                }
+                
+                &.active {
+                    color: $primary;
                 }
 
-                &:hover, &.active {
-                    color: $primary;
+                &:hover {
+                    color: $primary-highlight;
 
                     &:active {
-                        color: $primary-darkest;
+                        color: $primary-dark;
                     }
                 }
             }
@@ -451,14 +468,7 @@ header {
 
 // Sections
 
-.section-heading {
-    // Make section headings more attractive
-    .bg-dark & {
-        color: $white;
-    }
-}
-
-.service-box {
+.service-box { // TODO: Systemize all margins
     max-width: 400px;
     margin: 50px auto 0;
 
@@ -466,9 +476,9 @@ header {
         margin: 20px auto 0;
     }
 
-    p {
-        margin-bottom: 0;
-    }
+    // p {
+    //     margin-bottom: 0;
+    // }
 }
 
 .portfolio-box {
@@ -571,20 +581,20 @@ header {
 }
 
 #introduction .btn-primary {
-    @include button-variant($white, $primary);
+    @include button-variant($white, $primary-fill);
 
     &:focus {
-        background-color: $primary;
+        background-color: $primary-fill;
     }
 
     &:hover:active {
-        background-color: $primary-darkest;
+        background-color: $primary-fill-dark;
         box-shadow: none;
     }
 
     &:hover {
         color: $white;
-        background-color: $primary-darker;
+        background-color: $primary-fill-highlight;
     }
 }
 
@@ -602,7 +612,7 @@ header {
 
 // Contact
 #contact .fa {
-    color: $dark;
+    color: $gray-900;
     font-size: 4em;
 }
 

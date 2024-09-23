@@ -29,9 +29,11 @@ $gray: $gray-400;
 $gray-dark: $gray-800;
 $black: #000000;
 $primary: $orange;
-$primary-contrast: #FF5E00;
-$primary-darker: darken($primary, 7%);
-$primary-darkest: darken($primary-darker, 10%);
+$primary-fill: #FF5E00;
+$primary-fill-highlight: #FF6900;
+$primary-fill-dark: #E35205;
+$primary-dark: #E35205;
+$primary-highlight: #FF8200;
 $dark: #1d1d1f;
 $secondary: $dark;
 $tertiary: $blue;
@@ -43,6 +45,7 @@ $light: $gray-100;
 
 $border-width: 4px;
 // $grid-gutter-width: 20px;
+$enable-transitions: false;
 
 @import "variables.scss";
 @import "mixins.scss";
@@ -72,9 +75,11 @@ $custom-colors: map-merge($theme-colors, (
   "gray-dark": $gray-dark,
   "black": $black,
   "primary": $primary,
-  "primary-contrast": $primary-contrast,
-  "primary-darker": $primary-darker,
-  "primary-darkest": $primary-darkest,
+  "primary-fill": $primary-fill,
+  "primary-fill-highlight": $primary-fill-highlight,
+  "primary-fill-dark": $primary-fill-dark,
+  "primary-dark": $primary-dark,
+  "primary-highlight": $primary-highlight,
   "dark": $dark,
   "secondary": $secondary,
   "tertiary": $tertiary,
