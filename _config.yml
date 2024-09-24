@@ -19,15 +19,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Alpha Software
+title: Alpha Software Group
 email: alphasoftware102@gmail.com
 description: >- # TODO: Revise description
-  Hợp tác cùng Alpha Software để xây dựng hệ thống quản lý sản xuất dệt may.
-  Hệ thống này chính là tinh hoa của hơn 28 năm kinh nghiệm quản lý quy trình
-  nhuộm của ông Phan Đức Tuấn Anh, Giám đốc Điều hành của nhà cung cấp ưu tú có
-  đối tác là những công ty nước ngoài như Decathlon. Giải pháp của chúng tôi sẽ
-  mang lại năng suất và hiệu suất vượt bậc cho những nhà máy có ước muốn dẫn
-  đầu trong lĩnh vực dệt may.
+  Hợp tác cùng Alpha Software để xây dựng hệ thống quản lý quy trình dệt may.
+  Giải pháp của chúng tôi sẽ mang lại năng suất và hiệu suất vượt bậc cho những
+  doanh nghiệp có mong muốn dẫn đầu trong lĩnh vực dệt may.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
