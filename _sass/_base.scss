@@ -1,27 +1,22 @@
-
-@mixin transition-all()
-{
+@mixin transition-all() {
     -webkit-transition: all 0.35s;
     -moz-transition: all 0.35s;
     transition: all 0.35s;
 }
 
-@mixin background-cover()
-{
+@mixin background-cover() {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
 }
 
-@mixin sans-serif-font()
-{
-	font-family: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+@mixin sans-serif-font() {
+    font-family: "Raleway", BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@mixin serif-font()
-{
-	font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+@mixin serif-font() {
+    font-family: "Inter", BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 
@@ -33,7 +28,7 @@ body {
 }
 
 html {
-    overflow-x: hidden;
+    quotes: "“" "”";
 }
 
 body {
@@ -61,28 +56,41 @@ img {
 /* For browsers that support clamp  */
 @supports (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: clamp(0.2773896606rem, 0.0693474151vi + 0.2600528068rem, 0.3120633681rem);
-        --fs-xs: clamp(0.4253308129rem, 0.1063327032vi + 0.3987476371rem, 0.4784971645rem);
-        --fs-small: clamp(0.652173913rem, 0.1630434783vi + 0.6114130435rem, 0.7336956522rem);
-        --fs-p: clamp(1rem, 0.25vi + 0.9375rem, 1.125rem);
-        --fs-h3: clamp(1.5333333333rem, 0.3833333333vi + 1.4375rem, 1.725rem);
-        --fs-h2: clamp(2.3511111111rem, 0.5877777778vi + 2.2041666667rem, 2.645rem);
-        --fs-h1: clamp(3.605037037rem, 0.9012592593vi + 3.3797222222rem, 4.0556666667rem);
-        --fs-xl: clamp(5.5277234568rem, 1.3819308642vi + 5.1822407407rem, 6.2186888889rem);
+        --fs-thin: clamp(0.354rem, -0.188vi + 0.401rem, 0.236rem);
+        --fs-xs: clamp(0.5rem, -0.189vi + 0.547rem, 0.382rem);
+        --fs-small: clamp(0.707rem, -0.143vi + 0.743rem, 0.618rem);
+        --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
+        --fs-h3: clamp(1.414rem, 0.326vi + 1.332rem, 1.618rem);
+        --fs-h2: clamp(1.999rem, 0.99vi + 1.752rem, 2.618rem);
+        --fs-h1: clamp(2.827rem, 2.254vi + 2.264rem, 4.236rem);
+        --fs-xl: clamp(3.998rem, 4.57vi + 2.855rem, 6.854rem);
     }
 }
 
-/* For browsers that support clamp  */
-@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+/* For browsers that don't support clamp */
+@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
     :root {
-        --fs-thin: clamp(0.2773896606rem, 0.0346737076vi + 0.2687212337rem, 0.2947265143rem);
-        --fs-xs: clamp(0.4253308129rem, 0.0531663516vi + 0.412039225rem, 0.4519139887rem);
-        --fs-small: clamp(0.652173913rem, 0.0815217391vi + 0.6317934783rem, 0.6929347826rem);
-        --fs-p: clamp(1rem, 0.125vi + 0.96875rem, 1.0625rem);
-        --fs-h3: clamp(1.5333333333rem, 0.1916666667vi + 1.4854166667rem, 1.6291666667rem);
-        --fs-h2: clamp(2.3511111111rem, 0.2938888889vi + 2.2776388889rem, 2.4980555556rem);
-        --fs-h1: clamp(3.605037037rem, 0.4506296296vi + 3.4923796296rem, 3.8303518519rem);
-        --fs-xl: clamp(5.5277234568rem, 0.6909654321vi + 5.3549820988rem, 5.8732061728rem);
+        --fs-thin: 0.354rem;
+        --fs-xs: 0.5rem;
+        --fs-small: 0.707rem;
+        --fs-p: 1rem;
+        --fs-h3: 1.414rem;
+        --fs-h2: 1.999rem;
+        --fs-h1: 2.827rem;
+        --fs-xl: 3.998rem;
+    }
+
+    @media screen and (min-width: 1400px) {
+        :root {
+            --fs-thin: 0.236rem;
+            --fs-xs: 0.382rem;
+            --fs-small: 0.618rem;
+            --fs-p: 1rem;
+            --fs-h3: 1.618rem;
+            --fs-h2: 2.618rem;
+            --fs-h1: 4.236rem;
+            --fs-xl: 6.854rem;
+        }
     }
 }
 
@@ -94,51 +102,58 @@ abbr[title] {
 
 .highlight-hero {
     position: relative;
+    transition: color .35s ease;
 
-    &:before {
+    will-change: color;
+
+    &::before {
+        // Highlight effect
+        height: calc(100% + 0.1em);
+        border-radius: 0.1em; // TODO
+
+        background: $primary;
+        content: "";
+        inset: 0;
+        position: absolute;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.35s ease;
+        z-index: -1;
+
+        will-change: transform, transform-origin;
+    }
+
+    &::after {
         // Underline
         position: absolute;
         content: "";
-        bottom: calc(-0.1em);
+        bottom: -0.1em;
         left: 0;
-        right: 0;
-        margin: auto;
-        background-color: $primary;
-        width: calc(100%);
+        background: $primary;
+        width: 100%;
         height: 0.1em;
         z-index: -2;
-        transition: .35s ease-in-out;
-    }
 
-    &:after {
-        // Highlight effect
-        position: absolute;
-        content: "";
-        top: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to left, $primary-highlight 0 0) var(--p, 0) / var(--p, 0) no-repeat;
-        width: 100%;
-        height: calc(100% + 0.1em);
-        border-radius: 0.1em; // TODO
-        z-index: -1;
-        transition: .35s ease-in-out, background-position 0s;
+        will-change: opacity;
     }
-    transition: .35s ease-in-out,
-    background-position 0s; // TODO: Adjust bezier curve
 
     &:hover {
-        --p: 100%;
-        color: $gray-900;
+        color: $black;
 
-        &:before {
-            background-color: $primary-highlight;
-            opacity: 0;
+        will-change: color;
+
+        &::before {
+            transform: scaleX(1);
+            transform-origin: left;
+
+            will-change: transform, transform-origin;
         }
 
-        // &:after {
-        //     background-color: $primary-highlight;
-        // }
+        &::after {
+            opacity: 0;
+
+            will-change: opacity;
+        }
     }
 }
 
@@ -180,6 +195,7 @@ h3,
 p {
     margin-top: 0;
     margin-bottom: 28px;
+    letter-spacing: 0.01618em;
 }
 
 h1,
@@ -202,7 +218,6 @@ h3,
 
 p {
     font-size: var(--fs-p);
-    letter-spacing: 0.014em;
 }
 
 .navbar {
@@ -228,13 +243,15 @@ hr.light {
 
 a {
     @include transition-all;
-    &, &:focus {
+
+    &,
+    &:focus {
         color: $primary;
     }
 
     &:hover {
         color: $primary-highlight;
-        
+
         &:active {
             color: $primary-dark;
         }
@@ -331,17 +348,13 @@ aside {
         .nav-link {
             transition: none;
 
-            &, &:focus {
+            &,
+            &:focus {
                 font-weight: 400;
                 font-size: var(--fs-p);
-                letter-spacing: 0.014em;
                 line-height: 1;
                 color: $gray-900;
                 padding: calc(var(--fs-p) - var(--navbar-padding));
-            }
-
-            &:active, &:hover:focus {
-                color: $primary-highlight; // TODO
             }
         }
     }
@@ -391,10 +404,11 @@ aside {
             .nav-item .nav-link:focus {
                 transition: none;
 
-                &, &:focus {
+                &,
+                &:focus {
                     color: $gray-900;
                 }
-                
+
                 &.active {
                     color: $primary;
                 }
@@ -422,7 +436,7 @@ header {
     background-position: center;
     background-image:
         linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
-        url('../img/partnership.webp');
+        url("../img/partnership.webp");
     text-align: center;
     color: $gray-100;
 
@@ -468,7 +482,8 @@ header {
 
 // Sections
 
-.service-box { // TODO: Systemize all margins
+.service-box {
+    // TODO: Systemize all margins
     max-width: 400px;
     margin: 50px auto 0;
 
@@ -568,13 +583,7 @@ header {
         background-color: $white;
     }
 
-    &:hover:active {
-        color: $white;
-        background-color: $black;
-        box-shadow: none;
-    }
-
-    &:hover {
+    &:hover, &:hover:active {
         color: $white;
         background-color: $gray-800;
     }
@@ -587,22 +596,17 @@ header {
         background-color: $primary-fill;
     }
 
-    &:hover:active {
-        background-color: $primary-fill-dark;
-        box-shadow: none;
-    }
-
-    &:hover {
+    &:hover, &:hover:active {
         color: $white;
         background-color: $primary-fill-highlight;
     }
 }
 
 .btn {
-    @include sans-serif-font;
-    font-weight: 600;
+    @include serif-font;
+    font-weight: 400;
     font-size: var(--fs-p);
-    letter-spacing: 0.014em;
+    letter-spacing: 0.01618em;
 }
 
 .btn-xl {

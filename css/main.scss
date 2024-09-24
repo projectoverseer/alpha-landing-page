@@ -5,38 +5,41 @@
 @import "functions.scss";
 
 
-$blue: #071D49;
-$indigo: #472F91;
-$purple: #781D7D;
-$pink: #D90961;
-$red: #E21A22;
-$orange: #FF6A13;
-$yellow: #FDEF40;
-$green: #008751;
-$teal: #00B194;
-$cyan: #0FB5EA;
-$white: #fff;
+$primary: #FF6A13;
+$primary-dark: #E35205;
+$primary-highlight: #FF8200;
+
+$primary-fill: #FF5E00;
+$primary-fill-highlight: #FF6900;
+$primary-fill-dark: #E35205;
+
+$dark: #1D1D1F;
+$secondary: $dark;
+$tertiary: #071D49;
+
+$blue: $tertiary;
+$indigo: #500778;
+$purple: #753BBD;
+$pink: #D62598;
+$red: #D22630;
+$orange: $primary-fill;
+$yellow: #FFE900;
+$green: #046A38;
+$teal: #007377;
+$cyan: #41B6E6;
+$white: #FFF;
 $gray-100: #FBFBFD;
 $gray-200: #F5F5F7;
 $gray-300: #D2D2D4;
 $gray-400: #C4C4C6;
-$gray-500: #AAAAAC;
+$gray-500: #AAAAAA;
 $gray-600: #878789;
 $gray-700: #333333;
 $gray-800: #222223;
-$gray-900: #1d1d1f;
+$gray-900: #1D1D1F;
 $gray: $gray-400;
 $gray-dark: $gray-800;
 $black: #000000;
-$primary: $orange;
-$primary-fill: #FF5E00;
-$primary-fill-highlight: #FF6900;
-$primary-fill-dark: #E35205;
-$primary-dark: #E35205;
-$primary-highlight: #FF8200;
-$dark: #1d1d1f;
-$secondary: $dark;
-$tertiary: $blue;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
@@ -44,59 +47,13 @@ $danger: $red;
 $light: $gray-100;
 
 $border-width: 4px;
-// $grid-gutter-width: 20px;
 $enable-transitions: false;
+
 
 @import "variables.scss";
 @import "mixins.scss";
 
-$custom-colors: map-merge($theme-colors, (
-  "blue": $blue,
-  "indigo": $indigo,
-  "purple": $purple,
-  "pink": $pink,
-  "red": $red,
-  "orange": $orange,
-  "yellow": $yellow,
-  "green": $green,
-  "teal": $teal,
-  "cyan": $cyan,
-  "white": $white,
-  "gray-100": $gray-100,
-  "gray-200": $gray-200,
-  "gray-300": $gray-300,
-  "gray-400": $gray-400,
-  "gray-500": $gray-500,
-  "gray-600": $gray-600,
-  "gray-700": $gray-700,
-  "gray-800": $gray-800,
-  "gray-900": $gray-900,
-  "gray": $gray,
-  "gray-dark": $gray-dark,
-  "black": $black,
-  "primary": $primary,
-  "primary-fill": $primary-fill,
-  "primary-fill-highlight": $primary-fill-highlight,
-  "primary-fill-dark": $primary-fill-dark,
-  "primary-dark": $primary-dark,
-  "primary-highlight": $primary-highlight,
-  "dark": $dark,
-  "secondary": $secondary,
-  "tertiary": $tertiary,
-  "success": $success,
-  "info": $info,
-  "warning": $warning,
-  "danger": $danger,
-  "light": $light,
-));
 
-$theme-colors: map-merge($theme-colors, $custom-colors);
-$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
-$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
-$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text");
-$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg");
-
-// Import partials from `sass_dir` (defaults to `_sass`)
 @import "bootstrap.scss";
 
 
