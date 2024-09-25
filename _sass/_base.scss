@@ -139,7 +139,7 @@ abbr[title] {
         will-change: opacity;
     }
 
-    &:hover {
+    &:hover, &:focus-visible {
         color: $black;
 
         will-change: color;
@@ -246,11 +246,11 @@ a {
     @include transition-all;
 
     &,
-    &:focus {
+    &:focus:not(:focus-visible) {
         color: $primary;
     }
 
-    &:hover, &:hover:active {
+    &:hover, &:focus-visible, &:hover:active {
         color: $primary-highlight;
     }
 }
@@ -345,7 +345,7 @@ aside {
             transition: none;
 
             &,
-            &:focus {
+            &:focus:not(:focus-visible) {
                 font-weight: 400;
                 font-size: var(--fs-p);
                 line-height: 1;
@@ -372,7 +372,7 @@ aside {
         }
 
         .nav-item .nav-link,
-        .nav-item .nav-link:focus {
+        .nav-item .nav-link:focus:not(:focus-visible) {
             color: $gray-100;
         }
 
@@ -401,11 +401,11 @@ aside {
             }
 
             .nav-item .nav-link,
-            .nav-item .nav-link:focus {
+            .nav-item .nav-link:focus:not(:focus-visible) {
                 transition: none;
 
                 &,
-                &:focus {
+                &:focus:not(:focus-visible) {
                     color: $gray-900;
                 }
 
@@ -413,7 +413,7 @@ aside {
                     color: $primary;
                 }
 
-                &:hover, &:hover:active {
+                &:hover, &:focus-visible, &:hover:active {
                     color: $primary-highlight;
                 }
             }
@@ -539,7 +539,7 @@ header {
         }
     }
 
-    &:hover {
+    &:hover, &:focus-visible {
         .portfolio-box-caption {
             opacity: 1;
         }
@@ -568,18 +568,17 @@ header {
     box-sizing: content-box;
     border: none;
     box-shadow: none !important;
-    // @include transition-all;
     transition: none;
 }
 
 #introduction .btn-secondary {
     @include button-variant($black, $white);
 
-    &:focus {
+    &:focus:not(:focus-visible) {
         background-color: $white;
     }
 
-    &:hover, &:hover:active {
+    &:hover, &:focus-visible, &:hover:active {
         color: $white;
         background-color: $gray-800;
     }
@@ -588,15 +587,19 @@ header {
 #introduction .btn-primary {
     @include button-variant($white, $primary-fill);
 
-    &:focus {
-        background-color: $primary-fill;
-    }
-
-    &:hover, &:hover:active {
-        color: $white;
+    &:hover, &:focus-visible {
         background-color: $primary-fill-highlight;
     }
+
+    &:hover:active {
+        background-color: $primary-fill-dark;
+    }
+
+    &:focus:not(:focus-visible) {
+        background-color: $primary-fill;
+    }
 }
+
 
 .btn {
     @include serif-font;
