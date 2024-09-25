@@ -1,7 +1,7 @@
 @mixin transition-all() {
-    -webkit-transition: all 0.35s;
-    -moz-transition: all 0.35s;
-    transition: all 0.35s;
+    -webkit-transition: all .35s ease;
+    -moz-transition: all .35s ease;
+    transition: all .35s ease;
 }
 
 @mixin background-cover() {
@@ -12,11 +12,12 @@
 }
 
 @mixin sans-serif-font() {
-    font-family: "Raleway", BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 @mixin serif-font() {
-    font-family: "Inter", BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 0.01618em;
 }
 
 
@@ -98,6 +99,7 @@ img {
 abbr[title] {
     border-bottom: none !important;
     text-decoration: none !important;
+    cursor: default;
 }
 
 .highlight-hero {
@@ -117,7 +119,7 @@ abbr[title] {
         position: absolute;
         transform: scaleX(0);
         transform-origin: right;
-        transition: transform 0.35s ease;
+        transition: transform .35s ease;
         z-index: -1;
 
         will-change: transform, transform-origin;
@@ -195,7 +197,6 @@ h3,
 p {
     margin-top: 0;
     margin-bottom: 28px;
-    letter-spacing: 0.01618em;
 }
 
 h1,
@@ -249,12 +250,8 @@ a {
         color: $primary;
     }
 
-    &:hover {
+    &:hover, &:hover:active {
         color: $primary-highlight;
-
-        &:active {
-            color: $primary-dark;
-        }
     }
 }
 
@@ -316,11 +313,11 @@ aside {
     --navbar-height: 0;
     background-color: $white;
     border-style: solid;
-    $navbar-border-color: rgba(0, 0, 0, .16);
+    $navbar-border-color: #E1E3E1; // rgba(0, 20, 0, 0.118);
     border-color: $navbar-border-color;
     border-width: 0 0 1px 0;
+
     @include serif-font;
-    @include transition-all;
 
 
     .navbar-brand {
@@ -335,7 +332,6 @@ aside {
         margin-left: calc(var(--fs-p) - var(--navbar-padding));
         position: absolute;
         border-radius: 0;
-        transition: all 0.35s;
     }
 
     .logo-vector {
@@ -388,6 +384,10 @@ aside {
             background-color: $white;
             border-color: $navbar-border-color;
 
+            transition: color .35s ease, background-color .35s ease, opacity .35s ease, border-color .35s ease;
+
+            will-change: color, background-color, opacity, border-color;
+
             .logo-vector {
                 opacity: 0;
             }
@@ -413,12 +413,8 @@ aside {
                     color: $primary;
                 }
 
-                &:hover {
+                &:hover, &:hover:active {
                     color: $primary-highlight;
-
-                    &:active {
-                        color: $primary-dark;
-                    }
                 }
             }
         }
@@ -606,7 +602,6 @@ header {
     @include serif-font;
     font-weight: 400;
     font-size: var(--fs-p);
-    letter-spacing: 0.01618em;
 }
 
 .btn-xl {
