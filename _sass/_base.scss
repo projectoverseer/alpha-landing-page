@@ -16,7 +16,7 @@
 }
 
 @mixin serif-font() {
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     letter-spacing: 0.01618em;
 }
 
