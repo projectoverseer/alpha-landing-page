@@ -5,6 +5,42 @@
 @import "functions.scss";
 
 
+/* For browsers that support clamp  */
+@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+    :root {
+        --fs-xs: clamp(0.6298816rem, -0.3966649vi + 0.7290478rem, 0.381966rem);
+        --fs-small: clamp(0.7936508rem, -0.2809869vi + 0.8638975rem, 0.618034rem);
+        --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
+        --fs-h3: clamp(1.26rem, 0.5728544vi + 1.1167864rem, 1.618034rem);
+        --fs-h2: clamp(1.5876rem, 1.6486944vi + 1.1754264rem, 2.618034rem);
+        --fs-h1: clamp(2.000376rem, 3.5771072vi + 1.1060992rem, 4.236068rem);
+    }
+}
+
+/* For browsers that don't support clamp */
+@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
+    :root {
+        --fs-xs: 0.6298816rem;
+        --fs-small: 0.7936508rem;
+        --fs-p: 1rem;
+        --fs-h3: 1.26rem;
+        --fs-h2: 1.5876rem;
+        --fs-h1: 2.000376rem;
+    }
+
+    @media screen and (min-width: 768px) {
+        :root {
+            --fs-xs: 0.381966rem;
+            --fs-small: 0.618034rem;
+            --fs-p: 1rem;
+            --fs-h3: 1.618034rem;
+            --fs-h2: 2.618034rem;
+            --fs-h1: 4.236068rem;
+        }
+    }
+}
+
+
 $primary: #FF6A13;
 $primary-dark: #E35205;
 $primary-highlight: #FF8200;
@@ -46,8 +82,34 @@ $warning: $yellow;
 $danger: $red;
 $light: $gray-100;
 
-$border-width: 4px;
-$enable-transitions: false;
+
+$spacer: 0.6rem;
+$spacers: (
+  0: 0,
+  1: 0.6rem,
+  2: 1.2rem,
+  3: 1.8rem,
+  4: 2.4rem,
+  5: 3rem,
+);
+
+$line-height-base:              1.5;
+$headings-line-height:          1.2;
+
+$paragraph-margin-bottom:       4 * $spacer;
+
+// scss-docs-start headings-variables
+$headings-margin-bottom:        4 * $spacer;
+$headings-font-family:          "Raleway", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$headings-font-weight:          700;
+
+// scss-docs-start type-variables
+$hr-margin-y:                   4 * $spacer;
+$hr-color:                      $primary-fill;
+$hr-height:                     0.3rem;
+$hr-opacity:                    1;
+
+$enable-transitions:            false;
 
 
 @import "variables.scss";

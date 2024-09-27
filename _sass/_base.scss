@@ -12,7 +12,7 @@
 }
 
 @mixin sans-serif-font() {
-    font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: $headings-font-family;
 }
 
 @mixin serif-font() {
@@ -54,48 +54,6 @@ img {
 }
 
 
-/* For browsers that support clamp  */
-@supports (font-size: clamp(1rem, 1vi, 1rem)) {
-    :root {
-        --fs-thin: clamp(0.354rem, -0.188vi + 0.401rem, 0.236rem);
-        --fs-xs: clamp(0.5rem, -0.189vi + 0.547rem, 0.382rem);
-        --fs-small: clamp(0.707rem, -0.143vi + 0.743rem, 0.618rem);
-        --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
-        --fs-h3: clamp(1.414rem, 0.326vi + 1.332rem, 1.618rem);
-        --fs-h2: clamp(1.999rem, 0.99vi + 1.752rem, 2.618rem);
-        --fs-h1: clamp(2.827rem, 2.254vi + 2.264rem, 4.236rem);
-        --fs-xl: clamp(3.998rem, 4.57vi + 2.855rem, 6.854rem);
-    }
-}
-
-/* For browsers that don't support clamp */
-@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
-    :root {
-        --fs-thin: 0.354rem;
-        --fs-xs: 0.5rem;
-        --fs-small: 0.707rem;
-        --fs-p: 1rem;
-        --fs-h3: 1.414rem;
-        --fs-h2: 1.999rem;
-        --fs-h1: 2.827rem;
-        --fs-xl: 3.998rem;
-    }
-
-    @media screen and (min-width: 1400px) {
-        :root {
-            --fs-thin: 0.236rem;
-            --fs-xs: 0.382rem;
-            --fs-small: 0.618rem;
-            --fs-p: 1rem;
-            --fs-h3: 1.618rem;
-            --fs-h2: 2.618rem;
-            --fs-h1: 4.236rem;
-            --fs-xl: 6.854rem;
-        }
-    }
-}
-
-
 abbr[title] {
     border-bottom: none !important;
     text-decoration: none !important;
@@ -110,16 +68,17 @@ abbr[title] {
 
     &::before {
         // Highlight effect
-        height: calc(100% + 0.1em);
-        border-radius: 0.1em; // TODO
+        height: calc(100% + 0.42rem);
+        width: 100%;
+        border-radius: 0.5rem; // Matches the icons' border radii
 
         background: $primary;
         content: "";
-        inset: 0;
-        position: absolute;
+        bottom: -0.42rem;
         transform: scaleX(0);
         transform-origin: right;
         transition: transform .35s ease;
+        position: absolute;
         z-index: -1;
 
         will-change: transform, transform-origin;
@@ -127,19 +86,20 @@ abbr[title] {
 
     &::after {
         // Underline
-        position: absolute;
         content: "";
-        bottom: -0.1em;
+        bottom: -0.42rem;
         left: 0;
         background: $primary;
-        width: 100%;
-        height: 0.1em;
+        width: calc(100% - 0.0045em); // Subtract by h1's letter spacing
+        height: 0.42rem;
+        position: absolute;
         z-index: -2;
 
         will-change: opacity;
     }
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
         color: $black;
 
         will-change: color;
@@ -171,58 +131,34 @@ h2,
 .h2,
 h1,
 .h1 {
-    margin-top: 0;
-    margin-bottom: 1.4rem;
-    // line-height: 1.2;
-    // color: $black;
 
-    .bg-primary & {
-        color: $gray-100;
-    }
-
-    .bg-dark & {
-        color: $gray-100;
-    }
-
+    .bg-primary &,
+    .bg-dark &,
     .header-content-inner & {
         color: $gray-100;
     }
 }
 
-h3,
-.h3 {
-    margin-top: 1.4rem;
-}
-
-p {
-    margin-top: 0;
-    margin-bottom: 28px;
-}
-
 h1,
 .h1 {
     font-size: var(--fs-h1);
-    font-weight: 700;
+    letter-spacing: -0.0045em;
 }
 
 h2,
 .h2 {
     font-size: var(--fs-h2);
-    font-weight: 700;
+    letter-spacing: -0.005em;
 }
 
 h3,
 .h3 {
     font-size: var(--fs-h3);
-    font-weight: 600;
+    letter-spacing: 0.005em;
 }
 
 p {
     font-size: var(--fs-p);
-}
-
-.navbar {
-    min-height: 0;
 }
 
 .navbar-brand {
@@ -233,13 +169,9 @@ p {
 }
 
 hr {
-    width: calc(10*var(--phi)*4px);
-    margin: 32px auto;
-    opacity: 1;
-}
-
-hr.light {
-    border-color: $gray-100;
+    width: var(--fs-h1);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 a {
@@ -250,7 +182,9 @@ a {
         color: $primary;
     }
 
-    &:hover, &:focus-visible, &:hover:active {
+    &:hover,
+    &:focus-visible,
+    &:hover:active {
         color: $primary-highlight;
     }
 }
@@ -282,7 +216,7 @@ section.bg-dark {
 }
 
 section {
-    padding: 128px 0;
+    padding: 9rem 0;
 }
 
 aside {
@@ -413,7 +347,9 @@ aside {
                     color: $primary;
                 }
 
-                &:hover, &:focus-visible, &:hover:active {
+                &:hover,
+                &:focus-visible,
+                &:hover:active {
                     color: $primary-highlight;
                 }
             }
@@ -445,8 +381,6 @@ header {
         .header-content-inner {
             h1 {
                 font-weight: 700;
-                margin-top: 0;
-                margin-bottom: 35px;
                 cursor: default;
             }
         }
@@ -479,17 +413,9 @@ header {
 // Sections
 
 .service-box {
-    // TODO: Systemize all margins
     max-width: 400px;
-    margin: 50px auto 0;
-
-    @include media-breakpoint-up(lg) {
-        margin: 20px auto 0;
-    }
-
-    // p {
-    //     margin-bottom: 0;
-    // }
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .portfolio-box {
@@ -539,7 +465,8 @@ header {
         }
     }
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
         .portfolio-box-caption {
             opacity: 1;
         }
@@ -578,7 +505,9 @@ header {
         background-color: $white;
     }
 
-    &:hover, &:focus-visible, &:hover:active {
+    &:hover,
+    &:focus-visible,
+    &:hover:active {
         color: $white;
         background-color: $gray-800;
     }
@@ -587,7 +516,8 @@ header {
 #introduction .btn-primary {
     @include button-variant($white, $primary-fill);
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
         background-color: $primary-fill-highlight;
     }
 
@@ -610,6 +540,10 @@ header {
 .btn-xl {
     padding: 17px 30px;
     border-radius: 980px;
+}
+
+.fa-4x {
+    margin-top: 0.11em; // Simulates ascender height
 }
 
 // Contact
