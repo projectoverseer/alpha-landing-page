@@ -38,7 +38,7 @@ body {
 }
 
 img {
-    border-radius: var(--scale-xs);
+    border-radius: 0.5rem;
 }
 
 .noselect {
@@ -135,7 +135,7 @@ h1,
 .h1 {
 
     .bg-primary & {
-        color: $text;
+        color: $black;
     }
 
     .bg-dark &,
@@ -187,7 +187,11 @@ hr {
     margin-right: auto;
 
     .bg-primary & {
-        color: $dark;
+        color: $black;
+    }
+
+    .bg-dark & {
+        color: $primary-dark;
     }
 }
 
@@ -202,7 +206,7 @@ a {
     &:hover,
     &:focus-visible,
     &:hover:active {
-        color: $primary-highlight;
+        color: $accent;
     }
 }
 
@@ -216,12 +220,12 @@ h6 {
 }
 
 section.bg-primary {
-    background-color: $primary-fill !important;
+    background-color: $fill-primary !important;
 }
 
 .bg-primary {
-    background-color: $primary-fill !important;
-    color: $text !important;
+    background-color: $fill-primary !important;
+    color: $black !important;
 }
 
 section.bg-dark, section.bg-secondary {
@@ -264,7 +268,7 @@ aside {
     --navbar-height: 0;
     background-color: $white;
     border-style: solid;
-    $navbar-border-color: rgba(#000, 0.078125);
+    $navbar-border-color: rgba(#000, 0.0980392156862745); // #e6e6e6
     border-color: $navbar-border-color;
     border-width: 0 0 1px 0;
 
@@ -367,7 +371,7 @@ aside {
                 &:hover,
                 &:focus-visible,
                 &:hover:active {
-                    color: $primary-highlight;
+                    color: $accent;
                 }
             }
         }
@@ -515,32 +519,32 @@ header {
 }
 
 #introduction .btn-secondary {
-    @include button-variant($black, #fff);
+    @include button-variant($black, $white);
 
     &:focus:not(:focus-visible) {
         color: $black;
-        background-color: #fff;
+        background-color: $white;
     }
 
     &:hover,
     &:focus-visible,
     &:hover:active {
         color: #fff;
-        background-color: $gray-900;
+        background-color: $black;
     }
 }
 
 #introduction .btn-primary {
-    @include button-variant(#000, $primary-fill);
+    @include button-variant(#000, $fill-primary);
 
     &:hover,
     &:focus-visible,
     &:hover:active {
-        background-color: $primary-fill-highlight;
+        background-color: $fill-accent;
     }
 
     &:focus:not(:focus-visible) {
-        background-color: $primary-fill;
+        background-color: $fill-primary;
     }
 }
 
