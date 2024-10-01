@@ -9,30 +9,29 @@
 	--scale-caption: 0.8rem;
 	--scale-btn: 1rem;
 	--scale-p: 1rem;
-	--scale-h4: 1.54rem;
+	--scale-h4: 1.5rem;
 	--scale-h3: 1.92rem;
 	--scale-h2: 2.4rem;
 	--scale-h1: 3rem;
 }
 
+$small-font-size: var(--scale-caption);
 
-$text: #121212;
+
+$text: #212121;
 $background: #ffffff;
-$primary: #ff6600;
-$secondary: #1d4f91;
-$accent: #f8794f;
+$primary: #ff6f00;
+$secondary: #1a237e;
+$accent: #ffa000;
 
-$primary-dark: #E35205;
-$primary-highlight: #FF8200;
+$primary-highlight: $accent;
 
-$primary-fill: #ff6600;
-$primary-fill-highlight: #FA6400;
-$primary-fill-dark: #F55A00;
+$primary-fill: #ffa000;
+$primary-fill-highlight: #ffc107;
 
 $dark: $text;
-$tertiary: #071D49;
 
-$blue: $tertiary;
+$blue: $secondary;
 $indigo: #500778;
 $purple: #753BBD;
 $pink: #D62598;
@@ -43,14 +42,15 @@ $green: #046A38;
 $teal: #007377;
 $cyan: #41B6E6;
 $white: $background;
-$gray-100: #FBFBFD;
-$gray-200: #F5F5F7;
-$gray-300: #D2D2D4;
-$gray-400: #C4C4C6;
-$gray-500: #AAAAAA;
-$gray-600: #878789;
-$gray-700: #333333;
-$gray-800: #222223;
+$gray-50: #FAFAFA;
+$gray-100: #F5F5F5;
+$gray-200: #EEEEEE;
+$gray-300: #E0E0E0;
+$gray-400: #BDBDBD;
+$gray-500: #9E9E9E;
+$gray-600: #757575;
+$gray-700: #616161;
+$gray-800: #424242;
 $gray-900: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
@@ -84,7 +84,7 @@ $headings-font-weight:          700;
 
 // scss-docs-start type-variables
 $hr-margin-y:                   map-get($spacers, 4);
-$hr-color:                      $primary-fill;
+$hr-color:                      $primary;
 $hr-height:                     0.3rem;
 $hr-opacity:                    1;
 

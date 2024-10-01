@@ -134,10 +134,14 @@ h2,
 h1,
 .h1 {
 
-    .bg-primary &,
+    .bg-primary & {
+        color: $text;
+    }
+
     .bg-dark &,
+    .bg-secondary &,
     .header-content-inner & {
-        color: $gray-100;
+        color: #fff;
     }
 }
 
@@ -156,8 +160,18 @@ h3,
     font-size: var(--scale-h3);
 }
 
+h4,
+.h4 {
+    font-size: var(--scale-h4);
+}
+
 p {
     font-size: var(--scale-p);
+}
+
+small, .small {
+    font-size: var(--scale-caption);
+    line-height: 1.25;
 }
 
 .navbar-brand {
@@ -171,6 +185,10 @@ hr {
     width: var(--scale-h1);
     margin-left: auto;
     margin-right: auto;
+
+    .bg-primary & {
+        color: $dark;
+    }
 }
 
 a {
@@ -198,24 +216,24 @@ h6 {
 }
 
 section.bg-primary {
-    background-color: rgba($primary-fill, var(--bs-bg-opacity)) !important;
+    background-color: $primary-fill !important;
 }
 
 .bg-primary {
     background-color: $primary-fill !important;
-    color: $gray-100 !important;
+    color: $text !important;
 }
 
-section.bg-dark {
-    color: $gray-100;
+section.bg-dark, section.bg-secondary {
+    color: #fff;
 }
 
 .text-faded {
-    color: $gray-200;
+    color: $gray-100;
 }
 
 section {
-    padding: 9rem 0;
+    padding: 117px 0;
 }
 
 aside {
@@ -246,7 +264,7 @@ aside {
     --navbar-height: 0;
     background-color: $white;
     border-style: solid;
-    $navbar-border-color: #E1E3E1; // rgba(0, 20, 0, 0.118);
+    $navbar-border-color: rgba(#000, 0.078125);
     border-color: $navbar-border-color;
     border-width: 0 0 1px 0;
 
@@ -293,7 +311,7 @@ aside {
         border-color: transparent;
 
         .navbar-brand {
-            color: $gray-100;
+            color: #fff;
         }
 
         .logo-vector {
@@ -306,7 +324,7 @@ aside {
 
         .nav-item .nav-link,
         .nav-item .nav-link:focus:not(:focus-visible) {
-            color: $gray-100;
+            color: #fff;
         }
 
         &.nav-active {
@@ -369,7 +387,7 @@ header {
         linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
         url('../img/partnership.webp');
     text-align: center;
-    color: $gray-100;
+    color: #fff;
 
     .header-content {
         position: relative;
@@ -427,7 +445,7 @@ header {
     }
 
     .portfolio-box-caption {
-        color: $gray-100;
+        color: #fff;
         opacity: 0;
         display: block;
         background: rgba($primary, .9);
@@ -497,30 +515,28 @@ header {
 }
 
 #introduction .btn-secondary {
-    @include button-variant($black, $white);
+    @include button-variant($black, #fff);
 
     &:focus:not(:focus-visible) {
-        background-color: $white;
+        color: $black;
+        background-color: #fff;
     }
 
     &:hover,
     &:focus-visible,
     &:hover:active {
-        color: $white;
-        background-color: $gray-800;
+        color: #fff;
+        background-color: $gray-900;
     }
 }
 
 #introduction .btn-primary {
-    @include button-variant($white, $primary-fill);
+    @include button-variant(#000, $primary-fill);
 
     &:hover,
-    &:focus-visible {
-        background-color: $primary-fill-highlight;
-    }
-
+    &:focus-visible,
     &:hover:active {
-        background-color: $primary-fill-dark;
+        background-color: $primary-fill-highlight;
     }
 
     &:focus:not(:focus-visible) {
@@ -536,18 +552,12 @@ header {
 }
 
 .btn-xl {
-    padding: map-get($spacers, 1) map-get($spacers, 4);
+    padding: 0.96rem 1.54rem;
     border-radius: 0.5rem;
 }
 
 .fa-4x {
     margin-top: 0.11em; // Simulates ascender height
-}
-
-// Contact
-#contact .fa {
-    color: $gray-900;
-    font-size: 4em;
 }
 
 // Extras
