@@ -1,7 +1,7 @@
 @mixin transition-all() {
-    -webkit-transition: all .35s ease;
-    -moz-transition: all .35s ease;
-    transition: all .35s ease;
+    -webkit-transition: all .36s ease-in-out;
+    -moz-transition: all .36s ease-in-out;
+    transition: all .36s ease-in-out;
 }
 
 @mixin background-cover() {
@@ -16,8 +16,7 @@
 }
 
 @mixin serif-font() {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: 0.01618em;
+    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -29,7 +28,9 @@ body {
 }
 
 html {
-    quotes: "“" "”";
+    quotes: '“' '”';
+    font-kerning: normal;
+    font-feature-settings: "kern", "liga", "clig", "calt", "dlig";
 }
 
 body {
@@ -37,7 +38,7 @@ body {
 }
 
 img {
-    border-radius: var(--fs-xs);
+    border-radius: var(--scale-xs);
 }
 
 .noselect {
@@ -61,23 +62,24 @@ abbr[title] {
 }
 
 .highlight-hero {
+    --underline-height: 0.3rem;
     position: relative;
-    transition: color .35s ease;
+    transition: color .36s ease-in-out;
 
     will-change: color;
 
     &::before {
         // Highlight effect
-        height: calc(100% + 0.42rem);
+        height: calc(100% + var(--underline-height));
         width: 100%;
         border-radius: 0.5rem; // Matches the icons' border radii
 
         background: $primary;
-        content: "";
-        bottom: -0.42rem;
+        content: '';
+        bottom: calc(-1 * var(--underline-height));
         transform: scaleX(0);
         transform-origin: right;
-        transition: transform .35s ease;
+        transition: transform .36s ease-in-out;
         position: absolute;
         z-index: -1;
 
@@ -86,12 +88,12 @@ abbr[title] {
 
     &::after {
         // Underline
-        content: "";
-        bottom: -0.42rem;
+        content: '';
+        bottom: calc(-1 * var(--underline-height));
         left: 0;
         background: $primary;
-        width: calc(100% - 0.0045em); // Subtract by h1's letter spacing
-        height: 0.42rem;
+        width: 100%;
+        height: var(--underline-height);
         position: absolute;
         z-index: -2;
 
@@ -141,35 +143,32 @@ h1,
 
 h1,
 .h1 {
-    font-size: var(--fs-h1);
-    letter-spacing: -0.0045em;
+    font-size: var(--scale-h1);
 }
 
 h2,
 .h2 {
-    font-size: var(--fs-h2);
-    letter-spacing: -0.005em;
+    font-size: var(--scale-h2);
 }
 
 h3,
 .h3 {
-    font-size: var(--fs-h3);
-    letter-spacing: 0.005em;
+    font-size: var(--scale-h3);
 }
 
 p {
-    font-size: var(--fs-p);
+    font-size: var(--scale-p);
 }
 
 .navbar-brand {
-    font-size: var(--fs-p);
+    font-size: var(--scale-p);
     text-decoration: none;
     white-space: nowrap;
     padding: 0;
 }
 
 hr {
-    width: var(--fs-h1);
+    width: var(--scale-h1);
     margin-left: auto;
     margin-right: auto;
 }
@@ -234,15 +233,15 @@ aside {
     // Element's height = h
     // Element's padding (one side) = p
 
-    // H = 3*var(--fs-p)
-    // h + 2m = H = 3*var(--fs-p)
+    // H = 3*var(--scale-p)
+    // h + 2m = H = 3*var(--scale-p)
     // h/m = 2 * 2*var(--phi)   <-- This is the key!
 
     // Do the math, and we'll eventually get
-    // m = 3*var(--fs-p) / (4*var(--phi) + 2)
-    // h = 12*var(--phi)*var(--fs-p) / (4*var(--phi) + 2)
+    // m = 3*var(--scale-p) / (4*var(--phi) + 2)
+    // h = 12*var(--phi)*var(--scale-p) / (4*var(--phi) + 2)
 
-    --navbar-padding: calc(3*var(--fs-p) / (4*var(--phi) + 2));
+    --navbar-padding: calc(3*var(--scale-p) / (4*var(--phi) + 2));
     padding: var(--navbar-padding);
     --navbar-height: 0;
     background-color: $white;
@@ -263,7 +262,7 @@ aside {
     .navbar-logo {
         top: var(--navbar-padding);
         height: calc(100% - 2*var(--navbar-padding));
-        margin-left: calc(var(--fs-p) - var(--navbar-padding));
+        margin-left: calc(var(--scale-p) - var(--navbar-padding));
         position: absolute;
         border-radius: 0;
     }
@@ -281,10 +280,10 @@ aside {
             &,
             &:focus:not(:focus-visible) {
                 font-weight: 400;
-                font-size: var(--fs-p);
+                font-size: var(--scale-p);
                 line-height: 1;
                 color: $gray-900;
-                padding: calc(var(--fs-p) - var(--navbar-padding));
+                padding: calc(var(--scale-p) - var(--navbar-padding));
             }
         }
     }
@@ -318,7 +317,7 @@ aside {
             background-color: $white;
             border-color: $navbar-border-color;
 
-            transition: color .35s ease, background-color .35s ease, opacity .35s ease, border-color .35s ease;
+            transition: color .36s ease-in-out, background-color .36s ease-in-out, opacity .36s ease-in-out, border-color .36s ease-in-out;
 
             will-change: color, background-color, opacity, border-color;
 
@@ -368,7 +367,7 @@ header {
     background-position: center;
     background-image:
         linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
-        url("../img/partnership.webp");
+        url('../img/partnership.webp');
     text-align: center;
     color: $gray-100;
 
@@ -380,7 +379,6 @@ header {
 
         .header-content-inner {
             h1 {
-                font-weight: 700;
                 cursor: default;
             }
         }
@@ -534,12 +532,12 @@ header {
 .btn {
     @include serif-font;
     font-weight: 400;
-    font-size: var(--fs-p);
+    font-size: var(--scale-btn);
 }
 
 .btn-xl {
-    padding: 17px 30px;
-    border-radius: 980px;
+    padding: map-get($spacers, 1) map-get($spacers, 4);
+    border-radius: 0.5rem;
 }
 
 .fa-4x {

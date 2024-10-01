@@ -1,56 +1,35 @@
 ---
 ---
-@charset "utf-8";
+@charset 'utf-8';
 
-@import "functions.scss";
+@import 'functions.scss';
 
 
-/* For browsers that support clamp  */
-@supports (font-size: clamp(1rem, 1vi, 1rem)) {
-    :root {
-        --fs-xs: clamp(0.6298816rem, -0.3966649vi + 0.7290478rem, 0.381966rem);
-        --fs-small: clamp(0.7936508rem, -0.2809869vi + 0.8638975rem, 0.618034rem);
-        --fs-p: clamp(1rem, 0vi + 1rem, 1rem);
-        --fs-h3: clamp(1.26rem, 0.5728544vi + 1.1167864rem, 1.618034rem);
-        --fs-h2: clamp(1.5876rem, 1.6486944vi + 1.1754264rem, 2.618034rem);
-        --fs-h1: clamp(2.000376rem, 3.5771072vi + 1.1060992rem, 4.236068rem);
-    }
-}
-
-/* For browsers that don't support clamp */
-@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
-    :root {
-        --fs-xs: 0.6298816rem;
-        --fs-small: 0.7936508rem;
-        --fs-p: 1rem;
-        --fs-h3: 1.26rem;
-        --fs-h2: 1.5876rem;
-        --fs-h1: 2.000376rem;
-    }
-
-    @media screen and (min-width: 768px) {
-        :root {
-            --fs-xs: 0.381966rem;
-            --fs-small: 0.618034rem;
-            --fs-p: 1rem;
-            --fs-h3: 1.618034rem;
-            --fs-h2: 2.618034rem;
-            --fs-h1: 4.236068rem;
-        }
-    }
+:root {
+	--scale-caption: 0.8rem;
+	--scale-btn: 1rem;
+	--scale-p: 1rem;
+	--scale-h4: 1.54rem;
+	--scale-h3: 1.92rem;
+	--scale-h2: 2.4rem;
+	--scale-h1: 3rem;
 }
 
 
-$primary: #FF6A13;
+$text: #121212;
+$background: #ffffff;
+$primary: #ff6600;
+$secondary: #1d4f91;
+$accent: #f8794f;
+
 $primary-dark: #E35205;
 $primary-highlight: #FF8200;
 
-$primary-fill: #FF5E00;
+$primary-fill: #ff6600;
 $primary-fill-highlight: #FA6400;
 $primary-fill-dark: #F55A00;
 
-$dark: #1D1D1F;
-$secondary: $dark;
+$dark: $text;
 $tertiary: #071D49;
 
 $blue: $tertiary;
@@ -58,12 +37,12 @@ $indigo: #500778;
 $purple: #753BBD;
 $pink: #D62598;
 $red: #D22630;
-$orange: $primary-fill;
+$orange: $primary;
 $yellow: #FFE900;
 $green: #046A38;
 $teal: #007377;
 $cyan: #41B6E6;
-$white: #FFF;
+$white: $background;
 $gray-100: #FBFBFD;
 $gray-200: #F5F5F7;
 $gray-300: #D2D2D4;
@@ -72,10 +51,10 @@ $gray-500: #AAAAAA;
 $gray-600: #878789;
 $gray-700: #333333;
 $gray-800: #222223;
-$gray-900: #1D1D1F;
+$gray-900: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
-$black: #000000;
+$black: $text;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
@@ -83,28 +62,28 @@ $danger: $red;
 $light: $gray-100;
 
 
-$spacer: 0.6rem;
+$spacer: 0.625rem;
 $spacers: (
   0: 0,
-  1: 0.6rem,
-  2: 1.2rem,
-  3: 1.8rem,
-  4: 2.4rem,
-  5: 3rem,
+  1: 1.118rem,
+  2: 1.25rem,
+  3: 1.5625rem,
+  4: 1.953125rem,
+  5: 2.44140625rem,
 );
 
-$line-height-base:              1.5;
-$headings-line-height:          1.2;
+$line-height-base:              1.54;
+$headings-line-height:          1.25;
 
-$paragraph-margin-bottom:       4 * $spacer;
+$paragraph-margin-bottom:       map-get($spacers, 4);
 
 // scss-docs-start headings-variables
-$headings-margin-bottom:        4 * $spacer;
-$headings-font-family:          "Raleway", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$headings-margin-bottom:        map-get($spacers, 4);
+$headings-font-family:          'Noto Sans', sans-serif;
 $headings-font-weight:          700;
 
 // scss-docs-start type-variables
-$hr-margin-y:                   4 * $spacer;
+$hr-margin-y:                   map-get($spacers, 4);
 $hr-color:                      $primary-fill;
 $hr-height:                     0.3rem;
 $hr-opacity:                    1;
@@ -112,11 +91,11 @@ $hr-opacity:                    1;
 $enable-transitions:            false;
 
 
-@import "variables.scss";
-@import "mixins.scss";
+@import 'variables.scss';
+@import 'mixins.scss';
 
 
-@import "bootstrap.scss";
+@import 'bootstrap.scss';
 
 
-@import "base";
+@import 'base';
