@@ -179,7 +179,8 @@ small,
 }
 
 hr {
-    width: var(--scale-h1);
+    --width-to-height-ratio: calc(var(--phi) * pow(1.25, 8));
+    width: calc(var(--width-to-height-ratio) * #{$hr-height});
     margin-left: auto;
     margin-right: auto;
     color: $primary;
@@ -237,7 +238,7 @@ section.bg-secondary {
 }
 
 section.bg-light {
-    color: $black;
+    color: $text-f;
 }
 
 .text-faded {
@@ -287,6 +288,7 @@ aside {
         color: $primary;
         @include serif-font;
         font-weight: 600;
+        min-height: 37px;
     }
 
     .navbar-logo {
@@ -564,7 +566,7 @@ header {
 }
 
 .fa-4x {
-    height: var(--scale-xl);
+    height: calc(var(--phi) * var(--scale-h2));
     margin-top: 1.5625rem; // Compensate for header's line height
 
     .bg-light & {
