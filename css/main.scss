@@ -20,20 +20,21 @@
 $small-font-size: var(--scale-caption);
 
 
-$text: #212123;
+$text: #212123; // d
 $background: #fff;
-$text-dark: #fdfdff;
+$text-dark: #fff;
 
-$dark: #212121;
-$light: #f5f5f5;
+$dark: $text;
+$light: #f5f5f7; // d
 
-$primary: #ff6f00;
+$primary: #ff6f02; // d
 $accent: #ffa000;
 $primary-dark: #ffab00;
 $accent-dark: #ffc400;
+$primary-f: $primary;
 
-$fill-primary: #ffa002;
-$fill-accent: #ffc107;
+$fill-primary: #ffa002; // d
+$fill-accent: #ffc109; // d
 
 $secondary: #004c97;
 
@@ -56,7 +57,7 @@ $gray-800: #424242;
 $gray-900: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
-$black: $dark;
+$black: #212121;
 $success: $green;
 $info: $blue;
 $warning: $yellow;
@@ -79,14 +80,14 @@ $headings-line-height:          1.25;
 $paragraph-margin-bottom:       map-get($spacers, 4);
 
 // scss-docs-start headings-variables
-$headings-margin-bottom:        map-get($spacers, 4);
+$headings-margin-bottom:        map-get($spacers, 3);
 $headings-font-family:          'Noto Sans', sans-serif;
 $headings-font-weight:          700;
 
 // scss-docs-start type-variables
-$hr-margin-y:                   map-get($spacers, 4);
+$hr-margin-y:                   map-get($spacers, 3);
 $hr-color:                      $primary;
-$hr-height:                     0.3rem;
+$hr-height:                     0.3125rem;
 $hr-opacity:                    1;
 
 $enable-transitions:            false;
