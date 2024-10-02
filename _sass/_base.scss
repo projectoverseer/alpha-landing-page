@@ -51,7 +51,7 @@ img {
 }
 
 :root {
-    --phi: calc(0.5*(sqrt(5) + 1))
+    --phi: calc(0.5*(sqrt(5) + 1));
 }
 
 
@@ -102,7 +102,7 @@ abbr[title] {
 
     &:hover,
     &:focus-visible {
-        color: $black;
+        color: $text;
 
         will-change: color;
 
@@ -135,13 +135,13 @@ h1,
 .h1 {
 
     .bg-primary & {
-        color: $black;
+        color: $text;
     }
 
     .bg-dark &,
     .bg-secondary &,
     .header-content-inner & {
-        color: #fff;
+        color: $text-dark;
     }
 }
 
@@ -187,7 +187,7 @@ hr {
     margin-right: auto;
 
     .bg-primary & {
-        color: $black;
+        color: $text;
     }
 
     .bg-dark & {
@@ -220,16 +220,16 @@ h6 {
 }
 
 section.bg-primary {
-    background-color: $fill-primary !important;
+    background-color: $accent !important;
 }
 
 .bg-primary {
-    background-color: $fill-primary !important;
-    color: $black !important;
+    background-color: $accent !important;
+    color: $text !important;
 }
 
 section.bg-dark, section.bg-secondary {
-    color: #fff;
+    color: $text-dark;
 }
 
 .text-faded {
@@ -315,7 +315,7 @@ aside {
         border-color: transparent;
 
         .navbar-brand {
-            color: #fff;
+            color: $text-dark;
         }
 
         .logo-vector {
@@ -328,7 +328,7 @@ aside {
 
         .nav-item .nav-link,
         .nav-item .nav-link:focus:not(:focus-visible) {
-            color: #fff;
+            color: $text-dark;
         }
 
         &.nav-active {
@@ -391,7 +391,7 @@ header {
         linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
         url('../img/partnership.webp');
     text-align: center;
-    color: #fff;
+    color: $text-dark;
 
     .header-content {
         position: relative;
@@ -449,7 +449,7 @@ header {
     }
 
     .portfolio-box-caption {
-        color: #fff;
+        color: $text-dark;
         opacity: 0;
         display: block;
         background: rgba($primary, .9);
@@ -519,17 +519,17 @@ header {
 }
 
 #introduction .btn-secondary {
-    @include button-variant($black, $white);
+    @include button-variant(#000, $text-dark);
 
     &:focus:not(:focus-visible) {
-        color: $black;
-        background-color: $white;
+        color: #000;
+        background-color: $text-dark;
     }
 
     &:hover,
     &:focus-visible,
     &:hover:active {
-        color: #fff;
+        color: $text-dark;
         background-color: $black;
     }
 }
@@ -561,7 +561,8 @@ header {
 }
 
 .fa-4x {
-    margin-top: 0.11em; // Simulates ascender height
+    height: var(--scale-xl);
+    margin-top: 1.5625rem;; // Compensate for header's line height
 }
 
 // Extras
