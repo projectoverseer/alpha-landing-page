@@ -189,10 +189,6 @@ hr {
         color: $text;
     }
 
-    .bg-light & {
-        color: $primary-f;
-    }
-
     .bg-dark & {
         color: $primary-dark;
     }
@@ -237,9 +233,9 @@ section.bg-secondary {
     color: $text-dark;
 }
 
-section.bg-light {
-    color: $text-f;
-}
+// section.bg-light {
+//     color: $text-f;
+// }
 
 .text-faded {
     color: $gray-100;
@@ -277,7 +273,7 @@ aside {
     --navbar-height: 0;
     background-color: $white;
     border-style: solid;
-    $navbar-border-color: rgba(#000, 0.0980392156862745); // #e6e6e6
+    $navbar-border-color: rgba(#002, 0.0666667); // #e0e0e2
     border-color: $navbar-border-color;
     border-width: 0 0 1px 0;
 
@@ -314,7 +310,7 @@ aside {
                 font-weight: 400;
                 font-size: var(--scale-p);
                 line-height: 1;
-                color: $gray-900;
+                color: $text;
                 padding: calc(var(--scale-p) - var(--navbar-padding));
             }
         }
@@ -339,6 +335,21 @@ aside {
         .nav-item .nav-link,
         .nav-item .nav-link:focus:not(:focus-visible) {
             color: $text-dark;
+
+            &,
+            &:focus:not(:focus-visible) {
+                color: $text-dark;
+            }
+
+            &.active {
+                color: $primary-dark;
+            }
+
+            &:hover,
+            &:focus-visible,
+            &:hover:active {
+                color: $accent-dark;
+            }
         }
 
         &.nav-active {
@@ -346,7 +357,7 @@ aside {
             -webkit-background-clip: padding-box;
             background-clip: padding-box;
 
-            background-color: $white;
+            background-color: $background;
             border-color: $navbar-border-color;
 
             transition: color .36s ease-in-out, background-color .36s ease-in-out, opacity .36s ease-in-out, border-color .36s ease-in-out;
@@ -367,11 +378,9 @@ aside {
 
             .nav-item .nav-link,
             .nav-item .nav-link:focus:not(:focus-visible) {
-                transition: none;
-
                 &,
                 &:focus:not(:focus-visible) {
-                    color: $gray-900;
+                    color: $text;
                 }
 
                 &.active {
@@ -522,23 +531,23 @@ header {
     transition: none;
 }
 
-#introduction .btn-secondary {
-    @include button-variant($text, $text-dark);
+.btn-secondary {
+    @include button-variant($text, $white);
 
     &:focus:not(:focus-visible) {
         color: $text;
-        background-color: $text-dark;
+        background-color: $white;
     }
 
     &:hover,
     &:focus-visible,
     &:hover:active {
         color: $text-dark;
-        background-color: $text;
+        background-color: $dark;
     }
 }
 
-#introduction .btn-primary {
+.btn-primary { // TODO: Find a more robust solution
     @include button-variant($text, $fill-primary);
 
     &:hover,
@@ -549,6 +558,22 @@ header {
 
     &:focus:not(:focus-visible) {
         background-color: $fill-primary;
+        color: $text;
+    }
+
+
+    .header-content-inner &, .bg-dark & {
+        @include button-variant($text, $fill-primary-dark);
+    
+        &:hover,
+        &:focus-visible,
+        &:hover:active {
+            background-color: $fill-accent-dark;
+        }
+    
+        &:focus:not(:focus-visible) {
+            background-color: $fill-primary-dark;
+        }
     }
 }
 
@@ -568,10 +593,6 @@ header {
 .fa-4x {
     height: calc(var(--phi) * var(--scale-h2));
     margin-top: 1.5625rem; // Compensate for header's line height
-
-    .bg-light & {
-        color: $primary-f !important;
-    }
 }
 
 // Extras
