@@ -19,7 +19,8 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{site.myvariable}}.
 
-title: Alpha Software Group
+title: Alpha Software
+company_name: Công ty TNHH Phát triển Phần mềm Alpha
 email: alphasoftware102@gmail.com
 description: >- # TODO: Revise description
   Hợp tác cùng Alpha Software để xây dựng hệ thống quản lý quy trình dệt may.
