@@ -255,10 +255,11 @@ aside {
 // Navigation
 
 .navbar {
-    --navbar-height: calc(3 * var(--scale-p));
+    --logo-height: 39px;
     --navbar-padding: var(--scale-p);
+    --navbar-height: calc(max(3 * var(--scale-p), var(--logo-height) + #{map-get($spacers, 1)}));
     height: var(--navbar-height);
-    padding: var(--navbar-padding) calc(var(--navbar-padding) - #{$gutter-x / 2}) var(--navbar-padding) var(--navbar-padding);
+    padding: var(--navbar-padding) map-get($spacers, 1) / 2 var(--navbar-padding) var(--navbar-padding);
     background-color: $white;
     border-style: solid;
     $navbar-border-color: #dfdfe0;
@@ -268,7 +269,6 @@ aside {
     @include serif-font;
 
     .navbar-logo {
-        --logo-height: calc(var(--navbar-height) / 1.2720196495);
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
         position: absolute;
@@ -283,7 +283,7 @@ aside {
         .nav-link {
             transition: none;
             line-height: 1;
-            padding: $gutter-x / 2;
+            padding: map-get($spacers, 1) / 2;
 
             &,
             &:focus:not(:focus-visible) {
