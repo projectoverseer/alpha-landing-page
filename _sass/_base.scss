@@ -255,21 +255,10 @@ aside {
 // Navigation
 
 .navbar {
-    // Navbar's height = H
-    // Element's height = h
-    // Element's padding (one side) = p
-
-    // H = 3*var(--scale-p)
-    // h + 2m = H = 3*var(--scale-p)
-    // h/m = 2 * 2*var(--phi)   <-- This is the key!
-
-    // Do the math, and we'll eventually get
-    // m = 3*var(--scale-p) / (4*var(--phi) + 2)
-    // h = 12*var(--phi)*var(--scale-p) / (4*var(--phi) + 2)
-
-    --navbar-padding: calc(3*var(--scale-p) / (4*var(--phi) + 2));
-    padding: var(--navbar-padding);
-    --navbar-height: 0;
+    --navbar-height: calc(3 * var(--scale-p));
+    --navbar-padding: var(--scale-p);
+    height: var(--navbar-height);
+    padding: var(--navbar-padding) calc(var(--navbar-padding) - #{$gutter-x / 2}) var(--navbar-padding) var(--navbar-padding);
     background-color: $white;
     border-style: solid;
     $navbar-border-color: #dfdfe0;
@@ -278,18 +267,10 @@ aside {
 
     @include serif-font;
 
-
-    .navbar-brand {
-        color: $primary;
-        @include serif-font;
-        font-weight: 600;
-        min-height: 37px;
-    }
-
     .navbar-logo {
-        top: var(--navbar-padding);
-        height: calc(100% - 2*var(--navbar-padding));
-        margin-left: calc(var(--scale-p) - var(--navbar-padding));
+        --logo-height: calc(var(--navbar-height) / 1.2720196495);
+        top: calc((var(--navbar-height) - var(--logo-height)) / 2);
+        height: var(--logo-height);
         position: absolute;
         border-radius: 0;
     }
@@ -299,18 +280,16 @@ aside {
     }
 
     .nav-item {
-        padding: 0;
-
         .nav-link {
             transition: none;
+            line-height: 1;
+            padding: $gutter-x / 2;
 
             &,
             &:focus:not(:focus-visible) {
                 font-weight: 400;
                 font-size: var(--scale-p);
-                line-height: 1;
                 color: $text;
-                padding: calc(var(--scale-p) - var(--navbar-padding));
             }
         }
     }
@@ -377,6 +356,7 @@ aside {
 
             .nav-item .nav-link,
             .nav-item .nav-link:focus:not(:focus-visible) {
+
                 &,
                 &:focus:not(:focus-visible) {
                     color: $text;
@@ -546,7 +526,8 @@ header {
     }
 }
 
-.btn-primary { // TODO: Find a more robust solution
+.btn-primary {
+    // TODO: Find a more robust solution
     @include button-variant($text, $fill-primary);
 
     &:hover,
@@ -561,15 +542,16 @@ header {
     }
 
 
-    .header-content-inner &, .bg-dark & {
+    .header-content-inner &,
+    .bg-dark & {
         @include button-variant($text, $fill-primary-dark);
-    
+
         &:hover,
         &:focus-visible,
         &:hover:active {
             background-color: $fill-accent-dark;
         }
-    
+
         &:focus:not(:focus-visible) {
             background-color: $fill-primary-dark;
         }
@@ -581,7 +563,7 @@ header {
     @include serif-font;
     font-weight: 400;
     font-size: var(--scale-btn);
-    margin-top: -1px;
+    vertical-align: middle;
 }
 
 .btn-xl {
@@ -591,7 +573,8 @@ header {
 
 .fa-4x {
     height: calc(2.44140625 * var(--scale-h4));
-    margin-top: 1.5625rem; // Compensate for header's line height
+    margin-top: map-get($spacers, 3); // Compensate for header's line height
+    margin-left: 0.058rem; // Perfectly aligns icons to the text
 }
 
 // Extras
