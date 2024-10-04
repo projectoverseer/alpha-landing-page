@@ -25,11 +25,11 @@ $text-dark: #fff;
 
 $primary: #F25C05; // d
 $primary-dark: #F2660F; // d
-$accent: #f9c238; // d
-$accent-dark: #F9CC42; // d
+$accent: #ff8709; // d
+$accent-dark: #FF9113; // d
 
-$fill-primary: $accent; // d
-$fill-primary-dark: $accent-dark; // d
+$fill-primary: #f9c238; // d
+$fill-primary-dark: #F9CC42; // d
 $fill-accent: #f8e741; // d
 $fill-accent-dark: #F8F14B; // d
 
@@ -54,7 +54,7 @@ $gray-800: #2e2e2f;
 $gray-900: #0d0d0e;
 
 $dark: #0d0d0e; // d
-$light: $gray-50;
+$light: $gray-100;
 $black: #000;
 
 $body-color: $text;
