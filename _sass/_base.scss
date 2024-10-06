@@ -263,9 +263,9 @@ aside {
 // Navigation
 
 .navbar {
-    --logo-height: 40px;
+    --logo-height: 37px;
     --navbar-padding: var(--scale-p);
-    --navbar-height: calc(max(3 * var(--scale-p), var(--logo-height) * 1.29));
+    --navbar-height: calc(max(3 * var(--scale-p), var(--logo-height) * 1.5));
     height: var(--navbar-height);
     padding: var(--navbar-padding) map-get($spacers, 1) / 2 var(--navbar-padding) var(--navbar-padding);
     background-color: $white;
@@ -279,6 +279,7 @@ aside {
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
+        width: calc(var(--logo-height) * 3.5); // Ensures aspect ratio
         position: absolute;
         border-radius: 0;
     }
