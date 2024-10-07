@@ -53,6 +53,11 @@ $info: $blue;
 $warning: $yellow;
 $danger: $red;
 
+$link-color: $primary;
+$link-hover-color: $accent;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
 
 :root {
 	--scale-caption: 0.828rem;
@@ -65,38 +70,38 @@ $danger: $red;
 }
 
 $spacers: (
-  0: 0,
-  1: 1rem,
-  2: 1.25rem,
-  3: 1.563rem,
-  4: 1.953rem,
-  5: 2.441rem,
-  6: 3.052rem,
-  7: 3.815rem,
-  8: 4.768rem,
-  9: 5.96rem,
+	0: 0,
+	1: 1rem,
+	2: 1.25rem,
+	3: 1.563rem,
+	4: 1.953rem,
+	5: 2.441rem,
+	6: 3.052rem,
+	7: 3.815rem,
+	8: 4.768rem,
+	9: 5.96rem,
 );
 
 
 $small-font-size: var(--scale-caption);
 
-$line-height-base:              1.62;
-$headings-line-height:          1.33;
+$line-height-base: 1.62;
+$headings-line-height: 1.33;
 
-$paragraph-margin-bottom:       map-get($spacers, 5);
+$paragraph-margin-bottom: map-get($spacers, 5);
 
 // scss-docs-start headings-variables
-$headings-margin-bottom:        map-get($spacers, 4);
-$headings-font-family:          'Noto Sans', sans-serif;
-$headings-font-weight:          700;
+$headings-margin-bottom: map-get($spacers, 4);
+$headings-font-family: 'Noto Sans', sans-serif;
+$headings-font-weight: 700;
 
 // scss-docs-start type-variables
-$hr-margin-y:                   1.22*2.524rem*0.5 0 1.62*1rem;
-$hr-color:                      $primary;
-$hr-border-width:               0.25rem;
-$hr-opacity:                    1;
+$hr-margin-y: 1.22*2.524rem*0.5 0 1.62*1rem;
+$hr-color: $primary;
+$hr-border-width: 0.25rem;
+$hr-opacity: 1;
 
-$enable-transitions:            false;
+$enable-transitions: false;
 
 
 @import 'variables.scss';

@@ -50,8 +50,16 @@ img {
     user-select: none;
 }
 
-:root {
-    --phi: calc(0.5*(sqrt(5) + 1));
+.visuallyhidden {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
+    clip-path: inset(0px 0px 99.9% 99.9%);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    border: 0;
 }
 
 
@@ -165,6 +173,12 @@ h4,
     line-height: 1.33;
 }
 
+h6,
+.h6 {
+    font-size: var(--scale-p);
+    margin-bottom: 0;
+}
+
 p {
     font-size: var(--scale-p);
 }
@@ -173,13 +187,6 @@ small,
 .small {
     font-size: var(--scale-caption);
     line-height: 1.4 !important;
-}
-
-.navbar-brand {
-    font-size: var(--scale-p);
-    text-decoration: none;
-    white-space: nowrap;
-    padding: 0;
 }
 
 hr {
@@ -198,8 +205,6 @@ hr {
 }
 
 a {
-    @include transition-all;
-
     &,
     &:focus:not(:focus-visible) {
         color: $primary;
@@ -248,6 +253,10 @@ section {
     padding: 119.2px 0;
 }
 
+footer {
+    padding: map-get($spacers, $key: 8) 0 map-get($spacers, $key: 5);
+}
+
 aside {
     padding: 50px 0;
 }
@@ -260,28 +269,30 @@ aside {
 
 .navbar {
     --logo-height: 37px;
-    --navbar-padding: var(--scale-p);
     --navbar-height: calc(max(3 * var(--scale-p), var(--logo-height) * 1.5));
     height: var(--navbar-height);
-    padding: var(--navbar-padding) map-get($spacers, 1) / 2 var(--navbar-padding) var(--navbar-padding);
     background-color: $white;
     border-style: solid;
     $navbar-border-color: #dfdfe0;
     border-color: $navbar-border-color;
-    border-width: 0 0 1px 0;
+    border-width: 0 0 1px;
 
     @include serif-font;
 
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
-        width: calc(var(--logo-height) * 3.5); // Ensures aspect ratio
         position: absolute;
         border-radius: 0;
     }
 
-    .logo-vector {
+    .logo-white {
+        color: $text-dark !important;
         opacity: 0;
+    }
+
+    .logo-color {
+        color: $text !important;
     }
 
     .nav-item {
@@ -302,15 +313,11 @@ aside {
         background-color: transparent;
         border-color: transparent;
 
-        .navbar-brand {
-            color: $text-dark;
-        }
-
-        .logo-vector {
+        .logo-white {
             opacity: 1;
         }
 
-        .logo-dark {
+        .logo-color {
             opacity: 0;
         }
 
@@ -346,16 +353,12 @@ aside {
 
             will-change: color, background-color, opacity, border-color;
 
-            .logo-vector {
+            .logo-white {
                 opacity: 0;
             }
 
-            .logo-dark {
+            .logo-color {
                 opacity: 1;
-            }
-
-            .navbar-brand {
-                color: $primary;
             }
 
             .nav-item .nav-link,

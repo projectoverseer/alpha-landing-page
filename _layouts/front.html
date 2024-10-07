@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="vi-VN">
-
+<html xml:lang="vi-VN" lang="vi-VN">
 {% include meta.html %}
 
-<body id="introduction" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-smooth-scroll="true"> <!-- 51 + 119 = 170 -->
-  {% include nav.html %}
-  {% include hero.html %}
-  {% include overview.html %} <!-- #tong-quan -->
-  {% include benefits.html %} <!-- #cac-loi-ich -->
-  {% include testimonials.html %} <!-- #loi-chung-thuc -->
-  {% include about-us.html %} <!-- #ve-chung-toi -->
-  {% include gallery.html %} <!-- #gallery -->
-  {% include call-to-action.html %}
-  {% include footer.html %}
+<body data-bs-spy="scroll" data-bs-target="#globalnav" data-bs-smooth-scroll="true">
+  <div id="globalheader">
+    {% include nav.html %}
+  </div>
+  <main>
+    <h1 class="visuallyhidden">{{site.company_name}}</h1>
+    {% include hero.html %}
+    {% include overview.html %}
+    {% include benefits.html %}
+    {% include testimonials.html %}
+    {% include about-us.html %}
+    {% include gallery.html %}
+    {% include call-to-action.html %}
+  </main>
+  <footer id="footer">
+    {% include footer.html %}
+  </footer>
   {% include meta_scripts.html %}
 </body>
 
