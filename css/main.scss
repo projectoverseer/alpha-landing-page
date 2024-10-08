@@ -10,7 +10,7 @@ $text-f: #0d0d0d;
 $background: #fff;
 $text-dark: #fff;
 
-$primary: #E85C21;
+$primary: #e85c21;
 $primary-dark: #E8662B;
 $accent: #F5881F;
 $accent-dark: #F59229;
@@ -53,10 +53,11 @@ $info: $blue;
 $warning: $yellow;
 $danger: $red;
 
-$link-color: $primary;
-$link-hover-color: $accent;
+$link-color: #d5411f;
+$link-hover-color: #f14e28;
+$link-active-color: #d5411f;
 $link-decoration: none;
-$link-hover-decoration: underline;
+$link-hover-decoration: none;
 
 
 :root {
