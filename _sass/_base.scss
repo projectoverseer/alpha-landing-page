@@ -38,7 +38,7 @@ body {
 }
 
 img {
-    border-radius: 0.5rem;
+    border-radius: $global-border-radius;
 }
 
 .noselect {
@@ -80,7 +80,7 @@ abbr[title] {
         // Highlight effect
         height: calc(100% + var(--underline-height));
         width: 100%;
-        border-radius: 0.5rem; // Matches the icons' border radii
+        border-radius: $global-border-radius; // Matches the icons' border radii
 
         background: $primary;
         content: '';
@@ -151,49 +151,53 @@ h1,
 
 h1,
 .h1 {
-    font-size: var(--scale-h1);
+    font-size: $scale-h1;
     line-height: 1.25;
 }
 
 h2,
 .h2 {
-    font-size: var(--scale-h2);
+    font-size: $scale-h2;
     line-height: 1.22;
 }
 
 h3,
 .h3 {
-    font-size: var(--scale-h3);
+    font-size: $scale-h3;
     line-height: 1.26;
 }
 
 h4,
 .h4 {
-    font-size: var(--scale-h4);
+    font-size: $scale-h4;
     line-height: 1.33;
 }
 
 h6,
 .h6 {
-    font-size: var(--scale-p);
+    font-size: $scale-p;
     margin-bottom: 0;
 }
 
 p {
-    font-size: var(--scale-p);
+    font-size: $scale-p;
 }
 
 small,
 .small {
-    font-size: var(--scale-caption);
+    font-size: $scale-caption;
     line-height: 1.4 !important;
 }
 
 hr {
-    width: calc(2.628 * var(--scale-h4));
+    width: 2.628 * $scale-h4;
     margin-left: auto;
     margin-right: auto;
     color: $primary;
+
+    &.above-icons {
+        margin-bottom: $scale-h4;
+    }
 
     .bg-primary & {
         color: $text;
@@ -239,16 +243,22 @@ section.bg-secondary {
     color: $text-dark;
 }
 
-// section.bg-light {
-//     color: $text-f;
-// }
-
 .text-faded {
     color: $gray-100;
 }
 
 section {
-    padding: 119.2px 0;
+    padding: map-get($spacers, 10) 0;
+}
+
+footer {
+    & .footer-logo {
+        height: map-get($scalers, 8);
+    }
+
+    * address {
+        margin-bottom: map-get($scalers, 5);
+    }
 }
 
 aside {
@@ -262,12 +272,12 @@ aside {
 // Navigation
 
 .navbar {
-    --logo-height: 37px;
-    --navbar-height: calc(max(3 * var(--scale-p), var(--logo-height) * 1.5));
+    --logo-height: #{map-get($scalers, 6)};
+    --navbar-height: calc(max(var(--logo-height), #{map-get($spacers, 7)}));
     height: var(--navbar-height);
     background-color: $white;
     border-style: solid;
-    $navbar-border-color: #dfdfe0;
+    $navbar-border-color: $border-color;
     border-color: $navbar-border-color;
     border-width: 0 0 1px;
 
@@ -292,11 +302,11 @@ aside {
     .nav-item {
         .nav-link {
             transition: none;
-            padding: map-get($spacers, 1) / 2;
+            padding: $spacer / 2;
 
             & {
                 font-weight: 400;
-                font-size: var(--scale-p);
+                font-size: $scale-p;
                 color: $text;
             }
         }
@@ -483,12 +493,6 @@ header {
     }
 }
 
-.call-to-action {
-    h2 {
-        margin: 0 auto 20px;
-    }
-}
-
 // Bootstrap Overrides
 .no-gutter>[class*='col-'] {
     padding-right: 0;
@@ -560,19 +564,19 @@ header {
 .btn {
     @include serif-font;
     font-weight: 400;
-    font-size: var(--scale-btn);
+    font-size: $scale-btn;
     vertical-align: middle;
 }
 
 .btn-xl {
-    padding: 0.96rem 1.54rem;
-    border-radius: 0.5rem;
+    padding: map-get($spacers, 1) map-get($spacers, 3);
+    border-radius: $global-border-radius;
     margin-top: map-get($spacers, 5) - $paragraph-margin-bottom;
     margin-bottom: map-get($spacers, 5);
 }
 
 .fa-4x {
-    height: calc(2.628 * var(--scale-h4));
+    height: 2.628 * $scale-h4;
     margin-top: map-get($spacers, 3); // Compensate for header's line height
     margin-left: 0.08rem; // Perfectly aligns icons to the text
 }

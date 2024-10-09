@@ -5,22 +5,21 @@
 @import 'functions.scss';
 
 
-$text: #0d0d0e; // d
-$text-f: #0d0d0d;
+$text: #1d1d1f;
 $background: #fff;
 $text-dark: #fff;
 
-$primary: #e85c21;
-$primary-dark: #E8662B;
-$accent: #F5881F;
-$accent-dark: #F59229;
+$primary: #ff6300; // #f26e22;
+$primary-dark: #FF6D0A;
+$accent: #ff7b00; // #f28322;
+$accent-dark: #FF850A;
 
-$fill-primary: #fbc638;
-$fill-primary-dark: #FBD042;
-$fill-accent: #f6e83e;
-$fill-accent-dark: #F6F248;
+$fill-primary: #ffbf00; // #f9c238;
+$fill-primary-dark: #FFC90A;
+$fill-accent: #fce600; // #f8e741;
+$fill-accent-dark: #FCF00A;
 
-$secondary: #0C4F94;
+$secondary: #004977; // #024873;
 
 $blue: $secondary;
 $purple: #6a1b9a;
@@ -29,18 +28,18 @@ $orange: $primary;
 $yellow: #ffee00;
 $green: #00c753;
 $white: $background;
-$gray-50: #f6f6f7;
-$gray-100: #ececed;
-$gray-200: #dfdfe0;
-$gray-300: #cccccc;
-$gray-400: #a6a6a7;
-$gray-500: #858586;
-$gray-600: #5e5e5f;
-$gray-700: #4b4b4c;
-$gray-800: #2e2e2f;
-$gray-900: #0d0d0e;
+$gray-50: #F2F2F7;
+$gray-100: #E5E5EA;
+$gray-200: #D1D1D6;
+$gray-300: #C7C7CC;
+$gray-400: #AEAEB2;
+$gray-500: #8E8E93;
+$gray-600: #636366;
+$gray-700: #48484A;
+$gray-800: #3A3A3C;
+$gray-900: #2C2C2E;
 
-$dark: #0d0d0e; // d
+$dark: #1C1C1E;
 $light: $gray-50;
 $black: #000;
 
@@ -53,38 +52,70 @@ $info: $blue;
 $warning: $yellow;
 $danger: $red;
 
-$link-color: #d5411f;
-$link-hover-color: #f14e28;
-$link-active-color: #d5411f;
+$link-color: #ec3101; // #d94423;
+$link-hover-color: #fb3804; // #e74b27; // #ff3f0a; // #f5522c;
+$link-active-color: $link-hover-color;
 $link-decoration: none;
-$link-hover-decoration: none;
+$link-hover-decoration: underline;
 
 
-:root {
-	--scale-caption: 0.828rem;
-	--scale-btn: 1.036rem;
-	--scale-p: 1rem;
-	--scale-h4: 1.618rem; // 1.44rem
-	--scale-h3: 2.023rem; // 1.92rem
-	--scale-h2: 2.524rem; // 2.43rem
-	--scale-h1: 3.155rem; // 3.06rem
-}
-
-$spacers: (
-	0: 0,
+$scalers: (
+	-7: 0.2171688458rem,
+	-6: 0.2714610572rem,
+	-5: 0.3393263216rem,
+	-4: 0.4241579019rem,
+	-3: 0.5301973774rem,
+	-2: 0.6627467218rem,
+	-1: 0.8284334022rem,
+	0: 0rem,
 	1: 1rem,
-	2: 1.25rem,
-	3: 1.563rem,
-	4: 1.953rem,
-	5: 2.441rem,
-	6: 3.052rem,
-	7: 3.815rem,
-	8: 4.768rem,
-	9: 5.96rem,
+	2: 1.0355417528rem,
+	3: 1.2944271910rem,
+	4: 1.6180339887rem,
+	5: 2.0225424859rem,
+	6: 2.5281781074rem,
+	7: 3.1602226343rem,
+	8: 3.9502782928rem,
+	9: 4.9378478661rem,
+	10: 6.1723098326rem,
 );
 
+$scale-caption:	map-get($scalers, -1);
+$scale-btn:		map-get($scalers, 2);
+$scale-p:		map-get($scalers, 1);
+$scale-h4:		map-get($scalers, 4);
+$scale-h3:		map-get($scalers, 5);
+$scale-h2:		map-get($scalers, 6);
+$scale-h1:		map-get($scalers, 7);
 
-$small-font-size: var(--scale-caption);
+
+$spacer: 1rem;
+
+$spacers: (
+	-7: 0.2097152rem,
+	-6: 0.262144rem,
+	-5: 0.32768rem,
+	-4: 0.4096rem,
+	-3: 0.512rem,
+	-2: 0.64rem,
+	-1: 0.8rem,
+	0: 0rem,
+	1: 1rem,
+	2: 1.25rem,
+	3: 1.5625rem,
+	4: 1.953125rem,
+	5: 2.44140625rem,
+	6: 3.0517578125rem,
+	7: 3.8146972656rem,
+	8: 4.7683715820rem,
+	9: 5.9604644775rem,
+	10: 7.4505805969rem,
+);
+
+$grid-gutter-width: map-get($spacers, 2); // 2 feels the most modern
+
+
+$small-font-size: $scale-caption;
 
 $line-height-base: 1.62;
 $headings-line-height: 1.33;
@@ -97,10 +128,13 @@ $headings-font-family: 'Noto Sans', sans-serif;
 $headings-font-weight: 700;
 
 // scss-docs-start type-variables
-$hr-margin-y: 1.22*2.524rem*0.5 0 1.62*1rem;
+$hr-margin-y: 1.22*$scale-h2*.5  0  $line-height-base*$scale-p;
 $hr-color: $primary;
-$hr-border-width: 0.25rem;
+$hr-border-width: map-get($scalers, -7);
 $hr-opacity: 1;
+
+$global-border-radius: map-get($spacers, -3);
+$border-color: #d3d3d5;
 
 $enable-transitions: false;
 
