@@ -9,15 +9,15 @@ $text: #1d1d1f;
 $background: #fff;
 $text-dark: #fff;
 
-$primary: #ff6300; // #f26e22;
-$primary-dark: #FF6D0A;
-$accent: #ff7b00; // #f28322;
-$accent-dark: #FF850A;
+$primary: #DC5829;
+$primary-dark: #DC5829;
+$accent: #f58220;
+$accent-dark: #f58220;
 
-$fill-primary: #ffbf00; // #f9c238;
-$fill-primary-dark: #FFC90A;
-$fill-accent: #fce600; // #f8e741;
-$fill-accent-dark: #FCF00A;
+$fill-primary: #F99D22;
+$fill-primary-dark: #F99D22;
+$fill-accent: #fdb71c; // TODO
+$fill-accent-dark: #fdb71c;
 
 $secondary: #004977; // #024873;
 
@@ -52,7 +52,7 @@ $info: $blue;
 $warning: $yellow;
 $danger: $red;
 
-$link-color: #ec3101; // #d94423;
+$link-color: #ec3101; // #d94423; BE4729
 $link-hover-color: #fb3804; // #e74b27; // #ff3f0a; // #f5522c;
 $link-active-color: $link-hover-color;
 $link-decoration: none;
@@ -124,7 +124,7 @@ $paragraph-margin-bottom: map-get($spacers, 5);
 
 // scss-docs-start headings-variables
 $headings-margin-bottom: map-get($spacers, 4);
-$headings-font-family: 'Noto Sans', sans-serif;
+$headings-font-family: 'IBM Plex Sans', sans-serif;
 $headings-font-weight: 700;
 
 // scss-docs-start type-variables

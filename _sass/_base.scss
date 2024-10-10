@@ -16,7 +16,7 @@
 }
 
 @mixin serif-font() {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 
@@ -253,11 +253,11 @@ section {
 
 footer {
     & .footer-logo {
-        height: map-get($scalers, 8);
+        height: map-get($spacers, 6);
     }
 
     * address {
-        margin-bottom: map-get($scalers, 5);
+        margin-bottom: map-get($spacers, 7);
     }
 }
 
@@ -272,7 +272,7 @@ aside {
 // Navigation
 
 .navbar {
-    --logo-height: #{map-get($scalers, 6)};
+    --logo-height: #{map-get($spacers, 5)};
     --navbar-height: calc(max(var(--logo-height), #{map-get($spacers, 7)}));
     height: var(--navbar-height);
     background-color: $white;
