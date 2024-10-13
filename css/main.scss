@@ -9,17 +9,17 @@ $text: #1d1d1f;
 $background: #fff;
 $text-dark: #fff;
 
-$primary: #E35205;
-$primary-dark: #e2580e;
-$accent: #FF9E1B;
-$accent-dark: #ff9f21;
+$primary: #E35205;			// do not use for text
+$primary-dark: #B9D9EB;	// do not use for text
+$accent: #FF9E1B;			// do not use for text
+$accent-dark: #FFB81C;		// do not use for text
 
-$fill-primary: #FFB81C;
-$fill-primary-dark: #ffb921;
-$fill-accent: #FFB81C; // TODO
-$fill-accent-dark: #ffb921; // TODO
+$fill-primary: #B33D26;		// white text
+$fill-primary-dark: #B33D26;	// black text
+$fill-accent: #E35205;			// white text
+$fill-accent-dark: #E35205;	// black text
 
-$secondary: #004C97;
+$secondary: #003C71;
 
 $blue: $secondary;
 $purple: #6a1b9a;
@@ -39,8 +39,8 @@ $gray-700: #48484A;
 $gray-800: #3A3A3C;
 $gray-900: #2C2C2E;
 
-$dark: #1C1C1E;
-$light: $gray-50;
+$dark: #003057;
+$light: #B9D9EB;
 $black: #000;
 
 $body-color: $text;
@@ -52,9 +52,11 @@ $info: $blue;
 $warning: $yellow;
 $danger: $red;
 
-$link-color: #004C97;
-$link-hover-color: #007DBA;
-$link-hover-color-dark: #1d9dd6;
+$link-color: #003c71;
+$link-hover-color: #004183; // #007DBA
+$link-alt-color: #BD472A;
+$link-alt-hover-color: #E35205;
+$link-alt-hover-dark-color: #FFB81C;
 $link-decoration: none;
 $link-hover-decoration: underline;
 

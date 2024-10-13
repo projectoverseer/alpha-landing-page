@@ -4,13 +4,6 @@
     transition: all .36s ease-in-out;
 }
 
-@mixin parallax-bg() {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 @mixin sans-serif-font() {
     font-family: $headings-font-family;
 }
@@ -28,9 +21,7 @@ body {
 }
 
 html {
-    quotes: '“' '”';
-    font-kerning: normal;
-    font-feature-settings: "kern", "liga", "clig", "calt", "dlig";
+    font-size: 106.25%;
 }
 
 body {
@@ -200,7 +191,7 @@ hr {
     }
 
     .bg-primary & {
-        color: $text;
+        color: $text-dark;
     }
 
     .bg-dark & {
@@ -235,7 +226,7 @@ section.bg-primary {
 
 .bg-primary {
     background-color: $fill-primary !important;
-    color: $text !important;
+    color: $text-dark !important;
 }
 
 section.bg-dark,
@@ -326,19 +317,20 @@ aside {
 
         .nav-item .nav-link {
             color: $text-dark;
+            font-weight: 500;
 
             & {
                 color: $text-dark;
             }
 
             &.active {
-                color: $link-hover-color-dark; // TODO
+                color: $link-alt-hover-dark-color;
             }
 
             &:hover,
             &:focus-visible,
             &:hover:active {
-                color: $link-hover-color-dark; // TODO
+                color: $link-alt-hover-dark-color; // TODO
             }
         }
 
@@ -369,16 +361,16 @@ aside {
                 }
 
                 &.active {
-                    color: $link-color;
+                    color: $link-alt-color;
                 }
 
                 &:hover,
                 &:focus-visible {
-                    color: $link-hover-color;
+                    color: $link-alt-hover-color;
                 }
 
                 &:hover:active {
-                    color: $link-hover-color;
+                    color: $link-alt-hover-color;
                 }
             }
         }
@@ -391,7 +383,6 @@ header {
     position: relative;
     min-height: 100vh;
     height: fit-content;
-    @include parallax-bg;
     background-position: center;
     background-image:
         linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
@@ -530,7 +521,7 @@ header {
 
 .btn-primary {
     // TODO: Find a more robust solution
-    @include button-variant($text, $fill-primary);
+    @include button-variant($text-dark, $fill-primary);
 
     &:hover,
     &:focus-visible,
@@ -539,14 +530,14 @@ header {
     }
 
     &:focus:not(:focus-visible) {
-        background-color: $fill-primary;
-        color: $text;
+        background-color: $fill-accent;
+        color: $text-dark;
     }
 
 
     .header-content-inner &,
     .bg-dark & {
-        @include button-variant($text, $fill-primary-dark);
+        @include button-variant($text-dark, $fill-primary-dark);
 
         &:hover,
         &:focus-visible,
@@ -555,7 +546,7 @@ header {
         }
 
         &:focus:not(:focus-visible) {
-            background-color: $fill-primary-dark;
+            background-color: $fill-accent-dark;
         }
     }
 }
@@ -563,7 +554,7 @@ header {
 
 .btn {
     @include serif-font;
-    font-weight: 400;
+    font-weight: 500;
     font-size: $scale-btn;
     vertical-align: middle;
 }
