@@ -9,17 +9,17 @@ $text: #1d1d1f;
 $background: #fff;
 $text-dark: #fff;
 
-$primary: #DC5829;
-$primary-dark: #DC5829;
-$accent: #f58220;
-$accent-dark: #f58220;
+$primary: #E35205;
+$primary-dark: #e2580e;
+$accent: #FF9E1B;
+$accent-dark: #ff9f21;
 
-$fill-primary: #F99D22;
-$fill-primary-dark: #F99D22;
-$fill-accent: #fdb71c; // TODO
-$fill-accent-dark: #fdb71c;
+$fill-primary: #FFB81C;
+$fill-primary-dark: #ffb921;
+$fill-accent: #FFB81C; // TODO
+$fill-accent-dark: #ffb921; // TODO
 
-$secondary: #004977; // #024873;
+$secondary: #004C97;
 
 $blue: $secondary;
 $purple: #6a1b9a;
@@ -52,9 +52,9 @@ $info: $blue;
 $warning: $yellow;
 $danger: $red;
 
-$link-color: #ec3101; // #d94423; BE4729
-$link-hover-color: #fb3804; // #e74b27; // #ff3f0a; // #f5522c;
-$link-active-color: $link-hover-color;
+$link-color: #004C97;
+$link-hover-color: #007DBA;
+$link-hover-color-dark: #1d9dd6;
 $link-decoration: none;
 $link-hover-decoration: underline;
 

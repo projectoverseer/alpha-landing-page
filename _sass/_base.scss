@@ -215,7 +215,7 @@ a {
     }
 
     &:hover:active {
-        color: $link-active-color;
+        color: $link-hover-color;
     }
 }
 
@@ -332,13 +332,13 @@ aside {
             }
 
             &.active {
-                color: $primary-dark; // TODO
+                color: $link-hover-color-dark; // TODO
             }
 
             &:hover,
             &:focus-visible,
             &:hover:active {
-                color: $accent-dark; // TODO
+                color: $link-hover-color-dark; // TODO
             }
         }
 
@@ -378,7 +378,7 @@ aside {
                 }
 
                 &:hover:active {
-                    color: $link-active-color;
+                    color: $link-hover-color;
                 }
             }
         }
