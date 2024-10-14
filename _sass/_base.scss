@@ -20,10 +20,6 @@ body {
     text-wrap: balance;
 }
 
-html {
-    font-size: 106.25%;
-}
-
 body {
     @include serif-font;
 }
@@ -143,25 +139,21 @@ h1,
 h1,
 .h1 {
     font-size: $scale-h1;
-    line-height: 1.25;
 }
 
 h2,
 .h2 {
     font-size: $scale-h2;
-    line-height: 1.22;
 }
 
 h3,
 .h3 {
     font-size: $scale-h3;
-    line-height: 1.26;
 }
 
 h4,
 .h4 {
     font-size: $scale-h4;
-    line-height: 1.33;
 }
 
 h6,
@@ -244,7 +236,7 @@ section {
 
 footer {
     & .footer-logo {
-        height: map-get($spacers, 6);
+        height: map-get($scales, 4);
     }
 
     * address {
@@ -263,7 +255,7 @@ aside {
 // Navigation
 
 .navbar {
-    --logo-height: #{map-get($spacers, 5)};
+    --logo-height: #{map-get($scales, 3)};
     --navbar-height: calc(max(var(--logo-height), #{map-get($spacers, 7)}));
     height: var(--navbar-height);
     background-color: $white;
@@ -296,7 +288,7 @@ aside {
             padding: $spacer / 2;
 
             & {
-                font-weight: 400;
+                font-weight: 500;
                 font-size: $scale-p;
                 color: $text;
             }
@@ -317,7 +309,6 @@ aside {
 
         .nav-item .nav-link {
             color: $text-dark;
-            font-weight: 500;
 
             & {
                 color: $text-dark;

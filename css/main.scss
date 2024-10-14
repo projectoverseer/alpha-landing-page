@@ -61,34 +61,33 @@ $link-decoration: none;
 $link-hover-decoration: underline;
 
 
-$scalers: (
-	-7: 0.2171688458rem,
-	-6: 0.2714610572rem,
-	-5: 0.3393263216rem,
-	-4: 0.4241579019rem,
-	-3: 0.5301973774rem,
-	-2: 0.6627467218rem,
-	-1: 0.8284334022rem,
+$scales: (
+	-9: 0.2171688458rem,
+	-8: 0.2714610572rem,
+	-7: 0.3393263216rem,
+	-6: 0.4241579019rem,
+	-5: 0.5301973774rem,
+	-4: 0.6627467218rem,
+	-3: 0.8284334022rem,
+	-2: 1.0355417528rem,
+	-1: 1.2944271910rem,
 	0: 0rem,
-	1: 1rem,
-	2: 1.0355417528rem,
-	3: 1.2944271910rem,
-	4: 1.6180339887rem,
-	5: 2.0225424859rem,
-	6: 2.5281781074rem,
-	7: 3.1602226343rem,
-	8: 3.9502782928rem,
-	9: 4.9378478661rem,
-	10: 6.1723098326rem,
+	1: 1.6180339887rem,
+	2: 2.0225424859rem,
+	3: 2.5281781074rem,
+	4: 3.1602226343rem,
+	5: 3.9502782928rem,
+	6: 4.9378478661rem,
+	7: 6.1723098326rem,
 );
 
-$scale-caption:	map-get($scalers, -1);
-$scale-btn:		map-get($scalers, 2);
-$scale-p:		map-get($scalers, 1);
-$scale-h4:		map-get($scalers, 4);
-$scale-h3:		map-get($scalers, 5);
-$scale-h2:		map-get($scalers, 6);
-$scale-h1:		map-get($scalers, 7);
+$scale-caption:	map-get($scales, -3);
+$scale-p:		map-get($scales, -2);
+$scale-btn:		map-get($scales, -2);
+$scale-h4:		map-get($scales, 1);
+$scale-h3:		map-get($scales, 2);
+$scale-h2:		map-get($scales, 3);
+$scale-h1:		map-get($scales, 4);
 
 
 $spacer: 1rem;
@@ -119,8 +118,8 @@ $grid-gutter-width: map-get($spacers, 2); // 2 feels the most modern
 
 $small-font-size: $scale-caption;
 
-$line-height-base: 1.62;
-$headings-line-height: 1.33;
+$line-height-base: 1.5088720428;
+$headings-line-height: 1.2070976343;
 
 $paragraph-margin-bottom: map-get($spacers, 5);
 
@@ -130,9 +129,9 @@ $headings-font-family: 'IBM Plex Sans', sans-serif;
 $headings-font-weight: 700;
 
 // scss-docs-start type-variables
-$hr-margin-y: 1.22*$scale-h2*.5  0  $line-height-base*$scale-p;
+$hr-margin-y: $headings-line-height*$scale-h2*.5  0  $line-height-base*$scale-p;
 $hr-color: $primary;
-$hr-border-width: map-get($scalers, -7);
+$hr-border-width: map-get($scales, -9);
 $hr-opacity: 1;
 
 $global-border-radius: map-get($spacers, -3);
