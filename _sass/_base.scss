@@ -173,7 +173,7 @@ small,
 }
 
 hr {
-    width: 2.628 * $scale-h4;
+    width: map-get($spacers, 8);
     margin-left: auto;
     margin-right: auto;
     color: $primary;
