@@ -192,6 +192,8 @@ hr {
 }
 
 a {
+    font-weight: 500;
+
     &:hover,
     &:focus-visible {
         color: $link-hover-color;
@@ -235,10 +237,6 @@ section {
 }
 
 footer {
-    & .footer-logo {
-        height: map-get($scales, 4);
-    }
-
     * address {
         margin-bottom: map-get($spacers, 7);
     }
