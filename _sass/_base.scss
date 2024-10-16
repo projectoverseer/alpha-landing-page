@@ -4,24 +4,12 @@
     transition: all .36s ease-in-out;
 }
 
-@mixin sans-serif-font() {
-    font-family: $headings-font-family;
-}
-
-@mixin serif-font() {
-    font-family: 'Inter', sans-serif;
-}
-
 
 html,
 body {
     height: 100%;
     width: 100%;
     text-wrap: balance;
-}
-
-body {
-    @include serif-font;
 }
 
 img {
@@ -204,15 +192,6 @@ a {
     }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    @include sans-serif-font;
-}
-
 // TODO: Find a way to remove !important tag
 section.bg-primary {
     background-color: $fill-primary !important;
@@ -262,8 +241,6 @@ aside {
     border-color: $navbar-border-color;
     border-width: 0 0 1px;
 
-    @include serif-font;
-
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
@@ -280,46 +257,29 @@ aside {
         color: $text !important;
     }
 
-    .nav-item {
-        .nav-link {
-            transition: none;
-            padding: $spacer / 2;
-
-            & {
-                font-weight: 500;
-                font-size: $scale-p;
-                color: $text;
-            }
-        }
-    }
-
     @include media-breakpoint-up(md) {
-        background-color: transparent;
-        border-color: transparent;
+        &:not(.nav-active) {
+            background-color: transparent;
+            border-color: transparent;
 
-        .logo-white {
-            opacity: 1;
-        }
-
-        .logo-color {
-            opacity: 0;
-        }
-
-        .nav-item .nav-link {
-            color: $text-dark;
-
-            & {
-                color: $text-dark;
+            .logo-white {
+                opacity: 1;
             }
 
-            &.active {
-                color: $link-alt-hover-dark-color;
+            .logo-color {
+                opacity: 0;
             }
 
-            &:hover,
-            &:focus-visible,
-            &:hover:active {
-                color: $link-alt-hover-dark-color; // TODO
+            .nav-item .nav-link {
+                &:not(.active):focus:not(:focus-visible),
+                .active:focus:not(:focus-visible) {
+                    color: $navbar-dark-color;
+                }
+
+                &:not(.active):hover,
+                &:not(.active):hover:active {
+                    color: $navbar-dark-hover-color !important;
+                }
             }
         }
 
@@ -343,23 +303,19 @@ aside {
                 opacity: 1;
             }
 
-            .nav-item .nav-link {
+            .nav-link {
 
-                & {
-                    color: $text;
+                &:not(.active):focus:not(:focus-visible) {
+                    color: currentColor;
                 }
 
-                &.active {
-                    color: $link-alt-color;
+                .active:focus:not(:focus-visible) {
+                    color: currentColor;
                 }
 
-                &:hover,
-                &:focus-visible {
-                    color: $link-alt-hover-color;
-                }
-
-                &:hover:active {
-                    color: $link-alt-hover-color;
+                &:not(.active):hover,
+                &:not(.active):hover:active {
+                    color: $navbar-light-hover-color !important;
                 }
             }
         }
@@ -412,12 +368,6 @@ header {
 
 // Sections
 
-.service-box {
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .portfolio-box {
     position: relative;
     display: block;
@@ -449,7 +399,6 @@ header {
 
             .project-category,
             .project-name {
-                @include sans-serif-font;
                 padding: 0 17px;
             }
 
@@ -542,7 +491,6 @@ header {
 
 
 .btn {
-    @include serif-font;
     font-weight: 500;
     font-size: $scale-btn;
     vertical-align: middle;

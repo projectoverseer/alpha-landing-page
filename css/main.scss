@@ -125,7 +125,8 @@ $paragraph-margin-bottom: map-get($spacers, 5);
 
 // scss-docs-start headings-variables
 $headings-margin-bottom: map-get($spacers, 4);
-$headings-font-family: 'IBM Plex Sans', sans-serif;
+$headings-font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif;
 $headings-font-weight: 700;
 
 // scss-docs-start type-variables
@@ -133,6 +134,19 @@ $hr-margin-y: $headings-line-height*$scale-h2*.5  0  $line-height-base*$scale-p;
 $hr-color: $primary;
 $hr-border-width: map-get($scales, -9);
 $hr-opacity: 1;
+
+$navbar-light-color: $text;
+$navbar-light-hover-color: $link-alt-hover-color;
+$navbar-light-active-color: $link-alt-color;
+$nav-link-padding-y: $spacer;
+$nav-link-padding-x: $spacer;
+$nav-link-font-size: $scale-p;
+$nav-link-font-weight: 500;
+$nav-link-transition: none;
+
+$navbar-dark-color: $text-dark;
+$navbar-dark-hover-color: $link-alt-hover-dark-color;
+$navbar-dark-active-color: $link-alt-hover-dark-color;
 
 $global-border-radius: map-get($spacers, -3);
 $border-color: #d3d3d5;
