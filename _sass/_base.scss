@@ -1,7 +1,16 @@
 html, body {
     height: 100%;
     width: 100%;
-    text-wrap: balance;
+}
+
+html {
+    text-wrap: pretty;
+}
+
+@include media-breakpoint-up(md) {
+    html {
+        text-wrap: balance;
+    }
 }
 
 img {
