@@ -1,26 +1,25 @@
 ---
 ---
 @charset 'utf-8';
-
 @import 'functions.scss';
-
 
 $text: #1d1d1f;
 $background: #fff;
 $text-dark: #fff;
 
-$primary: #E35205;			// do not use for text
-$primary-dark: #B9D9EB;	// do not use for text
-$accent: #FF8F1C;			// do not use for text
-$accent-dark: #FFB549;		// do not use for text
+// Primary Colors (for glyphs and illustrations only; do not use for text)
+$primary: #E35205;
+$primary-dark: #B9D9EB;
+$accent: #FF8F1C;
+$accent-dark: #FFB549;
 
-$fill-primary: #C63527;		// white text
-$fill-primary-dark: #C63527;	// black text
-$fill-accent: #E35205;			// white text
-$fill-accent-dark: #E35205;	// black text
+// Fill Colors (use with white text)
+$fill-primary: #C63527;
+$fill-primary-dark: #C63527;
+$fill-accent: #E35205;
+$fill-accent-dark: #E35205;
 
 $secondary: #004B87;
-
 $blue: $secondary;
 $purple: #6a1b9a;
 $red: #b71c1c;
@@ -28,6 +27,7 @@ $orange: $primary;
 $yellow: #ffee00;
 $green: #00c753;
 $white: $background;
+
 $gray-50: #F2F2F7;
 $gray-100: #E5E5EA;
 $gray-200: #D1D1D6;
@@ -44,7 +44,6 @@ $light: #B9D9EB;
 $black: #000;
 
 $body-color: $text;
-
 $gray: $gray-400;
 $gray-dark: $gray-800;
 $success: $green;
@@ -60,77 +59,75 @@ $link-alt-hover-dark-color: #FFB549;
 $link-decoration: none;
 $link-hover-decoration: underline;
 
-
 $scales: (
-	-9: 0.2171688458rem,
-	-8: 0.2714610572rem,
-	-7: 0.3393263216rem,
-	-6: 0.4241579019rem,
-	-5: 0.5301973774rem,
-	-4: 0.6627467218rem,
-	-3: 0.8284334022rem,
-	-2: 1.0355417528rem,
-	-1: 1.2944271910rem,
-	0: 0rem,
-	1: 1.6180339887rem,
-	2: 2.0225424859rem,
-	3: 2.5281781074rem,
-	4: 3.1602226343rem,
-	5: 3.9502782928rem,
-	6: 4.9378478661rem,
-	7: 6.1723098326rem,
+    -9: 0.2171688458rem,
+    -8: 0.2714610572rem,
+    -7: 0.3393263216rem,
+    -6: 0.4241579019rem,
+    -5: 0.5301973774rem,
+    -4: 0.6627467218rem,
+    -3: 0.8284334022rem,
+    -2: 1.0355417528rem,
+    -1: 1.2944271910rem,
+    0: 0rem,
+    1: 1.6180339887rem,
+    2: 2.0225424859rem,
+    3: 2.5281781074rem,
+    4: 3.1602226343rem,
+    5: 3.9502782928rem,
+    6: 4.9378478661rem,
+    7: 6.1723098326rem,
 );
 
-$scale-caption:	map-get($scales, -3);
-$scale-p:		map-get($scales, -2);
-$scale-btn:		map-get($scales, -2);
-$scale-h4:		map-get($scales, 1);
-$scale-h3:		map-get($scales, 2);
-$scale-h2:		map-get($scales, 3);
-$scale-h1:		map-get($scales, 4);
+$font-size-sm: map-get($scales, -3);
+$font-size-base: map-get($scales, -2);
+$font-size-lg: map-get($scales, -2);
+$small-font-size: $font-size-sm;
+$input-btn-font-size: $font-size-lg;
 
+$h6-font-size: map-get($scales, -2);
+$h5-font-size: map-get($scales, -1);
+$h4-font-size: map-get($scales, 1);
+$h3-font-size: map-get($scales, 2);
+$h2-font-size: map-get($scales, 3);
+$h1-font-size: map-get($scales, 4);
 
 $spacer: 1rem;
 
 $spacers: (
-	-7: 0.2097152rem,
-	-6: 0.262144rem,
-	-5: 0.32768rem,
-	-4: 0.4096rem,
-	-3: 0.512rem,
-	-2: 0.64rem,
-	-1: 0.8rem,
-	0: 0rem,
-	1: 1rem,
-	2: 1.25rem,
-	3: 1.5625rem,
-	4: 1.953125rem,
-	5: 2.44140625rem,
-	6: 3.0517578125rem,
-	7: 3.8146972656rem,
-	8: 4.7683715820rem,
-	9: 5.9604644775rem,
-	10: 7.4505805969rem,
+    -7: 0.2097152rem,
+    -6: 0.262144rem,
+    -5: 0.32768rem,
+    -4: 0.4096rem,
+    -3: 0.512rem,
+    -2: 0.64rem,
+    -1: 0.8rem,
+    0: 0rem,
+    1: 1rem,
+    2: 1.25rem,
+    3: 1.5625rem,
+    4: 1.953125rem,
+    5: 2.44140625rem,
+    6: 3.0517578125rem,
+    7: 3.8146972656rem,
+    8: 4.7683715820rem,
+    9: 5.9604644775rem,
+    10: 7.4505805969rem,
 );
 
 $grid-gutter-width: map-get($spacers, 2); // 2 feels the most modern
-
-
-$small-font-size: $scale-caption;
-
 $line-height-base: 1.5088720428;
 $headings-line-height: 1.2070976343;
-
 $paragraph-margin-bottom: map-get($spacers, 5);
 
-// scss-docs-start headings-variables
+// Headings Variables
 $headings-margin-bottom: map-get($spacers, 4);
-$headings-font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif;
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif;
+$headings-font-family: 'IBM Plex Sans', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 $headings-font-weight: 700;
 
-// scss-docs-start type-variables
-$hr-margin-y: $headings-line-height*$scale-h2*.5  0  $line-height-base*$scale-p;
+// Type Variables
+$hr-margin-y: $headings-line-height * $h2-font-size * .5 0 $line-height-base * $font-size-base;
 $hr-color: $primary;
 $hr-border-width: map-get($scales, -9);
 $hr-opacity: 1;
@@ -140,7 +137,6 @@ $navbar-light-hover-color: $link-alt-hover-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: $spacer;
 $nav-link-padding-x: $spacer;
-$nav-link-font-size: $scale-p;
 $nav-link-font-weight: 500;
 $nav-link-transition: none;
 
@@ -148,17 +144,15 @@ $navbar-dark-color: $text-dark;
 $navbar-dark-hover-color: $link-alt-hover-dark-color;
 $navbar-dark-active-color: $link-alt-hover-dark-color;
 
-$global-border-radius: map-get($spacers, -3);
+$input-btn-padding-y: map-get($spacers, 1);
+$input-btn-padding-x: map-get($spacers, 3);
+$btn-font-weight: 500;
+
+$border-radius: map-get($spacers, -3);
 $border-color: #d3d3d5;
-
 $enable-transitions: false;
-
 
 @import 'variables.scss';
 @import 'mixins.scss';
-
-
 @import 'bootstrap.scss';
-
-
 @import 'base';

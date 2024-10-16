@@ -1,22 +1,14 @@
-@mixin transition-all() {
-    -webkit-transition: all .36s ease-in-out;
-    -moz-transition: all .36s ease-in-out;
-    transition: all .36s ease-in-out;
-}
-
-
-html,
-body {
+html, body {
     height: 100%;
     width: 100%;
     text-wrap: balance;
 }
 
 img {
-    border-radius: $global-border-radius;
+    border-radius: $border-radius;
 }
 
-.noselect {
+.noselect, img {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -28,8 +20,8 @@ img {
 .visuallyhidden {
     position: absolute;
     clip: rect(1px, 1px, 1px, 1px);
-    -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
     clip-path: inset(0px 0px 99.9% 99.9%);
+    -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
     overflow: hidden;
     height: 1px;
     width: 1px;
@@ -37,173 +29,49 @@ img {
     border: 0;
 }
 
-
-abbr[title] {
-    border-bottom: none !important;
-    text-decoration: none !important;
-    cursor: default;
-}
-
-.highlight-hero {
-    --underline-height: 0.3rem;
-    position: relative;
-    transition: color .36s ease-in-out;
-
-    will-change: color;
-
-    &::before {
-        // Highlight effect
-        height: calc(100% + var(--underline-height));
-        width: 100%;
-        border-radius: $global-border-radius; // Matches the icons' border radii
-
-        background: $primary;
-        content: '';
-        bottom: calc(-1 * var(--underline-height));
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform .36s ease-in-out;
-        position: absolute;
-        z-index: -1;
-
-        will-change: transform, transform-origin;
-    }
-
-    &::after {
-        // Underline
-        content: '';
-        bottom: calc(-1 * var(--underline-height));
-        left: 0;
-        background: $primary;
-        width: 100%;
-        height: var(--underline-height);
-        position: absolute;
-        z-index: -2;
-
-        will-change: opacity;
-    }
-
-    &:hover,
-    &:focus-visible {
-        color: $text;
-
-        will-change: color;
-
-        &::before {
-            transform: scaleX(1);
-            transform-origin: left;
-
-            will-change: transform, transform-origin;
-        }
-
-        &::after {
-            opacity: 0;
-
-            will-change: opacity;
-        }
-    }
-}
-
-h6,
-.h6,
-h5,
-.h5,
-h4,
-.h4,
-h3,
-.h3,
-h2,
-.h2,
-h1,
-.h1 {
-
-    .bg-dark &,
-    .bg-secondary &,
-    .header-content-inner & {
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    .bg-dark &, .bg-secondary & {
         color: $text-dark;
     }
-}
-
-h1,
-.h1 {
-    font-size: $scale-h1;
-}
-
-h2,
-.h2 {
-    font-size: $scale-h2;
-}
-
-h3,
-.h3 {
-    font-size: $scale-h3;
-}
-
-h4,
-.h4 {
-    font-size: $scale-h4;
-}
-
-h6,
-.h6 {
-    font-size: $scale-p;
-    margin-bottom: 0;
-}
-
-p {
-    font-size: $scale-p;
-}
-
-small,
-.small {
-    font-size: $scale-caption;
-    line-height: 1.4 !important;
 }
 
 hr {
     width: map-get($spacers, 8);
     margin-left: auto;
     margin-right: auto;
-    color: $primary;
-
     &.above-icons {
-        margin-bottom: $scale-h4;
+        margin-bottom: $h4-font-size;
     }
+}
 
+hr, .fa-4x {
+    color: $primary;
     .bg-primary & {
         color: $text-dark;
     }
-
     .bg-dark & {
         color: $primary-dark;
+    }
+    .bg-light & {
+        color: $secondary;
     }
 }
 
 a {
     font-weight: 500;
-
-    &:hover,
     &:focus-visible {
         color: $link-hover-color;
-    }
-
-    &:hover:active {
-        color: $link-hover-color;
+        box-shadow: $focus-ring-box-shadow;
+        outline: none;
     }
 }
 
-// TODO: Find a way to remove !important tag
 section.bg-primary {
     background-color: $fill-primary !important;
+    color: $text-dark;
 }
 
-.bg-primary {
-    background-color: $fill-primary !important;
-    color: $text-dark !important;
-}
-
-section.bg-dark,
-section.bg-secondary {
+section.bg-dark, section.bg-secondary {
     color: $text-dark;
 }
 
@@ -216,7 +84,7 @@ section {
 }
 
 footer {
-    * address {
+    address {
         margin-bottom: map-get($spacers, 7);
     }
 }
@@ -230,16 +98,12 @@ aside {
 }
 
 // Navigation
-
 .navbar {
     --logo-height: #{map-get($scales, 3)};
-    --navbar-height: calc(max(var(--logo-height), #{map-get($spacers, 7)}));
+    --navbar-height: #{map-get($spacers, 7)};
     height: var(--navbar-height);
     background-color: $white;
-    border-style: solid;
-    $navbar-border-color: $border-color;
-    border-color: $navbar-border-color;
-    border-width: 0 0 1px;
+    border-bottom: 1px solid $border-color;
 
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
@@ -248,13 +112,17 @@ aside {
         border-radius: 0;
     }
 
+    .navbar-brand:focus-visible {
+        box-shadow: none;
+    }
+
     .logo-white {
-        color: $text-dark !important;
+        color: $text-dark;
         opacity: 0;
     }
 
     .logo-color {
-        color: $text !important;
+        color: $text;
     }
 
     @include media-breakpoint-up(md) {
@@ -276,24 +144,19 @@ aside {
                     color: $navbar-dark-color;
                 }
 
-                &:not(.active):hover,
-                &:not(.active):hover:active {
-                    color: $navbar-dark-hover-color !important;
+                &:not(.active):hover, &:not(.active):hover:active {
+                    color: $navbar-dark-hover-color;
                 }
             }
         }
-
+        
         &.nav-active {
-            // The following two lines help making the border opaque
-            -webkit-background-clip: padding-box;
-            background-clip: padding-box;
-
             background-color: $background;
-            border-color: $navbar-border-color;
+            border-color: $border-color;
 
             transition: color .36s ease-in-out, background-color .36s ease-in-out, opacity .36s ease-in-out, border-color .36s ease-in-out;
-
             will-change: color, background-color, opacity, border-color;
+
 
             .logo-white {
                 opacity: 0;
@@ -304,18 +167,13 @@ aside {
             }
 
             .nav-link {
-
-                &:not(.active):focus:not(:focus-visible) {
-                    color: currentColor;
-                }
-
+                &:not(.active):focus:not(:focus-visible),
                 .active:focus:not(:focus-visible) {
                     color: currentColor;
                 }
 
-                &:not(.active):hover,
-                &:not(.active):hover:active {
-                    color: $navbar-light-hover-color !important;
+                &:not(.active):hover, &:not(.active):hover:active {
+                    color: $navbar-light-hover-color;
                 }
             }
         }
@@ -323,31 +181,24 @@ aside {
 }
 
 // Homepage Header
-
 header {
     position: relative;
     min-height: 100vh;
     height: fit-content;
     background-position: center;
-    background-image:
-        linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
-        url('../img/partnership.webp');
+    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/partnership.webp');
     text-align: center;
     color: $text-dark;
 
     .header-content {
         position: relative;
         text-align: center;
-        padding: 100px 17px 100px;
+        padding: 100px 17px;
         width: 100%;
-    }
 
-    @include media-breakpoint-up(md) {
-        .header-content {
+        @include media-breakpoint-up(md) {
             position: absolute;
             top: 50%;
-            -webkit-transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
             transform: translateY(-50%);
             padding: 0 50px;
 
@@ -367,7 +218,6 @@ header {
 }
 
 // Sections
-
 .portfolio-box {
     position: relative;
     display: block;
@@ -388,7 +238,9 @@ header {
         text-align: center;
         width: 100%;
         height: 100%;
-        @include transition-all;
+
+        transition: opacity .36s ease-in-out;
+        will-change: opacity;
 
         .portfolio-box-caption-content {
             width: 100%;
@@ -397,25 +249,18 @@ header {
             top: 50%;
             transform: translateY(-50%);
 
-            .project-category,
-            .project-name {
+            .project-category, .project-name {
                 padding: 0 17px;
             }
 
             .project-category {
                 text-transform: uppercase;
                 font-weight: 600;
-                // font-size: 18px; TODO
-            }
-
-            .project-name {
-                // font-size: 18px; TODO
             }
         }
     }
 
-    &:hover,
-    &:focus-visible {
+    &:hover, &:focus-visible {
         .portfolio-box-caption {
             opacity: 1;
         }
@@ -423,7 +268,7 @@ header {
 }
 
 // Bootstrap Overrides
-.no-gutter>[class*='col-'] {
+.no-gutter > [class*='col-'] {
     padding-right: 0;
     padding-left: 0;
 }
@@ -432,13 +277,11 @@ header {
 @mixin button-variant($color, $background) {
     $btn-padding-vertical: 18px;
     $btn-padding-horizontal: 31px;
-
     color: $color;
     background-color: $background;
     box-sizing: content-box;
     border: none;
     box-shadow: none !important;
-    transition: none;
 }
 
 .btn-secondary {
@@ -449,21 +292,16 @@ header {
         background-color: $white;
     }
 
-    &:hover,
-    &:focus-visible,
-    &:hover:active {
+    &:hover, &:focus-visible, &:hover:active {
         color: $text-dark;
         background-color: $dark;
     }
 }
 
 .btn-primary {
-    // TODO: Find a more robust solution
     @include button-variant($text-dark, $fill-primary);
 
-    &:hover,
-    &:focus-visible,
-    &:hover:active {
+    &:hover, &:focus-visible, &:hover:active {
         background-color: $fill-accent;
     }
 
@@ -472,14 +310,10 @@ header {
         color: $text-dark;
     }
 
-
-    .header-content-inner &,
-    .bg-dark & {
+    .header-content-inner &, .bg-dark & {
         @include button-variant($text-dark, $fill-primary-dark);
 
-        &:hover,
-        &:focus-visible,
-        &:hover:active {
+        &:hover, &:focus-visible, &:hover:active {
             background-color: $fill-accent-dark;
         }
 
@@ -489,32 +323,13 @@ header {
     }
 }
 
-
-.btn {
-    font-weight: 500;
-    font-size: $scale-btn;
-    vertical-align: middle;
-}
-
 .btn-xl {
-    padding: map-get($spacers, 1) map-get($spacers, 3);
-    border-radius: $global-border-radius;
     margin-top: map-get($spacers, 5) - $paragraph-margin-bottom;
     margin-bottom: map-get($spacers, 5);
 }
 
 .fa-4x {
-    height: 2.628 * $scale-h4;
+    height: 2.628 * $h4-font-size;
     margin-top: map-get($spacers, 3); // Compensate for header's line height
     margin-left: 0.08rem; // Perfectly aligns icons to the text
-}
-
-// Extras
-// -- Highlight Color Customization
-img::selection {
-    background: transparent;
-}
-
-img::-moz-selection {
-    background: transparent;
 }
