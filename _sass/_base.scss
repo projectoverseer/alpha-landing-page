@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
 }
@@ -17,7 +18,8 @@ img {
     border-radius: $border-radius;
 }
 
-.noselect, img {
+.noselect,
+img {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -38,8 +40,21 @@ img {
     border: 0;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    .bg-dark &, .bg-secondary & {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+
+    .bg-dark &,
+    .bg-secondary & {
         color: $text-dark;
     }
 }
@@ -48,19 +63,24 @@ hr {
     width: map-get($spacers, 8);
     margin-left: auto;
     margin-right: auto;
+
     &.above-icons {
         margin-bottom: $h4-font-size;
     }
 }
 
-hr, .fa-4x {
+hr,
+.fa-4x {
     color: $primary;
+
     .bg-primary & {
         color: $text-dark;
     }
+
     .bg-dark & {
         color: $primary-dark;
     }
+
     .bg-light & {
         color: $secondary;
     }
@@ -68,6 +88,7 @@ hr, .fa-4x {
 
 a {
     font-weight: 500;
+
     &:focus-visible {
         color: $link-hover-color;
         box-shadow: $focus-ring-box-shadow;
@@ -80,7 +101,8 @@ section.bg-primary {
     color: $text-dark;
 }
 
-section.bg-dark, section.bg-secondary {
+section.bg-dark,
+section.bg-secondary {
     color: $text-dark;
 }
 
@@ -117,6 +139,7 @@ aside {
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
+        aspect-ratio: 150/43;
         position: absolute;
         border-radius: 0;
     }
@@ -148,17 +171,19 @@ aside {
             }
 
             .nav-item .nav-link {
+
                 &:not(.active):focus:not(:focus-visible),
                 .active:focus:not(:focus-visible) {
                     color: $navbar-dark-color;
                 }
 
-                &:not(.active):hover, &:not(.active):hover:active {
+                &:not(.active):hover,
+                &:not(.active):hover:active {
                     color: $navbar-dark-hover-color;
                 }
             }
         }
-        
+
         &.nav-active {
             background-color: $background;
             border-color: $border-color;
@@ -176,12 +201,14 @@ aside {
             }
 
             .nav-link {
+
                 &:not(.active):focus:not(:focus-visible),
                 .active:focus:not(:focus-visible) {
                     color: currentColor;
                 }
 
-                &:not(.active):hover, &:not(.active):hover:active {
+                &:not(.active):hover,
+                &:not(.active):hover:active {
                     color: $navbar-light-hover-color;
                 }
             }
@@ -235,6 +262,7 @@ header {
 
     img {
         border-radius: 0;
+        aspect-ratio: 13 / 7;
     }
 
     .portfolio-box-caption {
@@ -244,21 +272,19 @@ header {
         background: rgba($primary, .9);
         position: absolute;
         bottom: 0;
-        text-align: center;
-        width: 100%;
-        height: 100%;
 
         transition: opacity .36s ease-in-out;
         will-change: opacity;
 
         .portfolio-box-caption-content {
             width: 100%;
-            text-align: center;
+            text-align: left;
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-100%);
+            padding-bottom: map-get($spacers, -1);
 
-            .project-category, .project-name {
+            .project-category,
+            .project-name {
                 padding: 0 17px;
             }
 
@@ -269,7 +295,8 @@ header {
         }
     }
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
         .portfolio-box-caption {
             opacity: 1;
         }
@@ -277,7 +304,7 @@ header {
 }
 
 // Bootstrap Overrides
-.no-gutter > [class*='col-'] {
+.no-gutter>[class*='col-'] {
     padding-right: 0;
     padding-left: 0;
 }
@@ -301,7 +328,9 @@ header {
         background-color: $white;
     }
 
-    &:hover, &:focus-visible, &:hover:active {
+    &:hover,
+    &:focus-visible,
+    &:hover:active {
         color: $text-dark;
         background-color: $dark;
     }
@@ -310,7 +339,9 @@ header {
 .btn-primary {
     @include button-variant($text-dark, $fill-primary);
 
-    &:hover, &:focus-visible, &:hover:active {
+    &:hover,
+    &:focus-visible,
+    &:hover:active {
         background-color: $fill-accent;
     }
 
@@ -319,10 +350,13 @@ header {
         color: $text-dark;
     }
 
-    .header-content-inner &, .bg-dark & {
+    .header-content-inner &,
+    .bg-dark & {
         @include button-variant($text-dark, $fill-primary-dark);
 
-        &:hover, &:focus-visible, &:hover:active {
+        &:hover,
+        &:focus-visible,
+        &:hover:active {
             background-color: $fill-accent-dark;
         }
 
