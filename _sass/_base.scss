@@ -6,6 +6,8 @@ body {
 
 html {
     text-wrap: pretty;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 @include media-breakpoint-up(md) {
@@ -139,7 +141,7 @@ aside {
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
-        aspect-ratio: 150/43;
+        aspect-ratio: 304/86;
         position: absolute;
         border-radius: 0;
     }
@@ -222,13 +224,11 @@ header {
     min-height: 100vh;
     height: fit-content;
     background-position: center;
-    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/partnership.webp');
-    text-align: center;
+    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/hero.webp');
     color: $text-dark;
 
     .header-content {
         position: relative;
-        text-align: center;
         padding: 100px 17px;
         width: 100%;
 
@@ -239,12 +239,10 @@ header {
             padding: 0 50px;
 
             .header-content-inner {
-                max-width: 1000px;
                 margin-left: auto;
                 margin-right: auto;
 
                 p {
-                    max-width: 80%;
                     margin-left: auto;
                     margin-right: auto;
                 }
@@ -257,7 +255,6 @@ header {
 .portfolio-box {
     position: relative;
     display: block;
-    max-width: 650px;
     margin: 0 auto;
 
     img {
@@ -278,7 +275,6 @@ header {
 
         .portfolio-box-caption-content {
             width: 100%;
-            text-align: left;
             position: absolute;
             transform: translateY(-100%);
             padding-bottom: map-get($spacers, -1);

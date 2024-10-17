@@ -122,7 +122,7 @@ $paragraph-margin-bottom: map-get($spacers, 5);
 
 // Headings Variables
 $headings-margin-bottom: map-get($spacers, 4);
-$headings-font-family: 'IBM Plex Sans', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+$headings-font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 $font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 $headings-font-weight: 700;
 
