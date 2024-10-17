@@ -3,7 +3,7 @@
 @charset 'utf-8';
 @import 'functions.scss';
 
-$text: #1d1d1f;
+$text: #101820;
 $background: #fff;
 $text-dark: #fff;
 
@@ -28,20 +28,19 @@ $yellow: #ffee00;
 $green: #00c753;
 $white: $background;
 
-$gray-50: #F2F2F7;
-$gray-100: #E5E5EA;
-$gray-200: #D1D1D6;
-$gray-300: #C7C7CC;
-$gray-400: #AEAEB2;
-$gray-500: #8E8E93;
-$gray-600: #636366;
-$gray-700: #48484A;
-$gray-800: #3A3A3C;
-$gray-900: #2C2C2E;
+$gray-100: #D9D9D6;
+$gray-200: #D0D0CE;
+$gray-300: #C8C9C7;
+$gray-400: #A7A8AA;
+$gray-500: #888B8D;
+$gray-600: #63666A;
+$gray-700: #53565A;
+$gray-800: #212721;
+$gray-900: #101820;
 
 $dark: #002554;
 $light: #B9D9EB;
-$black: #000;
+$black: #101820;
 
 $body-color: $text;
 $gray: $gray-400;
@@ -149,7 +148,7 @@ $input-btn-padding-x: map-get($spacers, 3);
 $btn-font-weight: 500;
 
 $border-radius: map-get($spacers, -3);
-$border-color: #d3d3d5;
+$border-color: rgba(16, 16, 0, 0.1607843137); // 15.659 // #D9D9D6;
 $enable-transitions: false;
 
 @import 'variables.scss';

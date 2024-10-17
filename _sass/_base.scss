@@ -16,6 +16,52 @@ html {
     }
 }
 
+:root {
+    --shadow-color: 0deg 0% 0%;
+    --shadow-elevation-low:
+        -0.5px 0.7px 1px hsl(var(--shadow-color) / 0.09),
+        -0.8px 1.1px 1.5px -1.2px hsl(var(--shadow-color) / 0.09),
+        -1.9px 2.4px 3.4px -2.5px hsl(var(--shadow-color) / 0.09);
+    --shadow-elevation-medium:
+        -0.5px 0.7px 1px hsl(var(--shadow-color) / 0.07),
+        -1.3px 1.7px 2.4px -0.6px hsl(var(--shadow-color) / 0.07),
+        -2.4px 3.2px 4.5px -1.2px hsl(var(--shadow-color) / 0.07),
+        -4.8px 6.4px 9px -1.9px hsl(var(--shadow-color) / 0.07),
+        -9.3px 12.2px 17.3px -2.5px hsl(var(--shadow-color) / 0.07);
+    --shadow-elevation-high:
+        -0.5px 0.7px 1px hsl(var(--shadow-color) / 0.08),
+        -2.3px 3.1px 4.3px -0.3px hsl(var(--shadow-color) / 0.08),
+        -4.1px 5.4px 7.6px -0.6px hsl(var(--shadow-color) / 0.08),
+        -6.4px 8.5px 12px -0.9px hsl(var(--shadow-color) / 0.08),
+        -9.7px 12.8px 18.1px -1.2px hsl(var(--shadow-color) / 0.08),
+        -14.5px 19.1px 27px -1.6px hsl(var(--shadow-color) / 0.08),
+        -21.2px 28px 39.5px -1.9px hsl(var(--shadow-color) / 0.08),
+        -30.4px 40.2px 56.7px -2.2px hsl(var(--shadow-color) / 0.08),
+        -42.6px 56.3px 79.4px -2.5px hsl(var(--shadow-color) / 0.08);
+
+    --shadow-color-fill-primary: 6deg 71% 29%;
+    --shadow-elevation-low-fill-primary:
+        -0.5px 0.7px 1px hsl(var(--shadow-color-fill-primary) / 0.29),
+        -0.8px 1.1px 1.5px -1.2px hsl(var(--shadow-color-fill-primary) / 0.29),
+        -1.9px 2.4px 3.4px -2.5px hsl(var(--shadow-color-fill-primary) / 0.29);
+    --shadow-elevation-medium-fill-primary:
+        -0.5px 0.7px 1px hsl(var(--shadow-color-fill-primary) / 0.24),
+        -1.3px 1.7px 2.4px -0.6px hsl(var(--shadow-color-fill-primary) / 0.24),
+        -2.4px 3.2px 4.5px -1.2px hsl(var(--shadow-color-fill-primary) / 0.24),
+        -4.8px 6.4px 9px -1.9px hsl(var(--shadow-color-fill-primary) / 0.24),
+        -9.3px 12.2px 17.3px -2.5px hsl(var(--shadow-color-fill-primary) / 0.24);
+    --shadow-elevation-high-fill-primary:
+        -0.5px 0.7px 1px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -2.3px 3.1px 4.3px -0.3px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -4.1px 5.4px 7.6px -0.6px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -6.4px 8.5px 12px -0.9px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -9.7px 12.8px 18.1px -1.2px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -14.5px 19.1px 27px -1.6px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -21.2px 28px 39.5px -1.9px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -30.4px 40.2px 56.7px -2.2px hsl(var(--shadow-color-fill-primary) / 0.25),
+        -42.6px 56.3px 79.4px -2.5px hsl(var(--shadow-color-fill-primary) / 0.25);
+}
+
 img {
     border-radius: $border-radius;
 }
@@ -136,7 +182,7 @@ aside {
     --navbar-height: #{map-get($spacers, 7)};
     height: var(--navbar-height);
     background-color: $white;
-    border-bottom: 1px solid $border-color;
+    box-shadow: var(--shadow-elevation-low);
 
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
@@ -160,9 +206,11 @@ aside {
     }
 
     @include media-breakpoint-up(md) {
+        will-change: color, background-color, opacity, box-shadow;
+
         &:not(.nav-active) {
             background-color: transparent;
-            border-color: transparent;
+            box-shadow: none;
 
             .logo-white {
                 opacity: 1;
@@ -188,10 +236,9 @@ aside {
 
         &.nav-active {
             background-color: $background;
-            border-color: $border-color;
+            box-shadow: var(--shadow-elevation-low);
 
-            transition: color .36s ease-in-out, background-color .36s ease-in-out, opacity .36s ease-in-out, border-color .36s ease-in-out;
-            will-change: color, background-color, opacity, border-color;
+            transition: color .36s ease-in-out, background-color .36s ease-in-out, opacity .36s ease-in-out;
 
 
             .logo-white {
@@ -313,22 +360,22 @@ header {
     background-color: $background;
     box-sizing: content-box;
     border: none;
-    box-shadow: none !important;
 }
 
 .btn-secondary {
     @include button-variant($text, $white);
-
-    &:focus:not(:focus-visible) {
-        color: $text;
-        background-color: $white;
-    }
+    box-shadow: var(--shadow-elevation-low-fill-primary);
 
     &:hover,
     &:focus-visible,
     &:hover:active {
         color: $text-dark;
         background-color: $dark;
+    }
+
+    &:focus:not(:focus-visible) {
+        color: $text;
+        background-color: $white;
     }
 }
 
@@ -338,27 +385,13 @@ header {
     &:hover,
     &:focus-visible,
     &:hover:active {
+        color: $text-dark;
         background-color: $fill-accent;
     }
 
     &:focus:not(:focus-visible) {
-        background-color: $fill-accent;
+        background-color: $fill-primary;
         color: $text-dark;
-    }
-
-    .header-content-inner &,
-    .bg-dark & {
-        @include button-variant($text-dark, $fill-primary-dark);
-
-        &:hover,
-        &:focus-visible,
-        &:hover:active {
-            background-color: $fill-accent-dark;
-        }
-
-        &:focus:not(:focus-visible) {
-            background-color: $fill-accent-dark;
-        }
     }
 }
 
