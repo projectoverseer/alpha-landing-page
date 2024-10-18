@@ -3,58 +3,51 @@
 @charset 'utf-8';
 @import 'functions.scss';
 
-$text: #101820;
+// 6200 K
+$text: #111820;
 $background: #fff;
 $text-dark: #fff;
 
 // Primary Colors (for glyphs and illustrations only; do not use for text)
-$primary: #E35205;
-$primary-dark: #B9D9EB;
-$accent: #FF8F1C;
-$accent-dark: #FFB549;
+$primary: #E85105;
+$primary-dark: #BFD7E9;
+$accent: #FF8D1C;
+$accent-dark: #FFB348;
 
 // Fill Colors (use with white text)
-$fill-primary: #C63527;
-$fill-primary-dark: #C63527;
-$fill-accent: #E35205;
-$fill-accent-dark: #E35205;
+$fill-primary: #CA3426;
+$fill-primary-dark: $fill-primary;
+$fill-accent: $primary;
+$fill-accent-dark: $primary;
 
 $secondary: #004B87;
 $blue: $secondary;
-$purple: #6a1b9a;
-$red: #b71c1c;
 $orange: $primary;
-$yellow: #ffee00;
-$green: #00c753;
 $white: $background;
 
-$gray-100: #D9D9D6;
-$gray-200: #D0D0CE;
-$gray-300: #C8C9C7;
-$gray-400: #A7A8AA;
-$gray-500: #888B8D;
-$gray-600: #63666A;
-$gray-700: #53565A;
-$gray-800: #212721;
-$gray-900: #101820;
+$gray-100: #E0D7D4;
+$gray-200: #D7CECC;
+$gray-300: #CEC7C5;
+$gray-400: #ACA7A8;
+$gray-500: #8C8A8B;
+$gray-600: #666569;
+$gray-700: #565559;
+$gray-800: #222721;
+$gray-900: #111820;
 
 $dark: #002554;
-$light: #B9D9EB;
-$black: #101820;
+$light: $primary-dark;
+$black: #111820;
 
 $body-color: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
-$success: $green;
-$info: $blue;
-$warning: $yellow;
-$danger: $red;
 
-$link-color: #004B87;
-$link-hover-color: #0084CA;
-$link-alt-color: #C63527;
-$link-alt-hover-color: #E35205;
-$link-alt-hover-dark-color: #FFB549;
+$link-color: $secondary;
+$link-hover-color: #0084C9;
+$link-alt-color: $fill-primary;
+$link-alt-hover-color: $primary;
+$link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
 

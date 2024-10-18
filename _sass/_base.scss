@@ -19,47 +19,26 @@ html {
 :root {
     --shadow-color: 0deg 0% 0%;
     --shadow-elevation-low:
-        -0.5px 0.7px 1px hsl(var(--shadow-color) / 0.09),
-        -0.8px 1.1px 1.5px -1.2px hsl(var(--shadow-color) / 0.09),
-        -1.9px 2.4px 3.4px -2.5px hsl(var(--shadow-color) / 0.09);
+        0.2px 0.5px 0.4px hsl(var(--shadow-color) / 0.24),
+        0.3px 0.7px 0.6px -2.5px hsl(var(--shadow-color) / 0.16),
+        0.9px 2.1px 1.7px -5px hsl(var(--shadow-color) / 0.08);
     --shadow-elevation-medium:
-        -0.5px 0.7px 1px hsl(var(--shadow-color) / 0.07),
-        -1.3px 1.7px 2.4px -0.6px hsl(var(--shadow-color) / 0.07),
-        -2.4px 3.2px 4.5px -1.2px hsl(var(--shadow-color) / 0.07),
-        -4.8px 6.4px 9px -1.9px hsl(var(--shadow-color) / 0.07),
-        -9.3px 12.2px 17.3px -2.5px hsl(var(--shadow-color) / 0.07);
+        0.2px 0.5px 0.4px hsl(var(--shadow-color) / 0.2),
+        0.3px 0.6px 0.5px -1.2px hsl(var(--shadow-color) / 0.16),
+        0.7px 1.7px 1.4px -2.5px hsl(var(--shadow-color) / 0.12),
+        2px 4.6px 3.8px -3.7px hsl(var(--shadow-color) / 0.08),
+        4.4px 10.3px 8.4px -5px hsl(var(--shadow-color) / 0.04);
     --shadow-elevation-high:
-        -0.5px 0.7px 1px hsl(var(--shadow-color) / 0.08),
-        -2.3px 3.1px 4.3px -0.3px hsl(var(--shadow-color) / 0.08),
-        -4.1px 5.4px 7.6px -0.6px hsl(var(--shadow-color) / 0.08),
-        -6.4px 8.5px 12px -0.9px hsl(var(--shadow-color) / 0.08),
-        -9.7px 12.8px 18.1px -1.2px hsl(var(--shadow-color) / 0.08),
-        -14.5px 19.1px 27px -1.6px hsl(var(--shadow-color) / 0.08),
-        -21.2px 28px 39.5px -1.9px hsl(var(--shadow-color) / 0.08),
-        -30.4px 40.2px 56.7px -2.2px hsl(var(--shadow-color) / 0.08),
-        -42.6px 56.3px 79.4px -2.5px hsl(var(--shadow-color) / 0.08);
-
-    --shadow-color-fill-primary: 6deg 71% 29%;
-    --shadow-elevation-low-fill-primary:
-        -0.5px 0.7px 1px hsl(var(--shadow-color-fill-primary) / 0.29),
-        -0.8px 1.1px 1.5px -1.2px hsl(var(--shadow-color-fill-primary) / 0.29),
-        -1.9px 2.4px 3.4px -2.5px hsl(var(--shadow-color-fill-primary) / 0.29);
-    --shadow-elevation-medium-fill-primary:
-        -0.5px 0.7px 1px hsl(var(--shadow-color-fill-primary) / 0.24),
-        -1.3px 1.7px 2.4px -0.6px hsl(var(--shadow-color-fill-primary) / 0.24),
-        -2.4px 3.2px 4.5px -1.2px hsl(var(--shadow-color-fill-primary) / 0.24),
-        -4.8px 6.4px 9px -1.9px hsl(var(--shadow-color-fill-primary) / 0.24),
-        -9.3px 12.2px 17.3px -2.5px hsl(var(--shadow-color-fill-primary) / 0.24);
-    --shadow-elevation-high-fill-primary:
-        -0.5px 0.7px 1px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -2.3px 3.1px 4.3px -0.3px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -4.1px 5.4px 7.6px -0.6px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -6.4px 8.5px 12px -0.9px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -9.7px 12.8px 18.1px -1.2px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -14.5px 19.1px 27px -1.6px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -21.2px 28px 39.5px -1.9px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -30.4px 40.2px 56.7px -2.2px hsl(var(--shadow-color-fill-primary) / 0.25),
-        -42.6px 56.3px 79.4px -2.5px hsl(var(--shadow-color-fill-primary) / 0.25);
+        0.2px 0.5px 0.4px hsl(var(--shadow-color) / 0.19),
+        0.2px 0.6px 0.5px -0.6px hsl(var(--shadow-color) / 0.17),
+        0.5px 1.1px 0.9px -1.1px hsl(var(--shadow-color) / 0.15),
+        1.1px 2.5px 2px -1.7px hsl(var(--shadow-color) / 0.13),
+        2.2px 5.3px 4.3px -2.2px hsl(var(--shadow-color) / 0.11),
+        4.2px 9.9px 8.1px -2.8px hsl(var(--shadow-color) / 0.09),
+        7.1px 16.7px 13.6px -3.3px hsl(var(--shadow-color) / 0.07),
+        11.1px 26.2px 21.3px -3.9px hsl(var(--shadow-color) / 0.06),
+        16.5px 38.9px 31.7px -4.4px hsl(var(--shadow-color) / 0.04),
+        23.4px 55.2px 45px -5px hsl(var(--shadow-color) / 0.02);
 }
 
 img {
@@ -76,17 +55,15 @@ img {
     user-select: none;
 }
 
-.visuallyhidden {
+.visuallyhidden:not(:focus):not(:active) {
     position: absolute;
-    clip: rect(1px, 1px, 1px, 1px);
-    clip-path: inset(0px 0px 99.9% 99.9%);
-    -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
-    overflow: hidden;
-    height: 1px;
     width: 1px;
-    padding: 0;
-    border: 0;
-}
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 
 h1,
 h2,
@@ -178,16 +155,16 @@ aside {
 
 // Navigation
 .navbar {
-    --logo-height: #{map-get($scales, 3)};
+    --logo-height: 2.5rem; // #{map-get($scales, 3)};
     --navbar-height: #{map-get($spacers, 7)};
     height: var(--navbar-height);
     background-color: $white;
-    box-shadow: var(--shadow-elevation-low);
+    box-shadow: var(--shadow-elevation-medium);
 
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
-        aspect-ratio: 304/86;
+        aspect-ratio: 143/40;
         position: absolute;
         border-radius: 0;
     }
@@ -236,9 +213,9 @@ aside {
 
         &.nav-active {
             background-color: $background;
-            box-shadow: var(--shadow-elevation-low);
+            box-shadow: var(--shadow-elevation-medium);
 
-            transition: color .36s ease-in-out, background-color .36s ease-in-out, opacity .36s ease-in-out;
+            transition: color .36s ease-in-out, background-color .36s ease-in-out, box-shadow .36s ease-in-out, opacity .36s ease-in-out;
 
 
             .logo-white {
@@ -354,8 +331,6 @@ header {
 
 // Button Styles
 @mixin button-variant($color, $background) {
-    $btn-padding-vertical: 18px;
-    $btn-padding-horizontal: 31px;
     color: $color;
     background-color: $background;
     box-sizing: content-box;
@@ -364,34 +339,37 @@ header {
 
 .btn-secondary {
     @include button-variant($text, $white);
-    box-shadow: var(--shadow-elevation-low-fill-primary);
-
-    &:hover,
-    &:focus-visible,
-    &:hover:active {
-        color: $text-dark;
-        background-color: $dark;
-    }
+    box-shadow: var(--shadow-elevation-low);
 
     &:focus:not(:focus-visible) {
         color: $text;
         background-color: $white;
     }
+
+    &:hover,
+    &:focus-visible,
+    &:active {
+        color: $text-dark;
+        background-color: $dark;
+        box-shadow: none;
+    }
 }
 
 .btn-primary {
     @include button-variant($text-dark, $fill-primary);
-
-    &:hover,
-    &:focus-visible,
-    &:hover:active {
-        color: $text-dark;
-        background-color: $fill-accent;
-    }
+    box-shadow: var(--shadow-elevation-low);
 
     &:focus:not(:focus-visible) {
         background-color: $fill-primary;
         color: $text-dark;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &:active {
+        color: $text-dark;
+        background-color: $fill-accent;
+        box-shadow: none;
     }
 }
 
