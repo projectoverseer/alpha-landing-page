@@ -4,47 +4,47 @@
 @import 'functions.scss';
 
 // 6200 K
-$text: #111820;
+$text: #242A36;
 $background: #fff;
 $text-dark: #fff;
 
 // Primary Colors (for glyphs and illustrations only; do not use for text)
-$primary: #E85105;
-$primary-dark: #BFD7E9;
-$accent: #FF8D1C;
-$accent-dark: #FFB348;
+$primary: #DE5829;
+$primary-dark: #B6D7EB;
+$accent: #F68E2D;
+$accent-dark: #FFB719;
 
 // Fill Colors (use with white text)
-$fill-primary: #CA3426;
+$fill-primary: #C93825;
 $fill-primary-dark: $fill-primary;
 $fill-accent: $primary;
 $fill-accent-dark: $primary;
 
-$secondary: #004B87;
+$secondary: #004A98;
 $blue: $secondary;
 $orange: $primary;
 $white: $background;
 
-$gray-100: #E0D7D4;
-$gray-200: #D7CECC;
-$gray-300: #CEC7C5;
-$gray-400: #ACA7A8;
-$gray-500: #8C8A8B;
-$gray-600: #666569;
-$gray-700: #565559;
-$gray-800: #222721;
-$gray-900: #111820;
+$gray-100: #C4C7C6;
+$gray-200: #B0B3B2;
+$gray-300: #9C9FA1;
+$gray-400: #A8ADAC;
+$gray-500: #9B9A9E;
+$gray-600: #8D8890;
+$gray-700: #7A7C81;
+$gray-800: #595359;
+$gray-900: #242A36;
 
-$dark: #002554;
+$dark: #002454;
 $light: $primary-dark;
-$black: #111820;
+$black: #242A36;
 
 $body-color: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
 
 $link-color: $secondary;
-$link-hover-color: #0084C9;
+$link-hover-color: #009ADF;
 $link-alt-color: $fill-primary;
 $link-alt-hover-color: $primary;
 $link-alt-hover-dark-color: $accent-dark;

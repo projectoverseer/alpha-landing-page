@@ -164,6 +164,7 @@ aside {
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
+        min-width: 85px;
         aspect-ratio: 143/40;
         position: absolute;
         border-radius: 0;
