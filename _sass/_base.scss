@@ -5,14 +5,19 @@ body {
 }
 
 html {
-    text-wrap: pretty;
+    text-wrap: balance;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv10' 1, 'cv11' 1, 'cv05' 1, 'cv03' 1, 'cpsp' 1; // 'tnum' 1;
 }
 
-@include media-breakpoint-up(md) {
-    html {
-        text-wrap: balance;
+@include media-breakpoint-down(md) {
+    p {
+        text-wrap: pretty;
+    }
+
+    .container-fluid {
+        --bs-gutter-x: 16px;
     }
 }
 
@@ -95,7 +100,7 @@ hr {
 }
 
 hr,
-.fa-4x {
+.fa-2x {
     color: $primary;
 
     .bg-primary & {
@@ -106,13 +111,13 @@ hr,
         color: $primary-dark;
     }
 
-    .bg-light & {
-        color: $secondary;
-    }
+    // .bg-light & {
+    //     color: $fill-primary;
+    // }
 }
 
 a {
-    font-weight: 500;
+    font-weight: 600;
 
     &:focus-visible {
         color: $link-hover-color;
@@ -145,18 +150,10 @@ footer {
     }
 }
 
-aside {
-    padding: 50px 0;
-}
-
-.no-padding {
-    padding: 0;
-}
-
 // Navigation
 .navbar {
-    --logo-height: 2.5rem; // #{map-get($scales, 3)};
-    --navbar-height: #{map-get($spacers, 7)};
+    --logo-height: max(2.5rem, 34px); // #{map-get($scales, 3)};
+    --navbar-height: #{map-get($spacers, -1) * 2 + 2.5rem};
     height: var(--navbar-height);
     background-color: $white;
     box-shadow: var(--shadow-elevation-medium);
@@ -164,7 +161,7 @@ aside {
     .navbar-logo {
         top: calc((var(--navbar-height) - var(--logo-height)) / 2);
         height: var(--logo-height);
-        min-width: 85px;
+        // min-width: 120px;
         aspect-ratio: 143/40;
         position: absolute;
         border-radius: 0;
@@ -253,30 +250,22 @@ header {
     color: $text-dark;
 
     .header-content {
-        position: relative;
-        padding: 100px 17px;
-        width: 100%;
-
-        @include media-breakpoint-up(md) {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 0 50px;
-
-            .header-content-inner {
-                margin-left: auto;
-                margin-right: auto;
-
-                p {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-            }
-        }
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 
 // Sections
+.service-box {
+    text-wrap: pretty;
+    max-width: 478px;
+}
+
+.img-fluid {
+    width: 100%;
+}
+
 .portfolio-box {
     position: relative;
     display: block;
@@ -322,12 +311,6 @@ header {
             opacity: 1;
         }
     }
-}
-
-// Bootstrap Overrides
-.no-gutter>[class*='col-'] {
-    padding-right: 0;
-    padding-left: 0;
 }
 
 // Button Styles
@@ -379,8 +362,8 @@ header {
     margin-bottom: map-get($spacers, 5);
 }
 
-.fa-4x {
-    height: 2.628 * $h4-font-size;
-    margin-top: map-get($spacers, 3); // Compensate for header's line height
+.fa-2x {
+    height: map-get($scales, 4);
+    margin-top: 0.5em; // Compensate for header's line height
     margin-left: 0.08rem; // Perfectly aligns icons to the text
 }

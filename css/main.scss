@@ -3,28 +3,28 @@
 @charset 'utf-8';
 @import 'functions.scss';
 
-// 6200 K
 $text: #242A36;
 $background: #fff;
 $text-dark: #fff;
 
 // Primary Colors (for glyphs and illustrations only; do not use for text)
-$primary: #DE5829;
-$primary-dark: #B6D7EB;
-$accent: #F68E2D;
-$accent-dark: #FFB719;
+$primary: #FF6500;
+$primary-dark: #D2EDFF; // #cfe5f2;
+$accent: #FF9600; // #F68E2D;
+$accent-dark: #FFAD00; // #FFB719;
 
 // Fill Colors (use with white text)
-$fill-primary: #C93825;
+$fill-primary: #d13000; // #d23800;
 $fill-primary-dark: $fill-primary;
 $fill-accent: $primary;
 $fill-accent-dark: $primary;
 
-$secondary: #004A98;
+$secondary: #004FA9; // #0051a8;
 $blue: $secondary;
 $orange: $primary;
 $white: $background;
 
+$gray-50: #F0F0F0;
 $gray-100: #C4C7C6;
 $gray-200: #B0B3B2;
 $gray-300: #9C9FA1;
@@ -35,16 +35,16 @@ $gray-700: #7A7C81;
 $gray-800: #595359;
 $gray-900: #242A36;
 
-$dark: #002454;
-$light: $primary-dark;
+$dark: #000F39;
+$light: #FFEBD2;
 $black: #242A36;
 
 $body-color: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
 
-$link-color: $secondary;
-$link-hover-color: #009ADF;
+$link-color: #0045D1; // #0041af;
+$link-hover-color: #0063FF; // #009deb; // #009ADF;
 $link-alt-color: $fill-primary;
 $link-alt-hover-color: $primary;
 $link-alt-hover-dark-color: $accent-dark;
@@ -73,7 +73,7 @@ $scales: (
 
 $font-size-sm: map-get($scales, -3);
 $font-size-base: map-get($scales, -2);
-$font-size-lg: map-get($scales, -2);
+$font-size-lg: $font-size-base;
 $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-lg;
 
@@ -107,6 +107,19 @@ $spacers: (
     10: 7.4505805969rem,
 );
 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 478px,
+  md: 767px,
+  lg: 991px,
+  xl: 1440px,
+  xxl: 1920px,
+);
+
+$container-max-widths: ();
+
+$container-padding-x: 12.5vw;
+
 $grid-gutter-width: map-get($spacers, 2); // 2 feels the most modern
 $line-height-base: 1.5088720428;
 $headings-line-height: 1.2070976343;
@@ -114,8 +127,8 @@ $paragraph-margin-bottom: map-get($spacers, 5);
 
 // Headings Variables
 $headings-margin-bottom: map-get($spacers, 4);
-$headings-font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+$font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+$headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 700;
 
 // Type Variables
@@ -129,7 +142,7 @@ $navbar-light-hover-color: $link-alt-hover-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: $spacer;
 $nav-link-padding-x: $spacer;
-$nav-link-font-weight: 500;
+$nav-link-font-weight: 600;
 $nav-link-transition: none;
 
 $navbar-dark-color: $text-dark;
@@ -138,10 +151,12 @@ $navbar-dark-active-color: $link-alt-hover-dark-color;
 
 $input-btn-padding-y: map-get($spacers, 1);
 $input-btn-padding-x: map-get($spacers, 3);
-$btn-font-weight: 500;
+$btn-font-weight: 600;
 
 $border-radius: map-get($spacers, -3);
 $border-color: rgba(16, 16, 0, 0.1607843137); // 15.659 // #D9D9D6;
+
+$enable-negative-margins: true;
 $enable-transitions: false;
 
 @import 'variables.scss';
