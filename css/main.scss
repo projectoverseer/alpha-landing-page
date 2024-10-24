@@ -3,49 +3,50 @@
 @charset 'utf-8';
 @import 'functions.scss';
 
-$text: #242A36;
+$text: #252525;
 $background: #fff;
 $text-dark: #fff;
 
 // Primary Colors (for glyphs and illustrations only; do not use for text)
-$primary: #FF6500;
-$primary-dark: #D2EDFF; // #cfe5f2;
-$accent: #FF9600; // #F68E2D;
-$accent-dark: #FFAD00; // #FFB719;
+$primary: #FF6A00; // #FD6500;
+$primary-dark: #CAFFFE; // #D2EBFF;
+$accent: #FFAD00; // #FF9600;
+$accent-dark: $accent;
 
 // Fill Colors (use with white text)
-$fill-primary: #d13000; // #d23800;
+$fill-primary: #C00B00; // #d13000;
 $fill-primary-dark: $fill-primary;
 $fill-accent: $primary;
 $fill-accent-dark: $primary;
 
-$secondary: #004FA9; // #0051a8;
+$secondary: #0059A6; // #004A97;
 $blue: $secondary;
 $orange: $primary;
 $white: $background;
 
-$gray-50: #F0F0F0;
-$gray-100: #C4C7C6;
-$gray-200: #B0B3B2;
-$gray-300: #9C9FA1;
-$gray-400: #A8ADAC;
-$gray-500: #9B9A9E;
-$gray-600: #8D8890;
-$gray-700: #7A7C81;
-$gray-800: #595359;
-$gray-900: #242A36;
+$gray-50:  #F1F0F1;
+$gray-100: #E2E1E2;
+$gray-200: #C7C6C6;
+$gray-300: #ACABAC;
+$gray-400: #939293;
+$gray-500: #7B7B7B;
+$gray-600: #656565;
+$gray-700: #505050;
+$gray-800: #3E3D3E;
+$gray-900: #2D2C2D;
+$gray-950: #252525;
 
-$dark: #000F39;
-$light: #FFEBD2;
-$black: #242A36;
+$dark: #001647; // #000F39;
+$light: #FFEDD7;
+$black: #1D1D1D;
 
 $body-color: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
 
-$link-color: #0045D1; // #0041af;
-$link-hover-color: #0063FF; // #009deb; // #009ADF;
-$link-alt-color: $fill-primary;
+$link-color: #0059B4; // #0045D1;
+$link-hover-color: #0059B8;
+$link-alt-color: #E05600; // #DE5100;
 $link-alt-hover-color: $primary;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
