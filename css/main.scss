@@ -90,6 +90,7 @@ $h1-font-size: map-get($scales, 6);
 $spacer: 1rem;
 
 $spacers: (
+   -2: 0.25rem,
    -1: 0.5rem,
     0: 0rem,
     1: 1rem,
@@ -142,7 +143,7 @@ $navbar-light-color: $text;
 $navbar-light-hover-color: $link-alt-hover-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: map-get($spacers, 1);
-$nav-link-padding-x: $grid-gutter-width;
+$navbar-nav-link-padding-x: map-get($spacers, 2) / 2; // NOTICE: This may be fixed in future Bootstrap versions
 $nav-link-font-weight: 600;
 $nav-link-transition: none;
 

@@ -23,7 +23,7 @@ html {
 }
 
 :root {
-    --shadow-color: 160deg 0% 11.25%;
+    --shadow-color: 0deg 0% 0%;
     --shadow-elevation-low:
         0.3px 0.5px 0.4px hsl(var(--shadow-color) / 0.19),
         0.3px 0.7px 0.6px -2.5px hsl(var(--shadow-color) / 0.13),
@@ -92,26 +92,30 @@ h6,
 
 h1, .h1 {
     line-height: 4rem / $h1-font-size;
-    margin-bottom: 4rem * 1/3;
+    margin-bottom: map-get($spacers, 2);
 }
 
 h2, .h2 {
     line-height: 3rem / $h2-font-size;
-    margin-bottom: 3rem * 2/3;
+    margin-bottom: map-get($spacers, 4);
 }
 
 h3, .h3 {
     line-height: 2.5rem / $h3-font-size;
-    margin-bottom: 2.5rem * 2/3;
+    margin-bottom: map-get($spacers, 3);
 }
 
 h4, .h4 {
     line-height: 2rem / $h4-font-size;
-    margin-bottom: 2rem * 2/3;
+    margin-bottom: map-get($spacers, 2);
 
     &.h4-adjust-mb {
-        margin-bottom: 2rem * 2/3 + 1.5rem * 1/3;
+        margin-bottom: map-get($spacers, 2) + 1.5rem * 1/3;
     }
+}
+
+.font-display {
+    font-family: $headings-font-family;
 }
 
 hr {
@@ -278,7 +282,8 @@ header {
     min-height: 100vh;
     height: fit-content;
     background-position: center;
-    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/hero.webp');
+    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/hero.jpg');
+    background-size: 100vw;
     color: $text-dark;
 
     .header-content {
@@ -419,7 +424,8 @@ header {
 
 .bi {
     color: $secondary;
-    height: $h4-font-size * 2.0581710273;
+    height: map-get($scales, 7);
+    margin-bottom: map-get($spacers, 1);
 
     .bg-light & {
         color: $primary;
@@ -427,5 +433,11 @@ header {
 }
 
 .partner-logo {
-    height: $h4-font-size * 2.6180339887;
+    height: map-get($scales, 8);
+    margin-bottom: map-get($spacers, -1);
+}
+
+.client-portrait {
+    height: 14.125rem;
+    margin-bottom: map-get($spacers, -1);
 }
