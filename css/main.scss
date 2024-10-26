@@ -80,8 +80,8 @@ $font-size-lg: 1.125rem;
 $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-base;
 
-$h6-font-size: map-get($scales, -2);
-$h5-font-size: map-get($scales, -1);
+$h6-font-size: $font-size-sm;
+$h5-font-size: $font-size-lg;
 $h4-font-size: map-get($scales, 3);
 $h3-font-size: map-get($scales, 4);
 $h2-font-size: map-get($scales, 5);
@@ -118,10 +118,10 @@ $grid-breakpoints: (
 $container-padding-x: 40px;
 
 $container-max-widths: (
-  lg: 1280px + $container-padding-x,
+  lg: 1272px + $container-padding-x,
 );
 
-$grid-gutter-width: map-get($spacers, 1);
+$grid-gutter-width: map-get($spacers, 2);
 $line-height-base: 1.5;
 $headings-line-height: 2rem / $h4-font-size;
 $paragraph-margin-bottom: map-get($spacers, 2);

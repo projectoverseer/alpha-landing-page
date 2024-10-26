@@ -114,6 +114,14 @@ h4, .h4 {
     }
 }
 
+h5, .h5 {
+    line-height: 1rem / $h5-font-size;
+}
+
+h6, .h6 {
+    line-height: 1rem / $h6-font-size;
+}
+
 .font-display {
     font-family: $headings-font-family;
 }
@@ -433,7 +441,7 @@ header {
 }
 
 .partner-logo {
-    height: map-get($scales, 8);
+    height: map-get($scales, 9);
     margin-bottom: map-get($spacers, -1);
 }
 
