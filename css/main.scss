@@ -79,6 +79,8 @@ $font-size-base: 1rem;
 $font-size-lg: 1.125rem;
 $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-base;
+$blockquote-font-size: $font-size-lg;
+$blockquote-footer-font-size: $font-size-sm;
 
 $h6-font-size: $font-size-sm;
 $h5-font-size: $font-size-lg;
@@ -133,7 +135,7 @@ $headings-font-family: InterDisplay, $font-family-sans-serif;
 $headings-font-weight: 700;
 
 // Type Variables
-$hr-margin-y: map-get($spacers, 6) * 2/3 - 0.9375rem 0 map-get($spacers, 1) + 0.375rem;
+$hr-margin-y: 2rem - 0.75rem 0 map-get($spacers, 5) - 1.125rem;
 $hr-color: $primary;
 $hr-border-width: 0.208984375rem;
 $hr-opacity: 1;

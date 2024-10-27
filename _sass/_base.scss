@@ -132,7 +132,11 @@ hr {
     margin-right: auto;
 
     &.above-icons {
-        margin-bottom: map-get($scales, 7);
+        margin-bottom: map-get($spacers, 5);
+    }
+
+    &.above-img {
+        margin-bottom: map-get($spacers, 6);
     }
 }
 
@@ -427,25 +431,23 @@ header {
 .bi, .partner-logo {
     max-width: 100%;
     margin-left: 0.046875rem; // Adjust for visual balance with the Inter font
-    margin-bottom: 0.1875rem; // Compensate for font's descender height // -0.140625rem;
 }
 
 .bi {
     color: $secondary;
     height: map-get($scales, 7);
-    margin-bottom: map-get($spacers, 1);
+    margin-bottom: map-get($spacers, 1) + 0.1875rem; // Compensate for font's descender height
 
-    .bg-light & {
-        color: $primary;
+    &.above-h2 {
+        margin-bottom: 0.5625rem;
     }
 }
 
 .partner-logo {
     height: map-get($scales, 9);
-    margin-bottom: map-get($spacers, -1);
 }
 
 .client-portrait {
     height: 14.125rem;
-    margin-bottom: map-get($spacers, -1);
+    margin-bottom: 0.75rem; // 0.375rem; for font-size-base
 }
