@@ -151,7 +151,7 @@ h6, .h6 {
 }
 
 hr {
-    width: 6rem;
+    width: map-get($scales, 9);
     margin-left: auto;
     margin-right: auto;
 
@@ -190,6 +190,25 @@ a {
     }
 
     @include link-transitions();
+
+    svg.external-link-icon {
+        color: $gray;
+        display: inline-block;
+        height: .875rem;
+        margin-left: .125rem;
+        width: .875rem;
+        // margin-bottom: .1875rem;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            color: $link-hover-color;
+
+            svg.external-link-icon {
+                color: $link-hover-color !important;
+            }
+        }
+    }
 }
 
 :is(ul, ol).spaced-items li {
@@ -282,10 +301,12 @@ footer {
                 .active:focus:not(:focus-visible) {
                     color: $navbar-dark-color;
                 }
-
-                &:not(.active):hover,
-                &:not(.active):hover:active {
-                    color: $navbar-dark-hover-color;
+                
+                @media (hover: hover) and (pointer: fine) {
+                    &:not(.active):hover,
+                    &:not(.active):hover:active {
+                        color: $navbar-dark-hover-color;
+                    }
                 }
             }
         }
@@ -308,9 +329,11 @@ footer {
                     color: currentColor;
                 }
 
-                &:not(.active):hover,
-                &:not(.active):hover:active {
-                    color: $navbar-light-hover-color;
+                @media (hover: hover) and (pointer: fine) {
+                    &:not(.active):hover,
+                    &:not(.active):hover:active {
+                        color: $navbar-light-hover-color;
+                    }
                 }
             }
         }
@@ -343,7 +366,7 @@ header {
     text-wrap: pretty;
     max-width: 478px;
 
-    :last-child {
+    & > :last-child {
         margin-bottom: map-get($spacers, 5);
     }
 
@@ -427,12 +450,14 @@ header {
     //     background-color: $white;
     // }
 
-    &:hover,
-    &:focus-visible,
-    &:active,
-    &:focus:not(:focus-visible) {
-        color: $text;
-        background-color: $gray-100;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover,
+        &:focus-visible,
+        &:active,
+        &:focus:not(:focus-visible) {
+            color: $text;
+            background-color: $gray-100;
+        }
     }
 }
 
@@ -445,12 +470,14 @@ header {
     //     color: $text-dark;
     // }
 
-    &:hover,
-    &:focus-visible,
-    &:active,
-    &:focus:not(:focus-visible) {
-        color: $text-dark;
-        background-color: $fill-accent;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover,
+        &:focus-visible,
+        &:active,
+        &:focus:not(:focus-visible) {
+            color: $text-dark;
+            background-color: $fill-accent;
+        }
     }
 }
 

@@ -41,7 +41,7 @@ $light: #FFEDD7;
 $black: #1D1D1D;
 
 $body-color: $text;
-$gray: $gray-400;
+$gray: $gray-600;
 $gray-dark: $gray-800;
 
 $link-color: #005ECC; // #0059B4;
@@ -141,7 +141,7 @@ $headings-font-weight: 700;
 // Type Variables
 $hr-margin-y: 2rem - 0.75rem 0 map-get($spacers, 5) - 1.125rem;
 $hr-color: $primary;
-$hr-border-width: 0.208984375rem;
+$hr-border-width: 0.28125rem;
 $hr-opacity: 1;
 
 $navbar-padding-y: 0;
