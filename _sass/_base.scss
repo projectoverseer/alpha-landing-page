@@ -22,16 +22,24 @@ svg, img {
 }
 
 @media (forced-colors: active) {
-    body {
-        color: WindowText;
-        background-color: Window;
+    a svg.external-link-icon, a:hover svg.external-link-icon, a.nav-link {
+        color: LinkText !important;
+    }
+
+    .btn {
+        color: ButtonText !important;
+        background-color: ButtonFace !important;
+    }
+
+    hr, .bi {
+        color: Highlight !important;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none;
-        transition: none;
+        scroll-behavior: auto;
     }
 }
 
@@ -197,15 +205,14 @@ a {
         height: .875rem;
         margin-left: .125rem;
         width: .875rem;
-        // margin-bottom: .1875rem;
     }
 
     @media (hover: hover) and (pointer: fine) {
-        &:hover {
+        body &:hover {
             color: $link-hover-color;
 
             svg.external-link-icon {
-                color: $link-hover-color !important;
+                color: $link-hover-color;
             }
         }
     }
@@ -343,17 +350,18 @@ footer {
 // Homepage Header
 header {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh + 12.5px);
     height: fit-content;
     background-position: center;
+    background-attachment: fixed;
     background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/hero.jpg');
-    background-size: 100vw;
+    background-size: cover;
     color: $text-dark;
 
     .header-content {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 50vh;
+        transform: translateY(-30.9vh);
 
         p, h2 {
             max-width: 60ch;

@@ -1,7 +1,7 @@
 (function () {
   function updateNavState() {
     const navbar = document.querySelector('#globalnav');
-    if (window.scrollY > 0) {
+    if (window.scrollY >= 12.5) {
       navbar.classList.add('nav-active');
       navbar.setAttribute('data-bs-theme', 'light');
     } else {
