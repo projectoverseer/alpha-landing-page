@@ -3,7 +3,7 @@
 @charset 'utf-8';
 @import 'functions.scss';
 
-$text: #252525;
+$text: #202020;
 $background: #fff;
 $text-dark: #fff;
 
@@ -34,7 +34,7 @@ $gray-600: #656565;
 $gray-700: #505050;
 $gray-800: #3E3D3E;
 $gray-900: #2D2C2D;
-$gray-950: #252525;
+$gray-950: #202020;
 
 $dark: #001647; // #000F39;
 $light: #FFEDD7;
@@ -44,13 +44,16 @@ $body-color: $text;
 $gray: $gray-400;
 $gray-dark: $gray-800;
 
-$link-color: #0059B4; // #0045D1;
-$link-hover-color: #0059B8;
+$link-color: #005ECC; // #0059B4;
+$link-hover-color: #0057C1;
 $link-alt-color: #E05600; // #DE5100;
 $link-alt-hover-color: $primary;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
+
+$focus-ring-opacity: .25;
+$focus-ring-color: rgba($link-color, $focus-ring-opacity);
 
 $scales: (
     -8: 0.125rem,
@@ -81,6 +84,7 @@ $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-base;
 $blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-sm;
+$blockquote-footer-color: $gray-dark;
 
 $h6-font-size: $font-size-sm;
 $h5-font-size: $font-size-lg;
@@ -120,7 +124,7 @@ $grid-breakpoints: (
 $container-padding-x: 40px;
 
 $container-max-widths: (
-  lg: 1272px + $container-padding-x,
+  lg: 1280px + $container-padding-x,
 );
 
 $grid-gutter-width: map-get($spacers, 2);
