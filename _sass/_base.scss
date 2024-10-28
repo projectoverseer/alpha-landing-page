@@ -11,7 +11,7 @@ body {
 
 html {
     text-wrap: balance;
-    text-underline-offset: 0.28125em;
+    text-underline-offset: 0.28em;
     text-decoration-thickness: from-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -494,22 +494,22 @@ header {
 .bi {
     color: $secondary;
     height: map-get($scales, 7);
-    margin-bottom: map-get($spacers, 1) + 0.1875rem; // Compensate for font's descender height
+    margin-bottom: map-get($spacers, 3) - 0.5625rem; // Compensate for font's descender height
 
     &.above-h2 {
-        margin-bottom: 0.5625rem;
+        margin-bottom: map-get($spacers, 2) - 0.46875rem;
     }
 }
 
 .partner-logo-card {
     box-sizing: content-box;
-    aspect-ratio: 16/9;
-    margin-bottom: map-get($spacers, 1) - 0.1875rem;
+    aspect-ratio: 7/4;
+    margin-bottom: map-get($spacers, 1) - 0.5625rem;
 }
 
 .partner-logo {
-    width: 3/4 * 100%;
-    height: 2/3 * 100%;
+    width: (5/7 + 2/3/7) * 100%;
+    height: (2/4 + 2/3/4) * 100%;
     object-fit: contain;
     margin: auto;
     // height: map-get($scales, 9);
