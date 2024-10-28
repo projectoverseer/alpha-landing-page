@@ -1,5 +1,5 @@
 @mixin link-transitions() {
-    transition: .3s cubic-bezier(.165, .84, .44, 1), box-shadow .3s cubic-bezier(.165, .84, .44, 1);
+    transition: .3s cubic-bezier(.165, .84, .44, 1);
     will-change: color, background-color, box-shadow;
 }
 
@@ -11,6 +11,8 @@ body {
 
 html {
     text-wrap: balance;
+    text-underline-offset: 0.28125em;
+    text-decoration-thickness: from-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -26,7 +28,7 @@ svg, img {
         color: LinkText !important;
     }
 
-    .btn {
+    .btn-xl {
         color: ButtonText !important;
         background-color: ButtonFace !important;
     }
@@ -92,16 +94,6 @@ picture {
     -ms-user-select: none;
     user-select: none;
 }
-
-.visuallyhidden:not(:focus):not(:active) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
 
 h1,
 h2,
@@ -182,14 +174,11 @@ hr {
     .bg-dark & {
         color: $primary-dark;
     }
-
-    // .bg-light & {
-    //     color: $fill-primary;
-    // }
 }
 
 a {
     font-weight: 600;
+    text-decoration-color: rgba($link-hover-color, 24.26620179%);
 
     &:focus-visible {
         color: $link-hover-color;
@@ -200,6 +189,8 @@ a {
     @include link-transitions();
 
     svg.external-link-icon {
+        @include link-transitions();
+
         color: $gray;
         display: inline-block;
         height: .875rem;
@@ -207,13 +198,12 @@ a {
         width: .875rem;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-        body &:hover {
-            color: $link-hover-color;
+    &:hover {
+        color: $link-hover-color;
+        text-decoration-color: $link-hover-color;
 
-            svg.external-link-icon {
-                color: $link-hover-color;
-            }
+        svg.external-link-icon {
+            color: $link-hover-color;
         }
     }
 }
@@ -253,7 +243,7 @@ footer {
     $logo-padding: 0; // map-get($spacers, -1);
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
-    transition: background-color .3s cubic-bezier(.165, .84, .44, 1), box-shadow .3s cubic-bezier(.165, .84, .44, 1);
+    transition: .3s cubic-bezier(.165, .84, .44, 1);
 
     will-change: background-color, box-shadow;
 
@@ -288,7 +278,6 @@ footer {
     }
 
     @include media-breakpoint-up(md) {
-        will-change: background-color, box-shadow;
 
         &:not(.nav-active) {
             background-color: transparent;
@@ -304,16 +293,12 @@ footer {
 
             .nav-item .nav-link {
 
-                &:not(.active):focus:not(:focus-visible),
-                .active:focus:not(:focus-visible) {
-                    color: $navbar-dark-color;
+                &:focus:not(:focus-visible) {
+                    color: initial;
                 }
-                
-                @media (hover: hover) and (pointer: fine) {
-                    &:not(.active):hover,
-                    &:not(.active):hover:active {
-                        color: $navbar-dark-hover-color;
-                    }
+
+                &:hover, &:focus-visible {
+                    color: $navbar-dark-hover-color !important;
                 }
             }
         }
@@ -321,8 +306,9 @@ footer {
         &.nav-active {
             background-color: $background;
             box-shadow: var(--box-shadow-menu);
-
-            transition: background-color .4s ease-out, box-shadow .4s ease-out;
+            transition: .4s ease-out;
+            
+            will-change: background-color, box-shadow;
 
 
             .logo-white {
@@ -331,16 +317,16 @@ footer {
 
             .nav-link {
 
-                &:not(.active):focus:not(:focus-visible),
-                .active:focus:not(:focus-visible) {
-                    color: currentColor;
+                &:focus:not(:focus-visible) {
+                    color: initial;
                 }
 
-                @media (hover: hover) and (pointer: fine) {
-                    &:not(.active):hover,
-                    &:not(.active):hover:active {
-                        color: $navbar-light-hover-color;
-                    }
+                &.active, &.show {
+                    color: $navbar-light-active-color !important;
+                }
+
+                &:hover, &:focus-visible {
+                    color: $navbar-light-hover-color !important;
                 }
             }
         }
@@ -353,7 +339,6 @@ header {
     min-height: calc(100vh + 12.5px);
     height: fit-content;
     background-position: center;
-    background-attachment: fixed;
     background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/hero.jpg');
     background-size: cover;
     color: $text-dark;
@@ -410,7 +395,7 @@ header {
         position: absolute;
         bottom: 0;
 
-        transition: opacity .4s ease-out;
+        @include link-transitions();
         will-change: opacity;
 
         .portfolio-box-caption-content {
@@ -440,17 +425,37 @@ header {
 }
 
 // Button Styles
-@mixin button-variant($color, $background) {
+@mixin btn-default($color, $background) {
     color: $color;
     background-color: $background;
-    box-sizing: content-box;
     border: none;
 
     @include link-transitions();
 }
 
+.btn-xl {
+    display: inline-block;
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    font-family: $btn-font-family;
+    font-size: $input-btn-font-size;
+    font-weight: $btn-font-weight;
+    line-height: $btn-line-height;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    border-radius: $btn-border-radius;
+    margin-top: map-get($spacers, 2) * 2 - $input-btn-padding-y - $paragraph-margin-bottom;
+    margin-bottom: map-get($spacers, 2) * 2 - $input-btn-padding-y;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .btn-secondary {
-    @include button-variant($text, $white);
+    @include btn-default($text, $white);
     box-shadow: var(--box-shadow-cta-secondary);
 
     // &:focus:not(:focus-visible) {
@@ -458,19 +463,15 @@ header {
     //     background-color: $white;
     // }
 
-    @media (hover: hover) and (pointer: fine) {
-        &:hover,
-        &:focus-visible,
-        &:active,
-        &:focus:not(:focus-visible) {
-            color: $text;
-            background-color: $gray-100;
-        }
+    &:hover,
+    &:focus-visible {
+        color: $text;
+        background-color: $gray-100;
     }
 }
 
 .btn-primary {
-    @include button-variant($text-dark, $fill-primary);
+    @include btn-default($text-dark, $fill-primary);
     box-shadow: var(--box-shadow-cta-colored);
 
     // &:focus:not(:focus-visible) {
@@ -478,20 +479,11 @@ header {
     //     color: $text-dark;
     // }
 
-    @media (hover: hover) and (pointer: fine) {
-        &:hover,
-        &:focus-visible,
-        &:active,
-        &:focus:not(:focus-visible) {
-            color: $text-dark;
-            background-color: $fill-accent;
-        }
+    &:hover,
+    &:focus-visible {
+        color: $text-dark;
+        background-color: $fill-accent;
     }
-}
-
-.btn-xl {
-    margin-top: map-get($spacers, 2) * 2 - $input-btn-padding-y - $paragraph-margin-bottom;
-    margin-bottom: map-get($spacers, 2) * 2 - $input-btn-padding-y;
 }
 
 .bi, .partner-logo {
@@ -509,13 +501,24 @@ header {
     }
 }
 
+.partner-logo-card {
+    box-sizing: content-box;
+    aspect-ratio: 16/9;
+    margin-bottom: map-get($spacers, 1) - 0.1875rem;
+}
+
 .partner-logo {
-    height: map-get($scales, 9);
+    width: 3/4 * 100%;
+    height: 2/3 * 100%;
+    object-fit: contain;
+    margin: auto;
+    // height: map-get($scales, 9);
+    // margin-bottom: 0.5rem;
 }
 
 .client-portrait {
     height: 14.125rem;
-    margin-bottom: 0.75rem; // 0.375rem; for font-size-base
+    margin-bottom: 0.9375rem; // 0.375rem; for font-size-base
 }
 
 .blockquote-footer {

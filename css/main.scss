@@ -49,7 +49,7 @@ $link-hover-color: #0057C1;
 $link-alt-color: #E05600; // #DE5100;
 $link-alt-hover-color: $primary;
 $link-alt-hover-dark-color: $accent-dark;
-$link-decoration: none;
+$link-decoration: underline;
 $link-hover-decoration: underline;
 
 $focus-ring-opacity: .25;
@@ -134,7 +134,8 @@ $paragraph-margin-bottom: map-get($spacers, 2);
 
 // Headings Variables
 $headings-margin-bottom: map-get($spacers, 2);
-$font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+$font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+$font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
 $headings-font-family: InterDisplay, $font-family-sans-serif;
 $headings-font-weight: 700;
 
@@ -163,6 +164,10 @@ $btn-font-weight: 600;
 
 $border-radius: 6.6875px;
 $border-color: rgba(16, 16, 0, 0.1607843137); // 15.659 // #D9D9D6;
+
+$card-border-width: 0.09375rem;
+$card-border-color: $gray-100;
+$card-border-radius: $border-radius;
 
 $enable-negative-margins: true;
 $enable-transitions: false;
