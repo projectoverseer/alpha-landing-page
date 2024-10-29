@@ -93,6 +93,9 @@ picture, .partner-logo-card img.partner-logo {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    user-drag: none;
+    -webkit-user-drag: none;
 }
 
 h1,
@@ -180,7 +183,7 @@ a {
     font-weight: 600;
     text-decoration-color: rgba($link-hover-color, 24.26620179%);
 
-    &:focus-visible {
+    &:focus-visible, .partner-logo-card:has(.stretched-link:focus-visible) ~ &:first-of-type {
         color: $link-hover-color;
         box-shadow: $focus-ring-box-shadow;
         outline: none;
@@ -198,7 +201,7 @@ a {
         width: .875rem;
     }
 
-    &:hover {
+    &:hover, .partner-logo-card:has(.stretched-link:hover) ~ &:first-of-type {
         color: $link-hover-color;
         text-decoration-color: $link-hover-color;
 
@@ -513,6 +516,8 @@ header {
         opacity: 0 !important;
     }
 
+    @include link-transitions();
+
     &:has(> .stretched-link:focus-visible) {
         box-shadow: $focus-ring-box-shadow;
     }
@@ -525,7 +530,7 @@ header {
 
 .partner-logo {
     width: 300px;
-    height: 128px;
+    height: 144px;
     object-fit: contain;
     margin: auto;
     // height: map-get($scales, 9);
