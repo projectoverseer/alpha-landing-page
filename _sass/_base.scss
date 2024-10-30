@@ -183,7 +183,7 @@ a {
     font-weight: 600;
     text-decoration-color: rgba($link-hover-color, 24.26620179%);
 
-    &:focus-visible, .partner-logo-card:has(.stretched-link:focus-visible) ~ &:first-of-type {
+    &:focus-visible { // , .partner-logo-card:has(~ &:first-of-type:focus-visible)
         color: $link-hover-color;
         box-shadow: $focus-ring-box-shadow;
         outline: none;
@@ -201,7 +201,7 @@ a {
         width: .875rem;
     }
 
-    &:hover, .partner-logo-card:has(.stretched-link:hover) ~ &:first-of-type {
+    &:hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
         color: $link-hover-color;
         text-decoration-color: $link-hover-color;
 
@@ -508,9 +508,14 @@ header {
     box-sizing: content-box;
     aspect-ratio: 7/4;
     margin-bottom: map-get($spacers, 1) - 0.5625rem;
-    background: white !important;
+    background: white;
 
-    .stretched-link {
+    &:hover:has(a.stretched-link),
+    &:has(~ a:first-of-type:focus-visible) {
+        box-shadow: inset 0 0 100vmax 100vmax rgba(17, 0, 17, 0.0588235294); // #F1F0F1
+    }
+
+    a.stretched-link {
         margin-top: -3rem;
         line-height: 3rem;
         opacity: 0 !important;
@@ -518,13 +523,17 @@ header {
 
     @include link-transitions();
 
-    &:has(> .stretched-link:focus-visible) {
-        box-shadow: $focus-ring-box-shadow;
+    &#spica-card {
+        background: #02743C;
+        border-color: #02743C;
     }
 
-    &#spica-card {
-        background: #0F773C !important;
-        border-color: #0F773C !important;
+    &:is(#spica-card) {
+        &:hover:has(a.stretched-link),
+        &:has(~ a:first-of-type:focus-visible) {
+            box-shadow: inset 0 0 100vmax 100vmax rgba(0, 0, 0, 0.0549019607);
+            filter: saturate(1.0580912862);
+        }
     }
 }
 
