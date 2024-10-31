@@ -10,6 +10,7 @@ body {
 }
 
 html {
+    font-size: calc(max(12px, min(100%, 24px)));
     text-wrap: balance;
     text-underline-offset: 0.28em;
     text-decoration-thickness: from-font;
@@ -241,20 +242,16 @@ footer {
 
 // Navigation
 .navbar {
-    // --navbar-height: #{map-get($spacers, -2) * 2 + 2.5rem};
-    // height: var(--navbar-height);
-    $logo-padding: 0; // map-get($spacers, -1);
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
     transition: .3s cubic-bezier(.165, .84, .44, 1);
+    height: 56px;
 
     will-change: background-color, box-shadow;
 
     .navbar-logo {
-        width: 150px;
-        // height: 42px;
+        height: 40px;
         aspect-ratio: 143/40;
-        // position: absolute;
         border-radius: 0;
     }
 
@@ -263,7 +260,6 @@ footer {
     }
 
     .navbar-brand {
-        padding: $logo-padding 0;
         margin-left: -0.1875rem; // Adjust for visual balance
     }
 
@@ -512,7 +508,7 @@ header {
 
     &:hover:has(a.stretched-link),
     &:has(~ a:first-of-type:focus-visible) {
-        box-shadow: inset 0 0 100vmax 100vmax rgba(17, 0, 17, 0.0588235294); // #F1F0F1
+        box-shadow: inset 0 0 100vmax 100vmax rgba(0, 0, 0, 0.05);
     }
 
     a.stretched-link {
@@ -531,8 +527,8 @@ header {
     &:is(#spica-card) {
         &:hover:has(a.stretched-link),
         &:has(~ a:first-of-type:focus-visible) {
-            box-shadow: inset 0 0 100vmax 100vmax rgba(0, 0, 0, 0.0549019607);
-            filter: saturate(1.0580912862);
+            // box-shadow: inset 0 0 100vmax 100vmax rgba(0, 0, 0, 0.0549019607);
+            filter: saturate(1.0526315789);
         }
     }
 }
