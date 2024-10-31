@@ -149,7 +149,7 @@ $navbar-padding-y: 0;
 $navbar-light-color: $text;
 $navbar-light-hover-color: $link-alt-hover-color;
 $navbar-light-active-color: $link-alt-color;
-$nav-link-padding-y: map-get($spacers, 1);
+$nav-link-padding-y: 0;
 $navbar-nav-link-padding-x: map-get($spacers, 2) / 2; // NOTICE: This may be fixed in future Bootstrap versions
 $nav-link-font-weight: 600;
 $nav-link-transition: none;
