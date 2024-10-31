@@ -3,6 +3,10 @@
 @charset 'utf-8';
 @import 'functions.scss';
 
+// @function round-to-px($rem-value) {
+  
+// }
+
 $text: #202020;
 $background: #fff;
 $text-dark: #fff;
@@ -75,6 +79,7 @@ $scales: (
     8: 5.375rem,
     9: 6.875rem,
     10: 8.6875rem,
+    13: 14.125rem,
 );
 
 $font-size-sm: 0.9375rem;
