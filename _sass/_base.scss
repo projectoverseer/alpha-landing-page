@@ -10,12 +10,12 @@ body {
 }
 
 html {
-    font-size: calc(max(12px, min(100%, 24px)));
     text-wrap: balance;
     text-underline-offset: 0.28em;
     text-decoration-thickness: from-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1; // 'cv10' 1, 'cv03' 1;
 }
@@ -269,11 +269,11 @@ footer {
 
     .nav-link {
         font-size: $font-size-sm;
-        line-height: $font-size-base * $line-height-base / $font-size-sm;
+        line-height: map-get($spacers, 3) / $font-size-sm;
     }
 
     .nav-item:last-of-type .nav-link {
-        padding-right: 0;
+        margin-right: -1 * $navbar-nav-link-padding-x;
     }
 
     @include media-breakpoint-up(md) {
@@ -512,8 +512,8 @@ header {
     }
 
     a.stretched-link {
+        line-height: 3rem; // An arbitrary value. Make sure it's bigger than the font size.
         margin-top: -3rem;
-        line-height: 3rem;
         opacity: 0 !important;
     }
 
@@ -543,12 +543,16 @@ header {
 }
 
 .client-portrait {
-    height: map-get($spacers, 13);
+    width: map-get($scales, 12);
     margin-bottom: 0.9375rem; // 0.375rem; for font-size-base
+}
+
+.blockquote {
+    line-height: $line-height-lg;
 }
 
 .blockquote-footer {
     font-weight: 600;
-    margin-top: -0.75rem;
-    line-height: map-get($spacers, 2) / $blockquote-footer-font-size;
+    margin-top: 0;
+    line-height: $line-height-sm;
 }
