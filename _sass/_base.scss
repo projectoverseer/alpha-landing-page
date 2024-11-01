@@ -133,13 +133,12 @@ h3, .h3 {
     margin-bottom: map-get($spacers, 3);
 }
 
-h4, .h4 {
-    line-height: map-get($spacers, 3) / $h4-font-size;
-    margin-bottom: map-get($spacers, 2);
+$h4-line-height: map-get($spacers, 3) / $h4-font-size;
+$h4-margin-bottom: map-get($spacers, 2);
 
-    &.h4-adjust-mb {
-        margin-bottom: map-get($spacers, 2) + map-get($spacers, 2) * 1/3;
-    }
+h4, .h4 {
+    line-height: $h4-line-height;
+    margin-bottom: $h4-margin-bottom;
 }
 
 h5, .h5 {
@@ -150,8 +149,20 @@ h6, .h6 {
     line-height: map-get($spacers, 1) / $h6-font-size;
 }
 
-.font-display {
-    font-family: $headings-font-family;
+small, .small {
+    line-height: $line-height-sm;
+}
+
+.adjust-mt-small {
+    &.mt-2 {
+        margin-top: map-get($spacers, 2) + $line-height-sm * $font-size-sm + snap-to-px(2/15) !important;
+    }
+}
+
+.adjust-mb-h4 {
+    &.mb-0 {
+        margin-bottom: $h4-line-height * $h4-font-size !important;
+    }
 }
 
 hr {
