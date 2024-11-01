@@ -7,6 +7,7 @@ description: >- # TODO: Revise description
   những doanh nghiệp có mong muốn dẫn đầu trong lĩnh vực dệt may.
 # baseurl: # the subpath of your site, e.g. /blog
 url: https://www.alphasoftwaregroup.com # the base hostname & protocol for your site, e.g. http://example.com
+alpha_home_url: https://www.alphasoftwaregroup.com
 
 # Build settings
 markdown: kramdown
