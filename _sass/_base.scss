@@ -1,5 +1,5 @@
 @mixin link-transitions() {
-    transition: .3s cubic-bezier(.165, .84, .44, 1);
+    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1), text-decoration-color 0s;
     will-change: color, background-color, box-shadow;
 }
 
@@ -87,7 +87,7 @@ picture {
 }
 
 .noselect,
-picture, .partner-logo-card img.partner-logo {
+picture, .navbar-logo, .partner-logo-card img.partner-logo {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -193,7 +193,7 @@ hr {
 
 a {
     font-weight: 600;
-    text-decoration-color: rgba($link-hover-color, 24.26620179%);
+    text-decoration-color: rgba($link-color, 24.26620179%);
 
     &:focus-visible { // , .partner-logo-card:has(~ &:first-of-type:focus-visible)
         color: $link-hover-color;
@@ -201,11 +201,11 @@ a {
         outline: none;
     }
 
-    @include link-transitions();
+    &.nav-link {
+        @include link-transitions();
+    }
 
     svg.external-link-icon {
-        @include link-transitions();
-
         color: $gray;
         display: inline-block;
         height: .875rem;
@@ -255,19 +255,28 @@ footer {
 .navbar {
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
-    transition: .3s cubic-bezier(.165, .84, .44, 1);
+    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1); // Back to top
     height: 56px;
 
     will-change: background-color, box-shadow;
 
     .navbar-logo {
+        position: relative;
         height: 40px;
         aspect-ratio: 143/40;
         border-radius: 0;
+        will-change: visibility;
     }
 
     .logo-white {
-        display: none;
+        visibility: hidden;
+        will-change: visibility;
+    }
+
+    .logo-color {
+        margin-left: -143px;
+        visibility: visible;
+        will-change: visibility;
     }
 
     .navbar-brand {
@@ -294,11 +303,13 @@ footer {
             box-shadow: none;
 
             .logo-color {
-                display: none;
+                visibility: hidden;
+                will-change: visibility;
             }
 
             .logo-white {
-                display: flex;
+                visibility: visible;
+                will-change: visibility;
             }
 
             .nav-item .nav-link {
@@ -316,13 +327,19 @@ footer {
         &.nav-active {
             background-color: $background;
             box-shadow: var(--box-shadow-menu);
-            transition: .4s ease-out;
+            transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
             
             will-change: background-color, box-shadow;
 
 
             .logo-white {
-                display: none;
+                visibility: hidden;
+                will-change: visibility;
+            }
+
+            .logo-color {
+                visibility: visible;
+                will-change: visibility;
             }
 
             .nav-link {
@@ -439,8 +456,7 @@ header {
     color: $color;
     background-color: $background;
     border: none;
-
-    @include link-transitions();
+    transition: none;
 }
 
 .btn-xl {
@@ -517,9 +533,11 @@ header {
     margin-bottom: map-get($spacers, 1) - 0.5625rem;
     background: white;
 
+    $card-overlay-opacity: (255 - 241) / 255;
+
     &:hover:has(a.stretched-link),
     &:has(~ a:first-of-type:focus-visible) {
-        box-shadow: inset 0 0 100vmax 100vmax rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 0 100vmax 100vmax rgba(17, 0, 17, $card-overlay-opacity);
     }
 
     a.stretched-link {
@@ -527,8 +545,6 @@ header {
         margin-top: -3rem;
         opacity: 0 !important;
     }
-
-    @include link-transitions();
 
     &#spica-card {
         background: #02743C;
@@ -538,8 +554,7 @@ header {
     &:is(#spica-card) {
         &:hover:has(a.stretched-link),
         &:has(~ a:first-of-type:focus-visible) {
-            // box-shadow: inset 0 0 100vmax 100vmax rgba(0, 0, 0, 0.0549019607);
-            filter: saturate(1.0526315789);
+            filter: saturate(1 / (1 - $card-overlay-opacity));
         }
     }
 }
