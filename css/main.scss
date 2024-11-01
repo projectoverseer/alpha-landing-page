@@ -141,7 +141,7 @@ $container-max-widths: (
 
 $grid-gutter-width: map-get($spacers, 2);
 $line-height-base: snap-line-height-to-px(1.5, $font-size-base);
-$line-height-sm: snap-line-height-to-px(1.5, $font-size-sm);
+$line-height-sm: snap-line-height-to-px(1.5, $font-size-sm); // TODO: spacers 3
 $line-height-lg: snap-line-height-to-px(1.5, $font-size-lg);
 $headings-line-height: snap-line-height-to-px(1.3, $h4-font-size);
 $paragraph-margin-bottom: map-get($spacers, 2);
