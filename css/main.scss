@@ -11,10 +11,6 @@
   @return round($line-height * ($font-size / 1rem) * 16px) / 16px / ($font-size / 1rem);
 }
 
-$text: #050505;
-$background: #fff;
-$text-dark: #fff;
-
 // Primary Colors (for glyphs and illustrations only; do not use for text)
 $primary: #FF6A00; // #FD6500;
 $primary-dark: #CAFFFE; // #D2EBFF;
@@ -30,7 +26,6 @@ $fill-accent-dark: $primary;
 $secondary: #0059A6; // #004A97;
 $blue: $secondary;
 $orange: $primary;
-$white: $background;
 
 $gray-50:  #F1F0F1;
 $gray-100: #E2E1E2;
@@ -47,6 +42,12 @@ $gray-950: #202020;
 $dark: #001647; // #000F39;
 $light: #FFEDD7;
 $black: #1D1D1D;
+$white: #fff;
+
+$text: #050505;
+$text-muted: $gray-400;
+$background: $white;
+$text-dark: $white;
 
 $body-color: $text;
 $gray: $gray-600;
@@ -98,8 +99,8 @@ $blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-sm;
 $blockquote-footer-color: $text;
 
-$h6-font-size: $font-size-sm;
-$h5-font-size: $font-size-lg;
+$h6-font-size: map-get($scales, 1);
+$h5-font-size: map-get($scales, 2);
 $h4-font-size: map-get($scales, 3);
 $h3-font-size: map-get($scales, 4);
 $h2-font-size: map-get($scales, 5);
@@ -141,7 +142,7 @@ $container-max-widths: (
 
 $grid-gutter-width: map-get($spacers, 2);
 $line-height-base: snap-line-height-to-px(1.5, $font-size-base);
-$line-height-sm: snap-line-height-to-px(1.5, $font-size-sm); // TODO: spacers 3
+$line-height-sm: snap-line-height-to-px(1.5, $font-size-sm);
 $line-height-lg: snap-line-height-to-px(1.5, $font-size-lg);
 $headings-line-height: snap-line-height-to-px(1.3, $h4-font-size);
 $paragraph-margin-bottom: map-get($spacers, 2);
