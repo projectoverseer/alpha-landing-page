@@ -1,0 +1,7 @@
+{
+    "devDependencies": {
+        "cssnano": "^7.0.6",
+        "postcss-cli": "^2.6.0",
+        "purgecss": "^6.0.0"
+    }
+}
