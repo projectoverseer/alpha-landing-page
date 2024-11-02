@@ -10,6 +10,7 @@ body {
 }
 
 html {
+    box-sizing: border-box;
     text-wrap: balance;
     text-underline-offset: 0.28em;
     text-decoration-thickness: from-font;
@@ -121,6 +122,26 @@ h6,
     .bg-secondary & {
         color: $text-dark;
     }
+}
+
+h1, .h1 {
+    line-height: $h1-line-height;
+    margin-bottom: $h1-margin-bottom;
+}
+
+h2, .h2 {
+    line-height: $h2-line-height;
+    margin-bottom: $h2-margin-bottom;
+}
+
+h3, .h3 {
+    line-height: $h3-line-height;
+    margin-bottom: $h3-margin-bottom;
+}
+
+h4, .h4 {
+    line-height: $h4-line-height;
+    margin-bottom: $h4-margin-bottom;
 
     &:has(:is(small, .small)) {
         display: flex;
@@ -130,47 +151,9 @@ h6,
     }
 }
 
-$magic-ratio: 3/15;
-
-$h1-line-height: map-get($spacers, 7) / $h1-font-size;
-$h1-margin-bottom: map-get($spacers, 2);
-
-h1, .h1 {
-    line-height: $h1-line-height;
-    margin-bottom: $h1-margin-bottom;
-}
-
-$h2-line-height: map-get($spacers, 5) / $h2-font-size;
-$h2-margin-bottom: map-get($spacers, 4);
-
-h2, .h2 {
-    line-height: $h2-line-height;
-    margin-bottom: $h2-margin-bottom;
-}
-
-$h3-line-height: map-get($spacers, 4) / $h3-font-size;
-$h3-margin-bottom: map-get($spacers, 3);
-
-h3, .h3 {
-    line-height: $h3-line-height;
-    margin-bottom: $h3-margin-bottom;
-}
-
-$h4-line-height: map-get($spacers, 3) / $h4-font-size;
-$h4-margin-bottom: map-get($spacers, 2);
-
-h4, .h4 {
-    line-height: $h4-line-height;
-    margin-bottom: $h4-margin-bottom;
-}
-
-$h5-line-height: map-get($spacers, 2) / $h5-font-size;
-
 h5, .h5 {
     line-height: $h5-line-height;
 }
-
-$h6-line-height: map-get($spacers, 1) / $h6-font-size;
 
 h6, .h6 {
     line-height: $h6-line-height;
@@ -212,6 +195,10 @@ hr {
 }
 
 hr {
+    border: none !important;
+    height: $hr-border-width;
+    background: currentColor;
+
     color: $primary;
 
     .bg-primary & {
@@ -551,7 +538,6 @@ header {
 
 .bi {
     color: $secondary;
-    height: map-get($scales, 7);
     margin-bottom: map-get($spacers, 4) - $h4-line-height;
 
     &.above-h2 {
@@ -560,9 +546,8 @@ header {
 }
 
 .partner-logo-card {
-    box-sizing: content-box;
     aspect-ratio: 7/4;
-    margin-bottom: map-get($spacers, 4) - $line-height-sm; // This creates a nice dissonance
+    margin-bottom: map-get($spacers, 4) - $h5-line-height;
     background: white;
 
     $card-overlay-opacity: (255 - 241) / 255;
@@ -580,7 +565,7 @@ header {
 
     &#spica-card {
         background: #02743C;
-        border-color: #02743C;
+        border: none;
     }
 
     &:is(#spica-card) {

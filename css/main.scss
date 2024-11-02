@@ -41,11 +41,11 @@ $gray-950: #202020;
 
 $dark: #001647; // #000F39;
 $light: #FFEDD7;
-$black: #1D1D1D;
+$black: #050505;
 $white: #fff;
 
 $text: #050505;
-$text-muted: $gray-400;
+$text-muted: $gray-600;
 $background: $white;
 $text-dark: $white;
 
@@ -64,6 +64,7 @@ $link-hover-decoration: underline;
 $focus-ring-opacity: .25;
 $focus-ring-color: rgba($link-color, $focus-ring-opacity);
 
+$magic-ratio: 3/15;
 $scales: (
     -8: snap-to-px(.146),
     -7: snap-to-px(.186),
@@ -154,10 +155,21 @@ $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, 
 $headings-font-family: InterDisplay, $font-family-sans-serif;
 $headings-font-weight: 700;
 
+$h1-line-height: map-get($spacers, 7) / $h1-font-size;
+$h1-margin-bottom: map-get($spacers, 2);
+$h2-line-height: map-get($spacers, 5) / $h2-font-size;
+$h2-margin-bottom: map-get($spacers, 4);
+$h3-line-height: map-get($spacers, 4) / $h3-font-size;
+$h3-margin-bottom: map-get($spacers, 3);
+$h4-line-height: map-get($spacers, 3) / $h4-font-size;
+$h4-margin-bottom: map-get($spacers, 2);
+$h5-line-height: map-get($spacers, 2) / $h5-font-size;
+$h6-line-height: map-get($spacers, 1) / $h6-font-size;
+
 // Type Variables
-$hr-margin-y: 2rem - 0.75rem 0 map-get($spacers, 5) - 1.125rem;
+$hr-border-width: snap-to-px(4/3 * $magic-ratio);
+$hr-margin-y: snap-to-px(2 - .75) - $hr-border-width 0 snap-to-px(3 - 1.125) + $hr-border-width;// map-get($spacers, 5) - 1.125; TODO: Look into this.
 $hr-color: $primary;
-$hr-border-width: 0.28125rem;
 $hr-opacity: 1;
 
 $navbar-padding-y: 0;
@@ -177,10 +189,10 @@ $input-btn-padding-y: map-get($spacers, 1);
 $input-btn-padding-x: map-get($spacers, 2);
 $btn-font-weight: 600;
 
-$border-radius: 8.5px / 16 * 15;
+$border-radius: 1.6/3 * 1rem;
 $border-color: rgba(16, 16, 0, 0.1607843137); // 15.659 // #D9D9D6;
 
-$card-border-width: 0.09375rem;
+$card-border-width: snap-to-px(0.5 * $magic-ratio);
 $card-border-color: $gray-100;
 $card-border-radius: $border-radius;
 
