@@ -1,6 +1,6 @@
 title: Alpha Software
 company_name: Công&nbsp;ty TNHH Phát&nbsp;triển Phần&nbsp;mềm Alpha
-email: contact@alphasoftwaregroup.com
+email: alphasoftware102@gmail.com
 description: >- # TODO: Revise description
   Hợp tác cùng Alpha Software để xây dựng hệ thống phần mềm quản lý nhà máy dệt may.
   Giải pháp chuyển đổi số của Alpha Software sẽ mang lại hiệu suất vượt bậc cho
@@ -8,6 +8,7 @@ description: >- # TODO: Revise description
 # baseurl: # the subpath of your site, e.g. /blog
 url: https://www.alphasoftwaregroup.com # the base hostname & protocol for your site, e.g. http://example.com
 alpha_home_url: https://www.alphasoftwaregroup.com
+facebook_page: https://fb.com/profile.php?id=100070371223404
 
 # Build settings
 markdown: kramdown

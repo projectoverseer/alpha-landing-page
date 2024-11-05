@@ -167,14 +167,14 @@ $h5-line-height: map-get($spacers, 2) / $h5-font-size;
 $h6-line-height: map-get($spacers, 1) / $h6-font-size;
 
 // Type Variables
-$hr-border-width: snap-to-px(4/3 * $magic-ratio);
+$hr-border-width: snap-to-px($magic-ratio);
 $hr-margin-y: snap-to-px(2 - .75) - $hr-border-width 0 snap-to-px(3 - 1.125) + $hr-border-width;// map-get($spacers, 5) - 1.125; TODO: Look into this.
 $hr-color: $primary;
 $hr-opacity: 1;
 
 $navbar-padding-y: 0;
 $navbar-light-color: $text;
-$navbar-light-hover-color: $link-alt-hover-color;
+$navbar-light-hover-color: none; // Dummy value to cancel the hover state
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
 $navbar-nav-link-padding-x: map-get($spacers, 2) / 2; // NOTICE: This may be fixed in future Bootstrap versions
@@ -189,11 +189,11 @@ $input-btn-padding-y: map-get($spacers, 1);
 $input-btn-padding-x: map-get($spacers, 2);
 $btn-font-weight: 600;
 
-$border-radius: 1.6/3 * 1rem;
-$border-color: rgba(16, 16, 0, 0.1607843137); // 15.659 // #D9D9D6;
+$border-radius: .5390625rem;
+$border-color: rgba($black, .1);
 
-$card-border-width: snap-to-px(0.5 * $magic-ratio);
-$card-border-color: $gray-100;
+$card-border-width: snap-to-px(0.25 * $magic-ratio);
+$card-border-color: $border-color;
 $card-border-radius: $border-radius;
 
 $enable-negative-margins: true;

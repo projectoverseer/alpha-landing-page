@@ -1,5 +1,5 @@
 @mixin link-transitions() {
-    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1), text-decoration-color 0s;
+    transition: .3s cubic-bezier(.4,0,.6,1), text-decoration-color 0s;
     will-change: color, background-color, box-shadow;
 }
 
@@ -127,11 +127,13 @@ h6,
 h1, .h1 {
     line-height: $h1-line-height;
     margin-bottom: $h1-margin-bottom;
+    letter-spacing: -.007em;
 }
 
 h2, .h2 {
     line-height: $h2-line-height;
     margin-bottom: $h2-margin-bottom;
+    letter-spacing: -.005em;
 }
 
 h3, .h3 {
@@ -142,6 +144,7 @@ h3, .h3 {
 h4, .h4 {
     line-height: $h4-line-height;
     margin-bottom: $h4-margin-bottom;
+    letter-spacing: -.005em;
 
     &:has(:is(small, .small)) {
         display: flex;
@@ -159,11 +162,17 @@ h6, .h6 {
     line-height: $h6-line-height;
 }
 
+abbr, blockquote, buttonlegend, li, ol, p, pre, ul, a {
+    letter-spacing: -.022em;
+}
+
 small, .small {
+    letter-spacing: -.022em;
     line-height: $line-height-sm !important;
 }
 
 big, .big {
+    letter-spacing: -.02em;
     font-size: $h5-font-size;
     line-height: $h5-line-height;
 }
@@ -181,7 +190,7 @@ big, .big {
 }
 
 hr {
-    width: map-get($scales, 9);
+    width: map-get($spacers, 11);
     margin-left: auto;
     margin-right: auto;
 
@@ -230,6 +239,11 @@ a {
         height: snap-to-px(.875);
         margin-left: snap-to-px(.125);
         width: snap-to-px(.875);
+    }
+
+    &.btn-xl svg.external-link-icon {
+        margin-bottom: snap-to-px(.125);
+        margin-left: snap-to-px(.25);
     }
 
     &:hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
@@ -307,6 +321,7 @@ footer {
     }
 
     .nav-link {
+        letter-spacing: -0.01em;
         font-size: $font-size-sm;
         line-height: map-get($spacers, 3) / $font-size-sm;
     }
@@ -385,7 +400,7 @@ header {
     min-height: calc(100vh + 12.5px);
     height: fit-content;
     background-position: center;
-    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../img/hero.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), image-set(url('../img/hero-1920w.avif') 1x, url('../img/hero-3840w.avif') 2x);
     background-size: cover;
     color: $text-dark;
 
@@ -453,6 +468,10 @@ header {
             .project-category,
             .project-name {
                 padding: 0 17px;
+            }
+
+            .project-name {
+                margin-bottom: 0;
             }
 
             .project-category {
@@ -550,7 +569,7 @@ header {
     margin-bottom: map-get($spacers, 4) - $h5-line-height;
     background: white;
 
-    $card-overlay-opacity: (255 - 241) / 255;
+    $card-overlay-opacity: .05; // (255 - 240) / 255;
 
     &:hover:has(a.stretched-link),
     &:has(~ a:first-of-type:focus-visible) {
