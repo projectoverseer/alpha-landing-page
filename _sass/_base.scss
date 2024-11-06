@@ -233,9 +233,7 @@ a {
     svg.external-link-icon {
         color: $gray;
         display: inline-block;
-        height: snap-to-px(.875);
         margin-left: snap-to-px(.125);
-        width: snap-to-px(.875);
     }
 
     &.btn-xl svg.external-link-icon {
