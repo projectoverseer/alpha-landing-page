@@ -35,7 +35,7 @@ svg, img {
         background-color: ButtonFace !important;
     }
 
-    hr, .bi {
+    .hr, .bi {
         color: Highlight !important;
     }
 }
@@ -125,24 +125,24 @@ h6,
 }
 
 h1, .h1 {
-    line-height: $h1-line-height;
+    line-height: $h1-line-height / $h1-font-size;
     margin-bottom: $h1-margin-bottom;
     letter-spacing: -.007em;
 }
 
 h2, .h2 {
-    line-height: $h2-line-height;
+    line-height: $h2-line-height / $h2-font-size;
     margin-bottom: $h2-margin-bottom;
     letter-spacing: -.005em;
 }
 
 h3, .h3 {
-    line-height: $h3-line-height;
+    line-height: $h3-line-height / $h3-font-size;
     margin-bottom: $h3-margin-bottom;
 }
 
 h4, .h4 {
-    line-height: $h4-line-height;
+    line-height: $h4-line-height / $h4-font-size;
     margin-bottom: $h4-margin-bottom;
     letter-spacing: -.005em;
 
@@ -155,11 +155,11 @@ h4, .h4 {
 }
 
 h5, .h5 {
-    line-height: $h5-line-height;
+    line-height: $h5-line-height / $h5-font-size;
 }
 
 h6, .h6 {
-    line-height: $h6-line-height;
+    line-height: $h6-line-height / $h6-font-size;
 }
 
 abbr, blockquote, buttonlegend, li, ol, p, pre, ul, a {
@@ -174,7 +174,7 @@ small, .small {
 big, .big {
     letter-spacing: -.02em;
     font-size: $h5-font-size;
-    line-height: $h5-line-height;
+    line-height: $h5-line-height / $h5-font-size;
 }
 
 .adjust-mt-small {
@@ -185,14 +185,14 @@ big, .big {
 
 .adjust-mb-h4 {
     &.mb-0 {
-        margin-bottom: $h4-line-height * $h4-font-size !important;
+        margin-bottom: $h4-line-height !important;
     }
 }
 
-hr {
+.hr {
+    border-top: $hr-border-width solid currentColor;
     width: map-get($spacers, 11);
-    margin-left: auto;
-    margin-right: auto;
+    margin: $hr-margin-top auto $hr-margin-bottom;
 
     &.above-icons {
         margin-bottom: map-get($spacers, 5);
@@ -203,11 +203,8 @@ hr {
     }
 }
 
-hr {
-    border: none !important;
-    height: $hr-border-width;
-    background: currentColor;
-
+.hr {
+    background-color: currentColor;
     color: $primary;
 
     .bg-primary & {
@@ -254,6 +251,10 @@ a {
             color: $link-hover-color;
         }
     }
+}
+
+ul, ol {
+    padding-left: pt-to-rem(14);
 }
 
 :is(ul, ol).spaced-items li {
@@ -397,7 +398,7 @@ footer {
 // Homepage Header
 header {
     position: relative;
-    min-height: calc(100vh + 12.5px);
+    min-height: calc(100vh + 12px);
     height: fit-content;
     background-position: center;
     background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), image-set(url('../img/hero-1920w.avif') 1x, url('../img/hero-3840w.avif') 2x);
@@ -552,15 +553,15 @@ header {
 
 .bi, .partner-logo {
     max-width: 100%;
-    margin-left: snap-to-px(1/4 * $magic-ratio); // Adjust for visual balance with the Inter font
+    // margin-left: snap-to-px(1/4 * $magic-ratio); // Adjust for visual balance with the Inter font
 }
 
 .bi {
     color: $secondary;
-    margin-bottom: map-get($spacers, 4) - $h4-line-height;
+    margin-bottom: map-get($spacers, -1);
 
     &.above-h2 {
-        margin-bottom: map-get($spacers, 4) - $h2-line-height;
+        margin-bottom: map-get($spacers, -1) + snap-to-px(1/4 * $h2-line-height / 1rem);
     }
 }
 
@@ -596,8 +597,8 @@ header {
 }
 
 .partner-logo {
-    width: 300px;
-    height: 144px;
+    width: 304px;  // 38pt
+    height: 144px; // 108pt
     object-fit: contain;
     margin: auto;
 }
