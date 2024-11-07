@@ -8,7 +8,7 @@ description: >- # TODO: Revise description
 # baseurl: # the subpath of your site, e.g. /blog
 url: https://www.alphasoftwaregroup.com # the base hostname & protocol for your site, e.g. http://example.com
 alpha_home_url: https://www.alphasoftwaregroup.com
-facebook_page: https://fb.com/profile.php?id=100070371223404
+facebook_page: https://www.facebook.com/profile.php?id=100070371223404
 
 # Build settings
 markdown: kramdown

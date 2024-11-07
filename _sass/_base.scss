@@ -16,7 +16,7 @@ html {
     text-decoration-thickness: from-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1; // 'cv10' 1, 'cv03' 1;
 }
@@ -42,7 +42,6 @@ svg, img {
 
 @media (prefers-reduced-motion: reduce) {
     * {
-        animation: none;
         scroll-behavior: auto;
     }
 }
@@ -52,11 +51,6 @@ button, input[type="submit"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-}
-
-a, button, input[type="button"], input[type="submit"] {
-    min-height: 24px;
-    min-width: 24px;
 }
 
 
@@ -117,6 +111,7 @@ h6,
 .h4,
 .h5,
 .h6 {
+    margin-bottom: 0;
 
     .bg-dark &,
     .bg-secondary & {
@@ -126,24 +121,20 @@ h6,
 
 h1, .h1 {
     line-height: $h1-line-height / $h1-font-size;
-    margin-bottom: 0;
     letter-spacing: -.007em;
 }
 
 h2, .h2 {
     line-height: $h2-line-height / $h2-font-size;
-    margin-bottom: 0;
     letter-spacing: -.005em;
 }
 
 h3, .h3 {
     line-height: $h3-line-height / $h3-font-size;
-    margin-bottom: 0;
 }
 
 h4, .h4 {
     line-height: $h4-line-height / $h4-font-size;
-    margin-bottom: 0;
     letter-spacing: -.005em;
 
     &:has(:is(small, .small)) {
@@ -175,31 +166,42 @@ big, .big {
     letter-spacing: -.02em;
     font-size: $h5-font-size;
     line-height: $h5-line-height / $h5-font-size;
+    margin-top: 1em;
 }
 
-.adjust-mt-small {
-    &.mt-2 {
-        margin-top: map-get($spacers, 2) + $line-height-sm * $font-size-sm + snap-to-px(2/15) !important;
+.dense {
+    font-size: $font-size-dense;
+    letter-spacing: -.022em;
+    line-height: $line-height-dense;
+}
+
+@include media-breakpoint-up(lg) {
+    .adjust-mt-base {
+        margin-top: calc(1em + #{$line-height-base * $font-size-base});
     }
-}
 
-.adjust-mb-h4 {
-    &.mb-0 {
-        margin-bottom: $h4-line-height !important;
+    .mtc-4 {
+        // Reads "margin top compromise add 4px"
+        margin-top: 1.25em !important;
+    }
+
+    .mtc--4 {
+        // Reads "margin top compromise subtract 4px"
+        margin-top: 1.25em - .5em !important;
     }
 }
 
 .hr {
-    border-top: $hr-border-width solid currentColor;
+    border-bottom: $hr-border-width solid currentColor;
     width: map-get($spacers, 11);
     margin: $hr-margin-top auto $hr-margin-bottom;
 
     &.above-icons {
-        margin-bottom: map-get($spacers, 5);
+        margin-bottom: $font-size-base * 2;
     }
 
     &.above-img {
-        margin-bottom: map-get($spacers, 6);
+        margin-bottom: $font-size-base * 2.5;
     }
 }
 
@@ -220,7 +222,7 @@ a {
     font-weight: 600;
     text-decoration-color: rgba($link-color, 24.26620179%);
 
-    &:focus-visible { // , .partner-logo-card:has(~ &:first-of-type:focus-visible)
+    &:focus-visible {
         color: $link-hover-color;
         box-shadow: $focus-ring-box-shadow;
         outline: none;
@@ -401,7 +403,7 @@ footer {
 // Homepage Header
 header {
     position: relative;
-    min-height: calc(100vh + 12px);
+    min-height: calc(100vh + 16px);
     height: fit-content;
     background-position: center;
     background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), image-set(url('../img/hero-1920w.avif') 1x, url('../img/hero-3840w.avif') 2x);
@@ -514,7 +516,7 @@ header {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: (1 + $line-height-lg) * $font-size-lg - $input-btn-padding-y;
+    margin-top: pt(13 + 1);
     margin-bottom: $btn-line-height * $input-btn-font-size - $input-btn-padding-y;
 
     &:hover {
@@ -525,11 +527,6 @@ header {
 .btn-secondary {
     @include btn-default($text, $white);
     box-shadow: var(--box-shadow-cta-secondary);
-
-    // &:focus:not(:focus-visible) {
-    //     color: $text;
-    //     background-color: $white;
-    // }
 
     &:hover,
     &:focus-visible {
@@ -542,11 +539,6 @@ header {
     @include btn-default($text-dark, $fill-primary);
     box-shadow: var(--box-shadow-cta-colored);
 
-    // &:focus:not(:focus-visible) {
-    //     background-color: $fill-primary;
-    //     color: $text-dark;
-    // }
-
     &:hover,
     &:focus-visible {
         color: $text-dark;
@@ -556,7 +548,6 @@ header {
 
 .bi, .partner-logo {
     max-width: 100%;
-    // margin-left: snap-to-px(1/4 * $magic-ratio); // Adjust for visual balance with the Inter font
 }
 
 .bi {
@@ -570,32 +561,17 @@ header {
 
 .partner-logo-card {
     aspect-ratio: 7/4;
-    margin-bottom: map-get($spacers, 4) - $h5-line-height;
     background: white;
 
-    $card-overlay-opacity: .05; // (255 - 240) / 255;
-
-    &:hover:has(a.stretched-link),
-    &:has(~ a:first-of-type:focus-visible) {
-        box-shadow: inset 0 0 100vmax 100vmax rgba(17, 0, 17, $card-overlay-opacity);
-    }
-
     a.stretched-link {
-        line-height: 3rem; // An arbitrary value. Make sure it's bigger than the font size.
-        margin-top: -3rem;
+        line-height: 2em;
+        margin-top: -2em;
         opacity: 0 !important;
     }
 
     &#spica-card {
         background: #02743C;
         border: none;
-    }
-
-    &:is(#spica-card) {
-        &:hover:has(a.stretched-link),
-        &:has(~ a:first-of-type:focus-visible) {
-            filter: saturate(1 / (1 - $card-overlay-opacity));
-        }
     }
 }
 
@@ -608,15 +584,15 @@ header {
 
 .client-portrait {
     width: 240px;
-    margin-bottom: map-get($spacers, 1);
 }
 
 .blockquote {
     line-height: $line-height-lg;
+    margin-bottom: 0;
 }
 
 .blockquote-footer {
     font-weight: 600;
-    margin-top: 0;
+    margin-top: 1em;
     line-height: $line-height-sm;
 }
