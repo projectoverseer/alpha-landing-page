@@ -126,24 +126,24 @@ h6,
 
 h1, .h1 {
     line-height: $h1-line-height / $h1-font-size;
-    margin-bottom: $h1-margin-bottom;
+    margin-bottom: 0;
     letter-spacing: -.007em;
 }
 
 h2, .h2 {
     line-height: $h2-line-height / $h2-font-size;
-    margin-bottom: $h2-margin-bottom;
+    margin-bottom: 0;
     letter-spacing: -.005em;
 }
 
 h3, .h3 {
     line-height: $h3-line-height / $h3-font-size;
-    margin-bottom: $h3-margin-bottom;
+    margin-bottom: 0;
 }
 
 h4, .h4 {
     line-height: $h4-line-height / $h4-font-size;
-    margin-bottom: $h4-margin-bottom;
+    margin-bottom: 0;
     letter-spacing: -.005em;
 
     &:has(:is(small, .small)) {
@@ -252,11 +252,16 @@ a {
 }
 
 ul, ol {
-    padding-left: pt-to-rem(14);
+    padding-left: pt(14);
 }
 
 :is(ul, ol).spaced-items li {
-    margin-bottom: $paragraph-margin-bottom;
+    margin-top: 1em;
+}
+
+p {
+    margin-top: 1em;
+    margin-bottom: 0;
 }
 
 section.bg-primary {
@@ -509,8 +514,8 @@ header {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: map-get($spacers, 2) * 2 - $input-btn-padding-y - $paragraph-margin-bottom;
-    margin-bottom: map-get($spacers, 2) * 2 - $input-btn-padding-y;
+    margin-top: (1 + $line-height-lg) * $font-size-lg - $input-btn-padding-y;
+    margin-bottom: $btn-line-height * $input-btn-font-size - $input-btn-padding-y;
 
     &:hover {
         text-decoration: none;
