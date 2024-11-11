@@ -108,7 +108,7 @@ $spacers: (
 );
 
 $font-size-root: calc(max(12px, min(100%, 24px)));
-$font-size-sm: map-get($scales, -2);
+$font-size-sm: map-get($scales, -1);
 $font-size-base: map-get($scales, 1);
 $font-size-lg: map-get($scales, 2);
 $font-size-dense: map-get($scales, -1);
@@ -153,17 +153,17 @@ $container-max-widths: (
 
 $grid-gutter-width: map-get($spacers, 2);
 $line-height-base: pt(6*2+6) / $font-size-base;
-$line-height-sm: pt(10+3) / $font-size-sm;
+$line-height-sm: pt(11+3) / $font-size-sm;
 $line-height-lg: pt(13+6) / $font-size-lg;
 $line-height-dense: pt(11+6) / $font-size-dense;
 $paragraph-margin-bottom: 0;
 
 
 $headings-margin-bottom: map-get($spacers, 2);
-$font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, InterVariable, Inter, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
 $headings-font-family: $font-family-sans-serif;
-$headings-font-weight: 700;
+$headings-font-weight: 600;
 
 
 $navbar-padding-y: 0;
@@ -185,14 +185,14 @@ $input-btn-padding-y: pt(6*2 + 1);
 $input-btn-padding-x: pt(6*2 + 7);
 $btn-font-weight: 600;
 
-$border-radius: 3px / 48 * 64;
+$border-radius: 5px;
 $border-color: rgba($black, .1);
 
 $card-border-width: snap-to-px(0.25 * $magic-ratio);
 $card-border-color: $border-color;
 $card-border-radius: $border-radius;
 
-$hr-border-width: $border-radius;
+$hr-border-width: 4px;
 $hr-margin-top: $font-size-base;
 $hr-margin-bottom: $font-size-base * 1.5;
 $hr-color: $primary;

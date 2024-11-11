@@ -1,10 +1,9 @@
 @mixin link-transitions() {
-    transition: .3s cubic-bezier(.4,0,.6,1), text-decoration-color 0s;
-    will-change: color, background-color, box-shadow;
+    transition: .3s cubic-bezier(.4, 0, .6, 1);
+    will-change: color;
 }
 
-html,
-body {
+html, body {
     height: 100%;
     width: 100%;
 }
@@ -18,7 +17,7 @@ html {
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-x: none;
     text-rendering: optimizeLegibility;
-    font-feature-settings: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1; // 'cv10' 1, 'cv03' 1;
+    font-feature-settings: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1;
 }
 
 svg, img {
@@ -27,16 +26,14 @@ svg, img {
 
 @media (forced-colors: active) {
     a svg.external-link-icon, a:hover svg.external-link-icon, a.nav-link {
-        color: LinkText !important;
+        color: LinkText;
     }
-
     .btn-xl {
-        color: ButtonText !important;
-        background-color: ButtonFace !important;
+        color: ButtonText;
+        background-color: ButtonFace;
     }
-
     .hr, .bi {
-        color: Highlight !important;
+        color: Highlight;
     }
 }
 
@@ -53,12 +50,10 @@ button, input[type="submit"] {
     appearance: none;
 }
 
-
 @include media-breakpoint-down(md) {
     p {
         text-wrap: pretty;
     }
-
     .container-fluid {
         --bs-gutter-x: 16px;
     }
@@ -74,22 +69,19 @@ section p {
     --box-shadow-input-inner: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
     --box-shadow-menu: 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.3) inset, 0px 12px 24px 8px rgba(0, 0, 0, 0.01), 0px 8px 16px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px 2px rgba(0, 0, 0, 0.01), 0px 2px 6px 0px rgba(0, 0, 0, 0.01), 0px 0px 1px 0px rgba(0, 0, 0, 0.0625);
     --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset, 0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset, 0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
-    --menu-shadow: 0px 12px 24px 8px rgba(0, 0, 0, 0.08), 0px 8px 16px 4px rgba(0, 0, 0, 0.08), 0px 4px 8px 2px rgba(0, 0, 0, 0.08), 0px 2px 6px 0px rgba(0, 0, 0, 0.08), 0px -0.5px 0.5px 0px rgba(0, 0, 0, 0.12) inset, 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.12) inset;
 }
 
 picture {
     border-radius: $border-radius;
 }
 
-.noselect,
-picture, .navbar-logo, .partner-logo-card img.partner-logo {
+.noselect, picture, .navbar-logo, .partner-logo-card img.partner-logo {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
     pointer-events: none;
     user-drag: none;
     -webkit-user-drag: none;
@@ -99,34 +91,20 @@ picture, .navbar-logo, .partner-logo-card img.partner-logo {
     color: $text-muted !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     margin-bottom: 0;
-
-    .bg-dark &,
-    .bg-secondary & {
-        color: $text-dark;
-    }
 }
 
 h1, .h1 {
     line-height: $h1-line-height / $h1-font-size;
     letter-spacing: -.007em;
+    font-weight: 700;
 }
 
 h2, .h2 {
     line-height: $h2-line-height / $h2-font-size;
     letter-spacing: -.005em;
+    font-weight: 700;
 }
 
 h3, .h3 {
@@ -159,7 +137,7 @@ abbr, blockquote, buttonlegend, li, ol, p, pre, ul, a {
 
 small, .small {
     letter-spacing: -.022em;
-    line-height: $line-height-sm !important;
+    line-height: $line-height-sm;
 }
 
 big, .big {
@@ -179,12 +157,10 @@ big, .big {
     .adjust-mt-base {
         margin-top: calc(1em + #{$line-height-base * $font-size-base});
     }
-
     .mtc-4 {
         // Reads "margin top compromise add 4px"
         margin-top: 1.25em !important;
     }
-
     .mtc--4 {
         // Reads "margin top compromise subtract 4px"
         margin-top: 1.25em - .5em !important;
@@ -203,9 +179,7 @@ big, .big {
     &.above-img {
         margin-bottom: $font-size-base * 2.5;
     }
-}
 
-.hr {
     background-color: currentColor;
     color: $primary;
 
@@ -271,8 +245,7 @@ section.bg-primary {
     color: $text-dark;
 }
 
-section.bg-dark,
-section.bg-secondary {
+section.bg-dark, section.bg-secondary {
     color: $text-dark;
 }
 
@@ -294,28 +267,22 @@ footer {
 .navbar {
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
-    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1); // Back to top
     height: 56px;
-
-    will-change: background-color, box-shadow;
 
     .navbar-logo {
         position: relative;
         height: 40px;
         aspect-ratio: 143/40;
         border-radius: 0;
-        will-change: visibility;
     }
 
     .logo-white {
         visibility: hidden;
-        will-change: visibility;
     }
 
     .logo-color {
         margin-left: -143px;
         visibility: visible;
-        will-change: visibility;
     }
 
     .navbar-brand {
@@ -329,7 +296,7 @@ footer {
     .nav-link {
         letter-spacing: -0.01em;
         font-size: $font-size-sm;
-        line-height: map-get($spacers, 3) / $font-size-sm;
+        line-height: $line-height-sm * 2;
     }
 
     .nav-item:last-of-type .nav-link {
@@ -337,6 +304,12 @@ footer {
     }
 
     @include media-breakpoint-up(md) {
+        transition: .35s cubic-bezier(.64, 0, .44, .99), box-shadow 0s;
+        will-change: background-color, box-shadow;
+
+        .logo-color, .logo-white {
+            will-change: visibility;
+        }
 
         &:not(.nav-active) {
             background-color: transparent;
@@ -344,16 +317,13 @@ footer {
 
             .logo-color {
                 visibility: hidden;
-                will-change: visibility;
             }
 
             .logo-white {
                 visibility: visible;
-                will-change: visibility;
             }
 
             .nav-item .nav-link {
-
                 &:focus:not(:focus-visible) {
                     color: initial;
                 }
@@ -367,23 +337,16 @@ footer {
         &.nav-active {
             background-color: $background;
             box-shadow: var(--box-shadow-menu);
-            transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
-            
-            will-change: background-color, box-shadow;
-
 
             .logo-white {
                 visibility: hidden;
-                will-change: visibility;
             }
 
             .logo-color {
                 visibility: visible;
-                will-change: visibility;
             }
 
             .nav-link {
-
                 &:focus:not(:focus-visible) {
                     color: initial;
                 }
@@ -471,8 +434,7 @@ header {
             transform: translateY(-100%);
             padding-bottom: map-get($spacers, -1);
 
-            .project-category,
-            .project-name {
+            .project-category, .project-name {
                 padding: 0 17px;
             }
 
@@ -487,8 +449,7 @@ header {
         }
     }
 
-    &:hover,
-    &:focus-visible {
+    &:hover, &:focus-visible {
         .portfolio-box-caption {
             opacity: 1;
         }
@@ -516,7 +477,7 @@ header {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: pt(13 + 1);
+    margin-top: pt(14 + 1);
     margin-bottom: $btn-line-height * $input-btn-font-size - $input-btn-padding-y;
 
     &:hover {
@@ -528,8 +489,7 @@ header {
     @include btn-default($text, $white);
     box-shadow: var(--box-shadow-cta-secondary);
 
-    &:hover,
-    &:focus-visible {
+    &:hover, &:focus-visible {
         color: $text;
         background-color: $gray-100;
     }
@@ -539,8 +499,7 @@ header {
     @include btn-default($text-dark, $fill-primary);
     box-shadow: var(--box-shadow-cta-colored);
 
-    &:hover,
-    &:focus-visible {
+    &:hover, &:focus-visible {
         color: $text-dark;
         background-color: $fill-accent;
     }
@@ -580,10 +539,6 @@ header {
     height: 144px; // 108pt
     object-fit: contain;
     margin: auto;
-}
-
-.client-portrait {
-    width: 240px;
 }
 
 .blockquote {
