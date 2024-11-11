@@ -160,7 +160,7 @@ $paragraph-margin-bottom: 0;
 
 
 $headings-margin-bottom: map-get($spacers, 2);
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, InterVariable, Inter, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+$font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 600;
