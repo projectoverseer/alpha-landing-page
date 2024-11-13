@@ -17,7 +17,7 @@ html {
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-x: none;
     text-rendering: optimizeLegibility;
-    font-feature-settings: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1;
+    font-feature-settings: $font-features;
 }
 
 svg, img {
@@ -105,6 +105,11 @@ h2, .h2 {
     line-height: $h2-line-height / $h2-font-size;
     letter-spacing: -.005em;
     font-weight: 700;
+    margin-bottom: $h2-margin-bottom;
+
+    &:has(+ p) {
+        margin-bottom: $font-size-base * 1.5;
+    }
 }
 
 h3, .h3 {
@@ -119,7 +124,6 @@ h4, .h4 {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-top: map-get($spacers, 2) - $line-height-sm;
     }
 }
 
@@ -144,7 +148,9 @@ big, .big {
     letter-spacing: -.02em;
     font-size: $h5-font-size;
     line-height: $h5-line-height / $h5-font-size;
-    margin-top: 1em;
+    .partner-logo-card + & {
+        margin-top: map-get($spacers, 4);
+    }
 }
 
 .dense {
@@ -169,16 +175,8 @@ big, .big {
 
 .hr {
     border-bottom: $hr-border-width solid currentColor;
-    width: map-get($spacers, 11);
+    width: pt(4*18);
     margin: $hr-margin-top auto $hr-margin-bottom;
-
-    &.above-icons {
-        margin-bottom: $font-size-base * 2;
-    }
-
-    &.above-img {
-        margin-bottom: $font-size-base * 2.5;
-    }
 
     background-color: currentColor;
     color: $primary;
@@ -209,12 +207,11 @@ a {
     svg.external-link-icon {
         color: $gray;
         display: inline-block;
-        margin-left: snap-to-px(.125);
+        margin-left: pt(2);
     }
 
     &.btn-xl svg.external-link-icon {
-        margin-bottom: snap-to-px(.125);
-        margin-left: snap-to-px(.25);
+        margin-bottom: pt(1);
     }
 
     &:hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
@@ -254,12 +251,12 @@ section.bg-dark, section.bg-secondary {
 }
 
 section {
-    padding: snap-to-px(10) 0;
+    padding: pt(4*30) 0;
 }
 
 footer {
     address {
-        margin-bottom: map-get($spacers, 7);
+        margin-bottom: map-get($spacers, 12); ///
     }
 }
 
@@ -286,7 +283,7 @@ footer {
     }
 
     .navbar-brand {
-        margin-left: snap-to-px(-1 * $magic-ratio);
+        margin-left: pt(0);
     }
 
     .navbar-brand:focus-visible {
@@ -387,14 +384,14 @@ header {
 // Sections
 .service-box {
     text-wrap: pretty;
-    max-width: 478px;
+    max-width: 512px;
 
     & > :last-child {
-        margin-bottom: map-get($spacers, 5);
+        margin-bottom: map-get($spacers, 8); ///
     }
 
     .row:has(&) {
-        margin-bottom: -1 * map-get($spacers, 5) + $paragraph-margin-bottom;
+        margin-bottom: -1 * map-get($spacers, 8) + $paragraph-margin-bottom; ///
     }
 }
 
@@ -432,7 +429,7 @@ header {
             width: 100%;
             position: absolute;
             transform: translateY(-100%);
-            padding-bottom: map-get($spacers, -1);
+            padding-bottom: map-get($spacers, 2); ///
 
             .project-category, .project-name {
                 padding: 0 17px;
@@ -511,11 +508,11 @@ header {
 
 .bi {
     color: $secondary;
-    margin-bottom: map-get($spacers, -1);
+    margin-bottom: map-get($spacers, 4); ///
+}
 
-    &.above-h2 {
-        margin-bottom: map-get($spacers, -1) + snap-to-px(1/4 * $h2-line-height / 1rem);
-    }
+.client-portrait + figure {
+    margin-top: map-get($spacers, 4);
 }
 
 .partner-logo-card {
@@ -535,14 +532,12 @@ header {
 }
 
 .partner-logo {
-    width: 304px;  // 38pt
-    height: 144px; // 108pt
     object-fit: contain;
     margin: auto;
 }
 
 .blockquote {
-    line-height: $line-height-lg;
+    line-height: $line-height-base;
     margin-bottom: 0;
 }
 
@@ -550,4 +545,25 @@ header {
     font-weight: 600;
     margin-top: 1em;
     line-height: $line-height-sm;
+}
+
+.heading-number {
+    background-color: $primary;
+    color: $background;
+    width: pt(84);
+    height: pt(72);
+    margin-bottom: map-get($spacers, 4) - pt(8 / 2); /// Divide by 2 as a compromise between shape and text
+
+    &:after {
+        color: inherit;
+        font-feature-settings: 'tnum' 1, $font-features;
+        font-size: map-get($scales, 9);
+        font-weight: 700;
+        overflow: hidden;
+        content: attr(data-number);
+        position: absolute;
+        transform: translate(pt(24), pt(4));
+
+        letter-spacing: -0.041em;
+    }
 }

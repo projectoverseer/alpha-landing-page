@@ -68,7 +68,6 @@ $link-hover-decoration: underline;
 $focus-ring-opacity: .25;
 $focus-ring-color: rgba($link-color, $focus-ring-opacity);
 
-$magic-ratio: 3/15;
 $scales: (
     -2: pt(10),
     -1: pt(11),
@@ -82,10 +81,10 @@ $scales: (
     7: pt(6*7),
     8: pt(6*8),
     9: pt(6*9),
-    10: snap-to-px(10.693),
-    11: snap-to-px(13.914),
-    12: snap-to-px(18.105),
-    13: snap-to-px(17.944),
+    10: pt(6*10),
+    11: pt(6*11),
+    12: pt(6*12),
+    13: pt(6*13),
 );
 
 $spacer: 1rem;
@@ -94,17 +93,18 @@ $spacers: (
    -2: snap-to-px(0.25),
    -1: snap-to-px(0.5),
     0: 0rem,
-    1: 1rem,
-    2: snap-to-px(1.5),
-    3: snap-to-px(2),
-    4: snap-to-px(2.5),
-    5: snap-to-px(3),
-    6: snap-to-px(3.5),
-    7: snap-to-px(4),
-    8: snap-to-px(4.5),
-    9: snap-to-px(5),
-   10: snap-to-px(5.5),
-   11: snap-to-px(6),
+    1: pt(4),
+    2: pt(4*2),
+    3: pt(4*3),
+    4: pt(4*4),
+    5: pt(4*5),
+    6: pt(4*6),
+    7: pt(4*7),
+    8: pt(4*8),
+    9: pt(4*9),
+   10: pt(4*10),
+   11: pt(4*11),
+   12: pt(4*12),
 );
 
 $font-size-root: calc(max(12px, min(100%, 24px)));
@@ -114,7 +114,7 @@ $font-size-lg: map-get($scales, 2);
 $font-size-dense: map-get($scales, -1);
 $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-base;
-$blockquote-font-size: $font-size-lg;
+$blockquote-font-size: $font-size-base;
 $blockquote-footer-font-size: $font-size-sm;
 $blockquote-footer-color: $text;
 
@@ -126,13 +126,13 @@ $h5-font-size: map-get($scales, 2);
 $h6-font-size: map-get($scales, 1);
 
 $h1-line-height: pt(6*6+6);
-$h1-margin-bottom: map-get($spacers, 2);
+$h1-margin-bottom: map-get($spacers, 8);
 $h2-line-height: pt(6*5+3);
-$h2-margin-bottom: map-get($spacers, 4);
+$h2-margin-bottom: map-get($spacers, 12);
 $h3-line-height: pt(6*4+3);
-$h3-margin-bottom: map-get($spacers, 3);
+$h3-margin-bottom: map-get($spacers, 4);
 $h4-line-height: pt(6*3+6);
-$h4-margin-bottom: map-get($spacers, 2);
+$h4-margin-bottom: map-get($spacers, 4);
 $h5-line-height: pt(13+6);
 $h6-line-height: pt(6*2+6);
 
@@ -151,19 +151,20 @@ $container-max-widths: (
   lg: 1280px + $container-padding-x,
 );
 
-$grid-gutter-width: map-get($spacers, 2);
+$grid-gutter-width: map-get($spacers, 4); ///
 $line-height-base: pt(6*2+6) / $font-size-base;
-$line-height-sm: pt(11+3) / $font-size-sm;
+$line-height-sm: pt(11+6) / $font-size-sm;
 $line-height-lg: pt(13+6) / $font-size-lg;
 $line-height-dense: pt(11+6) / $font-size-dense;
 $paragraph-margin-bottom: 0;
 
 
-$headings-margin-bottom: map-get($spacers, 2);
+$headings-margin-bottom: map-get($spacers, 4); ///
 $font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 600;
+$font-features: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1;
 
 
 $navbar-padding-y: 0;
@@ -171,7 +172,7 @@ $navbar-light-color: $text;
 $navbar-light-hover-color: none; // Dummy value to cancel the hover state
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
-$navbar-nav-link-padding-x: map-get($spacers, 2) / 2; // NOTICE: This may be fixed in future Bootstrap versions
+$navbar-nav-link-padding-x: map-get($spacers, 4) / 2; /// NOTICE: This may be fixed in future Bootstrap versions
 $nav-link-font-weight: 600;
 $nav-link-transition: none;
 
@@ -188,7 +189,7 @@ $btn-font-weight: 600;
 $border-radius: 5px;
 $border-color: rgba($black, .1);
 
-$card-border-width: snap-to-px(0.25 * $magic-ratio);
+$card-border-width: pt(1);
 $card-border-color: $border-color;
 $card-border-radius: $border-radius;
 
