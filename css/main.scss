@@ -145,10 +145,10 @@ $grid-breakpoints: (
   xxl: 1920px,
 );
 
-$container-padding-x: 40px;
+$container-padding-x: 48px;
 
 $container-max-widths: (
-  lg: 1280px + $container-padding-x,
+  lg: 1296px + $container-padding-x,
 );
 
 $grid-gutter-width: map-get($spacers, 4); ///
@@ -160,11 +160,11 @@ $paragraph-margin-bottom: 0;
 
 
 $headings-margin-bottom: map-get($spacers, 4); ///
-$font-family-sans-serif: InterVariable, Inter, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+$font-family-sans-serif: Inter, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-$headings-font-family: $font-family-sans-serif;
+$headings-font-family: InterDisplay, $font-family-sans-serif;
 $headings-font-weight: 600;
-$font-features: 'liga' 1, 'calt' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1;
+$font-features: 'liga' 1, 'calt' 1, 'cv01' 1, 'cv08' 1, 'cv11' 1, 'cv05' 1, 'ss01' 1, 'ss03' 1;
 
 
 $navbar-padding-y: 0;
@@ -181,10 +181,10 @@ $navbar-dark-hover-color: $link-alt-hover-dark-color;
 $navbar-dark-active-color: $link-alt-hover-dark-color;
 
 $input-btn-font-size: $font-size-base;
-$btn-line-height: pt(6*2 + 3) / $input-btn-font-size;
-$input-btn-padding-y: pt(6*2 + 1);
-$input-btn-padding-x: pt(6*2 + 7);
-$btn-font-weight: 600;
+$btn-line-height: $line-height-base;
+$input-btn-padding-y: pt(6*2);
+$input-btn-padding-x: pt(6*3);
+$btn-font-weight: 400;
 
 $border-radius: 5px;
 $border-color: rgba($black, .1);

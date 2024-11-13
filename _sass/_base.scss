@@ -97,15 +97,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 h1, .h1 {
     line-height: $h1-line-height / $h1-font-size;
-    letter-spacing: -.007em;
-    font-weight: 700;
 }
 
 h2, .h2 {
     line-height: $h2-line-height / $h2-font-size;
-    letter-spacing: -.005em;
-    font-weight: 700;
     margin-bottom: $h2-margin-bottom;
+    font-weight: 700;
 
     &:has(+ p) {
         margin-bottom: $font-size-base * 1.5;
@@ -118,7 +115,6 @@ h3, .h3 {
 
 h4, .h4 {
     line-height: $h4-line-height / $h4-font-size;
-    letter-spacing: -.005em;
 
     &:has(:is(small, .small)) {
         display: flex;
@@ -135,17 +131,11 @@ h6, .h6 {
     line-height: $h6-line-height / $h6-font-size;
 }
 
-abbr, blockquote, buttonlegend, li, ol, p, pre, ul, a {
-    letter-spacing: -.022em;
-}
-
 small, .small {
-    letter-spacing: -.022em;
     line-height: $line-height-sm;
 }
 
 big, .big {
-    letter-spacing: -.02em;
     font-size: $h5-font-size;
     line-height: $h5-line-height / $h5-font-size;
     .partner-logo-card + & {
@@ -155,7 +145,6 @@ big, .big {
 
 .dense {
     font-size: $font-size-dense;
-    letter-spacing: -.022em;
     line-height: $line-height-dense;
 }
 
@@ -225,7 +214,7 @@ a {
 }
 
 ul, ol {
-    padding-left: pt(14);
+    padding-left: pt(16);
 }
 
 :is(ul, ol).spaced-items li {
@@ -264,11 +253,11 @@ footer {
 .navbar {
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
-    height: 56px;
+    height: 64px;
 
     .navbar-logo {
         position: relative;
-        height: 40px;
+        height: 48px;
         aspect-ratio: 143/40;
         border-radius: 0;
     }
@@ -278,7 +267,7 @@ footer {
     }
 
     .logo-color {
-        margin-left: -143px;
+        margin-left: -172px;
         visibility: visible;
     }
 
@@ -291,7 +280,6 @@ footer {
     }
 
     .nav-link {
-        letter-spacing: -0.01em;
         font-size: $font-size-sm;
         line-height: $line-height-sm * 2;
     }
@@ -474,7 +462,7 @@ header {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: pt(14 + 1);
+    margin-top: map-get($spacers, 3);
     margin-bottom: $btn-line-height * $input-btn-font-size - $input-btn-padding-y;
 
     &:hover {
@@ -483,12 +471,12 @@ header {
 }
 
 .btn-secondary {
-    @include btn-default($text, $white);
+    @include btn-default($text, $light);
     box-shadow: var(--box-shadow-cta-secondary);
 
     &:hover, &:focus-visible {
         color: $text;
-        background-color: $gray-100;
+        background-color: $white;
     }
 }
 
@@ -548,22 +536,26 @@ header {
 }
 
 .heading-number {
+    position: relative;
     background-color: $primary;
     color: $background;
     width: pt(84);
     height: pt(72);
-    margin-bottom: map-get($spacers, 4) - pt(8 / 2); /// Divide by 2 as a compromise between shape and text
+    margin-bottom: map-get($spacers, 3);
 
     &:after {
+        position: absolute;
         color: inherit;
-        font-feature-settings: 'tnum' 1, $font-features;
+        font-family: $headings-font-family;
         font-size: map-get($scales, 9);
-        font-weight: 700;
+        font-weight: 600;
+        font-feature-settings: 'tnum' 1, $font-features;
         overflow: hidden;
         content: attr(data-number);
-        position: absolute;
-        transform: translate(pt(24), pt(4));
+        line-height: 1;
+        right: pt(-5);
+        bottom: 0;
 
-        letter-spacing: -0.041em;
+        letter-spacing: -2/48 * 1em;
     }
 }
