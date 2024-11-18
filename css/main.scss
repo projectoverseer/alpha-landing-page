@@ -15,21 +15,17 @@
   @return round($line-height * ($font-size / 1rem) * 16px) / 16px / ($font-size / 1rem);
 }
 
-// Primary Colors (for glyphs and illustrations only; do not use for text)
-$primary: #FF6A00; // #FD6500;
-$primary-dark: #CAFFFE; // #D2EBFF;
-$accent: #FFAD00; // #FF9600;
+$primary: #f55500;
+$primary-dark: #cef9f3;
+$accent: #ffb222;
 $accent-dark: $accent;
 
-// Fill Colors (use with white text)
-$fill-primary: #C00B00; // #d13000;
+$fill-primary: #ae2200;
 $fill-primary-dark: $fill-primary;
-$fill-accent: $primary;
-$fill-accent-dark: $primary;
+$fill-accent: #b32900;
+$fill-accent-dark: $fill-accent;
 
-$secondary: #0059A6; // #004A97;
-$blue: $secondary;
-$orange: $primary;
+$secondary: #243f98;
 
 $gray-50:  #F1F0F1;
 $gray-100: #E2E1E2;
@@ -43,8 +39,8 @@ $gray-800: #3E3D3E;
 $gray-900: #2D2C2D;
 $gray-950: #202020;
 
-$dark: #001647; // #000F39;
-$light: #FFEDD7;
+$dark: #141725;
+$light: #f5f0ed;
 $black: #050505;
 $white: #fff;
 
@@ -57,9 +53,9 @@ $body-color: $text;
 $gray: $gray-600;
 $gray-dark: $gray-900;
 
-$link-color: #005ECC; // #0059B4;
-$link-hover-color: #0057C1;
-$link-alt-color: #E05600; // #DE5100;
+$link-color: #0050cd;
+$link-hover-color: #005ac3;
+$link-alt-color: $primary;
 $link-alt-hover-color: $primary;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: underline;
