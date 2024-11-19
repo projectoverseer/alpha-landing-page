@@ -16,7 +16,7 @@
 }
 
 $primary: #f55500;
-$primary-dark: #cef9f3;
+$primary-dark: #f3f3f7;
 $accent: #ffb222;
 $accent-dark: $accent;
 
@@ -40,7 +40,7 @@ $gray-900: #2D2C2D;
 $gray-950: #202020;
 
 $dark: #141725;
-$light: #f5f0ed;
+$light: #f7f4dc;
 $black: #050505;
 $white: #fff;
 
@@ -68,8 +68,8 @@ $scales: (
     -2: pt(10),
     -1: pt(11),
     0: 0rem,
-    1: pt(6*2),
-    2: pt(13),
+    1: pt(11),
+    2: pt(12),
     3: pt(6*3),
     4: pt(6*4),
     5: pt(6*5),
@@ -110,18 +110,24 @@ $font-size-lg: map-get($scales, 2);
 $font-size-dense: map-get($scales, -1);
 $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-base;
-$blockquote-font-size: $font-size-base;
+$blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-sm;
 $blockquote-footer-color: $text;
 
-$h1-font-size: map-get($scales, 6);
+$line-height-base: pt(11+6) / $font-size-base;
+$line-height-sm: pt(10+6) / $font-size-sm;
+$line-height-lg: pt(12+6) / $font-size-lg;
+$line-height-dense: pt(11+6) / $font-size-dense;
+$line-height-blockquote: $line-height-lg;
+
+$h1-font-size: map-get($scales, 7);
 $h2-font-size: map-get($scales, 5);
 $h3-font-size: map-get($scales, 4);
 $h4-font-size: map-get($scales, 3);
 $h5-font-size: map-get($scales, 2);
 $h6-font-size: map-get($scales, 1);
 
-$h1-line-height: pt(6*6+6);
+$h1-line-height: pt(6*7+3);
 $h1-margin-bottom: map-get($spacers, 8);
 $h2-line-height: pt(6*5+3);
 $h2-margin-bottom: map-get($spacers, 12);
@@ -148,10 +154,6 @@ $container-max-widths: (
 );
 
 $grid-gutter-width: map-get($spacers, 4); ///
-$line-height-base: pt(6*2+6) / $font-size-base;
-$line-height-sm: pt(11+6) / $font-size-sm;
-$line-height-lg: pt(13+6) / $font-size-lg;
-$line-height-dense: pt(11+6) / $font-size-dense;
 $paragraph-margin-bottom: 0;
 
 
