@@ -10,13 +10,18 @@ html, body {
 
 html {
     box-sizing: border-box;
-    text-underline-offset: 0.28em;
-    text-decoration-thickness: from-font;
+    text-underline-offset: .2em;
+    text-decoration-thickness: 1px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-x: none;
     text-rendering: optimizeLegibility;
     font-feature-settings: $font-features;
+}
+
+::selection {
+    background: $secondary;
+    color: #fff;
 }
 
 svg, img {
@@ -182,7 +187,7 @@ big, .big {
 
 a {
     font-weight: 600;
-    text-decoration-color: rgba($link-color, 24.26620179%);
+    text-decoration-color: rgba($link-color, .25);
 
     &:focus-visible {
         color: $link-hover-color;
@@ -281,6 +286,7 @@ footer {
     .nav-link {
         font-size: $font-size-sm;
         line-height: $line-height-sm * 2;
+        text-wrap: nowrap;
     }
 
     .nav-item:last-of-type .nav-link {
@@ -552,6 +558,7 @@ header {
         font-size: map-get($scales, 9);
         font-weight: 600;
         font-feature-settings: 'tnum' 1, $font-features;
+        font-synthesis: none;
         overflow: hidden;
         content: attr(data-number);
         line-height: 1;

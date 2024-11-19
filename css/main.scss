@@ -15,17 +15,17 @@
   @return round($line-height * ($font-size / 1rem) * 16px) / 16px / ($font-size / 1rem);
 }
 
-$primary: #f55500;
+$primary: #FF6B00;
 $primary-dark: #f3f3f7;
 $accent: #ffb222;
 $accent-dark: $accent;
 
-$fill-primary: #ae2200;
+$fill-primary: #a00e0e;
 $fill-primary-dark: $fill-primary;
-$fill-accent: #b32900;
+$fill-accent: #970c0c;
 $fill-accent-dark: $fill-accent;
 
-$secondary: #243f98;
+$secondary: #00379A;
 
 $gray-50:  #F1F0F1;
 $gray-100: #E2E1E2;
@@ -39,8 +39,8 @@ $gray-800: #3E3D3E;
 $gray-900: #2D2C2D;
 $gray-950: #202020;
 
-$dark: #141725;
-$light: #f7f4dc;
+$dark: #00113d;
+$light: #fff2e0;
 $black: #050505;
 $white: #fff;
 
@@ -53,10 +53,10 @@ $body-color: $text;
 $gray: $gray-600;
 $gray-dark: $gray-900;
 
-$link-color: #0050cd;
-$link-hover-color: #005ac3;
-$link-alt-color: $primary;
-$link-alt-hover-color: $primary;
+$link-color: #0033BB;
+$link-hover-color: #0033BB;
+$link-alt-color: $secondary;
+$link-alt-hover-color: $secondary;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: underline;
 $link-hover-decoration: underline;
@@ -109,7 +109,7 @@ $font-size-base: map-get($scales, 1);
 $font-size-lg: map-get($scales, 2);
 $font-size-dense: map-get($scales, -1);
 $small-font-size: $font-size-sm;
-$input-btn-font-size: $font-size-base;
+$input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-sm;
 $blockquote-footer-color: $text;
@@ -118,6 +118,7 @@ $line-height-base: pt(11+6) / $font-size-base;
 $line-height-sm: pt(10+6) / $font-size-sm;
 $line-height-lg: pt(12+6) / $font-size-lg;
 $line-height-dense: pt(11+6) / $font-size-dense;
+$btn-line-height: $line-height-lg;
 $line-height-blockquote: $line-height-lg;
 
 $h1-font-size: map-get($scales, 7);
@@ -178,8 +179,6 @@ $navbar-dark-color: $text-dark;
 $navbar-dark-hover-color: $link-alt-hover-dark-color;
 $navbar-dark-active-color: $link-alt-hover-dark-color;
 
-$input-btn-font-size: $font-size-base;
-$btn-line-height: $line-height-base;
 $input-btn-padding-y: pt(6*2);
 $input-btn-padding-x: pt(6*3);
 $btn-font-weight: 400;
