@@ -3,20 +3,20 @@
     will-change: color;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-}
-
 html {
     box-sizing: border-box;
     text-underline-offset: .2em;
     text-decoration-thickness: 1px;
+    -moz-font-feature-settings: 'kern';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-x: none;
     text-rendering: optimizeLegibility;
     font-feature-settings: $font-features;
+}
+
+body {
+    letter-spacing: -.003em;
 }
 
 ::selection {
@@ -65,11 +65,29 @@ section p {
 }
 
 :root {
-    --box-shadow-cta-colored: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.8), 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.20) inset;
-    --box-shadow-cta-secondary: 0px 0.5px 1px rgba(0, 0, 0, 0.8), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.12);
-    --box-shadow-input-inner: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
-    --box-shadow-menu: 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.3) inset, 0px 12px 24px 8px rgba(0, 0, 0, 0.01), 0px 8px 16px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px 2px rgba(0, 0, 0, 0.01), 0px 2px 6px 0px rgba(0, 0, 0, 0.01), 0px 0px 1px 0px rgba(0, 0, 0, 0.0625);
-    --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset, 0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset, 0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
+    --box-shadow-cta-colored: 0pt 0.5pt 1pt 0pt rgba(0, 0, 0, 0.8), 0pt 0.5pt 0.5pt 0pt rgba(255, 255, 255, 0.20) inset; 
+    --box-shadow-cta-secondary: 0pt 0.5pt 1pt rgba(0, 0, 0, 0.8), inset 0pt 0.5pt 0.5pt rgba(255, 255, 255, 0.12);
+    --box-shadow-input-inner: 
+        0pt 1pt 1pt -1pt rgba(0, 0, 0, 0.13) inset, 
+        0pt 3pt 3pt -3pt rgba(0, 0, 0, 0.17) inset, 
+        0pt 4pt 4pt -4pt rgba(0, 0, 0, 0.17) inset,
+        0pt 8pt 8pt -8pt rgba(0, 0, 0, 0.17) inset,
+        0pt 12pt 12pt -12pt rgba(0, 0, 0, 0.13) inset,
+        0pt 16pt 16pt -16pt rgba(0, 0, 0, 0.13) inset;
+    --box-shadow-menu: 
+        0pt 0.5pt 0.5pt 0pt rgba(255, 255, 255, 0.3) inset, 
+        0pt 12pt 24pt 8pt rgba(0, 0, 0, 0.01), 
+        0pt 8pt 16pt 4pt rgba(0, 0, 0, 0.01), 
+        0pt 4pt 8pt 2pt rgba(0, 0, 0, 0.01), 
+        0pt 2pt 6pt 0pt rgba(0, 0, 0, 0.01), 
+        0pt 0pt 1pt 0pt rgba(0, 0, 0, 0.0625);
+    --input-inner-shadow: 
+        0pt 1pt 1pt -1pt rgba(0, 0, 0, 0.13) inset, 
+        0pt 3pt 3pt -3pt rgba(0, 0, 0, 0.17) inset, 
+        0pt 4pt 4pt -4pt rgba(0, 0, 0, 0.17) inset,
+        0pt 8pt 8pt -8pt rgba(0, 0, 0, 0.17) inset,
+        0pt 12pt 12pt -12pt rgba(0, 0, 0, 0.13) inset,
+        0pt 16pt 16pt -16pt rgba(0, 0, 0, 0.13) inset;
 }
 
 picture {
@@ -97,8 +115,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 h1, .h1 {
-    line-height: $h1-line-height;
     font-weight: 700;
+    letter-spacing: -.003em;
+    line-height: $h1-line-height;
 
     &:has(+ p) {
         margin-bottom: $font-size-base * 2;
@@ -106,9 +125,10 @@ h1, .h1 {
 }
 
 h2, .h2 {
+    font-weight: 700;
+    letter-spacing: -.007em;
     line-height: $h2-line-height;
     margin-bottom: $h2-margin-bottom;
-    font-weight: 700;
 
     &:has(+ p) {
         margin-bottom: $font-size-base * 1.5;
@@ -116,16 +136,22 @@ h2, .h2 {
 }
 
 h3, .h3 {
+    letter-spacing: -.008em;
     line-height: $h3-line-height;
 }
 
 h4, .h4 {
+    letter-spacing: -.013em;
     line-height: $h4-line-height;
 
-    &:has(:is(small, .small)) {
+    &:has(.mini-h4) {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+    }
+
+    .mini-h4 {
+        font-size: $h5-font-size;
+        line-height: $h5-line-height;
     }
 }
 
@@ -138,6 +164,7 @@ h6, .h6 {
 }
 
 small, .small {
+    letter-spacing: -.001em;
     line-height: $line-height-sm;
 }
 
@@ -152,6 +179,10 @@ big, .big {
 .dense {
     font-size: $font-size-dense;
     line-height: $line-height-dense;
+}
+
+b {
+    font-weight: 600;
 }
 
 @include media-breakpoint-up(lg) {
@@ -188,6 +219,20 @@ big, .big {
 a {
     font-weight: 600;
     text-decoration-color: rgba($link-color, .25);
+
+    .bg-primary & {
+        color: $text-dark;
+        text-decoration-color: rgba($text-dark, .25);
+
+        &:focus-visible {
+            color: $text-dark;
+        }
+
+        &:hover {
+            color: $text-dark;
+            text-decoration-color: $text-dark;
+        }
+    }
 
     &:focus-visible {
         color: $link-hover-color;
@@ -241,10 +286,6 @@ section.bg-dark, section.bg-secondary {
     color: $text-dark;
 }
 
-.text-faded {
-    color: $gray-100;
-}
-
 section {
     padding: pt(4*30) 0;
 }
@@ -259,7 +300,7 @@ footer {
 .navbar {
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
-    height: 64px;
+    height: 48pt;
 
     .navbar-logo {
         position: relative;
@@ -284,8 +325,8 @@ footer {
     }
 
     .nav-link {
-        font-size: $font-size-sm;
-        line-height: $line-height-sm * 2;
+        font-size: $font-size-base;
+        line-height: 2 * $line-height-base;
         text-wrap: nowrap;
     }
 
@@ -451,7 +492,7 @@ header {
 
 // Button Styles
 @mixin btn-default($color, $background) {
-    color: $color;
+    color: $color !important;
     background-color: $background;
     border: none;
     transition: none;
@@ -463,6 +504,7 @@ header {
     font-family: $btn-font-family;
     font-size: $input-btn-font-size;
     font-weight: $btn-font-weight;
+    letter-spacing: -.003em;
     line-height: $btn-line-height;
     text-align: center;
     vertical-align: middle;
@@ -483,7 +525,7 @@ header {
     box-shadow: var(--box-shadow-cta-secondary);
 
     &:hover, &:focus-visible {
-        color: $text;
+        color: $text !important;
         background-color: $white;
     }
 }
@@ -493,7 +535,7 @@ header {
     box-shadow: var(--box-shadow-cta-colored);
 
     &:hover, &:focus-visible {
-        color: $text-dark;
+        color: $text-dark !important;
         background-color: $fill-accent;
     }
 }
@@ -507,12 +549,16 @@ header {
     margin-bottom: map-get($spacers, 4); ///
 }
 
-.client-portrait + figure {
-    margin-top: map-get($spacers, 4);
+.client-portrait {
+    border-radius: $border-radius-sm;
+
+    & + figure {
+        margin-top: map-get($spacers, 4);
+    }
 }
 
 .partner-logo-card {
-    height: 256px;
+    height: 192pt;
     background: white;
 
     a.stretched-link {
@@ -533,14 +579,15 @@ header {
 }
 
 .blockquote {
-    line-height: $line-height-base;
+    line-height: $line-height-blockquote;
     margin-bottom: 0;
 }
 
 .blockquote-footer {
     font-weight: 600;
+    letter-spacing: -.001em;
     margin-top: 1em;
-    line-height: $line-height-blockquote;
+    line-height: $line-height-blockquote-footer;
 }
 
 .heading-number {
@@ -549,6 +596,7 @@ header {
     color: $background;
     width: pt(84);
     height: pt(72);
+    border-radius: $border-radius-xs;
     margin-bottom: map-get($spacers, 3);
 
     &:after {
@@ -562,9 +610,9 @@ header {
         overflow: hidden;
         content: attr(data-number);
         line-height: 1;
-        right: pt(-5);
+        right: pt(-6);
         bottom: 0;
 
-        letter-spacing: -2/48 * 1em;
+        letter-spacing: -.077em;
     }
 }
