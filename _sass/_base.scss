@@ -5,18 +5,11 @@
 
 html {
     box-sizing: border-box;
-    text-underline-offset: .2em;
-    text-decoration-thickness: 1px;
-    -moz-font-feature-settings: 'kern';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overscroll-behavior-x: none;
+    text-underline-offset: .125em;
+    font-synthesis: none;
     text-rendering: optimizeLegibility;
+    overscroll-behavior-x: none;
     font-feature-settings: $font-features;
-}
-
-body {
-    letter-spacing: -.003em;
 }
 
 ::selection {
@@ -111,12 +104,13 @@ picture {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    letter-spacing: -.01em;
     margin-bottom: 0;
+    margin-left: $offset-headings; // adjust for optical alignment
 }
 
 h1, .h1 {
     font-weight: 700;
-    letter-spacing: -.003em;
     line-height: $h1-line-height;
 
     &:has(+ p) {
@@ -126,7 +120,6 @@ h1, .h1 {
 
 h2, .h2 {
     font-weight: 700;
-    letter-spacing: -.007em;
     line-height: $h2-line-height;
     margin-bottom: $h2-margin-bottom;
 
@@ -136,12 +129,10 @@ h2, .h2 {
 }
 
 h3, .h3 {
-    letter-spacing: -.008em;
     line-height: $h3-line-height;
 }
 
 h4, .h4 {
-    letter-spacing: -.013em;
     line-height: $h4-line-height;
 
     &:has(.mini-h4) {
@@ -150,6 +141,7 @@ h4, .h4 {
     }
 
     .mini-h4 {
+        letter-spacing: -.0125em;
         font-size: $h5-font-size;
         line-height: $h5-line-height;
     }
@@ -164,7 +156,7 @@ h6, .h6 {
 }
 
 small, .small {
-    letter-spacing: -.001em;
+    letter-spacing: -.0125em;
     line-height: $line-height-sm;
 }
 
@@ -235,9 +227,14 @@ a {
     }
 
     &:focus-visible {
+        text-decoration: $link-decoration;
         color: $link-hover-color;
         box-shadow: $focus-ring-box-shadow;
         outline: none;
+
+        svg.external-link-icon {
+            color: $link-hover-color;
+        }
     }
 
     &.nav-link {
@@ -245,17 +242,15 @@ a {
     }
 
     svg.external-link-icon {
-        color: $gray;
+        color: $gray-700;
         display: inline-block;
         margin-left: pt(2);
-    }
-
-    &.btn-xl svg.external-link-icon {
-        margin-bottom: pt(1);
+        margin-top: $offset-y-balance;
     }
 
     &:hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
         color: $link-hover-color;
+        text-decoration: $link-hover-decoration;
         text-decoration-color: $link-hover-color;
 
         svg.external-link-icon {
@@ -317,7 +312,7 @@ footer {
     }
 
     .navbar-brand {
-        margin-left: pt(0);
+        margin-left: -1px;
     }
 
     .navbar-brand:focus-visible {
@@ -504,7 +499,6 @@ header {
     font-family: $btn-font-family;
     font-size: $input-btn-font-size;
     font-weight: $btn-font-weight;
-    letter-spacing: -.003em;
     line-height: $btn-line-height;
     text-align: center;
     vertical-align: middle;
@@ -512,7 +506,7 @@ header {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: map-get($spacers, 3);
+    margin-top: map-get($spacers, 3) + $offset-y-balance;
     margin-bottom: $btn-line-height * $input-btn-font-size - $input-btn-padding-y;
 
     &:hover {
@@ -521,12 +515,12 @@ header {
 }
 
 .btn-secondary {
-    @include btn-default($text, $light);
+    @include btn-default($text, $white);
     box-shadow: var(--box-shadow-cta-secondary);
 
     &:hover, &:focus-visible {
         color: $text !important;
-        background-color: $white;
+        background-color: $btn-hover-color;
     }
 }
 
@@ -550,7 +544,7 @@ header {
 }
 
 .client-portrait {
-    border-radius: $border-radius-sm;
+    border-radius: $border-radius-md;
 
     & + figure {
         margin-top: map-get($spacers, 4);
@@ -558,7 +552,7 @@ header {
 }
 
 .partner-logo-card {
-    height: 192pt;
+    height: 259px; // ensures golden ratio on full container width
     background: white;
 
     a.stretched-link {
@@ -585,7 +579,6 @@ header {
 
 .blockquote-footer {
     font-weight: 600;
-    letter-spacing: -.001em;
     margin-top: 1em;
     line-height: $line-height-blockquote-footer;
 }
@@ -597,7 +590,7 @@ header {
     width: pt(84);
     height: pt(72);
     border-radius: $border-radius-xs;
-    margin-bottom: map-get($spacers, 3);
+    margin-bottom: map-get($spacers, 3) + $offset-y-balance;
 
     &:after {
         position: absolute;
@@ -613,6 +606,6 @@ header {
         right: pt(-6);
         bottom: 0;
 
-        letter-spacing: -.077em;
+        letter-spacing: -.075em;
     }
 }

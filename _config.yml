@@ -1,12 +1,11 @@
-title: Alpha Software
-company_name: Công&nbsp;ty TNHH Phát&nbsp;triển Phần&nbsp;mềm Alpha
+title: Chuyển đổi số nhà máy dệt may - Alpha Software
+company_name: Công ty TNHH Phát triển Phần mềm Alpha
 email: alphasoftware102@gmail.com
-description: >- # TODO: Revise description
-  Hợp tác với Alpha Software để xây dựng hệ thống phần mềm quản lý nhà máy dệt may.
-  Giải pháp của chúng tôi sẽ mang lại hiệu suất vượt bậc cho những doanh nghiệp
-  có mong muốn là người dẫn đầu trong lĩnh vực dệt may.
-# baseurl: # the subpath of your site, e.g. /blog
-url: https://www.alphasoftwaregroup.com # the base hostname & protocol for your site, e.g. http://example.com
+description: >-
+  Hợp tác cùng Alpha và xây dựng hệ thống phần mềm quản lý nhà máy dệt may.
+  Phần mềm của Alpha sẽ mang đến hiệu suất tối đa cho doanh nghiệp dệt may
+  có mong muốn dẫn đầu trong lĩnh vực.
+url: https://www.alphasoftwaregroup.com
 alpha_home_url: https://www.alphasoftwaregroup.com
 facebook_page: https://www.facebook.com/profile.php?id=100070371223404
 
