@@ -5,20 +5,10 @@
 
 html {
     box-sizing: border-box;
-    text-underline-offset: .125em;
+    // text-underline-offset: .125em;
     font-synthesis: none;
-    text-rendering: optimizeLegibility;
     overscroll-behavior-x: none;
     font-feature-settings: $font-features;
-}
-
-::selection {
-    background: $secondary;
-    color: #fff;
-}
-
-svg, img {
-    image-rendering: optimizeQuality;
 }
 
 @media (forced-colors: active) {
@@ -38,13 +28,6 @@ svg, img {
     * {
         scroll-behavior: auto;
     }
-}
-
-// Removes default browser styles on buttons and inputs
-button, input[type="submit"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
 }
 
 @include media-breakpoint-down(md) {
@@ -106,12 +89,12 @@ picture {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     letter-spacing: -.01em;
     margin-bottom: 0;
-    margin-left: $offset-headings; // adjust for optical alignment
 }
 
 h1, .h1 {
     font-weight: 700;
     line-height: $h1-line-height;
+    margin-left: -.1875rem + $offset-text-base; // -.055em
 
     &:has(+ p) {
         margin-bottom: $font-size-base * 2;
@@ -121,6 +104,7 @@ h1, .h1 {
 h2, .h2 {
     font-weight: 700;
     line-height: $h2-line-height;
+    margin-left: -.125rem + $offset-text-base; // -.045em
     margin-bottom: $h2-margin-bottom;
 
     &:has(+ p) {
@@ -130,10 +114,12 @@ h2, .h2 {
 
 h3, .h3 {
     line-height: $h3-line-height;
+    margin-left: -.125rem + $offset-text-base; // -.045em
 }
 
 h4, .h4 {
     line-height: $h4-line-height;
+    margin-left: -.0625rem + $offset-text-base; // -.03em
 
     &:has(.mini-h4) {
         display: flex;
@@ -144,6 +130,7 @@ h4, .h4 {
         letter-spacing: -.0125em;
         font-size: $h5-font-size;
         line-height: $h5-line-height;
+        margin-left: .0625rem;
     }
 }
 
@@ -154,6 +141,10 @@ h5, .h5 {
 h6, .h6 {
     line-height: $h6-line-height;
 }
+
+// p, ul, a:not([role="button"]):not(p a):not(.navbar a) {
+//     margin-left: $offset-text-base;
+// }
 
 small, .small {
     letter-spacing: -.0125em;
@@ -307,12 +298,8 @@ footer {
     }
 
     .logo-color {
-        margin-left: -172px;
+        margin-left: -171px;
         visibility: visible;
-    }
-
-    .navbar-brand {
-        margin-left: -1px;
     }
 
     .navbar-brand:focus-visible {
@@ -383,6 +370,12 @@ footer {
 
                 &:hover, &:focus-visible {
                     color: $navbar-light-hover-color !important;
+                }
+
+                &.navlink-active-blue {
+                    &.active, &.show {
+                        color: $secondary !important;
+                    }
                 }
             }
         }
@@ -506,8 +499,7 @@ header {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: map-get($spacers, 3) + $offset-y-balance;
-    margin-bottom: $btn-line-height * $input-btn-font-size - $input-btn-padding-y;
+    margin-top: map-get($spacers, 3);
 
     &:hover {
         text-decoration: none;
@@ -540,11 +532,15 @@ header {
 
 .bi {
     color: $secondary;
-    margin-bottom: map-get($spacers, 4); ///
+    margin-bottom: $h4-line-height * .5;
+
+    &.above-h3 {
+        margin-bottom: $h3-line-height * .5;
+    }
 }
 
 .client-portrait {
-    border-radius: $border-radius-md;
+    border-radius: $border-radius-lg;
 
     & + figure {
         margin-top: map-get($spacers, 4);
@@ -552,7 +548,7 @@ header {
 }
 
 .partner-logo-card {
-    height: 259px; // ensures golden ratio on full container width
+    height: 256px;
     background: white;
 
     a.stretched-link {
@@ -587,25 +583,29 @@ header {
     position: relative;
     background-color: $primary;
     color: $background;
-    width: pt(84);
-    height: pt(72);
-    border-radius: $border-radius-xs;
-    margin-bottom: map-get($spacers, 3) + $offset-y-balance;
+    width: pt(96);
+    height: pt(84);
+    border-radius: $border-radius;
+    margin-bottom: $h2-line-height * .5;
+
+    .bg-light & {
+        background-color: $secondary;
+    }
 
     &:after {
         position: absolute;
         color: inherit;
         font-family: $headings-font-family;
-        font-size: map-get($scales, 9);
+        font-size: map-get($scales, 10);
         font-weight: 600;
         font-feature-settings: 'tnum' 1, $font-features;
         font-synthesis: none;
         overflow: hidden;
         content: attr(data-number);
         line-height: 1;
-        right: pt(-6);
+        right: pt(-7);
         bottom: 0;
 
-        letter-spacing: -.075em;
+        letter-spacing: -.08em;
     }
 }

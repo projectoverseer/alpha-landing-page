@@ -15,17 +15,17 @@
   @return round($line-height * ($font-size / 1rem) * 16px) / 16px / ($font-size / 1rem);
 }
 
-$primary: #e65927; // #de5829;
-$primary-dark: #e2f3fd; // #b6d7ed;
-$accent: #f6930c; // #ff9800;
-$accent-dark: $accent;
+$primary: #e65625;
+$primary-dark: #b8d9ee;
+$accent: #f58d28;
+$accent-dark: #fec670;
 
-$fill-primary: #bc3003; // #cd3504;
+$fill-primary: #cc3626;
 $fill-primary-dark: $fill-primary;
-$fill-accent: #bc3003; //
+$fill-accent: #ac2b29;
 $fill-accent-dark: $fill-accent;
 
-$secondary: #0f508d; // #055193;
+$secondary: #02518b;
 
 $gray-50:  #f5f6f7;
 $gray-100: #f2f3f5;
@@ -39,8 +39,8 @@ $gray-800: #444950;
 $gray-900: #303338;
 $gray-950: #1c1e21;
 
-$dark: #02101b; // #011b2b;
-$light: #fdefe3;
+$dark: #00253d;
+$light: #b8d9ee;
 $black: #080809;
 $white: #fff;
 
@@ -54,8 +54,8 @@ $body-color: $text;
 
 $link-color: #0064d1;
 $link-hover-color: #0064d1;
-$link-alt-color: $secondary;
-$link-alt-hover-color: $secondary;
+$link-alt-color: #b43701;
+$link-alt-hover-color: #b43701;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
@@ -150,7 +150,7 @@ $grid-breakpoints: (
 $container-padding-x: 48px;
 
 $container-max-widths: (
-  lg: 1296px + $container-padding-x,
+  lg: 1284px + $container-padding-x,
 );
 
 $grid-gutter-width: map-get($spacers, 4); ///
@@ -182,10 +182,8 @@ $input-btn-padding-y: pt(6*2);
 $input-btn-padding-x: pt(6*3);
 $btn-font-weight: 400;
 
-$border-radius: 3.5pt;
-$border-radius-xs: 0.5pt;
-$border-radius-md: 2.5pt;
-$border-radius-lg: 6pt;
+$border-radius: 4px;
+$border-radius-lg: 8px;
 $border-color: $gray-300;
 
 $card-border-width: 1px;
@@ -202,8 +200,8 @@ $enable-negative-margins: true;
 $enable-transitions: false;
 $enable-rfs: false;
 
-$offset-headings: -1em/80;
-$offset-y-balance: -1rem/16;
+$offset-y-balance: -.0625rem;
+$offset-text-base: 0; // -.0625rem
 
 @import 'variables.scss';
 @import 'mixins.scss';
