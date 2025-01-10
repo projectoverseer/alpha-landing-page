@@ -1,18 +1,15 @@
-@mixin link-transitions() {
-    transition: .3s cubic-bezier(.4, 0, .6, 1);
-    will-change: color;
-}
-
-html {
-    box-sizing: border-box;
-    // text-underline-offset: .125em;
+body {
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-synthesis: none;
     overscroll-behavior-x: none;
     font-feature-settings: $font-features;
+    unicode-bidi: embed;
 }
 
 @media (forced-colors: active) {
-    a svg.external-link-icon, a:hover svg.external-link-icon, a.nav-link {
+    a + svg.external-link-icon, a:hover + svg.external-link-icon, a.nav-link {
         color: LinkText;
     }
     .btn-xl {
@@ -36,54 +33,34 @@ html {
     }
 }
 
-section p {
-    max-width: 60ch;
+section {
+    p, li {
+        max-width: 60ch;
+    }
 }
 
 :root {
-    --box-shadow-cta-colored: 0pt 0.5pt 1pt 0pt rgba(0, 0, 0, 0.8), 0pt 0.5pt 0.5pt 0pt rgba(255, 255, 255, 0.20) inset; 
-    --box-shadow-cta-secondary: 0pt 0.5pt 1pt rgba(0, 0, 0, 0.8), inset 0pt 0.5pt 0.5pt rgba(255, 255, 255, 0.12);
-    --box-shadow-input-inner: 
-        0pt 1pt 1pt -1pt rgba(0, 0, 0, 0.13) inset, 
-        0pt 3pt 3pt -3pt rgba(0, 0, 0, 0.17) inset, 
-        0pt 4pt 4pt -4pt rgba(0, 0, 0, 0.17) inset,
-        0pt 8pt 8pt -8pt rgba(0, 0, 0, 0.17) inset,
-        0pt 12pt 12pt -12pt rgba(0, 0, 0, 0.13) inset,
-        0pt 16pt 16pt -16pt rgba(0, 0, 0, 0.13) inset;
-    --box-shadow-menu: 
-        0pt 0.5pt 0.5pt 0pt rgba(255, 255, 255, 0.3) inset, 
-        0pt 12pt 24pt 8pt rgba(0, 0, 0, 0.01), 
-        0pt 8pt 16pt 4pt rgba(0, 0, 0, 0.01), 
-        0pt 4pt 8pt 2pt rgba(0, 0, 0, 0.01), 
-        0pt 2pt 6pt 0pt rgba(0, 0, 0, 0.01), 
-        0pt 0pt 1pt 0pt rgba(0, 0, 0, 0.0625);
-    --input-inner-shadow: 
-        0pt 1pt 1pt -1pt rgba(0, 0, 0, 0.13) inset, 
-        0pt 3pt 3pt -3pt rgba(0, 0, 0, 0.17) inset, 
-        0pt 4pt 4pt -4pt rgba(0, 0, 0, 0.17) inset,
-        0pt 8pt 8pt -8pt rgba(0, 0, 0, 0.17) inset,
-        0pt 12pt 12pt -12pt rgba(0, 0, 0, 0.13) inset,
-        0pt 16pt 16pt -16pt rgba(0, 0, 0, 0.13) inset;
+    --box-shadow-cta-colored: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.8),0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.20) inset;
+    --box-shadow-cta-secondary: 0px 0.5px 1px rgba(0, 0, 0, 0.8),inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.12);
+    --box-shadow-input-inner: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
+    --box-shadow-menu: 0px 12px 24px 8px rgba(0, 0, 0, 0.01), 0px 8px 16px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px 2px rgba(0, 0, 0, 0.01), 0px 2px 6px 0px rgba(0, 0, 0, 0.02), 0px -0.5px 0.5px 0px rgba(0, 0, 0, 0.015) inset, 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.015) inset;
+    --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset, 0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset, 0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
 }
 
 picture {
-    border-radius: $border-radius;
+    border-radius: $border-radius-lg;
 }
 
 .noselect, picture, .navbar-logo, .partner-logo-card img.partner-logo {
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     pointer-events: none;
-    user-drag: none;
     -webkit-user-drag: none;
+    user-drag: none;
 }
 
 .text-muted {
-    color: $text-muted !important;
+    color: $text-muted !important; // !override Bootstrap's $secondary with $text-muted
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -94,7 +71,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 h1, .h1 {
     font-weight: 700;
     line-height: $h1-line-height;
-    margin-left: -.1875rem + $offset-text-base; // -.055em
+    margin-left: -.1875rem; // -.055em
 
     &:has(+ p) {
         margin-bottom: $font-size-base * 2;
@@ -104,7 +81,7 @@ h1, .h1 {
 h2, .h2 {
     font-weight: 700;
     line-height: $h2-line-height;
-    margin-left: -.125rem + $offset-text-base; // -.045em
+    margin-left: -.125rem; // -.045em
     margin-bottom: $h2-margin-bottom;
 
     &:has(+ p) {
@@ -114,12 +91,12 @@ h2, .h2 {
 
 h3, .h3 {
     line-height: $h3-line-height;
-    margin-left: -.125rem + $offset-text-base; // -.045em
+    margin-left: -.125rem; // -.045em
 }
 
 h4, .h4 {
     line-height: $h4-line-height;
-    margin-left: -.0625rem + $offset-text-base; // -.03em
+    margin-left: -.0625rem; // -.03em
 
     &:has(.mini-h4) {
         display: flex;
@@ -142,12 +119,8 @@ h6, .h6 {
     line-height: $h6-line-height;
 }
 
-// p, ul, a:not([role="button"]):not(p a):not(.navbar a) {
-//     margin-left: $offset-text-base;
-// }
-
 small, .small {
-    letter-spacing: -.0125em;
+    letter-spacing: -.005em;
     line-height: $line-height-sm;
 }
 
@@ -172,19 +145,11 @@ b {
     .adjust-mt-base {
         margin-top: calc(1em + #{$line-height-base * $font-size-base});
     }
-    .mtc-4 {
-        // Reads "margin top compromise add 4px"
-        margin-top: calc(1em + .3125rem) !important;
-    }
-    .mtc--4 {
-        // Reads "margin top compromise subtract 4px"
-        margin-top: calc(1em - .25rem) !important;
-    }
 }
 
 .hr {
     border-bottom: $hr-border-width solid currentColor;
-    width: pt(4*18);
+    width: 112px;
     margin: $hr-margin-top auto $hr-margin-bottom;
 
     background-color: currentColor;
@@ -220,31 +185,31 @@ a {
     &:focus-visible {
         text-decoration: $link-decoration;
         color: $link-hover-color;
-        box-shadow: $focus-ring-box-shadow;
-        outline: none;
-
-        svg.external-link-icon {
-            color: $link-hover-color;
-        }
+        outline: $focus-ring-box-shadow;
     }
 
     &.nav-link {
-        @include link-transitions();
+        transition: color .3s cubic-bezier(.4, 0, .6, 1);
+        will-change: color;
+
+        &:focus-visible {
+            outline: $focus-ring-box-shadow;
+        }
     }
 
-    svg.external-link-icon {
+    & + svg.external-link-icon {
         color: $gray-700;
         display: inline-block;
-        margin-left: pt(2);
-        margin-top: $offset-y-balance;
+        position: relative;
+        top: -.0625rem;
     }
 
-    &:hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
+    &:not(.nav-link):hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
         color: $link-hover-color;
         text-decoration: $link-hover-decoration;
         text-decoration-color: $link-hover-color;
 
-        svg.external-link-icon {
+        & + svg.external-link-icon {
             color: $link-hover-color;
         }
     }
@@ -264,7 +229,7 @@ p {
 }
 
 section.bg-primary {
-    background-color: $fill-primary !important;
+    background-color: $fill-primary !important; // !override Bootstrap's $primary with $fill-primary
     color: $text-dark;
 }
 
@@ -278,7 +243,7 @@ section {
 
 footer {
     address {
-        margin-bottom: map-get($spacers, 12); ///
+        margin-bottom: map-get($spacers, 12);
     }
 }
 
@@ -286,7 +251,7 @@ footer {
 .navbar {
     background-color: $white;
     box-shadow: var(--box-shadow-menu);
-    height: 48pt;
+    height: 64px;
 
     .navbar-logo {
         position: relative;
@@ -342,7 +307,7 @@ footer {
                 }
 
                 &:hover, &:focus-visible {
-                    color: $navbar-dark-hover-color !important;
+                    color: $navbar-dark-hover-color !important; // !override Bootstrap's focus color
                 }
             }
         }
@@ -360,21 +325,13 @@ footer {
             }
 
             .nav-link {
-                &:focus:not(:focus-visible) {
-                    color: initial;
-                }
-
                 &.active, &.show {
-                    color: $navbar-light-active-color !important;
-                }
-
-                &:hover, &:focus-visible {
-                    color: $navbar-light-hover-color !important;
+                    color: $navbar-light-active-color;
                 }
 
                 &.navlink-active-blue {
                     &.active, &.show {
-                        color: $secondary !important;
+                        color: $secondary;
                     }
                 }
             }
@@ -385,7 +342,7 @@ footer {
 // Homepage Header
 header {
     display: flex;
-    min-height: calc(round(100vh, 1px) + 16px);
+    min-height: calc(round(100vh, 1px) + 12px);
     height: fit-content;
     background-position: center;
     background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), image-set(url('../img/hero-1920w.avif') 1x, url('../img/hero-3840w.avif') 2x);
@@ -394,10 +351,10 @@ header {
     text-wrap: pretty;
 
     .header-content {
-        align-content: center;
+        transform: translateY(calc(round(14.286%, 1px)));
 
         @include media-breakpoint-up(md) {
-            transform: translateY(calc(round(-.0625 * 100vh, 1px)));
+            transform: translateY(calc(round(25vh, 1px)));
         }
 
         p, h2 {
@@ -409,10 +366,9 @@ header {
 // Sections
 .service-box {
     text-wrap: pretty;
-    max-width: 512px;
 
     & > :last-child {
-        margin-bottom: map-get($spacers, 8); ///
+        margin-bottom: map-get($spacers, 8);
     }
 
     .row:has(&) {
@@ -447,14 +403,14 @@ header {
         position: absolute;
         bottom: 0;
 
-        @include link-transitions();
+        transition: opacity .3s cubic-bezier(.4, 0, .6, 1);
         will-change: opacity;
 
         .portfolio-box-caption-content {
             width: 100%;
             position: absolute;
             transform: translateY(-100%);
-            padding-bottom: map-get($spacers, 2); ///
+            padding-bottom: map-get($spacers, 2);
 
             .project-category, .project-name {
                 padding: 0 17px;
@@ -480,13 +436,13 @@ header {
 
 // Button Styles
 @mixin btn-default($color, $background) {
-    color: $color !important;
+    color: $color;
     background-color: $background;
     border: none;
     transition: none;
 }
 
-.btn-xl {
+a.btn-xl {
     display: inline-block;
     padding: $input-btn-padding-y $input-btn-padding-x;
     font-family: $btn-font-family;
@@ -506,22 +462,22 @@ header {
     }
 }
 
-.btn-secondary {
+a.btn-secondary, a.btn-primary {
     @include btn-default($text, $white);
     box-shadow: var(--box-shadow-cta-secondary);
 
     &:hover, &:focus-visible {
-        color: $text !important;
+        color: $text;
         background-color: $btn-hover-color;
     }
 }
 
-.btn-primary {
+a.btn-primary {
     @include btn-default($text-dark, $fill-primary);
     box-shadow: var(--box-shadow-cta-colored);
 
     &:hover, &:focus-visible {
-        color: $text-dark !important;
+        color: $text-dark;
         background-color: $fill-accent;
     }
 }
@@ -554,7 +510,7 @@ header {
     a.stretched-link {
         line-height: 2em;
         margin-top: -2em;
-        opacity: 0 !important;
+        opacity: 0;
     }
 
     &#spica-card {
@@ -585,7 +541,7 @@ header {
     color: $background;
     width: pt(96);
     height: pt(84);
-    border-radius: $border-radius;
+    border-radius: $border-radius-sm;
     margin-bottom: $h2-line-height * .5;
 
     .bg-light & {
@@ -608,4 +564,8 @@ header {
 
         letter-spacing: -.08em;
     }
+}
+
+:is(small, .small, big, .big).text-muted {
+    font-weight: 600;
 }

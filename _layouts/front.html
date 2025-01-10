@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <!-- Warning: If you see this line, this code is unoptimized. Please run the optimization workflow in .optimizer-cmd -->
 <html xml:lang="vi-VN" lang="vi-VN">
-{% include meta.html %}
+<head>
+  {% include meta.html %}
+  {% include meta_scripts.html %}
+</head>
 <body data-bs-spy="scroll" data-bs-target="#globalnav" data-bs-smooth-scroll="true">
   <div id="globalheader">
     {% include nav.html %}
@@ -19,6 +22,7 @@
   <footer id="footer">
     {% include footer.html %}
   </footer>
+  <script defer src="js/bootstrap.min.js"></script>
+  <script defer src="js/custom.js"></script>
 </body>
-{% include meta_scripts.html %}
 </html>

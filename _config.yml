@@ -11,3 +11,16 @@ facebook_page: https://www.facebook.com/profile.php?id=100070371223404
 
 # Build settings
 markdown: kramdown
+
+exclude:
+  - node_modules/
+  - docs/
+  - update-class-names.js
+  - _classMap.json
+  - package-lock.json
+  - package.json
+  - postcss.config.js
+  - .gititnore
+  - CNAME
+  - Gemfile
+  - Gemfile.lock

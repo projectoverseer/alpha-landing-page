@@ -54,14 +54,13 @@ $body-color: $text;
 
 $link-color: #0064d1;
 $link-hover-color: #0064d1;
-$link-alt-color: #b43701;
-$link-alt-hover-color: #b43701;
+$link-alt-color: #c45330;
+$link-alt-hover-color: #c45330;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
 
-$focus-ring-opacity: 1/3;
-$focus-ring-color: rgba($link-color, $focus-ring-opacity);
+$focus-ring-box-shadow: 2px auto #0866ff;
 
 $scales: (
     -1: pt(10),
@@ -101,7 +100,7 @@ $spacers: (
    12: pt(4*12),
 );
 
-$font-size-root: calc(max(9pt, min(100%, 20pt)));
+$font-size-root: calc(max(13px, min(100%, 27px)));
 $font-size-sm: map-get($scales, -1);
 $font-size-base: map-get($scales, 1);
 $font-size-lg: map-get($scales, 2);
@@ -150,15 +149,15 @@ $grid-breakpoints: (
 $container-padding-x: 48px;
 
 $container-max-widths: (
-  lg: 1284px + $container-padding-x,
+  lg: 1281px + $container-padding-x,
 );
 
-$grid-gutter-width: map-get($spacers, 4); ///
+$grid-gutter-width: map-get($spacers, 4);
 $paragraph-margin-bottom: 0;
 
 
-$headings-margin-bottom: map-get($spacers, 4); ///
-$font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+$headings-margin-bottom: map-get($spacers, 4);
+$font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, sans-serif;
 $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 600;
@@ -167,10 +166,10 @@ $font-features: 'kern' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1;
 
 $navbar-padding-y: 0;
 $navbar-light-color: $text;
-$navbar-light-hover-color: none; // Dummy value to cancel the hover state
+$navbar-light-hover-color: $navbar-light-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
-$navbar-nav-link-padding-x: map-get($spacers, 4) / 2; /// NOTICE: This may be fixed in future Bootstrap versions
+$navbar-nav-link-padding-x: map-get($spacers, 4) / 2; // NOTICE: This may be fixed in future Bootstrap versions
 $nav-link-font-weight: 600;
 $nav-link-transition: none;
 
@@ -182,26 +181,26 @@ $input-btn-padding-y: pt(6*2);
 $input-btn-padding-x: pt(6*3);
 $btn-font-weight: 400;
 
-$border-radius: 4px;
+$border-radius-sm: 4px;
+$border-radius: 5.6568542495px;
 $border-radius-lg: 8px;
 $border-color: $gray-300;
+
+$btn-border-radius: $border-radius;
 
 $card-border-width: 1px;
 $card-border-color: $border-color;
 $card-border-radius: $border-radius-lg;
 
-$hr-border-width: 3pt;
-$hr-margin-top: $font-size-base;
-$hr-margin-bottom: $font-size-base * 1.5;
+$hr-border-width: 4px;
+$hr-margin-top: .5 * $h2-font-size;
+$hr-margin-bottom: $line-height-base * $font-size-base;
 $hr-color: $primary;
 $hr-opacity: 1;
 
 $enable-negative-margins: true;
 $enable-transitions: false;
 $enable-rfs: false;
-
-$offset-y-balance: -.0625rem;
-$offset-text-base: 0; // -.0625rem
 
 @import 'variables.scss';
 @import 'mixins.scss';
