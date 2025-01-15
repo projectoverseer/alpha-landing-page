@@ -1,8 +1,8 @@
 body {
     direction: ltr;
+    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-synthesis: none;
     overscroll-behavior-x: none;
     font-feature-settings: $font-features;
     unicode-bidi: embed;
@@ -35,7 +35,7 @@ body {
 
 section {
     p, li {
-        max-width: 60ch;
+        max-width: 53ch;
     }
 }
 
@@ -47,11 +47,7 @@ section {
     --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset, 0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset, 0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
 }
 
-picture {
-    border-radius: $border-radius-lg;
-}
-
-.noselect, picture, .navbar-logo, .partner-logo-card img.partner-logo {
+.noselect, .navbar-logo, .partner-logo-card .partner-logo {
     -webkit-touch-callout: none;
     user-select: none;
     pointer-events: none;
@@ -64,7 +60,7 @@ picture {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    letter-spacing: -.01em;
+    letter-spacing: -.016em;
     margin-bottom: 0;
 }
 
@@ -72,26 +68,21 @@ h1, .h1 {
     font-weight: 700;
     line-height: $h1-line-height;
     margin-left: -.1875rem; // -.055em
-
-    &:has(+ p) {
-        margin-bottom: $font-size-base * 2;
-    }
+    letter-spacing: -.018em;
 }
 
 h2, .h2 {
     font-weight: 700;
     line-height: $h2-line-height;
     margin-left: -.125rem; // -.045em
-    margin-bottom: $h2-margin-bottom;
-
-    &:has(+ p) {
-        margin-bottom: $font-size-base * 1.5;
-    }
+    letter-spacing: -.022em;
+    max-width: 32ch;
 }
 
 h3, .h3 {
     line-height: $h3-line-height;
     margin-left: -.125rem; // -.045em
+    letter-spacing: -.024em;
 }
 
 h4, .h4 {
@@ -104,10 +95,10 @@ h4, .h4 {
     }
 
     .mini-h4 {
-        letter-spacing: -.0125em;
-        font-size: $h5-font-size;
-        line-height: $h5-line-height;
+        font-size: $font-size-base;
+        line-height: $line-height-base;
         margin-left: .0625rem;
+        letter-spacing: 0;
     }
 }
 
@@ -120,16 +111,14 @@ h6, .h6 {
 }
 
 small, .small {
-    letter-spacing: -.005em;
+    letter-spacing: -.002em; // -.008em; TODO
     line-height: $line-height-sm;
 }
 
 big, .big {
-    font-size: $h5-font-size;
-    line-height: $h5-line-height;
-    .partner-logo-card + & {
-        margin-top: map-get($spacers, 4);
-    }
+    letter-spacing: .003em;
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
 }
 
 .dense {
@@ -142,15 +131,25 @@ b {
 }
 
 @include media-breakpoint-up(lg) {
-    .adjust-mt-base {
-        margin-top: calc(1em + #{$line-height-base * $font-size-base});
+    // !override Bootstrap's spacing system with adjusted spacers
+    .adjust-mb-base.mb-0 {
+        padding-bottom: $line-height-base * $font-size-base !important;
     }
+}
+
+.mt-1em {
+    margin-top: 1em !important; // !parallels Bootstrap's spacing system
+}
+
+.bg-gray-100 {
+    background-color: $gray-100 !important; // !parallels Bootstrap's bg- system
 }
 
 .hr {
     border-bottom: $hr-border-width solid currentColor;
-    width: 112px;
-    margin: $hr-margin-top auto $hr-margin-bottom;
+    width: pt(96);
+    margin-left: auto;
+    margin-right: auto;
 
     background-color: currentColor;
     color: $primary;
@@ -204,7 +203,7 @@ a {
         top: -.0625rem;
     }
 
-    &:not(.nav-link):hover, .partner-logo-card:has(a.stretched-link:hover) ~ &:first-of-type {
+    &:not(.nav-link):hover, .partner-logo-card:has(a.stretched-link:hover) + div & {
         color: $link-hover-color;
         text-decoration: $link-hover-decoration;
         text-decoration-color: $link-hover-color;
@@ -238,13 +237,11 @@ section.bg-dark, section.bg-secondary {
 }
 
 section {
-    padding: pt(4*30) 0;
+    padding: pt(4*24) 0;
 }
 
-footer {
-    address {
-        margin-bottom: map-get($spacers, 12);
-    }
+.copyright-text {
+    color: $text-muted;
 }
 
 // Navigation
@@ -273,7 +270,7 @@ footer {
 
     .nav-link {
         font-size: $font-size-base;
-        line-height: 2 * $line-height-base;
+        line-height: 48px;
         text-wrap: nowrap;
     }
 
@@ -351,14 +348,14 @@ header {
     text-wrap: pretty;
 
     .header-content {
-        transform: translateY(calc(round(14.286%, 1px)));
+        margin-top: calc(round(14.286vh, 1px));
 
         @include media-breakpoint-up(md) {
-            transform: translateY(calc(round(25vh, 1px)));
+            margin-top: calc(round(25vh, 1px));
         }
 
         p, h2 {
-            max-width: 60ch;
+            max-width: 53ch;
         }
     }
 }
@@ -368,11 +365,11 @@ header {
     text-wrap: pretty;
 
     & > :last-child {
-        margin-bottom: map-get($spacers, 8);
+        margin-bottom: map-get($spacers, 9);
     }
 
     .row:has(&) {
-        margin-bottom: -1 * map-get($spacers, 8) + $paragraph-margin-bottom; ///
+        margin-bottom: -1 * map-get($spacers, 9) + $paragraph-margin-bottom; ///
     }
 }
 
@@ -410,7 +407,7 @@ header {
             width: 100%;
             position: absolute;
             transform: translateY(-100%);
-            padding-bottom: map-get($spacers, 2);
+            padding-bottom: map-get($spacers, 4);
 
             .project-category, .project-name {
                 padding: 0 17px;
@@ -447,7 +444,6 @@ a.btn-xl {
     padding: $input-btn-padding-y $input-btn-padding-x;
     font-family: $btn-font-family;
     font-size: $input-btn-font-size;
-    font-weight: $btn-font-weight;
     line-height: $btn-line-height;
     text-align: center;
     vertical-align: middle;
@@ -455,7 +451,7 @@ a.btn-xl {
     user-select: none;
     text-decoration: none;
     border-radius: $btn-border-radius;
-    margin-top: map-get($spacers, 3);
+    letter-spacing: .003em;
 
     &:hover {
         text-decoration: none;
@@ -488,19 +484,10 @@ a.btn-primary {
 
 .bi {
     color: $secondary;
-    margin-bottom: $h4-line-height * .5;
-
-    &.above-h3 {
-        margin-bottom: $h3-line-height * .5;
-    }
 }
 
 .client-portrait {
     border-radius: $border-radius-lg;
-
-    & + figure {
-        margin-top: map-get($spacers, 4);
-    }
 }
 
 .partner-logo-card {
@@ -524,25 +511,13 @@ a.btn-primary {
     margin: auto;
 }
 
-.blockquote {
-    line-height: $line-height-blockquote;
-    margin-bottom: 0;
-}
-
-.blockquote-footer {
-    font-weight: 600;
-    margin-top: 1em;
-    line-height: $line-height-blockquote-footer;
-}
-
 .heading-number {
     position: relative;
     background-color: $primary;
     color: $background;
-    width: pt(96);
-    height: pt(84);
+    width: 128px;
+    height: 112px;
     border-radius: $border-radius-sm;
-    margin-bottom: $h2-line-height * .5;
 
     .bg-light & {
         background-color: $secondary;
@@ -552,20 +527,21 @@ a.btn-primary {
         position: absolute;
         color: inherit;
         font-family: $headings-font-family;
-        font-size: map-get($scales, 10);
+        font-size: 80px;
         font-weight: 600;
-        font-feature-settings: 'tnum' 1, $font-features;
         font-synthesis: none;
         overflow: hidden;
         content: attr(data-number);
         line-height: 1;
-        right: pt(-7);
+        right: -11px;
         bottom: 0;
 
-        letter-spacing: -.08em;
+        letter-spacing: -.013em;
     }
-}
 
-:is(small, .small, big, .big).text-muted {
-    font-weight: 600;
+    &[data-number="01"]:after {
+        right: -9px;
+        font-feature-settings: 'tnum' 1, $font-features;
+        letter-spacing: -.084em;
+    }
 }
