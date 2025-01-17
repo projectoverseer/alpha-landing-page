@@ -56,7 +56,7 @@ section {
 }
 
 .text-muted {
-    color: $text-muted !important; // !override Bootstrap's $secondary with $text-muted
+    color: $text-muted !important; // !override Bootstrap's $text-muted
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -119,11 +119,6 @@ big, .big {
     letter-spacing: .003em;
     font-size: $font-size-lg;
     line-height: $line-height-lg;
-}
-
-.dense {
-    font-size: $font-size-dense;
-    line-height: $line-height-dense;
 }
 
 b {
@@ -237,7 +232,7 @@ section.bg-dark, section.bg-secondary {
 }
 
 section {
-    padding: pt(4*24) 0;
+    padding: map-get($spacers, 24) 0;
 }
 
 .copyright-text {
@@ -483,7 +478,7 @@ a.btn-primary {
 }
 
 .bi {
-    color: $secondary;
+    color: $fill-secondary;
 }
 
 .client-portrait {

@@ -15,55 +15,56 @@
   @return round($line-height * ($font-size / 1rem) * 16px) / 16px / ($font-size / 1rem);
 }
 
-$primary: #e65625;
-$primary-dark: #b8d9ee;
-$accent: #f58d28;
-$accent-dark: #fec670;
+$primary: #d64a1e;
+$primary-dark: #a5cde7;
+$accent: #e87a20;
+$accent-dark: #fbb670;
 
-$fill-primary: #cc3626;
+$fill-primary: #c33b1a;
 $fill-primary-dark: $fill-primary;
-$fill-accent: #ac2b29;
+$fill-accent: #a62928;
 $fill-accent-dark: $fill-accent;
+$fill-secondary: #02416d;
 
 $secondary: #02518b;
 
-$gray-50:  #f5f6f7;
-$gray-100: #f2f3f5;
-$gray-200: #ebedf0;
-$gray-300: #dadde1;
-$gray-400: #ccd0d5;
-$gray-500: #bec3c9;
-$gray-600: #8d949e;
-$gray-700: #606770;
-$gray-800: #444950;
-$gray-900: #303338;
-$gray-950: #1c1e21;
+$gray-50:  #fafafa;
+$gray-100: #f5f5f5;
+$gray-200: #ededed;
+$gray-300: #e0e0e0;
+$gray-400: #bdbdbd;
+$gray-500: #9e9e9e;
+$gray-600: #757575;
+$gray-700: #616161;
+$gray-800: #424242;
+$gray-900: #212121;
+$gray-950: #121212;
 
-$dark: #00253d;
-$light: #b8d9ee;
-$black: #080809;
+$dark: #1a2b3c;
+$light: #d3e3f0;
+$black: #000;
 $white: #fff;
 
-$text: $black;
-$text-muted: #65686c;
+$text: $gray-900;
+$text-muted: $gray-600;
 $background: $white;
 $text-dark: $white;
-$btn-hover-color: #f2f2f2;
+$btn-hover-color: $gray-100;
 
 $body-color: $text;
 
-$link-color: #0064d1;
-$link-hover-color: #0064d1;
-$link-alt-color: #c45330;
-$link-alt-hover-color: #c45330;
+$link-color: #006ba5;
+$link-hover-color: $link-color;
+$link-alt-color: #c33b1a;
+$link-alt-hover-color: $link-alt-color;
 $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
 
-$focus-ring-box-shadow: 2px auto #0866ff;
+$focus-ring-box-shadow: 2px auto #0056ff;
 
 $scales: (
-    -1: pt(10),
+    -1: pt(9),
     0: 0rem,
     1: pt(11),
     2: pt(12),
@@ -83,11 +84,11 @@ $scales: (
 $spacer: 1rem;
 
 $spacers: (
-   -2: snap-to-px(0.25),
-   -1: snap-to-px(0.5),
+   -2: pt(1),
+   -1: pt(2),
     0: 0rem,
     1: pt(4),
-    2: pt(4*4) / 2,
+    2: pt(4*2),
     3: pt(4*3),
     4: pt(4*4),
     5: pt(4*5),
@@ -98,13 +99,13 @@ $spacers: (
    10: pt(4*10),
    11: pt(4*11),
    12: pt(4*12),
+   24: pt(4*24),
 );
 
-$font-size-root: calc(max(13px, min(100%, 27px)));
+$font-size-root: calc(max(14px, min(100%, 26px)));
 $font-size-sm: map-get($scales, -1);
 $font-size-base: map-get($scales, 1);
 $font-size-lg: map-get($scales, 2);
-$font-size-dense: map-get($scales, -1);
 $small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
@@ -112,9 +113,8 @@ $blockquote-footer-font-size: $font-size-base;
 $blockquote-footer-color: $text;
 
 $line-height-base: pt(11+6) / $font-size-base;
-$line-height-sm: pt(10+5) / $font-size-sm;
+$line-height-sm: pt(10+6) / $font-size-sm;
 $line-height-lg: pt(12+6) / $font-size-lg;
-$line-height-dense: pt(11+6) / $font-size-dense; // TODO: Consider removing this value
 $btn-line-height: $line-height-base;
 
 $h1-font-size: map-get($scales, 7);
@@ -124,29 +124,29 @@ $h4-font-size: map-get($scales, 3);
 $h5-font-size: map-get($scales, 2);
 $h6-font-size: map-get($scales, 1);
 
-$h1-line-height: pt(6*7+9);
+$h1-line-height: pt(6*7+12);
 $h2-line-height: pt(6*5+6);
 $h3-line-height: pt(6*4+6);
-$h4-line-height: pt(6*3+5);
-$h5-line-height: pt(13+7);
+$h4-line-height: pt(6*3+6);
+$h5-line-height: pt(13+6);
 $h6-line-height: pt(6*2+6);
 
 $grid-breakpoints: (
   xs: 0,
-  sm: 478px,
-  md: 767px,
-  lg: 991px,
+  sm: 480px,
+  md: 768px,
+  lg: 1024px,
   xl: 1440px,
   xxl: 1920px,
 );
 
-$container-padding-x: 48px;
+$container-padding-x: 32px;
 
 $container-max-widths: (
-  lg: 1280px + $container-padding-x,
+  lg: 1200px + $container-padding-x,
 );
 
-$grid-gutter-width: map-get($spacers, 4);
+$grid-gutter-width: map-get($spacers, 3);
 $paragraph-margin-bottom: 0;
 
 
@@ -173,9 +173,9 @@ $navbar-dark-active-color: $link-alt-hover-dark-color;
 $input-btn-padding-y: 16px; // pt(6*2);
 $input-btn-padding-x: 24px; // pt(6*3);
 
-$border-radius-sm: 4px;
+$border-radius-sm: 2px;
 $border-radius: 4px;
-$border-radius-lg: 8px;
+$border-radius-lg: 6px;
 $border-color: $gray-300;
 
 $btn-border-radius: $border-radius;
@@ -184,7 +184,7 @@ $card-border-width: 1px;
 $card-border-color: $border-color;
 $card-border-radius: $border-radius-lg;
 
-$hr-border-width: 3px;
+$hr-border-width: 2px;
 
 $enable-negative-margins: true;
 $enable-transitions: false;
