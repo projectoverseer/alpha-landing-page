@@ -6,20 +6,20 @@
   {% include meta_scripts.html %}
 </head>
 <body data-bs-spy="scroll" data-bs-target="#globalnav" data-bs-smooth-scroll="true">
-  <div id="globalheader">
+  <nav id="globalnav" lang="vi-VN" dir="ltr" aria-label="Mục lục" class="navbar fixed-top navbar-expand-md" data-bs-theme="dark">
     {% include nav.html %}
-  </div>
+  </nav>
   <main>
     {% include hero.html %}
     {% include overview.html %}
-    {% include benefits.html %}
-    {% include testimonials.html %}
+    {% include advantages.html %}
+    {% include customer-testimonials.html %}
     {% include our-projects.html %}
-    {% include about-us.html %}
+    {% include our-story.html %}
     {% include gallery.html %}
     {% include call-to-action.html %}
   </main>
-  <footer id="footer">
+  <footer>
     {% include footer.html %}
   </footer>
   <script defer src="js/bootstrap.min.js"></script>
