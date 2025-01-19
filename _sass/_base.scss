@@ -176,21 +176,7 @@ dd {
 
 a {
     font-weight: 600;
-    text-decoration-color: rgba($link-color, .25);
-
-    .bg-primary & {
-        color: $text-dark;
-        text-decoration-color: rgba($text-dark, .25);
-
-        &:focus-visible {
-            color: $text-dark;
-        }
-
-        &:hover {
-            color: $text-dark;
-            text-decoration-color: $text-dark;
-        }
-    }
+    text-decoration-color: $link-hover-color;
 
     &:focus-visible {
         text-decoration: $link-decoration;
@@ -217,7 +203,6 @@ a {
     &:not(.nav-link):hover, .partner-logo-card:has(a.stretched-link:hover) + div & {
         color: $link-hover-color;
         text-decoration: $link-hover-decoration;
-        text-decoration-color: $link-hover-color;
 
         & + svg.external-link-icon {
             color: $link-hover-color;
