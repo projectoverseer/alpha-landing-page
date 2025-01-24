@@ -6,6 +6,7 @@ body {
     overscroll-behavior-x: none;
     font-feature-settings: $font-features;
     unicode-bidi: embed;
+    text-wrap: pretty;
 }
 
 @media (forced-colors: active) {
@@ -35,7 +36,7 @@ body {
 
 section {
     p, li {
-        max-width: 53ch;
+        max-width: 28em;
     }
 }
 
@@ -76,7 +77,7 @@ h2, .h2 {
     line-height: $h2-line-height;
     margin-left: -.125rem; // -.045em
     letter-spacing: -.022em;
-    max-width: 32ch;
+    max-width: 28em;
 }
 
 h3, .h3 {
@@ -138,7 +139,7 @@ dt {
 
 dd {
     grid-column-start: 2;
-    margin: 0 0 0 1ch;
+    margin: 0 0 0 .5em; // en space
 }
 
 @include media-breakpoint-up(lg) {
@@ -146,10 +147,6 @@ dd {
     .adjust-mb-base.mb-0 {
         padding-bottom: $line-height-base * $font-size-base !important;
     }
-}
-
-.mt-1em {
-    margin-top: 1em !important; // !parallels Bootstrap's spacing system
 }
 
 .bg-gray-100 {
@@ -341,25 +338,22 @@ header {
     background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), image-set(url('../img/hero-1920w.avif') 1x, url('../img/hero-3840w.avif') 2x);
     background-size: cover;
     color: $text-dark;
-    text-wrap: pretty;
 
     .header-content {
-        margin-top: calc(round(14.286vh, 1px));
+        margin-top: calc(#{map-get($spacers, 24)} + 64px);
 
         @include media-breakpoint-up(md) {
             margin-top: calc(round(25vh, 1px));
         }
 
         p, h2 {
-            max-width: 53ch;
+            max-width: 28em;
         }
     }
 }
 
 // Sections
 .service-box {
-    text-wrap: pretty;
-
     & > :last-child {
         margin-bottom: map-get($spacers, 9);
     }
