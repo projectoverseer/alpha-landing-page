@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <!-- Warning: If you see this line, this code is unoptimized. Please run the optimization workflow in .optimizer-cmd -->
 <html xml:lang="vi-VN" lang="vi-VN">
-<head>
-  {% include meta.html %}
-  {% include meta_scripts.html %}
-</head>
-<body data-bs-spy="scroll" data-bs-target="#globalnav" data-bs-smooth-scroll="true">
-  <nav id="globalnav" lang="vi-VN" dir="ltr" aria-label="Mục lục" class="navbar fixed-top navbar-expand-md" data-bs-theme="dark">
-    {% include nav.html %}
-  </nav>
-  <main>
-    {% include hero.html %}
-    {% include overview.html %}
-    {% include advantages.html %}
-    {% include customer-testimonials.html %}
-    {% include our-projects.html %}
-    {% include our-story.html %}
-    {% include gallery.html %}
-    {% include call-to-action.html %}
-  </main>
-  <footer>
-    {% include footer.html %}
-  </footer>
-  <script defer src="js/bootstrap.min.js"></script>
-  <script defer src="js/custom.js"></script>
-</body>
+  <head>
+    {% include meta.html %} {% include meta_scripts.html %}
+  </head>
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#globalnav"
+    data-bs-smooth-scroll="true"
+  >
+    <nav
+      id="globalnav"
+      lang="vi-VN"
+      dir="ltr"
+      aria-label="Mục lục"
+      class="navbar fixed-top navbar-expand-md"
+      data-bs-theme="dark"
+    >
+      {% include nav.html %}
+    </nav>
+    <main>
+      {% include hero.html %} {% include overview.html %} {% include
+      advantages.html %} {% include customer-testimonials.html %} {% include
+      our-projects.html %} {% include our-story.html %} {% include gallery.html
+      %} {% include call-to-action.html %}
+    </main>
+    <footer>{% include footer.html %}</footer>
+    <script defer src="js/bootstrap.min.js"></script>
+    <script defer src="js/custom.js"></script>
+  </body>
 </html>

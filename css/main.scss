@@ -1,18 +1,11 @@
 ---
 ---
-@charset 'utf-8';
-@import 'functions.scss';
 
-@function snap-to-px($rem) {
-  @return round(15px * $rem) / 16px * 1rem;
-}
+@charset "utf-8";
+@import "functions.scss";
 
 @function pt($pt) {
-  @return round($pt / 3 * 4) / 16 * 1rem;
-}
-
-@function snap-line-height-to-px($line-height, $font-size) {
-  @return round($line-height * ($font-size / 1rem) * 16px) / 16px / ($font-size / 1rem);
+  @return 1rem * round($pt / 3 * 4) / 16;
 }
 
 $primary: #d64a1e;
@@ -28,29 +21,29 @@ $fill-secondary: #02416d;
 
 $secondary: #02518b;
 
-$gray-50:  #faf9fb; // 6534
-$gray-100: #f5f4f6;
-$gray-200: #edecee;
-$gray-300: #e0dfe1;
-$gray-400: #bdbcbe;
-$gray-500: #9e9d9f;
-
-$gray-600: #747476;
-$gray-700: #606062;
-$gray-800: #414143;
-$gray-900: #202022;
-$gray-950: #111113;
+$gray-50: #f8f9fb;
+$gray-100: #eef0f3;
+$gray-200: #e2e4e8;
+$gray-300: #ccd0d6;
+$gray-400: #aeb4bc;
+$gray-500: #8c939d;
+$gray-600: #6f7681;
+$gray-700: #555c68;
+$gray-800: #3c434d;
+$gray-900: #272d36;
+$gray-950: #1c2028;
 
 $dark: #1a2b3c;
 $light: #d3e3f0;
 $black: #000;
 $white: #fff;
 
-$text: $gray-900;
-$text-muted: $gray-600;
+$text: $gray-950;
+$text-muted: rgba($text, 0.65);
 $background: $white;
 $text-dark: $white;
 $btn-hover-color: $gray-100;
+$border-color: rgba($gray-300, 0.8);
 
 $body-color: $text;
 
@@ -62,52 +55,51 @@ $link-alt-hover-dark-color: $accent-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
 
-$focus-ring-box-shadow: 2px auto #0056ff;
+$focus-ring-box-shadow: 3px auto #0056ff;
 
 $scales: (
-    -1: pt(9),
-    0: 0rem,
-    1: pt(11),
-    2: pt(12),
-    3: pt(6*3),
-    4: pt(6*4),
-    5: pt(6*5),
-    6: pt(6*6),
-    7: pt(6*7),
-    8: pt(6*8),
-    9: pt(6*9),
-    10: pt(6*10),
-    11: pt(6*11),
-    12: pt(6*12),
-    13: pt(6*13),
+  -1: pt(9),
+  0: 0rem,
+  1: pt(11),
+  2: pt(6 * 2),
+  3: pt(6 * 3),
+  4: pt(6 * 4),
+  5: pt(6 * 5),
+  6: pt(6 * 6),
+  7: pt(6 * 7),
+  8: pt(6 * 8),
+  9: pt(6 * 9),
+  10: pt(6 * 10),
+  11: pt(6 * 11),
+  12: pt(6 * 12),
+  13: pt(6 * 13)
 );
 
 $spacer: 1rem;
 
 $spacers: (
-   -2: pt(1),
-   -1: pt(2),
-    0: 0rem,
-    1: pt(4),
-    2: pt(4*2),
-    3: pt(4*3),
-    4: pt(4*4),
-    5: pt(4*5),
-    6: pt(4*6),
-    7: pt(4*7),
-    8: pt(4*8),
-    9: pt(4*9),
-   10: pt(4*10),
-   11: pt(4*11),
-   12: pt(4*12),
-   24: pt(4*24),
+  -2: pt(1),
+  -1: pt(2),
+  0: 0rem,
+  1: pt(4),
+  2: pt(4 * 2),
+  3: pt(4 * 3),
+  4: pt(4 * 2) * 2,
+  5: pt(4 * 5),
+  6: pt(4 * 2) * 3,
+  7: pt(4 * 7),
+  8: pt(4 * 2) * 4,
+  9: pt(4 * 3) * 3,
+  10: pt(4 * 2) * 5,
+  11: pt(4 * 11),
+  12: pt(4 * 2) * 6,
+  24: pt(4 * 2) * 12
 );
 
 $font-size-root: calc(max(14px, min(100%, 26px)));
 $font-size-sm: map-get($scales, -1);
 $font-size-base: map-get($scales, 1);
 $font-size-lg: map-get($scales, 2);
-$small-font-size: $font-size-sm;
 $input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-base;
@@ -125,12 +117,12 @@ $h4-font-size: map-get($scales, 3);
 $h5-font-size: map-get($scales, 2);
 $h6-font-size: map-get($scales, 1);
 
-$h1-line-height: pt(6*7+12);
-$h2-line-height: pt(6*5+6);
-$h3-line-height: pt(6*4+6);
-$h4-line-height: pt(6*3+6);
+$h1-line-height: pt(6 * 7+12);
+$h2-line-height: pt(6 * 5+6);
+$h3-line-height: pt(6 * 4+6);
+$h4-line-height: pt(6 * 3+6);
 $h5-line-height: pt(13+6);
-$h6-line-height: pt(6*2+6);
+$h6-line-height: pt(6 * 2+6);
 
 $grid-breakpoints: (
   xs: 0,
@@ -138,25 +130,25 @@ $grid-breakpoints: (
   md: 768px,
   lg: 1024px,
   xl: 1440px,
-  xxl: 1920px,
+  xxl: 1920px
 );
 
 $container-padding-x: 32px;
 
 $container-max-widths: (
-  lg: 1200px + $container-padding-x,
+  lg: 1200px + $container-padding-x
 );
 
 $grid-gutter-width: map-get($spacers, 3);
 $paragraph-margin-bottom: 0;
 
-
-$font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, sans-serif;
-$font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+$font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont,
+  Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, sans-serif;
+$font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
+  Liberation Mono, monospace;
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 600;
-$font-features: 'kern' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1;
-
+$font-features: "kern" 1, "liga" 1, "ss01" 1, "ss02" 1, "ss03" 1;
 
 $navbar-padding-y: 0;
 $navbar-light-color: $text;
@@ -171,13 +163,12 @@ $navbar-dark-color: $text-dark;
 $navbar-dark-hover-color: $link-alt-hover-dark-color;
 $navbar-dark-active-color: $link-alt-hover-dark-color;
 
-$input-btn-padding-y: 16px; // pt(6*2);
-$input-btn-padding-x: 24px; // pt(6*3);
+$input-btn-padding-y: 16px;
+$input-btn-padding-x: 24px;
 
 $border-radius-sm: 2px;
 $border-radius: 4px;
 $border-radius-lg: 6px;
-$border-color: $gray-300;
 
 $btn-border-radius: $border-radius;
 
@@ -185,13 +176,13 @@ $card-border-width: 1px;
 $card-border-color: $border-color;
 $card-border-radius: $border-radius-lg;
 
-$hr-border-width: 2px;
+$hr-border-width: 3px;
 
 $enable-negative-margins: true;
 $enable-transitions: false;
 $enable-rfs: false;
 
-@import 'variables.scss';
-@import 'mixins.scss';
-@import 'bootstrap.scss';
-@import 'base';
+@import "variables.scss";
+@import "mixins.scss";
+@import "bootstrap.scss";
+@import "base";

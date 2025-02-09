@@ -1,537 +1,584 @@
 body {
-    direction: ltr;
-    font-synthesis: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overscroll-behavior-x: none;
-    font-feature-settings: $font-features;
-    unicode-bidi: embed;
-    text-wrap: pretty;
+  direction: ltr;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-x: none;
+  font-feature-settings: $font-features;
+  text-rendering: geometricPrecision;
+  unicode-bidi: embed;
+  text-wrap: pretty;
 }
 
 @media (forced-colors: active) {
-    a + svg.external-link-icon, a:hover + svg.external-link-icon, a.nav-link {
-        color: LinkText;
-    }
-    .btn-xl {
-        color: ButtonText;
-        background-color: ButtonFace;
-    }
-    .hr, .bi {
-        color: Highlight;
-    }
+  a + svg.external-link-icon,
+  a:hover + svg.external-link-icon,
+  a.nav-link {
+    color: LinkText;
+  }
+  .btn-xl {
+    color: ButtonText;
+    background-color: ButtonFace;
+  }
+  .hr,
+  .bi {
+    color: Highlight;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    * {
-        scroll-behavior: auto;
-    }
+  * {
+    scroll-behavior: auto;
+  }
 }
 
 @include media-breakpoint-down(md) {
-    .container-fluid {
-        --bs-gutter-x: 16px;
-    }
+  .container-fluid {
+    --bs-gutter-x: 16px;
+  }
 }
 
 section {
-    p, li {
-        max-width: 28em;
-    }
+  p,
+  li {
+    max-width: 32rem;
+  }
 }
 
 :root {
-    --box-shadow-cta-colored: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.8),0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.20) inset;
-    --box-shadow-cta-secondary: 0px 0.5px 1px rgba(0, 0, 0, 0.8),inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.12);
-    --box-shadow-input-inner: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
-    --box-shadow-menu: 0px 12px 24px 8px rgba(0, 0, 0, 0.01), 0px 8px 16px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px 2px rgba(0, 0, 0, 0.01), 0px 2px 6px 0px rgba(0, 0, 0, 0.02), 0px -0.5px 0.5px 0px rgba(0, 0, 0, 0.015) inset, 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.015) inset;
-    --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset, 0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset, 0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
+  --box-shadow-cta-colored: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.8),
+    0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.2) inset;
+  --box-shadow-cta-secondary: 0px 0.5px 1px rgba(0, 0, 0, 0.8),
+    inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.12);
+  --box-shadow-input-inner: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,
+    0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
+    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,
+    0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
+    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,
+    0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
+  --box-shadow-menu: 0px 12px 24px 8px rgba(0, 0, 0, 0.01),
+    0px 8px 16px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px 2px rgba(0, 0, 0, 0.01),
+    0px 2px 6px 0px rgba(0, 0, 0, 0.02),
+    0px -0.5px 0.5px 0px rgba(0, 0, 0, 0.015) inset,
+    0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.015) inset;
+  --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,
+    0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
+    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,
+    0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
+    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,
+    0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
 }
 
-.noselect, .navbar-logo, .partner-logo-card .partner-logo {
-    -webkit-touch-callout: none;
-    user-select: none;
-    pointer-events: none;
-    -webkit-user-drag: none;
-    user-drag: none;
+.noselect,
+.navbar-logo,
+.partner-logo-card .partner-logo {
+  -webkit-touch-callout: none;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 .text-muted {
-    color: $text-muted !important; // !override Bootstrap's $text-muted
+  color: $text-muted !important; // override Bootstrap's text-muted
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    letter-spacing: -.016em;
-    margin-bottom: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-bottom: 0;
+  max-width: 64rem;
 }
 
-h1, .h1 {
-    font-weight: 700;
-    line-height: $h1-line-height;
-    margin-left: -.1875rem; // -.055em
-    letter-spacing: -.018em;
+h1,
+.h1 {
+  font-weight: 700;
+  line-height: $h1-line-height;
+  margin-left: -0.1875rem;
+  letter-spacing: -0.0625rem;
 }
 
-h2, .h2 {
-    font-weight: 700;
-    line-height: $h2-line-height;
-    margin-left: -.125rem; // -.045em
-    letter-spacing: -.022em;
-    max-width: 28em;
+h2,
+.h2 {
+  font-weight: 700;
+  line-height: $h2-line-height;
+  margin-left: -0.125rem;
+  letter-spacing: -0.05625rem;
 }
 
-h3, .h3 {
-    line-height: $h3-line-height;
-    margin-left: -.125rem; // -.045em
-    letter-spacing: -.024em;
+h3,
+.h3 {
+  line-height: $h3-line-height;
+  margin-left: -0.125rem;
+  letter-spacing: -0.05rem;
 }
 
-h4, .h4 {
-    line-height: $h4-line-height;
-    margin-left: -.0625rem; // -.03em
+h4,
+.h4 {
+  line-height: $h4-line-height;
+  margin-left: -0.0625rem;
+  letter-spacing: -0.025rem;
 
-    &:has(.mini-h4) {
-        display: flex;
-        flex-direction: column;
-    }
+  &:has(.mini-h4) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .mini-h4 {
-    font-size: $font-size-base;
-    line-height: $line-height-base;
-    margin-left: .0625rem;
-    letter-spacing: 0;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  margin-left: 0.0625rem;
+  letter-spacing: 0;
 }
 
-h5, .h5 {
-    line-height: $h5-line-height;
+h5,
+.h5 {
+  line-height: $h5-line-height;
 }
 
-h6, .h6 {
-    line-height: $h6-line-height;
+h6,
+.h6 {
+  line-height: $h6-line-height;
 }
 
-small, .small {
-    letter-spacing: -.002em; // -.008em; TODO
-    line-height: $line-height-sm;
-}
-
-big, .big {
-    letter-spacing: .003em;
-    font-size: $font-size-lg;
-    line-height: $line-height-lg;
+big,
+.big {
+  font-size: $font-size-lg;
+  line-height: $line-height-lg;
 }
 
 b {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 dl {
-    display: grid;
-    grid-template-columns: max-content auto;
-    margin: 0;
+  display: grid;
+  grid-template-columns: max-content auto;
+  margin: 0;
 }
 
 dt {
-    font-weight: 400;
-    grid-column-start: 1;
+  font-weight: 600;
+  grid-column-start: 1;
 }
 
 dd {
-    grid-column-start: 2;
-    margin: 0 0 0 .5em; // en space
+  grid-column-start: 2;
+  margin: 0 0 0 0.5em; // en space's width
 }
 
 @include media-breakpoint-up(lg) {
-    // !override Bootstrap's spacing system with adjusted spacers
-    .adjust-mb-base.mb-0 {
-        padding-bottom: $line-height-base * $font-size-base !important;
-    }
+  // shift Bootstrap's spacers by specified values
+  .mb-0.shift-mb-base {
+    padding-bottom: $line-height-base * $font-size-base !important;
+  }
 }
 
 .bg-gray-100 {
-    background-color: $gray-100 !important; // !parallels Bootstrap's bg- system
+  background-color: $gray-100 !important;
 }
 
 .hr {
-    border-bottom: $hr-border-width solid currentColor;
-    width: pt(96);
-    margin-left: auto;
-    margin-right: auto;
+  border-bottom: $hr-border-width solid currentColor;
+  width: map-get($spacers, 24);
+  margin-left: auto;
+  margin-right: auto;
 
-    background-color: currentColor;
-    color: $primary;
+  background-color: currentColor;
+  color: $primary;
 
-    .bg-primary & {
-        color: $text-dark;
-    }
+  .bg-primary & {
+    color: $text-dark;
+  }
 
-    .bg-dark & {
-        color: $primary-dark;
-    }
+  .bg-dark & {
+    color: $primary-dark;
+  }
 }
 
 a {
-    font-weight: 600;
-    text-decoration-color: $link-hover-color;
+  font-weight: 600;
+  text-decoration-color: $link-hover-color;
+
+  &:focus-visible {
+    text-decoration: $link-decoration;
+    color: $link-hover-color;
+    outline: $focus-ring-box-shadow;
+  }
+
+  &.nav-link {
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+    will-change: color;
 
     &:focus-visible {
-        text-decoration: $link-decoration;
-        color: $link-hover-color;
-        outline: $focus-ring-box-shadow;
+      outline: $focus-ring-box-shadow;
     }
+  }
 
-    &.nav-link {
-        transition: color .3s cubic-bezier(.4, 0, .6, 1);
-        will-change: color;
+  & + svg.external-link-icon {
+    color: $gray-700;
+    display: inline-block;
+    position: relative;
+    top: -0.0625rem;
+  }
 
-        &:focus-visible {
-            outline: $focus-ring-box-shadow;
-        }
-    }
+  &:not(.nav-link):hover,
+  .partner-logo-card:has(a.stretched-link:hover) + div & {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
 
     & + svg.external-link-icon {
-        color: $gray-700;
-        display: inline-block;
-        position: relative;
-        top: -.0625rem;
+      color: $link-hover-color;
     }
-
-    &:not(.nav-link):hover, .partner-logo-card:has(a.stretched-link:hover) + div & {
-        color: $link-hover-color;
-        text-decoration: $link-hover-decoration;
-
-        & + svg.external-link-icon {
-            color: $link-hover-color;
-        }
-    }
+  }
 }
 
-ul, ol {
-    padding-left: pt(16);
+ul,
+ol {
+  padding-left: map-get($spacers, 4);
 }
 
 :is(ul, ol).spaced-items li {
-    margin-top: 1em;
+  margin-top: 1em;
 }
 
 p {
-    margin-top: 1em;
-    margin-bottom: 0;
+  margin-top: 1em;
+  margin-bottom: 0;
 }
 
 section.bg-primary {
-    background-color: $fill-primary !important; // !override Bootstrap's $primary with $fill-primary
-    color: $text-dark;
+  background-color: $fill-primary !important; // use $fill-primary instead of $primary for bg-primary class
+  color: $text-dark;
 }
 
-section.bg-dark, section.bg-secondary {
-    color: $text-dark;
+section.bg-dark,
+section.bg-secondary {
+  color: $text-dark;
 }
 
 section {
-    padding: map-get($spacers, 24) 0;
+  padding: map-get($spacers, 24) 0;
 }
 
 .copyright-text {
-    color: $text-muted;
+  color: $text-muted;
 }
 
-// Navigation
 .navbar {
-    background-color: $white;
-    box-shadow: var(--box-shadow-menu);
-    height: 64px;
+  background-color: $white;
+  box-shadow: var(--box-shadow-menu);
+  height: 64px;
 
-    .navbar-logo {
-        position: relative;
-        border-radius: 0;
-    }
+  .navbar-logo {
+    position: relative;
+    border-radius: 0;
+  }
 
+  .logo-white {
+    visibility: hidden;
+  }
+
+  .logo-color {
+    margin-left: -171px;
+    visibility: visible;
+  }
+
+  .navbar-brand:focus-visible {
+    box-shadow: none;
+  }
+
+  .nav-link {
+    font-size: $font-size-base;
+    line-height: 48px;
+    text-wrap: nowrap;
+  }
+
+  .nav-item:last-of-type .nav-link {
+    margin-right: -1 * $navbar-nav-link-padding-x;
+  }
+
+  @include media-breakpoint-up(md) {
+    transition: 0.35s cubic-bezier(0.64, 0, 0.44, 0.99), box-shadow 0s;
+    will-change: background-color, box-shadow;
+
+    .logo-color,
     .logo-white {
+      will-change: visibility;
+    }
+
+    &:not(.nav-active) {
+      background-color: transparent;
+      box-shadow: none;
+
+      .logo-color {
         visibility: hidden;
-    }
+      }
 
-    .logo-color {
-        margin-left: -171px;
+      .logo-white {
         visibility: visible;
+      }
+
+      .nav-item .nav-link {
+        &:focus:not(:focus-visible) {
+          color: initial;
+        }
+
+        &:hover,
+        &:focus-visible {
+          color: $navbar-dark-hover-color !important; // override nav link focus color
+        }
+      }
     }
 
-    .navbar-brand:focus-visible {
-        box-shadow: none;
-    }
+    &.nav-active {
+      background-color: $background;
+      box-shadow: var(--box-shadow-menu);
 
-    .nav-link {
-        font-size: $font-size-base;
-        line-height: 48px;
-        text-wrap: nowrap;
-    }
+      .logo-white {
+        visibility: hidden;
+      }
 
-    .nav-item:last-of-type .nav-link {
-        margin-right: -1 * $navbar-nav-link-padding-x;
+      .logo-color {
+        visibility: visible;
+      }
+
+      .nav-link {
+        &.active,
+        &.show {
+          color: $navbar-light-active-color;
+        }
+
+        &.navlink-active-blue {
+          &.active,
+          &.show {
+            color: $secondary;
+          }
+        }
+      }
     }
+  }
+}
+
+header {
+  display: flex;
+  min-height: calc(round(100vh, 1px) + 12px);
+  height: fit-content;
+  background-position: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    image-set(
+      url("../img/hero-1920w.avif") 1x,
+      url("../img/hero-3840w.avif") 2x
+    );
+  background-size: cover;
+  color: $text-dark;
+
+  .header-content {
+    margin-top: calc(#{map-get($spacers, 24)} + 64px);
 
     @include media-breakpoint-up(md) {
-        transition: .35s cubic-bezier(.64, 0, .44, .99), box-shadow 0s;
-        will-change: background-color, box-shadow;
-
-        .logo-color, .logo-white {
-            will-change: visibility;
-        }
-
-        &:not(.nav-active) {
-            background-color: transparent;
-            box-shadow: none;
-
-            .logo-color {
-                visibility: hidden;
-            }
-
-            .logo-white {
-                visibility: visible;
-            }
-
-            .nav-item .nav-link {
-                &:focus:not(:focus-visible) {
-                    color: initial;
-                }
-
-                &:hover, &:focus-visible {
-                    color: $navbar-dark-hover-color !important; // !override Bootstrap's focus color
-                }
-            }
-        }
-
-        &.nav-active {
-            background-color: $background;
-            box-shadow: var(--box-shadow-menu);
-
-            .logo-white {
-                visibility: hidden;
-            }
-
-            .logo-color {
-                visibility: visible;
-            }
-
-            .nav-link {
-                &.active, &.show {
-                    color: $navbar-light-active-color;
-                }
-
-                &.navlink-active-blue {
-                    &.active, &.show {
-                        color: $secondary;
-                    }
-                }
-            }
-        }
+      margin-top: calc(round(25vh, 1px));
     }
+
+    p {
+      max-width: 32rem;
+    }
+  }
 }
 
-// Homepage Header
-header {
-    display: flex;
-    min-height: calc(round(100vh, 1px) + 12px);
-    height: fit-content;
-    background-position: center;
-    background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), image-set(url('../img/hero-1920w.avif') 1x, url('../img/hero-3840w.avif') 2x);
-    background-size: cover;
-    color: $text-dark;
-
-    .header-content {
-        margin-top: calc(#{map-get($spacers, 24)} + 64px);
-
-        @include media-breakpoint-up(md) {
-            margin-top: calc(round(25vh, 1px));
-        }
-
-        p, h2 {
-            max-width: 28em;
-        }
-    }
-}
-
-// Sections
 .service-box {
-    & > :last-child {
-        margin-bottom: map-get($spacers, 9);
-    }
+  & > :last-child {
+    margin-bottom: map-get($spacers, 9);
+  }
 
-    .row:has(&) {
-        margin-bottom: -1 * map-get($spacers, 9) + $paragraph-margin-bottom; ///
-    }
+  .row:has(&) {
+    margin-bottom: -1 * map-get($spacers, 9) + $paragraph-margin-bottom;
+  }
 }
 
 .img-fluid {
-    width: 100%;
+  width: 100%;
 }
 
 .container-fluid {
-    padding-left: $container-padding-x * .5;
-    padding-right: $container-padding-x * .5;
+  padding-left: $container-padding-x * 0.5;
+  padding-right: $container-padding-x * 0.5;
 }
 
 .portfolio-box {
-    position: relative;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+
+  img {
+    border-radius: 0;
+    aspect-ratio: 13 / 7;
+  }
+
+  .portfolio-box-caption {
+    color: $text-dark;
+    opacity: 0;
     display: block;
-    margin: 0 auto;
+    background: rgba($primary, 0.9);
+    position: absolute;
+    bottom: 0;
 
-    img {
-        border-radius: 0;
-        aspect-ratio: 13 / 7;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+    will-change: opacity;
+
+    .portfolio-box-caption-content {
+      width: 100%;
+      position: absolute;
+      transform: translateY(-100%);
+      padding-bottom: map-get($spacers, 4);
+
+      .project-category,
+      .project-name {
+        padding: 0 17px;
+      }
+
+      .project-name {
+        margin-bottom: 0;
+      }
+
+      .project-category {
+        text-transform: uppercase;
+        font-weight: 600;
+      }
     }
+  }
 
+  &:hover,
+  &:focus-visible {
     .portfolio-box-caption {
-        color: $text-dark;
-        opacity: 0;
-        display: block;
-        background: rgba($primary, .9);
-        position: absolute;
-        bottom: 0;
-
-        transition: opacity .3s cubic-bezier(.4, 0, .6, 1);
-        will-change: opacity;
-
-        .portfolio-box-caption-content {
-            width: 100%;
-            position: absolute;
-            transform: translateY(-100%);
-            padding-bottom: map-get($spacers, 4);
-
-            .project-category, .project-name {
-                padding: 0 17px;
-            }
-
-            .project-name {
-                margin-bottom: 0;
-            }
-
-            .project-category {
-                text-transform: uppercase;
-                font-weight: 600;
-            }
-        }
+      opacity: 1;
     }
-
-    &:hover, &:focus-visible {
-        .portfolio-box-caption {
-            opacity: 1;
-        }
-    }
+  }
 }
 
-// Button Styles
 @mixin btn-default($color, $background) {
-    color: $color;
-    background-color: $background;
-    border: none;
-    transition: none;
+  color: $color;
+  background-color: $background;
+  border: none;
+  transition: none;
 }
 
 a.btn-xl {
-    display: inline-block;
-    padding: $input-btn-padding-y $input-btn-padding-x;
-    font-family: $btn-font-family;
-    font-size: $input-btn-font-size;
-    line-height: $btn-line-height;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    text-decoration: none;
-    border-radius: $btn-border-radius;
-    letter-spacing: .003em;
+  display: inline-block;
+  padding: $input-btn-padding-y $input-btn-padding-x;
+  font-family: $btn-font-family;
+  font-size: $input-btn-font-size;
+  line-height: $btn-line-height;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  border-radius: $btn-border-radius;
 
-    &:hover {
-        text-decoration: none;
-    }
+  &:hover {
+    text-decoration: none;
+  }
 }
 
-a.btn-secondary, a.btn-primary {
-    @include btn-default($text, $white);
-    box-shadow: var(--box-shadow-cta-secondary);
+a.btn-secondary,
+a.btn-primary {
+  @include btn-default($text, $white);
+  box-shadow: var(--box-shadow-cta-secondary);
 
-    &:hover, &:focus-visible {
-        color: $text;
-        background-color: $btn-hover-color;
-    }
+  &:hover,
+  &:focus-visible {
+    color: $text;
+    background-color: $btn-hover-color;
+  }
 }
 
 a.btn-primary {
-    @include btn-default($text-dark, $fill-primary);
-    box-shadow: var(--box-shadow-cta-colored);
+  @include btn-default($text-dark, $fill-primary);
+  box-shadow: var(--box-shadow-cta-colored);
 
-    &:hover, &:focus-visible {
-        color: $text-dark;
-        background-color: $fill-accent;
-    }
+  &:hover,
+  &:focus-visible {
+    color: $text-dark;
+    background-color: $fill-accent;
+  }
 }
 
-.bi, .partner-logo {
-    max-width: 100%;
+.bi,
+.partner-logo {
+  max-width: 100%;
 }
 
 .bi {
-    color: $fill-secondary;
+  color: $fill-secondary;
 }
 
 .client-portrait {
-    border-radius: $border-radius-lg;
+  border-radius: $border-radius-lg;
 }
 
 .partner-logo-card {
-    height: 256px;
-    background: white;
+  height: 256px;
+  background: white;
 
-    a.stretched-link {
-        line-height: 2em;
-        margin-top: -2em;
-        opacity: 0;
-    }
+  a.stretched-link {
+    line-height: 2em;
+    margin-top: -2em;
+    opacity: 0;
+  }
 
-    &#spica-card {
-        background: #02743C;
-        border: none;
-    }
+  &#spica-card {
+    background: #02743c;
+    border: none;
+  }
 }
 
 .partner-logo {
-    object-fit: contain;
-    margin: auto;
+  object-fit: contain;
+  margin: auto;
 }
 
 .heading-number {
-    position: relative;
-    background-color: $primary;
-    color: $background;
-    width: 128px;
-    height: 112px;
-    border-radius: $border-radius-sm;
+  position: relative;
+  background-color: $primary;
+  color: $background;
+  width: 128px;
+  height: 112px;
+  border-radius: $border-radius-sm;
 
-    .bg-light & {
-        background-color: $secondary;
-    }
+  .bg-light & {
+    background-color: $secondary;
+  }
 
-    &:after {
-        position: absolute;
-        color: inherit;
-        font-family: $headings-font-family;
-        font-size: 80px;
-        font-weight: 600;
-        font-synthesis: none;
-        overflow: hidden;
-        content: attr(data-number);
-        line-height: 1;
-        right: -11px;
-        bottom: 0;
+  &:after {
+    position: absolute;
+    color: inherit;
+    font-family: $headings-font-family;
+    font-size: 80px;
+    font-weight: 600;
+    font-synthesis: none;
+    overflow: hidden;
+    content: attr(data-number);
+    line-height: 1;
+    right: -11px;
+    bottom: 0;
 
-        letter-spacing: -.013em;
-    }
+    letter-spacing: -1px; // rounded from -1.04px
+  }
 
-    &[data-number="01"]:after {
-        right: -9px;
-        font-feature-settings: 'tnum' 1, $font-features;
-        letter-spacing: -.084em;
-    }
+  &[data-number="01"]:after {
+    right: -9px;
+    font-feature-settings: "tnum" 1, $font-features;
+    letter-spacing: -6.7px; // rounded from -6.74px
+  }
 }
