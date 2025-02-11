@@ -8,6 +8,7 @@ body {
   text-rendering: geometricPrecision;
   unicode-bidi: embed;
   text-wrap: pretty;
+  quotes: "“" "”" "‘" "’";
 }
 
 @media (forced-colors: active) {
@@ -179,8 +180,11 @@ dd {
 
 @include media-breakpoint-up(lg) {
   // shift Bootstrap's spacers by specified values
-  .mb-0.shift-mb-base {
+  .pb-0.shift-pb-base {
     padding-bottom: $line-height-base * $font-size-base !important;
+  }
+  .mt-6.shift-mt--3px {
+    margin-top: calc(#{map-get($spacers, 6)} - 3px) !important;
   }
 }
 
@@ -255,6 +259,14 @@ ol {
 p {
   margin-top: 1em;
   margin-bottom: 0;
+}
+
+blockquote > :first-child:before {
+  content: open-quote;
+}
+
+blockquote > :last-child:after {
+  content: close-quote;
 }
 
 section.bg-primary {

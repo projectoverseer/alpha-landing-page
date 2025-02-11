@@ -3,26 +3,42 @@
     <div class="heading-number mb-3" data-number="03" aria-hidden="true"></div>
     <h2>Khách&nbsp;hàng nhận&nbsp;xét gì về chúng&nbsp;tôi</h2>
     <div class="row row-cols-xl-3 row-cols-lg-2 row-cols-1 mt-9">
-      <div class="col service-box">
+      <div
+        class="col service-box"
+        itemprop="review"
+        itemscope
+        itemtype="http://schema.org/Review"
+      >
+        <meta itemprop="dateCreated" content="2024-10-17" />
         <img
           src="img/client-portraits/portrait-mr-dinh-van-hiep.webp"
           alt="Chân dung Ông Đinh Văn Hiệp"
           width="269"
           height="341"
           class="client-portrait"
+          loading="lazy"
         />
-        <blockquote class="blockquote big mt-4 mb-0">
-          <p>
-            &ldquo;Phần mềm Alpha&nbsp;Software hỗ trợ rất tốt cho công ty, nhất
-            là công ty sản xuất nhiều công đoạn. Hơn nữa, Alpha thì có lợi thế
-            hơn những phần mềm quản lý khác do có thể tuỳ biến linh hoạt và chi
-            tiết theo yêu cầu của người sử dụng; mọi thông số đều rất rõ ràng và
-            chi tiết.&rdquo;
-          </p>
+        <blockquote class="blockquote big mt-4 mb-0" itemprop="reviewBody">
+          <p
+            >Phần mềm Alpha&nbsp;Software hỗ trợ rất tốt cho công ty, nhất là
+            công ty sản xuất nhiều công đoạn. Hơn nữa, Alpha thì có lợi thế hơn
+            những phần mềm quản lý khác do có thể tuỳ biến linh hoạt và chi tiết
+            theo yêu cầu của người sử dụng; mọi thông số đều rất rõ ràng và chi
+            tiết.</p
+          >
         </blockquote>
-        <p class="blockquote-footer mt-3"
-          >Ông Đinh Văn Hiệp, Trợ lý Giám đốc<br />Công ty TNHH Chỉ may Tuấn
-          Hồng
+        <p
+          class="blockquote-footer mt-3"
+          itemprop="author"
+          itemscope
+          itemtype="http://schema.org/Person"
+          >Ông <span itemprop="name">Đinh Văn Hiệp</span>,
+          <span itemprop="jobTitle">Trợ lý Giám đốc</span><br />
+          <span itemprop="worksFor">Công ty TNHH Chỉ may Tuấn Hồng</span>
+          <meta
+            itemprop="image"
+            content="https://www.alphasoftwaregroup.com/img/client-portraits/portrait-mr-dinh-van-hiep.webp"
+          />
         </p>
       </div>
     </div>
