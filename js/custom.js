@@ -1,5 +1,5 @@
 (function () {
-  const navbar = document.querySelector("#globalnav");
+  const navbar = document.querySelector("#muc-luc");
 
   function updateNavState() {
     if (window.scrollY > 12) {

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi-VN" itemscope itemtype="http://schema.org/Organization">
+  <head>
+    {% include meta.html %} {% include meta-assets.html %}
+  </head>
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#muc-luc"
+    data-bs-smooth-scroll="true"
+  >
+    <nav
+      id="muc-luc"
+      dir="ltr"
+      aria-label="Mục lục"
+      class="navbar fixed-top navbar-expand-md"
+      data-bs-theme="dark"
+    >
+      {% include muc-luc.html %}
+    </nav>
+    <main>
+      {% include chuyen-doi-so-nha-may-det-may.html %} {% include
+      gioi-thieu.html %} {% include cac-loi-the.html %} {% include
+      loi-chung-thuc.html %} {% include cac-du-an.html %} {% include
+      cau-chuyen-cua-alpha-software.html %} {% include ho-tro-khach-hang.html %}
+    </main>
+    <footer id="ket-noi-voi-alpha-software">
+      {% include ket-noi-voi-alpha-software.html %}
+    </footer>
+    <script defer src="js/bootstrap.min.js"></script>
+    <script defer src="js/custom.js"></script>
+  </body>
+</html>

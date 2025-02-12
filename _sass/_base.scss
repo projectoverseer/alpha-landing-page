@@ -314,6 +314,7 @@ section {
     font-size: $font-size-base;
     line-height: 48px;
     text-wrap: nowrap;
+    text-transform: capitalize;
   }
 
   .nav-item:last-of-type .nav-link {
