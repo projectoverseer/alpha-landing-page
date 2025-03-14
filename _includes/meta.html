@@ -1,18 +1,26 @@
 <meta charset="utf-8" />
 <title>{{ site.title }}</title>
 
+<!-- HTML Metadata -->
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 />
-<meta name="description" content="{{ site.description }}" />
+<meta
+  name="description"
+  content="Alpha Software là công ty hàng đầu trong lĩnh vực phát triển phần mềm quản lý sản xuất, số hóa quy trình, và chuyển đổi số."
+/>
 <meta
   name="keywords"
-  itemprop="keywords"
   content="phần mềm quản lý nhà máy, phần mềm dệt may, chuyển đổi số, quản lý sản xuất, Alpha Software"
 />
 <meta name="robots" content="index, follow" />
 
+<!-- Open Graph and Organization-Type Microdata -->
+<meta
+  itemprop="@id"
+  content="https://www.alphasoftwaregroup.com/#organization"
+/>
 <meta property="og:type" content="website" />
 <meta property="og:site_name" itemprop="name" content="Alpha Software" />
 <meta itemprop="alternateName" content="{{ site.company_name }}" />
@@ -23,12 +31,12 @@
 />
 <meta
   itemprop="logo"
-  content="https://www.alphasoftwaregroup.com/img/logo/knowledge-graph-logo.png"
+  content="https://www.alphasoftwaregroup.com/anh/logo/alpha-knowledge-graph.png"
 />
 <meta
   property="og:image"
   itemprop="image"
-  content="https://www.alphasoftwaregroup.com/img/logo/open-graph-logo.png"
+  content="https://www.alphasoftwaregroup.com/anh/logo/alpha-open-graph.png"
 />
 <meta property="og:locale" content="vi_VN" />
 
@@ -48,23 +56,40 @@
   content="{{ site.description }}"
 />
 
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ site.title }}" />
+<meta
+  name="twitter:description"
+  content="Alpha Software cung cấp phần mềm và giải pháp số hóa tối ưu cho doanh nghiệp."
+/>
+<meta
+  name="twitter:image"
+  content="https://www.alphasoftwaregroup.com/anh/logo/alpha-open-graph.png"
+/>
+
+<!-- Structured Data -->
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
+    "@id": "https://www.alphasoftwaregroup.com/#website",
     "@type": "WebSite",
-    "url": "https://www.alphasoftwaregroup.com/",
-    "name": "Alpha Software"
+    "name": "Alpha Software",
+    "alternateName": "Công ty TNHH Phát triển Phần mềm Alpha",
+    "url": "https://www.alphasoftwaregroup.com/"
   }
 </script>
 
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",
+    "@id": "https://www.alphasoftwaregroup.com/#webpage",
     "@type": "WebPage",
-    "url": "https://www.alphasoftwaregroup.com/",
-    "name": "Alpha Software"
+    "name": "Alpha Software",
+    "alternateName": "Công ty TNHH Phát triển Phần mềm Alpha",
+    "url": "https://www.alphasoftwaregroup.com/"
   }
 </script>
 
-<link rel="canonical" href="https://www.alphasoftwaregroup.com" />
+<link rel="canonical" href="https://www.alphasoftwaregroup.com/" />
 <link rel="stylesheet" href="css/main.css" />

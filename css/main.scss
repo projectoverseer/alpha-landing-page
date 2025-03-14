@@ -9,7 +9,9 @@
 }
 
 $primary: #d64a1e;
-$primary-dark: #a5cde7;
+$primary-dark: #f57a4f;
+$primary-inverted-dark: #a5cde7;
+
 $accent: #e87a20;
 $accent-dark: #fbb670;
 
@@ -17,14 +19,15 @@ $fill-primary: #c33b1a;
 $fill-primary-dark: $fill-primary;
 $fill-accent: #a62928;
 $fill-accent-dark: $fill-accent;
-$fill-secondary: #02416d;
 
 $secondary: #02518b;
+$secondary-dark: #2b7bb3;
+$fill-secondary: #02416d;
 
 $gray-50: #f8f9fb;
-$gray-100: #eef0f3;
-$gray-200: #e2e4e8;
-$gray-300: #ccd0d6;
+$gray-100: #eef2f6;
+$gray-200: #e2e6ea;
+$gray-300: #ccd2d8;
 $gray-400: #aeb4bc;
 $gray-500: #8c939d;
 $gray-600: #6f7681;
@@ -39,11 +42,12 @@ $black: #000;
 $white: #fff;
 
 $text: $gray-950;
-$text-muted: rgba($text, 0.65);
+$text-muted: rgba($gray-800, 0.65);
 $background: $white;
 $text-dark: $white;
 $btn-hover-color: $gray-100;
-$border-color: rgba($gray-300, 0.8);
+$border-color: rgba($gray-300, 0.75);
+$external-link-icon-color: rgba($gray-800, 0.65 * 1.25);
 
 $body-color: $text;
 
@@ -51,7 +55,7 @@ $link-color: #006ba5;
 $link-hover-color: $link-color;
 $link-alt-color: #c33b1a;
 $link-alt-hover-color: $link-alt-color;
-$link-alt-hover-dark-color: $accent-dark;
+$link-alt-hover-dark-color: $primary-dark;
 $link-decoration: none;
 $link-hover-decoration: underline;
 
@@ -114,8 +118,8 @@ $h1-font-size: map-get($scales, 7);
 $h2-font-size: map-get($scales, 5);
 $h3-font-size: map-get($scales, 4);
 $h4-font-size: map-get($scales, 3);
-$h5-font-size: map-get($scales, 2);
-$h6-font-size: map-get($scales, 1);
+$h5-font-size: pt(13);
+$h6-font-size: map-get($scales, 2);
 
 $h1-line-height: pt(6 * 7+12);
 $h2-line-height: pt(6 * 5+6);
@@ -136,18 +140,18 @@ $grid-breakpoints: (
 $container-padding-x: 32px;
 
 $container-max-widths: (
-  lg: 1200px + $container-padding-x
+  lg: 1216px + $container-padding-x
 );
 
-$grid-gutter-width: map-get($spacers, 3);
+$grid-gutter-width: map-get($spacers, 4);
 $paragraph-margin-bottom: 0;
 
 $font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont,
-  Roboto, "Helvetica Neue", "Segoe UI", "Noto Sans", Helvetica, sans-serif;
+  "Helvetica Neue", Helvetica, Roboto, "Segoe UI", sans-serif;
 $font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
-  Liberation Mono, monospace;
+  monospace;
 $headings-font-family: $font-family-sans-serif;
-$headings-font-weight: 600;
+$headings-font-weight: bold;
 $font-features: "kern" 1, "liga" 1, "ss01" 1, "ss02" 1, "ss03" 1;
 
 $navbar-padding-y: 0;
@@ -156,7 +160,7 @@ $navbar-light-hover-color: $navbar-light-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
 $navbar-nav-link-padding-x: map-get($spacers, 2);
-$nav-link-font-weight: 600;
+$nav-link-font-weight: bold;
 $nav-link-transition: none;
 
 $navbar-dark-color: $text-dark;
@@ -166,9 +170,9 @@ $navbar-dark-active-color: $link-alt-hover-dark-color;
 $input-btn-padding-y: 16px;
 $input-btn-padding-x: 24px;
 
-$border-radius-sm: 2px;
-$border-radius: 4px;
-$border-radius-lg: 6px;
+$border-radius-sm: 2px * 1.5;
+$border-radius: 2.5px * 1.5;
+$border-radius-lg: 3px * 1.5;
 
 $btn-border-radius: $border-radius;
 

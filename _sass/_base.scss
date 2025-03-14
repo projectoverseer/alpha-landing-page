@@ -1,11 +1,8 @@
 body {
   direction: ltr;
   font-synthesis: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-x: none;
   font-feature-settings: $font-features;
-  text-rendering: geometricPrecision;
   unicode-bidi: embed;
   text-wrap: pretty;
   quotes: "“" "”" "‘" "’";
@@ -47,27 +44,16 @@ section {
 }
 
 :root {
-  --box-shadow-cta-colored: 0px 0.5px 1px 0px rgba(0, 0, 0, 0.8),
-    0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.2) inset;
-  --box-shadow-cta-secondary: 0px 0.5px 1px rgba(0, 0, 0, 0.8),
-    inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.12);
-  --box-shadow-input-inner: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,
-    0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
-    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,
-    0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
-    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,
-    0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
-  --box-shadow-menu: 0px 12px 24px 8px rgba(0, 0, 0, 0.01),
-    0px 8px 16px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px 2px rgba(0, 0, 0, 0.01),
-    0px 2px 6px 0px rgba(0, 0, 0, 0.02),
-    0px -0.5px 0.5px 0px rgba(0, 0, 0, 0.015) inset,
-    0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.015) inset;
-  --input-inner-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,
-    0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
-    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,
-    0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
-    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,
-    0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset;
+  --box-shadow-cta: 0px 2px 4px rgba(0, 0, 0, 0.1),
+    0px 4px 6px rgba(0, 0, 0, 0.07), inset 0px 1px 2px rgba(255, 255, 255, 0.2);
+  --box-shadow-cta-pressed: 0px 3px 6px rgba(0, 0, 0, 0.1),
+    0px 5px 10px rgba(0, 0, 0, 0.08), inset 0px 1px 2px rgba(255, 255, 255, 0.2);
+  --box-shadow-input-inner: inset 0px 1px 2px rgba(255, 255, 255, 0.18),
+    inset 0px 2px 3px rgba(0, 0, 0, 0.1);
+  --box-shadow-menu: 0 6px 12px rgba(0, 0, 0, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  --input-inner-shadow: inset 0px 1px 2px rgba(255, 255, 255, 0.18),
+    inset 0px 2px 3px rgba(0, 0, 0, 0.1);
 }
 
 .noselect,
@@ -102,7 +88,6 @@ h6,
 
 h1,
 .h1 {
-  font-weight: 700;
   line-height: $h1-line-height;
   margin-left: -0.1875rem;
   letter-spacing: -0.0625rem;
@@ -110,7 +95,6 @@ h1,
 
 h2,
 .h2 {
-  font-weight: 700;
   line-height: $h2-line-height;
   margin-left: -0.125rem;
   letter-spacing: -0.05625rem;
@@ -138,6 +122,8 @@ h4,
 .mini-h4 {
   font-size: $font-size-base;
   line-height: $line-height-base;
+  font-weight: 600;
+  color: $gray-900;
   margin-left: 0.0625rem;
   letter-spacing: 0;
 }
@@ -145,6 +131,8 @@ h4,
 h5,
 .h5 {
   line-height: $h5-line-height;
+  font-weight: 600;
+  letter-spacing: 0.00625rem;
 }
 
 h6,
@@ -158,10 +146,6 @@ big,
   line-height: $line-height-lg;
 }
 
-b {
-  font-weight: 600;
-}
-
 dl {
   display: grid;
   grid-template-columns: max-content auto;
@@ -169,22 +153,19 @@ dl {
 }
 
 dt {
-  font-weight: 600;
+  font-weight: normal;
   grid-column-start: 1;
 }
 
 dd {
   grid-column-start: 2;
-  margin: 0 0 0 0.5em; // en space's width
+  margin: 0 0 0 0.44em; // 7/4 of an en space
 }
 
 @include media-breakpoint-up(lg) {
   // shift Bootstrap's spacers by specified values
   .pb-0.shift-pb-base {
     padding-bottom: $line-height-base * $font-size-base !important;
-  }
-  .mt-6.shift-mt--3px {
-    margin-top: calc(#{map-get($spacers, 6)} - 3px) !important;
   }
 }
 
@@ -193,7 +174,7 @@ dd {
 }
 
 .hr {
-  border-bottom: $hr-border-width solid currentColor;
+  outline: $hr-border-width / 2 solid currentColor;
   width: map-get($spacers, 24);
   margin-left: auto;
   margin-right: auto;
@@ -206,7 +187,7 @@ dd {
   }
 
   .bg-dark & {
-    color: $primary-dark;
+    color: $primary-inverted-dark;
   }
 }
 
@@ -230,7 +211,7 @@ a {
   }
 
   & + svg.external-link-icon {
-    color: $gray-700;
+    color: $external-link-icon-color;
     display: inline-block;
     position: relative;
     top: -0.0625rem;
@@ -249,7 +230,7 @@ a {
 
 ul,
 ol {
-  padding-left: map-get($spacers, 4);
+  padding-left: 1.75em; // 7 times an en space
 }
 
 :is(ul, ol).spaced-items li {
@@ -259,6 +240,10 @@ ol {
 p {
   margin-top: 1em;
   margin-bottom: 0;
+}
+
+blockquote {
+  line-height: $line-height-lg;
 }
 
 blockquote > :first-child:before {
@@ -314,7 +299,6 @@ section {
     font-size: $font-size-base;
     line-height: 48px;
     text-wrap: nowrap;
-    text-transform: capitalize;
   }
 
   .nav-item:last-of-type .nav-link {
@@ -390,8 +374,8 @@ header {
   background-position: center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     image-set(
-      url("../img/hero-1920w.avif") 1x,
-      url("../img/hero-3840w.avif") 2x
+      url("../anh/trang-bia/hero-1920w.avif") 1x,
+      url("../anh/trang-bia/hero-3840w.avif") 2x
     );
   background-size: cover;
   color: $text-dark;
@@ -466,7 +450,6 @@ header {
 
       .project-category {
         text-transform: uppercase;
-        font-weight: 600;
       }
     }
   }
@@ -507,18 +490,21 @@ a.btn-xl {
 a.btn-secondary,
 a.btn-primary {
   @include btn-default($text, $white);
-  box-shadow: var(--box-shadow-cta-secondary);
+  box-shadow: var(--box-shadow-cta);
 
   &:hover,
   &:focus-visible {
     color: $text;
     background-color: $btn-hover-color;
+
+    &:active {
+      box-shadow: var(--box-shadow-cta-pressed);
+    }
   }
 }
 
 a.btn-primary {
   @include btn-default($text-dark, $fill-primary);
-  box-shadow: var(--box-shadow-cta-colored);
 
   &:hover,
   &:focus-visible {
@@ -533,16 +519,18 @@ a.btn-primary {
 }
 
 .bi {
-  color: $fill-secondary;
+  color: $secondary;
 }
 
 .client-portrait {
-  border-radius: $border-radius-lg;
+  border-radius: $border-radius;
 }
 
 .partner-logo-card {
-  height: 256px;
+  height: 234px;
   background: white;
+  outline: $card-border-width solid $card-border-color;
+  border: none;
 
   a.stretched-link {
     line-height: 2em;
@@ -552,7 +540,7 @@ a.btn-primary {
 
   &#spica-card {
     background: #02743c;
-    border: none;
+    outline: none;
   }
 }
 
@@ -567,7 +555,6 @@ a.btn-primary {
   color: $background;
   width: 128px;
   height: 112px;
-  border-radius: $border-radius-sm;
 
   .bg-light & {
     background-color: $secondary;
@@ -576,14 +563,12 @@ a.btn-primary {
   &:after {
     position: absolute;
     color: inherit;
-    font-family: $headings-font-family;
     font-size: 80px;
     font-weight: 600;
-    font-synthesis: none;
     overflow: hidden;
     content: attr(data-number);
     line-height: 1;
-    right: -11px;
+    right: -12px;
     bottom: 0;
 
     letter-spacing: -1px; // rounded from -1.04px
