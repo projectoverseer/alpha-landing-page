@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="vi-VN" itemscope itemtype="http://schema.org/Organization">
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Organization" lang="vi-VN">
   <head>
+    <title>{{ site.title }}</title>
     {% include meta.html %} {% include meta-assets.html %}
   </head>
   <body
+    data-bs-smooth-scroll="true"
     data-bs-spy="scroll"
     data-bs-target="#muc-luc"
-    data-bs-smooth-scroll="true"
   >
     <nav
-      id="muc-luc"
-      dir="ltr"
       aria-label="Mục lục"
       class="navbar fixed-top navbar-expand-md"
       data-bs-theme="dark"
+      dir="ltr"
+      id="muc-luc"
     >
       {% include muc-luc.html %}
     </nav>

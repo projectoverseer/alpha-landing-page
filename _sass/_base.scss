@@ -1,11 +1,18 @@
 body {
   direction: ltr;
   font-synthesis: none;
-  overscroll-behavior-x: none;
-  font-feature-settings: $font-features;
   unicode-bidi: embed;
   text-wrap: pretty;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
   quotes: "“" "”" "‘" "’";
+}
+
+body,
+td,
+div,
+a {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 @media (forced-colors: active) {
@@ -16,7 +23,7 @@ body {
   }
   .btn-xl {
     color: ButtonText;
-    background-color: ButtonFace;
+    background: ButtonFace;
   }
   .hr,
   .bi {
@@ -37,6 +44,8 @@ body {
 }
 
 section {
+  padding: map-get($spacers, 24) 0;
+
   p,
   li {
     max-width: 32rem;
@@ -44,30 +53,37 @@ section {
 }
 
 :root {
-  --box-shadow-cta: 0px 2px 4px rgba(0, 0, 0, 0.1),
-    0px 4px 6px rgba(0, 0, 0, 0.07), inset 0px 1px 2px rgba(255, 255, 255, 0.2);
-  --box-shadow-cta-pressed: 0px 3px 6px rgba(0, 0, 0, 0.1),
-    0px 5px 10px rgba(0, 0, 0, 0.08), inset 0px 1px 2px rgba(255, 255, 255, 0.2);
-  --box-shadow-input-inner: inset 0px 1px 2px rgba(255, 255, 255, 0.18),
+  --box-shadow-cta:
+    0px 2px 4px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.07),
+    inset 0px 1px 2px rgba(255, 255, 255, 0.2);
+  --box-shadow-cta-pressed:
+    0px 3px 6px rgba(0, 0, 0, 0.1), 0px 5px 10px rgba(0, 0, 0, 0.08),
+    inset 0px 1px 2px rgba(255, 255, 255, 0.2);
+  --box-shadow-input-inner:
+    inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
-  --box-shadow-menu: 0 6px 12px rgba(0, 0, 0, 0.06),
-    0 2px 4px rgba(0, 0, 0, 0.08);
-  --input-inner-shadow: inset 0px 1px 2px rgba(255, 255, 255, 0.18),
+  --box-shadow-menu:
+    0 6px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --input-inner-shadow:
+    inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
 }
 
-.noselect,
+.select-disabled,
 .navbar-logo,
 .partner-logo-card .partner-logo {
   -webkit-touch-callout: none;
   user-select: none;
   pointer-events: none;
   -webkit-user-drag: none;
-  user-drag: none;
 }
 
-.text-muted {
-  color: $text-muted !important; // override Bootstrap's text-muted
+.text-secondary {
+  color: $text-secondary !important;
+}
+
+.text-tertiary {
+  color: $text-tertiary !important;
 }
 
 h1,
@@ -90,28 +106,28 @@ h1,
 .h1 {
   line-height: $h1-line-height;
   margin-left: -0.1875rem;
-  letter-spacing: -0.0625rem;
+  letter-spacing: -0.02em;
 }
 
 h2,
 .h2 {
   line-height: $h2-line-height;
   margin-left: -0.125rem;
-  letter-spacing: -0.05625rem;
+  letter-spacing: -0.02em;
 }
 
 h3,
 .h3 {
   line-height: $h3-line-height;
   margin-left: -0.125rem;
-  letter-spacing: -0.05rem;
+  letter-spacing: -0.02em;
 }
 
 h4,
 .h4 {
   line-height: $h4-line-height;
   margin-left: -0.0625rem;
-  letter-spacing: -0.025rem;
+  letter-spacing: -0.01em;
 
   &:has(.mini-h4) {
     display: flex;
@@ -132,18 +148,24 @@ h5,
 .h5 {
   line-height: $h5-line-height;
   font-weight: 600;
-  letter-spacing: 0.00625rem;
+  letter-spacing: 0;
 }
 
 h6,
 .h6 {
   line-height: $h6-line-height;
+  letter-spacing: 0;
 }
 
 big,
 .big {
   font-size: $font-size-lg;
   line-height: $line-height-lg;
+}
+
+b,
+strong {
+  font-weight: 700;
 }
 
 dl {
@@ -170,7 +192,7 @@ dd {
 }
 
 .bg-gray-100 {
-  background-color: $gray-100 !important;
+  background: $gray-100 !important;
 }
 
 .hr {
@@ -179,7 +201,7 @@ dd {
   margin-left: auto;
   margin-right: auto;
 
-  background-color: currentColor;
+  background: currentColor;
   color: $primary;
 
   .bg-primary & {
@@ -193,21 +215,18 @@ dd {
 
 a {
   font-weight: 600;
-  text-decoration-color: $link-hover-color;
+  letter-spacing: 0.01em;
+  color: $link-color;
+  text-decoration-color: currentColor;
 
-  &:focus-visible {
-    text-decoration: $link-decoration;
-    color: $link-hover-color;
-    outline: $focus-ring-box-shadow;
+  .bg-primary &,
+  .bg-dark & {
+    color: inherit;
   }
 
-  &.nav-link {
-    transition: color 0.3s cubic-bezier(0.4, 0, 0.6, 1);
-    will-change: color;
-
-    &:focus-visible {
-      outline: $focus-ring-box-shadow;
-    }
+  &:focus-visible {
+    outline-offset: 1px;
+    outline: $focus-ring-box-shadow;
   }
 
   & + svg.external-link-icon {
@@ -217,10 +236,15 @@ a {
     top: -0.0625rem;
   }
 
-  &:not(.nav-link):hover,
+  &:not(.nav-link, .btn-xl):hover,
   .partner-logo-card:has(a.stretched-link:hover) + div & {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
+
+    .bg-primary &,
+    .bg-dark & {
+      color: inherit;
+    }
 
     & + svg.external-link-icon {
       color: $link-hover-color;
@@ -254,26 +278,30 @@ blockquote > :last-child:after {
   content: close-quote;
 }
 
+.blockquote-footer {
+  color: $text-secondary-alt;
+}
+
 section.bg-primary {
-  background-color: $fill-primary !important; // use $fill-primary instead of $primary for bg-primary class
+  background: $fill-primary;
   color: $text-dark;
 }
 
-section.bg-dark,
-section.bg-secondary {
+section.bg-dark {
+  background: $dark;
   color: $text-dark;
 }
 
-section {
-  padding: map-get($spacers, 24) 0;
+section.bg-light {
+  background: $light;
 }
 
 .copyright-text {
-  color: $text-muted;
+  color: $text-secondary;
 }
 
 .navbar {
-  background-color: $white;
+  background: $white;
   box-shadow: var(--box-shadow-menu);
   height: 64px;
 
@@ -283,22 +311,19 @@ section {
   }
 
   .logo-white {
-    visibility: hidden;
+    opacity: 0;
   }
 
   .logo-color {
     margin-left: -171px;
-    visibility: visible;
-  }
-
-  .navbar-brand:focus-visible {
-    box-shadow: none;
+    opacity: 1;
   }
 
   .nav-link {
     font-size: $font-size-base;
     line-height: 48px;
-    text-wrap: nowrap;
+    letter-spacing: 0;
+    text-overflow: ellipsis;
   }
 
   .nav-item:last-of-type .nav-link {
@@ -306,48 +331,42 @@ section {
   }
 
   @include media-breakpoint-up(md) {
-    transition: 0.35s cubic-bezier(0.64, 0, 0.44, 0.99), box-shadow 0s;
-    will-change: background-color, box-shadow;
-
-    .logo-color,
-    .logo-white {
-      will-change: visibility;
-    }
+    transition: background 0.29s cubic-bezier(0.28, 0.11, 0.32, 1);
+    will-change: background;
 
     &:not(.nav-active) {
-      background-color: transparent;
+      background: transparent;
       box-shadow: none;
 
       .logo-color {
-        visibility: hidden;
+        opacity: 0;
       }
 
       .logo-white {
-        visibility: visible;
+        opacity: 1;
       }
 
       .nav-item .nav-link {
-        &:focus:not(:focus-visible) {
+        &:focus {
           color: initial;
         }
 
-        &:hover,
-        &:focus-visible {
+        &:hover {
           color: $navbar-dark-hover-color !important; // override nav link focus color
         }
       }
     }
 
     &.nav-active {
-      background-color: $background;
+      background: $background;
       box-shadow: var(--box-shadow-menu);
 
       .logo-white {
-        visibility: hidden;
+        opacity: 0;
       }
 
       .logo-color {
-        visibility: visible;
+        opacity: 1;
       }
 
       .nav-link {
@@ -356,7 +375,7 @@ section {
           color: $navbar-light-active-color;
         }
 
-        &.navlink-active-blue {
+        &.nav-link-active-blue {
           &.active,
           &.show {
             color: $secondary;
@@ -369,10 +388,11 @@ section {
 
 header {
   display: flex;
-  min-height: calc(round(100vh, 1px) + 12px);
+  min-height: 100vh;
   height: fit-content;
   background-position: center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     image-set(
       url("../anh/trang-bia/hero-1920w.avif") 1x,
       url("../anh/trang-bia/hero-3840w.avif") 2x
@@ -384,7 +404,7 @@ header {
     margin-top: calc(#{map-get($spacers, 24)} + 64px);
 
     @include media-breakpoint-up(md) {
-      margin-top: calc(round(25vh, 1px));
+      margin-top: 25vh;
     }
 
     p {
@@ -430,7 +450,7 @@ header {
     position: absolute;
     bottom: 0;
 
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+    transition: opacity 0.29s cubic-bezier(0.4, 0, 0.6, 1);
     will-change: opacity;
 
     .portfolio-box-caption-content {
@@ -464,9 +484,7 @@ header {
 
 @mixin btn-default($color, $background) {
   color: $color;
-  background-color: $background;
-  border: none;
-  transition: none;
+  background: $background;
 }
 
 a.btn-xl {
@@ -481,35 +499,48 @@ a.btn-xl {
   user-select: none;
   text-decoration: none;
   border-radius: $btn-border-radius;
+  letter-spacing: 0.01em;
 
   &:hover {
     text-decoration: none;
   }
+
+  &:active {
+    box-shadow: var(--box-shadow-cta-pressed);
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 3px #000,
+      0 0 0 5px $focus-ring-color;
+    outline: none;
+  }
 }
 
-a.btn-secondary,
-a.btn-primary {
-  @include btn-default($text, $white);
+a.btn-secondary {
+  @include btn-default(#000, $text-dark);
   box-shadow: var(--box-shadow-cta);
 
-  &:hover,
-  &:focus-visible {
-    color: $text;
-    background-color: $btn-hover-color;
+  &:hover {
+    color: #000;
+    background: #fff;
+  }
 
-    &:active {
-      box-shadow: var(--box-shadow-cta-pressed);
-    }
+  &:active {
+    background: #ededf2;
   }
 }
 
 a.btn-primary {
-  @include btn-default($text-dark, $fill-primary);
+  @include btn-default(#fff, $btn-primary-color);
 
-  &:hover,
-  &:focus-visible {
-    color: $text-dark;
-    background-color: $fill-accent;
+  &:hover {
+    color: #fff;
+    background: $btn-primary-hover;
+  }
+
+  &:active {
+    background: $btn-primary-active;
   }
 }
 
@@ -529,8 +560,6 @@ a.btn-primary {
 .partner-logo-card {
   height: 234px;
   background: white;
-  outline: $card-border-width solid $card-border-color;
-  border: none;
 
   a.stretched-link {
     line-height: 2em;
@@ -540,7 +569,7 @@ a.btn-primary {
 
   &#spica-card {
     background: #02743c;
-    outline: none;
+    border: none;
   }
 }
 
@@ -551,13 +580,14 @@ a.btn-primary {
 
 .heading-number {
   position: relative;
-  background-color: $primary;
+  background: $primary;
   color: $background;
   width: 128px;
   height: 112px;
 
   .bg-light & {
-    background-color: $secondary;
+    background: $secondary;
+    color: $light;
   }
 
   &:after {
@@ -568,15 +598,11 @@ a.btn-primary {
     overflow: hidden;
     content: attr(data-number);
     line-height: 1;
-    right: -12px;
+    right: -7px;
     bottom: 0;
 
-    letter-spacing: -1px; // rounded from -1.04px
-  }
-
-  &[data-number="01"]:after {
-    right: -9px;
-    font-feature-settings: "tnum" 1, $font-features;
-    letter-spacing: -6.7px; // rounded from -6.74px
+    font-feature-settings: "tnum" 1;
+    -webkit-font-smoothing: antialiased !important;
+    letter-spacing: -0.1em;
   }
 }

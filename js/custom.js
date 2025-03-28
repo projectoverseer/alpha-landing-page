@@ -1,8 +1,33 @@
 (function () {
-  const navbar = document.querySelector("#muc-luc");
+  const navbar = document.getElementById("muc-luc");
+
+  function throttle(func, wait) {
+    let timeout;
+    let previous = 0;
+
+    return function executedFunction(...args) {
+      const now = Date.now();
+      const remaining = wait - (now - previous);
+
+      if (remaining <= 0 || remaining > wait) {
+        clearTimeout(timeout);
+        timeout = null;
+        previous = now;
+        func(...args);
+      } else if (!timeout) {
+        timeout = setTimeout(() => {
+          previous = Date.now();
+          timeout = null;
+          func(...args);
+        }, remaining);
+      }
+    };
+  }
+
+  const throttledUpdateNavState = throttle(updateNavState, 377); // assumes average input lag of 23ms
 
   function updateNavState() {
-    if (window.scrollY > 12) {
+    if (window.scrollY > 0) {
       navbar.classList.add("nav-active");
       navbar.setAttribute("data-bs-theme", "light");
     } else {
@@ -15,19 +40,20 @@
     history.replaceState(
       "",
       document.title,
-      window.location.pathname + window.location.search
+      window.location.pathname + window.location.search,
     );
   }
 
   function cleanUrl() {
     if (location.search) {
-      const cleanUrl = location.href.split("?")[0];
-      history.replaceState(null, "", cleanUrl);
+      history.replaceState(null, "", location.pathname);
     }
   }
 
-  updateNavState(); // update navbar upon page load
-  window.addEventListener("scroll", updateNavState);
+  // Initial call to set the correct state on page load
+  updateNavState();
+
+  window.addEventListener("scroll", throttledUpdateNavState, { passive: true });
   window.addEventListener("hashchange", removeHash, false);
 
   cleanUrl();
