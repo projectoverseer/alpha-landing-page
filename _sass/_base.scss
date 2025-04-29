@@ -189,6 +189,11 @@ dd {
   .pb-0.shift-pb-base {
     padding-bottom: $line-height-base * $font-size-base !important;
   }
+  .mt-9.shift-mt--3.shift-mt--3px {
+    margin-top: calc(
+      #{map-get($spacers, 9) - map-get($spacers, 3)} - 3px
+    ) !important;
+  }
 }
 
 .bg-gray-100 {
@@ -196,7 +201,8 @@ dd {
 }
 
 .hr {
-  outline: $hr-border-width / 2 solid currentColor;
+  // outline: $hr-border-width / 2 solid currentColor;
+  height: $hr-border-width;
   width: map-get($spacers, 24);
   margin-left: auto;
   margin-right: auto;

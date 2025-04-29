@@ -10,6 +10,7 @@ facebook_page: https://www.facebook.com/profile.php?id=100070371223404
 # Build settings
 exclude:
   - node_modules/
+  - .assets_backup/
   - docs/
   - update-class-names.js
   - _classMap.json
