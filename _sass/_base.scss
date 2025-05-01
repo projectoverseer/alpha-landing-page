@@ -3,7 +3,6 @@ body {
   font-synthesis: none;
   unicode-bidi: embed;
   text-wrap: pretty;
-  text-rendering: optimizeSpeed;
   -webkit-font-smoothing: antialiased;
   quotes: "“" "”" "‘" "’";
 }
@@ -168,6 +167,10 @@ strong {
   font-weight: 700;
 }
 
+figure {
+  width: fit-content;
+}
+
 dl {
   display: grid;
   grid-template-columns: max-content auto;
@@ -184,16 +187,17 @@ dd {
   margin: 0 0 0 0.44em; // 7/4 of an en space
 }
 
-@include media-breakpoint-up(lg) {
-  // shift Bootstrap's spacers by specified values
+// shift Bootstrap's spacers by specified values
+@include media-breakpoint-up(md) {
   .pb-0.shift-pb-base {
     padding-bottom: $line-height-base * $font-size-base !important;
   }
-  .mt-9.shift-mt--3.shift-mt--3px {
-    margin-top: calc(
-      #{map-get($spacers, 9) - map-get($spacers, 3)} - 3px
-    ) !important;
-  }
+}
+
+.mt-9.shift-mt--3.shift-mt--3px {
+  margin-top: calc(
+    #{map-get($spacers, 9) - map-get($spacers, 3)} - 3px
+  ) !important;
 }
 
 .bg-gray-100 {
@@ -267,7 +271,8 @@ ol {
   margin-top: 1em;
 }
 
-p {
+p,
+figcaption {
   margin-top: 1em;
   margin-bottom: 0;
 }

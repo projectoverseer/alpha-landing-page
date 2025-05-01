@@ -1,8 +1,4 @@
 User-agent: *
-Disallow: http://alphasoftwaregroup.com/
-Disallow: http://www.alphasoftwaregroup.com/
-Disallow: https://alphasoftwaregroup.com/
-
 Allow: /
 
 Sitemap: https://www.alphasoftwaregroup.com/sitemap.xml
