@@ -94,8 +94,20 @@ $link-hover-decoration: underline;
 // Spacing Variables
 // -------------------------------------
 
+@function px($px) {
+  @return 1rem * $px / 16;
+}
+
 @function pt($pt) {
   @return 1rem * round($pt / 3 * 4) / 16;
+}
+
+@function line-height-for-pt($pt) {
+  @return round(($pt + 6)/ 3 * 4) / round($pt / 3 * 4);
+}
+
+@function line-height-for-px($px) {
+  @return line-height-for-pt($px / 4 * 3);
 }
 
 $scales: (

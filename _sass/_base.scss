@@ -45,9 +45,11 @@ a {
 section {
   padding: map-get($spacers, 24) 0;
 
-  p,
-  li {
-    max-width: 32rem;
+  @include media-breakpoint-up(md) {
+    p,
+    li {
+      max-width: 32rem;
+    }
   }
 }
 
@@ -277,8 +279,20 @@ figcaption {
   margin-bottom: 0;
 }
 
-blockquote {
-  line-height: $line-height-lg;
+.small-16 {
+  font-size: px(14);
+  line-height: line-height-for-px(14);
+}
+
+.small-15 {
+  font-size: px(13);
+  line-height: line-height-for-px(13);
+}
+
+blockquote,
+.blockquote {
+  font-size: px(17);
+  line-height: line-height-for-px(17);
 }
 
 blockquote > :first-child:before {
@@ -289,8 +303,14 @@ blockquote > :last-child:after {
   content: close-quote;
 }
 
-.blockquote-footer {
+.blockquote-footer,
+figcaption {
   color: $text-secondary-alt;
+
+  .bg-dark &,
+  .bg-primary & {
+    color: rgba($text-dark, 0.82);
+  }
 }
 
 section.bg-primary {
@@ -405,10 +425,11 @@ header {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     image-set(
-      url("../anh/trang-bia/hero-1920w.avif") 1x,
-      url("../anh/trang-bia/hero-3840w.avif") 2x
+      url("../anh/trang-bia/hero-1920.avif") 1x,
+      url("../anh/trang-bia/hero-3840.avif") 2x
     );
   background-size: cover;
+  background-color: $text; // a welcoming splash screen while the hero image is loading
   color: $text-dark;
 
   .header-content {
@@ -416,10 +437,10 @@ header {
 
     @include media-breakpoint-up(md) {
       margin-top: 25vh;
-    }
 
-    p {
-      max-width: 32rem;
+      p {
+        max-width: 32rem;
+      }
     }
   }
 }
@@ -603,15 +624,17 @@ a.btn-primary {
 
   &:after {
     position: absolute;
+    width: 100%;
+    text-align: right;
     color: inherit;
     font-size: 80px;
     font-weight: 600;
     overflow: hidden;
     content: attr(data-number);
     line-height: 1;
-    right: -7px;
     bottom: 0;
 
+    text-rendering: geometricPrecision;
     font-feature-settings: "tnum" 1;
     -webkit-font-smoothing: antialiased !important;
     letter-spacing: -0.1em;
