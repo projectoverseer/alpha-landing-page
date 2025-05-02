@@ -128,7 +128,7 @@ h4,
 .h4 {
   line-height: $h4-line-height;
   margin-left: -0.0625rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 
   &:has(.mini-h4) {
     display: flex;
@@ -169,6 +169,10 @@ strong {
   font-weight: 700;
 }
 
+.prose {
+  letter-spacing: 0.01em;
+}
+
 figure {
   width: fit-content;
 }
@@ -194,12 +198,6 @@ dd {
   .pb-0.shift-pb-base {
     padding-bottom: $line-height-base * $font-size-base !important;
   }
-}
-
-.mt-9.shift-mt--3.shift-mt--3px {
-  margin-top: calc(
-    #{map-get($spacers, 9) - map-get($spacers, 3)} - 3px
-  ) !important;
 }
 
 .bg-gray-100 {
@@ -274,25 +272,25 @@ ol {
 }
 
 p,
-figcaption {
+address,
+figcaption,
+.blockquote-footer {
   margin-top: 1em;
   margin-bottom: 0;
 }
 
-.small-16 {
-  font-size: px(14);
-  line-height: line-height-for-px(14);
-}
-
-.small-15 {
-  font-size: px(13);
-  line-height: line-height-for-px(13);
+small,
+.small {
+  font-size: pt(10);
+  line-height: line-height-for-pt(10);
+  letter-spacing: 0.01em;
 }
 
 blockquote,
 .blockquote {
-  font-size: px(17);
-  line-height: line-height-for-px(17);
+  font-size: pt(13);
+  line-height: line-height-for-pt(13);
+  letter-spacing: 0.01em;
 }
 
 blockquote > :first-child:before {
@@ -301,16 +299,6 @@ blockquote > :first-child:before {
 
 blockquote > :last-child:after {
   content: close-quote;
-}
-
-.blockquote-footer,
-figcaption {
-  color: $text-secondary-alt;
-
-  .bg-dark &,
-  .bg-primary & {
-    color: rgba($text-dark, 0.82);
-  }
 }
 
 section.bg-primary {
@@ -353,7 +341,6 @@ section.bg-light {
   .nav-link {
     font-size: $font-size-base;
     line-height: 48px;
-    letter-spacing: 0;
     text-overflow: ellipsis;
   }
 
@@ -447,11 +434,11 @@ header {
 
 .service-box {
   & > :last-child {
-    margin-bottom: map-get($spacers, 9);
+    margin-bottom: map-get($spacers, 8);
   }
 
   .row:has(&) {
-    margin-bottom: -1 * map-get($spacers, 9) + $paragraph-margin-bottom;
+    margin-bottom: -1 * map-get($spacers, 8) + $paragraph-margin-bottom;
   }
 }
 
@@ -637,6 +624,6 @@ a.btn-primary {
     text-rendering: geometricPrecision;
     font-feature-settings: "tnum" 1;
     -webkit-font-smoothing: antialiased !important;
-    letter-spacing: -0.1em;
+    letter-spacing: -0.12em;
   }
 }
