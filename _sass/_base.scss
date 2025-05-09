@@ -48,7 +48,7 @@ section {
   @include media-breakpoint-up(md) {
     p,
     li {
-      max-width: 32rem;
+      max-width: 33em;
     }
   }
 }
@@ -159,7 +159,8 @@ h6,
 }
 
 big,
-.big {
+.big,
+.prose {
   font-size: $font-size-lg;
   line-height: $line-height-lg;
 }
@@ -167,10 +168,6 @@ big,
 b,
 strong {
   font-weight: 700;
-}
-
-.prose {
-  letter-spacing: 0.01em;
 }
 
 figure {
@@ -286,6 +283,12 @@ small,
   letter-spacing: 0.01em;
 }
 
+figcaption {
+  font-size: px(14);
+  line-height: line-height-for-px(14);
+  letter-spacing: 0.01em;
+}
+
 blockquote,
 .blockquote {
   font-size: pt(13);
@@ -299,6 +302,11 @@ blockquote > :first-child:before {
 
 blockquote > :last-child:after {
   content: close-quote;
+}
+
+.accordion-item:first-of-type > :first-child {
+  border-top-left-radius: $accordion-inner-border-radius;
+  border-top-right-radius: $accordion-inner-border-radius;
 }
 
 section.bg-primary {
@@ -426,7 +434,7 @@ header {
       margin-top: 25vh;
 
       p {
-        max-width: 32rem;
+        max-width: 32em;
       }
     }
   }
@@ -620,10 +628,12 @@ a.btn-primary {
     content: attr(data-number);
     line-height: 1;
     bottom: 0;
+    right: 3.5px;
+    padding-right: 5px; // this is to avoid text clipping
 
     text-rendering: geometricPrecision;
     font-feature-settings: "tnum" 1;
     -webkit-font-smoothing: antialiased !important;
-    letter-spacing: -0.12em;
+    letter-spacing: -8.4px;
   }
 }
