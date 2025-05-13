@@ -38,6 +38,11 @@
     text-decoration: if($link-hover-decoration == underline, none, null);
   }
 
+  &:focus-visible {
+    outline: 0;
+    box-shadow: $nav-link-focus-box-shadow;
+  }
+
   // Disabled state lightens text
   &.disabled,
   &:disabled {
@@ -164,8 +169,8 @@
 .nav-justified {
   > .nav-link,
   .nav-item {
-    flex-basis: 0;
     flex-grow: 1;
+    flex-basis: 0;
     text-align: center;
   }
 }

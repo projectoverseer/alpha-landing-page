@@ -54,17 +54,21 @@
 
     // Add some height to date inputs on iOS
     // https://github.com/twbs/bootstrap/issues/23307
+    // TODO: we can remove this workaround once https://bugs.webkit.org/show_bug.cgi?id=198959 is resolved
     // Multiply line-height by 1em if it has no unit
-    height: if(
-      unit($input-line-height) == "",
-      $input-line-height * 1em,
-      $input-line-height
-    );
+    height: if(unit($input-line-height) == "", $input-line-height * 1em, $input-line-height);
 
     // Android Chrome type="date" is taller than the other inputs
     // because of "margin: 1px 24px 1px 4px" inside the shadow DOM
     // Tested under Android 11 / Chrome 89, Android 12 / Chrome 100, Android 13 / Chrome 109
     margin: 0;
+  }
+
+  // Prevent excessive date input height in Webkit
+  // https://github.com/twbs/bootstrap/issues/34433
+  &::-webkit-datetime-edit {
+    display: block;
+    padding: 0;
   }
 
   // Placeholder
@@ -184,7 +188,6 @@ textarea {
     min-height: $input-height-lg;
   }
 }
-
 // stylelint-enable selector-no-qualifying-type
 
 .form-control-color {
@@ -206,11 +209,6 @@ textarea {
     @include border-radius($input-border-radius);
   }
 
-  &.form-control-sm {
-    height: $input-height-sm;
-  }
-
-  &.form-control-lg {
-    height: $input-height-lg;
-  }
+  &.form-control-sm { height: $input-height-sm; }
+  &.form-control-lg { height: $input-height-lg; }
 }

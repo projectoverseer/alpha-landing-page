@@ -68,6 +68,8 @@ body {
 hr {
   margin: $hr-margin-y 0;
   color: $hr-color; // 1
+  border: 0;
+  border-top: $hr-border-width solid $hr-border-color;
   opacity: $hr-opacity;
 }
 
@@ -497,9 +499,9 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: $legend-margin-bottom;
-  @include font-size($legend-font-size);
   font-weight: $legend-font-weight;
   line-height: inherit;
+  @include font-size($legend-font-size);
 
   + * {
     clear: left; // 2

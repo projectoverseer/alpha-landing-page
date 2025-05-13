@@ -4,6 +4,8 @@
 @charset "utf-8";
 @import "functions.scss";
 
+$prefix: "ap-";
+
 // -------------------------------------
 // Color Variables
 // -------------------------------------
@@ -25,20 +27,20 @@ $light: #c3e5f1;
 $dark: #00263e;
 
 $white: #fff;
-$gray-50: #f7f7f9;
-$gray-100: #f2f2f7;
-$gray-200: #e5e5ea;
-$gray-300: #d1d1d6;
-$gray-400: #b8b8c2;
-$gray-500: #9a9aa2;
-$gray-600: #7e7e86;
-$gray-700: #62626c;
-$gray-800: #46464f;
-$gray-900: #2a2a2f;
-$gray-950: #1d1d1f;
+$gray-50: #f6f6f9;
+$gray-100: #eeeef2;
+$gray-200: #dcdce2;
+$gray-300: #c4c4ca;
+$gray-400: #aaaaaf;
+$gray-500: #8e8e93;
+$gray-600: #707075;
+$gray-700: #58585d;
+$gray-800: #3b3b40;
+$gray-900: #1f1f23;
+$gray-950: #121215;
 $black: #000;
 
-$text: $gray-900;
+$text: #1d1d1f;
 $text-secondary: #6e6e73;
 $text-secondary-alt: #515154;
 $text-tertiary: #86868b;
@@ -51,7 +53,8 @@ $text-dark-secondary-alt: #a1a1a6;
 $text-dark-tertiary: #6e6e73;
 
 $border-color: $gray-300;
-$external-link-icon-color: $text-secondary;
+$external-link-icon-color: $gray-600;
+$external-link-dark-icon-color: $text-dark;
 
 // -------------------------------------
 // Typography Variables
@@ -160,7 +163,7 @@ $blockquote-footer-color: $text;
 $line-height-base: pt(11+6) / $font-size-base;
 $line-height-sm: pt(10+6) / $font-size-sm;
 $line-height-lg: pt(12+6) / $font-size-lg;
-$btn-line-height: $line-height-base;
+$btn-line-height: $line-height-lg;
 
 $h1-font-size: map-get($scales, 7);
 $h2-font-size: map-get($scales, 5);
@@ -215,6 +218,21 @@ $card-border-radius: $border-radius-lg;
 $hr-border-width: 3px;
 
 // -------------------------------------
+// Focus Ring Variables
+// -------------------------------------
+
+$focus-ring-width: 2px;
+$focus-ring-opacity: 1;
+$focus-ring-color: #0071e3;
+$focus-ring-blur: 0;
+
+$focus-ring-outline: $focus-ring-width solid $focus-ring-color;
+$focus-ring-box-shadow: 0 0 0 $focus-ring-width $focus-ring-color;
+$focus-ring-dark-box-shadow:
+  0 0 0 3px #000,
+  0 0 0 3px + $focus-ring-width $focus-ring-color;
+
+// -------------------------------------
 // Component Variables
 // -------------------------------------
 
@@ -237,24 +255,32 @@ $btn-primary-active: #c6321f;
 $input-btn-padding-y: 16px;
 $input-btn-padding-x: 24px;
 
-$accordion-button-active-bg: $gray-50;
-$accordion-button-active-color: $text;
-$accordion-button-focus-box-shadow: inset 0
-  calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+$btn-transition:
+  color 100ms linear,
+  background-color 100ms linear;
 
-// -------------------------------------
-// Focus Ring Variables
-// -------------------------------------
+$accordion-button-bg: $gray-50;
+$accordion-button-color: $text;
+$accordion-button-active-bg: $accordion-button-bg;
+$accordion-button-active-color: $accordion-button-color;
+$accordion-button-focus-box-shadow: $focus-ring-box-shadow;
 
-$focus-ring-color: #0071e3;
-$focus-ring-box-shadow: 2px solid $focus-ring-color;
+$accordion-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#707075"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
+$accordion-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#707075"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
+
+$accordion-icon-width: 32px;
+
+$accordion-padding-y: map-get($spacers, 2);
+$accordion-padding-x: map-get($spacers, 4);
+
+$accordion-body-padding-y: map-get($spacers, 4);
 
 // -------------------------------------
 // Feature Flags
 // -------------------------------------
 
 $enable-negative-margins: true;
-$enable-transitions: false;
+$enable-transitions: true;
 $enable-rfs: false;
 
 // -------------------------------------
