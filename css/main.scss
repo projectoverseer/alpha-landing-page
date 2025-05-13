@@ -4,8 +4,6 @@
 @charset "utf-8";
 @import "functions.scss";
 
-$prefix: "ap-";
-
 // -------------------------------------
 // Color Variables
 // -------------------------------------
@@ -14,6 +12,7 @@ $primary: #e35205;
 $primary-dark: #e67300;
 $primary-inverted-dark: #8dc8e8;
 $fill-primary: #c63527;
+$figure-primary: #b33f04;
 
 $accent: #ff8f1c;
 $fill-accent: #e35205;
@@ -21,6 +20,7 @@ $fill-accent: #e35205;
 $secondary: #004c97;
 $secondary-dark: #009cde;
 $fill-secondary: #003865;
+$figure-secondary: #004080;
 
 $background: #fff;
 $light: #c3e5f1;
@@ -87,7 +87,7 @@ $font-size-root: calc(max(14px, min(100%, 26px)));
 
 $link-color: #06c;
 $link-hover-color: $link-color;
-$link-alt-color: $fill-primary;
+$link-alt-color: $figure-primary;
 $link-alt-hover-color: $link-alt-color;
 $link-alt-hover-dark-color: $primary-dark;
 $link-decoration: none;
@@ -149,9 +149,11 @@ $spacers: (
   10: pt(4 * 2) * 5,
   11: pt(4 * 11),
   12: pt(4 * 2) * 6,
+  16: pt(4 * 2) * 8,
   24: pt(4 * 2) * 12
 );
 
+$text-tab-width: 1.75em; // 7 times an en space
 $font-size-sm: 14/16 * 1rem;
 $font-size-base: map-get($scales, 1);
 $font-size-lg: map-get($scales, 2);
@@ -205,17 +207,16 @@ $container-max-widths: (
 // Border Variables
 // -------------------------------------
 
-$border-radius-sm: 2px * 1.5;
-$border-radius: 2.5px * 1.5;
-$border-radius-lg: 3px * 1.5;
+$border-radius-sm: 4px / 48 * 80;
+$border-radius: 4.5px / 48 * 80;
 
-$btn-border-radius: $border-radius;
+$btn-border-radius: $border-radius-sm;
 
 $card-border-width: 1px;
 $card-border-color: $border-color;
-$card-border-radius: $border-radius-lg;
+$card-border-radius: $border-radius;
 
-$hr-border-width: 3px;
+$hr-border-width: 2px;
 
 // -------------------------------------
 // Focus Ring Variables
@@ -242,7 +243,7 @@ $navbar-light-hover-color: $navbar-light-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
 $navbar-nav-link-padding-x: map-get($spacers, 2);
-$nav-link-font-weight: 700;
+$nav-link-font-weight: 600;
 $nav-link-transition: none;
 $navbar-dark-color: $text-dark;
 $navbar-dark-hover-color: $link-alt-hover-dark-color;
@@ -254,10 +255,6 @@ $btn-primary-active: #c6321f;
 
 $input-btn-padding-y: 16px;
 $input-btn-padding-x: 24px;
-
-$btn-transition:
-  color 100ms linear,
-  background-color 100ms linear;
 
 $accordion-button-bg: $gray-50;
 $accordion-button-color: $text;

@@ -2,7 +2,6 @@ body {
   direction: ltr;
   font-synthesis: none;
   unicode-bidi: embed;
-  text-wrap: pretty;
   -webkit-font-smoothing: antialiased;
   quotes: "“" "”" "‘" "’";
 }
@@ -110,19 +109,19 @@ h6,
 h1,
 .h1 {
   line-height: $h1-line-height;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 h2,
 .h2 {
   line-height: $h2-line-height;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 h3,
 .h3 {
   line-height: $h3-line-height;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 
   &:has(.mini-h3) {
     display: flex;
@@ -133,7 +132,7 @@ h3,
 h4,
 .h4 {
   line-height: $h4-line-height;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 
   &:has(.mini-h4) {
     display: flex;
@@ -142,19 +141,17 @@ h4,
 }
 
 .mini-h3 {
-  font-size: $font-size-lg;
-  line-height: $line-height-lg;
+  font-size: $h5-font-size;
+  line-height: $h5-line-height;
   font-weight: 600;
-  letter-spacing: 0;
-  color: $gray-900;
+  letter-spacing: -0.01em;
 }
 
 .mini-h4 {
-  font-size: $font-size-base;
-  line-height: $line-height-base;
+  font-size: $h6-font-size;
+  line-height: $h6-line-height;
   font-weight: 600;
   letter-spacing: 0;
-  color: $gray-900;
 }
 
 h5,
@@ -284,7 +281,7 @@ a {
 
 ul,
 ol {
-  padding-left: 1.75em; // 7 times an en space
+  padding-left: $text-tab-width;
 }
 
 :is(ul, ol).spaced-items li {
@@ -328,6 +325,7 @@ blockquote > :last-child:after {
 
 .blockquote-footer {
   color: $text-secondary-alt;
+  padding-left: $text-tab-width;
 }
 
 .accordion-item:first-of-type > :first-child {
@@ -453,7 +451,7 @@ section.bg-dark {
         &.nav-link-active-blue {
           &.active,
           &.show {
-            color: $secondary;
+            color: $figure-secondary;
           }
         }
       }
@@ -473,11 +471,11 @@ header {
       url("../anh/trang-bia/hero-3840.avif") 2x
     );
   background-size: cover;
-  background-color: $text; // a welcoming splash screen while the hero image is loading
+  background-color: $text; // a welcoming splash color while the hero image is loading
   color: $text-dark;
 
   .header-content {
-    margin-top: calc(#{map-get($spacers, 24)} + 64px);
+    margin-top: map-get($spacers, 24);
 
     @include media-breakpoint-up(md) {
       margin-top: 25vh;
@@ -657,6 +655,7 @@ a.btn-primary {
   color: $background;
   width: 128px;
   height: 112px;
+  border-radius: $border-radius-sm;
 
   .bg-light & {
     background: $secondary;
