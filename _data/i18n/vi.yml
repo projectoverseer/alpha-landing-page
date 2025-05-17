@@ -1,0 +1,246 @@
+homeurl: "/"
+company_name: "Công ty TNHH Phát triển Phần mềm Alpha"
+copyright_notice: "Bản quyền &copy; 2025 Alpha&nbsp;Software. Bảo lưu mọi quyền."
+
+social_description: "Alpha Software là công ty hàng đầu trong lĩnh vực phát triển phần mềm quản lý sản xuất, số hóa quy trình, và chuyển đổi số."
+
+to_homepage: "Đi đến trang chủ Alpha&nbsp;Software"
+slogan: "Chuyển đổi số<wbr /> nhà máy dệt may"
+description: "Alpha&nbsp;Software cách mạng hoá quản lý sản xuất dệt may qua việc phát triển phần mềm quản lý quy trình công nghệ một cách khoa học, thiết lập và triển khai kế hoạch sản xuất một cách trực quan, kết nối với các thiết bị sản xuất để tăng cường tự động hoá giúp nhà máy cải thiện chất lượng, tăng sản lượng và rút ngắn thời gian giao hàng."
+learn_more: "Tìm hiểu thêm"
+learn_more_aria: "Tìm hiểu thêm về Alpha&nbsp;Software"
+toc: "Mục lục"
+toc_overview: "Giới thiệu"
+toc_overview_id: "gioi-thieu"
+toc_benefits: "Các lợi ích"
+toc_benefits_id: "cac-loi-ich"
+toc_products: "Chi tiết các sản phẩm"
+toc_products_id: "chi-tiet-cac-san-pham"
+toc_projects: "Các dự án"
+toc_projects_id: "cac-du-an"
+toc_reviews: "Đánh giá của khách hàng"
+toc_reviews_id: "danh-gia-cua-khach-hang"
+toc_our_story: "Câu chuyện của Alpha&nbsp;Software"
+toc_our_story_id: "cau-chuyen-cua-alpha-software"
+toc_customer_assistance: "Chăm sóc khách hàng"
+toc_customer_assistance_id: "cham-soc-khach-hang"
+
+overview_title: "Giới&nbsp;thiệu phần&nbsp;mềm quản&nbsp;lý nhà&nbsp;máy thông&nbsp;minh của Alpha&nbsp;Software"
+hjk_1: "Lập&nbsp;kế&nbsp;hoạch sản&nbsp;xuất trực&nbsp;quan"
+hjk_2: "Thao tác lập kế hoạch, điều chỉnh kế hoạch được thực hiện một cách dễ dàng nhanh chóng bằng cách kéo-thả."
+hjk_3: "Khi có sự điều chỉnh kế hoạch của một mẻ hàng, toàn bộ bảng kế hoạch sẽ được tự động điều chỉnh theo. Điều này giúp bảng kế hoạch có sự đồng bộ tuyệt đối."
+hjk_4: "Bảng triển khai kế hoạch tại nơi sản xuất thể hiện trực quan và kiểm soát việc tuân thủ trình tự đã được lập."
+hjk_5: "Quản&nbsp;lý công&nbsp;nghệ thông&nbsp;minh"
+hjk_6: "Có công cụ để người kỹ thuật trưởng lưu trữ tri thức công nghệ của công ty vào phần mềm."
+hjk_7: "Phần mềm sẽ tìm kiếm chính xác công nghệ áp dụng cho mẻ hàng thông qua chỉ một cú click chuột. Điều này không những giúp công ty giảm được quy mô nhân sự có trình độ kỹ thuật cao mà còn giúp tất cả các mẻ hàng được xử lý với công nghệ đồng nhất, từ đó ổn định chất lượng."
+hjk_8: "Tích&nbsp;hợp với các thiết&nbsp;bị&nbsp;sản&nbsp;xuất, thiết&nbsp;bị&nbsp;phòng&nbsp;lab"
+hjk_9: "Với các thiết bị vận hành tự động nhưng độc lập, chúng tôi có thể giúp kết nối vào hệ thống phần mềm để hình thành một hệ thống nhất."
+hjk_10: "Chúng tôi cũng có thể giúp cải tạo các thiết bị đang vận hành bằng tay thông qua công tắc và nút nhấn thành điều kiển tự động theo quy trình và kết nối với hệ thống phần mềm."
+hjk_11: "Tuỳ&nbsp;chỉnh phù&nbsp;hợp cho từng nhà&nbsp;máy"
+hjk_12: "Hiểu rằng mỗi nhà máy có hệ thống quản lý khác nhau, chúng tôi luôn khảo sát kỹ càng để thiết kế và triển khai cho phù hợp, liên tục cải tiến để giúp hoạt động của nhà máy ngày càng hiệu quả hơn."
+hjk_13: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
+hjk_14: "Rất dễ sử&nbsp;dụng!"
+hjk_15: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để người công nhân đứng máy, nhân viên văn phòng dù không có kiến thức tin học cơ bản vẫn có thể sử dụng được một cách dễ dàng."
+benefits_title: "Vì sao nhà&nbsp;máy nên chọn Alpha&nbsp;Software?"
+hjk_16: "Cải&nbsp;thiện rõ&nbsp;rệt chất&nbsp;lượng sản&nbsp;phẩm"
+hjk_17: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay từ đầu (RFT—Right First Time)."
+hjk_18: "Giảm thiểu rủi&nbsp;ro sai&nbsp;sót của công&nbsp;nhân"
+hjk_19: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha&nbsp;Software có khả năng ngăn ngừa lỗi rất cao."
+hjk_20: "Giảm&nbsp;thiểu nhu&nbsp;cầu nhân&nbsp;sự"
+hjk_21: "Trong quá trình khảo sát và phát triển phần mềm, chúng tôi sẽ nhận diện những thao tác nào có thể được phần mềm tự động thực hiện. Nhờ đó làm giảm nhu cầu và chi phí nhân sự."
+hjk_22: "Tích&nbsp;hợp với các thiết&nbsp;bị có sẵn"
+hjk_23: "Chúng tôi có trình độ và kinh nghiệm để kết nối với các thiết bị tự động hoặc cải tạo thiết bị đang vận hành bằng công tắc tay thành vận hành tự động. Nhờ đó giảm nhu cầu nhân sự có trình độ tay nghề cao và giảm thao tác sai của người vận hành."
+products_title: "Chi&nbsp;tiết về các sản&nbsp;phẩm của Alpha&nbsp;Software"
+alpha_smart_dyehouse: '<span class="mini-h3">Hệ&nbsp;thống phần&nbsp;mềm quản&nbsp;lý nhà&nbsp;máy&nbsp;<wbr /></span>Alpha&nbsp;Smart&nbsp;Dyehouse'
+alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
+            <p>
+              <strong>Alpha Smart Dyehouse</strong> là một giải pháp phần mềm
+              toàn diện giúp số hoá và tự động hoá toàn bộ quy trình nhuộm trong
+              nhà máy. Hệ thống tích hợp từ khâu quản lý đơn hàng, lập kế hoạch
+              nhuộm, tạo công thức màu, đến thực hiện nhuộm, kiểm tra chất lượng
+              và đóng gói.
+            </p>
+            <p>
+              Đơn công nghệ nhuộm là một thành tố quan trọng ảnh hưởng lớn đến
+              chất lượng nhuộm được phần mềm quản lý một cách thông minh và tự
+              động phát sinh mà không cần một kỹ thuật viên chuyên biệt cho
+              nhiệm vụ này.
+            </p>
+            <p>
+              Đường đi công nghệ của mẻ hàng cũng được phần mềm dẫn dắt đảm bảo
+              không có mẻ hàng nào được xử lý thiếu, thừa hay sai trình tự các
+              công đoạn.
+            </p>
+            <p>
+              Giải pháp còn cho phép kết nối trực tiếp với các thiết bị phần
+              cứng trong nhà máy nhằm nâng cao mức độ tự động hoá và giảm thiểu
+              sai sót trong sản xuất.
+            </p>
+
+            <h4>2. Các tính&nbsp;năng</h4>
+            <p>
+              Phần mềm <strong>Alpha Smart Dyehouse</strong> hỗ trợ đầy đủ các
+              công đoạn trong quy trình nhuộm, bao gồm:
+            </p>
+            <ul>
+              <li>Quản lý và theo dõi tiến độ đơn hàng</li>
+              <li>Lập kế hoạch nhuộm</li>
+              <li>Quản lý công thức màu và đơn công nghệ</li>
+              <li>Phần mềm cân thuốc và định lượng hoá chất</li>
+              <li>Quản lý quy trình công nghệ</li>
+              <li>Quản lý tiêu chuẩn chất lượng</li>
+              <li>Thực hiện nhuộm và các công đoạn sau nhuộm</li>
+              <li>Kiểm tra chất lượng và đóng gói</li>
+              <li>Quản lý kho hoá chất, mộc và thành phẩm</li>
+            </ul>
+            <h4>
+              3. Khả&nbsp;năng kết&nbsp;nối thiết&nbsp;bị trong
+              nhà&nbsp;máy&nbsp;nhuộm
+            </h4>
+            <p>
+              Phần mềm <strong>Alpha Smart Dyehouse</strong> có khả năng tích
+              hợp sâu với hệ thống thiết bị của nhà máy nhuộm. Giải pháp hỗ trợ
+              giao tiếp với các thiết bị như cân thuốc, máy rót màu, máy bơm hoá
+              chất, thiết bị quang phổ LAB, v.v. Đặc biệt, Alpha phát triển hai
+              thiết bị phần cứng chuyên biệt gồm Cân thuốc Alpha và Bộ quy trình
+              Alpha (bộ điều khiển máy nhuộm), giúp đảm bảo sự đồng bộ và hiệu
+              quả cao trong toàn bộ hệ thống.
+            </p>'
+alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc&nbsp;nhuộm thông&nbsp;minh&nbsp;<wbr /></span>Alpha&nbsp;Dyes&nbsp;Weighing'
+alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
+            <p>
+              <strong>Alpha Dyes Weighing</strong> là phần mềm chuyên dụng hỗ
+              trợ quá trình cân thuốc nhuộm trong các nhà máy dệt nhuộm. Phần
+              mềm được thiết kế nhằm đảm bảo độ chính xác, an toàn và tiện lợi
+              tối đa cho người vận hành trong suốt quá trình chuẩn bị thuốc
+              nhuộm.
+            </p>
+            <h4>2. Các điểm nổi&nbsp;bật</h4>
+            <ul class="spaced-items">
+              <li>
+                <b>Hệ thống đèn LED chỉ thị vị trí:</b> Hỗ trợ người vận hành dễ
+                dàng xác định vị trí thùng thuốc nhuộm cần lấy thông qua hệ
+                thống đèn LED hiển thị trực quan.
+              </li>
+              <li>
+                <b>Xác thực bằng mã QR:</b> Quét mã QR để đảm bảo lấy đúng loại
+                thuốc nhuộm, tránh nhầm lẫn và nâng cao tính an toàn trong sản
+                xuất.
+              </li>
+              <li>
+                <b>Dẫn dắt quá trình cân bằng lời nói:</b> Phần mềm có chức năng
+                hướng dẫn người vận hành từng bước trong quá trình cân thông qua
+                giọng nói, giúp thao tác nhanh chóng và giảm sai sót.
+              </li>
+              <li>
+                <b>Kết nối đa cân điện tử:</b> Hỗ trợ kết nối đồng thời với 3
+                cân điện tử. Phần mềm tương thích với mọi thương hiệu cân điện
+                tử miễn là có chức năng truyền dữ liệu về máy tính.
+              </li>
+              <li>
+                <b
+                  >Thích nghi với sai lệch cường độ màu giữa các lô thuốc
+                  nhuộm:</b
+                >
+                Các lô thuốc nhuộm mua vào thường có cường độ màu sai lệch từ 3%
+                đến 5% so với lô gốc. Phần mềm tự động điều chỉnh để thích nghi
+                với sự dao động này, giúp tránh lỗi sai màu khi chuyển sang sử
+                dụng lô thuốc nhuộm mới.
+              </li>
+              <li>
+                <b>Linh hoạt về phần cứng:</b> Alpha cung cấp phần mềm. Máy
+                tính, cân điện tử và kệ chứa thùng thuốc nhuộm sẽ do khách hàng
+                chủ động đầu tư. Điều này giúp tối ưu chi phí đầu tư ban đầu và
+                tăng tính linh hoạt cho từng nhà máy.
+              </li>
+            </ul>'
+projects_title: "Các dự&nbsp;án của Alpha&nbsp;Software"
+hjk_24: "Công ty TNHH Chỉ may Tuấn Hồng"
+hjk_25: '<span class="mini-h4">Công&nbsp;ty TNHH Chỉ&nbsp;may&nbsp;<wbr /></span>Tuấn&nbsp;Hồng'
+hjk_26: '<p>Các thành phần phần mềm:</p>
+        <ul>
+          <li>Quản lý sản xuất</li>
+          <li>
+            Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy hút
+            màu phòng thí nghiệm Datacolor Autolab TF
+          </li>
+          <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
+          <li>Cân thuốc nhuộm bán tự động</li>
+        </ul>'
+hjk_27: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng Đông"
+hjk_28: '<span class="mini-h4">Công&nbsp;ty TNHH Sản&nbsp;xuất Thương&nbsp;mại và Đầu&nbsp;tư&nbsp;<wbr /></span>Dũng&nbsp;Đông'
+hjk_29: '<p>Các thành phần phần mềm:</p>
+        <ul>
+          <li>Quản lý sản xuất</li>
+          <li>
+            Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
+            màu phòng thí nghiệm COPOWER CptLab
+          </li>
+          <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
+          <li>Cân thuốc nhuộm bán tự động</li>
+          <li>Cân hoá chất bán tự động</li>
+          <li>
+            Cải tạo điều khiển máy nhuộm từ vận hành bằng tay thành điều khiển
+            tự động theo chương trình, kết nối trực tiếp và điều khiển từ phần
+            mềm quản lý sản xuất
+          </li>
+        </ul>'
+hjk_30: "Công ty TNHH Nhuộm Spica"
+hjk_31: '<span class="mini-h4">Công&nbsp;ty TNHH Nhuộm&nbsp;<wbr /></span>Spica'
+hjk_32: '<p>Các thành phần phần mềm:</p>
+        <ul>
+          <li>Quản lý sản xuất</li>
+          <li>
+            Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
+            màu phòng thí nghiệm COPOWER CptLab
+          </li>
+          <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
+          <li>Cân thuốc nhuộm bán tự động</li>
+          <li>Cân hoá chất bán tự động</li>
+          <li>
+            Cải tiến chương trình trên bộ điều khiển Delta của máy nhuộm hiện
+            hữu để kết nối và chuyển chương trình nhuộm, thể tích nước, tốc độ
+            bơm chính từ phần mềm quản lý sản xuất
+          </li>
+        </ul>'
+reviews_title: "Khách&nbsp;hàng nhận&nbsp;xét gì về Alpha&nbsp;Software?"
+female_title: "Bà"
+male_title: "Ông"
+of: ""
+hjk_33: '<p>Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với các thiết bị nhuộm
+            như máy Spectro, máy hút màu và controller máy nhuộm, từ đó giảm
+            thiểu lỗi thao tác thủ công. Việc quản lý công thức nhuộm trở nên dễ
+            dàng hơn, lập kế hoạch nhuộm chính xác và kiểm soát toàn bộ quy
+            trình chặt chẽ qua mã QR và hệ thống báo cáo trực quan.</p>
+          <p>Sau khi triển khai phần mềm, tỷ lệ nhuộm đạt ngay lần đầu (RFT) tăng
+            từ 80% lên 90% theo mẻ, và từ 90% lên 95% theo khối lượng—hướng đến
+            mục tiêu đạt 93% và 98% trong thời gian tới.</p>'
+co_title_1: "Phó Tổng Giám&nbsp;đốc<br />"
+hjk_34: '<p>Phần mềm Alpha&nbsp;Software hỗ trợ rất tốt cho công ty, nhất là
+            công ty sản xuất nhiều công đoạn. Hơn nữa, Alpha thì có lợi thế hơn
+            những phần mềm quản lý khác do có thể tuỳ biến linh hoạt và chi tiết
+            theo yêu cầu của người sử dụng. Mọi thông số đều rất rõ ràng và chi
+            tiết.</p>'
+co_title_2: "Trợ&nbsp;lý Giám&nbsp;đốc<br />"
+our_story_title: "Câu&nbsp;chuyện của Alpha&nbsp;Software"
+co_title_3: "Nhà sáng lập"
+hjk_35: '<p class="mt-md-0">
+          Alpha&nbsp;Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn
+          Anh, người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
+          may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
+          nhà máy. Với nền tảng vững chắc về Hoá học Hữu cơ cùng sự hiểu biết
+          sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn Anh đã
+          giúp chúng tôi cung cấp các giải pháp công nghệ thực tiễn đáp ứng nhu
+          cầu của các doanh nghiệp dệt may hiện đại.
+        </p>'
+support_title: "Chúng&nbsp;tôi rất hân&nbsp;hạnh được hỗ&nbsp;trợ bạn!"
+hjk_36: "Hãy gọi"
+hjk_37: "để cho phép chúng tôi tư vấn bạn miễn phí hoặc gửi các câu hỏi của bạn qua địa chỉ"
+cta_1: "Gửi câu hỏi đến Alpha&nbsp;Software"
+hjk_38: "Số điện thoại"
+co_title_4: "Giám&nbsp;đốc"
+hjk_39: "Email"
+hjk_40: "Mạng xã hội"
+hjk_41: "Thời gian hoạt động"
+hjk_42: "sáng"
+hjk_43: "chiều"

@@ -1,8 +1,8 @@
 <div class="container mt-16 mb-16">
-  <p class="h5">{{ site.company_name }}</p>
+  <p class="h5">{{ t.company_name }}</p>
   <address class="big">
     <dl>
-      <dt>Số điện thoại:</dt>
+      <dt>{{ t.hjk_38 }}:</dt>
       <dd>
         <a href="tel:+84983505002">0983.50.50.02</a>
         <svg
@@ -18,18 +18,18 @@
           />
         </svg>
         <small class="small text-secondary">
-          Ông Tuấn&nbsp;Anh, Giám&nbsp;đốc Alpha
+          {{ t.male_title }} Tuấn&nbsp;Anh, {{ t.co_title_4 }} {{ t.of }} Alpha
         </small>
       </dd>
     </dl>
     <dl>
-      <dt>Email:</dt>
+      <dt>{{ t.hjk_39 }}:</dt>
       <dd>
         <a href="mailto:{{ site.email }}">{{ site.email }}</a>
       </dd>
     </dl>
     <dl>
-      <dt>Mạng xã hội:</dt>
+      <dt>{{ t.hjk_40 }}:</dt>
       <dd>
         <a
           href="{{ site.facebook_page }}"
@@ -52,16 +52,14 @@
       </dd>
     </dl>
     <dl>
-      <dt>Thời gian hoạt động:</dt>
-      <dd>8:00 &ndash; 11:00 (sáng)</dd>
-      <dd>13:00 &ndash; 16:00 (chiều)</dd>
+      <dt>{{ t.hjk_41 }}:</dt>
+      <dd>8:00 &ndash; 11:00 ({{ t.hjk_42 }})</dd>
+      <dd>13:00 &ndash; 16:00 ({{ t.hjk_43 }})</dd>
     </dl>
   </address>
 </div>
 <div class="container-fluid px-0 pt-2 pb-2 bg-gray-100">
   <div class="container">
-    <small class="small copyright-text">
-      Bản quyền &copy; 2025 Alpha&nbsp;Software. Bảo lưu mọi quyền.
-    </small>
+    <small class="small copyright-text"> {{ t.copyright_notice }} </small>
   </div>
 </div>

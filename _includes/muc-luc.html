@@ -1,46 +1,58 @@
 <div class="container">
-  <a class="navbar-brand" href="https://www.alphasoftwaregroup.com">
+  <a class="navbar-brand" href="{{ t.homeurl }}">
     <span class="visually-hidden">Alpha Software</span>
     <img
-      alt="Trang chủ Alpha Software"
+      alt="{{ t.to_homepage }}"
       class="navbar-logo logo-white"
       height="48"
-      src="anh/logo/logo-alpha-silhouette.svg"
+      src="{{ site.baseurl }}/anh/logo/logo-alpha-silhouette.svg"
       width="171"
     /><img
-      alt="Trang chủ Alpha Software"
+      alt="{{ t.to_homepage }}"
       class="navbar-logo logo-color"
       height="48"
-      src="anh/logo/logo-alpha.svg"
+      src="{{ site.baseurl }}/anh/logo/logo-alpha.svg"
       width="171"
     />
   </a>
   <div class="collapse navbar-collapse">
     <ol class="navbar-nav ms-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#gioi-thieu">Giới thiệu</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link nav-link-active-blue" href="#cac-loi-ich"
-          >Các lợi ích</a
+        <a class="nav-link" href="#{{ t.toc_overview_id }}"
+          >{{ t.toc_overview }}</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#chi-tiet-cac-san-pham"
-          >Chi tiết các sản phẩm</a
+        <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}"
+          >{{ t.toc_benefits }}</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#cac-du-an">Các dự án</a>
+        <a class="nav-link" href="#{{ t.toc_products_id }}"
+          >{{ t.toc_products }}</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#danh-gia-cua-khach-hang"
-          >Đánh giá của khách hàng</a
+        <a class="nav-link" href="#{{ t.toc_projects_id }}"
+          >{{ t.toc_projects }}</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#{{ t.toc_reviews_id }}"
+          >{{ t.toc_reviews }}</a
         >
       </li>
       <li class="visually-hidden nav-item">
-        <a class="nav-link" href="#cau-chuyen-cua-alpha-software" tabindex="-1"
-          >Câu chuyện của Alpha Software</a
+        <a class="nav-link" href="#{{ t.toc_our_story_id }}" tabindex="-1"
+          >{{ t.toc_our_story }}</a
+        >
+      </li>
+      <li class="visually-hidden nav-item">
+        <a
+          class="nav-link"
+          href="#{{ t.toc_customer_assistance_id }}"
+          tabindex="-1"
+          >{{ t.toc_customer_assistance }}</a
         >
       </li>
     </ol>

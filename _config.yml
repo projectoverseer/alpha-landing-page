@@ -4,7 +4,8 @@ email: alphasoftware102@gmail.com
 description:
   Alpha Software chuyên cung cấp phần mềm quản lý nhà máy, dệt may, và giải pháp chuyển đổi số giúp doanh nghiệp phát
   triển bền vững.
-url: https://www.alphasoftwaregroup.com/
+url: https://www.alphasoftwaregroup.com
+baseurl: https://www.alphasoftwaregroup.com
 facebook_page: https://www.facebook.com/profile.php?id=100070371223404
 
 # Build settings

@@ -79,7 +79,7 @@ section {
 }
 
 .text-secondary {
-  color: $text-secondary-alt !important;
+  color: $text-secondary !important;
 }
 
 .text-tertiary {
@@ -134,7 +134,7 @@ h4,
   line-height: $h4-line-height;
   letter-spacing: -0.01em;
 
-  &:has(.mini-h4) {
+  &:has(.mini-h4, .h5) {
     display: flex;
     flex-direction: column;
   }
@@ -234,8 +234,8 @@ a {
   color: $link-color;
   text-decoration-color: currentColor;
 
-  .bg-primary &,
-  .bg-dark & {
+  .bg-dark &,
+  .bg-primary & {
     color: inherit;
   }
 
@@ -263,8 +263,8 @@ a {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
 
-    .bg-primary &,
-    .bg-dark & {
+    .bg-dark &,
+    .bg-primary & {
       color: $white;
     }
 
@@ -291,7 +291,8 @@ ol {
 p,
 address,
 figcaption,
-.blockquote-footer {
+.blockquote-footer,
+.translated_review_disclaimer {
   margin-top: 1em;
   margin-bottom: 0;
 }
@@ -307,6 +308,11 @@ figcaption {
   font-size: px(14);
   line-height: line-height-for-px(14);
   letter-spacing: 0.01em;
+
+  .bg-dark &,
+  .bg-primary & {
+    color: $text-dark-secondary;
+  }
 }
 
 blockquote,
@@ -324,7 +330,11 @@ blockquote > :last-child:after {
 }
 
 .blockquote-footer {
-  color: $text-secondary-alt;
+  color: $text-secondary;
+  padding-left: $text-tab-width;
+}
+
+.translated_review_disclaimer {
   padding-left: $text-tab-width;
 }
 
@@ -367,7 +377,7 @@ section.bg-dark {
 }
 
 .copyright-text {
-  color: $text-secondary-alt;
+  color: $text-secondary;
 }
 
 .navbar {
@@ -625,7 +635,7 @@ a.btn-primary {
 }
 
 .client-portrait {
-  border-radius: $border-radius;
+  border-radius: $card-border-radius;
 }
 
 .partner-logo-card {
@@ -655,7 +665,7 @@ a.btn-primary {
   color: $background;
   width: 128px;
   height: 112px;
-  border-radius: $border-radius-sm;
+  border-radius: $border-radius-svg;
 
   .bg-light & {
     background: $secondary;
@@ -673,11 +683,11 @@ a.btn-primary {
     content: attr(data-number);
     line-height: 1;
     bottom: 0;
-    right: 3.5px;
+    right: 3px;
     padding-right: 5px; // this is to avoid text clipping
 
     text-rendering: geometricPrecision;
     font-feature-settings: "tnum" 1;
-    letter-spacing: -8.4px;
+    letter-spacing: -7.6px;
   }
 }

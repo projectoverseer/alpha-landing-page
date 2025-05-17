@@ -1,9 +1,7 @@
-<section id="danh-gia-cua-khach-hang">
+<section id="{{ t.toc_reviews_id }}">
   <div class="container">
     <div aria-hidden="true" class="heading-number mb-3" data-number="05"></div>
-    <h2 class="mt-0">
-      Khách&nbsp;hàng nhận&nbsp;xét gì về Alpha&nbsp;Software?
-    </h2>
+    <h2 class="mt-0">{{ t.reviews_title }}</h2>
     <div class="row row-cols-xl-2 row-cols-md-2 row-cols-1 mt-12">
       <div
         class="col service-box"
@@ -13,31 +11,20 @@
       >
         <meta content="2025-04-28" itemprop="datePublished" />
         <img
-          alt="Chân dung Bà Nguyễn Thị Nga"
+          alt="{{ t.female_title }} Nguyễn Thị Nga"
           class="client-portrait"
           height="342"
           itemprop="image"
           loading="lazy"
-          src="anh/chan-dung/chan-dung-ba-nguyen-thi-nga.webp"
+          src="{{ site.baseurl }}/anh/chan-dung/chan-dung-ba-nguyen-thi-nga.webp"
           srcset="
-            anh/chan-dung/chan-dung-ba-nguyen-thi-nga.webp    1x,
-            anh/chan-dung/chan-dung-ba-nguyen-thi-nga-2x.webp 2x
+            {{ site.baseurl }}/anh/chan-dung/chan-dung-ba-nguyen-thi-nga.webp    1x,
+            {{ site.baseurl }}/anh/chan-dung/chan-dung-ba-nguyen-thi-nga-2x.webp 2x
           "
           width="228"
         />
         <blockquote class="blockquote mt-4 mb-0" itemprop="reviewBody">
-          <p>
-            Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với các thiết bị nhuộm
-            như máy Spectro, máy hút màu và controller máy nhuộm, từ đó giảm
-            thiểu lỗi thao tác thủ công. Việc quản lý công thức nhuộm trở nên dễ
-            dàng hơn, lập kế hoạch nhuộm chính xác và kiểm soát toàn bộ quy
-            trình chặt chẽ qua mã QR và hệ thống báo cáo trực quan.
-          </p>
-          <p>
-            Sau khi triển khai phần mềm, tỷ lệ nhuộm đạt ngay lần đầu (RFT) tăng
-            từ 80% lên 90% theo mẻ, và từ 90% lên 95% theo khối lượng—hướng đến
-            mục tiêu đạt 93% và 98% trong thời gian tới.
-          </p>
+          {{ t.hjk_33 }}
         </blockquote>
         <p
           class="blockquote-footer"
@@ -45,17 +32,17 @@
           itemscope
           itemtype="https://schema.org/Person"
         >
-          Bà <span itemprop="name">Nguyễn Thị Nga</span>,
-          <span itemprop="jobTitle">Tổng Giám đốc</span><br />
+          {{ t.female_title }} <span itemprop="name">Nguyễn Thị Nga</span>,
+          <span itemprop="jobTitle">{{ t.co_title_1 }}</span>
+          {{ t.of }}
           <span
             itemprop="worksFor"
             itemscope
             itemtype="https://schema.org/Organization"
-            ><span itemprop="name"
-              >Công ty TNHH Nhuộm Spica Việt Nam</span
-            ></span
+            ><span itemprop="name">{{ t.hjk_30 }}</span></span
           >
         </p>
+        {{ t.translated_review_disclaimer }}
       </div>
       <div
         class="col service-box"
@@ -65,26 +52,20 @@
       >
         <meta content="2024-10-17" itemprop="datePublished" />
         <img
-          alt="Chân dung Ông Đinh Văn Hiệp"
+          alt="{{ t.male_title }} Đinh Văn Hiệp"
           class="client-portrait"
           height="342"
           itemprop="image"
           loading="lazy"
-          src="anh/chan-dung/chan-dung-ong-dinh-van-hiep.webp"
+          src="{{ site.baseurl }}/anh/chan-dung/chan-dung-ong-dinh-van-hiep.webp"
           srcset="
-            anh/chan-dung/chan-dung-ong-dinh-van-hiep.webp    1x,
-            anh/chan-dung/chan-dung-ong-dinh-van-hiep-2x.webp 2x
+            {{ site.baseurl }}/anh/chan-dung/chan-dung-ong-dinh-van-hiep.webp    1x,
+            {{ site.baseurl }}/anh/chan-dung/chan-dung-ong-dinh-van-hiep-2x.webp 2x
           "
           width="228"
         />
         <blockquote class="blockquote mt-4 mb-0" itemprop="reviewBody">
-          <p>
-            Phần mềm Alpha&nbsp;Software hỗ trợ rất tốt cho công ty, nhất là
-            công ty sản xuất nhiều công đoạn. Hơn nữa, Alpha thì có lợi thế hơn
-            những phần mềm quản lý khác do có thể tuỳ biến linh hoạt và chi tiết
-            theo yêu cầu của người sử dụng. Mọi thông số đều rất rõ ràng và chi
-            tiết.
-          </p>
+          {{ t.hjk_34 }}
         </blockquote>
         <p
           class="blockquote-footer"
@@ -92,15 +73,17 @@
           itemscope
           itemtype="https://schema.org/Person"
         >
-          Ông <span itemprop="name">Đinh Văn Hiệp</span>,
-          <span itemprop="jobTitle">Trợ lý Giám đốc</span><br />
+          {{ t.male_title }} <span itemprop="name">Đinh Văn Hiệp</span>,
+          <span itemprop="jobTitle">{{ t.co_title_2 }}</span>
+          {{ t.of }}
           <span
             itemprop="worksFor"
             itemscope
             itemtype="https://schema.org/Organization"
-            ><span itemprop="name">Công ty TNHH Chỉ may Tuấn Hồng</span></span
+            ><span itemprop="name">{{ t.hjk_24 }}</span></span
           >
         </p>
+        {{ t.translated_review_disclaimer }}
       </div>
     </div>
   </div>

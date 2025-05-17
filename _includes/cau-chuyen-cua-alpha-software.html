@@ -1,6 +1,6 @@
-<section class="bg-dark" id="cau-chuyen-cua-alpha-software">
+<section class="bg-dark" id="{{ t.toc_our_story_id }}">
   <div class="container">
-    <h2 class="mx-auto text-center">Câu&nbsp;chuyện của Alpha&nbsp;Software</h2>
+    <h2 class="mx-auto text-center">{{ t.our_story_title }}</h2>
   </div>
   <div aria-hidden="true" class="hr mt-3"></div>
   <div class="container mt-4">
@@ -8,34 +8,24 @@
       <div class="col-md-5 col-12 text-center">
         <figure class="mx-auto me-md-0 my-0">
           <img
-            alt="Chân dung Ông Phan Đức Tuấn Anh"
+            alt="{{ t.male_title }} Phan Đức Tuấn Anh"
             class="client-portrait"
             height="342"
             loading="lazy"
-            src="anh/chan-dung/chan-dung-ong-phan-duc-tuan-anh.webp"
+            src="{{ site.baseurl }}/anh/chan-dung/chan-dung-ong-phan-duc-tuan-anh.webp"
             srcset="
-              anh/chan-dung/chan-dung-ong-phan-duc-tuan-anh.webp    1x,
-              anh/chan-dung/chan-dung-ong-phan-duc-tuan-anh-2x.webp 2x
+              {{ site.baseurl }}/anh/chan-dung/chan-dung-ong-phan-duc-tuan-anh.webp    1x,
+              {{ site.baseurl }}/anh/chan-dung/chan-dung-ong-phan-duc-tuan-anh-2x.webp 2x
             "
             width="228"
           />
           <figcaption>
-            Ông Phan Đức Tuấn Anh,<br />
-            Nhà sáng lập Alpha&nbsp;Software
+            {{ t.male_title }} Phan Đức Tuấn Anh,<br />
+            {{ t.co_title_3 }} {{ t.of }} Alpha&nbsp;Software
           </figcaption>
         </figure>
       </div>
-      <div class="prose col-md-7 col-12">
-        <p class="mt-md-0">
-          Alpha&nbsp;Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn
-          Anh, người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
-          may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
-          nhà máy. Với nền tảng vững chắc về Hoá học Hữu cơ cùng sự hiểu biết
-          sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn Anh đã
-          giúp chúng tôi cung cấp các giải pháp công nghệ thực tiễn đáp ứng nhu
-          cầu của các doanh nghiệp dệt may hiện đại.
-        </p>
-      </div>
+      <div class="prose col-md-7 col-12">{{ t.hjk_35 }}</div>
     </div>
   </div>
 </section>

@@ -2,10 +2,7 @@
 
 <!-- HTML Metadata -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta
-  content="Alpha Software là công ty hàng đầu trong lĩnh vực phát triển phần mềm quản lý sản xuất, số hóa quy trình, và chuyển đổi số."
-  name="description"
-/>
+<meta content="{{ t.social_description }}" name="description" />
 <meta
   content="phần mềm quản lý nhà máy, phần mềm dệt may, chuyển đổi số, quản lý sản xuất, Alpha Software"
   name="keywords"
@@ -19,7 +16,7 @@
 />
 <meta content="website" property="og:type" />
 <meta content="Alpha Software" itemprop="name" property="og:site_name" />
-<meta content="{{ site.company_name }}" itemprop="alternateName" />
+<meta content="{{ t.company_name }}" itemprop="alternateName" />
 <meta
   content="https://www.alphasoftwaregroup.com/"
   itemprop="url"
@@ -88,4 +85,4 @@
 </script>
 
 <link href="https://www.alphasoftwaregroup.com/" rel="canonical" />
-<link href="css/main.css" rel="stylesheet" />
+<link href="{{ site.baseurl }}/css/main.css" rel="stylesheet" />

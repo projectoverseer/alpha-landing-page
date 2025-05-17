@@ -1,13 +1,13 @@
 <header id="trang-bia">
   <div class="container header-content">
-    <h1 itemprop="slogan">Chuyển đổi số<wbr /> nhà&nbsp;máy dệt&nbsp;may</h1>
-    <p class="big">
-      Alpha&nbsp;Software cách mạng hoá quản lý sản xuất dệt may qua việc phát triển phần mềm quản lý quy trình công
-      nghệ một cách khoa học, thiết lập và triển khai kế hoạch sản xuất một cách trực quan, kết nối với các thiết bị sản
-      xuất để tăng cường tự động hoá giúp nhà máy cải thiện chất lượng, tăng sản lượng và rút ngắn thời gian giao hàng.
-    </p>
-    <a href="#gioi-thieu" class="btn-primary btn-xl mt-4 mb-24" aria-label="Tìm hiểu thêm về Alpha Software">
-      Tìm hiểu thêm
+    <h1 itemprop="slogan">{{ t.slogan }}</h1>
+    <p class="big">{{ t.description }}</p>
+    <a
+      aria-label="{{ t.learn_more_aria }}"
+      class="btn-primary btn-xl mt-4 mb-24"
+      href="#{{ t.toc_overview_id }}"
+    >
+      {{ t.learn_more }}
     </a>
   </div>
 </header>
