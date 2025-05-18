@@ -13,6 +13,10 @@ a {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
+html {
+  scrollbar-color: $gray-100 transparent;
+}
+
 @media (forced-colors: active) {
   a + svg.external-link-icon,
   a:hover + svg.external-link-icon,
@@ -481,7 +485,7 @@ header {
       url("../anh/trang-bia/hero-3840.avif") 2x
     );
   background-size: cover;
-  background-color: $text; // a welcoming splash color while the hero image is loading
+  background-color: $gray-950; // a welcoming splash color while the hero image is loading
   color: $text-dark;
 
   .header-content {

@@ -52,8 +52,8 @@ $text-dark-secondary: #f3f3f3;
 $text-dark-tertiary: #afafaf;
 
 $border-color: $gray-300;
-$external-link-icon-color: $gray-600;
-$external-link-dark-icon-color: $text-dark;
+$external-link-icon-color: $gray-600; // closest to $text-secondary
+$external-link-dark-icon-color: $gray-100; // closest to $text-dark-secondary
 
 // -------------------------------------
 // Typography Variables
@@ -272,7 +272,8 @@ $accordion-button-active-bg: $accordion-button-bg;
 $accordion-button-active-color: $accordion-button-color;
 $accordion-button-focus-box-shadow: $focus-ring-box-shadow;
 
-$accordion-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#707075"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
+$accordion-icon-color: $external-link-icon-color;
+$accordion-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#{$accordion-icon-color}"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
 $accordion-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#707075"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
 
 $accordion-icon-width: 32px;
