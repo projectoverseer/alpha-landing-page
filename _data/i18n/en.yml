@@ -1,11 +1,15 @@
 homeurl: "/en"
-company_name: "Alpha Software Development Company Limited"
+legal_name: "Alpha Software Development Company Limited"
+display_phone: "(+84) 983 505 002"
 copyright_notice: "Copyright &copy; 2025 Alpha&nbsp;Software. All rights reserved."
 
-social_description: "Alpha Software is a leading company in the field of software development for production management, process digitization, and digital transformation."
+social_description: "Alpha Software is a leader in textile production management, process digitization, and digital transformation."
+twitter_description: "Alpha Software provides software and digital solutions for textile businesses."
+og_description: "Alpha Software provides factory management software and digital transformation solutions to help textile businesses develop sustainably."
+keywords: "textile factory management software, textile management software, digital transformation, production management"
 
 to_homepage: "Go to Alpha&nbsp;Software homepage"
-slogan: "Digital transformation solution for textile factories"
+slogan: "Digital transformation for textile factories"
 description: "Alpha&nbsp;Software revolutionizes textile production management by developing software to scientifically manage technological processes, establish and deploy production plans visually, and connect with production equipments to enhance automation, helping factories improve quality, increase output and shorten delivery times."
 learn_more: "Learn more"
 learn_more_aria: "Learn more about Alpha&nbsp;Software"
@@ -20,12 +24,12 @@ toc_projects: "Our Projects"
 toc_projects_id: "our-projects"
 toc_reviews: "Customer Reviews"
 toc_reviews_id: "customer-reviews"
-toc_our_story: "Our Story"
-toc_our_story_id: "our-story"
+toc_our_story: "The Story of Alpha Software"
+toc_our_story_id: "the-story-of-alpha-software"
 toc_customer_assistance: "Customer Assistance"
 toc_customer_assistance_id: "customer-assistance"
 
-overview_title: "Introducing Alpha&nbsp;Software's smart factory management suite"
+overview_title: "Introducing Alpha&nbsp;Smart&nbsp;Dyehouse factory management system"
 hjk_1: "Visual production planning"
 hjk_2: "Planning and adjusting plans are done quickly and visually by dragging-and-dropping."
 hjk_3: "When a batch plan is adjusted, the entire plan is automatically adjusted. This ensures that the plan is in perfect sync."
@@ -36,22 +40,22 @@ hjk_7: "The software will find the exact technology to apply to the batch with j
 hjk_8: "Integration with manufacturing and lab equipments"
 hjk_9: "With autonomous but independent operating devices, we can help connect to the software system to form a unified system."
 hjk_10: "We can also help convert equipment that is operated manually through switches and push buttons into automated process control and connected to software systems."
-hjk_11: "Tailored to each factory"
-hjk_12: "We understand that each factory has a different management system. Therefore, we always conduct careful surveys to design and implement appropriately, continuously improving to help the factory operate more and more efficiently."
+hjk_11: "Customized for each factory"
+hjk_12: "We understand that each factory has a different management standards. Therefore, we always conduct careful surveys to design and implement appropriately, continuously improving to help the factory operate more and more efficiently."
 hjk_13: "In addition, during the cooperation process, we are also able to advise customers on process improvement to achieve efficiency and savings."
-hjk_14: "Very easy to use!"
+hjk_14: "Very easy to use"
 hjk_15: "We always aim for the simplest way to operate the software, requiring the least amount of operations so that workers and office staff, even without basic computer knowledge, can still use the software with ease."
-benefits_title: "Why choose Alpha&nbsp;Software"
+benefits_title: "Why factories should choose Alpha&nbsp;Software"
 hjk_16: "Significantly improve product quality"
 hjk_17: "Thanks to our long-term experience in technology engineering in the industry, we know how to map the technological knowledge of the factory's internal experts or external experts, apply that technology automatically and accurately to production, thereby greatly improving the rate of right products from the first time (RFT—Right First Time)."
 hjk_18: "Minimize the risk of worker error"
 hjk_19: "Having worked in various positions in the industry from technical management, line management to dyeing factory management, we understand the risks of errors that may occur in the work process of employees at all levels. Thanks to that, Alpha&nbsp;Software's software has a very high ability to prevent errors."
-hjk_20: "Reduce staffing needs"
+hjk_20: "Reduce staffing costs"
 hjk_21: "During the software research and development process, we will identify which tasks can be automated by the software, thereby reducing the need for and cost of human resources."
-hjk_22: "Integrate with existing equipments"
+hjk_22: "Enhance existing equipments"
 hjk_23: "We have the expertise and experience to connect to automated equipment or convert equipment that is operated by manual switches to automatic operation. This reduces the need for highly skilled personnel and reduces operator errors."
 products_title: "Alpha Software Products"
-alpha_smart_dyehouse: 'Alpha&nbsp;Smart&nbsp;Dyehouse&nbsp;<wbr /><span class="mini-h3">Factory management suite</span>'
+alpha_smart_dyehouse: 'Alpha Smart Dyehouse <span class="mini-h3">Factory Management System</span>'
 alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
             <p>
               <strong>Alpha Smart Dyehouse</strong> is a comprehensive software solution that digitizes and automates the entire dyeing process in the factory. The system integrates everything from order management, dyeing planning, color formulation, to dyeing, quality control and packaging.
@@ -82,17 +86,17 @@ alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
               <li>Chemical warehouse, raw and finished product warehouse management</li>
             </ul>
             <h4>
-              3. Ability to connect equipment in the dyeing factory
+              3. Seamless Integration with Dyeing Equipment
             </h4>
             <p>
               <strong>Alpha Smart Dyehouse</strong> is capable of deep integration with the equipment system of the dyeing factory. The solution supports communication with equipment such as drug scales, color filling machines, chemical pumps, LAB spectrometers, etc. In particular, Alpha develops two specialized hardware devices including Alpha Drug Scale and Alpha Process Unit (dyeing machine controller), helping to ensure synchronization and high efficiency in the entire system.
             </p>'
-alpha_dyes_weighing: 'Alpha&nbsp;Dyes&nbsp;Weighing'
+alpha_dyes_weighing: 'Alpha Dyes Weighing <span class="mini-h3">Smart Dye Scale</span>'
 alpha_dyes_weighing_content: '<h4>1. Introduction</h4>
             <p>
               <strong>Alpha Dyes Weighing</strong> is a specialized software that supports the dye weighing process in textile dyeing factories. The software is designed to ensure maximum accuracy, safety and convenience for the operator during the dye preparation process.
             </p>
-            <h4>2. Key distinguishing factors</h4>
+            <h4>2. Key Distinguishing Factors</h4>
             <ul class="spaced-items">
               <li>
                 <b>LED position indicator system:</b> Helps operators easily locate the dye tank to be retrieved through the intuitive LED display system.
@@ -177,7 +181,7 @@ hjk_37: "for a free consultation, or email your questions to"
 cta_1: "Request a free consultation"
 hjk_38: "Phone number"
 co_title_4: "Director"
-hjk_39: "E-mail"
+hjk_39: "Email"
 hjk_40: "Socials"
 hjk_41: "Hours of operation"
 hjk_42: "Mon &ndash; Fri"

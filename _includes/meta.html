@@ -3,10 +3,7 @@
 <!-- HTML Metadata -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="{{ t.social_description }}" name="description" />
-<meta
-  content="phần mềm quản lý nhà máy, phần mềm dệt may, chuyển đổi số, quản lý sản xuất, Alpha Software"
-  name="keywords"
-/>
+<meta content="{{ t.keywords }}, Alpha Software" name="keywords" />
 <meta content="index, follow" name="robots" />
 
 <!-- Open Graph and Organization-Type Microdata -->
@@ -16,10 +13,10 @@
 />
 <meta content="website" property="og:type" />
 <meta content="Alpha Software" itemprop="name" property="og:site_name" />
-<meta content="{{ t.company_name }}" itemprop="alternateName" />
+<meta content="{{ t.legal_name }}" itemprop="alternateName" />
+<meta content="https://www.alphasoftwaregroup.com" itemprop="url" />
 <meta
-  content="https://www.alphasoftwaregroup.com/"
-  itemprop="url"
+  content="https://www.alphasoftwaregroup.com{{ t.homeurl }}"
   property="og:url"
 />
 <meta
@@ -31,7 +28,7 @@
   itemprop="image"
   property="og:image"
 />
-<meta content="vi_VN" property="og:locale" />
+<meta content="{{ page.lang }}" property="og:locale" />
 
 <meta content="Phan Đức Tuấn Anh" itemprop="founder" />
 <meta content="2021-01-20" itemprop="foundingDate" />
@@ -42,20 +39,17 @@
 />
 <meta content="0316685078" itemprop="taxID" />
 
-<meta content="{{ site.title }}" property="og:title" />
+<meta content="Alpha Software - {{ t.slogan }}" property="og:title" />
 <meta
-  content="{{ site.description }}"
+  content="{{ t.og_description }}"
   itemprop="description"
   property="og:description"
 />
 
 <!-- Twitter Meta Tags -->
 <meta content="summary_large_image" name="twitter:card" />
-<meta content="{{ site.title }}" name="twitter:title" />
-<meta
-  content="Alpha Software cung cấp phần mềm và giải pháp số hóa tối ưu cho doanh nghiệp."
-  name="twitter:description"
-/>
+<meta content="Alpha Software - {{ t.slogan }}" name="twitter:title" />
+<meta content="{{ t.twitter_description }}" name="twitter:description" />
 <meta
   content="https://www.alphasoftwaregroup.com/anh/logo/alpha-open-graph.png"
   name="twitter:image"
@@ -65,24 +59,27 @@
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@id": "https://www.alphasoftwaregroup.com/#website",
+    "@id": "https://www.alphasoftwaregroup.com/{{ page.lang }}/#website",
     "@type": "WebSite",
     "name": "Alpha Software",
-    "alternateName": "Công ty TNHH Phát triển Phần mềm Alpha",
-    "url": "https://www.alphasoftwaregroup.com/"
+    "alternateName": "{{ t.legal_name }}",
+    "url": "https://www.alphasoftwaregroup.com{{ t.homeurl }}"
   }
 </script>
 
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@id": "https://www.alphasoftwaregroup.com/#webpage",
+    "@id": "https://www.alphasoftwaregroup.com/{{ page.lang }}/#webpage",
     "@type": "WebPage",
     "name": "Alpha Software",
-    "alternateName": "Công ty TNHH Phát triển Phần mềm Alpha",
-    "url": "https://www.alphasoftwaregroup.com/"
+    "alternateName": "{{ t.legal_name }}",
+    "url": "https://www.alphasoftwaregroup.com{{ t.homeurl }}"
   }
 </script>
 
-<link href="https://www.alphasoftwaregroup.com/" rel="canonical" />
-<link href="{{ site.baseurl }}/css/main.css" rel="stylesheet" />
+<link
+  href="https://www.alphasoftwaregroup.com{{ t.homeurl }}"
+  rel="canonical"
+/>
+<link href="{{ site.url }}/css/main.css" rel="stylesheet" />
