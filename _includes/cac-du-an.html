@@ -1,6 +1,11 @@
 <section class="pb-0" id="{{ t.toc_projects_id }}">
   <div class="container">
-    <div aria-hidden="true" class="heading-number mb-3" data-number="04"></div>
+    <div
+      aria-hidden="true"
+      class="heading-number mb-3"
+      data-number="04"
+      data-squircle-radius
+    ></div>
     <h2 class="mt-0">{{ t.projects_title }}</h2>
     <div class="row row-cols-xl-3 row-cols-md-2 row-cols-1 mt-12">
       <div class="col service-box">
@@ -8,6 +13,7 @@
           <img
             alt="{{ t.hjk_24 }}"
             class="partner-logo"
+            data-squircle-radius
             height="149"
             loading="lazy"
             src="{{ site.url }}/anh/logo-doi-tac/logo-tuan-hong.png"
@@ -59,6 +65,7 @@
           <img
             alt="{{ t.hjk_27 }}"
             class="partner-logo"
+            data-squircle-radius
             height="92"
             loading="lazy"
             src="{{ site.url }}/anh/logo-doi-tac/logo-dung-dong.png"
@@ -106,7 +113,11 @@
         {{ t.hjk_29 }}
       </div>
       <div class="col service-box">
-        <div class="card partner-logo-card" id="spica-card">
+        <div
+          class="card partner-logo-card"
+          data-squircle-radius
+          id="spica-card"
+        >
           <img
             alt="{{ t.hjk_30 }}"
             class="partner-logo"

@@ -46,6 +46,7 @@ const filesToProcess = [
   { path: path.resolve(__dirname, "_site/index.html"), type: "html" },
   { path: path.resolve(__dirname, "_site/en/index.html"), type: "html" },
   { path: path.resolve(__dirname, "_site/js/custom.js"), type: "js" },
+  { path: path.resolve(__dirname, "_site/js/squircle.js"), type: "js" },
 ];
 
 // Process each file

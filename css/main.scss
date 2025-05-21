@@ -206,14 +206,14 @@ $container-max-widths: (
 // Border Variables
 // -------------------------------------
 
-$border-radius-xs: 0.125rem;
-$border-radius-sm: 0.25rem;
-$border-radius: 0.375rem;
-$border-radius-lg: 0.5rem;
-$border-radius-xl: 0.75rem;
-$border-radius-2xl: 1rem;
-$border-radius-3xl: 1.5rem;
-$border-radius-4xl: 2rem;
+$border-radius-xs: 2px;
+$border-radius-sm: 4px;
+$border-radius: 6px;
+$border-radius-lg: 8px;
+$border-radius-xl: 12px;
+$border-radius-2xl: 16px;
+$border-radius-3xl: 24px;
+$border-radius-4xl: 32px;
 $border-radius-svg: 4px / 48 * 80;
 
 $btn-border-radius: $border-radius-lg;
@@ -264,7 +264,7 @@ $input-btn-padding-x: 24px;
 
 $accordion-padding-y: map-get($spacers, 2);
 $accordion-padding-x: map-get($spacers, 4);
-$accordion-border-radius: $border-radius-lg;
+$accordion-border-radius: $border-radius-2xl;
 
 $accordion-button-bg: $gray-50;
 $accordion-button-color: $text;
