@@ -235,9 +235,6 @@ $focus-ring-blur: 0;
 
 $focus-ring-outline: $focus-ring-width solid $focus-ring-color;
 $focus-ring-box-shadow: 0 0 0 $focus-ring-width $focus-ring-color;
-$focus-ring-dark-box-shadow:
-  0 0 0 3px #000,
-  0 0 0 3px + $focus-ring-width $focus-ring-color;
 
 // -------------------------------------
 // Component Variables
@@ -273,6 +270,7 @@ $accordion-button-active-color: $accordion-button-color;
 $accordion-button-focus-box-shadow: $focus-ring-box-shadow;
 
 $accordion-icon-color: $external-link-icon-color;
+$accordion-icon-transform: rotate(180deg);
 $accordion-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#{$accordion-icon-color}"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
 $accordion-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="#707075"><path d="M480-344 240-584l47.33-47.33L480-438.67l192.67-192.66L720-584 480-344Z"/></svg>');
 

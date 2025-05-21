@@ -59,3 +59,59 @@
   cleanUrl();
   removeHash();
 })();
+
+function copyEmailToClipboard(element, feedbackMessage) {
+  // Get the email address from the href attribute.
+  // This is generally more reliable than textContent if the displayed text might differ.
+  const emailToCopy = element.href.replace("mailto:", "");
+
+  // Attempt to use the modern Clipboard API
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(emailToCopy)
+      .then(() => {
+        // Provide temporary user feedback on the element itself
+        const originalText = element.textContent;
+        element.textContent = feedbackMessage;
+        setTimeout(() => {
+          element.textContent = originalText;
+        }, 2000); // Revert after 2 seconds
+      })
+      .catch(() => {
+        // Fallback if Clipboard API fails (e.g., permissions, specific browser contexts)
+        fallbackCopyTextToClipboard(emailToCopy, element);
+      });
+  } else {
+    // Fallback for browsers that do not support the Clipboard API
+    fallbackCopyTextToClipboard(emailToCopy, element, feedbackMessage);
+  }
+}
+
+// Fallback function for older browsers that don't support Clipboard API
+function fallbackCopyTextToClipboard(text, element, feedbackMessage) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  // Avoid scrolling to bottom
+  textArea.style.position = "fixed"; // Ensures it's not part of flow
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.opacity = "0"; // Make it invisible
+  textArea.style.pointerEvents = "none"; // Ensure it doesn't interfere with clicks
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    const successful = document.execCommand("copy");
+    // Provide temporary user feedback on the element itself
+    const originalText = element.textContent;
+    element.textContent = feedbackMessage;
+    setTimeout(() => {
+      element.textContent = originalText;
+    }, 2000); // Revert after 2 seconds
+  } catch {}
+
+  document.body.removeChild(textArea);
+}

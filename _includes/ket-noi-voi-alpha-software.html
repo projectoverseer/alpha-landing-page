@@ -25,7 +25,11 @@
     <dl>
       <dt>{{ t.hjk_39 }}:</dt>
       <dd>
-        <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+        <a
+          href="mailto:{{ site.email }}"
+          onclick="copyEmailToClipboard(this, '{{ t.copied_email_message }}')"
+          >{{ site.email }}</a
+        >
       </dd>
     </dl>
     <dl>
