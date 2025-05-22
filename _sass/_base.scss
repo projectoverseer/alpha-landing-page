@@ -194,7 +194,7 @@ dt {
 
 dd {
   grid-column-start: 2;
-  margin: 0 0 0 0.5em;
+  margin: 0 0 0 $text-tab-width / 4;
 }
 
 // shift Bootstrap's spacers by specified values
@@ -246,7 +246,7 @@ a {
   }
 
   & + svg.external-link-icon {
-    color: $external-link-icon-color;
+    color: $icon-color;
     display: inline-block;
     position: relative;
     top: -0.0625rem;
@@ -298,14 +298,14 @@ figcaption,
 
 small,
 .small {
-  font-size: pt(10);
-  line-height: line-height-for-pt(10);
+  font-size: $font-size-sm;
+  line-height: $line-height-sm;
   letter-spacing: 0.02em;
 }
 
 figcaption {
-  font-size: px(14);
-  line-height: line-height-for-px(14);
+  font-size: $font-size-base;
+  line-height: $line-height-base;
   letter-spacing: 0.01em;
 
   .bg-dark &,
@@ -316,8 +316,8 @@ figcaption {
 
 blockquote,
 .blockquote {
-  font-size: pt(13);
-  line-height: line-height-for-pt(13);
+  font-size: $h5-font-size;
+  line-height: $h5-line-height;
 }
 
 blockquote > :first-child:before {
@@ -409,7 +409,7 @@ section.bg-dark {
   }
 
   @include media-breakpoint-up(md) {
-    transition: background 0.29s cubic-bezier(0.28, 0.11, 0.32, 1);
+    transition: background 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
     will-change: background;
 
     .navbar-nav {
@@ -533,7 +533,7 @@ header {
     position: absolute;
     bottom: 0;
 
-    transition: opacity 0.29s cubic-bezier(0.4, 0, 0.6, 1);
+    transition: opacity 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
     will-change: opacity;
 
     .portfolio-box-caption-content {
@@ -572,12 +572,13 @@ header {
 
 a.btn-xl {
   display: inline-block;
-  padding: $input-btn-padding-y $input-btn-padding-x;
+  padding: 0 $input-btn-padding-x;
+  height: map-get($scales, 7);
+  min-width: 30px;
   font-family: $btn-font-family;
   font-size: $input-btn-font-size;
-  line-height: $btn-line-height;
+  line-height: map-get($scales, 7);
   text-align: center;
-  vertical-align: middle;
   cursor: pointer;
   user-select: none;
   text-decoration: none;
@@ -623,6 +624,7 @@ a.btn-primary {
 
 .bi {
   color: $secondary;
+  margin-left: -1 * map-get($spacers, 1);
 }
 
 .client-portrait {
@@ -630,7 +632,7 @@ a.btn-primary {
 }
 
 .partner-logo-card {
-  height: 234px;
+  height: map-get($scales, 30);
   background: white;
 
   a.stretched-link {
@@ -654,8 +656,8 @@ a.btn-primary {
   position: relative;
   background: $primary;
   color: $background;
-  width: 128px;
-  height: 112px;
+  width: map-get($spacers, 24);
+  height: map-get($scales, 15);
   border-radius: $border-radius-svg;
 
   .bg-light & {
@@ -668,17 +670,16 @@ a.btn-primary {
     width: 100%;
     text-align: right;
     color: inherit;
-    font-size: 80px;
+    font-size: map-get($scales, 10);
     font-weight: 600;
     overflow: hidden;
     content: attr(data-number);
     line-height: 1;
     bottom: 0;
-    right: 3px;
-    padding-right: 5px; // this is to avoid text clipping
+    right: 0.0375em;
+    padding-right: map-get($spacers, 2); // this is to avoid text clipping
 
-    text-rendering: geometricPrecision;
     font-feature-settings: "tnum" 1;
-    letter-spacing: -7.6px;
+    letter-spacing: -0.095em;
   }
 }

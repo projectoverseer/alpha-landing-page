@@ -24,7 +24,7 @@
     };
   }
 
-  const throttledUpdateNavState = throttle(updateNavState, 377); // assumes average input lag of 23ms
+  const throttledUpdateNavState = throttle(updateNavState, 200);
 
   function updateNavState() {
     if (window.scrollY > 0) {
