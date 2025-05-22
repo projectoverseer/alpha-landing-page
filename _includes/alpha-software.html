@@ -7,6 +7,15 @@
   lang="{{ page.lang }}"
 >
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LZBMND9VE8');
+    </script>
     <title>Alpha Software - {{ t.slogan }}</title>
     {% include meta.html %} {% include meta-assets.html %}
   </head>
