@@ -72,10 +72,12 @@ function copyEmailToClipboard(element, feedbackMessage) {
       .then(() => {
         // Provide temporary user feedback on the element itself
         const originalText = element.textContent;
-        element.textContent = feedbackMessage;
         setTimeout(() => {
-          element.textContent = originalText;
-        }, 2000); // Revert after 2 seconds
+          element.textContent = feedbackMessage;
+          setTimeout(() => {
+            element.textContent = originalText;
+          }, 2000); // Revert to original text after 2 seconds
+        }, 200); // If redirect action succeeds, there is no need to show this feedback
       })
       .catch(() => {
         // Fallback if Clipboard API fails (e.g., permissions, specific browser contexts)
@@ -115,3 +117,91 @@ function fallbackCopyTextToClipboard(text, element, feedbackMessage) {
 
   document.body.removeChild(textArea);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const NAVBAR_HEIGHT = 64; // Your fixed navbar height in pixels
+  const rootFontSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize,
+  );
+  const REM_OFFSET = 6.8125 * rootFontSize; // Convert rem to pixels
+
+  // --- Scalable Dropdown Hover Logic ---
+  const allDropdowns = document.querySelectorAll(".nav-item.dropdown"); // Selects all dropdowns
+
+  allDropdowns.forEach((dropdownEl) => {
+    // Loop through each dropdown found
+    const dropdownToggle = dropdownEl.querySelector(".dropdown-toggle");
+    let bsDropdownInstance = null; // This variable will hold the Bootstrap Dropdown object for *this specific dropdown*
+
+    // Helper function to get or create the Bootstrap Dropdown instance for the current dropdown
+    function getBsDropdown() {
+      if (!bsDropdownInstance) {
+        bsDropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle);
+        if (!bsDropdownInstance) {
+          // If no instance exists yet, create a new one
+          bsDropdownInstance = new bootstrap.Dropdown(dropdownToggle);
+        }
+      }
+      return bsDropdownInstance;
+    }
+
+    // Show dropdown on mouse enter for this specific dropdown
+    dropdownEl.addEventListener("mouseenter", function () {
+      getBsDropdown().show();
+    });
+
+    // Hide dropdown on mouse leave for this specific dropdown
+    dropdownEl.addEventListener("mouseleave", function () {
+      getBsDropdown().hide();
+    });
+  });
+  // --- End Scalable Dropdown Hover Logic ---
+
+  // --- Accordion Expansion & Scroll Logic (Existing code) ---
+  const dropdownItems = document.querySelectorAll(
+    ".dropdown-item[data-target-accordion]",
+  );
+
+  dropdownItems.forEach((item) => {
+    item.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const targetAccordionId = this.getAttribute("data-target-accordion");
+      const targetAccordionElement = document.querySelector(targetAccordionId);
+
+      if (targetAccordionElement) {
+        // Only expand if it's currently collapsed
+        if (!targetAccordionElement.classList.contains("show")) {
+          const bsCollapse = new bootstrap.Collapse(targetAccordionElement, {
+            toggle: false,
+          });
+          bsCollapse.show();
+        }
+
+        // --- Custom Scroll Offset Logic ---
+        const elementRect = targetAccordionElement.getBoundingClientRect();
+        const scrollPosition =
+          window.scrollY + elementRect.top - NAVBAR_HEIGHT - REM_OFFSET;
+
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: "smooth",
+        });
+        // --- End Custom Scroll Offset Logic ---
+
+        // Hide the SPECIFIC parent dropdown after clicking an item
+        const parentDropdownLi = this.closest(".nav-item.dropdown"); // Find the closest parent dropdown
+        if (parentDropdownLi) {
+          const parentDropdownToggle =
+            parentDropdownLi.querySelector(".dropdown-toggle");
+          const bsDropdown =
+            bootstrap.Dropdown.getInstance(parentDropdownToggle); // Get its existing instance
+          if (bsDropdown) {
+            bsDropdown.hide(); // Hide that specific dropdown
+          }
+        }
+      }
+    });
+  });
+  // --- End Accordion Expansion & Scroll Logic ---
+});

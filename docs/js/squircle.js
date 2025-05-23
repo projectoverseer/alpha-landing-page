@@ -1,10 +1,14 @@
 class SquircleRenderer {
   constructor() {
     this.observer = new ResizeObserver((entries) => {
-      entries.forEach((entry) => this._updateSquircle(entry.target));
+      // Ensure we only update elements that are still managed by the renderer
+      entries.forEach((entry) => {
+        if (this.elements.has(entry.target)) {
+          this._updateSquircle(entry.target);
+        }
+      });
     });
     this.elements = new Map(); // Store elements and their original styles
-    this.animationFrameId = null; // For the box-shadow monitoring loop
   }
 
   /**
@@ -107,10 +111,8 @@ class SquircleRenderer {
     bottomLeftPathParams,
     bottomRightPathParams,
   }) {
-    // We need to use _rounded for ALL numeric values in the path string
-    // even for the initial M and L commands.
     const startX = SquircleRenderer._rounded`${width - topRightPathParams.p}`;
-    const startY = SquircleRenderer._rounded`0`; // Or just "0" if always integer 0
+    const startY = SquircleRenderer._rounded`0`;
 
     const topRightPath = SquircleRenderer._drawTopRightPath(topRightPathParams);
 
@@ -125,7 +127,7 @@ class SquircleRenderer {
     const bottomLeftPath =
       SquircleRenderer._drawBottomLeftPath(bottomLeftPathParams);
 
-    const L4X = SquircleRenderer._rounded`0`; // Or just "0"
+    const L4X = SquircleRenderer._rounded`0`;
     const L4Y = SquircleRenderer._rounded`${topLeftPathParams.p}`;
     const topLeftPath = SquircleRenderer._drawTopLeftPath(topLeftPathParams);
 
@@ -159,8 +161,6 @@ class SquircleRenderer {
       return SquircleRenderer._rounded`l ${p} 0`;
     }
   }
-
-  // --- START: Helper functions from Figma/MartinRGB algorithm (as static methods) ---
 
   /**
    * Draws the bottom-right corner path segment.
@@ -232,67 +232,72 @@ class SquircleRenderer {
     }
   }
 
+  /**
+   * Initializes the SquircleRenderer by finding elements and setting up observers.
+   */
   init() {
-    // Target both [data-squircle-radius] elements and .btn-xl buttons
     document.querySelectorAll("[data-squircle-radius]").forEach((el) => {
-      // Store initial styles before we override them
-      const initialBorderRadius = getComputedStyle(el).borderRadius;
-      const initialBorder = el.style.border;
-      const initialFilter = el.style.filter; // Capture any existing filter
+      const initialComputedStyle = getComputedStyle(el);
+      const initialBorderRadius = initialComputedStyle.borderRadius;
 
+      // Only store originalBorderRadius as other styles are no longer needed
       this.elements.set(el, {
         originalBorderRadius: initialBorderRadius,
-        initialBorder: initialBorder,
-        initialFilter: initialFilter,
-        lastComputedBoxShadow: "", // To track box-shadow changes
       });
+
       this._applySquircleStyles(el);
       this.observer.observe(el);
     });
 
-    // Start monitoring for box-shadow changes on tracked elements
-    this._startBoxShadowMonitoring();
+    // Specific Bootstrap dropdown handling: Re-apply squircle when dropdown is shown
+    document.addEventListener("shown.bs.dropdown", (e) => {
+      const dropdownMenu = e.target.querySelector(
+        ".dropdown-menu[data-squircle-radius]",
+      );
+      if (dropdownMenu && this.elements.has(dropdownMenu)) {
+        this._applySquircleStyles(dropdownMenu);
+      }
+    });
   }
 
-  _startBoxShadowMonitoring() {
-    const monitor = () => {
-      this.elements.forEach((data, element) => {
-        const computedStyle = getComputedStyle(element);
-        const currentBoxShadow = computedStyle.boxShadow;
-
-        // If the box-shadow has changed, re-apply squircle styles
-        if (currentBoxShadow !== data.lastComputedBoxShadow) {
-          data.lastComputedBoxShadow = currentBoxShadow;
-          this._applySquircleStyles(element);
-        }
-      });
-      this.animationFrameId = requestAnimationFrame(monitor);
-    };
-    this.animationFrameId = requestAnimationFrame(monitor);
-  }
-
+  /**
+   * Applies the squircle clip-path.
+   * @param {HTMLElement} element The element to apply squircle styles to.
+   */
   _applySquircleStyles(element) {
     const data = this.elements.get(element);
-    if (!data) return; // Should not happen if element is in map
+    if (!data) return;
 
     const { originalBorderRadius } = data;
+
     const rect = element.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
 
-    // Use the parsed radius from the initial border-radius
     const radius = parseFloat(originalBorderRadius);
     const cornerSmoothing = 0.6;
 
-    // Calculate path parameters for a single corner
+    // Skip if dimensions or radius are invalid
+    if (isNaN(radius) || radius <= 0 || width <= 0 || height <= 0) {
+      console.warn(
+        "Invalid dimensions or radius for squircle element (skipping squircle application):",
+        element,
+        { width, height, radius },
+      );
+      // Revert to original styles if squircle cannot be applied
+      element.style.clipPath = "none";
+      element.style.borderRadius = originalBorderRadius;
+      console.log(`--- Squircle Apply Skipped ---`);
+      return;
+    }
+
     const cornerParams = SquircleRenderer._getPathParamsForCorner({
       cornerRadius: radius,
       cornerSmoothing: cornerSmoothing,
-      preserveSmoothing: false, // Typically false for this algorithm
-      roundingAndSmoothingBudget: Math.min(width, height) / 2, // Max possible radius for the element
+      preserveSmoothing: false,
+      roundingAndSmoothingBudget: Math.min(width, height) / 2,
     });
 
-    // Generate the full SVG path using the single corner parameters
     const pathData = SquircleRenderer._getSVGPathFromPathParams({
       width,
       height,
@@ -302,77 +307,19 @@ class SquircleRenderer {
       bottomRightPathParams: cornerParams,
     });
 
-    // Apply clip-path
     element.style.clipPath = `path("${pathData}")`;
-    element.style.borderRadius = "0"; // Crucial: Remove native border-radius
-
-    // --- Handle Border ---
-    const computedStyle = getComputedStyle(element);
-    const borderWidth = parseFloat(computedStyle.borderWidth);
-    const borderColor = computedStyle.borderColor;
-    const borderStyle = computedStyle.borderStyle;
-
-    element.style.border = "none"; // Crucial: Remove native border
-
-    let filters = [];
-
-    // Add filter for the border if present
-    if (borderWidth > 0 && borderStyle !== "none") {
-      filters.push(`drop-shadow(0 0 0 ${borderWidth}px ${borderColor})`);
-    }
-
-    // --- Handle Box-Shadow (for :active, :focus-visible, etc.) ---
-    const currentBoxShadow = computedStyle.boxShadow;
-
-    if (currentBoxShadow && currentBoxShadow !== "none") {
-      const dropShadows =
-        this._parseBoxShadowAndConvertToDropShadow(currentBoxShadow);
-      filters.push(...dropShadows); // Add parsed drop shadows to the filters array
-    }
-
-    // Apply all combined filters
-    element.style.filter =
-      filters.length > 0 ? filters.join(" ") : data.initialFilter || "none";
+    element.style.borderRadius = "0"; // Always remove native border-radius
   }
 
-  // Renamed to avoid confusion with original updateSquircle
+  /**
+   * Callback for ResizeObserver. Re-applies squircle styles on element resize.
+   * @param {HTMLElement} element
+   */
   _updateSquircle(element) {
     this._applySquircleStyles(element); // Re-apply all styles
   }
-
-  _parseBoxShadowAndConvertToDropShadow(boxShadowString) {
-    const shadows = boxShadowString.split(/,\s*(?![^()]*\))/);
-    let dropShadows = [];
-
-    shadows.forEach((shadow) => {
-      const parts = shadow
-        .trim()
-        .match(
-          /(-?\d+\.?\d*px)\s+(-?\d+\.?\d*px)\s+(-?\d+\.?\d*px)(?:\s+(-?\d+\.?\d*px))?\s*(.+)/,
-        );
-
-      if (parts) {
-        const offsetX = parts[1];
-        const offsetY = parts[2];
-        const blurRadius = parts[3];
-        const spreadRadius = parts[4] || "0px";
-        const color = parts[5];
-
-        if (offsetX === "0px" && offsetY === "0px" && blurRadius === "0px") {
-          dropShadows.push(`drop-shadow(0 0 ${spreadRadius} ${color})`);
-        } else {
-          dropShadows.push(
-            `drop-shadow(${offsetX} ${offsetY} ${blurRadius} ${color})`,
-          );
-        }
-      }
-    });
-    return dropShadows;
-  }
-
-  // --- END: Helper functions ---
 }
 
-// Initialize the renderer
+// Initialize the renderer when the DOM is ready
 const squircleModule = new SquircleRenderer();
 squircleModule.init();

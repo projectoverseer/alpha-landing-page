@@ -13,6 +13,13 @@ module.exports = {
       except: [
         "active",
         "show",
+        "nav-item",
+        "nav-link",
+        "dropdown",
+        "dropdown-toggle",
+        "dropdown-menu",
+        "dropdown-item",
+        "aria-expanded",
         "collapsed",
         "collapse",
         "transition",

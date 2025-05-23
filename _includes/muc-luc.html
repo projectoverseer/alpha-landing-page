@@ -17,6 +17,11 @@
   </a>
   <div class="collapse navbar-collapse">
     <ol class="navbar-nav ms-auto">
+      <li class="visually-hidden nav-item">
+        <a class="nav-link" href="#{{ t.toc_hero_id }}" tabindex="-1"
+          >{{ t.toc_hero }}</a
+        >
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="#{{ t.toc_overview_id }}"
           >{{ t.toc_overview }}</a
@@ -27,10 +32,34 @@
           >{{ t.toc_benefits }}</a
         >
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#{{ t.toc_products_id }}"
-          >{{ t.toc_products }}</a
+      <li class="nav-item dropdown">
+        <a
+          aria-expanded="false"
+          class="nav-link dropdown-toggle"
+          data-bs-toggle="dropdown"
+          href="#{{ t.toc_products_id }}"
+          role="button"
         >
+          {{ t.toc_products }}
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <div
+              class="a dropdown-item"
+              data-target-accordion="#collapse-alpha-smart-dyehouse"
+            >
+              {{ t.product_1 }}
+            </div>
+          </li>
+          <li>
+            <div
+              class="a dropdown-item"
+              data-target-accordion="#collapse-alpha-dyes-weighing"
+            >
+              {{ t.product_2 }}
+            </div>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#{{ t.toc_projects_id }}"

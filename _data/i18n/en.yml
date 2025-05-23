@@ -14,6 +14,8 @@ description: "Alpha&nbsp;Software revolutionizes textile production management b
 learn_more: "Learn more"
 learn_more_aria: "Learn more about Alpha&nbsp;Software"
 toc: "Table of contents"
+toc_hero: "Welcome to Alpha Software"
+toc_hero_id: "welcome-to-alpha-software"
 toc_overview: "Overview"
 toc_overview_id: "overview"
 toc_benefits: "Benefits"
@@ -43,8 +45,8 @@ hjk_10: "We can also help convert equipment that is operated manually through sw
 hjk_11: "Customized for each factory"
 hjk_12: "We understand that each factory has a different management standards. Therefore, we always conduct careful surveys to design and implement appropriately, continuously improving to help the factory operate more and more efficiently."
 hjk_13: "In addition, during the cooperation process, we are also able to advise customers on process improvement to achieve efficiency and savings."
-hjk_14: "Very easy to use"
-hjk_15: "We always aim for the simplest way to operate the software, requiring the least amount of operations so that workers and office staff, even without basic computer knowledge, can still use the software with ease."
+hjk_14: "Very easy to use!"
+hjk_15: "We always aim for the simplest way to operate the software, requiring the least amount of operations so that everyone—from factory workers to office staff—even without basic computer knowledge, can still use the software with ease."
 benefits_title: "Why factories should choose Alpha&nbsp;Software"
 hjk_16: "Significantly improve product quality"
 hjk_17: "Thanks to our long-term experience in technology engineering in the industry, we know how to map the technological knowledge of the factory's internal experts or external experts, apply that technology automatically and accurately to production, thereby <strong>greatly improving right first time (RFT)</strong>."
@@ -55,6 +57,7 @@ hjk_21: "During the software research and development process, we will identify 
 hjk_22: "Enhance existing equipments"
 hjk_23: "We have the expertise and experience to connect to automated equipment or convert equipment that is operated by manual switches to automatic operation. This reduces the need for highly skilled personnel and reduces operator errors."
 products_title: "Alpha Software Products"
+product_1: "Alpha Smart Dyehouse"
 alpha_smart_dyehouse: 'Alpha Smart Dyehouse <span class="mini-h3">Factory Management System</span>'
 alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
             <p>
@@ -91,6 +94,7 @@ alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
             <p>
               <strong>Alpha Smart Dyehouse</strong> is capable of deep integration with the equipment system of the dyeing factory. The solution supports communication with equipment such as drug scales, color filling machines, chemical pumps, LAB spectrometers, etc. In particular, Alpha develops two specialized hardware devices including Alpha Drug Scale and Alpha Process Unit (dyeing machine controller), helping to ensure synchronization and high efficiency in the entire system.
             </p>'
+product_2: "Alpha Dyes Weighing"
 alpha_dyes_weighing: 'Alpha Dyes Weighing <span class="mini-h3">Smart Dye Scale</span>'
 alpha_dyes_weighing_content: '<h4>1. Introduction</h4>
             <p>

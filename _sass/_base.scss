@@ -253,11 +253,11 @@ a {
 
     .bg-dark &,
     .bg-primary & {
-      color: $external-link-dark-icon-color;
+      color: $dark-icon-color;
     }
   }
 
-  &:not(.nav-link, .btn-xl):hover,
+  &:not(.nav-link, .btn-xl, .dropdown-item):hover,
   .partner-logo-card:has(a.stretched-link:hover) + div & {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
@@ -276,6 +276,10 @@ a {
       }
     }
   }
+}
+
+.a {
+  cursor: pointer;
 }
 
 ul,
@@ -347,15 +351,77 @@ blockquote > :last-child:after {
   border-bottom-right-radius: $accordion-inner-border-radius;
 }
 
-.accordion-button {
+.accordion-button,
+.dropdown-item {
   &:hover {
-    background: $gray-100;
+    background: $dropdown-link-hover-bg;
   }
 
   &:active {
-    background: $gray-200;
+    background: $dropdown-link-active-state-bg;
+  }
+}
+
+.dropdown-menu {
+  border: $border-width solid $border-color;
+  background-clip: border-box;
+  /* Keep its default Bootstrap styles, but override display */
+  display: block !important;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0s linear 240ms,
+    opacity 240ms cubic-bezier(0.4, 0, 0.6, 1);
+  pointer-events: none; /* Prevent interaction when hidden */
+}
+
+/* When Bootstrap applies the .show class */
+.dropdown-menu.show {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+  pointer-events: auto; /* Allow interaction when shown */
+}
+
+.dropdown-item {
+  font-weight: $nav-link-font-weight;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.dropdown-toggle {
+  &:focus,
+  &:focus-visible {
+    outline: 0 !important;
+    box-shadow: none !important; /* Remove any box-shadow used for focus outline by Bootstrap */
   }
 
+  &:after {
+    content: "" !important;
+    border: none !important;
+
+    background-image: $dropdown-toggler-icon;
+
+    .navbar:not(.nav-active) & {
+      background-image: $dropdown-toggler-icon-dark;
+    }
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%; /* Make it fill the pseudo-element */
+
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+
+    margin-left: 0;
+    vertical-align: -0.2em;
+  }
+}
+
+.accordion-button {
   &:not(.collapsed):focus:not(:focus-visible) {
     box-shadow: inset 0 calc(-1 * var(--#{$prefix}accordion-border-width)) 0
       var(--#{$prefix}accordion-border-color);
@@ -404,7 +470,7 @@ section.bg-dark {
 
   .nav-link {
     font-size: $font-size-base;
-    line-height: 48px;
+    line-height: $nav-link-line-height;
     text-overflow: ellipsis;
   }
 
@@ -452,16 +518,18 @@ section.bg-dark {
       }
 
       .nav-link {
-        &.active,
-        &.show {
+        &.active {
           color: $navbar-light-active-color;
         }
 
         &.nav-link-active-blue {
-          &.active,
-          &.show {
+          &.active {
             color: $figure-secondary;
           }
+        }
+
+        &.show:not(.active) {
+          color: initial;
         }
       }
     }
@@ -624,7 +692,6 @@ a.btn-primary {
 
 .bi {
   color: $secondary;
-  margin-left: -1 * map-get($spacers, 1);
 }
 
 .client-portrait {
