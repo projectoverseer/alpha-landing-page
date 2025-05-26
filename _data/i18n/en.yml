@@ -1,20 +1,20 @@
 homeurl: "/en"
-legal_name: "Alpha Software Development Company Limited"
+legal_name: "Alpha&nbsp;Software Development Company Limited"
 display_phone: "(+84) 983 505 002"
 copyright_notice: "Copyright &copy; 2025 Alpha&nbsp;Software. All rights reserved."
 
-social_description: "Alpha Software is a leader in textile production management, process digitization, and digital transformation."
-twitter_description: "Alpha Software provides software and digital solutions for textile businesses."
-og_description: "Alpha Software provides factory management software and digital transformation solutions to help textile businesses develop sustainably."
+social_description: "Alpha&nbsp;Software is a leader in textile production management, process digitization, and digital transformation."
+twitter_description: "Alpha&nbsp;Software provides software and digital solutions for textile businesses."
+og_description: "Alpha&nbsp;Software provides factory management software and digital transformation solutions to help textile businesses develop sustainably."
 keywords: "textile factory management software, textile management software, digital transformation, production management"
 
 to_homepage: "Go to Alpha&nbsp;Software homepage"
 slogan: "Digital transformation for textile factories"
-description: "Alpha&nbsp;Software revolutionizes textile production management by developing software to scientifically manage technological processes, establish and deploy production plans visually, and connect with production equipments to enhance automation, helping factories improve quality, increase output and shorten delivery times."
+description: "Alpha&nbsp;Software revolutionizes textile production management by developing software that scientifically manages technological processes, visually plans production, and integrates with production equipment to enhance automation, helping factories improve quality, increase output, and shorten delivery times."
 learn_more: "Learn more"
 learn_more_aria: "Learn more about Alpha&nbsp;Software"
 toc: "Table of contents"
-toc_hero: "Welcome to Alpha Software"
+toc_hero: "Welcome to Alpha&nbsp;Software"
 toc_hero_id: "welcome-to-alpha-software"
 toc_overview: "Overview"
 toc_overview_id: "overview"
@@ -26,10 +26,14 @@ toc_projects: "Our Projects"
 toc_projects_id: "our-projects"
 toc_reviews: "Customer Reviews"
 toc_reviews_id: "customer-reviews"
-toc_our_story: "The Story of Alpha Software"
+toc_our_story: "The Story of Alpha&nbsp;Software"
 toc_our_story_id: "the-story-of-alpha-software"
 toc_customer_assistance: "Customer Assistance"
 toc_customer_assistance_id: "customer-assistance"
+translate_to_homeurl: "/"
+translate_to_locale: "vi"
+translate_to_language: "Vietnamese"
+translate_to_flag: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="1" y="4" width="30" height="24" rx="4" ry="4" fill="#c93728"></rect><path d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z" opacity=".15"></path><path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path><path fill="#ff5" d="M18.008 16.366L21.257 14.006 17.241 14.006 16 10.186 14.759 14.006 10.743 14.006 13.992 16.366 12.751 20.186 16 17.825 19.249 20.186 18.008 16.366z"></path></svg>'
 
 overview_title: "Introducing Alpha&nbsp;Smart&nbsp;Dyehouse factory management system"
 hjk_1: "Visual production planning"
@@ -38,33 +42,33 @@ hjk_3: "When a batch plan is adjusted, the entire plan is automatically adjusted
 hjk_4: "The production plan dashboard visually represents and controls compliance with established sequences."
 hjk_5: "Smart technology management"
 hjk_6: "There are tools for the chief engineer to store the company's technological knowledge into the software."
-hjk_7: "The software will find the exact technology to apply to the batch with just one click. This not only helps the company reduce the size of highly skilled personnel, but also ensures that all batches are processed with the same technology, thereby stabilizing quality."
-hjk_8: "Integration with manufacturing and lab equipments"
-hjk_9: "With autonomous but independent operating devices, we can help connect to the software system to form a unified system."
-hjk_10: "We can also help convert equipment that is operated manually through switches and push buttons into automated process control and connected to software systems."
+hjk_7: "The software will find the exact technology to apply to the batch with just one click. This not only helps the company reduce the number of highly skilled technician, but also ensures that all batches are processed with the same technology, thereby stabilizing quality."
+hjk_8: "Integration with production and lab equipment"
+hjk_9: "With automatic but separately operating devices, we can help connect to the software system to form a synchronized system."
+hjk_10: "We can also help convert manually operated equipment using switches and push buttons into automated process control systems connected to software."
 hjk_11: "Customized for each factory"
-hjk_12: "We understand that each factory has a different management standards. Therefore, we always conduct careful surveys to design and implement appropriately, continuously improving to help the factory operate more and more efficiently."
+hjk_12: "We understand that each factory has different management standards. Therefore, we always conduct careful surveys to design and implement appropriately, continuously improving to help the factory operate more and more efficiently."
 hjk_13: "In addition, during the cooperation process, we are also able to advise customers on process improvement to achieve efficiency and savings."
 hjk_14: "Very easy to use!"
-hjk_15: "We always aim for the simplest way to operate the software, requiring the least amount of operations so that everyone—from factory workers to office staff—even without basic computer knowledge, can still use the software with ease."
+hjk_15: "We always aim for the simplest way to operate the software, requiring the least amount of operations so that everyone—from factory workers to office staff, even without basic computer knowledge, can easily use the software."
 benefits_title: "Why factories should choose Alpha&nbsp;Software"
 hjk_16: "Significantly improve product quality"
-hjk_17: "Thanks to our long-term experience in technology engineering in the industry, we know how to map the technological knowledge of the factory's internal experts or external experts, apply that technology automatically and accurately to production, thereby <strong>greatly improving right first time (RFT)</strong>."
+hjk_17: "Thanks to our long-term experience in the textile industry, we know how to map the technological knowledge of the factory's internal experts or external experts, apply that technology automatically and accurately to production, thereby <strong>greatly improving Right First Time rate (RFT).</strong>"
 hjk_18: "Minimize the risk of worker error"
-hjk_19: "Having worked in various positions in the industry from technical management, line management to dyeing factory management, we understand the risks of errors that may occur in the work process of employees at all levels. Thanks to that, Alpha&nbsp;Software's software has a very high ability to prevent errors."
+hjk_19: "Having worked in various positions in the textile industry from technical management, line management to dyeing factory management, we understand the risks of errors that may occur in the work process of employees at all levels. Thanks to that, Alpha&nbsp;Software's software has a very high ability to prevent errors."
 hjk_20: "Reduce staffing costs"
 hjk_21: "During the software research and development process, we will identify which tasks can be automated by the software, thereby reducing the need for and cost of human resources."
-hjk_22: "Enhance existing equipments"
-hjk_23: "We have the expertise and experience to connect to automated equipment or convert equipment that is operated by manual switches to automatic operation. This reduces the need for highly skilled personnel and reduces operator errors."
-products_title: "Alpha Software Products"
+hjk_22: "Modify & enhance existing equipment"
+hjk_23: "We have the expertise and experience in connecting to automated equipment and converting equipment that is operated by manual switches to automatic operation. This reduces the need for highly skilled personnel and reduces operator errors."
+products_title: "Alpha&nbsp;Software Products"
 product_1: "Alpha Smart Dyehouse"
 alpha_smart_dyehouse: 'Alpha Smart Dyehouse <span class="mini-h3">Factory Management System</span>'
 alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
             <p>
-              <strong>Alpha Smart Dyehouse</strong> is a comprehensive software solution that digitizes and automates the entire dyeing process in the factory. The system integrates everything from order management, dyeing planning, color formulation, to dyeing, quality control and packaging.
+              <strong>Alpha Smart Dyehouse</strong> is a comprehensive software solution that digitizes and automates every process in the factory. The system integrates everything from order management, dyeing planning, color formulation, to dyeing, quality control and packaging.
             </p>
             <p>
-              The dyeing technology is an important factor that greatly affects the dyeing quality and is intelligently managed and automatically generated by the software without the need for a specialized technician for this task.
+              The dyeing recipe is an important factor that greatly affects the dyeing quality and is intelligently managed and automatically generated by the software without the need for a specialized technician for this task.
             </p>
             <p>
               The technological path of the batch is also guided by the software to ensure that no batch is processed with missing, excess or incorrect steps.
@@ -78,24 +82,24 @@ alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
               <strong>Alpha Smart Dyehouse</strong> fully supports all stages of the dyeing process, including:
             </p>
             <ul>
-              <li>Manage and track order progress</li>
+              <li>Managing and tracking order progress</li>
               <li>Dyeing planning</li>
-              <li>Color formula and technology menu management</li>
-              <li>Software for dyes and chemical weighing</li>
-              <li>Technology process management</li>
+              <li>Color formula and recipe management</li>
+              <li>Dye and chemical weighing</li>
+              <li>Production process management</li>
               <li>Quality standards management</li>
-              <li>Dyeing and post-dyeing procedures</li>
+              <li>Execution of dyeing and post-dyeing processes</li>
               <li>Quality control and packaging</li>
-              <li>Chemical warehouse, raw and finished product warehouse management</li>
+              <li>Management of chemical, raw material, and finished goods warehouse.</li>
             </ul>
             <h4>
               3. Seamless Integration with Dyeing Equipment
             </h4>
             <p>
-              <strong>Alpha Smart Dyehouse</strong> is capable of deep integration with the equipment system of the dyeing factory. The solution supports communication with equipment such as drug scales, color filling machines, chemical pumps, LAB spectrometers, etc. In particular, Alpha develops two specialized hardware devices including Alpha Drug Scale and Alpha Process Unit (dyeing machine controller), helping to ensure synchronization and high efficiency in the entire system.
+              <strong>Alpha Smart Dyehouse</strong> is capable of deep integration with the equipment system of the dyeing factory. The solution supports communication with equipment such as dyestuff weighing, lab dispensing, bulk dispensing, Lab spectrometers, etc. In particular, Alpha develops two specialized hardware devices including <strong>Alpha Dyes Weighing</strong> and Alpha Dyeing Controller, helping to ensure synchronization and high efficiency in the entire system.
             </p>'
 product_2: "Alpha Dyes Weighing"
-alpha_dyes_weighing: 'Alpha Dyes Weighing <span class="mini-h3">Smart Dye Scale</span>'
+alpha_dyes_weighing: 'Alpha Dyes Weighing <span class="mini-h3">Semi-Automatic Dye Scale</span>'
 alpha_dyes_weighing_content: '<h4>1. Introduction</h4>
             <p>
               <strong>Alpha Dyes Weighing</strong> is a specialized software that supports the dye weighing process in textile dyeing factories. The software is designed to ensure maximum accuracy, safety and convenience for the operator during the dye preparation process.
@@ -109,29 +113,29 @@ alpha_dyes_weighing_content: '<h4>1. Introduction</h4>
                 <b>QR code dye identification:</b> Scan the QR code to ensure the correct dye is obtained, avoid confusion and improve production safety.
               </li>
               <li>
-                <b>Voice guidance during the weighing process:</b> The software has the function of guiding the operator step by step during the weighing process through voice in their own language, helping to operate quickly and reduce errors.
+                <b>Voice guidance during the weighing process:</b> The software guides the operator step by step through the weighing process using voice in their own language, helping them to operate quickly while minimizing errors.
               </li>
               <li>
-                <b>Multi-electronic scale connection:</b> Supports simultaneous connection with 3 electronic scales. The software is compatible with all brands of electronic scales as long as they have the function of transmitting data to the computer.
+                <b>Multi-electronic scale connection:</b> Supports simultaneous connection with 3 electronic scales. The software is compatible with <strong>all brands</strong> of electronic scales as long as they permit transmitting data to the computer.
               </li>
               <li>
                 <b
                   >Adapts to color intensity variations between dye lots:</b
                 >
-                Purchased dye lots often have color intensity variations of 3% to 5% compared to the original lot. The software automatically adjusts to accommodate this variation, helping to avoid color errors when switching to a new dye lot.
+                Purchased dye lots often have color strength variations of 3% to 5% compared to the standard lot. The software automatically adjusts to compensate for this variation, helping to avoid color errors when switching to a new dye lot.
               </li>
               <li>
                 <b>Flexible hardware budget:</b> Alpha provides the software. Computers, electronic scales and dye tank shelves will be invested by the customer. This helps to minimize initial investment costs and increase flexibility for each factory.
               </li>
             </ul>'
-projects_title: "Alpha Software Projects Showcase"
+projects_title: "Alpha&nbsp;Software Projects Showcase"
 hjk_24: "Tuan&nbsp;Hong Sewing Thread Company Limited"
 hjk_25: 'Tuấn&nbsp;Hồng'
 hjk_26: '<p>Software components:</p>
         <ul>
           <li>Production management</li>
           <li>
-            Technology management—integrates with Datacolor spectrophotometer and Datacolor&nbsp;Autolab&nbsp;TF laboratory color hood
+            Technology management—integrates with Datacolor spectrophotometer and Datacolor&nbsp;Autolab&nbsp;TF laboratory dispenser
           </li>
           <li>Manage raw materials, finished products and semi-finished products warehouse</li>
           <li>Semi-automatic dye scale</li>
@@ -163,22 +167,22 @@ hjk_32: '<p>Software components:</p>
           <li>Semi-automatic dye scale</li>
           <li>Semi-automatic chemical scale</li>
           <li>
-            Enhance the program on the Delta controller of the existing dyeing machine to connect and transfer the dyeing program, water volume, main pump speed from the Alpha Smart Dyehouse production management software
+            Modify the program on the Delta controller of the existing dyeing machine to connect and transfer the dyeing program, water volume, main pump speed from the <strong>Alpha Smart Dyehouse</strong> production management software
           </li>
         </ul>'
-reviews_title: "What customers say about Alpha Software"
+reviews_title: "What customers say about Alpha&nbsp;Software"
 female_title: "Ms."
 male_title: "Mr."
 of: "of"
 translated_review_disclaimer: '<div class="translated_review_disclaimer"><a href="https://www.alphasoftwaregroup.com/#danh-gia-cua-khach-hang" rel="nofollow noopener" target="_blank">Original review in Vietnamese</a></div>'
 hjk_33: '<p>Alpha&nbsp;Software has helped SPICA effectively connect with dyeing equipment such as Spectro, color extraction machine and dyeing machine controller, thereby minimizing manual errors. Dyeing formula management becomes easier, dyeing planning is accurate and the entire process is tightly controlled through QR codes and intuitive reporting systems.</p>
-  <p>After implementing the software, right-first-time (RFT) dyeing rates increased from 80% to 90% batch-wise, and from 90% to 95% volume-wise—on track to reach 93% and 98% in the future.</p>'
+  <p>After implementing the software, right first time (RFT) dyeing rates increased from 80% to 90% batch-wise, and from 90% to 95% volume-wise, with expectations for reaching 93% and 98% in the future.</p>'
 co_title_1: "Deputy General Director"
-hjk_34: '<p>Alpha Software is a great support for companies, especially companies with many production stages. Moreover, Alpha has an advantage over other management software because it can be flexibly and specifically customized according to user requirements. All parameters are very clear and detailed.</p>'
+hjk_34: '<p>Alpha&nbsp;Software is a great support for companies, especially companies with many production stages. Moreover, Alpha has an advantage over other management software because it can be flexibly and specifically customized according to user requirements. All parameters are very clear and detailed.</p>'
 co_title_2: "Assistant to the Director"
-our_story_title: "The Story of Alpha Software"
+our_story_title: "The Story of Alpha&nbsp;Software"
 co_title_3: "Founder"
-hjk_35: '<p class="mt-md-0">Alpha Software was founded in 2021 by Mr. Phan Duc Tuan Anh, who has over 28 years of practical experience in the textile industry—including 13 years as a dyeing technician and 15 years as a factory manager. With a strong background in Organic Chemistry and a deep understanding of factory management and software development, Mr. Tuan Anh has helped us provide practical technology solutions that meet the needs of modern textile enterprises.</p>'
+hjk_35: '<p class="mt-md-0">Alpha&nbsp;Software was founded in 2021 by Mr. Phan Duc Tuan Anh, who has over 28 years of practical experience in the textile industry—including 13 years as a dyeing technician and 15 years as a factory director. With a strong background in Organic Chemistry and a deep understanding of factory management and software development, Mr. Tuan Anh has helped us provide practical technology solutions that meet the needs of modern textile enterprises.</p>'
 support_title: "We are happy to assist you!"
 hjk_36: "Please call"
 hjk_37: "for a free consultation, or email your questions to"

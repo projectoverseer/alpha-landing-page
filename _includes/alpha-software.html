@@ -7,15 +7,6 @@
   lang="{{ page.lang }}"
 >
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-LZBMND9VE8');
-    </script>
     <title>Alpha Software - {{ t.slogan }}</title>
     {% include meta.html %} {% include meta-assets.html %}
   </head>
@@ -24,7 +15,7 @@
     data-bs-spy="scroll"
     data-bs-target="#muc-luc"
   >
-    <div class="visually-hidden active collapsing translated_review_disclaimer"></div>
+    <div class="visually-hidden active collapsing show translated_review_disclaimer"></div>
     <nav
       aria-label="{{ t.toc }}"
       class="navbar fixed-top navbar-expand-md"
@@ -47,5 +38,22 @@
     <script defer src="{{ site.url }}/js/bootstrap.min.js"></script>
     <script defer src="{{ site.url }}/js/custom.js"></script>
     <script defer src="{{ site.url }}/js/squircle.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LZBMND9VE8', { 'anonymize_ip': true });
+
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'granted'
+      });
+    </script>
   </body>
 </html>

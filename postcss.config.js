@@ -15,6 +15,7 @@ module.exports = {
         "show",
         "nav-item",
         "nav-link",
+        "a",
         "dropdown",
         "dropdown-toggle",
         "dropdown-menu",

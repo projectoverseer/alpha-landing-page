@@ -21,7 +21,7 @@ class SquircleRenderer {
   }
 
   /**
-   * Tagged template literal to format numbers in SVG paths to 2 decimal places.
+   * Tagged template literal to format numbers in SVG paths to 8 decimal places.
    * @param {TemplateStringsArray} strings
    * @param {...number[]} values
    * @returns {string} Formatted SVG path segment
@@ -30,7 +30,7 @@ class SquircleRenderer {
     return strings.reduce((acc, str, i) => {
       const value = values[i];
       if (typeof value === "number") {
-        return acc + str + value.toFixed(2);
+        return acc + str + value.toFixed(8);
       } else {
         return acc + str + (value ?? "");
       }
@@ -275,7 +275,7 @@ class SquircleRenderer {
     const height = rect.height;
 
     const radius = parseFloat(originalBorderRadius);
-    const cornerSmoothing = 0.6;
+    const cornerSmoothing = 1;
 
     // Skip if dimensions or radius are invalid
     if (isNaN(radius) || radius <= 0 || width <= 0 || height <= 0) {
@@ -294,7 +294,7 @@ class SquircleRenderer {
     const cornerParams = SquircleRenderer._getPathParamsForCorner({
       cornerRadius: radius,
       cornerSmoothing: cornerSmoothing,
-      preserveSmoothing: false,
+      preserveSmoothing: true,
       roundingAndSmoothingBudget: Math.min(width, height) / 2,
     });
 

@@ -14,8 +14,8 @@ description: "Alpha&nbsp;Software cách mạng hoá quản lý sản xuất dệ
 learn_more: "Tìm hiểu thêm"
 learn_more_aria: "Tìm hiểu thêm về Alpha&nbsp;Software"
 toc: "Mục lục"
-toc_hero: "Chào mừng bạn đến với Alpha Software"
-toc_hero_id: "chao-mung-ban-den-voi-alpha-software"
+toc_hero: "Xin chào"
+toc_hero_id: "xin-chao"
 toc_overview: "Giới thiệu"
 toc_overview_id: "gioi-thieu"
 toc_benefits: "Các lợi ích"
@@ -30,6 +30,10 @@ toc_our_story: "Câu chuyện của Alpha&nbsp;Software"
 toc_our_story_id: "cau-chuyen-cua-alpha-software"
 toc_customer_assistance: "Chăm sóc khách hàng"
 toc_customer_assistance_id: "cham-soc-khach-hang"
+translate_to_homeurl: "/en"
+translate_to_locale: "en"
+translate_to_language: "English"
+translate_to_flag: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="1" y="4" width="30" height="24" rx="4" ry="4" fill="#071b65"></rect><path d="M5.101,4h-.101c-1.981,0-3.615,1.444-3.933,3.334L26.899,28h.101c1.981,0,3.615-1.444,3.933-3.334L5.101,4Z" fill="#fff"></path><path d="M22.25,19h-2.5l9.934,7.947c.387-.353,.704-.777,.929-1.257l-8.363-6.691Z" fill="#b92932"></path><path d="M1.387,6.309l8.363,6.691h2.5L2.316,5.053c-.387,.353-.704,.777-.929,1.257Z" fill="#b92932"></path><path d="M5,28h.101L30.933,7.334c-.318-1.891-1.952-3.334-3.933-3.334h-.101L1.067,24.666c.318,1.891,1.952,3.334,3.933,3.334Z" fill="#fff"></path><rect x="13" y="4" width="6" height="24" fill="#fff"></rect><rect x="1" y="13" width="30" height="6" fill="#fff"></rect><rect x="14" y="4" width="4" height="24" fill="#b92932"></rect><rect x="14" y="1" width="4" height="30" transform="translate(32) rotate(90)" fill="#b92932"></rect><path d="M28.222,4.21l-9.222,7.376v1.414h.75l9.943-7.94c-.419-.384-.918-.671-1.471-.85Z" fill="#b92932"></path><path d="M2.328,26.957c.414,.374,.904,.656,1.447,.832l9.225-7.38v-1.408h-.75L2.328,26.957Z" fill="#b92932"></path><path d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z" opacity=".15"></path><path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path></svg>'
 
 overview_title: "Giới&nbsp;thiệu phần&nbsp;mềm quản&nbsp;lý nhà&nbsp;máy thông&nbsp;minh của Alpha&nbsp;Software"
 hjk_1: "Lập&nbsp;kế&nbsp;hoạch sản&nbsp;xuất trực&nbsp;quan"
@@ -46,10 +50,10 @@ hjk_11: "Tuỳ&nbsp;chỉnh phù&nbsp;hợp cho từng nhà&nbsp;máy"
 hjk_12: "Hiểu rằng mỗi nhà máy có hệ thống quản lý khác nhau, chúng tôi luôn khảo sát kỹ càng để thiết kế và triển khai cho phù hợp, liên tục cải tiến để giúp hoạt động của nhà máy ngày càng hiệu quả hơn."
 hjk_13: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
 hjk_14: "Rất dễ sử&nbsp;dụng!"
-hjk_15: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để người công nhân đứng máy, nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể sử dụng được một cách dễ dàng."
+hjk_15: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người—từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
 benefits_title: "Vì sao nhà&nbsp;máy nên chọn Alpha&nbsp;Software?"
 hjk_16: "Cải&nbsp;thiện rõ&nbsp;rệt chất&nbsp;lượng sản&nbsp;phẩm"
-hjk_17: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time)</strong>."
+hjk_17: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time).</strong>"
 hjk_18: "Giảm thiểu rủi&nbsp;ro sai&nbsp;sót của công&nbsp;nhân"
 hjk_19: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha&nbsp;Software có khả năng ngăn ngừa lỗi rất cao."
 hjk_20: "Giảm&nbsp;thiểu nhu&nbsp;cầu nhân&nbsp;sự"
@@ -113,8 +117,8 @@ alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
               Alpha (bộ điều khiển máy nhuộm), giúp đảm bảo sự đồng bộ và hiệu
               quả cao trong toàn bộ hệ thống.
             </p>'
-product_2: "Cân thuốc&nbsp;nhuộm thông&nbsp;minh Alpha Dyes Weighing"
-alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc&nbsp;nhuộm thông&nbsp;minh </span>Alpha Dyes Weighing'
+product_2: "Cân thuốc&nbsp;nhuộm bán&nbsp;tự&nbsp;động Alpha Dyes Weighing"
+alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc&nbsp;nhuộm bán&nbsp;tự&nbsp;động </span>Alpha Dyes Weighing'
 alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
             <p>
               <strong>Alpha Dyes Weighing</strong> là phần mềm chuyên dụng hỗ
