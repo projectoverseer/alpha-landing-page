@@ -6,13 +6,13 @@
       class="navbar-logo logo-white"
       height="48"
       src="{{ site.url }}/anh/logo/logo-alpha-silhouette.svg"
-      width="171"
+      width="170"
     /><img
       alt="{{ t.to_homepage }}"
       class="navbar-logo logo-color"
       height="48"
       src="{{ site.url }}/anh/logo/logo-alpha.svg"
-      width="171"
+      width="170"
     />
   </a>
   <div class="collapse navbar-collapse">
@@ -84,15 +84,19 @@
           >{{ t.toc_customer_assistance }}</a
         >
       </li>
-      <li class="nav-item">
-        <a
-          class="nav-link language-switcher"
-          href="{{ t.translate_to_homeurl }}"
-          hreflang="{{ t.translate_to_locale }}"
-          title="Translate to {{ t.translate_to_language }}"
-          >{{ t.translate_to_flag }}</a
-        >
-      </li>
     </ol>
+  </div>
+  <div class="nav-item">
+    <a
+      class="nav-link language-switcher"
+      href="{{ t.translate_to_homeurl }}"
+      hreflang="{{ t.translate_to_locale }}"
+      title="Translate to {{ t.translate_to_language }}"
+      ><img
+        alt="Translate to {{ t.translate_to_language }}"
+        height="32"
+        src="{{ site.url }}/anh/svg/locale_flag/{{ t.translate_to_locale }}.svg"
+        width="32"
+    /></a>
   </div>
 </div>

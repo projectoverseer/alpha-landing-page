@@ -53,10 +53,8 @@ $text-dark-tertiary: #afafaf;
 
 $border-color: $gray-300;
 $icon-color: $gray-600; // closest to $text-secondary
-$icon-color-svg: "%23676767";
 $icon-active-color: $gray-700;
 $dark-icon-color: $gray-100; // closest to $text-dark-secondary
-$dark-icon-color-svg: "%23ececec";
 
 // -------------------------------------
 // Typography Variables
@@ -279,8 +277,8 @@ $dropdown-link-active-state-bg: $gray-200;
 $dropdown-border-width: $border-width;
 $dropdown-border-color: $border-color;
 $dropdown-border-radius: $border-radius;
-$dropdown-toggler-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="1rem" fill="#{$icon-color-svg}"><path d="M461-403 318.88-545.19q-2.94-2.95-4.41-6.38Q313-555 313-558.5q0-7 4.95-12.25T331-576h298q8.1 0 13.05 5.4Q647-565.2 647-558q0 1-5.88 12.77L499-403q-4 4-9 6t-10 2q-5 0-10-2t-9-6Z"/></svg>');
-$dropdown-toggler-icon-dark: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 -960 960 960" width="1rem" fill="#{$dark-icon-color-svg}"><path d="M461-403 318.88-545.19q-2.94-2.95-4.41-6.38Q313-555 313-558.5q0-7 4.95-12.25T331-576h298q8.1 0 13.05 5.4Q647-565.2 647-558q0 1-5.88 12.77L499-403q-4 4-9 6t-10 2q-5 0-10-2t-9-6Z"/></svg>');
+$dropdown-toggler-icon: url("../anh/svg/ui_icons/dropdown-toggler-icon.svg");
+$dropdown-toggler-icon-dark: url("../anh/svg/ui_icons/dropdown-toggler-icon-dark.svg");
 
 $dropdown-item-padding-y: map-get($spacers, 1);
 $dropdown-item-padding-x: map-get($spacers, 2);
@@ -309,8 +307,8 @@ $accordion-button-focus-box-shadow: $focus-ring-box-shadow;
 
 $accordion-icon-transform: rotate(180deg);
 $accordion-icon-transition: transform 320ms cubic-bezier(0.12, 0, 0.38, 0);
-$accordion-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="2.5rem" viewBox="0 -960 960 960" width="2.5rem" fill="#{$icon-color-svg}" aria-hidden="true"><path d="M480-357.67q-6.67 0-12.33-2.16-5.67-2.17-11-7.5L263.33-560.67q-9.66-9.66-9.33-23.66.33-14 10-23.67 9.67-9.67 23.67-9.67 14 0 23.66 9.67L480-438.67 649.33-608q9.67-9.67 23.34-9.33 13.66.33 23.33 10 9.67 9.66 9.67 23.66T696-560L503.33-367.33q-5.33 5.33-11 7.5-5.66 2.16-12.33 2.16Z"/></svg>');
-$accordion-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="2.5rem" viewBox="0 -960 960 960" width="2.5rem" fill="#{$icon-color-svg}" aria-hidden="true"><path d="M480-357.67q-6.67 0-12.33-2.16-5.67-2.17-11-7.5L263.33-560.67q-9.66-9.66-9.33-23.66.33-14 10-23.67 9.67-9.67 23.67-9.67 14 0 23.66 9.67L480-438.67 649.33-608q9.67-9.67 23.34-9.33 13.66.33 23.33 10 9.67 9.66 9.67 23.66T696-560L503.33-367.33q-5.33 5.33-11 7.5-5.66 2.16-12.33 2.16Z"/></svg>');
+$accordion-button-icon: url("../anh/svg/ui_icons/accordion-button-icon.svg");
+$accordion-button-active-icon: url("../anh/svg/ui_icons/accordion-button-icon.svg");
 $transition-collapse: height 400ms ease-in-out;
 $accordion-transition:
   $btn-transition,

@@ -451,10 +451,6 @@ section.bg-dark {
   box-shadow: var(--box-shadow-menu);
   height: 64px;
 
-  .navbar-brand {
-    margin-left: -2px;
-  }
-
   .navbar-logo {
     position: relative;
     border-radius: 0;
@@ -465,7 +461,7 @@ section.bg-dark {
   }
 
   .logo-color {
-    margin-left: -171px;
+    margin-left: -170px;
     opacity: 1;
   }
 
@@ -479,7 +475,9 @@ section.bg-dark {
     transition: background 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
     will-change: background;
 
-    .navbar-nav {
+    .language-switcher {
+      padding-left: $navbar-nav-link-padding-x;
+      padding-right: $navbar-nav-link-padding-x;
       margin-right: -1 * $navbar-nav-link-padding-x;
     }
 
@@ -692,7 +690,8 @@ a.btn-primary {
 }
 
 .bi {
-  color: $secondary;
+  width: map-get($scales, 10);
+  height: map-get($scales, 10);
 }
 
 .client-portrait {

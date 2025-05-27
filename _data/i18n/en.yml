@@ -1,11 +1,11 @@
 homeurl: "/en"
-legal_name: "Alpha&nbsp;Software Development Company Limited"
+legal_name: "Alpha Software Development Company Limited"
 display_phone: "(+84) 983 505 002"
 copyright_notice: "Copyright &copy; 2025 Alpha&nbsp;Software. All rights reserved."
 
-social_description: "Alpha&nbsp;Software is a leader in textile production management, process digitization, and digital transformation."
-twitter_description: "Alpha&nbsp;Software provides software and digital solutions for textile businesses."
-og_description: "Alpha&nbsp;Software provides factory management software and digital transformation solutions to help textile businesses develop sustainably."
+social_description: "Alpha Software is a leader in textile production management, process digitization, and digital transformation."
+twitter_description: "Alpha Software provides software and digital solutions for textile businesses."
+og_description: "Alpha Software provides factory management software and digital transformation solutions to help textile businesses develop sustainably."
 keywords: "textile factory management software, textile management software, digital transformation, production management"
 
 to_homepage: "Go to Alpha&nbsp;Software homepage"
@@ -33,7 +33,6 @@ toc_customer_assistance_id: "customer-assistance"
 translate_to_homeurl: "/"
 translate_to_locale: "vi"
 translate_to_language: "Vietnamese"
-translate_to_flag: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="1" y="4" width="30" height="24" rx="4" ry="4" fill="#c93728"></rect><path d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z" opacity=".15"></path><path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path><path fill="#ff5" d="M18.008 16.366L21.257 14.006 17.241 14.006 16 10.186 14.759 14.006 10.743 14.006 13.992 16.366 12.751 20.186 16 17.825 19.249 20.186 18.008 16.366z"></path></svg>'
 
 overview_title: "Introducing Alpha&nbsp;Smart&nbsp;Dyehouse factory management system"
 hjk_1: "Visual production planning"
@@ -174,7 +173,7 @@ reviews_title: "What customers say about Alpha&nbsp;Software"
 female_title: "Ms."
 male_title: "Mr."
 of: "of"
-translated_review_disclaimer: '<div class="translated_review_disclaimer"><a href="https://www.alphasoftwaregroup.com/#danh-gia-cua-khach-hang" rel="nofollow noopener" target="_blank">Original review in Vietnamese</a></div>'
+translated_review_disclaimer: '<div class="translated_review_disclaimer"><a href="https://www.alphasoftwaregroup.com/#danh-gia-cua-khach-hang" rel="nofollow noopener" target="_blank">Show original review in Vietnamese</a></div>'
 hjk_33: '<p>Alpha&nbsp;Software has helped SPICA effectively connect with dyeing equipment such as Spectro, color extraction machine and dyeing machine controller, thereby minimizing manual errors. Dyeing formula management becomes easier, dyeing planning is accurate and the entire process is tightly controlled through QR codes and intuitive reporting systems.</p>
   <p>After implementing the software, right first time (RFT) dyeing rates increased from 80% to 90% batch-wise, and from 90% to 95% volume-wise, with expectations for reaching 93% and 98% in the future.</p>'
 co_title_1: "Deputy General Director"

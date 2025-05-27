@@ -21,7 +21,7 @@ class SquircleRenderer {
   }
 
   /**
-   * Tagged template literal to format numbers in SVG paths to 8 decimal places.
+   * Tagged template literal to format numbers in SVG paths to 6 decimal places.
    * @param {TemplateStringsArray} strings
    * @param {...number[]} values
    * @returns {string} Formatted SVG path segment
@@ -30,7 +30,7 @@ class SquircleRenderer {
     return strings.reduce((acc, str, i) => {
       const value = values[i];
       if (typeof value === "number") {
-        return acc + str + value.toFixed(8);
+        return acc + str + value.toFixed(6);
       } else {
         return acc + str + (value ?? "");
       }
