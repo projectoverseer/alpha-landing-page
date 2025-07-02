@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://www.alphasoftwaregroup.com/</loc>
+        <xhtml:link rel="alternate" hreflang="vi" href="https://www.alphasoftwaregroup.com/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.alphasoftwaregroup.com/en/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alphasoftwaregroup.com/"/>
+        <lastmod>2025-05-27</lastmod>
+    </url>
+    <url>
+        <loc>https://www.alphasoftwaregroup.com/en/</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.alphasoftwaregroup.com/en/"/>
+        <xhtml:link rel="alternate" hreflang="vi" href="https://www.alphasoftwaregroup.com/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alphasoftwaregroup.com/"/>
+        <lastmod>2025-05-27</lastmod>
+    </url>
+</urlset>
