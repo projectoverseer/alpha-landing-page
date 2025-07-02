@@ -51,7 +51,7 @@ section {
   @include media-breakpoint-up(md) {
     p,
     li {
-      max-width: 33em;
+      max-width: 36rem;
     }
   }
 }
@@ -138,6 +138,8 @@ h4,
   }
 }
 
+h5,
+.h5,
 .mini-h3 {
   font-size: $h5-font-size;
   line-height: $h5-line-height;
@@ -145,24 +147,12 @@ h4,
   letter-spacing: -0.01em;
 }
 
+h6,
 .mini-h4 {
   font-size: $h6-font-size;
   line-height: $h6-line-height;
   font-weight: 600;
-  letter-spacing: 0;
-}
-
-h5,
-.h5 {
-  line-height: $h5-line-height;
-  font-weight: 600;
-  letter-spacing: 0;
-}
-
-h6,
-.h6 {
-  line-height: $h6-line-height;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 
 big,
@@ -353,6 +343,8 @@ blockquote > :last-child:after {
 
 .accordion-button,
 .dropdown-item {
+  transition: $accordion-transition;
+
   &:hover {
     background: $dropdown-link-hover-bg;
   }
@@ -557,7 +549,7 @@ header {
       margin-top: 25vh;
 
       p {
-        max-width: 32em;
+        max-width: 36rem;
       }
     }
   }

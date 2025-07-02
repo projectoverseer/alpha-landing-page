@@ -6,7 +6,20 @@
       data-squircle-radius
       role="presentation"
     ></div>
-    <h2 class="mt-0">{{ t.reviews_title }}</h2>
+    <h2 class="mt-0" itemprop="name">{{ t.reviews_title }}</h2>
+
+    <!-- Aggregate Rating for the service -->
+    <div
+      itemprop="aggregateRating"
+      itemscope
+      itemtype="https://schema.org/AggregateRating"
+    >
+      <meta content="5" itemprop="ratingValue" />
+      <meta content="5" itemprop="bestRating" />
+      <meta content="1" itemprop="worstRating" />
+      <meta content="2" itemprop="reviewCount" />
+    </div>
+
     <div class="row row-cols-xl-2 row-cols-md-2 row-cols-1 mt-12">
       <div
         class="col service-box"
@@ -15,6 +28,18 @@
         itemtype="https://schema.org/Review"
       >
         <meta content="2025-04-28" itemprop="datePublished" />
+
+        <!-- Individual rating for this review -->
+        <div
+          itemprop="reviewRating"
+          itemscope
+          itemtype="https://schema.org/Rating"
+        >
+          <meta content="5" itemprop="ratingValue" />
+          <meta content="5" itemprop="bestRating" />
+          <meta content="1" itemprop="worstRating" />
+        </div>
+
         <img
           alt="{{ t.female_title }} Nguyễn Thị Nga"
           class="client-portrait"
@@ -57,6 +82,18 @@
         itemtype="https://schema.org/Review"
       >
         <meta content="2024-10-17" itemprop="datePublished" />
+
+        <!-- Individual rating for this review -->
+        <div
+          itemprop="reviewRating"
+          itemscope
+          itemtype="https://schema.org/Rating"
+        >
+          <meta content="5" itemprop="ratingValue" />
+          <meta content="5" itemprop="bestRating" />
+          <meta content="1" itemprop="worstRating" />
+        </div>
+
         <img
           alt="{{ t.male_title }} Đinh Văn Hiệp"
           class="client-portrait"

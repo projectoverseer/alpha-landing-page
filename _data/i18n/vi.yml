@@ -1,18 +1,18 @@
 homeurl: "/"
 legal_name: "Công ty TNHH Phát triển Phần mềm Alpha"
 display_phone: "0983.50.50.02"
-copyright_notice: "Bản quyền &copy; 2025 Alpha&nbsp;Software. Bảo lưu mọi quyền."
+copyright_notice: "Bản quyền &copy; 2025 Alpha Software. Bảo lưu mọi quyền."
 
-social_description: "Alpha Software là công ty hàng đầu trong lĩnh vực phát triển phần mềm quản lý sản xuất, số hóa quy trình, và chuyển đổi số."
-twitter_description: "Alpha Software cung cấp phần mềm và giải pháp số hóa tối ưu cho doanh nghiệp."
-og_description: "Alpha Software chuyên cung cấp phần mềm quản lý nhà máy, dệt may, và giải pháp chuyển đổi số giúp doanh nghiệp phát triển bền vững."
-keywords: "phần mềm quản lý nhà máy, phần mềm dệt may, chuyển đổi số, quản lý sản xuất"
+social_description: "Alpha Software tiên phong chuyển đổi ngành dệt may Việt Nam bằng phần mềm tự động hoá và giải pháp công nghệ thông minh."
+twitter_description: "Đột phá ngành dệt may với phần mềm tự động hoá tiên tiến, thiết kế riêng cho từng doanh nghiệp."
+og_description: "Alpha Software cung cấp hệ thống phần mềm tự động hoá sản xuất dệt may giúp giảm lỗi thủ công, nâng cao hiệu suất, và hỗ trợ doanh nghiệp Việt Nam vươn tầm quốc tế."
+keywords: "phần mềm tự động hóa dệt may, hệ thống quản lý sản xuất, nhà máy thông minh dệt may, chuyển đổi số ngành dệt, phần mềm quản lý nhuộm"
 
-to_homepage: "Đi đến trang chủ Alpha&nbsp;Software"
-slogan: "Chuyển đổi số nhà máy dệt may"
-description: "Alpha&nbsp;Software cách mạng hoá quản lý sản xuất dệt may qua việc phát triển phần mềm quản lý quy trình công nghệ một cách khoa học, thiết lập và triển khai kế hoạch sản xuất một cách trực quan, kết nối với các thiết bị sản xuất để tăng cường tự động hoá giúp nhà máy cải thiện chất lượng, tăng sản lượng và rút ngắn thời gian giao hàng."
+to_homepage: "Đi đến trang chủ Alpha Software"
+slogan: "Chuyển đổi số ngành dệt nhuộm"
+description: "Alpha Software đang tái định nghĩa cách quản lý sản xuất trong ngành dệt may tại Việt Nam bằng hệ thống phần mềm tự động hoá tiên tiến, thiết kế riêng cho từng quy trình. Phần mềm giúp giảm thiểu lỗi thủ công, lập kế hoạch trực quan, kết nối thiết bị sản xuất và tối ưu hoá hiệu quả. Chúng tôi đồng hành cùng nhà máy dệt may nâng cao chất lượng, gia tăng sản lượng và rút ngắn thời gian giao hàng, góp phần đưa Việt Nam trở thành cường quốc sản xuất dệt may."
 learn_more: "Tìm hiểu thêm"
-learn_more_aria: "Tìm hiểu thêm về Alpha&nbsp;Software"
+learn_more_aria: "Tìm hiểu thêm về Alpha Software"
 toc: "Mục lục"
 toc_hero: "Xin chào"
 toc_hero_id: "xin-chao"
@@ -20,13 +20,13 @@ toc_overview: "Giới thiệu"
 toc_overview_id: "gioi-thieu"
 toc_benefits: "Các lợi ích"
 toc_benefits_id: "cac-loi-ich"
-toc_products: "Chi tiết các sản phẩm"
-toc_products_id: "chi-tiet-cac-san-pham"
+toc_products: "Các sản phẩm"
+toc_products_id: "cac-san-pham"
 toc_projects: "Các dự án"
 toc_projects_id: "cac-du-an"
 toc_reviews: "Đánh giá của khách hàng"
 toc_reviews_id: "danh-gia-cua-khach-hang"
-toc_our_story: "Câu chuyện của Alpha&nbsp;Software"
+toc_our_story: "Câu chuyện của Alpha Software"
 toc_our_story_id: "cau-chuyen-cua-alpha-software"
 toc_customer_assistance: "Chăm sóc khách hàng"
 toc_customer_assistance_id: "cham-soc-khach-hang"
@@ -50,16 +50,16 @@ hjk_12: "Hiểu rằng mỗi nhà máy có hệ thống quản lý khác nhau, c
 hjk_13: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
 hjk_14: "Rất dễ sử&nbsp;dụng!"
 hjk_15: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người—từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
-benefits_title: "Vì sao nhà&nbsp;máy nên chọn Alpha&nbsp;Software?"
+benefits_title: "Vì sao nhà&nbsp;máy cần Alpha&nbsp;Software"
 hjk_16: "Cải&nbsp;thiện rõ&nbsp;rệt chất&nbsp;lượng sản&nbsp;phẩm"
 hjk_17: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time).</strong>"
 hjk_18: "Giảm thiểu rủi&nbsp;ro sai&nbsp;sót của công&nbsp;nhân"
-hjk_19: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha&nbsp;Software có khả năng ngăn ngừa lỗi rất cao."
+hjk_19: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha Software có khả năng ngăn ngừa lỗi rất cao."
 hjk_20: "Giảm&nbsp;thiểu nhu&nbsp;cầu nhân&nbsp;sự"
 hjk_21: "Trong quá trình khảo sát và phát triển phần mềm, chúng tôi sẽ nhận diện những thao tác nào có thể được phần mềm tự động thực hiện. Nhờ đó làm giảm nhu cầu và chi phí nhân sự."
 hjk_22: "Tích&nbsp;hợp với các thiết&nbsp;bị có sẵn"
 hjk_23: "Chúng tôi có trình độ và kinh nghiệm để kết nối với các thiết bị tự động hoặc cải tạo thiết bị đang vận hành bằng công tắc tay thành vận hành tự động. Nhờ đó giảm nhu cầu nhân sự có trình độ tay nghề cao và giảm thao tác sai của người vận hành."
-products_title: "Chi&nbsp;tiết về các sản&nbsp;phẩm của Alpha&nbsp;Software"
+products_title: "Các sản&nbsp;phẩm của Alpha&nbsp;Software"
 product_1: "Hệ&nbsp;thống quản&nbsp;lý nhà&nbsp;máy Alpha Smart Dyehouse"
 alpha_smart_dyehouse: '<span class="mini-h3">Hệ&nbsp;thống quản&nbsp;lý nhà&nbsp;máy </span>Alpha Smart Dyehouse'
 alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
@@ -116,8 +116,8 @@ alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
               Alpha (bộ điều khiển máy nhuộm), giúp đảm bảo sự đồng bộ và hiệu
               quả cao trong toàn bộ hệ thống.
             </p>'
-product_2: "Cân thuốc&nbsp;nhuộm bán&nbsp;tự&nbsp;động Alpha Dyes Weighing"
-alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc&nbsp;nhuộm bán&nbsp;tự&nbsp;động </span>Alpha Dyes Weighing'
+product_2: "Cân thuốc&nbsp;nhuộm bán-tự-động Alpha Dyes Weighing"
+alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc&nbsp;nhuộm bán-tự-động </span>Alpha Dyes Weighing'
 alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
             <p>
               <strong>Alpha Dyes Weighing</strong> là phần mềm chuyên dụng hỗ
@@ -167,7 +167,7 @@ alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
             </ul>'
 projects_title: "Các dự&nbsp;án của Alpha&nbsp;Software"
 hjk_24: "Công ty TNHH Chỉ may Tuấn Hồng"
-hjk_25: '<span class="mini-h4">Công&nbsp;ty TNHH Chỉ&nbsp;may </span>Tuấn&nbsp;Hồng'
+hjk_25: 'Tuấn Hồng'
 hjk_26: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
@@ -176,10 +176,10 @@ hjk_26: '<p>Các thành phần phần mềm:</p>
             màu phòng thí nghiệm Datacolor Autolab TF
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
-          <li>Cân thuốc nhuộm bán tự động</li>
+          <li>Cân thuốc nhuộm bán-tự-động</li>
         </ul>'
 hjk_27: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng Đông"
-hjk_28: '<span class="mini-h4">Công&nbsp;ty TNHH Sản&nbsp;xuất Thương&nbsp;mại và Đầu&nbsp;tư </span>Dũng&nbsp;Đông'
+hjk_28: 'Dũng Đông'
 hjk_29: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
@@ -188,8 +188,8 @@ hjk_29: '<p>Các thành phần phần mềm:</p>
             màu phòng thí nghiệm COPOWER CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
-          <li>Cân thuốc nhuộm bán tự động</li>
-          <li>Cân hoá chất bán tự động</li>
+          <li>Cân thuốc nhuộm bán-tự-động</li>
+          <li>Cân hoá chất bán-tự-động</li>
           <li>
             Cải tạo điều khiển máy nhuộm từ vận hành bằng tay thành điều khiển
             tự động theo chương trình, kết nối trực tiếp và điều khiển từ phần
@@ -197,7 +197,7 @@ hjk_29: '<p>Các thành phần phần mềm:</p>
           </li>
         </ul>'
 hjk_30: "Công ty TNHH Nhuộm Spica"
-hjk_31: '<span class="mini-h4">Công&nbsp;ty TNHH Nhuộm </span>Spica'
+hjk_31: 'Spica'
 hjk_32: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
@@ -206,8 +206,8 @@ hjk_32: '<p>Các thành phần phần mềm:</p>
             màu phòng thí nghiệm COPOWER CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
-          <li>Cân thuốc nhuộm bán tự động</li>
-          <li>Cân hoá chất bán tự động</li>
+          <li>Cân thuốc nhuộm bán-tự-động</li>
+          <li>Cân hoá chất bán-tự-động</li>
           <li>
             Cải tiến chương trình trên bộ điều khiển Delta của máy nhuộm hiện
             hữu để kết nối và chuyển chương trình nhuộm, thể tích nước, tốc độ
@@ -227,7 +227,7 @@ hjk_33: '<p>Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với c
             từ 80% lên 90% theo mẻ, và từ 90% lên 95% theo khối lượng—hướng đến
             mục tiêu đạt 93% và 98% trong thời gian tới.</p>'
 co_title_1: "Phó Tổng Giám&nbsp;đốc<br />"
-hjk_34: '<p>Phần mềm Alpha&nbsp;Software hỗ trợ rất tốt cho công ty, nhất là
+hjk_34: '<p>Phần mềm Alpha Software hỗ trợ rất tốt cho công ty, nhất là
             công ty sản xuất nhiều công đoạn. Hơn nữa, Alpha thì có lợi thế hơn
             những phần mềm quản lý khác do có thể tuỳ biến linh hoạt và chi tiết
             theo yêu cầu của người sử dụng. Mọi thông số đều rất rõ ràng và chi
@@ -236,7 +236,7 @@ co_title_2: "Trợ&nbsp;lý Giám&nbsp;đốc<br />"
 our_story_title: "Câu&nbsp;chuyện của Alpha&nbsp;Software"
 co_title_3: "Nhà sáng lập"
 hjk_35: '<p class="mt-md-0">
-          Alpha&nbsp;Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn
+          Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn
           Anh, người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
           may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
           nhà máy. Với nền tảng vững chắc về Hoá học Hữu cơ cùng sự hiểu biết

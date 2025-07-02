@@ -1,20 +1,20 @@
 homeurl: "/en"
 legal_name: "Alpha Software Development Company Limited"
 display_phone: "(+84) 983 505 002"
-copyright_notice: "Copyright &copy; 2025 Alpha&nbsp;Software. All rights reserved."
+copyright_notice: "Copyright &copy; 2025 Alpha Software. All rights reserved."
 
-social_description: "Alpha Software is a leader in textile production management, process digitization, and digital transformation."
-twitter_description: "Alpha Software provides software and digital solutions for textile businesses."
-og_description: "Alpha Software provides factory management software and digital transformation solutions to help textile businesses develop sustainably."
-keywords: "textile factory management software, textile management software, digital transformation, production management"
+social_description: "Alpha Software pioneers the future of textile manufacturing in Vietnam with cutting-edge automation and intelligent software solutions."
+twitter_description: "Revolutionizing Vietnam’s textile industry with smart, custom-built automation software."
+og_description: "Alpha Software develops intelligent textile production systems that reduce human error, increase efficiency, and automate processes—leading the digital revolution in Vietnam’s manufacturing sector."
+keywords: "textile automation software, production management system, smart factory textile Vietnam, digital textile transformation, dyeing process automation"
 
-to_homepage: "Go to Alpha&nbsp;Software homepage"
-slogan: "Digital transformation for textile factories"
-description: "Alpha&nbsp;Software revolutionizes textile production management by developing software that scientifically manages technological processes, visually plans production, and integrates with production equipment to enhance automation, helping factories improve quality, increase output, and shorten delivery times."
+to_homepage: "Go to Alpha Software homepage"
+slogan: "Digital Transformation for Textile&nbsp;Factories"
+description: "Alpha Software is redefining textile manufacturing in Vietnam by providing custom-built automation systems that scientifically manage production processes and integrate seamlessly with machinery. Our advanced software eliminates human errors, optimizes efficiency, and supports Vietnam’s journey toward becoming a world-class textile production hub. Backed by innovation and reliability, we help factories improve quality, boost output, and accelerate delivery timelines."
 learn_more: "Learn more"
-learn_more_aria: "Learn more about Alpha&nbsp;Software"
+learn_more_aria: "Learn more about Alpha Software"
 toc: "Table of contents"
-toc_hero: "Welcome to Alpha&nbsp;Software"
+toc_hero: "Welcome to Alpha Software"
 toc_hero_id: "welcome-to-alpha-software"
 toc_overview: "Overview"
 toc_overview_id: "overview"
@@ -26,7 +26,7 @@ toc_projects: "Our Projects"
 toc_projects_id: "our-projects"
 toc_reviews: "Customer Reviews"
 toc_reviews_id: "customer-reviews"
-toc_our_story: "The Story of Alpha&nbsp;Software"
+toc_our_story: "The Story of Alpha Software"
 toc_our_story_id: "the-story-of-alpha-software"
 toc_customer_assistance: "Customer Assistance"
 toc_customer_assistance_id: "customer-assistance"
@@ -34,7 +34,7 @@ translate_to_homeurl: "/"
 translate_to_locale: "vi"
 translate_to_language: "Vietnamese"
 
-overview_title: "Introducing Alpha&nbsp;Smart&nbsp;Dyehouse factory management system"
+overview_title: "Introducing Alpha&nbsp;Smart&nbsp;Dyehouse Factory&nbsp;Management&nbsp;System"
 hjk_1: "Visual production planning"
 hjk_2: "Planning and adjusting plans are done quickly and visually by dragging-and-dropping."
 hjk_3: "When a batch plan is adjusted, the entire plan is automatically adjusted. This ensures that the plan is in perfect sync."
@@ -50,11 +50,11 @@ hjk_12: "We understand that each factory has different management standards. The
 hjk_13: "In addition, during the cooperation process, we are also able to advise customers on process improvement to achieve efficiency and savings."
 hjk_14: "Very easy to use!"
 hjk_15: "We always aim for the simplest way to operate the software, requiring the least amount of operations so that everyone—from factory workers to office staff, even without basic computer knowledge, can easily use the software."
-benefits_title: "Why factories should choose Alpha&nbsp;Software"
+benefits_title: "Why Factories Need Alpha&nbsp;Software"
 hjk_16: "Significantly improve product quality"
 hjk_17: "Thanks to our long-term experience in the textile industry, we know how to map the technological knowledge of the factory's internal experts or external experts, apply that technology automatically and accurately to production, thereby <strong>greatly improving Right First Time rate (RFT).</strong>"
 hjk_18: "Minimize the risk of worker error"
-hjk_19: "Having worked in various positions in the textile industry from technical management, line management to dyeing factory management, we understand the risks of errors that may occur in the work process of employees at all levels. Thanks to that, Alpha&nbsp;Software's software has a very high ability to prevent errors."
+hjk_19: "Having worked in various positions in the textile industry from technical management, line management to dyeing factory management, we understand the risks of errors that may occur in the work process of employees at all levels. Thanks to that, Alpha Software's software has a very high ability to prevent errors."
 hjk_20: "Reduce staffing costs"
 hjk_21: "During the software research and development process, we will identify which tasks can be automated by the software, thereby reducing the need for and cost of human resources."
 hjk_22: "Modify & enhance existing equipment"
@@ -169,19 +169,19 @@ hjk_32: '<p>Software components:</p>
             Modify the program on the Delta controller of the existing dyeing machine to connect and transfer the dyeing program, water volume, main pump speed from the <strong>Alpha Smart Dyehouse</strong> production management software
           </li>
         </ul>'
-reviews_title: "What customers say about Alpha&nbsp;Software"
+reviews_title: "What Customers Say About Alpha&nbsp;Software"
 female_title: "Ms."
 male_title: "Mr."
 of: "of"
 translated_review_disclaimer: '<div class="translated_review_disclaimer"><a href="https://www.alphasoftwaregroup.com/#danh-gia-cua-khach-hang" rel="nofollow noopener" target="_blank">Show original review in Vietnamese</a></div>'
-hjk_33: '<p>Alpha&nbsp;Software has helped SPICA effectively connect with dyeing equipment such as Spectro, color extraction machine and dyeing machine controller, thereby minimizing manual errors. Dyeing formula management becomes easier, dyeing planning is accurate and the entire process is tightly controlled through QR codes and intuitive reporting systems.</p>
-  <p>After implementing the software, right first time (RFT) dyeing rates increased from 80% to 90% batch-wise, and from 90% to 95% volume-wise, with expectations for reaching 93% and 98% in the future.</p>'
+hjk_33: '<p>Alpha Software has helped SPICA effectively connect with dyeing equipment such as Spectro machines, color extraction devices, and dyeing machine controllers, thereby minimizing manual operation errors. Managing dyeing recipes has become much easier, enabling accurate dyeing plans and tightly controlled processes through QR codes and an intuitive reporting system.</p>
+  <p>After implementing the software, our first-time-right dyeing rate (RFT) increased from 80% to 90% per batch, and from 90% to 95% by volume — moving steadily toward our targets of 93% and 98% in the near future.</p>'
 co_title_1: "Deputy General Director"
-hjk_34: '<p>Alpha&nbsp;Software is a great support for companies, especially companies with many production stages. Moreover, Alpha has an advantage over other management software because it can be flexibly and specifically customized according to user requirements. All parameters are very clear and detailed.</p>'
+hjk_34: '<p>Alpha Software has been a great support to our company, especially as a business with many production stages. Additionally, Alpha stands out from other management software due to its flexibility and detailed customization based on user requirements. Every parameter is clearly and precisely presented.</p>'
 co_title_2: "Assistant to the Director"
 our_story_title: "The Story of Alpha&nbsp;Software"
 co_title_3: "Founder"
-hjk_35: '<p class="mt-md-0">Alpha&nbsp;Software was founded in 2021 by Mr. Phan Duc Tuan Anh, who has over 28 years of practical experience in the textile industry—including 13 years as a dyeing technician and 15 years as a factory director. With a strong background in Organic Chemistry and a deep understanding of factory management and software development, Mr. Tuan Anh has helped us provide practical technology solutions that meet the needs of modern textile enterprises.</p>'
+hjk_35: '<p class="mt-md-0">Alpha Software was founded in 2021 by Mr. Phan Duc Tuan Anh, who has over 28 years of practical experience in the textile industry—including 13 years as a dyeing technician and 15 years as a factory director. With a strong background in Organic Chemistry and a deep understanding of factory management and software development, Mr. Tuan Anh has helped us provide practical technology solutions that meet the needs of modern textile enterprises.</p>'
 support_title: "We are happy to assist you!"
 hjk_36: "Please call"
 hjk_37: "for a free consultation, or email your questions to"

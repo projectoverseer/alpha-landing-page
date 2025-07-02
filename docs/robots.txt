@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Allow: /en/
-
-Sitemap: https://www.alphasoftwaregroup.com/sitemap.xml
