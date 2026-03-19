@@ -7,6 +7,8 @@
   lang="{{ page.lang }}"
 >
   <head>
+    <meta charset="utf-8" />
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8"></script>
     <script>
@@ -33,34 +35,46 @@
     </script>
 
     <title>Alpha Software: {{ t.slogan }}</title>
-    {% include meta.html %} {% include meta-assets.html %}
+    {% include meta.html %}
+    {% include meta-assets.html %}
   </head>
   <body
     data-bs-smooth-scroll="true"
     data-bs-spy="scroll"
-    data-bs-target="#muc-luc"
+    data-bs-target="#navbar"
   >
-    <div class="visually-hidden active collapsing show translated_review_disclaimer"></div>
+    <!--
+      This hidden element preserves Bootstrap dynamic class names (active, show, collapsing)
+      and the translated_review_disclaimer class for the CSS build/purge pipeline.
+    -->
+    <div aria-hidden="true" class="visually-hidden active collapsing show translated_review_disclaimer"></div>
+
     <nav
       aria-label="{{ t.toc }}"
       class="navbar fixed-top navbar-expand-md"
       data-bs-theme="dark"
       dir="ltr"
-      id="muc-luc"
+      id="navbar"
     >
-      {% include muc-luc.html %}
+      {% include navbar.html %}
     </nav>
+
     <main>
-      {% include trang-bia.html %} {% include gioi-thieu.html %} {% include
-      cac-loi-ich.html %} {% include cac-san-pham.html %} {% include
-      cac-du-an.html %} {% include danh-gia-cua-khach-hang.html %} {% include
-      cau-chuyen-cua-alpha-software.html %} {% include ho-tro-khach-hang.html %}
+      {% include hero.html %}
+      {% include overview.html %}
+      {% include benefits.html %}
+      {% include products.html %}
+      {% include projects.html %}
+      {% include reviews.html %}
+      {% include our-story.html %}
+      {% include support.html %}
     </main>
-    <footer id="ket-noi-voi-alpha-software">
-      {% include ket-noi-voi-alpha-software.html %}
+
+    <footer id="{{ t.toc_footer_id }}">
+      {% include footer.html %}
     </footer>
-    <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script defer src="{{ site.url }}/js/bootstrap.min.js"></script>
+
+    <script defer src="{{ site.url }}/js/bootstrap.bundle.min.js"></script>
     <script defer src="{{ site.url }}/js/custom.js"></script>
     <script defer src="{{ site.url }}/js/squircle.js"></script>
   </body>

@@ -1,5 +1,5 @@
 (function () {
-  const navbar = document.getElementById("muc-luc");
+  const navbar = document.getElementById("navbar");
 
   function throttle(func, wait) {
     let timeout;
@@ -23,8 +23,6 @@
       }
     };
   }
-
-  const throttledUpdateNavState = throttle(updateNavState, 200);
 
   function updateNavState() {
     if (window.scrollY > 0) {
@@ -50,10 +48,9 @@
     }
   }
 
-  // Initial call to set the correct state on page load
+  // Set correct state on page load, then track on scroll
   updateNavState();
-
-  window.addEventListener("scroll", throttledUpdateNavState, { passive: true });
+  window.addEventListener("scroll", throttle(updateNavState, 200), { passive: true });
   window.addEventListener("hashchange", removeHash, false);
 
   cleanUrl();
@@ -61,147 +58,101 @@
 })();
 
 function copyEmailToClipboard(element, feedbackMessage) {
-  // Get the email address from the href attribute.
-  // This is generally more reliable than textContent if the displayed text might differ.
   const emailToCopy = element.href.replace("mailto:", "");
 
-  // Attempt to use the modern Clipboard API
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(emailToCopy)
       .then(() => {
-        // Provide temporary user feedback on the element itself
         const originalText = element.textContent;
+        // Short delay so the browser's mailto action resolves first;
+        // if it navigates away this feedback is never shown.
         setTimeout(() => {
           element.textContent = feedbackMessage;
           setTimeout(() => {
             element.textContent = originalText;
-          }, 2000); // Revert to original text after 2 seconds
-        }, 200); // If redirect action succeeds, there is no need to show this feedback
+          }, 2000);
+        }, 200);
       })
       .catch(() => {
-        // Fallback if Clipboard API fails (e.g., permissions, specific browser contexts)
-        fallbackCopyTextToClipboard(emailToCopy, element);
+        fallbackCopyTextToClipboard(emailToCopy, element, feedbackMessage);
       });
   } else {
-    // Fallback for browsers that do not support the Clipboard API
     fallbackCopyTextToClipboard(emailToCopy, element, feedbackMessage);
   }
 }
 
-// Fallback function for older browsers that don't support Clipboard API
 function fallbackCopyTextToClipboard(text, element, feedbackMessage) {
   const textArea = document.createElement("textarea");
   textArea.value = text;
-
-  // Avoid scrolling to bottom
-  textArea.style.position = "fixed"; // Ensures it's not part of flow
-  textArea.style.top = "0";
-  textArea.style.left = "0";
-  textArea.style.opacity = "0"; // Make it invisible
-  textArea.style.pointerEvents = "none"; // Ensure it doesn't interfere with clicks
+  textArea.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
 
   document.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
 
   try {
-    const successful = document.execCommand("copy");
-    // Provide temporary user feedback on the element itself
+    document.execCommand("copy");
     const originalText = element.textContent;
     element.textContent = feedbackMessage;
     setTimeout(() => {
       element.textContent = originalText;
-    }, 2000); // Revert after 2 seconds
-  } catch {}
+    }, 2000);
+  } catch (_) {
+    // Copy not supported in this context — fail silently
+  }
 
   document.body.removeChild(textArea);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const NAVBAR_HEIGHT = 64; // Your fixed navbar height in pixels
-  const rootFontSize = parseFloat(
-    getComputedStyle(document.documentElement).fontSize,
-  );
-  const REM_OFFSET = 6.8125 * rootFontSize; // Convert rem to pixels
+  const navbar = document.getElementById("navbar");
+  const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 64;
+  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const scrollOffset = 6.8125 * rootFontSize; // rem offset below the navbar
 
-  // --- Scalable Dropdown Hover Logic ---
-  const allDropdowns = document.querySelectorAll(".nav-item.dropdown"); // Selects all dropdowns
-
-  allDropdowns.forEach((dropdownEl) => {
-    // Loop through each dropdown found
+  // Dropdown hover — open on mouseenter, close on mouseleave
+  document.querySelectorAll(".nav-item.dropdown").forEach((dropdownEl) => {
     const dropdownToggle = dropdownEl.querySelector(".dropdown-toggle");
-    let bsDropdownInstance = null; // This variable will hold the Bootstrap Dropdown object for *this specific dropdown*
+    let bsDropdown = null;
 
-    // Helper function to get or create the Bootstrap Dropdown instance for the current dropdown
-    function getBsDropdown() {
-      if (!bsDropdownInstance) {
-        bsDropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle);
-        if (!bsDropdownInstance) {
-          // If no instance exists yet, create a new one
-          bsDropdownInstance = new bootstrap.Dropdown(dropdownToggle);
-        }
+    function getDropdown() {
+      if (!bsDropdown) {
+        bsDropdown =
+          bootstrap.Dropdown.getInstance(dropdownToggle) ||
+          new bootstrap.Dropdown(dropdownToggle);
       }
-      return bsDropdownInstance;
+      return bsDropdown;
     }
 
-    // Show dropdown on mouse enter for this specific dropdown
-    dropdownEl.addEventListener("mouseenter", function () {
-      getBsDropdown().show();
-    });
-
-    // Hide dropdown on mouse leave for this specific dropdown
-    dropdownEl.addEventListener("mouseleave", function () {
-      getBsDropdown().hide();
-    });
+    dropdownEl.addEventListener("mouseenter", () => getDropdown().show());
+    dropdownEl.addEventListener("mouseleave", () => getDropdown().hide());
   });
-  // --- End Scalable Dropdown Hover Logic ---
 
-  // --- Accordion Expansion & Scroll Logic (Existing code) ---
-  const dropdownItems = document.querySelectorAll(
-    ".dropdown-item[data-target-accordion]",
-  );
-
-  dropdownItems.forEach((item) => {
+  // Accordion expansion via dropdown item — expand & smooth-scroll
+  document.querySelectorAll(".dropdown-item[data-target-accordion]").forEach((item) => {
     item.addEventListener("click", function (event) {
       event.preventDefault();
 
-      const targetAccordionId = this.getAttribute("data-target-accordion");
-      const targetAccordionElement = document.querySelector(targetAccordionId);
+      const targetId = this.getAttribute("data-target-accordion");
+      const targetEl = document.querySelector(targetId);
 
-      if (targetAccordionElement) {
-        // Only expand if it's currently collapsed
-        if (!targetAccordionElement.classList.contains("show")) {
-          const bsCollapse = new bootstrap.Collapse(targetAccordionElement, {
-            toggle: false,
-          });
-          bsCollapse.show();
-        }
+      if (!targetEl) return;
 
-        // --- Custom Scroll Offset Logic ---
-        const elementRect = targetAccordionElement.getBoundingClientRect();
-        const scrollPosition =
-          window.scrollY + elementRect.top - NAVBAR_HEIGHT - REM_OFFSET;
+      if (!targetEl.classList.contains("show")) {
+        new bootstrap.Collapse(targetEl, { toggle: false }).show();
+      }
 
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: "smooth",
-        });
-        // --- End Custom Scroll Offset Logic ---
+      const top =
+        window.scrollY + targetEl.getBoundingClientRect().top - navbarHeight - scrollOffset;
 
-        // Hide the SPECIFIC parent dropdown after clicking an item
-        const parentDropdownLi = this.closest(".nav-item.dropdown"); // Find the closest parent dropdown
-        if (parentDropdownLi) {
-          const parentDropdownToggle =
-            parentDropdownLi.querySelector(".dropdown-toggle");
-          const bsDropdown =
-            bootstrap.Dropdown.getInstance(parentDropdownToggle); // Get its existing instance
-          if (bsDropdown) {
-            bsDropdown.hide(); // Hide that specific dropdown
-          }
-        }
+      window.scrollTo({ top, behavior: "smooth" });
+
+      const parentDropdownToggle = this.closest(".nav-item.dropdown")
+        ?.querySelector(".dropdown-toggle");
+      if (parentDropdownToggle) {
+        bootstrap.Dropdown.getInstance(parentDropdownToggle)?.hide();
       }
     });
   });
-  // --- End Accordion Expansion & Scroll Logic ---
 });

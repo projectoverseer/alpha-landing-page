@@ -127,6 +127,12 @@ h3,
   }
 }
 
+.accordion-button:has(.mini-h3) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 h4,
 .h4 {
   line-height: $h4-line-height;
@@ -184,7 +190,7 @@ dt {
 
 dd {
   grid-column-start: 2;
-  margin: 0 0 0 $text-tab-width / 4;
+  margin: 0 0 0 $text-tab-width * 0.25;
 }
 
 // shift Bootstrap's spacers by specified values
@@ -535,8 +541,8 @@ header {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     image-set(
-      url("../anh/trang-bia/hero-1920.avif") 1x,
-      url("../anh/trang-bia/hero-3840.avif") 2x
+      url("../img/hero/hero-1920.avif") 1x,
+      url("../img/hero/hero-3840.avif") 2x
     );
   background-size: cover;
   background-color: $gray-950; // a welcoming splash color while the hero image is loading
@@ -574,55 +580,6 @@ header {
   padding-right: $container-padding-x * 0.5;
 }
 
-.portfolio-box {
-  position: relative;
-  display: block;
-  margin: 0 auto;
-
-  img {
-    border-radius: 0;
-    aspect-ratio: 13 / 7;
-  }
-
-  .portfolio-box-caption {
-    color: $text-dark;
-    opacity: 0;
-    display: block;
-    background: rgba($primary, 0.9);
-    position: absolute;
-    bottom: 0;
-
-    transition: opacity 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
-    will-change: opacity;
-
-    .portfolio-box-caption-content {
-      width: 100%;
-      position: absolute;
-      transform: translateY(-100%);
-      padding-bottom: map-get($spacers, 4);
-
-      .project-category,
-      .project-name {
-        padding: 0 17px;
-      }
-
-      .project-name {
-        margin-bottom: 0;
-      }
-
-      .project-category {
-        text-transform: uppercase;
-      }
-    }
-  }
-
-  &:hover,
-  &:focus-visible {
-    .portfolio-box-caption {
-      opacity: 1;
-    }
-  }
-}
 
 @mixin btn-default($color, $background) {
   color: $color;

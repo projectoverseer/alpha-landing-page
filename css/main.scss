@@ -72,7 +72,7 @@ $font-family-sans-serif:
 $font-family-monospace:
   ui-monospace,
   SFMono-Regular,
-  SF Mono,
+  "SF Mono",
   Menlo,
   Consolas,
   monospace;
@@ -277,8 +277,8 @@ $dropdown-link-active-state-bg: $gray-200;
 $dropdown-border-width: $border-width;
 $dropdown-border-color: $border-color;
 $dropdown-border-radius: $border-radius;
-$dropdown-toggler-icon: url("../anh/svg/ui_icons/dropdown-toggler-icon.svg");
-$dropdown-toggler-icon-dark: url("../anh/svg/ui_icons/dropdown-toggler-icon-dark.svg");
+$dropdown-toggler-icon: url("../img/svg/ui_icons/dropdown-toggler-icon.svg");
+$dropdown-toggler-icon-dark: url("../img/svg/ui_icons/dropdown-toggler-icon-dark.svg");
 
 $dropdown-item-padding-y: map-get($spacers, 1);
 $dropdown-item-padding-x: map-get($spacers, 2);
@@ -307,8 +307,8 @@ $accordion-button-focus-box-shadow: $focus-ring-box-shadow;
 
 $accordion-icon-transform: rotate(180deg);
 $accordion-icon-transition: transform 320ms cubic-bezier(0.12, 0, 0.38, 0);
-$accordion-button-icon: url("../anh/svg/ui_icons/accordion-button-icon.svg");
-$accordion-button-active-icon: url("../anh/svg/ui_icons/accordion-button-icon.svg");
+$accordion-button-icon: url("../img/svg/ui_icons/accordion-button-icon.svg");
+$accordion-button-active-icon: url("../img/svg/ui_icons/accordion-button-icon.svg");
 $transition-collapse: height 400ms ease-in-out;
 $accordion-transition:
   $btn-transition,

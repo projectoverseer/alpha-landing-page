@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r anh/ e:Gitprojectoverseeralpha-landing-page --include=*.yml --include=*.xml --include=*.js --include=*.scss)"
+    ]
+  }
+}

@@ -277,17 +277,10 @@ class SquircleRenderer {
     const radius = parseFloat(originalBorderRadius);
     const cornerSmoothing = 1;
 
-    // Skip if dimensions or radius are invalid
+    // Skip if dimensions or radius are invalid (e.g. element not yet visible)
     if (isNaN(radius) || radius <= 0 || width <= 0 || height <= 0) {
-      console.warn(
-        "Invalid dimensions or radius for squircle element (skipping squircle application):",
-        element,
-        { width, height, radius },
-      );
-      // Revert to original styles if squircle cannot be applied
       element.style.clipPath = "none";
       element.style.borderRadius = originalBorderRadius;
-      console.log(`--- Squircle Apply Skipped ---`);
       return;
     }
 

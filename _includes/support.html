@@ -1,0 +1,23 @@
+<section class="bg-primary" id="{{ t.toc_support_id }}">
+  <div class="container">
+    <h2>{{ t.support_title }}</h2>
+    <p class="big">
+      {{ t.support_call_prompt }}
+      <a href="tel:+84983505002">{{ t.display_phone }}</a>
+      {% include icon-phone.html %}
+      {{ t.support_email_prompt }}
+      <a
+        href="mailto:{{ site.email }}"
+        onclick="copyEmailToClipboard(this, '{{ t.copied_email_message }}')"
+      >{{ site.email }}</a>
+    </p>
+    <a
+      class="btn-secondary btn-xl mt-4"
+      data-squircle-radius
+      href="mailto:{{ site.email }}"
+      onclick="copyEmailToClipboard(this, '{{ t.copied_email_message }}')"
+    >
+      {{ t.support_cta }}
+    </a>
+  </div>
+</section>

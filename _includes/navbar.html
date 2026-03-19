@@ -5,32 +5,39 @@
       alt="{{ t.to_homepage }}"
       class="navbar-logo logo-white"
       height="48"
-      src="{{ site.url }}/anh/logo/logo-alpha-silhouette.svg"
+      src="{{ site.url }}/img/logo/logo-alpha-silhouette.svg"
       width="170"
     /><img
       alt="{{ t.to_homepage }}"
       class="navbar-logo logo-color"
       height="48"
-      src="{{ site.url }}/anh/logo/logo-alpha.svg"
+      src="{{ site.url }}/img/logo/logo-alpha.svg"
       width="170"
     />
   </a>
-  <div class="collapse navbar-collapse">
-    <ol class="navbar-nav ms-auto">
+
+  <button
+    aria-controls="navbar-collapse"
+    aria-expanded="false"
+    aria-label="{{ t.toc }}"
+    class="navbar-toggler"
+    data-bs-target="#navbar-collapse"
+    data-bs-toggle="collapse"
+    type="button"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbar-collapse">
+    <ul class="navbar-nav ms-auto">
       <li class="visually-hidden nav-item">
-        <a class="nav-link" href="#{{ t.toc_hero_id }}" tabindex="-1"
-          >{{ t.toc_hero }}</a
-        >
+        <a class="nav-link" href="#{{ t.toc_hero_id }}" tabindex="-1">{{ t.toc_hero }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#{{ t.toc_overview_id }}"
-          >{{ t.toc_overview }}</a
-        >
+        <a class="nav-link" href="#{{ t.toc_overview_id }}">{{ t.toc_overview }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}"
-          >{{ t.toc_benefits }}</a
-        >
+        <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}">{{ t.toc_benefits }}</a>
       </li>
       <li class="nav-item dropdown">
         <a
@@ -62,41 +69,31 @@
         </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#{{ t.toc_projects_id }}"
-          >{{ t.toc_projects }}</a
-        >
+        <a class="nav-link" href="#{{ t.toc_projects_id }}">{{ t.toc_projects }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#{{ t.toc_reviews_id }}"
-          >{{ t.toc_reviews }}</a
-        >
+        <a class="nav-link" href="#{{ t.toc_reviews_id }}">{{ t.toc_reviews }}</a>
       </li>
       <li class="visually-hidden nav-item">
-        <a class="nav-link" href="#{{ t.toc_our_story_id }}" tabindex="-1"
-          >{{ t.toc_our_story }}</a
-        >
+        <a class="nav-link" href="#{{ t.toc_our_story_id }}" tabindex="-1">{{ t.toc_our_story }}</a>
       </li>
       <li class="visually-hidden nav-item">
-        <a
-          class="nav-link"
-          href="#{{ t.toc_customer_assistance_id }}"
-          tabindex="-1"
-          >{{ t.toc_customer_assistance }}</a
-        >
+        <a class="nav-link" href="#{{ t.toc_support_id }}" tabindex="-1">{{ t.toc_support }}</a>
       </li>
-    </ol>
+    </ul>
   </div>
+
   <div class="nav-item">
     <a
       class="nav-link language-switcher"
       href="{{ t.translate_to_homeurl }}"
       hreflang="{{ t.translate_to_locale }}"
       title="Translate to {{ t.translate_to_language }}"
-      ><img
+    ><img
         alt="Translate to {{ t.translate_to_language }}"
         height="32"
-        src="{{ site.url }}/anh/svg/locale_flag/{{ t.translate_to_locale }}.svg"
+        src="{{ site.url }}/img/svg/locale_flag/{{ t.translate_to_locale }}.svg"
         width="32"
-    /></a>
+      /></a>
   </div>
 </div>

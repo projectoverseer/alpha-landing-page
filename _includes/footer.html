@@ -1,0 +1,39 @@
+<div class="container mt-16 mb-16">
+  <p class="h5">{{ t.legal_name }}</p>
+  <address class="big">
+    <dl>
+      <dt>{{ t.footer_label_phone }}:</dt>
+      <dd>
+        <a href="tel:+84983505002">{{ t.display_phone }}</a>
+        {% include icon-phone.html %}
+        <small class="text-secondary">
+          {{ t.male_title }} Tuấn&nbsp;Anh, {{ t.director_title }} {{ t.of }} Alpha
+        </small>
+      </dd>
+      <dt>{{ t.footer_label_email }}:</dt>
+      <dd>
+        <a
+          href="mailto:{{ site.email }}"
+          onclick="copyEmailToClipboard(this, '{{ t.copied_email_message }}')"
+        >{{ site.email }}</a>
+      </dd>
+      <dt>{{ t.footer_label_socials }}:</dt>
+      <dd>
+        <a
+          href="{{ site.facebook_page }}"
+          rel="nofollow noopener external"
+          target="_blank"
+        >Alpha Software | Facebook</a>
+        {% include icon-external-link.html %}
+      </dd>
+      <dt>{{ t.footer_label_hours }}:</dt>
+      <dd>8:00 &ndash; 11:00 ({{ t.footer_hours_morning }})</dd>
+      <dd>13:00 &ndash; 16:00 ({{ t.footer_hours_afternoon }})</dd>
+    </dl>
+  </address>
+</div>
+<div class="container-fluid px-0 pt-2 pb-2 bg-gray-100">
+  <div class="container">
+    <small class="copyright-text">{{ t.copyright_notice }}</small>
+  </div>
+</div>

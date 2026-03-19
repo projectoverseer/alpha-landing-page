@@ -1,12 +1,10 @@
-<meta charset="utf-8" />
-
-<!-- HTML Metadata -->
+<!-- Viewport & Encoding -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="{{ t.social_description }}" name="description" />
 <meta content="{{ t.keywords }}, Alpha Software" name="keywords" />
 <meta content="index, follow" name="robots" />
 
-<!-- Open Graph and Organization-Type Microdata -->
+<!-- Open Graph & Organization Microdata -->
 <meta
   content="https://www.alphasoftwaregroup.com/#organization"
   itemprop="@id"
@@ -20,15 +18,15 @@
   property="og:url"
 />
 <meta
-  content="https://www.alphasoftwaregroup.com/apple-touch-icon.png"
+  content="https://www.alphasoftwaregroup.com/img/logo/alpha-open-graph.png"
   itemprop="logo"
 />
 <meta
-  content="https://www.alphasoftwaregroup.com/anh/logo/alpha-open-graph.png"
+  content="https://www.alphasoftwaregroup.com/img/logo/alpha-open-graph.png"
   itemprop="image"
   property="og:image"
 />
-<meta content="{{ page.lang }}" property="og:locale" />
+<meta content="{{ t.og_locale }}" property="og:locale" />
 
 <meta content="Phan Đức Tuấn Anh" itemprop="founder" />
 <meta content="2021-01-20" itemprop="foundingDate" />
@@ -46,14 +44,28 @@
   property="og:description"
 />
 
-<!-- Twitter Meta Tags -->
+<!-- Twitter / X Card -->
 <meta content="summary_large_image" name="twitter:card" />
-<meta content="Alpha Software - {{ t.slogan }}" name="twitter:title" />
+<meta content="Alpha Software: {{ t.slogan }}" name="twitter:title" />
 <meta content="{{ t.twitter_description }}" name="twitter:description" />
 <meta
-  content="https://www.alphasoftwaregroup.com/anh/logo/alpha-open-graph.png"
+  content="https://www.alphasoftwaregroup.com/img/logo/alpha-open-graph.png"
   name="twitter:image"
 />
+
+<!-- Hreflang — bilingual alternates -->
+<link rel="alternate" hreflang="vi" href="https://www.alphasoftwaregroup.com/" />
+<link rel="alternate" hreflang="en" href="https://www.alphasoftwaregroup.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://www.alphasoftwaregroup.com/" />
+
+<!-- Canonical -->
+<link
+  href="https://www.alphasoftwaregroup.com{{ t.homeurl }}"
+  rel="canonical"
+/>
+
+<!-- Stylesheet -->
+<link href="{{ site.url }}/css/main.css" rel="stylesheet" />
 
 <!-- Structured Data -->
 <script type="application/ld+json">
@@ -77,9 +89,3 @@
     "url": "https://www.alphasoftwaregroup.com{{ t.homeurl }}"
   }
 </script>
-
-<link
-  href="https://www.alphasoftwaregroup.com{{ t.homeurl }}"
-  rel="canonical"
-/>
-<link href="{{ site.url }}/css/main.css" rel="stylesheet" />

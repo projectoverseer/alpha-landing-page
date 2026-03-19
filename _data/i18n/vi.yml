@@ -1,4 +1,5 @@
 homeurl: "/"
+og_locale: "vi_VN"
 legal_name: "Công ty TNHH Phát triển Phần mềm Alpha"
 display_phone: "0983.50.50.02"
 copyright_notice: "Bản quyền &copy; 2025 Alpha Software. Bảo lưu mọi quyền."
@@ -13,6 +14,7 @@ slogan: "Chuyển đổi số ngành dệt nhuộm"
 description: "Alpha Software đang tái định nghĩa cách quản lý sản xuất trong ngành dệt may tại Việt Nam bằng hệ thống phần mềm tự động hoá tiên tiến, thiết kế riêng cho từng quy trình. Phần mềm giúp giảm thiểu lỗi thủ công, lập kế hoạch trực quan, kết nối thiết bị sản xuất và tối ưu hoá hiệu quả. Chúng tôi đồng hành cùng nhà máy dệt may nâng cao chất lượng, gia tăng sản lượng và rút ngắn thời gian giao hàng, góp phần đưa Việt Nam trở thành cường quốc sản xuất dệt may."
 learn_more: "Tìm hiểu thêm"
 learn_more_aria: "Tìm hiểu thêm về Alpha Software"
+
 toc: "Mục lục"
 toc_hero: "Xin chào"
 toc_hero_id: "xin-chao"
@@ -28,37 +30,55 @@ toc_reviews: "Đánh giá của khách hàng"
 toc_reviews_id: "danh-gia-cua-khach-hang"
 toc_our_story: "Câu chuyện của Alpha Software"
 toc_our_story_id: "cau-chuyen-cua-alpha-software"
-toc_customer_assistance: "Chăm sóc khách hàng"
-toc_customer_assistance_id: "cham-soc-khach-hang"
+toc_support: "Chăm sóc khách hàng"
+toc_support_id: "cham-soc-khach-hang"
+toc_footer_id: "ket-noi-voi-alpha-software"
 translate_to_homeurl: "/en"
 translate_to_locale: "en"
 translate_to_language: "English"
 
+# --- Overview Section ---
+
 overview_title: "Giới&nbsp;thiệu phần&nbsp;mềm quản&nbsp;lý nhà&nbsp;máy thông&nbsp;minh của Alpha&nbsp;Software"
-hjk_1: "Lập&nbsp;kế&nbsp;hoạch sản&nbsp;xuất trực&nbsp;quan"
-hjk_2: "Thao tác lập kế hoạch, điều chỉnh kế hoạch được thực hiện một cách dễ dàng nhanh chóng bằng cách kéo-thả."
-hjk_3: "Khi có sự điều chỉnh kế hoạch của một mẻ hàng, toàn bộ bảng kế hoạch sẽ được tự động điều chỉnh theo. Điều này giúp bảng kế hoạch có sự đồng bộ tuyệt đối."
-hjk_4: "Bảng triển khai kế hoạch tại nơi sản xuất thể hiện trực quan và kiểm soát việc tuân thủ trình tự đã được lập."
-hjk_5: "Quản&nbsp;lý công&nbsp;nghệ thông&nbsp;minh"
-hjk_6: "Có công cụ để người kỹ thuật trưởng lưu trữ tri thức công nghệ của công ty vào phần mềm."
-hjk_7: "Phần mềm sẽ tìm kiếm chính xác công nghệ áp dụng cho mẻ hàng thông qua chỉ một cú click chuột. Điều này không những giúp công ty giảm được quy mô nhân sự có trình độ kỹ thuật cao mà còn giúp tất cả các mẻ hàng được xử lý với công nghệ đồng nhất, từ đó ổn định chất lượng."
-hjk_8: "Tích&nbsp;hợp với các thiết&nbsp;bị&nbsp;sản&nbsp;xuất, thiết&nbsp;bị&nbsp;phòng&nbsp;lab"
-hjk_9: "Với các thiết bị vận hành tự động nhưng độc lập, chúng tôi có thể giúp kết nối vào hệ thống phần mềm để hình thành một hệ thống nhất."
-hjk_10: "Chúng tôi cũng có thể giúp cải tạo các thiết bị đang vận hành bằng tay thông qua công tắc và nút nhấn thành điều kiển tự động theo quy trình và kết nối với hệ thống phần mềm."
-hjk_11: "Tuỳ&nbsp;chỉnh phù&nbsp;hợp cho từng nhà&nbsp;máy"
-hjk_12: "Hiểu rằng mỗi nhà máy có hệ thống quản lý khác nhau, chúng tôi luôn khảo sát kỹ càng để thiết kế và triển khai cho phù hợp, liên tục cải tiến để giúp hoạt động của nhà máy ngày càng hiệu quả hơn."
-hjk_13: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
-hjk_14: "Rất dễ sử&nbsp;dụng!"
-hjk_15: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người—từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
+
+feature_tech_mgmt_title: "Quản&nbsp;lý công&nbsp;nghệ thông&nbsp;minh"
+feature_tech_mgmt_point_1: "Có công cụ để người kỹ thuật trưởng lưu trữ tri thức công nghệ của công ty vào phần mềm."
+feature_tech_mgmt_point_2: "Phần mềm sẽ tìm kiếm chính xác công nghệ áp dụng cho mẻ hàng thông qua chỉ một cú click chuột. Điều này không những giúp công ty giảm được quy mô nhân sự có trình độ kỹ thuật cao mà còn giúp tất cả các mẻ hàng được xử lý với công nghệ đồng nhất, từ đó ổn định chất lượng."
+
+feature_planning_title: "Lập&nbsp;kế&nbsp;hoạch sản&nbsp;xuất trực&nbsp;quan"
+feature_planning_point_1: "Thao tác lập kế hoạch, điều chỉnh kế hoạch được thực hiện một cách dễ dàng nhanh chóng bằng cách kéo-thả."
+feature_planning_point_2: "Khi có sự điều chỉnh kế hoạch của một mẻ hàng, toàn bộ bảng kế hoạch sẽ được tự động điều chỉnh theo. Điều này giúp bảng kế hoạch có sự đồng bộ tuyệt đối."
+feature_planning_point_3: "Bảng triển khai kế hoạch tại nơi sản xuất thể hiện trực quan và kiểm soát việc tuân thủ trình tự đã được lập."
+
+feature_equipment_integration_title: "Tích&nbsp;hợp với các thiết&nbsp;bị&nbsp;sản&nbsp;xuất, thiết&nbsp;bị&nbsp;phòng&nbsp;lab"
+feature_equipment_integration_point_1: "Với các thiết bị vận hành tự động nhưng độc lập, chúng tôi có thể giúp kết nối vào hệ thống phần mềm để hình thành một hệ thống nhất."
+feature_equipment_integration_point_2: "Chúng tôi cũng có thể giúp cải tạo các thiết bị đang vận hành bằng tay thông qua công tắc và nút nhấn thành điều kiển tự động theo quy trình và kết nối với hệ thống phần mềm."
+
+feature_customization_title: "Tuỳ&nbsp;chỉnh phù&nbsp;hợp cho từng nhà&nbsp;máy"
+feature_customization_point_1: "Hiểu rằng mỗi nhà máy có hệ thống quản lý khác nhau, chúng tôi luôn khảo sát kỹ càng để thiết kế và triển khai cho phù hợp, liên tục cải tiến để giúp hoạt động của nhà máy ngày càng hiệu quả hơn."
+feature_customization_point_2: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
+
+feature_ease_of_use_title: "Rất dễ sử&nbsp;dụng!"
+feature_ease_of_use_desc: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người—từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
+
+# --- Benefits Section ---
+
 benefits_title: "Vì sao nhà&nbsp;máy cần Alpha&nbsp;Software"
-hjk_16: "Cải&nbsp;thiện rõ&nbsp;rệt chất&nbsp;lượng sản&nbsp;phẩm"
-hjk_17: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time).</strong>"
-hjk_18: "Giảm thiểu rủi&nbsp;ro sai&nbsp;sót của công&nbsp;nhân"
-hjk_19: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha Software có khả năng ngăn ngừa lỗi rất cao."
-hjk_20: "Giảm&nbsp;thiểu nhu&nbsp;cầu nhân&nbsp;sự"
-hjk_21: "Trong quá trình khảo sát và phát triển phần mềm, chúng tôi sẽ nhận diện những thao tác nào có thể được phần mềm tự động thực hiện. Nhờ đó làm giảm nhu cầu và chi phí nhân sự."
-hjk_22: "Tích&nbsp;hợp với các thiết&nbsp;bị có sẵn"
-hjk_23: "Chúng tôi có trình độ và kinh nghiệm để kết nối với các thiết bị tự động hoặc cải tạo thiết bị đang vận hành bằng công tắc tay thành vận hành tự động. Nhờ đó giảm nhu cầu nhân sự có trình độ tay nghề cao và giảm thao tác sai của người vận hành."
+
+benefit_quality_title: "Cải&nbsp;thiện rõ&nbsp;rệt chất&nbsp;lượng sản&nbsp;phẩm"
+benefit_quality_desc: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time).</strong>"
+
+benefit_staffing_costs_title: "Giảm&nbsp;thiểu nhu&nbsp;cầu nhân&nbsp;sự"
+benefit_staffing_costs_desc: "Trong quá trình khảo sát và phát triển phần mềm, chúng tôi sẽ nhận diện những thao tác nào có thể được phần mềm tự động thực hiện. Nhờ đó làm giảm nhu cầu và chi phí nhân sự."
+
+benefit_error_reduction_title: "Giảm thiểu rủi&nbsp;ro sai&nbsp;sót của công&nbsp;nhân"
+benefit_error_reduction_desc: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha Software có khả năng ngăn ngừa lỗi rất cao."
+
+benefit_equipment_retrofit_title: "Tích&nbsp;hợp với các thiết&nbsp;bị có sẵn"
+benefit_equipment_retrofit_desc: "Chúng tôi có trình độ và kinh nghiệm để kết nối với các thiết bị tự động hoặc cải tạo thiết bị đang vận hành bằng công tắc tay thành vận hành tự động. Nhờ đó giảm nhu cầu nhân sự có trình độ tay nghề cao và giảm thao tác sai của người vận hành."
+
+# --- Products Section ---
+
 products_title: "Các sản&nbsp;phẩm của Alpha&nbsp;Software"
 product_1: "Hệ&nbsp;thống quản&nbsp;lý nhà&nbsp;máy Alpha Smart Dyehouse"
 alpha_smart_dyehouse: '<span class="mini-h3">Hệ&nbsp;thống quản&nbsp;lý nhà&nbsp;máy </span>Alpha Smart Dyehouse'
@@ -149,10 +169,7 @@ alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
                 tử miễn là có chức năng truyền dữ liệu về máy tính.
               </li>
               <li>
-                <b
-                  >Thích nghi với sai lệch cường độ màu giữa các lô thuốc
-                  nhuộm:</b
-                >
+                <b>Thích nghi với sai lệch cường độ màu giữa các lô thuốc nhuộm:</b>
                 Các lô thuốc nhuộm mua vào thường có cường độ màu sai lệch từ 3%
                 đến 5% so với lô gốc. Phần mềm tự động điều chỉnh để thích nghi
                 với sự dao động này, giúp tránh lỗi sai màu khi chuyển sang sử
@@ -165,10 +182,14 @@ alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
                 tăng tính linh hoạt cho từng nhà máy.
               </li>
             </ul>'
+
+# --- Projects Section ---
+
 projects_title: "Các dự&nbsp;án của Alpha&nbsp;Software"
-hjk_24: "Công ty TNHH Chỉ may Tuấn Hồng"
-hjk_25: 'Tuấn Hồng'
-hjk_26: '<p>Các thành phần phần mềm:</p>
+
+project_tuan_hong_company_name: "Công ty TNHH Chỉ may Tuấn Hồng"
+project_tuan_hong_short_name: 'Tuấn Hồng'
+project_tuan_hong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
@@ -178,9 +199,10 @@ hjk_26: '<p>Các thành phần phần mềm:</p>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
         </ul>'
-hjk_27: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng Đông"
-hjk_28: 'Dũng Đông'
-hjk_29: '<p>Các thành phần phần mềm:</p>
+
+project_dung_dong_company_name: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng Đông"
+project_dung_dong_short_name: 'Dũng Đông'
+project_dung_dong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
@@ -196,9 +218,10 @@ hjk_29: '<p>Các thành phần phần mềm:</p>
             mềm quản lý sản xuất
           </li>
         </ul>'
-hjk_30: "Công ty TNHH Nhuộm Spica"
-hjk_31: 'Spica'
-hjk_32: '<p>Các thành phần phần mềm:</p>
+
+project_spica_company_name: "Công ty TNHH Nhuộm Spica"
+project_spica_short_name: 'Spica'
+project_spica_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
@@ -214,11 +237,17 @@ hjk_32: '<p>Các thành phần phần mềm:</p>
             bơm chính từ phần mềm quản lý sản xuất
           </li>
         </ul>'
+
+# --- Reviews Section ---
+
 reviews_title: "Khách&nbsp;hàng nhận&nbsp;xét gì về Alpha&nbsp;Software?"
 female_title: "Bà"
 male_title: "Ông"
 of: ""
-hjk_33: '<p>Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với các thiết bị nhuộm
+reviewer_1_job_title: "Phó Tổng Giám&nbsp;đốc"
+reviewer_2_job_title: "Trợ&nbsp;lý Giám&nbsp;đốc"
+
+review_nguyen_thi_nga_body: '<p>Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với các thiết bị nhuộm
             như máy Spectro, máy hút màu và controller máy nhuộm, từ đó giảm
             thiểu lỗi thao tác thủ công. Việc quản lý công thức nhuộm trở nên dễ
             dàng hơn, lập kế hoạch nhuộm chính xác và kiểm soát toàn bộ quy
@@ -226,16 +255,19 @@ hjk_33: '<p>Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với c
           <p>Sau khi triển khai phần mềm, tỷ lệ nhuộm đạt ngay lần đầu (RFT) tăng
             từ 80% lên 90% theo mẻ, và từ 90% lên 95% theo khối lượng—hướng đến
             mục tiêu đạt 93% và 98% trong thời gian tới.</p>'
-co_title_1: "Phó Tổng Giám&nbsp;đốc<br />"
-hjk_34: '<p>Phần mềm Alpha Software hỗ trợ rất tốt cho công ty, nhất là
+
+review_dinh_van_hiep_body: '<p>Phần mềm Alpha Software hỗ trợ rất tốt cho công ty, nhất là
             công ty sản xuất nhiều công đoạn. Hơn nữa, Alpha thì có lợi thế hơn
             những phần mềm quản lý khác do có thể tuỳ biến linh hoạt và chi tiết
             theo yêu cầu của người sử dụng. Mọi thông số đều rất rõ ràng và chi
             tiết.</p>'
-co_title_2: "Trợ&nbsp;lý Giám&nbsp;đốc<br />"
+
+# --- Our Story Section ---
+
 our_story_title: "Câu&nbsp;chuyện của Alpha&nbsp;Software"
-co_title_3: "Nhà sáng lập"
-hjk_35: '<p class="mt-md-0">
+founder_title: "Nhà sáng lập"
+
+our_story_body: '<p class="mt-md-0">
           Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn
           Anh, người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
           may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
@@ -244,15 +276,21 @@ hjk_35: '<p class="mt-md-0">
           giúp chúng tôi cung cấp các giải pháp công nghệ thực tiễn đáp ứng nhu
           cầu của các doanh nghiệp dệt may hiện đại.
         </p>'
+
+# --- Support Section ---
+
 support_title: "Chúng&nbsp;tôi rất hân&nbsp;hạnh được hỗ&nbsp;trợ bạn!"
-hjk_36: "Hãy gọi"
-hjk_37: "để cho phép chúng tôi tư vấn bạn miễn phí hoặc gửi các câu hỏi của bạn qua địa chỉ"
-cta_1: "Gửi câu hỏi đến Alpha&nbsp;Software"
-hjk_38: "Số điện thoại"
-co_title_4: "Giám&nbsp;đốc"
-hjk_39: "Email"
-hjk_40: "Mạng xã hội"
-hjk_41: "Thời gian hoạt động"
-hjk_42: "sáng"
-hjk_43: "chiều"
+support_call_prompt: "Hãy gọi"
+support_email_prompt: "để cho phép chúng tôi tư vấn bạn miễn phí hoặc gửi các câu hỏi của bạn qua địa chỉ"
+support_cta: "Gửi câu hỏi đến Alpha&nbsp;Software"
+
+# --- Footer ---
+
+footer_label_phone: "Số điện thoại"
+director_title: "Giám&nbsp;đốc"
+footer_label_email: "Email"
+footer_label_socials: "Mạng xã hội"
+footer_label_hours: "Thời gian hoạt động"
+footer_hours_morning: "sáng"
+footer_hours_afternoon: "chiều"
 copied_email_message: "Đã copy địa chỉ email!"
