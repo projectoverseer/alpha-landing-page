@@ -46,13 +46,19 @@ html {
 }
 
 section {
-  padding: map-get($spacers, 24) 0;
+  padding: map-get($spacers, 10) 0;
 
   @include media-breakpoint-up(md) {
+    padding: map-get($spacers, 16) 0;
+
     p,
     li {
       max-width: 36rem;
     }
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: map-get($spacers, 24) 0;
   }
 }
 
@@ -65,6 +71,24 @@ section {
   --input-inner-shadow:
     inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.skip-link {
+  position: fixed;
+  top: map-get($spacers, 2);
+  left: map-get($spacers, 2);
+  z-index: 9999;
+  padding: map-get($spacers, 2) map-get($spacers, 3);
+  background: $focus-ring-color;
+  color: $white;
+  border-radius: $border-radius-lg;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:focus {
+    outline: 2px solid $white;
+    outline-offset: 2px;
+  }
 }
 
 .select-disabled,
@@ -128,9 +152,34 @@ h3,
 }
 
 .accordion-button:has(.mini-h3) {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  /* Product name (the text node / non-.mini-h3 content) renders at heading scale */
+  font-size: $h3-font-size;
+  font-weight: $headings-font-weight;
+  letter-spacing: -0.01em;
+  line-height: $h3-line-height;
+
+  /* Reserve space on the right so long product names never slide under the arrow */
+  padding-right: calc(#{$accordion-padding-x} + #{$accordion-icon-width} + #{map-get($spacers, 3)});
+
+  /* Lift the arrow out of column flow and pin it to the vertical centre of the
+     whole button regardless of how tall the two-line heading grows */
+  &::after {
+    position: absolute;
+    right: $accordion-padding-x;
+    top: 50%;
+    margin-left: 0;
+    transform: translateY(-50%);
+  }
+
+  /* When open: keep centred AND rotate 180° */
+  &:not(.collapsed)::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
 }
 
 h4,
@@ -166,6 +215,213 @@ big,
 .prose {
   font-size: $font-size-lg;
   line-height: $line-height-lg;
+
+  // Override narrow p/li max-width set on sections — prose containers manage their own width
+  p,
+  li {
+    max-width: none;
+  }
+
+  // Breathing room between block elements
+  p + p,
+  p + ul,
+  p + ol,
+  p + table,
+  p + .video-embed,
+  ul + p,
+  ol + p,
+  table + p {
+    margin-top: 1em;
+  }
+
+  h2, h3, h4, h5, h6 {
+    &:not(:first-child) {
+      margin-top: 1.5em;
+    }
+  }
+
+  // Tables — readable and responsive
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: map-get($spacers, 2) map-get($spacers, 3);
+    border-bottom: $border-width solid $border-color;
+    vertical-align: top;
+  }
+
+  th {
+    font-weight: 600;
+    border-bottom-width: 2px;
+    border-bottom-color: $gray-400;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  // Responsive 16:9 video / iframe embeds
+  // Usage: wrap <iframe> or <video> in <div class="video-embed">
+  .video-embed {
+    position: relative;
+    padding-bottom: 56.25%; // 16:9
+    height: 0;
+    overflow: hidden;
+    border-radius: $border-radius-xl;
+    margin-top: 1.5em;
+    background: $gray-950;
+
+    iframe,
+    video,
+    embed,
+    object {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+
+  // Standalone video element without wrapper
+  video {
+    max-width: 100%;
+    height: auto;
+    border-radius: $border-radius-xl;
+    display: block;
+    margin-top: 1.5em;
+  }
+
+  // Code blocks
+  pre {
+    background: $gray-100;
+    border-radius: $border-radius-lg;
+    padding: map-get($spacers, 3) map-get($spacers, 4);
+    overflow-x: auto;
+    margin-top: 1em;
+    font-family: $font-family-monospace;
+    font-size: $font-size-sm;
+    line-height: $line-height-sm;
+    tab-size: 2;
+  }
+
+  code {
+    font-family: $font-family-monospace;
+    font-size: 0.875em;
+    background: $gray-100;
+    border-radius: $border-radius-sm;
+    padding: 0.125em 0.3125em;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+    border-radius: 0;
+  }
+
+  // Figures (images with captions)
+  figure {
+    margin: 1.5em 0;
+    width: auto;
+    max-width: 100%;
+
+    img {
+      border-radius: $border-radius-xl;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    figcaption {
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      margin-top: map-get($spacers, 1);
+      padding-left: 0;
+    }
+  }
+
+  // Horizontal rule
+  hr {
+    border: none;
+    border-top: $border-width solid $border-color;
+    margin: 2em 0;
+  }
+
+  // Highlighted text
+  mark {
+    background: rgba($accent, 0.2);
+    border-radius: $border-radius-xs;
+    padding: 0.0625em 0.25em;
+    color: inherit;
+  }
+
+  // Images outside figures
+  img:not(.bi) {
+    max-width: 100%;
+    height: auto;
+    border-radius: $border-radius-xl;
+  }
+
+  // Collapsible / details-summary (native HTML collapsible)
+  details {
+    border: $border-width solid $border-color;
+    border-radius: $border-radius-xl;
+    padding: map-get($spacers, 3) map-get($spacers, 4);
+    margin-top: 1em;
+
+    summary {
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: map-get($spacers, 2);
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background-image: url("../img/svg/ui_icons/accordion-button-icon.svg");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        transition: transform 240ms ease;
+        flex-shrink: 0;
+      }
+    }
+
+    &[open] > summary::before {
+      transform: rotate(180deg);
+    }
+
+    &[open] > summary {
+      margin-bottom: map-get($spacers, 3);
+    }
+  }
+
+  // Blockquotes within prose (nested/inline, not the review blockquotes)
+  blockquote {
+    border-left: 3px solid $primary;
+    padding-left: map-get($spacers, 4);
+    margin-left: 0;
+    font-style: italic;
+    color: $text-secondary;
+  }
 }
 
 b,
@@ -337,6 +593,21 @@ blockquote > :last-child:after {
   padding-left: $text-tab-width;
 }
 
+/* ─── Navbar ─── */
+
+/* The hamburger toggler is intentionally disabled — no collapsible mobile menu. */
+.navbar-toggler {
+  display: none;
+}
+
+/* ─── Accordion ─── */
+
+/* Accordion headers are <h3> elements and would inherit the global h* max-width.
+   Remove it so the header fills its parent at any viewport width. */
+.accordion-header {
+  max-width: none;
+}
+
 .accordion-item:first-of-type > :first-child {
   border-top-left-radius: $accordion-inner-border-radius;
   border-top-right-radius: $accordion-inner-border-radius;
@@ -383,17 +654,27 @@ blockquote > :last-child:after {
 
 .dropdown-item {
   font-weight: $nav-link-font-weight;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
 
   &:focus-visible {
-    outline: none;
+    outline: $focus-ring-outline;
+    outline-offset: -2px;
   }
 }
 
 .dropdown-toggle {
-  &:focus,
-  &:focus-visible {
+  /* Hide focus ring on mouse/pointer interaction, but preserve it for keyboard navigation */
+  &:focus:not(:focus-visible) {
     outline: 0 !important;
-    box-shadow: none !important; /* Remove any box-shadow used for focus outline by Bootstrap */
+    box-shadow: none !important;
+  }
+
+  &:focus-visible {
+    outline: $focus-ring-outline;
+    box-shadow: none;
   }
 
   &:after {
@@ -449,9 +730,22 @@ section.bg-dark {
   box-shadow: var(--box-shadow-menu);
   height: 64px;
 
-  .navbar-logo {
+  .navbar-brand {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 170px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .navbar-logo {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     border-radius: 0;
+    transition: opacity 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
   }
 
   .logo-white {
@@ -459,7 +753,6 @@ section.bg-dark {
   }
 
   .logo-color {
-    margin-left: -170px;
     opacity: 1;
   }
 
@@ -586,26 +879,29 @@ header {
   background: $background;
 }
 
-a.btn-xl {
-  display: inline-block;
+:is(a, button).btn-xl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0 $input-btn-padding-x;
   height: map-get($scales, 7);
   min-width: 30px;
   font-family: $btn-font-family;
   font-size: $input-btn-font-size;
-  line-height: map-get($scales, 7);
+  line-height: 1;
   text-align: center;
   cursor: pointer;
   user-select: none;
   text-decoration: none;
   border-radius: $btn-border-radius;
+  border: none;
 
   &:hover {
     text-decoration: none;
   }
 }
 
-a.btn-secondary {
+:is(a, button).btn-secondary {
   @include btn-default(#000, $text-dark);
 
   &:hover {
@@ -619,7 +915,7 @@ a.btn-secondary {
   }
 }
 
-a.btn-primary {
+:is(a, button).btn-primary {
   @include btn-default($white, $btn-primary-color);
 
   &:hover {

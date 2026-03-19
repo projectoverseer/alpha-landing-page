@@ -2,13 +2,15 @@
   <a class="navbar-brand" href="{{ t.homeurl }}">
     <span class="visually-hidden">Alpha Software</span>
     <img
-      alt="{{ t.to_homepage }}"
+      alt=""
+      aria-hidden="true"
       class="navbar-logo logo-white"
       height="48"
       src="{{ site.url }}/img/logo/logo-alpha-silhouette.svg"
       width="170"
     /><img
-      alt="{{ t.to_homepage }}"
+      alt=""
+      aria-hidden="true"
       class="navbar-logo logo-color"
       height="48"
       src="{{ site.url }}/img/logo/logo-alpha.svg"
@@ -51,20 +53,22 @@
         </a>
         <ul class="dropdown-menu">
           <li>
-            <div
-              class="a dropdown-item"
+            <button
+              class="dropdown-item"
               data-target-accordion="#collapse-alpha-smart-dyehouse"
+              type="button"
             >
               {{ t.product_1 }}
-            </div>
+            </button>
           </li>
           <li>
-            <div
-              class="a dropdown-item"
+            <button
+              class="dropdown-item"
               data-target-accordion="#collapse-alpha-dyes-weighing"
+              type="button"
             >
               {{ t.product_2 }}
-            </div>
+            </button>
           </li>
         </ul>
       </li>

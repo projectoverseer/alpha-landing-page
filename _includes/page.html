@@ -2,6 +2,7 @@
 
 <!doctype html>
 <html
+  itemid="https://www.alphasoftwaregroup.com/#organization"
   itemscope
   itemtype="https://schema.org/Organization"
   lang="{{ page.lang }}"
@@ -43,6 +44,7 @@
     data-bs-spy="scroll"
     data-bs-target="#navbar"
   >
+    <a class="skip-link visually-hidden-focusable" href="#main-content">{{ t.skip_to_content }}</a>
     <!--
       This hidden element preserves Bootstrap dynamic class names (active, show, collapsing)
       and the translated_review_disclaimer class for the CSS build/purge pipeline.
@@ -51,7 +53,7 @@
 
     <nav
       aria-label="{{ t.toc }}"
-      class="navbar fixed-top navbar-expand-md"
+      class="navbar fixed-top navbar-expand-lg"
       data-bs-theme="dark"
       dir="ltr"
       id="navbar"
@@ -59,7 +61,7 @@
       {% include navbar.html %}
     </nav>
 
-    <main>
+    <main id="main-content">
       {% include hero.html %}
       {% include overview.html %}
       {% include benefits.html %}
