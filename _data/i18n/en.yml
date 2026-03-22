@@ -2,7 +2,7 @@ homeurl: "/en"
 og_locale: "en_US"
 legal_name: "Alpha Software Development Company Limited"
 display_phone: "(+84) 983 505 002"
-copyright_notice: "Copyright &copy; 2025 Alpha Software. All rights reserved."
+copyright_notice: "Copyright &copy; 2026 Alpha Software. All rights reserved."
 
 social_description: "Alpha Software pioneers the future of textile manufacturing in Vietnam with cutting-edge automation and intelligent software solutions."
 twitter_description: "Revolutionizing Vietnam's textile industry with smart, custom-built automation software."
@@ -18,22 +18,22 @@ learn_more_aria: "Learn more about Alpha Software"
 
 toc: "Table of contents"
 toc_hero: "Welcome to Alpha Software"
-toc_hero_id: "welcome-to-alpha-software"
+toc_hero_id: "home"
 toc_overview: "Overview"
 toc_overview_id: "overview"
 toc_benefits: "Benefits"
 toc_benefits_id: "benefits"
 toc_products: "Our Product Catalogue"
-toc_products_id: "our-product-catalogue"
+toc_products_id: "products"
 toc_projects: "Our Projects"
-toc_projects_id: "our-projects"
+toc_projects_id: "projects"
 toc_reviews: "Reviews"
-toc_reviews_id: "customer-reviews"
+toc_reviews_id: "reviews"
 toc_our_story: "The Story of Alpha Software"
-toc_our_story_id: "the-story-of-alpha-software"
+toc_our_story_id: "about-us"
 toc_support: "Customer Assistance"
-toc_support_id: "customer-assistance"
-toc_footer_id: "connect-with-alpha-software"
+toc_support_id: "support"
+toc_footer_id: "contact"
 translate_to_homeurl: "/"
 translate_to_locale: "vi"
 translate_to_language: "Vietnamese"
@@ -204,13 +204,13 @@ reviewer_2_job_title: "Assistant to the Director"
 translated_review_disclaimer: '<div class="translated_review_disclaimer"><a href="https://www.alphasoftwaregroup.com/#danh-gia-cua-khach-hang" rel="nofollow noopener" target="_blank">Show original review in Vietnamese</a></div>'
 
 review_nguyen_thi_nga_body: '<p>Alpha Software has helped SPICA effectively connect with dyeing equipment such as Spectro machines, color extraction devices, and dyeing machine controllers, thereby minimizing manual operation errors. Managing dyeing recipes has become much easier, enabling accurate dyeing plans and tightly controlled processes through QR codes and an intuitive reporting system.</p>
-  <p>After implementing the software, our first-time-right dyeing rate (RFT) increased from 80% to 90% per batch, and from 90% to 95% by volume — moving steadily toward our targets of 93% and 98% in the near future.</p>'
+  <p>After implementing the software, our right-first-time dyeing rate (RFT) increased from 80% to 90% per batch, and from 90% to 95% by volume — moving steadily toward our targets of 93% and 98% in the near future.</p>'
 
 review_dinh_van_hiep_body: '<p>Alpha Software has been a great support to our company, especially as a business with many production stages. Additionally, Alpha stands out from other management software due to its flexibility and detailed customization based on user requirements. Every parameter is clearly and precisely presented.</p>'
 
 # --- Our Story Section ---
 
-our_story_title: "The Story of Alpha&nbsp;Software"
+our_story_title: "About Alpha&nbsp;Software"
 founder_title: "Founder"
 
 our_story_body: '<p class="mt-md-0">Alpha Software was founded in 2021 by Mr. Phan Duc Tuan Anh, who has over 28 years of practical experience in the textile industry—including 13 years as a dyeing technician and 15 years as a factory director. With a strong background in Organic Chemistry and a deep understanding of factory management and software development, Mr. Tuan Anh has helped us provide practical technology solutions that meet the needs of modern textile enterprises.</p>'
@@ -228,7 +228,7 @@ footer_label_phone: "Phone number"
 director_title: "Director"
 footer_label_email: "Email"
 footer_label_socials: "Socials"
-footer_label_hours: "Hours of operation"
+footer_label_hours: "Working hours"
 footer_hours_morning: "Morning"
 footer_hours_afternoon: "Afternoon"
 copied_email_message: "Email copied successfully!"

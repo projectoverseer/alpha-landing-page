@@ -21,7 +21,8 @@ class SquircleRenderer {
   }
 
   /**
-   * Tagged template literal to format numbers in SVG paths to 6 decimal places.
+   * Tagged template literal to format numbers in SVG paths to 2 decimal places.
+   * 2 decimal places = 0.01px CSS precision = 0.005px on retina — imperceptible.
    * @param {TemplateStringsArray} strings
    * @param {...number[]} values
    * @returns {string} Formatted SVG path segment
@@ -30,7 +31,7 @@ class SquircleRenderer {
     return strings.reduce((acc, str, i) => {
       const value = values[i];
       if (typeof value === "number") {
-        return acc + str + value.toFixed(6);
+        return acc + str + value.toFixed(2);
       } else {
         return acc + str + (value ?? "");
       }
@@ -275,7 +276,9 @@ class SquircleRenderer {
     const height = rect.height;
 
     const radius = parseFloat(originalBorderRadius);
-    const cornerSmoothing = 1;
+    // 0.6 = Apple's iOS squircle (60% corner smoothing), the established
+    // reverse-engineered value. 1.0 would be a pure bezier with no arc (too smooth).
+    const cornerSmoothing = 0.6;
 
     // Skip if dimensions or radius are invalid (e.g. element not yet visible)
     if (isNaN(radius) || radius <= 0 || width <= 0 || height <= 0) {

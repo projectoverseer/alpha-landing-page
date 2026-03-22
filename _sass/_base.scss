@@ -53,7 +53,7 @@ section {
 
     p,
     li {
-      max-width: 36rem;
+      max-width: 65ch;
     }
   }
 
@@ -108,20 +108,36 @@ section {
   color: $text-tertiary !important;
 }
 
+
 h1,
+.h1 {
+  max-width: 25ch;
+}
+
 h2,
 h3,
 h4,
 h5,
 h6,
-.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  max-width: 35ch;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6,
 .h2,
 .h3,
 .h4,
 .h5,
 .h6 {
   margin-bottom: 0;
-  max-width: 64rem;
 
   &:not(:first-child) {
     margin-top: 1em;
@@ -215,12 +231,6 @@ big,
 .prose {
   font-size: $font-size-lg;
   line-height: $line-height-lg;
-
-  // Override narrow p/li max-width set on sections — prose containers manage their own width
-  p,
-  li {
-    max-width: none;
-  }
 
   // Breathing room between block elements
   p + p,
@@ -831,12 +841,21 @@ header {
   min-height: 100vh;
   height: fit-content;
   background-position: center;
+
+  /* 1. Fallback for older browsers that do not support image-set() */
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    image-set(
-      url("../img/hero/hero-1920.avif") 1x,
-      url("../img/hero/hero-3840.avif") 2x
-    );
+  linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  url("../img/hero/hero-1920.jpg");
+
+  /* 2. Modern implementation for browsers that support image-set() */
+  background-image:
+  linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  image-set(
+    url("../img/hero/hero-1920.avif") type("image/avif") 1x,
+    url("../img/hero/hero-3840.avif") type("image/avif") 2x,
+    url("../img/hero/hero-1920.jpg") type("image/jpeg") 1x
+  );
+
   background-size: cover;
   background-color: $gray-950; // a welcoming splash color while the hero image is loading
   color: $text-dark;
@@ -848,16 +867,14 @@ header {
       margin-top: 25vh;
 
       p {
-        max-width: 36rem;
+        max-width: 65ch;
       }
     }
   }
 }
 
 .service-box {
-  & > :last-child {
-    margin-bottom: map-get($spacers, 8);
-  }
+  padding-bottom: map-get($spacers, 8);
 
   .row:has(&) {
     margin-bottom: -1 * map-get($spacers, 8) + $paragraph-margin-bottom;

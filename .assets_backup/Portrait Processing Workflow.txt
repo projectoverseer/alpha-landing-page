@@ -1,0 +1,28 @@
+Lightroom Classic
+- Auto-correct tone
+- Apply Adaptive - Enhance Eyes preset
+- Auto-straighten and crop to 4:3 or 3:2 aspect ratio
+- Mask background with pure white curve
+- Export as 8-bit PNG
+
+Squoosh.app
+RESIZE
+- Catmull-Rom
+- Height: 336
+- Height 2x: 672
+
+COMPRESS
+- MozJPEG
+- Quality 95
+- Channels YCbCr
+- Auto subsample chroma OFF
+- Subsample chroma by 1
+- Separate chroma quality OFF
+- Spec compliance OFF
+- Progressive rendering ON
+- Smoothing 0
+- Quantization JPEG Annex K
+- Trellis multipass ON
+- Optimize zero block runs ON
+- Optimize after trellis quantization ON
+- Trellis quantization passes 1
