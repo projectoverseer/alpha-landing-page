@@ -26,8 +26,14 @@
 />
 <meta content="1200" property="og:image:width" />
 <meta content="630" property="og:image:height" />
+<meta content="image/png" property="og:image:type" />
 <meta content="Alpha Software logo" property="og:image:alt" />
 <meta content="{{ t.og_locale }}" property="og:locale" />
+{% if page.lang == "vi" %}
+<meta content="en_US" property="og:locale:alternate" />
+{% else %}
+<meta content="vi_VN" property="og:locale:alternate" />
+{% endif %}
 
 <meta content="Phan Đức Tuấn Anh" itemprop="founder" />
 <meta content="2021-01-20" itemprop="foundingDate" />
@@ -53,6 +59,7 @@
   content="https://www.alphasoftwaregroup.com/img/logo/alpha-open-graph.png"
   name="twitter:image"
 />
+<meta content="Alpha Software logo" name="twitter:image:alt" />
 
 <!-- Hreflang — bilingual alternates -->
 <link rel="alternate" hreflang="vi" href="https://www.alphasoftwaregroup.com/" />
@@ -86,8 +93,48 @@
     "@id": "https://www.alphasoftwaregroup.com{{ t.homeurl }}#webpage",
     "@type": "WebPage",
     "isPartOf": { "@id": "https://www.alphasoftwaregroup.com{{ t.homeurl }}#website" },
+    "about": { "@id": "https://www.alphasoftwaregroup.com/#organization" },
     "name": "Alpha Software: {{ t.slogan }}",
     "description": "{{ t.og_description }}",
-    "url": "https://www.alphasoftwaregroup.com{{ t.homeurl }}"
+    "url": "https://www.alphasoftwaregroup.com{{ t.homeurl }}",
+    "inLanguage": "{{ page.lang }}"
+  }
+</script>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.alphasoftwaregroup.com/#organization",
+    "name": "Alpha Software",
+    "alternateName": "Công ty TNHH Phát triển Phần mềm Alpha",
+    "url": "https://www.alphasoftwaregroup.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.alphasoftwaregroup.com/img/logo/alpha-open-graph.png",
+      "width": 1200,
+      "height": 630
+    },
+    "foundingDate": "2021-01-20",
+    "founder": {
+      "@type": "Person",
+      "name": "Phan Đức Tuấn Anh"
+    },
+    "taxID": "0316685078",
+    "telephone": "+84983505002",
+    "email": "alphasoftware102@gmail.com",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=100070371223404"
+    ],
+    "areaServed": {
+      "@type": "Country",
+      "name": "Vietnam"
+    },
+    "knowsAbout": [
+      "textile manufacturing automation",
+      "dyeing factory management software",
+      "production management systems",
+      "digital transformation for textile factories"
+    ]
   }
 </script>

@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -r anh/ e:Gitprojectoverseeralpha-landing-page --include=*.yml --include=*.xml --include=*.js --include=*.scss)"
+      "Bash(grep -r anh/ e:Gitprojectoverseeralpha-landing-page --include=*.yml --include=*.xml --include=*.js --include=*.scss)",
+      "Bash(du -sh e:/Git/projectoverseer/alpha-landing-page/_site/img/*)",
+      "Bash(npm install:*)"
     ]
   }
 }

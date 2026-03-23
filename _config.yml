@@ -11,11 +11,12 @@ exclude:
   - node_modules/
   - .assets_backup/
   - docs/
-  - update-class-names.js
   - _classMap.json
   - package-lock.json
   - package.json
   - postcss.config.js
-  - .gititnore
+  - optimize-js.mjs
+  - svgo.config.mjs
+  - .gitignore
   - Gemfile
   - Gemfile.lock

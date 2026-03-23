@@ -29,7 +29,7 @@ toc_projects: "Các dự án"
 toc_projects_id: "du-an"
 toc_reviews: "Đánh giá"
 toc_reviews_id: "danh-gia"
-toc_our_story: "Câu chuyện của Alpha Software"
+toc_our_story: "Về chúng tôi"
 toc_our_story_id: "ve-chung-toi"
 toc_support: "Chăm sóc khách hàng"
 toc_support_id: "ho-tro"
@@ -188,27 +188,27 @@ alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
 
 projects_title: "Các dự&nbsp;án của Alpha&nbsp;Software"
 
-project_tuan_hong_company_name: "Công ty TNHH Chỉ may Tuấn Hồng"
-project_tuan_hong_short_name: 'Tuấn Hồng'
+project_tuan_hong_company_name: "Công ty TNHH Chỉ may Tuấn&nbsp;Hồng"
+project_tuan_hong_short_name: 'Tuấn&nbsp;Hồng'
 project_tuan_hong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
             Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy hút
-            màu phòng thí nghiệm Datacolor Autolab TF
+            màu phòng thí nghiệm Datacolor&nbsp;Autolab&nbsp;TF
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
         </ul>'
 
-project_dung_dong_company_name: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng Đông"
-project_dung_dong_short_name: 'Dũng Đông'
+project_dung_dong_company_name: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng&nbsp;Đông"
+project_dung_dong_short_name: 'Dũng&nbsp;Đông'
 project_dung_dong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
             Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
-            màu phòng thí nghiệm COPOWER CptLab
+            màu phòng thí nghiệm COPOWER&nbsp;CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
@@ -227,7 +227,7 @@ project_spica_components: '<p>Các thành phần phần mềm:</p>
           <li>Quản lý sản xuất</li>
           <li>
             Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
-            màu phòng thí nghiệm COPOWER CptLab
+            màu phòng thí nghiệm COPOWER&nbsp;CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
@@ -265,15 +265,15 @@ review_dinh_van_hiep_body: '<p>Phần mềm Alpha Software hỗ trợ rất tố
 
 # --- Our Story Section ---
 
-our_story_title: "Về chúng tôi"
+our_story_title: "Về Alpha Software"
 founder_title: "Nhà sáng lập"
 
 our_story_body: '<p class="mt-md-0">
-          Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn
-          Anh, người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
+          Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn&nbsp;Anh,
+          người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
           may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
           nhà máy. Với nền tảng vững chắc về Hoá học Hữu cơ cùng sự hiểu biết
-          sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn Anh đã
+          sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn&nbsp;Anh đã
           giúp chúng tôi cung cấp các giải pháp công nghệ thực tiễn đáp ứng nhu
           cầu của các doanh nghiệp dệt may hiện đại.
         </p>'

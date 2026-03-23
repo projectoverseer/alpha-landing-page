@@ -1,6 +1,9 @@
 {
   "name": "Alpha Software",
   "short_name": "Alpha",
+  "description": "Phần mềm quản lý nhà máy dệt nhuộm thông minh — Alpha Smart Dyehouse",
+  "lang": "vi",
+  "start_url": "/",
   "icons": [
     {
       "src": "android-chrome-192x192.png",
@@ -13,7 +16,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#fff",
-  "background_color": "#fff",
+  "theme_color": "#e35205",
+  "background_color": "#ffffff",
   "display": "standalone"
 }

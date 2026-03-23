@@ -19,7 +19,9 @@ html {
 
 @media (forced-colors: active) {
   a + svg.external-link-icon,
+  a + svg.phone-icon,
   a:hover + svg.external-link-icon,
+  a:hover + svg.phone-icon,
   a.nav-link {
     color: LinkText;
   }
@@ -507,7 +509,8 @@ a {
     box-shadow: none;
   }
 
-  & + svg.external-link-icon {
+  & + svg.external-link-icon,
+  & + svg.phone-icon {
     color: $icon-color;
     display: inline-block;
     position: relative;
@@ -529,7 +532,8 @@ a {
       color: $white;
     }
 
-    & + svg.external-link-icon {
+    & + svg.external-link-icon,
+    & + svg.phone-icon {
       color: $link-hover-color;
 
       .bg-dark &,
