@@ -40,50 +40,50 @@ translate_to_language: "English"
 
 # --- Overview Section ---
 
-overview_title: "Giới&nbsp;thiệu phần&nbsp;mềm quản&nbsp;lý nhà&nbsp;máy thông&nbsp;minh của Alpha&nbsp;Software"
+overview_title: "Giới thiệu phần mềm quản lý nhà máy thông minh của Alpha Software"
 
-feature_tech_mgmt_title: "Quản&nbsp;lý công&nbsp;nghệ thông&nbsp;minh"
+feature_tech_mgmt_title: "Quản lý công nghệ thông minh"
 feature_tech_mgmt_point_1: "Có công cụ để người kỹ thuật trưởng lưu trữ tri thức công nghệ của công ty vào phần mềm."
 feature_tech_mgmt_point_2: "Phần mềm sẽ tìm kiếm chính xác công nghệ áp dụng cho mẻ hàng thông qua chỉ một cú click chuột. Điều này không những giúp công ty giảm được quy mô nhân sự có trình độ kỹ thuật cao mà còn giúp tất cả các mẻ hàng được xử lý với công nghệ đồng nhất, từ đó ổn định chất lượng."
 
-feature_planning_title: "Lập&nbsp;kế&nbsp;hoạch sản&nbsp;xuất trực&nbsp;quan"
+feature_planning_title: "Lập kế hoạch sản xuất trực quan"
 feature_planning_point_1: "Thao tác lập kế hoạch, điều chỉnh kế hoạch được thực hiện một cách dễ dàng nhanh chóng bằng cách kéo-thả."
 feature_planning_point_2: "Khi có sự điều chỉnh kế hoạch của một mẻ hàng, toàn bộ bảng kế hoạch sẽ được tự động điều chỉnh theo. Điều này giúp bảng kế hoạch có sự đồng bộ tuyệt đối."
 feature_planning_point_3: "Bảng triển khai kế hoạch tại nơi sản xuất thể hiện trực quan và kiểm soát việc tuân thủ trình tự đã được lập."
 
-feature_equipment_integration_title: "Tích&nbsp;hợp với các thiết&nbsp;bị&nbsp;sản&nbsp;xuất, thiết&nbsp;bị&nbsp;phòng&nbsp;lab"
+feature_equipment_integration_title: "Tích hợp với các thiết bị sản xuất, thiết bị phòng lab"
 feature_equipment_integration_point_1: "Với các thiết bị vận hành tự động nhưng độc lập, chúng tôi có thể giúp kết nối vào hệ thống phần mềm để hình thành một hệ thống nhất."
 feature_equipment_integration_point_2: "Chúng tôi cũng có thể giúp cải tạo các thiết bị đang vận hành bằng tay thông qua công tắc và nút nhấn thành điều kiển tự động theo quy trình và kết nối với hệ thống phần mềm."
 
-feature_customization_title: "Tuỳ&nbsp;chỉnh phù&nbsp;hợp cho từng nhà&nbsp;máy"
+feature_customization_title: "Tuỳ chỉnh phù hợp cho từng nhà máy"
 feature_customization_point_1: "Hiểu rằng mỗi nhà máy có hệ thống quản lý khác nhau, chúng tôi luôn khảo sát kỹ càng để thiết kế và triển khai cho phù hợp, liên tục cải tiến để giúp hoạt động của nhà máy ngày càng hiệu quả hơn."
 feature_customization_point_2: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
 
-feature_ease_of_use_title: "Rất dễ sử&nbsp;dụng!"
+feature_ease_of_use_title: "Rất dễ sử dụng!"
 feature_ease_of_use_desc: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người—từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
 
 # --- Benefits Section ---
 
-benefits_title: "Vì sao nhà&nbsp;máy cần Alpha&nbsp;Software"
+benefits_title: "Vì sao nhà máy cần Alpha Software"
 
-benefit_quality_title: "Cải&nbsp;thiện rõ&nbsp;rệt chất&nbsp;lượng sản&nbsp;phẩm"
+benefit_quality_title: "Cải thiện rõ rệt chất lượng sản phẩm"
 benefit_quality_desc: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time).</strong>"
 
-benefit_staffing_costs_title: "Giảm&nbsp;thiểu nhu&nbsp;cầu nhân&nbsp;sự"
+benefit_staffing_costs_title: "Giảm thiểu nhu cầu nhân sự"
 benefit_staffing_costs_desc: "Trong quá trình khảo sát và phát triển phần mềm, chúng tôi sẽ nhận diện những thao tác nào có thể được phần mềm tự động thực hiện. Nhờ đó làm giảm nhu cầu và chi phí nhân sự."
 
-benefit_error_reduction_title: "Giảm thiểu rủi&nbsp;ro sai&nbsp;sót của công&nbsp;nhân"
+benefit_error_reduction_title: "Giảm thiểu rủi ro sai sót của công nhân"
 benefit_error_reduction_desc: "Trải qua các vị trí công việc trong ngành từ quản lý kỹ thuật, quản lý dây chuyền đến quản lý nhà máy nhuộm, chúng tôi hiểu được những rủi ro sai sót có thể có trong quá trình thực hiện công việc của nhân viên các cấp. Nhờ đó, phần mềm của Alpha Software có khả năng ngăn ngừa lỗi rất cao."
 
-benefit_equipment_retrofit_title: "Tích&nbsp;hợp với các thiết&nbsp;bị có sẵn"
+benefit_equipment_retrofit_title: "Tích hợp với các thiết bị có sẵn"
 benefit_equipment_retrofit_desc: "Chúng tôi có trình độ và kinh nghiệm để kết nối với các thiết bị tự động hoặc cải tạo thiết bị đang vận hành bằng công tắc tay thành vận hành tự động. Nhờ đó giảm nhu cầu nhân sự có trình độ tay nghề cao và giảm thao tác sai của người vận hành."
 
 # --- Products Section ---
 
-products_title: "Các sản&nbsp;phẩm của Alpha&nbsp;Software"
-product_1: "Hệ&nbsp;thống quản&nbsp;lý nhà&nbsp;máy Alpha Smart Dyehouse"
-alpha_smart_dyehouse: '<span class="mini-h3">Hệ&nbsp;thống quản&nbsp;lý nhà&nbsp;máy </span>Alpha Smart Dyehouse'
-alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
+products_title: "Các sản phẩm của Alpha Software"
+product_1: "Hệ thống quản lý nhà máy Alpha Smart Dyehouse"
+alpha_smart_dyehouse: '<span class="mini-h3">Hệ thống quản lý nhà máy </span>Alpha Smart Dyehouse'
+alpha_smart_dyehouse_content: '<h4>1. Giới thiệu</h4>
             <p>
               <strong>Alpha Smart Dyehouse</strong> là một giải pháp phần mềm
               toàn diện giúp số hoá và tự động hoá toàn bộ quy trình nhuộm trong
@@ -108,7 +108,7 @@ alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
               sai sót trong sản xuất.
             </p>
 
-            <h4>2. Các tính&nbsp;năng</h4>
+            <h4>2. Các tính năng</h4>
             <p>
               Phần mềm <strong>Alpha Smart Dyehouse</strong> hỗ trợ đầy đủ các
               công đoạn trong quy trình nhuộm, bao gồm:
@@ -125,8 +125,8 @@ alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
               <li>Quản lý kho hoá chất, mộc và thành phẩm</li>
             </ul>
             <h4>
-              3. Khả&nbsp;năng kết&nbsp;nối thiết&nbsp;bị trong
-              nhà&nbsp;máy&nbsp;nhuộm
+              3. Khả năng kết nối thiết bị trong
+              nhà máy nhuộm
             </h4>
             <p>
               Phần mềm <strong>Alpha Smart Dyehouse</strong> có khả năng tích
@@ -137,9 +137,9 @@ alpha_smart_dyehouse_content: '<h4>1. Giới&nbsp;thiệu</h4>
               Alpha (bộ điều khiển máy nhuộm), giúp đảm bảo sự đồng bộ và hiệu
               quả cao trong toàn bộ hệ thống.
             </p>'
-product_2: "Cân thuốc&nbsp;nhuộm bán-tự-động Alpha Dyes Weighing"
-alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc&nbsp;nhuộm bán-tự-động </span>Alpha Dyes Weighing'
-alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
+product_2: "Cân thuốc nhuộm bán-tự-động Alpha Dyes Weighing"
+alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc nhuộm bán-tự-động </span>Alpha Dyes Weighing'
+alpha_dyes_weighing_content: '<h4>1. Giới thiệu</h4>
             <p>
               <strong>Alpha Dyes Weighing</strong> là phần mềm chuyên dụng hỗ
               trợ quá trình cân thuốc nhuộm trong các nhà máy dệt nhuộm. Phần
@@ -147,7 +147,7 @@ alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
               tối đa cho người vận hành trong suốt quá trình chuẩn bị thuốc
               nhuộm.
             </p>
-            <h4>2. Các điểm nổi&nbsp;bật</h4>
+            <h4>2. Các điểm nổi bật</h4>
             <ul class="spaced-items">
               <li>
                 <b>Hệ thống đèn LED chỉ thị vị trí:</b> Hỗ trợ người vận hành dễ
@@ -186,29 +186,29 @@ alpha_dyes_weighing_content: '<h4>1. Giới&nbsp;thiệu</h4>
 
 # --- Projects Section ---
 
-projects_title: "Các dự&nbsp;án của Alpha&nbsp;Software"
+projects_title: "Các dự án của Alpha Software"
 
-project_tuan_hong_company_name: "Công ty TNHH Chỉ may Tuấn&nbsp;Hồng"
-project_tuan_hong_short_name: 'Tuấn&nbsp;Hồng'
+project_tuan_hong_company_name: "Công ty TNHH Chỉ may Tuấn Hồng"
+project_tuan_hong_short_name: 'Tuấn Hồng'
 project_tuan_hong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
             Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy hút
-            màu phòng thí nghiệm Datacolor&nbsp;Autolab&nbsp;TF
+            màu phòng thí nghiệm Datacolor Autolab TF
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
         </ul>'
 
-project_dung_dong_company_name: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng&nbsp;Đông"
-project_dung_dong_short_name: 'Dũng&nbsp;Đông'
+project_dung_dong_company_name: "Công ty TNHH Sản xuất Thương mại và Đầu tư Dũng Đông"
+project_dung_dong_short_name: 'Dũng Đông'
 project_dung_dong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
             Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
-            màu phòng thí nghiệm COPOWER&nbsp;CptLab
+            màu phòng thí nghiệm COPOWER CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
@@ -227,7 +227,7 @@ project_spica_components: '<p>Các thành phần phần mềm:</p>
           <li>Quản lý sản xuất</li>
           <li>
             Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
-            màu phòng thí nghiệm COPOWER&nbsp;CptLab
+            màu phòng thí nghiệm COPOWER CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
           <li>Cân thuốc nhuộm bán-tự-động</li>
@@ -241,12 +241,12 @@ project_spica_components: '<p>Các thành phần phần mềm:</p>
 
 # --- Reviews Section ---
 
-reviews_title: "Khách&nbsp;hàng nhận&nbsp;xét gì về Alpha&nbsp;Software?"
+reviews_title: "Khách hàng nhận xét gì về Alpha Software?"
 female_title: "Bà"
 male_title: "Ông"
 of: ""
-reviewer_1_job_title: "Phó Tổng Giám&nbsp;đốc"
-reviewer_2_job_title: "Trợ&nbsp;lý Giám&nbsp;đốc"
+reviewer_1_job_title: "Phó Tổng Giám đốc"
+reviewer_2_job_title: "Trợ lý Giám đốc"
 
 review_nguyen_thi_nga_body: '<p>Phần mềm Alpha đã giúp SPICA kết nối hiệu quả với các thiết bị nhuộm
             như máy Spectro, máy hút màu và controller máy nhuộm, từ đó giảm
@@ -269,26 +269,26 @@ our_story_title: "Về Alpha Software"
 founder_title: "Nhà sáng lập"
 
 our_story_body: '<p class="mt-md-0">
-          Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn&nbsp;Anh,
+          Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn Anh,
           người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
           may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
           nhà máy. Với nền tảng vững chắc về Hoá học Hữu cơ cùng sự hiểu biết
-          sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn&nbsp;Anh đã
+          sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn Anh đã
           giúp chúng tôi cung cấp các giải pháp công nghệ thực tiễn đáp ứng nhu
           cầu của các doanh nghiệp dệt may hiện đại.
         </p>'
 
 # --- Support Section ---
 
-support_title: "Chúng&nbsp;tôi rất hân&nbsp;hạnh được hỗ&nbsp;trợ bạn!"
+support_title: "Chúng tôi rất hân hạnh được hỗ trợ bạn!"
 support_call_prompt: "Hãy gọi"
 support_email_prompt: "để cho phép chúng tôi tư vấn bạn miễn phí hoặc gửi các câu hỏi của bạn qua địa chỉ"
-support_cta: "Gửi câu hỏi đến Alpha&nbsp;Software"
+support_cta: "Gửi câu hỏi đến Alpha Software"
 
 # --- Footer ---
 
 footer_label_phone: "Số điện thoại"
-director_title: "Giám&nbsp;đốc"
+director_title: "Giám đốc"
 footer_label_email: "Email"
 footer_label_socials: "Mạng xã hội"
 footer_label_hours: "Thời gian hoạt động"
