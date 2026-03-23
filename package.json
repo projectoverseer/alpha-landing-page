@@ -5,17 +5,15 @@
     "esbuild": "^0.27.4",
     "html-minifier-terser": "^7.2.0",
     "purgecss": "^8.0.0",
-    "shx": "^0.4.0",
-    "svgo": "^3.3.2"
+    "shx": "^0.4.0"
   },
   "scripts": {
     "clean": "shx rm -rf _site docs",
     "build:jekyll": "cross-env JEKYLL_ENV=production bundle exec jekyll build",
     "optimize:css": "purgecss --css _site/css/main.css --content \"_site/**/*.html\" \"_site/**/*.js\" --output _site/css/main.css && cleancss -O2 -o _site/css/main.css _site/css/main.css",
     "optimize:js": "node optimize-js.mjs",
-    "optimize:svg": "svgo -rf _site/img/",
     "optimize:html": "html-minifier-terser --collapse-whitespace --remove-comments --collapse-boolean-attributes --remove-redundant-attributes --decode-entities --use-short-doctype --remove-script-type-attributes --minify-js true --input-dir _site --output-dir _site --file-ext html",
     "postbuild:docs": "shx mv _site docs",
-    "ship": "npm run clean && npm run build:jekyll && npm run optimize:css && npm run optimize:js && npm run optimize:svg && npm run optimize:html && npm run postbuild:docs"
+    "ship": "npm run clean && npm run build:jekyll && npm run optimize:css && npm run optimize:js && npm run optimize:html && npm run postbuild:docs"
   }
 }
