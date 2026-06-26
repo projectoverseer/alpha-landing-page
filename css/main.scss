@@ -2,7 +2,7 @@
 ---
 
 @charset "utf-8";
-@import "functions.scss";
+@import "bootstrap/functions";
 
 // -------------------------------------
 // Color Variables
@@ -330,6 +330,6 @@ $enable-rfs: false;
 // Import Bootstrap and Custom Styles
 // -------------------------------------
 
-@import "variables.scss";
-@import "bootstrap.scss";
+@import "bootstrap/variables";
+@import "bootstrap/bootstrap";
 @import "base";
