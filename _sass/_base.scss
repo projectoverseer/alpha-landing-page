@@ -7,6 +7,17 @@ body {
 }
 
 body,
+button,
+input,
+select,
+textarea {
+  font-synthesis: none !important;
+  -moz-font-feature-settings: "kern" !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+body,
 td,
 div,
 a {
@@ -18,17 +29,20 @@ html {
 }
 
 @media (forced-colors: active) {
-  a + svg.external-link-icon,
-  a + svg.phone-icon,
-  a:hover + svg.external-link-icon,
-  a:hover + svg.phone-icon,
+
+  a+svg.external-link-icon,
+  a+svg.phone-icon,
+  a:hover+svg.external-link-icon,
+  a:hover+svg.phone-icon,
   a.nav-link {
     color: LinkText;
   }
+
   .btn-xl {
     color: ButtonText;
     background: ButtonFace;
   }
+
   .hr,
   .bi {
     color: Highlight;
@@ -235,18 +249,22 @@ big,
   line-height: $line-height-lg;
 
   // Breathing room between block elements
-  p + p,
-  p + ul,
-  p + ol,
-  p + table,
-  p + .video-embed,
-  ul + p,
-  ol + p,
-  table + p {
+  p+p,
+  p+ul,
+  p+ol,
+  p+table,
+  p+.video-embed,
+  ul+p,
+  ol+p,
+  table+p {
     margin-top: 1em;
   }
 
-  h2, h3, h4, h5, h6 {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     &:not(:first-child) {
       margin-top: 1.5em;
     }
@@ -417,11 +435,11 @@ big,
       }
     }
 
-    &[open] > summary::before {
+    &[open]>summary::before {
       transform: rotate(180deg);
     }
 
-    &[open] > summary {
+    &[open]>summary {
       margin-bottom: map-get($spacers, 3);
     }
   }
@@ -509,8 +527,8 @@ a {
     box-shadow: none;
   }
 
-  & + svg.external-link-icon,
-  & + svg.phone-icon {
+  &+svg.external-link-icon,
+  &+svg.phone-icon {
     color: $icon-color;
     display: inline-block;
     position: relative;
@@ -523,7 +541,7 @@ a {
   }
 
   &:not(.nav-link, .btn-xl, .dropdown-item):hover,
-  .partner-logo-card:has(a.stretched-link:hover) + div & {
+  .partner-logo-card:has(a.stretched-link:hover)+div & {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
 
@@ -532,8 +550,8 @@ a {
       color: $white;
     }
 
-    & + svg.external-link-icon,
-    & + svg.phone-icon {
+    &+svg.external-link-icon,
+    &+svg.phone-icon {
       color: $link-hover-color;
 
       .bg-dark &,
@@ -590,11 +608,11 @@ blockquote,
   line-height: $h5-line-height;
 }
 
-blockquote > :first-child:before {
+blockquote> :first-child:before {
   content: open-quote;
 }
 
-blockquote > :last-child:after {
+blockquote> :last-child:after {
   content: close-quote;
 }
 
@@ -622,12 +640,12 @@ blockquote > :last-child:after {
   max-width: none;
 }
 
-.accordion-item:first-of-type > :first-child {
+.accordion-item:first-of-type> :first-child {
   border-top-left-radius: $accordion-inner-border-radius;
   border-top-right-radius: $accordion-inner-border-radius;
 }
 
-.accordion-item:last-of-type > .collapsed:first-child {
+.accordion-item:last-of-type>.collapsed:first-child {
   border-bottom-left-radius: $accordion-inner-border-radius;
   border-bottom-right-radius: $accordion-inner-border-radius;
 }
@@ -655,7 +673,8 @@ blockquote > :last-child:after {
   transition:
     visibility 0s linear 240ms,
     opacity 240ms cubic-bezier(0.4, 0, 0.6, 1);
-  pointer-events: none; /* Prevent interaction when hidden */
+  pointer-events: none;
+  /* Prevent interaction when hidden */
 }
 
 /* When Bootstrap applies the .show class */
@@ -663,7 +682,8 @@ blockquote > :last-child:after {
   visibility: visible;
   opacity: 1;
   transition-delay: 0s;
-  pointer-events: auto; /* Allow interaction when shown */
+  pointer-events: auto;
+  /* Allow interaction when shown */
 }
 
 .dropdown-item {
@@ -680,6 +700,7 @@ blockquote > :last-child:after {
 }
 
 .dropdown-toggle {
+
   /* Hide focus ring on mouse/pointer interaction, but preserve it for keyboard navigation */
   &:focus:not(:focus-visible) {
     outline: 0 !important;
@@ -703,7 +724,8 @@ blockquote > :last-child:after {
 
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 100% 100%; /* Make it fill the pseudo-element */
+    background-size: 100% 100%;
+    /* Make it fill the pseudo-element */
 
     display: inline-block;
     width: 1em;
@@ -717,8 +739,7 @@ blockquote > :last-child:after {
 
 .accordion-button {
   &:not(.collapsed):focus:not(:focus-visible) {
-    box-shadow: inset 0 calc(-1 * var(--#{$prefix}accordion-border-width)) 0
-      var(--#{$prefix}accordion-border-color);
+    box-shadow: inset 0 calc(-1 * var(--#{$prefix}accordion-border-width)) 0 var(--#{$prefix}accordion-border-color);
   }
 
   &.collapsed:focus:not(:focus-visible) {
@@ -848,17 +869,15 @@ header {
 
   /* 1. Fallback for older browsers that do not support image-set() */
   background-image:
-  linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-  url("../img/hero/hero-1920.jpg");
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../img/hero/hero-1920.jpg");
 
   /* 2. Modern implementation for browsers that support image-set() */
   background-image:
-  linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-  image-set(
-    url("../img/hero/hero-1920.avif") type("image/avif") 1x,
-    url("../img/hero/hero-3840.avif") type("image/avif") 2x,
-    url("../img/hero/hero-1920.jpg") type("image/jpeg") 1x
-  );
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    image-set(url("../img/hero/hero-1920.avif") type("image/avif") 1x,
+      url("../img/hero/hero-3840.avif") type("image/avif") 2x,
+      url("../img/hero/hero-1920.jpg") type("image/jpeg") 1x);
 
   background-size: cover;
   background-color: $gray-950; // a welcoming splash color while the hero image is loading

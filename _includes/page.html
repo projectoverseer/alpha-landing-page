@@ -45,11 +45,6 @@
     data-bs-target="#navbar"
   >
     <a class="skip-link visually-hidden-focusable" href="#main-content">{{ t.skip_to_content }}</a>
-    <!--
-      This hidden element preserves Bootstrap dynamic class names (active, show, collapsing)
-      and the translated_review_disclaimer class for the CSS build/purge pipeline.
-    -->
-    <div aria-hidden="true" class="visually-hidden active collapsing show translated_review_disclaimer"></div>
 
     <nav
       aria-label="{{ t.toc }}"
@@ -76,6 +71,12 @@
       {% include footer.html %}
     </footer>
 
+    {% if jekyll.environment == "production" %}
     <script defer src="{{ site.url }}/js/bundle.js"></script>
+    {% else %}
+    <script defer src="{{ site.url }}/js/bootstrap.bundle.min.js"></script>
+    <script defer src="{{ site.url }}/js/custom.js"></script>
+    <script defer src="{{ site.url }}/js/squircle.js"></script>
+    {% endif %}
   </body>
 </html>

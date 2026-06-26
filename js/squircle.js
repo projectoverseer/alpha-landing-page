@@ -1,321 +1,308 @@
-class SquircleRenderer {
-  constructor() {
-    this.observer = new ResizeObserver((entries) => {
-      // Ensure we only update elements that are still managed by the renderer
-      entries.forEach((entry) => {
-        if (this.elements.has(entry.target)) {
-          this._updateSquircle(entry.target);
+(() => {
+  'use strict';
+
+  /* ======================================================================== *
+   *  Squircle engine — CSS `corner-shape` edition.
+   *
+   *  Replaces the old SVG/clip-path renderer. Instead of rebuilding every
+   *  rounded element as an SVG path, it asks the browser to reshape the corner
+   *  itself via `corner-shape: superellipse(K)`, keeping native antialiasing,
+   *  borders, backgrounds and transitions intact.
+   *
+   *  THE CORNER SHAPE IS FIXED at n = phi^3 (the golden ratio cubed), a gentle
+   *  superellipse sitting just past the n = 4 "squircle" sweet spot. Because n
+   *  never changes, every derived number below is precomputed — nothing about
+   *  the shape is recalculated at runtime.
+   *
+   *      n      = phi^3                = 4.2360679774997900
+   *      K      = log2(n)             ~= 2.0827   (CSS superellipse() param)
+   *      SCALE  = depth-match factor  ~= 1.9404   (see below)
+   *
+   *  DEPTH MATCH (SCALE). A superellipse of radius r is shallower at the 45°
+   *  corner than a circle of the same r, so a raw swap would make every corner
+   *  read as "less round". SCALE enlarges the radius so the superellipse's
+   *  corner DEPTH equals the original circle's depth — the silhouette stays as
+   *  close to the page's authored border-radius as the shape allows, neither
+   *  visibly shrunk nor enlarged:
+   *
+   *      depth(r, n) = r * sqrt(2) * (1 - 2^(-1/n))
+   *      SCALE = (1 - 2^(-1/2)) / (1 - 2^(-1/n))      (the sqrt(2)'s cancel)
+   *
+   *  SAFE FALLBACK. On any browser without `corner-shape` (everything before
+   *  Chromium 139) the script returns immediately and never touches a single
+   *  style — every element keeps its original, unmodified border-radius.
+   * ======================================================================== */
+
+  // ---- precomputed constants (n = phi^3, fixed) ---------------------------
+  const CORNER_PARAM = '2.0827';            // K = log2(phi^3), 4-dp
+  const SCALE = 1.9404128895326194;         // depth-match radius multiplier
+  const FULLY_ROUND_EPS = 0.5;              // px tolerance for "this is a circle"
+  const SLICE_MAX_NODES = 1500;             // elements measured per idle slice
+
+  // ---- capability gate ----------------------------------------------------
+  // `corner-shape` lands in Chromium 139+. Anywhere else: do nothing, cleanly,
+  // leaving the authored border-radius exactly as the stylesheet set it.
+  if (!(window.CSS && CSS.supports && CSS.supports('corner-shape', 'squircle'))) return;
+
+  // Prefer the tunable function so the exact exponent is honoured; otherwise
+  // fall back to the `squircle` keyword (n = 4), the closest built-in shape.
+  const CORNER_SHAPE = CSS.supports('corner-shape', 'superellipse(2)')
+    ? 'superellipse(' + CORNER_PARAM + ')'
+    : 'squircle';
+
+  // ---- state --------------------------------------------------------------
+  const seen = new WeakSet();    // element queued/measured at most once
+  const ORIG = new WeakMap();    // el -> base [ [h,v] x4 ] radii (pre-scale)
+  const managed = new WeakSet(); // el we own: recompute when its class changes
+  const tracked = new WeakSet(); // el currently observed for resize
+  const pending = [];            // elements awaiting their first measurement
+  const roots = [];              // freshly added subtrees awaiting expansion
+  let scheduled = false;
+
+  const resizeObserver = window.ResizeObserver
+    ? new ResizeObserver((entries) => {
+        for (let i = 0; i < entries.length; i++) {
+          const el = entries[i].target;
+          const corners = ORIG.get(el);
+          if (!corners || !el.isConnected) continue;
+          const out = compute(el, corners);
+          if (out.radius) write(el, out.radius);
         }
-      });
-    });
-    this.elements = new Map(); // Store elements and their original styles
+      })
+    : null;
+
+  // ---- scheduling (initial sweep + new nodes are non-urgent) --------------
+  const schedule = () => {
+    if (scheduled) return;
+    scheduled = true;
+    const run = (deadline) => { scheduled = false; flush(deadline); };
+    if (window.requestIdleCallback) requestIdleCallback(run, { timeout: 500 });
+    else setTimeout(() => run(null), 16);
+  };
+
+  const expand = (root) => {
+    if (root.nodeType === 1 && !seen.has(root)) { seen.add(root); pending.push(root); }
+    const list = root.querySelectorAll ? root.querySelectorAll('*') : null;
+    if (!list) return;
+    for (let i = 0; i < list.length; i++) {
+      const el = list[i];
+      if (!seen.has(el)) { seen.add(el); pending.push(el); }
+    }
+  };
+
+  const drainRoots = () => {
+    while (roots.length) {
+      const r = roots.pop();
+      if (r && r.isConnected) expand(r);
+    }
+  };
+
+  // ---- measurement --------------------------------------------------------
+  // "12px" (circular) or "12px 8px" (elliptical) per corner — parse both.
+  const parsePair = (s) => {
+    if (!s) return [0, 0];
+    const sp = s.split(' ');
+    const h = parseFloat(sp[0]) || 0;
+    const v = sp.length > 1 ? (parseFloat(sp[1]) || 0) : h;
+    return [h, v];
+  };
+
+  const readCorners = (cs) => [
+    parsePair(cs.borderTopLeftRadius),
+    parsePair(cs.borderTopRightRadius),
+    parsePair(cs.borderBottomRightRadius),
+    parsePair(cs.borderBottomLeftRadius),
+  ];
+
+  const cornersEqual = (a, b) => {
+    for (let i = 0; i < 4; i++) {
+      if (Math.abs(a[i][0] - b[i][0]) > 0.01) return false;
+      if (Math.abs(a[i][1] - b[i][1]) > 0.01) return false;
+    }
+    return true;
+  };
+
+  // Match (scale to preserve corner depth), then per-axis clamp. Capping each
+  // corner at half its side keeps the sum along every edge within the side, so
+  // the browser never fires its own proportional shrink.
+  // Returns { radius: string|null, clamped: bool }. null => no rounded corners.
+  function compute(el, corners) {
+    const fitH = el.offsetWidth / 2;
+    const fitV = el.offsetHeight / 2;
+    const fitMin = Math.min(fitH, fitV);
+    const laidOut = fitH > 0 && fitV > 0;
+
+    let maxR = 0;
+    for (let i = 0; i < 4; i++) {
+      if (corners[i][0] > maxR) maxR = corners[i][0];
+      if (corners[i][1] > maxR) maxR = corners[i][1];
+    }
+    if (maxR === 0) return { radius: null, clamped: false };  // not rounded
+
+    // Circle / pill (detected on the ORIGINAL radius, before scaling): a
+    // squircle can't be a true circle, so leave it perfectly round.
+    if (laidOut && maxR >= fitMin - FULLY_ROUND_EPS)
+      return { radius: null, clamped: false };
+
+    const capH = fitH > 0 ? fitH : Infinity;
+    const capV = fitV > 0 ? fitV : Infinity;
+
+    let clamped = !laidOut;   // zero-size now -> revisit once it has a box
+    let elliptical = false;
+    const H = new Array(4), V = new Array(4);
+    for (let i = 0; i < 4; i++) {
+      const th = corners[i][0] * SCALE;
+      const tv = corners[i][1] * SCALE;
+      const sh = Math.min(th, capH);
+      const sv = Math.min(tv, capV);
+      if (th > capH + 0.01 || tv > capV + 0.01) clamped = true;
+      if (Math.abs(sh - sv) > 0.01) elliptical = true;
+      H[i] = sh; V[i] = sv;
+    }
+
+    const f = (n) => n.toFixed(2) + 'px';
+    const radius = elliptical
+      ? H.map(f).join(' ') + ' / ' + V.map(f).join(' ')
+      : H.map(f).join(' ');
+    return { radius, clamped };
   }
 
-  /**
-   * Converts degrees to radians.
-   * @param {number} degrees
-   * @returns {number} radians
-   */
-  static _toRadians(degrees) {
-    return (degrees * Math.PI) / 180;
+  function write(el, radius) {
+    el.style.setProperty('corner-shape', CORNER_SHAPE, 'important');
+    el.style.setProperty('border-radius', radius, 'important');
   }
 
-  /**
-   * Tagged template literal to format numbers in SVG paths to 2 decimal places.
-   * 2 decimal places = 0.01px CSS precision = 0.005px on retina — imperceptible.
-   * @param {TemplateStringsArray} strings
-   * @param {...number[]} values
-   * @returns {string} Formatted SVG path segment
-   */
-  static _rounded(strings, ...values) {
-    return strings.reduce((acc, str, i) => {
-      const value = values[i];
-      if (typeof value === "number") {
-        return acc + str + value.toFixed(2);
-      } else {
-        return acc + str + (value ?? "");
+  // ---- the work slice (initial sweep + newly added nodes) -----------------
+  function flush(deadline) {
+    drainRoots();
+    if (!pending.length) return;
+
+    const chunk = pending.splice(0, SLICE_MAX_NODES);
+
+    // READ PHASE: only reads, so layout/style flush at most once.
+    const jobs = [];
+    let i = 0;
+    for (; i < chunk.length; i++) {
+      if (deadline && (i & 255) === 255 && deadline.timeRemaining() < 2) break;
+      const el = chunk[i];
+      if (!(el instanceof HTMLElement) || !el.isConnected) continue;
+
+      const corners = readCorners(getComputedStyle(el));
+      const out = compute(el, corners);
+      if (!out.radius) continue;
+      jobs.push({ el, radius: out.radius, clamped: out.clamped, corners });
+    }
+
+    if (i < chunk.length) {
+      const rest = chunk.slice(i);
+      for (let k = rest.length - 1; k >= 0; k--) pending.unshift(rest[k]);
+    }
+
+    // WRITE PHASE: writes + observer hookups, no interleaved reads.
+    for (let j = 0; j < jobs.length; j++) {
+      const { el, radius, clamped, corners } = jobs[j];
+      write(el, radius);
+      ORIG.set(el, corners);  // store BASE radii so recompute is exact
+      managed.add(el);        // ...and follow its border-radius from now on
+      if (resizeObserver && clamped && !tracked.has(el)) {
+        tracked.add(el);
+        resizeObserver.observe(el);
       }
-    }, "");
-  }
-
-  /**
-   * Calculates parameters for a single corner's SVG path segments.
-   * Based on Figma blog post and MartinRGB's implementation.
-   * @param {{cornerRadius: number, cornerSmoothing: number, preserveSmoothing: boolean, roundingAndSmoothingBudget: number}} params
-   * @returns {{a: number, b: number, c: number, d: number, p: number, cornerRadius: number, arcSectionLength: number}}
-   */
-  static _getPathParamsForCorner({
-    cornerRadius,
-    cornerSmoothing,
-    preserveSmoothing,
-    roundingAndSmoothingBudget,
-  }) {
-    let p = (1 + cornerSmoothing) * cornerRadius;
-
-    if (!preserveSmoothing) {
-      const maxCornerSmoothing = roundingAndSmoothingBudget / cornerRadius - 1;
-      cornerSmoothing = Math.min(cornerSmoothing, maxCornerSmoothing);
-      p = Math.min(p, roundingAndSmoothingBudget);
     }
 
-    const arcMeasure = 90 * (1 - cornerSmoothing);
-    const arcSectionLength =
-      Math.sin(SquircleRenderer._toRadians(arcMeasure / 2)) *
-      cornerRadius *
-      Math.sqrt(2);
-
-    const angleAlpha = (90 - arcMeasure) / 2;
-    const p3ToP4Distance =
-      cornerRadius * Math.tan(SquircleRenderer._toRadians(angleAlpha / 2));
-
-    const angleBeta = 45 * cornerSmoothing;
-    const c = p3ToP4Distance * Math.cos(SquircleRenderer._toRadians(angleBeta));
-    const d = c * Math.tan(SquircleRenderer._toRadians(angleBeta));
-
-    let b = (p - arcSectionLength - c - d) / 3;
-    let a = 2 * b;
-
-    if (preserveSmoothing && p > roundingAndSmoothingBudget) {
-      const p1ToP3MaxDistance =
-        roundingAndSmoothingBudget - d - arcSectionLength - c;
-
-      const minA = p1ToP3MaxDistance / 6;
-      const maxB = p1ToP3MaxDistance - minA;
-
-      b = Math.min(b, maxB);
-      a = p1ToP3MaxDistance - b;
-      p = Math.min(p, roundingAndSmoothingBudget);
-    }
-
-    return {
-      a,
-      b,
-      c,
-      d,
-      p,
-      arcSectionLength,
-      cornerRadius,
-    };
+    if (pending.length || roots.length) schedule();
   }
 
-  /**
-   * Generates the full SVG path string for a squircle.
-   * Adapted to use a single set of corner parameters for all 4 corners.
-   * @param {{width: number, height: number, cornerPathParams: object}} input
-   * @returns {string} SVG path data
-   */
-  static _getSVGPathFromPathParams({
-    width,
-    height,
-    topLeftPathParams,
-    topRightPathParams,
-    bottomLeftPathParams,
-    bottomRightPathParams,
-  }) {
-    const startX = SquircleRenderer._rounded`${width - topRightPathParams.p}`;
-    const startY = SquircleRenderer._rounded`0`;
+  // ---- dynamic border-radius changes (e.g. .accordion-button) -------------
+  // A class flip can rewrite an element's authored border-radius. Our inline
+  // override masks the stylesheet, so we must re-read the new target and rewrite
+  // it ourselves. Elements carry `transition: border-radius` (Bootstrap's
+  // accordion does, 400ms), so we hand the animation back to CSS: suppress the
+  // transition only long enough to sample the new target and re-seat the old
+  // value as the baseline, then release it so the inline change tweens natively.
+  function recompute(el) {
+    if (!el.isConnected) return;
 
-    const topRightPath = SquircleRenderer._drawTopRightPath(topRightPathParams);
+    const prev = ORIG.get(el);
+    const prevBR = el.style.getPropertyValue('border-radius');
 
-    const L2X = SquircleRenderer._rounded`${width}`;
-    const L2Y = SquircleRenderer._rounded`${height - bottomRightPathParams.p}`;
-    const bottomRightPath = SquircleRenderer._drawBottomRightPath(
-      bottomRightPathParams,
-    );
+    // Reveal the stylesheet's *target* radius: drop our override and freeze the
+    // transition so getComputedStyle returns the final value, not a mid-tween one.
+    el.style.setProperty('transition', 'none', 'important');
+    el.style.removeProperty('border-radius');
+    const corners = readCorners(getComputedStyle(el));   // forced flush -> target
+    const out = compute(el, corners);
+    const next = out.radius;
 
-    const L3X = SquircleRenderer._rounded`${bottomLeftPathParams.p}`;
-    const L3Y = SquircleRenderer._rounded`${height}`;
-    const bottomLeftPath =
-      SquircleRenderer._drawBottomLeftPath(bottomLeftPathParams);
+    ORIG.set(el, corners);
 
-    const L4X = SquircleRenderer._rounded`0`;
-    const L4Y = SquircleRenderer._rounded`${topLeftPathParams.p}`;
-    const topLeftPath = SquircleRenderer._drawTopLeftPath(topLeftPathParams);
-
-    return `
-      M ${startX} ${startY}
-      ${topRightPath}
-      L ${L2X} ${L2Y}
-      ${bottomRightPath}
-      L ${L3X} ${L3Y}
-      ${bottomLeftPath}
-      L ${L4X} ${L4Y}
-      ${topLeftPath}
-      Z
-    `
-      .replace(/[\t\s\n]+/g, " ")
-      .trim();
-  }
-
-  /**
-   * Draws the top-right corner path segment.
-   */
-  static _drawTopRightPath({ cornerRadius, a, b, c, d, p, arcSectionLength }) {
-    if (cornerRadius) {
-      return SquircleRenderer._rounded`
-      c ${a} 0 ${a + b} 0 ${a + b + c} ${d}
-      a ${cornerRadius} ${cornerRadius} 0 0 1 ${arcSectionLength} ${arcSectionLength}
-      c ${d} ${c}
-        ${d} ${b + c}
-        ${d} ${a + b + c}`;
-    } else {
-      return SquircleRenderer._rounded`l ${p} 0`;
-    }
-  }
-
-  /**
-   * Draws the bottom-right corner path segment.
-   */
-  static _drawBottomRightPath({
-    cornerRadius,
-    a,
-    b,
-    c,
-    d,
-    p,
-    arcSectionLength,
-  }) {
-    if (cornerRadius) {
-      return SquircleRenderer._rounded`
-      c 0 ${a}
-        0 ${a + b}
-        ${-d} ${a + b + c}
-      a ${cornerRadius} ${cornerRadius} 0 0 1 -${arcSectionLength} ${arcSectionLength}
-      c ${-c} ${d}
-        ${-(b + c)} ${d}
-        ${-(a + b + c)} ${d}`;
-    } else {
-      return SquircleRenderer._rounded`l 0 ${p}`;
-    }
-  }
-
-  /**
-   * Draws the bottom-left corner path segment.
-   */
-  static _drawBottomLeftPath({
-    cornerRadius,
-    a,
-    b,
-    c,
-    d,
-    p,
-    arcSectionLength,
-  }) {
-    if (cornerRadius) {
-      return SquircleRenderer._rounded`
-      c ${-a} 0
-        ${-(a + b)} 0
-        ${-(a + b + c)} ${-d}
-      a ${cornerRadius} ${cornerRadius} 0 0 1 -${arcSectionLength} -${arcSectionLength}
-      c ${-d} ${-c}
-        ${-d} ${-(b + c)}
-        ${-d} ${-(a + b + c)}`;
-    } else {
-      return SquircleRenderer._rounded`l ${-p} 0`;
-    }
-  }
-
-  /**
-   * Draws the top-left corner path segment.
-   */
-  static _drawTopLeftPath({ cornerRadius, a, b, c, d, p, arcSectionLength }) {
-    if (cornerRadius) {
-      return SquircleRenderer._rounded`
-      c 0 ${-a}
-        0 ${-(a + b)}
-        ${d} ${-(a + b + c)}
-      a ${cornerRadius} ${cornerRadius} 0 0 1 ${arcSectionLength} -${arcSectionLength}
-      c ${c} ${-d}
-        ${b + c} ${-d}
-        ${a + b + c} ${-d}`;
-    } else {
-      return SquircleRenderer._rounded`l 0 ${-p}`;
-    }
-  }
-
-  /**
-   * Initializes the SquircleRenderer by finding elements and setting up observers.
-   */
-  init() {
-    document.querySelectorAll("[data-squircle-radius]").forEach((el) => {
-      const initialComputedStyle = getComputedStyle(el);
-      const initialBorderRadius = initialComputedStyle.borderRadius;
-
-      // Only store originalBorderRadius as other styles are no longer needed
-      this.elements.set(el, {
-        originalBorderRadius: initialBorderRadius,
-      });
-
-      this._applySquircleStyles(el);
-      this.observer.observe(el);
-    });
-
-    // Specific Bootstrap dropdown handling: Re-apply squircle when dropdown is shown
-    document.addEventListener("shown.bs.dropdown", (e) => {
-      const dropdownMenu = e.target.querySelector(
-        ".dropdown-menu[data-squircle-radius]",
-      );
-      if (dropdownMenu && this.elements.has(dropdownMenu)) {
-        this._applySquircleStyles(dropdownMenu);
+    if (!next) {
+      // No rounded corners now. Tween our radius down to 0 (keeping the squircle
+      // shape, which is invisible at 0) so the corners shrink in step with the
+      // element's own border-radius transition instead of snapping. Stay managed
+      // so a later class flip can re-squircle them.
+      if (prevBR) {
+        el.style.setProperty('border-radius', prevBR, 'important');
+        getComputedStyle(el).borderRadius;   // commit baseline
       }
-    });
-  }
-
-  /**
-   * Applies the squircle clip-path.
-   * @param {HTMLElement} element The element to apply squircle styles to.
-   */
-  _applySquircleStyles(element) {
-    const data = this.elements.get(element);
-    if (!data) return;
-
-    const { originalBorderRadius } = data;
-
-    const rect = element.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    const radius = parseFloat(originalBorderRadius);
-    // 0.6 = Apple's iOS squircle (60% corner smoothing), the established
-    // reverse-engineered value. 1.0 would be a pure bezier with no arc (too smooth).
-    const cornerSmoothing = 0.6;
-
-    // Skip if dimensions or radius are invalid (e.g. element not yet visible)
-    if (isNaN(radius) || radius <= 0 || width <= 0 || height <= 0) {
-      element.style.clipPath = "none";
-      element.style.borderRadius = originalBorderRadius;
+      el.style.removeProperty('transition');
+      el.style.setProperty('border-radius', '0px', 'important');
       return;
     }
 
-    const cornerParams = SquircleRenderer._getPathParamsForCorner({
-      cornerRadius: radius,
-      cornerSmoothing: cornerSmoothing,
-      preserveSmoothing: true,
-      roundingAndSmoothingBudget: Math.min(width, height) / 2,
-    });
+    if (prev && cornersEqual(prev, corners)) {
+      // Authored radius is unchanged (the class flip touched something else):
+      // re-seat our frozen value and commit it while transitions are still off,
+      // so releasing the transition can't tween from the bare unscaled target.
+      if (prevBR) {
+        el.style.setProperty('border-radius', prevBR, 'important');
+        getComputedStyle(el).borderRadius;   // commit before re-enabling
+      }
+      el.style.removeProperty('transition');
+      return;
+    }
 
-    const pathData = SquircleRenderer._getSVGPathFromPathParams({
-      width,
-      height,
-      topLeftPathParams: cornerParams,
-      topRightPathParams: cornerParams,
-      bottomLeftPathParams: cornerParams,
-      bottomRightPathParams: cornerParams,
-    });
-
-    element.style.clipPath = `path("${pathData}")`;
-    element.style.borderRadius = "0"; // Always remove native border-radius
+    // Re-seat the old (scaled) value as the transition baseline while still
+    // frozen, commit it, then release the transition and write the new value so
+    // CSS tweens old -> new instead of jumping from the bare target.
+    if (prevBR) {
+      el.style.setProperty('border-radius', prevBR, 'important');
+      getComputedStyle(el).borderRadius;   // commit baseline
+    }
+    el.style.removeProperty('transition');
+    write(el, next);
   }
 
-  /**
-   * Callback for ResizeObserver. Re-applies squircle styles on element resize.
-   * @param {HTMLElement} element
-   */
-  _updateSquircle(element) {
-    this._applySquircleStyles(element); // Re-apply all styles
-  }
-}
+  // ---- observe the page ---------------------------------------------------
+  const observer = new MutationObserver((mutations) => {
+    let added = false;
+    let dirty = null;
+    for (let i = 0; i < mutations.length; i++) {
+      const m = mutations[i];
+      if (m.type === 'attributes') {
+        const el = m.target;
+        if (managed.has(el)) (dirty || (dirty = new Set())).add(el);
+        continue;
+      }
+      const nodes = m.addedNodes;
+      for (let j = 0; j < nodes.length; j++) {
+        if (nodes[j].nodeType === 1) { roots.push(nodes[j]); added = true; }
+      }
+    }
+    if (dirty) dirty.forEach(recompute);
+    if (added) schedule();
+  });
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class'],   // our own writes touch style, never class
+  });
 
-// Initialize the renderer when the DOM is ready
-const squircleModule = new SquircleRenderer();
-squircleModule.init();
+  const sweep = () => { expand(document.documentElement); schedule(); };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sweep, { once: true });
+  } else {
+    sweep();
+  }
+})();
