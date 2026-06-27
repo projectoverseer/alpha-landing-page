@@ -62,10 +62,13 @@ html {
 }
 
 section {
-  padding: map-get($spacers, 10) 0;
+  // Standard section rhythm: 48 / 72 / 96px (was 55 / 88 / 132) — denser, more
+  // conventional. Decoupled from the spacer keys so it doesn't shrink the .hr or
+  // hero margin that also reference $spacers-24.
+  padding: 3rem 0;
 
   @include media-breakpoint-up(md) {
-    padding: map-get($spacers, 16) 0;
+    padding: 4.5rem 0;
 
     p,
     li {
@@ -74,7 +77,7 @@ section {
   }
 
   @include media-breakpoint-up(lg) {
-    padding: map-get($spacers, 24) 0;
+    padding: 6rem 0;
   }
 }
 
@@ -87,6 +90,29 @@ section {
   --input-inner-shadow:
     inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
+
+  // — Precision redesign: motion tokens (design/04 §5)
+  --ease-precise: cubic-bezier(0.28, 0.11, 0.32, 1);
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 400ms;
+
+  // Standard, restrained fluid type scale (conventional web practice; body 14px).
+  // Values are mobile -> desktop in px (root 16px). Headings stay moderate so the
+  // page reads professional and "natural", not oversized. calc() wraps the +term
+  // so Ruby Sass (incl. compressed/production) passes clamp() through verbatim.
+  // NOTE: never put an inline // comment after a custom-property value — it breaks
+  // the compressed/production Sass build. Keep notes above the declarations.
+  --fs-display: clamp(2.25rem, calc(1.6rem + 2.6vw), 3.25rem);
+  --fs-h1: clamp(2rem, calc(1.5rem + 2vw), 3rem);
+  --fs-h2: clamp(1.625rem, calc(1.4rem + 0.9vw), 2rem);
+  --fs-h3: clamp(1.25rem, calc(1.13rem + 0.5vw), 1.5rem);
+  --fs-h4: clamp(1.0625rem, calc(1.02rem + 0.18vw), 1.125rem);
+  --fs-lead: clamp(1rem, calc(0.95rem + 0.2vw), 1.125rem);
+  // Chrome stays responsive (smaller on mobile) so the logo/buttons never dominate.
+  --size-icon: clamp(2.75rem, calc(2.3rem + 1.8vw), 4rem);
+  --btn-h: clamp(2.625rem, calc(2.4rem + 0.9vw), 3rem);
+  --btn-px: clamp(1.25rem, calc(1.1rem + 0.6vw), 1.5rem);
 }
 
 .skip-link {
@@ -124,6 +150,22 @@ section {
   color: $text-tertiary !important;
 }
 
+// Never let a long word (e.g. "Transformation") or a long URL push past the
+// viewport on small screens — keep every device free of horizontal scroll.
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  overflow-wrap: break-word;
+}
 
 h1,
 .h1 {
@@ -143,17 +185,19 @@ h6,
   max-width: 35ch;
 }
 
+h1,
 h2,
 h3,
 h4,
 h5,
 h6,
+.h1,
 .h2,
 .h3,
 .h4,
 .h5,
 .h6 {
-  margin-bottom: 0;
+  margin-bottom: 0; // spacing is owned by the following element's margin-top
 
   &:not(:first-child) {
     margin-top: 1em;
@@ -162,18 +206,21 @@ h6,
 
 h1,
 .h1 {
+  font-size: var(--fs-h1);
   line-height: $h1-line-height;
   letter-spacing: -0.01em;
 }
 
 h2,
 .h2 {
+  font-size: var(--fs-h2);
   line-height: $h2-line-height;
   letter-spacing: -0.01em;
 }
 
 h3,
 .h3 {
+  font-size: var(--fs-h3);
   line-height: $h3-line-height;
   letter-spacing: -0.01em;
 
@@ -190,7 +237,7 @@ h3,
   align-items: flex-start;
 
   /* Product name (the text node / non-.mini-h3 content) renders at heading scale */
-  font-size: $h3-font-size;
+  font-size: var(--fs-h3);
   font-weight: $headings-font-weight;
   letter-spacing: -0.01em;
   line-height: $h3-line-height;
@@ -216,6 +263,7 @@ h3,
 
 h4,
 .h4 {
+  font-size: var(--fs-h4);
   line-height: $h4-line-height;
   letter-spacing: -0.01em;
 
@@ -747,9 +795,13 @@ blockquote> :last-child:after {
   }
 }
 
+// Support / CTA section. Redesigned from a flat orange flood to a disciplined
+// deep-ink panel: dye is reserved for the spotlight (top hairline + the button),
+// not used as a full-bleed wash. Only the support section uses section.bg-primary.
 section.bg-primary {
-  background: $fill-primary !important;
+  background: $ink-900 !important;
   color: $text-dark;
+  border-top: 0.25rem solid $dye;
 }
 
 section.bg-dark {
@@ -764,6 +816,21 @@ section.bg-dark {
   background: $white;
   box-shadow: var(--box-shadow-menu);
   height: 64px;
+
+  // On phones the logo was dominating: scale the brand down by √φ (170→132,
+  // 48→37) and shorten the bar so it matches the now-smaller type and buttons.
+  @include media-breakpoint-down(md) {
+    height: 56px;
+
+    .navbar-brand {
+      width: 132px;
+      height: 37px;
+    }
+
+    .navbar-logo {
+      width: 132px;
+    }
+  }
 
   .navbar-brand {
     position: relative;
@@ -861,6 +928,54 @@ section.bg-dark {
   }
 }
 
+/* ─── Precision components (design/04 §2.2–2.3, §4) ─── */
+
+// Kicker / technical eyebrow label (Calibration motif)
+.kicker {
+  display: block;
+  margin: 0;
+  font-size: pt(10);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  color: $slate-500;
+}
+
+// Metric — large tabular figure; the signature typographic move
+.metric {
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-size: clamp(2rem, calc(1.4rem + 2.4vw), 3rem);
+}
+
+.metric__unit {
+  font-size: 0.5em;
+  font-weight: 600;
+  margin-left: 0.08em;
+  color: $slate-500;
+}
+
+// Ghost button — secondary action, reads on dark and light
+:is(a, button).btn-ghost {
+  color: $text-dark;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    color: $text-dark;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  &:active,
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
 header {
   display: flex;
   min-height: 100vh;
@@ -896,11 +1011,124 @@ header {
   }
 }
 
+/* ─── PARKED: precision hero (design/04 §1.3 Atelier, §2.1) ───
+   Preserved but inactive. Re-enable by including hero-precision.html
+   (its <header> carries .hero-precision) instead of hero.html. */
+
+header.hero-precision {
+  align-items: flex-end;
+  min-height: 100vh; // fallback for browsers without svh
+  min-height: 100svh;
+  background-color: $ink-950; // splash color while the hero image is loading
+
+  /* fallback */
+  background-image:
+    linear-gradient(180deg, rgba(7, 21, 31, 0.62) 0%, rgba(7, 21, 31, 0.5) 36%, rgba(7, 21, 31, 0.85) 100%),
+    url("../img/hero/hero-1920.jpg");
+
+  /* modern image-set() */
+  background-image:
+    linear-gradient(180deg, rgba(7, 21, 31, 0.62) 0%, rgba(7, 21, 31, 0.5) 36%, rgba(7, 21, 31, 0.85) 100%),
+    image-set(url("../img/hero/hero-1920.avif") type("image/avif") 1x,
+      url("../img/hero/hero-3840.avif") type("image/avif") 2x,
+      url("../img/hero/hero-1920.jpg") type("image/jpeg") 1x);
+
+  .header-content {
+    width: 100%;
+    margin-top: 0;
+    padding-top: map-get($spacers, 16);
+    padding-bottom: map-get($spacers, 10);
+
+    @include media-breakpoint-up(md) {
+      margin-top: 0;
+      padding-top: map-get($spacers, 22);
+      padding-bottom: map-get($spacers, 12);
+    }
+  }
+
+  .hero__kicker {
+    color: $blue-pale;
+    margin-bottom: map-get($spacers, 3);
+  }
+
+  h1 {
+    font-size: var(--fs-display);
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+
+  .hero__lead {
+    max-width: 60ch;
+    color: $text-dark-secondary;
+    margin-top: map-get($spacers, 4);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: map-get($spacers, 3);
+    margin-top: map-get($spacers, 6);
+  }
+
+  .hero__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, calc(1rem + 3.5vw), 4rem);
+    margin-top: map-get($spacers, 9);
+    padding-top: map-get($spacers, 5);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .metric-block {
+    display: flex;
+    flex-direction: column-reverse; // number on top; DOM keeps dt→dd order
+    gap: map-get($spacers, 1);
+
+    dt,
+    dd {
+      margin: 0;
+    }
+  }
+
+  .metric {
+    color: $white;
+  }
+
+  .metric--rft .metric__to {
+    color: $dye-bright; // the win — the single moment that matters
+  }
+
+  .metric--rft .metric__from {
+    color: $mist-300;
+  }
+
+  .metric--rft .metric__sep {
+    color: $slate-400;
+    margin: 0 0.18em;
+  }
+
+  .metric .metric__unit {
+    color: $mist-300;
+  }
+
+  .metric-block .kicker {
+    color: $mist-300;
+  }
+}
+
 .service-box {
-  padding-bottom: map-get($spacers, 8);
+  // Inter-item gap: was 44px ($spacers-8) — too large when items stack. 32px is a
+  // standard feature-grid gap. The row cancels the last row's padding (see below).
+  padding-bottom: 2rem;
 
   .row:has(&) {
-    margin-bottom: -1 * map-get($spacers, 8) + $paragraph-margin-bottom;
+    margin-bottom: -2rem + $paragraph-margin-bottom;
+  }
+
+  // Title → list rhythm: lists here had 0 top margin (title touched the first
+  // bullet) while Benefits' title → paragraph is 14px. Match that 1em step.
+  ul {
+    margin-top: 1em;
   }
 }
 
@@ -923,8 +1151,8 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 $input-btn-padding-x;
-  height: map-get($scales, 7);
+  padding: 0 var(--btn-px);
+  height: var(--btn-h);
   min-width: 30px;
   font-family: $btn-font-family;
   font-size: $input-btn-font-size;
@@ -975,8 +1203,8 @@ header {
 }
 
 .bi {
-  width: map-get($scales, 10);
-  height: map-get($scales, 10);
+  width: var(--size-icon);
+  height: var(--size-icon);
 }
 
 .client-portrait {
@@ -1004,34 +1232,39 @@ header {
   margin: auto;
 }
 
+// Section index marker — a measured "calibration" marker: a large tabular
+// figure in the accent colour trailed by a hairline rule across the column.
+// Replaces the heavy solid block (design/02 — "measured, not loud").
 .heading-number {
-  position: relative;
-  background: $primary;
-  color: $background;
-  width: map-get($spacers, 24);
-  height: map-get($scales, 15);
-  border-radius: $border-radius-svg;
+  display: flex;
+  align-items: center;
+  gap: map-get($spacers, 3);
+  width: 100%;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  color: $dye;
 
   .bg-light & {
-    background: $secondary;
-    color: $light;
+    color: $blue;
   }
 
-  &:after {
-    position: absolute;
-    width: 100%;
-    text-align: right;
-    color: inherit;
-    font-size: map-get($scales, 10);
-    font-weight: 600;
-    overflow: hidden;
+  &::before {
     content: attr(data-number);
-    line-height: 1;
-    bottom: 0;
-    right: 0.0375em;
-    padding-right: map-get($spacers, 2); // this is to avoid text clipping
-
     font-feature-settings: "tnum" 1;
-    letter-spacing: -0.095em;
+    font-weight: 700;
+    font-size: clamp(1.75rem, calc(1.4rem + 1.5vw), 2.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: inherit;
+  }
+
+  // the "measurement" rule running out to the column edge
+  &::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.22;
   }
 }

@@ -16,6 +16,24 @@ description: "Alpha Software đang tái định nghĩa cách quản lý sản xu
 learn_more: "Tìm hiểu thêm"
 learn_more_aria: "Tìm hiểu thêm về Alpha Software"
 
+# --- Hero Section (PARKED precision hero — see _includes/hero-precision.html) ---
+# Khi bật lại hero "precision", đặt `slogan` = `hero_headline` để khớp <title>/OG.
+
+hero_headline: "Chính xác là cốt lõi"
+hero_kicker: "Độ chính xác cho nhà máy dệt nhuộm"
+hero_lead: "Chúng tôi biến kinh nghiệm dày dạn của nhà máy thành phần mềm áp dụng đúng công nghệ cho từng mẻ nhuộm—loại bỏ những lỗi gây tái chế, nâng tỷ lệ đúng ngay từ đầu (RFT) từ mức 45–60% lên trên 90%, mang lại chất lượng ổn định và có thể chứng minh mà các thương hiệu khắt khe nhất thế giới đòi hỏi."
+hero_cta_primary: "Nhận tư vấn miễn phí"
+hero_cta_secondary: "Xem cách hoạt động"
+hero_metrics_label: "Kết quả Alpha mang lại"
+hero_metric_rft_from: "45–60"
+hero_metric_rft_to: "90–92"
+hero_metric_rft_label: "Tỷ lệ đúng ngay từ đầu (RFT) — kết quả thực tế"
+hero_metric_years_value: "28"
+hero_metric_years_unit: " năm"
+hero_metric_years_label: "kinh nghiệm dệt nhuộm"
+hero_metric_mills_value: "3"
+hero_metric_mills_label: "nhà máy đang dùng Alpha"
+
 toc: "Mục lục"
 toc_hero: "Xin chào"
 toc_hero_id: "xin-chao"

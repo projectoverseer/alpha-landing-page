@@ -26,24 +26,26 @@ $background: #fff;
 $light: #c3e5f1;
 $dark: #00263e;
 
+// Neutral ramp — shifted subtly cool ("ink") to align with the precision brand.
+// Low saturation on surfaces so whites stay clean; text colors lean more slate.
 $white: #fff;
 $black: #000;
-$gray-50: #f9f9f9;
-$gray-100: #ececec;
-$gray-200: #e3e3e3;
-$gray-300: #cdcdcd;
-$gray-400: #b4b4b4;
-$gray-500: #9b9b9b;
-$gray-600: #676767;
-$gray-700: #424242;
-$gray-750: #2f2f2f;
-$gray-800: #212121;
-$gray-900: #171717;
-$gray-950: #0d0d0d;
+$gray-50: #f6f8fa;
+$gray-100: #eaeef2;
+$gray-200: #dfe5ea;
+$gray-300: #cad4dc;
+$gray-400: #aab6c0;
+$gray-500: #8b97a3;
+$gray-600: #5b6976;
+$gray-700: #3b4753;
+$gray-750: #2c333a;
+$gray-800: #1f262d;
+$gray-900: #151b21;
+$gray-950: #0b1119;
 
-$text: #0d0d0d;
-$text-secondary: #5d5d5d;
-$text-tertiary: #8f8f8f;
+$text: #0e1b27;
+$text-secondary: #46586a;
+$text-tertiary: #6f8294;
 
 $body-color: $text;
 
@@ -55,6 +57,41 @@ $border-color: $gray-300;
 $icon-color: $gray-600; // closest to $text-secondary
 $icon-active-color: $gray-700;
 $dark-icon-color: $gray-100; // closest to $text-dark-secondary
+
+// -------------------------------------
+// Precision Redesign Tokens (design/04-design-system.md)
+// Calibration x Atelier · cool ink base + reserved dye accent.
+// Additive: introduced alongside the legacy vars so sections migrate one by one.
+// -------------------------------------
+
+// Ink — cool structural neutrals (surfaces, dark sections, near-black text)
+$ink-950: #07151f;
+$ink-900: #0b1b2b;
+$ink-800: #102a3c;
+$ink-700: #1d3b4f;
+$ink-600: #2f5167;
+
+// Slate / mist — text, labels, hairlines, dividers
+$slate-600: #46586a; // secondary text on light
+$slate-500: #647889; // tertiary text / captions / kicker labels
+$slate-400: #8a9cab;
+$mist-300: #b9c6d0; // hairlines, ticks
+$mist-200: #d6e0e7; // borders, dividers
+$mist-100: #e9eff3; // subtle fills / alt section background
+$paper-50: #f6f9fb; // page background, a hair cooler than white
+
+// Dye accent — the signature, reserved for metrics + CTAs + key marks
+$dye: $primary; // #e35205 — large numerals, fills, decorative marks (never small text)
+$dye-bright: #ff6a1a; // hover / highlight
+$dye-deep: #b8390a; // AA-safe: small accent text on light; CTA bg with white text
+$dye-tint: #fdece2; // faint dye wash for callout backgrounds on light
+
+// Secondary cool accent (kept from current brand)
+$blue: $secondary; // #004c97 — links, secondary marks
+$blue-bright: $secondary-dark; // #009cde
+$blue-pale: $light; // #c3e5f1
+
+// Motion + fluid type are emitted as CSS custom properties in _base.scss :root.
 
 // -------------------------------------
 // Typography Variables
@@ -141,30 +178,34 @@ $scales: (
 
 $spacer: 1rem;
 
+// Spacing scale snapped to the standard 4px base grid (was an 11px point scale:
+// 5.5/11/22/27/33/37/44…). Each key keeps ~its previous value so the tuned layout
+// holds, but every value is now a clean grid step. Key landmarks match Bootstrap's
+// canonical scale: 2 = .5–.75rem, 3 = 1rem (16px), 4 = 1.5rem (24px).
 $spacers: (
-  -2: pt(1),
-  -1: pt(2),
+  -2: 0.125rem, // 2px
+  -1: 0.25rem,  // 4px
   0: 0rem,
-  1: pt(4 * 2) / 2,
-  2: pt(4 * 2),
-  3: pt(4 * 3),
-  4: pt(4 * 2) * 2,
-  5: pt(4 * 5),
-  6: pt(4 * 2) * 3,
-  7: pt(4 * 7),
-  8: pt(4 * 2) * 4,
-  9: pt(4 * 3) * 3,
-  10: pt(4 * 2) * 5,
-  11: pt(4 * 11),
-  12: pt(4 * 2) * 6,
-  16: pt(4 * 2) * 8,
-  22: pt(4 * 2) * 11,
-  24: pt(4 * 2) * 12
+  1: 0.25rem,   // 4px
+  2: 0.75rem,   // 12px
+  3: 1rem,      // 16px
+  4: 1.5rem,    // 24px
+  5: 1.75rem,   // 28px
+  6: 2rem,      // 32px
+  7: 2.5rem,    // 40px
+  8: 2.75rem,   // 44px
+  9: 3rem,      // 48px
+  10: 3.5rem,   // 56px
+  11: 3.75rem,  // 60px
+  12: 4rem,     // 64px
+  16: 5rem,     // 80px
+  22: 7.5rem,   // 120px
+  24: 8rem,     // 128px
 );
 
 $text-tab-width: 1.625em; // 13/4 of an en space
 $font-size-sm: map-get($scales, -1);
-$font-size-base: map-get($scales, 1);
+$font-size-base: 0.875rem; // 14px — standard body size; line-height-base derives ~1.57
 $font-size-lg: map-get($scales, 2);
 $input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
@@ -208,8 +249,10 @@ $grid-breakpoints: (
 
 $container-padding-x: map-get($spacers, 4) * 2;
 
+// Narrower content column (~1140px, the conventional max) for generous, calm
+// left/right margins on large screens — the standard, "natural" feel.
 $container-max-widths: (
-  lg: 76rem + $container-padding-x,
+  lg: 69rem + $container-padding-x,
 );
 
 // -------------------------------------

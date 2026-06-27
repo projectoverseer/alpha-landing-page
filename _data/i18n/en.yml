@@ -16,6 +16,25 @@ description: "Alpha Software is redefining textile manufacturing in Vietnam by p
 learn_more: "Learn more"
 learn_more_aria: "Learn more about Alpha Software"
 
+# --- Hero Section (PARKED precision hero — see _includes/hero-precision.html) ---
+# When re-enabling the precision hero, set `slogan` to `hero_headline` so the
+# <title>/OG meta match.
+
+hero_headline: "Precision is the business"
+hero_kicker: "Precision for textile dyehouses"
+hero_lead: "We turn your factory's hard-won expertise into software that applies the right technology to every batch—eliminating the errors that cause rework, lifting Right-First-Time from the 50s into the 90s, and giving you the consistent, provable quality the world's most demanding brands require."
+hero_cta_primary: "Request a free consultation"
+hero_cta_secondary: "See how it works"
+hero_metrics_label: "Results Alpha delivers"
+hero_metric_rft_from: "45–60"
+hero_metric_rft_to: "90–92"
+hero_metric_rft_label: "Right-First-Time, real client results"
+hero_metric_years_value: "28"
+hero_metric_years_unit: " yrs"
+hero_metric_years_label: "in textile dyeing"
+hero_metric_mills_value: "3"
+hero_metric_mills_label: "dyehouses running Alpha"
+
 toc: "Table of contents"
 toc_hero: "Welcome to Alpha Software"
 toc_hero_id: "home"

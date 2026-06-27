@@ -1,0 +1,52 @@
+{% comment %}
+  PARKED precision hero (design/04). Not currently active.
+  To re-enable: in _includes/page.html swap `{% include hero.html %}`
+  for `{% include hero-precision.html %}`. Styles live under
+  `header.hero-precision` in _sass/_base.scss.
+{% endcomment %}
+<header class="hero-precision" id="{{ t.toc_hero_id }}">
+  <div class="container header-content">
+    <p class="kicker hero__kicker">{{ t.hero_kicker }}</p>
+    <h1 itemprop="slogan">{{ t.hero_headline }}</h1>
+    <p class="big hero__lead">{{ t.hero_lead }}</p>
+
+    <div class="hero__actions">
+      <a
+        class="btn-primary btn-xl"
+        data-squircle-radius
+        href="#{{ t.toc_support_id }}"
+      >
+        {{ t.hero_cta_primary }}
+      </a>
+      <a
+        class="btn-ghost btn-xl"
+        data-squircle-radius
+        href="#{{ t.toc_overview_id }}"
+      >
+        {{ t.hero_cta_secondary }}
+      </a>
+    </div>
+
+    <dl class="hero__metrics" aria-label="{{ t.hero_metrics_label }}">
+      <div class="metric-block">
+        <dt class="kicker">{{ t.hero_metric_rft_label }}</dt>
+        <dd class="metric metric--rft">
+          <span class="metric__from">{{ t.hero_metric_rft_from }}</span><span
+            class="metric__sep"
+          >→</span><span class="metric__to">{{ t.hero_metric_rft_to }}<span
+              class="metric__unit"
+            >%</span></span>
+        </dd>
+      </div>
+      <div class="metric-block">
+        <dt class="kicker">{{ t.hero_metric_years_label }}</dt>
+        <dd class="metric">{{ t.hero_metric_years_value
+          }}<span class="metric__unit">{{ t.hero_metric_years_unit }}</span></dd>
+      </div>
+      <div class="metric-block">
+        <dt class="kicker">{{ t.hero_metric_mills_label }}</dt>
+        <dd class="metric">{{ t.hero_metric_mills_value }}</dd>
+      </div>
+    </dl>
+  </div>
+</header>
