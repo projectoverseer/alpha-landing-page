@@ -204,11 +204,16 @@ h6,
   }
 }
 
+// Tracking (letterspacing) follows the USWDS size-based recommendations
+// (designsystem.digital.gov typesetting): tighten large text, loosen small and
+// uppercase text. Rendered-size bands at 16px root:
+//   ≥32px → -0.02em  ·  ≥22px → -0.01em  ·  <22px → normal
+//   13px small text → +0.025em  ·  uppercase eyebrows → +0.15em
 h1,
 .h1 {
   font-size: var(--fs-h1);
   line-height: $h1-line-height;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 h2,
@@ -265,7 +270,7 @@ h4,
 .h4 {
   font-size: var(--fs-h4);
   line-height: $h4-line-height;
-  letter-spacing: -0.01em;
+  letter-spacing: normal; // 17–18px: below the USWDS 22px threshold for tightening
 
   &:has(.mini-h4, .h5) {
     display: flex;
@@ -279,7 +284,7 @@ h5,
   font-size: $h5-font-size;
   line-height: $h5-line-height;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: normal; // 17px: below the USWDS 22px threshold for tightening
 }
 
 h6,
@@ -287,7 +292,7 @@ h6,
   font-size: $h6-font-size;
   line-height: $h6-line-height;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: normal; // 14px: below the USWDS 22px threshold for tightening
 }
 
 big,
@@ -636,13 +641,13 @@ small,
 .small {
   font-size: $font-size-sm;
   line-height: $line-height-sm;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em; // USWDS letterspacing 1 — loosen very small (13px) text
 }
 
 figcaption {
   font-size: $font-size-base;
   line-height: $line-height-base;
-  letter-spacing: 0.01em;
+  letter-spacing: normal; // 14px body size — USWDS adds tracking only below ~12px
 
   .bg-dark &,
   .bg-primary & {
@@ -934,10 +939,10 @@ section.bg-dark {
 .kicker {
   display: block;
   margin: 0;
-  font-size: pt(10);
+  font-size: $font-size-sm; // 13px — the small-text rung of the type scale
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em; // USWDS letterspacing 3 — uppercase section-intro label
   line-height: 1.2;
   color: $slate-500;
 }
@@ -1255,7 +1260,7 @@ header.hero-precision {
     font-weight: 700;
     font-size: clamp(1.75rem, calc(1.4rem + 1.5vw), 2.5rem);
     line-height: 0.85;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em; // USWDS letterspacing -2 — large (28–40px) tabular figure
     color: inherit;
   }
 
@@ -1263,8 +1268,9 @@ header.hero-precision {
   &::after {
     content: "";
     flex: 1 1 auto;
-    height: 2px;
+    height: $hr-border-width;
     background: currentColor;
     opacity: 0.22;
+    border-radius: $border-radius-2xl;
   }
 }

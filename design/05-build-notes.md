@@ -137,6 +137,23 @@ implementation proceeds.
     no `bg-tint`, original section colours (white content · blue benefits · navy about · ink
     support). Net change from this whole pass: **none** — the standardized baseline stands as
     the comfortable, standard reading experience. Section‑distinction work parked.
+- 2026‑06‑27 — **Pass 8 — drop the `pt()` point‑unit crutch** (owner: "you shouldn't use
+  `pt()` at all anymore… everything should be in scales, no standalone values"). Pure
+  representation cleanup — **every value is byte‑identical** to before (each `pt()` result
+  equals an exact `px()` rung), so nothing rendered changes. Prod build clean (exit 0).
+  - **`pt()` length function deleted** from `css/main.scss`. (The `line-height-for-pt`
+    *ratio* helper stays — it returns a unitless leading ratio, not a length; commented as such.)
+  - **`$scales` map rebuilt with `px()`** instead of `pt(6*n)` arithmetic — self‑documenting
+    rem rungs (13/15/16/**17**/24/32/40/48/56/64/72/80/88/96/104/112/120/128/240px).
+  - **h5 (17px) → new in‑between key `2.5`** in `$scales` (sits between the 16px `2` and 24px
+    `3` rungs) per the owner's "be inventive with a fractional key" steer; `$h5-font-size:
+    map-get($scales, 2.5)`.
+  - **`$focus-ring-width: pt(2)` → `px(3)`**; **`.kicker font-size: pt(10)` → `$font-size-sm`**
+    (the 13px type‑scale token); **`$font-size-base: 0.875rem` → `px(14)`** (kill the last
+    stray literal). No `pt(` left except the named line‑height‑ratio helper.
+  - Deprecated‑class sweep: the section‑as‑slide experiment's `bg-tint` / hairline
+    `.heading-number` were already fully reverted (only design‑doc references remain) — **no
+    orphaned rules to remove**.
 - ⚠️ Working‑tree note: a prior `squircle.js` standards‑rewrite (drop φ³ → standard
   `corner-shape: squircle`) was reverted out of the tree; `js/squircle.js` is currently the
   φ³ `superellipse(log₂ φ³)` + depth‑match‑SCALE version again. Re‑apply only on owner steer.

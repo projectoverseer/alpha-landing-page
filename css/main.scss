@@ -97,15 +97,22 @@ $blue-pale: $light; // #c3e5f1
 // Typography Variables
 // -------------------------------------
 
+// USWDS Public Sans font stack (designsystem.digital.gov/design-tokens/typesetting/font/).
+// Primary stays "Public Sans" (the family name loaded from Google Fonts); the system
+// fallbacks below match the USWDS-recommended ordering verbatim. Public Sans is designed
+// to be optically similar to these system fonts, so the fallback degrades cleanly.
 $font-family-sans-serif:
   "Public Sans",
   -apple-system,
   BlinkMacSystemFont,
-  "Helvetica Neue",
-  Helvetica,
-  Roboto,
   "Segoe UI",
-  sans-serif;
+  Roboto,
+  Helvetica,
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol";
 $font-family-monospace:
   ui-monospace,
   SFMono-Regular,
@@ -138,10 +145,9 @@ $link-hover-decoration: underline;
   @return 1rem * $px / 16;
 }
 
-@function pt($pt) {
-  @return 1rem * round($pt / 3 * 4) / 16;
-}
-
+// Leading-ratio helper: returns a unitless line-height for a body of `$pt`
+// points plus `$add` points of leading (snapped to the 4/3 px grid). Distinct
+// from a length — produces a ratio, never a standalone size.
 @function line-height-for-pt($pt, $add: 6) {
   @return round(($pt + $add)/ 3 * 4) / round($pt / 3 * 4);
 }
@@ -154,26 +160,30 @@ $link-hover-decoration: underline;
   @return line-height-for-pt($rem * 12, $add);
 }
 
+// Type / size scale (rem via the px() helper — no more point conversion).
+// Key 2.5 is an in-between step (17px) holding the h5 size, which sits between
+// the 16px and 24px rungs.
 $scales: (
-  -1: pt(10),
+  -1: px(13),
   0: 0rem,
-  1: pt(11),
-  2: pt(6 * 2),
-  3: pt(6 * 3),
-  4: pt(6 * 2) * 2,
-  5: pt(6 * 5),
-  6: pt(6 * 2) * 3,
-  7: pt(6 * 7),
-  8: pt(6 * 2) * 4,
-  9: pt(6 * 3) * 3,
-  10: pt(6 * 2) * 5,
-  11: pt(6 * 11),
-  12: pt(6 * 2) * 6,
-  13: pt(6 * 13),
-  14: pt(6 * 2) * 7,
-  15: pt(6 * 3) * 5,
-  16: pt(6 * 2) * 8,
-  30: pt(6 * 2) * 15
+  1: px(15),
+  2: px(16),
+  2.5: px(17),
+  3: px(24),
+  4: px(32),
+  5: px(40),
+  6: px(48),
+  7: px(56),
+  8: px(64),
+  9: px(72),
+  10: px(80),
+  11: px(88),
+  12: px(96),
+  13: px(104),
+  14: px(112),
+  15: px(120),
+  16: px(128),
+  30: px(240),
 );
 
 $spacer: 1rem;
@@ -205,7 +215,7 @@ $spacers: (
 
 $text-tab-width: 1.625em; // 13/4 of an en space
 $font-size-sm: map-get($scales, -1);
-$font-size-base: 0.875rem; // 14px — standard body size; line-height-base derives ~1.57
+$font-size-base: px(14); // standard body size; line-height-base derives ~1.57
 $font-size-lg: map-get($scales, 2);
 $input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
@@ -221,7 +231,7 @@ $h1-font-size: map-get($scales, 7);
 $h2-font-size: map-get($scales, 5);
 $h3-font-size: map-get($scales, 4);
 $h4-font-size: map-get($scales, 3);
-$h5-font-size: pt(13);
+$h5-font-size: map-get($scales, 2.5);
 $h6-font-size: $font-size-base;
 
 $h1-line-height: line-height-for-rem($h1-font-size);
@@ -277,13 +287,13 @@ $card-border-width: $border-width;
 $card-border-color: $border-color;
 $card-border-radius: $border-radius-2xl;
 
-$hr-border-width: pt(2);
+$hr-border-width: 2px;
 
 // -------------------------------------
 // Focus Ring Variables
 // -------------------------------------
 
-$focus-ring-width: pt(2);
+$focus-ring-width: px(3);
 $focus-ring-opacity: 1;
 $focus-ring-color: #0071e3;
 $focus-ring-blur: 0;
