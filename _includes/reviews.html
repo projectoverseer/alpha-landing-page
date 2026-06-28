@@ -22,6 +22,7 @@
     <div class="row row-cols-xl-2 row-cols-md-2 row-cols-1 mt-9">
       <div
         class="col service-box"
+        id="review-nguyen-thi-nga"
         itemprop="review"
         itemscope
         itemtype="https://schema.org/Review"
@@ -62,7 +63,7 @@
             itemscope
             itemtype="https://schema.org/Person"
           >
-            {{ t.female_title }} <span itemprop="name">Nguyễn Thị Nga</span>,
+            {{ t.female_title }} <span itemprop="name" lang="vi">Nguyễn Thị Nga</span>,
             <span itemprop="jobTitle">{{ t.reviewer_1_job_title }}</span>
             {{ t.of }}
             <span
@@ -72,11 +73,22 @@
             ><span itemprop="name">{{ t.project_spica_company_name }}</span></span>
           </figcaption>
         </figure>
-        {{ t.translated_review_disclaimer }}
+        {% if t.show_original_review %}
+        <p class="original-review">
+          <a
+            class="original-review-link"
+            href="{{ site.url }}{{ t.translate_to_homeurl }}#review-nguyen-thi-nga"
+            hreflang="{{ t.translate_to_locale }}"
+            rel="nofollow noopener"
+            target="_blank"
+          >{% include icon-translate.html %}<span class="original-review-label">{{ t.show_original_review }}</span></a>
+        </p>
+        {% endif %}
       </div>
 
       <div
         class="col service-box"
+        id="review-dinh-van-hiep"
         itemprop="review"
         itemscope
         itemtype="https://schema.org/Review"
@@ -117,7 +129,7 @@
             itemscope
             itemtype="https://schema.org/Person"
           >
-            {{ t.male_title }} <span itemprop="name">Đinh Văn Hiệp</span>,
+            {{ t.male_title }} <span itemprop="name" lang="vi">Đinh Văn Hiệp</span>,
             <span itemprop="jobTitle">{{ t.reviewer_2_job_title }}</span>
             {{ t.of }}
             <span
@@ -127,7 +139,17 @@
             ><span itemprop="name">{{ t.project_tuan_hong_company_name }}</span></span>
           </figcaption>
         </figure>
-        {{ t.translated_review_disclaimer }}
+        {% if t.show_original_review %}
+        <p class="original-review">
+          <a
+            class="original-review-link"
+            href="{{ site.url }}{{ t.translate_to_homeurl }}#review-dinh-van-hiep"
+            hreflang="{{ t.translate_to_locale }}"
+            rel="nofollow noopener"
+            target="_blank"
+          >{% include icon-translate.html %}<span class="original-review-label">{{ t.show_original_review }}</span></a>
+        </p>
+        {% endif %}
       </div>
     </div>
   </div>

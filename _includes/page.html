@@ -15,24 +15,47 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-LZBMND9VE8', { 'anonymize_ip': true });
-
-      gtag('consent', 'update', {
+      // Consent Mode v2 (advanced). Consent state MUST be declared before config
+      // so tags evaluate it on the very first hit.
+      //
+      // Default: granted everywhere — collect the maximum where it's lawful to do
+      // so without a banner.
+      gtag('consent', 'default', {
         'ad_storage': 'granted',
         'ad_user_data': 'granted',
         'ad_personalization': 'granted',
-        'analytics_storage': 'granted'
+        'analytics_storage': 'granted',
+        'security_storage': 'granted'
       });
 
-      gtag('consent', 'update', {
+      // Override: denied in regions with opt-in / strict privacy regimes. With no
+      // consent banner on this site, these visitors stay denied; Google's Consent
+      // Mode *modeling* still recovers aggregate analytics/conversions legally from
+      // the cookieless pings, so we lose as little data as the law allows.
+      // NOTE: keep this list under periodic legal review — US state privacy laws
+      // are expanding. (Country codes; US states as US-XX. CA = Canada.)
+      gtag('consent', 'default', {
         'ad_storage': 'denied',
         'ad_user_data': 'denied',
         'ad_personalization': 'denied',
         'analytics_storage': 'denied',
-        'region': ['FR', 'DE', 'IT', 'ES', 'NL', 'PL', 'SE', 'GB', 'CH', 'CA', 'KR', 'US-CA', 'US-CO', 'US-VA', 'US-CT', 'US-UT']
+        'region': [
+          'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE',
+          'IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE',
+          'IS','LI','NO','GB','CH',
+          'CA','KR',
+          'US-CA','US-CO','US-CT','US-UT','US-VA','US-TX','US-OR','US-MT'
+        ]
       });
+
+      // Maximize lawful measurement when consent is denied: redact ad identifiers,
+      // and preserve ad-click attribution through URL params instead of cookies.
+      gtag('set', 'ads_data_redaction', true);
+      gtag('set', 'url_passthrough', true);
+
+      gtag('js', new Date());
+      gtag('config', 'G-LZBMND9VE8', { 'anonymize_ip': true });
     </script>
 
     <title>Alpha Software: {{ t.slogan }}</title>

@@ -8,50 +8,22 @@
     <h2 class="mt-0">{{ t.benefits_title }}</h2>
     <div class="row row-cols-xl-4 row-cols-md-2 row-cols-1 mt-9">
       <div class="col service-box">
-        <img
-          alt=""
-          class="bi"
-          height="80"
-          role="presentation"
-          src="{{ site.url }}/img/svg/material_symbols/editor_choice.svg"
-          width="80"
-        />
+        {% include icon-editor-choice.html %}
         <h3 class="h4 mt-4">{{ t.benefit_quality_title }}</h3>
         <p>{{ t.benefit_quality_desc }}</p>
       </div>
       <div class="col service-box">
-        <img
-          alt=""
-          class="bi"
-          height="80"
-          role="presentation"
-          src="{{ site.url }}/img/svg/material_symbols/savings.svg"
-          width="80"
-        />
+        {% include icon-savings.html %}
         <h3 class="h4 mt-4">{{ t.benefit_staffing_costs_title }}</h3>
         <p>{{ t.benefit_staffing_costs_desc }}</p>
       </div>
       <div class="col service-box">
-        <img
-          alt=""
-          class="bi"
-          height="80"
-          role="presentation"
-          src="{{ site.url }}/img/svg/material_symbols/security.svg"
-          width="80"
-        />
+        {% include icon-security.html %}
         <h3 class="h4 mt-4">{{ t.benefit_error_reduction_title }}</h3>
         <p>{{ t.benefit_error_reduction_desc }}</p>
       </div>
       <div class="col service-box">
-        <img
-          alt=""
-          class="bi"
-          height="80"
-          role="presentation"
-          src="{{ site.url }}/img/svg/material_symbols/precision_manufacturing.svg"
-          width="80"
-        />
+        {% include icon-precision-manufacturing.html %}
         <h3 class="h4 mt-4">{{ t.benefit_equipment_retrofit_title }}</h3>
         <p>{{ t.benefit_equipment_retrofit_desc }}</p>
       </div>

@@ -1,6 +1,6 @@
 homeurl: "/en"
 og_locale: "en_US"
-legal_name: "Alpha Software Development Company Limited"
+legal_name: "Alpha Software Development Co. Ltd."
 display_phone: "(+84) 983 505 002"
 copyright_notice: "Copyright &copy; 2026 Alpha Software. All rights reserved."
 
@@ -220,7 +220,10 @@ male_title: "Mr."
 of: "of"
 reviewer_1_job_title: "Deputy General Director"
 reviewer_2_job_title: "Assistant to the Director"
-translated_review_disclaimer: '<div class="translated_review_disclaimer"><a href="https://www.alphasoftwaregroup.com/#danh-gia" rel="nofollow noopener" target="_blank">Show original review in Vietnamese</a></div>'
+# Shown on the translated (English) page only — the Vietnamese page IS the
+# original, so it carries no such link. Each review deep-links to the SAME review
+# on the Vietnamese page via a shared, language-neutral #review-… anchor.
+show_original_review: "Show original in Vietnamese"
 
 review_nguyen_thi_nga_body: '<p>Alpha Software has helped SPICA effectively connect with dyeing equipment such as Spectro machines, color extraction devices, and dyeing machine controllers, thereby minimizing manual operation errors. Managing dyeing recipes has become much easier, enabling accurate dyeing plans and tightly controlled processes through QR codes and an intuitive reporting system.</p>
   <p>After implementing the software, our right-first-time dyeing rate (RFT) increased from 80% to 90% per batch, and from 90% to 95% by volume — moving steadily toward our targets of 93% and 98% in the near future.</p>'
@@ -239,7 +242,7 @@ our_story_body: '<p class="mt-md-0">Alpha Software was founded in 2021 by Mr. Ph
 support_title: "We are happy to assist you!"
 support_call_prompt: "Please call"
 support_email_prompt: "for a free consultation, or email your questions to"
-support_cta: "Request a free consultation"
+support_cta: "Email Alpha Software"
 
 # --- Footer ---
 

@@ -3,6 +3,10 @@ body {
   font-synthesis: none;
   unicode-bidi: embed;
   -webkit-font-smoothing: antialiased;
+  // Apple §3.3 tracking: SF tightens text slightly below display sizes. Public
+  // Sans takes a small negative track on body for the same optical density.
+  letter-spacing: -0.011em;
+  text-rendering: optimizeLegibility;
   quotes: "“" "”" "‘" "’";
 }
 
@@ -12,6 +16,11 @@ input,
 select,
 textarea {
   font-synthesis: none !important;
+  // Kerning: the standard `font-kerning` is the cross-browser switch (every modern
+  // engine); the proprietary `-moz-font-feature-settings: "kern"` is kept only as a
+  // belt-and-braces fallback for legacy Firefox. Both force pair-kerning on rather
+  // than leaving it to the browser's size-dependent "auto".
+  font-kerning: normal !important;
   -moz-font-feature-settings: "kern" !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
@@ -24,34 +33,14 @@ a {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-html {
-  scrollbar-color: $gray-100 transparent;
-}
-
-@media (forced-colors: active) {
-
-  a+svg.external-link-icon,
-  a+svg.phone-icon,
-  a:hover+svg.external-link-icon,
-  a:hover+svg.phone-icon,
-  a.nav-link {
-    color: LinkText;
-  }
-
-  .btn-xl {
-    color: ButtonText;
-    background: ButtonFace;
-  }
-
-  .hr,
-  .bi {
-    color: Highlight;
-  }
-}
-
+// Apple §10/§13: honor Reduce Motion — replace movement with near-instant change
+// and disable parallax/specular transitions.
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -81,38 +70,120 @@ section {
   }
 }
 
+// Anchor-jump landing (nav links → #section). The bar is fixed, so without an
+// inset a jumped-to section lands under it — the "01" marker was being cropped.
+// Apple §2: content should clear the chrome with a *comfortable* margin, neither
+// kissing the bar nor buried in dead space. Each section already carries generous
+// top padding (48/72/96px), so the scroll inset is deliberately SMALLER than the
+// bar height — the empty padding tucks behind the bar and the first content (the
+// "01" / heading) settles a touch below it. The inset eases off as the viewport
+// grows so the larger desktop padding lets the content sit a little lower (more
+// air up top), which reads better on wide screens; mobile lands tighter.
+section[id],
+header[id] {
+  scroll-margin-top: 1.5rem; // compact: 01 settles ~16px below the 56px bar
+}
+
+@include media-breakpoint-up(md) {
+  section[id],
+  header[id] {
+    scroll-margin-top: 1rem; // ~24px below the 64px bar
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  section[id],
+  header[id] {
+    scroll-margin-top: 0.5rem; // padding does the rest — content sits a touch lower
+  }
+}
+
 :root {
+  // Force a consistent, intended rendering across every browser/device rather than
+  // a per-browser-tweaked one:
+  //   · color-scheme: light  — the site is light-only; tell the engine so UA widgets
+  //     and scrollbars render light instead of a dark-mode browser auto-inverting them.
+  //   · text-size-adjust: 100% — stop iOS Safari / some Android browsers from silently
+  //     inflating font sizes (esp. in landscape), which breaks the tuned type ramp.
+  //     100% (not `none`) disables the inflation while preserving user pinch-zoom (a11y).
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   --box-shadow-input-inner:
     inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
+  // Apple §9 elevation: large, soft, low-opacity, near-neutral (cool-ink tint to
+  // match the brand neutrals). A close 1px layer grounds the edge; a wide diffuse
+  // layer lifts the bar off the content. No blur material — a quiet shadow only.
   --box-shadow-menu:
-    0 6px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.08);
+    0 1px 1px rgba(13, 27, 39, 0.05), 0 6px 20px rgba(13, 27, 39, 0.08);
   --input-inner-shadow:
     inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
 
-  // — Precision redesign: motion tokens (design/04 §5)
-  --ease-precise: cubic-bezier(0.28, 0.11, 0.32, 1);
+  // — Motion tokens. Apple §10: swift, soft, decelerating. The default ease is
+  //   Apple's recommended cubic-bezier(.2,.8,.2,1); durations sit in the ~.16–.4s
+  //   band (micro-feedback short, surface transitions longer).
+  --ease-precise: cubic-bezier(0.2, 0.8, 0.2, 1);
   --dur-fast: 160ms;
-  --dur-base: 240ms;
+  --dur-base: 280ms;
   --dur-slow: 400ms;
 
-  // Standard, restrained fluid type scale (conventional web practice; body 14px).
-  // Values are mobile -> desktop in px (root 16px). Headings stay moderate so the
-  // page reads professional and "natural", not oversized. calc() wraps the +term
-  // so Ruby Sass (incl. compressed/production) passes clamp() through verbatim.
+  // Apple type scale, stepped at breakpoints instead of fluid clamp() (per owner
+  // direction: no clamp; change scale at viewport breakpoints). These are the
+  // COMPACT (phone) values, close to Apple's native Dynamic Type sizes; the
+  // @media blocks below step them up for regular/large size classes (§3.2, §15).
   // NOTE: never put an inline // comment after a custom-property value — it breaks
   // the compressed/production Sass build. Keep notes above the declarations.
-  --fs-display: clamp(2.25rem, calc(1.6rem + 2.6vw), 3.25rem);
-  --fs-h1: clamp(2rem, calc(1.5rem + 2vw), 3rem);
-  --fs-h2: clamp(1.625rem, calc(1.4rem + 0.9vw), 2rem);
-  --fs-h3: clamp(1.25rem, calc(1.13rem + 0.5vw), 1.5rem);
-  --fs-h4: clamp(1.0625rem, calc(1.02rem + 0.18vw), 1.125rem);
-  --fs-lead: clamp(1rem, calc(0.95rem + 0.2vw), 1.125rem);
-  // Chrome stays responsive (smaller on mobile) so the logo/buttons never dominate.
-  --size-icon: clamp(2.75rem, calc(2.3rem + 1.8vw), 4rem);
-  --btn-h: clamp(2.625rem, calc(2.4rem + 0.9vw), 3rem);
-  --btn-px: clamp(1.25rem, calc(1.1rem + 0.6vw), 1.5rem);
+  --fs-display: 2.25rem;
+  --fs-h1: 2rem;
+  --fs-h2: 1.625rem;
+  --fs-h3: 1.25rem;
+  --fs-h4: 1.0625rem;
+  --fs-lead: 1.0625rem;
+  --fs-quote: 1rem;
+  --fs-metric: 2.25rem;
+  --fs-heading-num: 1.75rem;
+  --gap-hero-metrics: 2rem;
+  // Chrome stays compact on phones so the logo/buttons never dominate.
+  --size-icon: 3rem;
+  --btn-h: 2.75rem;
+  --btn-px: 1.25rem;
+}
+
+// Regular size class (tablet+). Step the display/heading scale up; Apple §15
+// "reflow over rescale" — the structure holds, only the type ramp grows.
+@include media-breakpoint-up(md) {
+  :root {
+    --fs-display: 3rem;
+    --fs-h1: 2.5rem;
+    --fs-h2: 1.875rem;
+    --fs-h3: 1.375rem;
+    --fs-h4: 1.125rem;
+    --fs-lead: 1.1875rem;
+    --fs-quote: 1.0625rem;
+    --fs-metric: 2.625rem;
+    --fs-heading-num: 2.25rem;
+    --gap-hero-metrics: 3rem;
+    --size-icon: 3.5rem;
+    --btn-px: 1.5rem;
+  }
+}
+
+// Large size class (desktop). Top of the ramp.
+@include media-breakpoint-up(lg) {
+  :root {
+    --fs-display: 3.5rem;
+    --fs-h1: 3rem;
+    --fs-h2: 2.125rem;
+    --fs-h3: 1.5rem;
+    --fs-quote: 1.0625rem;
+    --fs-metric: 3rem;
+    --fs-heading-num: 2.5rem;
+    --gap-hero-metrics: 4rem;
+    --size-icon: 4rem;
+  }
 }
 
 .skip-link {
@@ -148,6 +219,20 @@ section {
 
 .text-tertiary {
   color: $text-tertiary !important;
+}
+
+// Dark-surface variants — on dark panels these muted tiers must use the white
+// alpha ramp, not the dark-ink tokens (which would be near-invisible there). This
+// keeps the classes safe to drop anywhere, including under the prefers-contrast
+// overrides at the end of this file.
+.bg-dark .text-secondary,
+.bg-primary .text-secondary {
+  color: $text-dark-secondary !important;
+}
+
+.bg-dark .text-tertiary,
+.bg-primary .text-tertiary {
+  color: $text-dark-tertiary !important;
 }
 
 // Never let a long word (e.g. "Transformation") or a long URL push past the
@@ -631,8 +716,7 @@ ol {
 p,
 address,
 figcaption,
-.blockquote-footer,
-.translated_review_disclaimer {
+.blockquote-footer {
   margin-top: 1em;
   margin-bottom: 0;
 }
@@ -655,10 +739,14 @@ figcaption {
   }
 }
 
+// Customer testimonials read as a faithful, paragraph-length review written in
+// the client's own words — set at reading size with comfortable paragraph leading
+// (not a dramatic pulled quote). The exact words stay wrapped in real curly
+// quotation marks so it's unmistakably a direct record of what they said.
 blockquote,
 .blockquote {
-  font-size: $h5-font-size;
-  line-height: $h5-line-height;
+  font-size: var(--fs-quote);
+  line-height: 1.55;
 }
 
 blockquote> :first-child:before {
@@ -669,21 +757,77 @@ blockquote> :last-child:after {
   content: close-quote;
 }
 
+// A modest, inline accent quotation mark opens the review — a quiet "this is a
+// quote" cue that lets the block keep reading like written prose, not a billboard.
+.blockquote {
+  color: $text;
+
+  > :first-child::before {
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 0;
+    color: $dye;
+    vertical-align: -0.32em;
+    margin-right: 0.02em;
+  }
+}
+
 .blockquote-footer {
   color: $text-secondary;
   padding-left: $text-tab-width;
 }
 
-.translated_review_disclaimer {
+// ─── "Show original in Vietnamese" deep link ───
+// On the translated (English) page each review carries a quiet link back to the
+// SAME review in the original language. Both locales render the review cards with
+// identical, language-neutral ids (#review-…), so the link deep-jumps to the exact
+// card — not just the section. The bar is fixed, so a jumped-to card needs its own
+// scroll inset (the section[id] rule above only covers whole sections): bar height
+// (56/64px) plus a little air so the card clears the chrome (Apple §2).
+.service-box[id] {
+  scroll-margin-top: 5rem;
+
+  @include media-breakpoint-up(md) {
+    scroll-margin-top: 6rem;
+  }
+}
+
+// Sits just under the attribution; aligned to the same text indent.
+.original-review {
+  margin-top: 0.75em;
   padding-left: $text-tab-width;
+}
+
+// Apple §11 "plain" button: text-only, the one accent color signals interactivity,
+// Semibold, a leading translate glyph. The visual is small but the hit area is a
+// full 44px via invisible padding pulled back with equal negative margin (§2), so
+// the rhythm is unchanged. Press dims swiftly (§10); hover underline comes from the
+// global link rule.
+.original-review-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.625rem 0.5rem;
+  margin: -0.625rem -0.5rem;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $link-color;
+  transition: opacity var(--dur-fast) var(--ease-precise);
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+.original-review-icon {
+  flex-shrink: 0;
+  font-size: 1.15em;
 }
 
 /* ─── Navbar ─── */
 
-/* The hamburger toggler is intentionally disabled — no collapsible mobile menu. */
-.navbar-toggler {
-  display: none;
-}
+/* No hamburger toggler exists — the section nav is desktop-only by design; on
+   mobile the page is navigated by scrolling. (The toggler markup was removed.) */
 
 /* ─── Accordion ─── */
 
@@ -813,12 +957,29 @@ section.bg-dark {
   color: $text-dark;
 }
 
+// Print fidelity: browsers strip background fills when printing to save ink, but
+// our dark surfaces (hero, support, our-story) carry white text — without their
+// background that text prints white-on-white and vanishes. Force these specific
+// dark panels to print their background+color exactly so they stay legible on
+// paper. Scoped to the dark surfaces only — the rest of the page still prints
+// ink-light as expected. (`-webkit-` prefix covers Chrome/Safari/older engines.)
+header,
+section.bg-dark,
+section.bg-primary {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
 .copyright-text {
   color: $text-secondary;
 }
 
+// The navigation bar is a quiet, opaque chrome layer: a clean white surface that
+// lifts off the content with a hairline separator + a soft, diffuse Apple shadow
+// (§9) — no translucent blur material.
 .navbar {
   background: $white;
+  border-bottom: 0.5px solid $separator;
   box-shadow: var(--box-shadow-menu);
   height: 64px;
 
@@ -870,7 +1031,9 @@ section.bg-dark {
   }
 
   @include media-breakpoint-up(md) {
-    transition: background 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
+    transition: background var(--dur-base) var(--ease-precise),
+      border-color var(--dur-base) var(--ease-precise),
+      box-shadow var(--dur-base) var(--ease-precise);
     will-change: background;
 
     .language-switcher {
@@ -879,8 +1042,11 @@ section.bg-dark {
       margin-right: -1 * $navbar-nav-link-padding-x;
     }
 
+    // At the top of the hero the bar yields entirely to the content (Apple
+    // deference): fully transparent, no shadow, no separator — white logo + links.
     &:not(.nav-active) {
       background: transparent;
+      border-bottom-color: transparent;
       box-shadow: none;
 
       .logo-color {
@@ -902,8 +1068,10 @@ section.bg-dark {
       }
     }
 
+    // Once content scrolls under it, the bar lifts onto the white chrome surface.
     &.nav-active {
-      background: $background;
+      background: $white;
+      border-bottom-color: $separator;
       box-shadow: var(--box-shadow-menu);
 
       .logo-white {
@@ -954,7 +1122,7 @@ section.bg-dark {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 0.95;
-  font-size: clamp(2rem, calc(1.4rem + 2.4vw), 3rem);
+  font-size: var(--fs-metric);
 }
 
 .metric__unit {
@@ -983,7 +1151,13 @@ section.bg-dark {
 
 header {
   display: flex;
+  // Fill exactly one viewport on every device. Plain 100vh on iOS resolves to the
+  // *large* viewport (taller than what's visible while the browser toolbars show),
+  // so the hero spilled past the screen. dvh tracks the live visible height, with
+  // svh and vh as fallbacks for older engines.
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   height: fit-content;
   background-position: center;
 
@@ -1078,7 +1252,7 @@ header.hero-precision {
   .hero__metrics {
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(1.5rem, calc(1rem + 3.5vw), 4rem);
+    gap: var(--gap-hero-metrics);
     margin-top: map-get($spacers, 9);
     padding-top: map-get($spacers, 5);
     border-top: 1px solid rgba(255, 255, 255, 0.18);
@@ -1168,9 +1342,18 @@ header.hero-precision {
   text-decoration: none;
   border-radius: $btn-border-radius;
   border: none;
+  transition: transform var(--dur-fast) var(--ease-precise),
+    background var(--dur-fast) linear,
+    color var(--dur-fast) linear;
 
   &:hover {
     text-decoration: none;
+  }
+
+  // Apple §10 micro-feedback: a tapped control scales down slightly so the press
+  // feels direct. Suppressed automatically under prefers-reduced-motion above.
+  &:active {
+    transform: scale(0.97);
   }
 }
 
@@ -1210,6 +1393,10 @@ header.hero-precision {
 .bi {
   width: var(--size-icon);
   height: var(--size-icon);
+  // Icons are now inline SVG painted with `fill: currentColor`, so this drives
+  // their color. Brand blue on light sections; in forced-colors the system forces
+  // it to CanvasText (handled in the high-contrast block at end of file).
+  color: $secondary;
 }
 
 .client-portrait {
@@ -1258,7 +1445,7 @@ header.hero-precision {
     content: attr(data-number);
     font-feature-settings: "tnum" 1;
     font-weight: 700;
-    font-size: clamp(1.75rem, calc(1.4rem + 1.5vw), 2.5rem);
+    font-size: var(--fs-heading-num);
     line-height: 0.85;
     letter-spacing: -0.02em; // USWDS letterspacing -2 — large (28–40px) tabular figure
     color: inherit;
@@ -1272,5 +1459,189 @@ header.hero-precision {
     background: currentColor;
     opacity: 0.22;
     border-radius: $border-radius-2xl;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Accessibility display modes (forced-colors / prefers-contrast /
+// prefers-reduced-transparency). These deliberately live at the END of the file:
+// media queries add NO specificity, so to win over the component rules above they
+// must come last in source order — and where the base rule is more specific (the
+// `:is(a, button)` button selectors), these mirror that specificity so they apply.
+// ════════════════════════════════════════════════════════════════════════════
+
+// ─── Windows High Contrast / Contrast Themes (forced-colors) ───
+// The OS swaps our palette for a small system set. Things that break here: (a)
+// background images survive but text over them is forced to CanvasText and stops
+// matching; (b) custom-filled controls lose their fill and flatten into the page;
+// (c) anything painted at low opacity disappears. We drop the imagery, give
+// controls a real border, and force full opacity on the decorative marks.
+@media (forced-colors: active) {
+
+  // Drop the hero photo + dark gradient so forced CanvasText sits on plain Canvas.
+  header,
+  header.hero-precision {
+    background-image: none !important;
+  }
+
+  // Controls keep a visible shape: system button colors + a real border. Mirrors
+  // the base `:is(a, button).btn-xl { border: none }` specificity so it applies.
+  :is(a, button).btn-xl,
+  :is(a, button).btn-ghost {
+    color: ButtonText;
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+  }
+
+  // Links and the dropdown product items (real <button>s used as navigation) take
+  // the system link color.
+  a.nav-link,
+  .dropdown-item {
+    color: LinkText;
+  }
+
+  // The small inline link icons (phone / external-link) sit beside a link and must
+  // match it on EVERY surface — including the dark support / our-story panels whose
+  // `.bg-primary`/`.bg-dark` color rules outrank a plain selector here and would
+  // otherwise force them to body CanvasText (the inconsistency seen in ho-tro).
+  // !important wins that, and the hover rule recolors them with the link.
+  svg.external-link-icon,
+  svg.phone-icon {
+    color: LinkText !important;
+  }
+
+  a:hover+svg.external-link-icon,
+  a:hover+svg.phone-icon {
+    color: Highlight !important;
+  }
+
+  // Inline-SVG feature icons follow the forced text color (they're currentColor).
+  .bi {
+    color: CanvasText;
+  }
+
+  // Decorative rules/marks: the calibration rule is painted at 0.22 opacity and
+  // simply vanishes in forced colors — force it opaque and paint it CanvasText.
+  .hr,
+  .heading-number,
+  .heading-number::before {
+    color: CanvasText;
+  }
+
+  .heading-number::after {
+    opacity: 1;
+    background: CanvasText;
+  }
+
+  // The support panel's accent top-border as a visible system line.
+  section.bg-primary {
+    border-top-color: CanvasText;
+  }
+
+  // Every partner-logo card needs a visible system border — including #spica-card,
+  // which sets `border: none`; its green fill is stripped to Canvas in forced
+  // colors, so without this it becomes an invisible, edgeless card.
+  .partner-logo-card {
+    border: 1px solid CanvasText !important;
+  }
+
+  // The "sneaky" chevrons (accordion toggle, products dropdown caret, prose
+  // <details> marker) are background-image SVGs with a baked-in fill — they don't
+  // recolor and can vanish on the forced background. Repaint each through a mask so
+  // the shape takes a system color matching its control.
+  .accordion-button::after {
+    background-color: ButtonText;
+    background-image: none !important;
+    -webkit-mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
+    mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
+  }
+
+  .dropdown-toggle::after {
+    background-color: LinkText;
+    background-image: none !important;
+    -webkit-mask: url("../img/svg/ui_icons/dropdown-toggler-icon.svg") center / contain no-repeat;
+    mask: url("../img/svg/ui_icons/dropdown-toggler-icon.svg") center / contain no-repeat;
+  }
+
+  .prose details summary::before {
+    background-color: CanvasText;
+    background-image: none !important;
+    -webkit-mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
+    mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
+  }
+}
+
+// ─── User asks for more contrast (e.g. macOS Increase Contrast) ───
+// Firm up everything the calm design keeps deliberately quiet: hairline separators
+// become solid lines, muted label tiers step toward full strength, translucent
+// text on dark panels goes opaque, and content links gain an underline.
+@media (prefers-contrast: more) {
+
+  .navbar {
+    border-bottom: 1px solid $slate-600;
+  }
+
+  .dropdown-menu,
+  .card,
+  .accordion-item {
+    border-color: $slate-600 !important;
+  }
+
+  // Full border (not just color) so #spica-card's `border: none` also gets an edge.
+  .partner-logo-card {
+    border: 1px solid $slate-600 !important;
+  }
+
+  // Muted tiers on LIGHT surfaces → darker.
+  .text-secondary {
+    color: $text !important;
+  }
+
+  .text-tertiary {
+    color: $text-secondary !important;
+  }
+
+  // Muted tiers + captions on DARK surfaces → fully opaque white.
+  .bg-dark .text-secondary,
+  .bg-primary .text-secondary,
+  .bg-dark .text-tertiary,
+  .bg-primary .text-tertiary,
+  .bg-dark figcaption,
+  .bg-primary figcaption {
+    color: #fff !important;
+  }
+
+  // Content links readable beyond color (skip nav items, buttons, dropdown items).
+  a:not(.nav-link, .btn-xl, .dropdown-item) {
+    text-decoration: underline;
+  }
+}
+
+// ─── User asks to reduce transparency ───
+// Make the few translucent surfaces solid: alpha-faded text on dark panels and the
+// ghost button's see-through fill/border.
+@media (prefers-reduced-transparency: reduce) {
+
+  .bg-dark .text-secondary,
+  .bg-primary .text-secondary,
+  .bg-dark .text-tertiary,
+  .bg-primary .text-tertiary,
+  .bg-dark figcaption,
+  .bg-primary figcaption {
+    color: #fff !important;
+  }
+
+  :is(a, button).btn-ghost {
+    border-color: #fff;
+
+    // Solid ink steps on the dark panel instead of translucent white washes.
+    &:hover {
+      background: $ink-700;
+    }
+
+    &:active,
+    &:focus-visible {
+      background: $ink-600;
+    }
   }
 }

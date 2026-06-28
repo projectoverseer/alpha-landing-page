@@ -301,7 +301,7 @@ our_story_body: '<p class="mt-md-0">
 support_title: "Chúng tôi rất hân hạnh được hỗ trợ bạn!"
 support_call_prompt: "Hãy gọi"
 support_email_prompt: "để cho phép chúng tôi tư vấn bạn miễn phí hoặc gửi các câu hỏi của bạn qua địa chỉ"
-support_cta: "Gửi câu hỏi đến Alpha Software"
+support_cta: "Gửi email đến Alpha Software"
 
 # --- Footer ---
 

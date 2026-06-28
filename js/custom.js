@@ -48,13 +48,34 @@
     }
   }
 
+  // On load, honor a deep-link fragment (e.g. /#review-…) BEFORE stripping it.
+  // The browser's own jump-to-fragment races with removeHash() and loses: the hash
+  // is gone before layout settles, so the page stays pinned to the top. Do the jump
+  // ourselves, then clean the URL to match the hash-free convention used elsewhere.
+  // scrollIntoView honors the target's scroll-margin-top, so it clears the fixed bar.
+  function jumpToInitialHash() {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const target = id && document.getElementById(id);
+
+    if (target) {
+      // Defer one frame so scroll-margin-top and reserved image space are applied,
+      // then land instantly (a smooth scroll from the top would crawl down the page).
+      requestAnimationFrame(function () {
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+        removeHash();
+      });
+    } else {
+      removeHash();
+    }
+  }
+
   // Set correct state on page load, then track on scroll
   updateNavState();
   window.addEventListener("scroll", throttle(updateNavState, 200), { passive: true });
   window.addEventListener("hashchange", removeHash, false);
 
   cleanUrl();
-  removeHash();
+  jumpToInitialHash();
 })();
 
 function copyEmailToClipboard(element, feedbackMessage) {

@@ -43,17 +43,37 @@ $gray-800: #1f262d;
 $gray-900: #151b21;
 $gray-950: #0b1119;
 
-$text: #0e1b27;
-$text-secondary: #46586a;
-$text-tertiary: #6f8294;
+// — Label hierarchy (Apple §4.2): neutral foreground in decreasing strength.
+// Apple expresses these as ink-with-decreasing-alpha. We keep the brand's tuned
+// cool-ink SOLIDS for the two read-critical levels (they clear WCAG AA with more
+// margin than Apple's lighter spec alphas — doc §13 is non-negotiable), and use
+// alpha only for the decorative quaternary/placeholder levels.
+$text: #0e1b27; // label — primary text
+$text-secondary: #46586a; // secondaryLabel — subtitles, supporting (AA on white)
+$text-tertiary: #5b6e7f; // tertiaryLabel — captions, hints (≈5.3:1 on white: AA for normal text; was #6f8294 ≈3.96:1 which failed AA on the project-year labels)
+$text-quaternary: rgba(14, 27, 39, 0.22); // quaternaryLabel — watermark level
+$placeholder-color: rgba(14, 27, 39, 0.40);
 
 $body-color: $text;
 
+// Dark-surface label hierarchy (white with decreasing alpha), per Apple §4.2.
 $text-dark: #fff;
-$text-dark-secondary: #f3f3f3;
-$text-dark-tertiary: #afafaf;
+$text-dark-secondary: rgba(255, 255, 255, 0.66);
+$text-dark-tertiary: rgba(255, 255, 255, 0.42);
 
-$border-color: $gray-300;
+// Separators are hairline + translucent (Apple §4.2 / §9): separation by tone +
+// blur, not heavy boxes. Alpha-based so it adapts to whatever sits behind it.
+$separator: rgba(14, 27, 39, 0.14);
+$separator-dark: rgba(255, 255, 255, 0.18);
+$border-color: $separator;
+
+// System fills (Apple §4.4): translucent grays for small UI shapes (chips,
+// fields, segmented tracks) — they adapt to the content behind them.
+$fill-1: rgba(99, 114, 128, 0.18);
+$fill-2: rgba(99, 114, 128, 0.14);
+$fill-3: rgba(99, 114, 128, 0.10);
+$fill-4: rgba(99, 114, 128, 0.07);
+
 $icon-color: $gray-600; // closest to $text-secondary
 $icon-active-color: $gray-700;
 $dark-icon-color: $gray-100; // closest to $text-dark-secondary
@@ -123,7 +143,10 @@ $font-family-monospace:
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 700;
 
-$font-size-root: calc(max(14px, min(100%, 26px)));
+// Respect the user's text size (Apple §3.4 / §13): size everything in rem, never
+// cap font scaling. html = 100% = the browser's font size (16px default), so OS
+// large-text and browser zoom flow straight through. (Was a fluid min/max cap.)
+$font-size-root: 100%;
 
 // -------------------------------------
 // Link Variables
@@ -213,33 +236,41 @@ $spacers: (
   24: 8rem,     // 128px
 );
 
+// Apple type scale (§3.2), capped at a 16px body per owner direction. Roles:
+//   body 16 (Apple Callout/Body floor) · lead/large 17 (Apple Body) ·
+//   small 13 (Apple Footnote). Hierarchy is carried by weight + size + space,
+//   never by a second typeface. Line-heights are explicit Apple-tight ratios.
 $text-tab-width: 1.625em; // 13/4 of an en space
-$font-size-sm: map-get($scales, -1);
-$font-size-base: px(14); // standard body size; line-height-base derives ~1.57
-$font-size-lg: map-get($scales, 2);
+$font-size-sm: px(13); // Footnote — metadata, captions
+$font-size-base: 1rem; // 16px — default body (Apple §3.2, owner cap)
+$font-size-lg: px(17); // Apple Body — lead paragraphs, buttons, blockquote
 $input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-base;
 $blockquote-footer-color: $text;
 
-$line-height-base: line-height-for-rem($font-size-base);
-$line-height-sm: line-height-for-rem($font-size-sm);
-$line-height-lg: line-height-for-rem($font-size-lg);
-$btn-line-height: $line-height-lg;
+$line-height-base: 1.5; // body — Apple §3.2 "1.3–1.5× for body"
+$line-height-sm: 1.38; // Footnote 13/18
+$line-height-lg: 1.47; // Body 17 ≈ comfortable web reading
+$btn-line-height: 1;
 
-$h1-font-size: map-get($scales, 7);
-$h2-font-size: map-get($scales, 5);
-$h3-font-size: map-get($scales, 4);
-$h4-font-size: map-get($scales, 3);
-$h5-font-size: map-get($scales, 2.5);
-$h6-font-size: $font-size-base;
+// SCSS heading sizes feed component sizing (accordion chevron, blockquote) and
+// the line-height ratios below. The *rendered* h1–h6 sizes are driven by the
+// breakpoint-stepped --fs-* custom properties in _base.scss (no clamp).
+$h1-font-size: px(48);
+$h2-font-size: px(34);
+$h3-font-size: px(22);
+$h4-font-size: px(18);
+$h5-font-size: px(16);
+$h6-font-size: px(14);
 
-$h1-line-height: line-height-for-rem($h1-font-size);
-$h2-line-height: line-height-for-rem($h2-font-size);
-$h3-line-height: line-height-for-rem($h3-font-size);
-$h4-line-height: line-height-for-rem($h4-font-size);
-$h5-line-height: line-height-for-rem($h5-font-size);
-$h6-line-height: line-height-for-rem($h6-font-size);
+// Apple §3.2: ~1.1–1.25 for headings (tighten as size grows).
+$h1-line-height: 1.07;
+$h2-line-height: 1.14;
+$h3-line-height: 1.22;
+$h4-line-height: 1.3;
+$h5-line-height: 1.35;
+$h6-line-height: 1.4;
 
 $grid-gutter-width: map-get($spacers, 4);
 $paragraph-margin-bottom: 0;
@@ -281,7 +312,10 @@ $border-radius-svg: 4px;
 
 $border-width: 1px;
 
-$btn-border-radius: $border-radius-lg;
+// Apple §7 continuous-corner radii: controls 8–14, cards 12–20, sheets 16–28.
+// Controls land at 12 (xl); squircle.js layers superellipse smoothing on top for
+// the few hero/CTA/card shapes that carry [data-squircle-radius].
+$btn-border-radius: $border-radius-xl;
 
 $card-border-width: $border-width;
 $card-border-color: $border-color;
