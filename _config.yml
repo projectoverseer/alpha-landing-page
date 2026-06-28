@@ -16,6 +16,7 @@ exclude:
   - package.json
   - optimize-js.mjs
   - fingerprint.mjs
+  - publish.mjs
   - preview.mjs
   - .gitignore
   - Gemfile
