@@ -762,13 +762,21 @@ blockquote> :last-child:after {
 .blockquote {
   color: $text;
 
-  > :first-child::before {
+  > :first-child::before,
+  > :last-child::after {
     font-size: 1.5em;
     font-weight: 700;
     line-height: 0;
     color: $dye;
     vertical-align: -0.32em;
+  }
+
+  > :first-child::before {
     margin-right: 0.02em;
+  }
+
+  > :last-child::after {
+    margin-left: 0.02em;
   }
 }
 
@@ -785,10 +793,63 @@ blockquote> :last-child:after {
 // scroll inset (the section[id] rule above only covers whole sections): bar height
 // (56/64px) plus a little air so the card clears the chrome (Apple §2).
 .service-box[id] {
+  position: relative;
   scroll-margin-top: 5rem;
+  border-radius: 1.25rem; // harmless while transparent; gives the lit tint/glow round corners
 
   @include media-breakpoint-up(md) {
     scroll-margin-top: 6rem;
+  }
+}
+
+// Deep-link cue (Apple §10/§12 "feedback"): when a /#review-… link lands on a card, a soft,
+// brand-tinted wash lights up the card and is HELD while the page glides toward it, then eases
+// out once the scroll settles — a gentle "here it is" highlight, present the whole way in (no
+// flash on a white card). JS adds .is-flashing the moment the card is on screen and, on arrival
+// (timed to `scrollend`, so the hold spans the full travel time), swaps it for .is-settling to
+// run the fade. The tint is on the card's OWN background + a soft glow (painted behind its
+// content, above the page) so the quote and portrait stay crisp; no negative z-index.
+//
+// HELD state: lit and static — no transition, no animation — so it shows instantly on load and
+// stays put for however long the glide lasts.
+.service-box[id].is-flashing {
+  background-color: rgba($dye, 0.11);
+  box-shadow:
+    0 0 0 3px rgba($dye, 0.24),
+    0 12px 30px rgba($dye, 0.16);
+}
+
+// SETTLE-OUT: a keyframe animation eases the lit values back to transparent. Driven by an
+// animation (not a transition) because a transition out of a `transition:none` held state is
+// suppressed in Chromium and snaps; a keyframe reliably interpolates both background and the
+// box-shadow (transparent endpoints share the held state's structure, so nothing jumps).
+.service-box[id].is-settling {
+  animation: review-settle 1100ms var(--ease-precise) forwards;
+}
+
+@keyframes review-settle {
+  from {
+    background-color: rgba($dye, 0.11);
+    box-shadow:
+      0 0 0 3px rgba($dye, 0.24),
+      0 12px 30px rgba($dye, 0.16);
+  }
+
+  to {
+    background-color: rgba($dye, 0);
+    box-shadow:
+      0 0 0 3px rgba($dye, 0),
+      0 12px 30px rgba($dye, 0);
+  }
+}
+
+// The settle-out is a quiet color fade, not the kind of movement Reduce Motion guards against,
+// so keep it visible: re-assert a duration so the global `* { animation-duration: .01ms }`
+// reduce-motion override doesn't snap it away. (The site-wide policy still governs everything
+// else.) The held .is-flashing state has no animation, so it's unaffected either way.
+@media (prefers-reduced-motion: reduce) {
+  .service-box[id].is-settling {
+    animation-duration: 900ms !important;
   }
 }
 
@@ -981,12 +1042,18 @@ section.bg-primary {
   background: $white;
   border-bottom: 0.5px solid $separator;
   box-shadow: var(--box-shadow-menu);
-  height: 64px;
+
+  // viewport-fit=cover lets the bar's surface bleed up under the Dynamic Island;
+  // this inset drops the logo + links clear of it ($navbar-padding-y is 0, so on
+  // devices without a top inset this is 0 and nothing moves). Height grows by the
+  // same inset, so the visible chrome region stays exactly 64px (56px on phones).
+  padding-top: env(safe-area-inset-top);
+  height: calc(64px + env(safe-area-inset-top));
 
   // On phones the logo was dominating: scale the brand down by √φ (170→132,
   // 48→37) and shorten the bar so it matches the now-smaller type and buttons.
   @include media-breakpoint-down(md) {
-    height: 56px;
+    height: calc(56px + env(safe-area-inset-top));
 
     .navbar-brand {
       width: 132px;
@@ -1030,72 +1097,76 @@ section.bg-primary {
     text-overflow: ellipsis;
   }
 
-  @include media-breakpoint-up(md) {
-    transition: background var(--dur-base) var(--ease-precise),
-      border-color var(--dur-base) var(--ease-precise),
-      box-shadow var(--dur-base) var(--ease-precise);
-    will-change: background;
+  // Fade between the transparent (over-hero) and white (scrolled) states. Applied
+  // at every width so phones get the same deferential transparent hero treatment
+  // as desktop — below lg only the logo + language switcher show, so the inline
+  // link recolors below are simply inert there.
+  transition: background var(--dur-base) var(--ease-precise),
+    border-color var(--dur-base) var(--ease-precise),
+    box-shadow var(--dur-base) var(--ease-precise);
+  will-change: background;
 
+  @include media-breakpoint-up(md) {
     .language-switcher {
       padding-left: $navbar-nav-link-padding-x;
       padding-right: $navbar-nav-link-padding-x;
       margin-right: -1 * $navbar-nav-link-padding-x;
     }
+  }
 
-    // At the top of the hero the bar yields entirely to the content (Apple
-    // deference): fully transparent, no shadow, no separator — white logo + links.
-    &:not(.nav-active) {
-      background: transparent;
-      border-bottom-color: transparent;
-      box-shadow: none;
+  // At the top of the hero the bar yields entirely to the content (Apple
+  // deference): fully transparent, no shadow, no separator — white logo + links.
+  &:not(.nav-active) {
+    background: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
 
-      .logo-color {
-        opacity: 0;
-      }
-
-      .logo-white {
-        opacity: 1;
-      }
-
-      .nav-item .nav-link {
-        &:focus {
-          color: initial;
-        }
-
-        &:hover {
-          color: $navbar-dark-hover-color !important; // override nav link focus color
-        }
-      }
+    .logo-color {
+      opacity: 0;
     }
 
-    // Once content scrolls under it, the bar lifts onto the white chrome surface.
-    &.nav-active {
-      background: $white;
-      border-bottom-color: $separator;
-      box-shadow: var(--box-shadow-menu);
+    .logo-white {
+      opacity: 1;
+    }
 
-      .logo-white {
-        opacity: 0;
+    .nav-item .nav-link {
+      &:focus {
+        color: initial;
       }
 
-      .logo-color {
-        opacity: 1;
+      &:hover {
+        color: $navbar-dark-hover-color !important; // override nav link focus color
+      }
+    }
+  }
+
+  // Once content scrolls under it, the bar lifts onto the white chrome surface.
+  &.nav-active {
+    background: $white;
+    border-bottom-color: $separator;
+    box-shadow: var(--box-shadow-menu);
+
+    .logo-white {
+      opacity: 0;
+    }
+
+    .logo-color {
+      opacity: 1;
+    }
+
+    .nav-link {
+      &.active {
+        color: $navbar-light-active-color;
       }
 
-      .nav-link {
+      &.nav-link-active-blue {
         &.active {
-          color: $navbar-light-active-color;
+          color: $figure-secondary;
         }
+      }
 
-        &.nav-link-active-blue {
-          &.active {
-            color: $figure-secondary;
-          }
-        }
-
-        &.show:not(.active) {
-          color: initial;
-        }
+      &.show:not(.active) {
+        color: initial;
       }
     }
   }
@@ -1151,14 +1222,37 @@ section.bg-primary {
 
 header {
   display: flex;
+  flex-direction: column;
+  // Center the hero content in the viewport so whitespace is BALANCED above and below
+  // (Apple §0/§2: content-first, calm, generous *balanced* whitespace) instead of the
+  // content clinging to the top with a large void beneath it on tall phones (the owner's
+  // iPhone 14 Pro / Pro Max). Centering is breakpoint-proof — the block stays optically
+  // centered at every viewport with no per-size margin tuning.
+  justify-content: center;
+
   // Fill exactly one viewport on every device. Plain 100vh on iOS resolves to the
   // *large* viewport (taller than what's visible while the browser toolbars show),
   // so the hero spilled past the screen. dvh tracks the live visible height, with
   // svh and vh as fallbacks for older engines.
+  //
+  // No explicit `height` here: the min-height floor is what fills the viewport, and a
+  // flex column already grows past it when content is taller (small phones in
+  // landscape). An earlier `height: fit-content` actively broke this on iOS Safari —
+  // WebKit resolved the flex container's used height to the content height and dropped
+  // the min-height floor, collapsing the hero to ~text height on the device the owner
+  // tested (iPhone 14 Pro). Other engines honored the floor, so it only showed there.
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  height: fit-content;
+
+  // Apple §2 "Safe areas / edges": offset the centered block so it clears the fixed
+  // navbar at the top (56px phone / 64px ≥md) and the home indicator at the bottom on
+  // notched iPhones. padding-top = bar height keeps the optical center inside the region
+  // the visitor actually sees *below* the bar; the env() insets add the device's own
+  // safe gaps and resolve to 0 where there are none, so this is inert on plain screens.
+  padding-top: calc(56px + env(safe-area-inset-top));
+  padding-bottom: calc(#{map-get($spacers, 6)} + env(safe-area-inset-bottom));
+
   background-position: center;
 
   /* 1. Fallback for older browsers that do not support image-set() */
@@ -1178,15 +1272,38 @@ header {
   color: $text-dark;
 
   .header-content {
-    margin-top: map-get($spacers, 24);
-
+    // Vertical placement is owned by the flex centering above. No fixed top margin
+    // (was 128px on phone / 25vh on desktop) — that top-anchoring is exactly what
+    // dumped the blank space below the content on tall viewports.
     @include media-breakpoint-up(md) {
-      margin-top: 25vh;
-
       p {
         max-width: 65ch;
       }
     }
+  }
+
+  // The taller bar on ≥md needs a correspondingly taller top offset so the centered
+  // block stays clear of the chrome and optically centered in the visible region.
+  @include media-breakpoint-up(md) {
+    padding-top: calc(64px + env(safe-area-inset-top));
+  }
+}
+
+// With viewport-fit=cover the page paints under the home indicator. Keep the
+// copyright bar's text above it (extra bottom padding = its existing pb-2 + the
+// inset) while the bar's gray surface still bleeds to the very bottom edge.
+footer > .container-fluid {
+  padding-bottom: calc(#{map-get($spacers, 2)} + env(safe-area-inset-bottom));
+}
+
+// In landscape on notched iPhones the Dynamic Island sits at the left/right edge.
+// max() keeps the standard gutter normally and only widens it to the safe inset
+// when the device actually has one, so body content never tucks under the cutout.
+// (Apple §2 safe areas; the navbar + footer share this .container.)
+@supports (padding: max(0px)) {
+  .container {
+    padding-left: max(var(--#{$prefix}gutter-x, #{$grid-gutter-width}) * 0.5, env(safe-area-inset-left));
+    padding-right: max(var(--#{$prefix}gutter-x, #{$grid-gutter-width}) * 0.5, env(safe-area-inset-right));
   }
 }
 
