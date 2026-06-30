@@ -7,28 +7,29 @@
   type="image/avif"
 />
 
-<link href="https://fonts.googleapis.com" rel="preconnect" />
+<!-- Self-hosted Public Sans — the @font-face rules ship in main.css (see
+     _sass/_fonts.scss), so no font stylesheet request and no third-party
+     connection to fonts.googleapis.com / fonts.gstatic.com (also closes the
+     GDPR IP-leak that the regional Consent Mode in page.html cares about).
+     These preloads kick off the most-used subset right away so the swap from
+     the system fallback is fast. latin covers ASCII on every page; vi pages
+     (the default locale) also preload the vietnamese subset. -->
 <link
+  as="font"
   crossorigin="anonymous"
-  href="https://fonts.gstatic.com"
-  rel="preconnect"
+  href="{{ site.url }}/fonts/public-sans/public-sans-latin.woff2"
+  rel="preload"
+  type="font/woff2"
 />
-<!-- Load the font CSS without blocking render: `media="print"` lets the browser
-     fetch it off the critical path, then `onload` promotes it to `all` so the
-     font applies as soon as it's ready. `display=swap` keeps text visible in the
-     system fallback meanwhile, and the <noscript> copy serves no-JS visitors. -->
+{% if page.lang == "vi" %}
 <link
-  href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-  rel="stylesheet"
-  media="print"
-  onload="this.media='all'"
+  as="font"
+  crossorigin="anonymous"
+  href="{{ site.url }}/fonts/public-sans/public-sans-vietnamese.woff2"
+  rel="preload"
+  type="font/woff2"
 />
-<noscript>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-    rel="stylesheet"
-  />
-</noscript>
+{% endif %}
 <link
   href="{{ site.url }}/apple-touch-icon.png"
   rel="apple-touch-icon"

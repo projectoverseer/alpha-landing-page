@@ -1,0 +1,46 @@
+name: Purge Cloudflare cache after Pages deploy
+
+# GitHub Pages (deploy from the docs/ folder) publishes a `github-pages`
+# deployment on every push to main. The moment that deployment goes live we
+# purge Cloudflare's edge cache, so the aggressive edge TTLs can never serve
+# stale HTML/assets. This replaces the manual "Purge Everything" after deploys
+# and lets the cache rules stay as aggressive as they are.
+#
+# Requires one repo secret:
+#   CF_CACHE_PURGE_TOKEN — a Cloudflare API token scoped to *only*
+#   Zone → Cache Purge on the alphasoftwaregroup.com zone. Do NOT use the
+#   global API key here.
+
+on:
+  deployment_status:
+  workflow_dispatch: # allow a manual purge from the Actions tab
+
+permissions:
+  contents: read
+
+jobs:
+  purge:
+    # Run on a manual dispatch, or when a github-pages deployment actually
+    # succeeded (ignore the in_progress / failure statuses and any other env).
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment_status.environment == 'github-pages')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge everything
+        env:
+          CF_TOKEN: ${{ secrets.CF_CACHE_PURGE_TOKEN }}
+        run: |
+          if [ -z "$CF_TOKEN" ]; then
+            echo "::error::CF_CACHE_PURGE_TOKEN secret is not set"; exit 1
+          fi
+          resp=$(curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/5283fd5d397bbf659f925027d6fdc981/purge_cache" \
+            -H "Authorization: Bearer $CF_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "$resp"
+          echo "$resp" | grep -q '"success":true' \
+            || { echo "::error::Cloudflare purge failed"; exit 1; }
+          echo "Cloudflare cache purged."

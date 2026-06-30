@@ -39,6 +39,13 @@
   const FULLY_ROUND_EPS = 0.5;              // px tolerance for "this is a circle"
   const SLICE_MAX_NODES = 1500;             // elements measured per idle slice
 
+  // Tags that never paint a rounded box: skip them BEFORE the (costly)
+  // getComputedStyle read instead of measuring then discarding. This only trims
+  // work — every element that can actually show a corner is still measured, so
+  // the squircle shape is applied exactly as before. (SVG/MathML nodes are
+  // already skipped by the `instanceof HTMLElement` gate in the read phase.)
+  const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'BR', 'WBR']);
+
   // ---- capability gate ----------------------------------------------------
   // `corner-shape` lands in Chromium 139+. Anywhere else: do nothing, cleanly,
   // leaving the authored border-radius exactly as the stylesheet set it.
@@ -186,6 +193,7 @@
       if (deadline && (i & 255) === 255 && deadline.timeRemaining() < 2) break;
       const el = chunk[i];
       if (!(el instanceof HTMLElement) || !el.isConnected) continue;
+      if (SKIP_TAGS.has(el.tagName)) continue;
 
       const corners = readCorners(getComputedStyle(el));
       const out = compute(el, corners);
@@ -299,7 +307,11 @@
     attributeFilter: ['class'],   // our own writes touch style, never class
   });
 
-  const sweep = () => { expand(document.documentElement); schedule(); };
+  // Sweep the rendered tree only. <head> (meta/link/script/style/title) never
+  // paints a box, so starting at <body> drops a whole batch of pointless
+  // getComputedStyle reads. The MutationObserver below still watches the whole
+  // document, so anything later added anywhere is still caught.
+  const sweep = () => { expand(document.body || document.documentElement); schedule(); };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', sweep, { once: true });
   } else {
