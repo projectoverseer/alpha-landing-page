@@ -19,6 +19,8 @@ e.g. `2026-06-30-mobile-lighthouse.json`.
 | 2026-06-30 | Lighthouse | mobile      | 0.82 | 1.00 | 0.81    | 1.00 | early localhost run |
 | 2026-06-30 | Lighthouse | desktop     | 0.91 | 1.00 | 0.81    | 1.00 | **production**, pre-Cloudflare-fix |
 | 2026-06-30 | Lighthouse | mobile      | 0.70 | 1.00 | 0.81    | 1.00 | **production**, pre-Cloudflare-fix (laptop in Battery Saver; benchmarkIndex ~310) |
+| 2026-06-30 | Lighthouse | mobile      | 0.87 | 1.00 | 0.96    | 1.00 | **production**, post-deploy (slim bundle + self-hosted fonts live; TBT 320 ms, mostly gtag) |
+| 2026-06-30 | Lighthouse | desktop     | 0.96 | 1.00 | 0.96    | 1.00 | **production**, post-deploy (TBT 0, CLS 0) |
 
 SEO and Accessibility are already 1.00 in production. The 0.81 Best-Practices and
 a large share of mobile TBT (2117 ms) were **Cloudflare-injected**, not repo bugs
@@ -41,6 +43,19 @@ owner's authorization. Re-verified against the live site afterwards.
 | **Security Level** (`security_level`) | high → **medium** | "high" challenges legit global visitors (shared-NAT mobile carriers, VPNs). Inconsistent with bot-fight being off. Medium is the balanced default. DDoS + free managed WAF + custom firewall rules all remain. |
 | **Hotlink Protection** (`hotlink_protection`) | on → **off** | Can block the OG image in social/chat link unfurls — bad for a share-focused marketing page. |
 | **Purge Everything** | — | Applied so all of the above took effect immediately. |
+
+### 2026-06-30 (later) — killed the RUM beacon for Best-Practices 1.00
+
+`auto_install:false` stopped the *external* `beacon.min.js`, but the Web Analytics
+**ruleset was still `enabled:true`** and edge-injected a *same-origin* RUM snippet
+that POSTed to `/cdn-cgi/rum`. The custom firewall (blocks non-GET/HEAD) rejected
+that POST with **403** — the lone `errors-in-console` audit holding Best-Practices
+at 0.96. Fix: **paused the ruleset's catch-all injection rule** (ruleset
+`e17475a7-82b9-415b-9cee-2e798df88f78`, rule `4b6ea90e…`, `is_paused:true`) via
+API, then Purge Everything. Verified live: `cdn-cgi/rum`, `cloudflareinsights`,
+`beacon` all **0** in HTML; HTTP 200. Reversible (un-pause) — site_info + history
+kept. **Expect Best-Practices 1.00** next audit. *Note: this means there is no
+cookieless RUM running; analytics is GA4 + Cloudflare server-side traffic only.*
 
 Verified live after purge: `challenge-platform`, `cloudflareinsights`,
 `email-decode` all return **0** occurrences in the HTML; assets serve
