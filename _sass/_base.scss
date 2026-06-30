@@ -1247,6 +1247,7 @@ header {
   justify-content: center;
 
   min-height: 100vh;
+  min-height: 100svh;
 
   // Design doc §2 "Safe areas / edges": offset the centered block so it clears the fixed
   // navbar at the top ($navbar-height-sm phone / $navbar-height ≥md) and the home
