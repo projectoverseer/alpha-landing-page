@@ -261,7 +261,16 @@ document.addEventListener("DOMContentLoaded", function () {
       return bsDropdown;
     }
 
-    dropdownEl.addEventListener("mouseenter", () => getDropdown().show());
+    dropdownEl.addEventListener("mouseenter", () => {
+      // Bootstrap's Dropdown.show() force-focuses the toggle. On a hover open that
+      // scripted focus is unwanted: right after F12 or a navigation the browser's
+      // :focus-visible heuristic is in "keyboard" mode, so it paints the focus ring
+      // on mere hover. Drop the focus we didn't ask for — but only if the user wasn't
+      // already keyboard-focused here, so genuine keyboard focus is preserved.
+      const hadFocus = document.activeElement === dropdownToggle;
+      getDropdown().show();
+      if (!hadFocus) dropdownToggle.blur();
+    });
     dropdownEl.addEventListener("mouseleave", () => getDropdown().hide());
   });
 
