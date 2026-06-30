@@ -12,6 +12,7 @@ exclude:
   - .assets_backup/
   - design/
   - docs/
+  - performance-audits/
   - package-lock.json
   - package.json
   - optimize-js.mjs

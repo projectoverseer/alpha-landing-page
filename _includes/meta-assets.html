@@ -13,10 +13,22 @@
   href="https://fonts.gstatic.com"
   rel="preconnect"
 />
+<!-- Load the font CSS without blocking render: `media="print"` lets the browser
+     fetch it off the critical path, then `onload` promotes it to `all` so the
+     font applies as soon as it's ready. `display=swap` keeps text visible in the
+     system fallback meanwhile, and the <noscript> copy serves no-JS visitors. -->
 <link
   href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
   rel="stylesheet"
+  media="print"
+  onload="this.media='all'"
 />
+<noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+</noscript>
 <link
   href="{{ site.url }}/apple-touch-icon.png"
   rel="apple-touch-icon"

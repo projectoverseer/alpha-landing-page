@@ -11,7 +11,6 @@
     <meta charset="utf-8" />
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -56,6 +55,31 @@
 
       gtag('js', new Date());
       gtag('config', 'G-LZBMND9VE8', { 'anonymize_ip': true });
+
+      // Load the gtag.js library OFF the critical path. The library is ~118 KB and
+      // ~300 ms of main-thread work; running it during initial load inflated Total
+      // Blocking Time. The consent/config commands above are already queued in
+      // dataLayer, so they run the instant the library evaluates them — no hit is
+      // lost, the measurement just starts once the page is idle. Loading waits for
+      // `load`, then an idle slot (timeout-capped so it can't be starved forever).
+      function loadGtag() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8';
+        document.head.appendChild(s);
+      }
+      function scheduleGtag() {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadGtag, { timeout: 3000 });
+        } else {
+          setTimeout(loadGtag, 1200);
+        }
+      }
+      if (document.readyState === 'complete') {
+        scheduleGtag();
+      } else {
+        window.addEventListener('load', scheduleGtag, { once: true });
+      }
     </script>
 
     <title>Alpha Software: {{ t.slogan }}</title>
