@@ -18,6 +18,8 @@ deliberately kept in the repo (but excluded from the Jekyll build — see
 | 03 | `03-information-architecture.md` | What sections exist, in what order, and what is each one's job? |
 | 04 | `04-design-system.md` | The concrete visual system: color, type, space, grid, motion, components. *(written after art direction is chosen)* |
 | 05 | `05-build-notes.md` | How the redesign maps onto the existing Jekyll/Bootstrap stack and pipeline. *(living doc, updated during implementation)* |
+| 06 | `06-spacing-and-class-audit.md` | Measured spacing/class audit of the live page (the evidence behind passes 5–7). |
+| 07 | `07-alpha-design-language.md` | **«Đúng» — Alpha's own named design language.** The self-contained reference distilled from 01–04 as built; start here when styling anything new. |
 
 Read them in order. 01 → 02 → 03 is the spine: **strategy decides principles,
 principles decide architecture, architecture decides the system.**

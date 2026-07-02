@@ -76,6 +76,30 @@ Polish, Mirage, Image Resizing, and Speed prefetch/preload are `editable:false`.
 
 ---
 
+## 2026-07-02 — Cloudflare zone changes APPLIED via API (capacity + security pass)
+
+Applied against the zone with the owner's authorization; all verified live.
+
+| Change | Detail | Why |
+|---|---|---|
+| **Query-string strip redirect** (dynamic redirect ruleset, new rule) | `www` + non-empty query → 301 to the bare path | The site uses zero query params (its own JS strips them), but every `?fbclid=`/`?utm_=` from a social share is a distinct cache key that misses the edge and hits GitHub Pages. Under a viral share that meant one origin hit per click; now such traffic is 100% edge-served. Trade-off: URL-based ad/campaign attribution params are dropped at the edge (they were already dropped client-side by `cleanUrl()`). |
+| **Rate limit scoped to pages** (`http_ratelimit` rule) | Expression now excludes static-asset extensions; still 50 req/10 s per IP+colo, 10 s block | Previously *every* request counted — one page load ≈ 20+ requests, so two quick loads (or an office/carrier NAT, common in VN) could block real visitors. Now only page/HTML requests count. |
+| **Content-Security-Policy added** (response-header transform rule) | `default-src 'self'`; script `self + unsafe-inline + googletagmanager`; connect/img cover GA4 endpoints; `frame-ancestors 'none'`; `object-src 'none'`; `base-uri 'self'` | The one materially missing security header. `unsafe-inline` is required by the inline consent-mode bootstrap + `onclick` copy handlers. `squircle.js` verified worklet/blob-free before writing the policy. |
+| **X-XSS-Protection → `0`** (same transform rule) | was `1; mode=block` | Header is deprecated; the legacy filter it enables can *introduce* XSS in old browsers. `0` is the OWASP-recommended value. |
+| **HSTS max-age 15552000 → 31536000** | keeps includeSubDomains + preload + nosniff | 180 d is below the hstspreload.org minimum (1 y) even though the `preload` flag was already being sent. Now eligible for actual preload-list submission. |
+
+Left deliberately as-is: HTML edge TTL 4 h (raising it adds staleness risk if a
+purge is missed, while a traffic spike inside any window is edge-served either
+way); Bot Fight Mode off (would risk challenging Zalo/messenger link-preview
+fetchers — critical for VN social sharing); min TLS 1.2 (older Android still
+common locally); `security_level` medium.
+
+⚠️ The owner's **global API key** was used in-session for these changes — it
+should be **rotated**, and future automation should use scoped tokens (like the
+existing cache-purge token).
+
+---
+
 ## Repo-side fixes already applied (earlier on 2026-06-30)
 
 1. **Render-blocking Google Fonts CSS** → loaded off the critical path via

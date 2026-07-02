@@ -20,6 +20,10 @@ exclude:
   - fingerprint.mjs
   - publish.mjs
   - preview.mjs
+  - ship.mjs
+  - verify.mjs
+  - update-sitemap.mjs
+  - README.md
   - .gitignore
   - Gemfile
   - Gemfile.lock

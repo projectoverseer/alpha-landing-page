@@ -33,6 +33,13 @@ a {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
+// Text selection carries a quiet dye wash — a small brand signature that shows
+// up everywhere without adding a single element. Translucent so it reads
+// correctly over light and dark surfaces alike.
+::selection {
+  background: rgba($dye, 0.24);
+}
+
 // Design doc §10/§13: honor Reduce Motion — replace movement with near-instant change
 // and disable parallax/specular transitions.
 @media (prefers-reduced-motion: reduce) {
@@ -1295,20 +1302,26 @@ header {
 
   background-position: center;
 
+  /* The scrim is brand ink, not neutral black (design/04 §1.3 Atelier): a top-to-
+     bottom ink gradient — slightly open mid-frame where the copy sits, deepest at
+     the base — so the hero reads as a dyed material surface instead of a generic
+     darkened photo. Density stays at/above the old flat 0.7 wash at the edges and
+     ~0.66 mid, keeping the white copy comfortably over WCAG AA. */
+
   /* 1. Fallback for older browsers that do not support image-set() */
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    linear-gradient(180deg, rgba(7, 21, 31, 0.74) 0%, rgba(9, 24, 37, 0.66) 45%, rgba(7, 21, 31, 0.84) 100%),
     url("../img/hero/hero-1920.jpg");
 
   /* 2. Modern implementation for browsers that support image-set() */
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    linear-gradient(180deg, rgba(7, 21, 31, 0.74) 0%, rgba(9, 24, 37, 0.66) 45%, rgba(7, 21, 31, 0.84) 100%),
     image-set(url("../img/hero/hero-1920.avif") type("image/avif") 1x,
       url("../img/hero/hero-3840.avif") type("image/avif") 2x,
       url("../img/hero/hero-1920.jpg") type("image/jpeg") 1x);
 
   background-size: cover;
-  background-color: $gray-950; // a welcoming splash color while the hero image is loading
+  background-color: $ink-950; // ink splash color while the hero image is loading
   color: $text-dark;
 
   .header-content {

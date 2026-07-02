@@ -10,7 +10,10 @@ implementation proceeds.
 - Component styles in `_sass/_base.scss` (imported last in `main.scss`).
 - Sections are `_includes/*.html`, assembled by `_includes/page.html`.
 - Copy is bilingual in `_data/i18n/en.yml` + `vi.yml` — **every key in both**.
-- Prod ship: `npm run ship` (PurgeCSS → cleancss → esbuild → fingerprint → minify → `docs/`).
+- Prod build: `npm run build` (PurgeCSS → cleancss → esbuild → fingerprint →
+  minify → sitemap lastmod → verify → `docs/`). `npm run ship` = the human
+  wrapper: build with auto-retry, then the local preview server. (Renamed from
+  the old `npm run ship` on 2026-07-02; see the root `README.md` for the map.)
 
 ## Implementation order
 

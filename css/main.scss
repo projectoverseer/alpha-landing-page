@@ -429,9 +429,12 @@ $dropdown-toggler-icon-dark: url("../img/svg/ui_icons/dropdown-toggler-icon-dark
 $dropdown-item-padding-y: map-get($spacers, 1);
 $dropdown-item-padding-x: map-get($spacers, 2);
 
-$btn-primary-color: $fill-primary;
-$btn-primary-hover: #c63b31;
-$btn-primary-active: #c6321f;
+// Primary CTA rides the dye ramp (design/04 §1.2): white text on $dye-deep
+// clears WCAG AA (~5:1); hover warms one step toward $dye, active presses one
+// step deeper. (Replaces the legacy #c63527 red, which sat outside the ramp.)
+$btn-primary-color: $dye-deep;
+$btn-primary-hover: #c9420c;
+$btn-primary-active: #a33208;
 
 $input-btn-padding-y: map-get($spacers, 2);
 $input-btn-padding-x: map-get($spacers, 4);

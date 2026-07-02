@@ -18,9 +18,12 @@
     "optimize:css": "node optimize-css.mjs",
     "optimize:js": "node optimize-js.mjs",
     "optimize:hash": "node fingerprint.mjs",
-    "optimize:html": "html-minifier-terser --collapse-whitespace --remove-comments --collapse-boolean-attributes --remove-redundant-attributes --decode-entities --use-short-doctype --remove-script-type-attributes --minify-js true --input-dir _site --output-dir _site --file-ext html",
+    "optimize:html": "html-minifier-terser --collapse-whitespace --remove-comments --collapse-boolean-attributes --remove-redundant-attributes --remove-empty-attributes --remove-style-link-type-attributes --remove-script-type-attributes --decode-entities --use-short-doctype --sort-attributes --sort-class-name --minify-js true --minify-css true --input-dir _site --output-dir _site --file-ext html",
+    "sitemap:lastmod": "node update-sitemap.mjs",
+    "check": "node verify.mjs",
     "publish:docs": "node publish.mjs",
-    "ship": "npm run clean && npm run build:jekyll && npm run optimize:css && npm run optimize:js && npm run optimize:hash && npm run optimize:html && npm run publish:docs",
+    "build": "npm run clean && npm run build:jekyll && npm run optimize:css && npm run optimize:js && npm run optimize:hash && npm run optimize:html && npm run sitemap:lastmod && npm run check && npm run publish:docs",
+    "ship": "node ship.mjs",
     "preview": "node preview.mjs"
   }
 }
