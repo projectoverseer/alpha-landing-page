@@ -16,6 +16,7 @@ exclude:
   - package-lock.json
   - package.json
   - optimize-js.mjs
+  - optimize-css.mjs
   - fingerprint.mjs
   - publish.mjs
   - preview.mjs

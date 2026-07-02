@@ -115,6 +115,56 @@ $blue-pale: $light; // #c3e5f1
 // Motion + fluid type are emitted as CSS custom properties in _base.scss :root.
 
 // -------------------------------------
+// Dark Theme Palette (Apple HIG §5 model · brand cool-ink character)
+// -------------------------------------
+//
+// A scalable, semantic dark palette: today it is the single source of truth for
+// the site's dark chrome (the navbar menus that open over the dark hero); it is
+// built to become the foundation of a full-site dark mode without retuning. It
+// follows the Apple design-language rules (apple-design-language-for-web.md §5):
+//
+//  · NEUTRAL, not branded. Surfaces are low-chroma cool-ink grays — deliberately
+//    NOT the saturated $ink-900 CTA panel (section.bg-primary). The accent stays
+//    reserved for interactivity (§4.1); the dark UI itself stays quiet.
+//  · ELEVATION LIGHTENS (§5 / §9). Higher layers are lighter, not darker — the
+//    inverse of paper shadow. surface-1 is the page; each step floats above it.
+//  · COOL CAST to match the "precision ink" brand: at every rung the blue channel
+//    sits a hair above red/green, at low saturation so it never reads navy.
+//  · Foreground / separators / fills are WHITE-ALPHA (§4.2 / §4.4 / §9) so they
+//    adapt to whatever surface — or the hero photo — sits behind them.
+//
+// To take a section (or the whole site) dark later: set its background to a
+// surface token and its text to the $text-dark* labels; the translucent
+// separators, fills and brightened accents then read correctly on any surface.
+// (Shipping stays light-only until that migration — owner direction.)
+
+// Surface ramp — page → raised → elevated → overlay (lighter = higher layer).
+$dark-surface-1: #0c1218; // base page (systemBackground): cool near-black
+$dark-surface-2: #151d25; // raised: sections lifted off the page, resting cards
+$dark-surface-3: #1f2932; // elevated: cards, popovers, DROPDOWN MENUS, nav chrome
+$dark-surface-4: #2a3540; // overlay: sheets / a menu stacked above an elevated layer
+
+// Foreground labels reuse the shipped dark-surface hierarchy (white + alpha):
+//   $text-dark #fff · $text-dark-secondary .66 · $text-dark-tertiary .42
+$text-dark-quaternary: rgba(255, 255, 255, 0.28); // quaternaryLabel — watermark level
+
+// Hairlines & borders — translucent white, adapting to the surface behind.
+//   ($separator-dark rgba(255,255,255,0.18) = the standard hairline, defined above)
+$dark-border: rgba(255, 255, 255, 0.10); // resting card / menu edge
+$dark-border-highlight: rgba(255, 255, 255, 0.14); // Liquid-Glass top-edge sheen (§6)
+
+// System fills — translucent WHITE for shapes/hover/press on dark (§4.4). White
+// (not a dark gray) so a fill LIFTS its surface — the correct direction for dark.
+$dark-fill-1: rgba(255, 255, 255, 0.14); // pressed / selected
+$dark-fill-2: rgba(255, 255, 255, 0.10); // hover / current
+$dark-fill-3: rgba(255, 255, 255, 0.06); // resting chip / track
+
+// Accents on dark — the brand marks, brightened a touch so they stay vibrant on
+// dark surfaces (§5). Reserved for interactivity + key marks, never plain chrome.
+$dark-accent: $dye-bright; // #ff6a1a — primary interactive dye
+$dark-accent-blue: $secondary-dark; // #009cde — secondary marks / links on dark
+
+// -------------------------------------
 // Typography Variables
 // -------------------------------------
 

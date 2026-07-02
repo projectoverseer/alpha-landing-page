@@ -1,4 +1,6 @@
 homeurl: "/"
+locale: "vi"
+language_name: "Tiếng Việt"
 og_locale: "vi_VN"
 legal_name: "Công ty TNHH Phát triển Phần mềm Alpha"
 display_phone: "0983 505 002"
@@ -55,6 +57,7 @@ toc_footer_id: "lien-he"
 translate_to_homeurl: "/en"
 translate_to_locale: "en"
 translate_to_language: "English"
+language_switcher_label: "Đổi ngôn ngữ"
 
 # --- Overview Section ---
 

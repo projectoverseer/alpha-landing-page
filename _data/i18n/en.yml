@@ -1,4 +1,6 @@
 homeurl: "/en"
+locale: "en"
+language_name: "English"
 og_locale: "en_US"
 legal_name: "Alpha Software Development Co. Ltd."
 display_phone: "(+84) 983 505 002"
@@ -56,6 +58,7 @@ toc_footer_id: "contact"
 translate_to_homeurl: "/"
 translate_to_locale: "vi"
 translate_to_language: "Vietnamese"
+language_switcher_label: "Change language"
 
 # --- Overview Section ---
 

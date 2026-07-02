@@ -75,17 +75,47 @@
     </ul>
   </div>
 
-  <div class="nav-item">
+  <div class="nav-item dropdown">
     <a
-      class="nav-link language-switcher"
-      href="{{ t.translate_to_homeurl }}"
-      hreflang="{{ t.translate_to_locale }}"
-      title="Translate to {{ t.translate_to_language }}"
+      aria-expanded="false"
+      class="nav-link dropdown-toggle language-switcher"
+      data-bs-toggle="dropdown"
+      href="#"
+      role="button"
+      title="{{ t.language_switcher_label }}"
     ><img
-        alt="Translate to {{ t.translate_to_language }}"
-        height="32"
-        src="{{ site.url }}/img/svg/locale_flag/{{ t.translate_to_locale }}.svg"
+        alt=""
+        aria-hidden="true"
+        class="locale-flag"
+        height="24"
+        src="{{ site.url }}/img/svg/locale_flag/{{ t.locale }}.svg"
         width="32"
-      /></a>
+      /><span class="visually-hidden">{{ t.language_switcher_label }}</span></a>
+    <ul class="dropdown-menu dropdown-menu-end language-switcher-menu">
+      {%- comment -%}
+        Current language first, then the other — so the selected locale sits at
+        the top of the list. Driven by data ([t.locale, t.translate_to_locale])
+        so adding a third language only needs its i18n file, not new markup.
+      {%- endcomment -%}
+      {% assign menu_locales = t.locale | append: "," | append: t.translate_to_locale | split: "," %}
+      {% for loc in menu_locales %}
+      {% assign l = site.data.i18n[loc] %}
+      <li>
+        <a
+          class="dropdown-item{% if loc == t.locale %} active{% endif %}"
+          {% if loc == t.locale %}aria-current="true"{% endif %}
+          href="{{ site.url }}{{ l.homeurl }}"
+          hreflang="{{ loc }}"
+        ><img
+            alt=""
+            aria-hidden="true"
+            class="locale-flag"
+            height="20"
+            src="{{ site.url }}/img/svg/locale_flag/{{ loc }}.svg"
+            width="27"
+          />{{ l.language_name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>

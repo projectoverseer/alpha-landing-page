@@ -957,6 +957,34 @@ blockquote> :last-child:after {
   }
 }
 
+// Flag chips (language switcher toggle + menu items). The authored border-radius
+// is what squircle.js reads and reshapes into a superellipse corner — it depth-
+// matches, so the silhouette still reads as this radius, just with continuous
+// corners. Browsers without `corner-shape` keep the plain rounded rectangle as a
+// clean fallback. The hairline inset ring gives the flag a defined edge on both
+// the white (scrolled) and deep-ink (over-hero) surfaces — the US flag's white
+// stripe would otherwise bleed into the white chrome.
+.locale-flag {
+  flex-shrink: 0;
+  border-radius: $border-radius-svg;
+  box-shadow: inset 0 0 0 0.5px rgba($black, 0.18);
+}
+
+.language-switcher-menu {
+  min-width: 12rem;
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: $spacer * 0.5;
+
+    &.active {
+      font-weight: $font-weight-bold;
+      background: $dropdown-link-active-state-bg;
+    }
+  }
+}
+
 .dropdown-toggle {
 
   /* Hide focus ring on mouse/pointer interaction, but preserve it for keyboard navigation */
@@ -976,8 +1004,15 @@ blockquote> :last-child:after {
 
     background-image: $dropdown-toggler-icon;
 
-    .navbar:not(.nav-active) & {
-      background-image: $dropdown-toggler-icon-dark;
+    // The dark (light-colored) chevron is only correct while the bar is
+    // transparent/deferential over the hero — a state reserved for ≥md. Below
+    // md the bar is forced solid white at every scroll position (see the
+    // `media-breakpoint-down(md)` block above), so the chevron must stay dark
+    // there too; without this scoping it wrongly stayed light on mobile.
+    @include media-breakpoint-up(md) {
+      .navbar:not(.nav-active) & {
+        background-image: $dropdown-toggler-icon-dark;
+      }
     }
 
     background-repeat: no-repeat;

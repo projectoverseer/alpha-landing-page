@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "shx rm -rf _site",
     "build:jekyll": "cross-env JEKYLL_ENV=production bundle exec jekyll build",
-    "optimize:css": "purgecss --css _site/css/main.css --content \"_site/**/*.html\" \"_site/**/*.js\" --safelist active show collapsing --output _site/css/main.css && cleancss -O2 -o _site/css/main.css _site/css/main.css",
+    "optimize:css": "node optimize-css.mjs",
     "optimize:js": "node optimize-js.mjs",
     "optimize:hash": "node fingerprint.mjs",
     "optimize:html": "html-minifier-terser --collapse-whitespace --remove-comments --collapse-boolean-attributes --remove-redundant-attributes --decode-entities --use-short-doctype --remove-script-type-attributes --minify-js true --input-dir _site --output-dir _site --file-ext html",
