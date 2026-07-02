@@ -8,7 +8,7 @@
 
 <!-- Open Graph & Organization Microdata -->
 <meta content="website" property="og:type" />
-<meta content="Alpha Software" itemprop="name" property="og:site_name" />
+<meta content="Alpha Software Group" itemprop="name" property="og:site_name" />
 <meta content="{{ t.legal_name }}" itemprop="alternateName" />
 <meta content="https://www.alphasoftwaregroup.com" itemprop="url" />
 <meta
@@ -81,8 +81,8 @@
     "@context": "https://schema.org",
     "@id": "https://www.alphasoftwaregroup.com{{ t.homeurl }}#website",
     "@type": "WebSite",
-    "name": "Alpha Software",
-    "alternateName": "{{ t.legal_name }}",
+    "name": "Alpha Software Group",
+    "alternateName": ["Alpha Software", "{{ t.legal_name }}"],
     "url": "https://www.alphasoftwaregroup.com{{ t.homeurl }}"
   }
 </script>
@@ -107,7 +107,7 @@
     "@type": "Organization",
     "@id": "https://www.alphasoftwaregroup.com/#organization",
     "name": "Alpha Software",
-    "alternateName": "Công ty TNHH Phát triển Phần mềm Alpha",
+    "alternateName": ["Alpha Software Group", "Công ty TNHH Phát triển Phần mềm Alpha"],
     "url": "https://www.alphasoftwaregroup.com",
     "logo": {
       "@type": "ImageObject",
