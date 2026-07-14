@@ -26,6 +26,9 @@ const ASSETS = [
   { file: 'css/main.css', ref: '/css/main.css' },
   { file: 'css/chiasekinhnghiem.css', ref: '/css/chiasekinhnghiem.css' },
   { file: 'js/bundle.js', ref: '/js/bundle.js' },
+  // The hub loads the corner engine on its own — it shares no bundle with the
+  // main site, whose copy is inlined in bundle.js above.
+  { file: 'js/squircle.js', ref: '/js/squircle.js' },
 ];
 
 // Insert the hash before the final extension: foo.css -> foo.<hash>.css

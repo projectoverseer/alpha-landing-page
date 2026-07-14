@@ -26,7 +26,24 @@ image: rft-nhuom-dat-tu-lan-dau   # optional — key from _data/chia_se_kinh_ngh
 ---
 ```
 
-New topics/series: add the key to `_data/chia_se_kinh_nghiem.yml` first.
+New series: add the key to `_data/chia_se_kinh_nghiem.yml` first.
+
+**New topic — two steps.** Add the key (with `label` and `desc`) to
+`_data/chia_se_kinh_nghiem.yml` → `topics`, then create its page:
+`chia-se-kinh-nghiem/chu-de/<key>.html`, which is nothing but front matter —
+
+```yaml
+---
+layout: chia-se-kinh-nghiem-topic
+permalink: /chia-se-kinh-nghiem/chu-de/<key>/
+topic: <key>
+---
+```
+
+The heading, the description, the post list, the topic strip, the sitemap entry
+and the structured data all come from the data file and the posts. (Two steps
+rather than one because GitHub Pages forces Jekyll into `safe` mode, so no
+generator plugin may create the page for us.)
 
 `series_part` is ordering metadata, never shown to the reader — the hub is a
 chronological feed and articles carry no "bài n/N" tag (philosophy §5). The
@@ -69,7 +86,9 @@ already showed it.
 
 - ALL-CAPS section headers → `##` sentence case; sub-points (`THỨ NHẤT…`) →
   `###` or a bold run-in (`**Thứ nhất — …**`), whichever the rhythm needs.
-- Formulas and key rules → blockquotes (`>`); use `×`, `÷`, `√`, `Δ` characters.
+- Rules of thumb written in Vietnamese words (`OEE = Sẵn sàng × Hiệu suất ×
+  Chất lượng`) → blockquotes (`>`), with `×`, `÷`, `√`, `Δ` typed as characters.
+  Those are sentences. Real equations are §3b.
 - Enumerations → Markdown lists; Excel column specs → header-only tables.
 - Fix only unambiguous typos; never rewrite the author's voice. When unsure,
   check the archive file.
@@ -79,6 +98,41 @@ already showed it.
 - Images arrive later: leave a placeholder comment where the original post
   had an attachment, with enough description to find the right image:
   `<!-- [Hình] Sơ đồ nguyên lý máy quang phổ -->` (or `[Video]`).
+
+## 3b. Write the equations in LaTeX
+
+Anything with Greek, a superscript, a subscript, a radical or a fraction is an
+equation, and it is written as **LaTeX between `$$…$$`** — the same delimiter for
+a display formula on its own line and for a symbol inside a sentence:
+
+```markdown
+Máy tính ra $$\Delta E^*$$ (Delta E), độ lệch màu giữa hai mẫu.
+
+$$\Delta E^* = \sqrt{(\Delta L^*)^2 + (\Delta a^*)^2 + (\Delta b^*)^2}$$
+
+Trong đó $$S_L$$, $$S_C$$, $$S_H$$ là các hàm trọng số.
+```
+
+The build renders it to **MathML** (`optimize-math.mjs` → KaTeX). Nothing is
+computed in the browser: the reader gets real text, correctly typeset, that a
+screen reader speaks and Google indexes, and the page still ships no maths
+library. A malformed formula fails the build, loudly.
+
+So: **never type an equation by hand as Unicode with `<sub>` tags again.** That
+is what `ΔEcmc = √[(ΔL*/lS<sub>L</sub>)²…]` was, and it was wrong on every count.
+
+Three rules:
+
+1. **Never bold or italicise an equation** — no `**$$…$$**`. The HTML minifier
+   treats `<math>` as a block element and swallows the word space next to it
+   (`chọn ΔEcmc(2:1)khi đo màu`). `verify.mjs` fails the build if you do. The
+   maths already stands apart from the prose; it needs no help.
+2. **Headings stay plain text.** Write `## Độ lệch màu ΔE*`, not `$$…$$` — a
+   heading is a label to scan, and maths set inside bold serif reads worse, not
+   better. Same for `title:` and `description:` in the front matter, which are
+   plain text by nature (they become the `<title>`, the og: tags, the feed card).
+3. **A single `*` is safe in a heading; `L*a*b*` is not** — Markdown reads the
+   inner pair as emphasis, so that one still needs `L\*a\*b\*`.
 
 ## 4. Insert CTAs
 

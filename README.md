@@ -27,12 +27,13 @@ bundle exec jekyll serve   # dev server with live rebuild (unoptimized)
 |---|---|---|
 | `clean` | shx | wipe `_site/` |
 | `build:jekyll` | Jekyll (production env) | render pages from `_includes/` + `_data/i18n/` |
+| `optimize:math` | `optimize-math.mjs` | render the LaTeX in the Chia sẻ kinh nghiệm articles to static MathML (KaTeX) — no maths library ships, and the equations stay real, indexable text |
 | `optimize:css` | `optimize-css.mjs` | PurgeCSS (API, greedy popper safelist) → clean-css `-O2` |
-| `optimize:js` | `optimize-js.mjs` | esbuild: slim Bootstrap (Collapse/Dropdown/ScrollSpy only) + site JS → one minified `bundle.js` |
-| `optimize:hash` | `fingerprint.mjs` | content-hash `main.css` / `bundle.js`, rewrite references |
+| `optimize:js` | `optimize-js.mjs` | esbuild: slim Bootstrap (Collapse/Dropdown/ScrollSpy only) + site JS → one minified `bundle.js`; `squircle.js` also survives on its own, for the hub |
+| `optimize:hash` | `fingerprint.mjs` | content-hash the CSS/JS assets, rewrite references |
 | `optimize:html` | html-minifier-terser | minify markup, inline JS/CSS; sorted attributes/classes for better compression |
 | `sitemap:lastmod` | `update-sitemap.mjs` | bump `<lastmod>` **only when a page's content really changed** (hash-normalized diff vs the published copy — keeps the signal trustworthy for search engines) |
-| `check` | `verify.mjs` | fail the build on missing files, broken local references, or leaked template syntax |
+| `check` | `verify.mjs` | fail the build on missing files, broken local references, leaked template syntax, or unrendered maths |
 | `publish:docs` | `publish.mjs` | move `_site/` → `docs/`, carrying prior hashed assets forward (14-day retention) so stale cached HTML never 404s its CSS/JS |
 
 `npm run ship` wraps `build` with automatic retries (the toolchain can fail

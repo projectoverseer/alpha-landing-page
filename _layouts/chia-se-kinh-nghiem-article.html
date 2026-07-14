@@ -15,7 +15,13 @@
           {%- if page.series -%}
             {%- assign kt_episodes = site.posts | where: "series", page.series | sort: "series_part" -%}
           {%- endif %}
-          <p class="kt-kicker">{{ kt_topic.label }}</p>
+          {%- comment -%}
+            The kicker is the article's topic, and it links to that topic's page —
+            the reader who wants "more like this" has one obvious way to ask. It
+            stays metadata grey rather than indigo: it labels this article first
+            and only offers a route second (owner's call, philosophy §3).
+          {%- endcomment %}
+          <p class="kt-kicker"><a href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ page.topic }}/">{{ kt_topic.label }}</a></p>
           <h1>{{ page.title }}</h1>
           <p class="kt-standfirst">{{ page.description }}</p>
           {%- comment -%}

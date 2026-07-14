@@ -6,6 +6,7 @@
     "cross-env": "^10.1.0",
     "esbuild": "^0.28.1",
     "html-minifier-terser": "^7.2.0",
+    "katex": "^0.17.0",
     "purgecss": "^8.0.0",
     "shx": "^0.4.0"
   },
@@ -15,6 +16,7 @@
   "scripts": {
     "clean": "shx rm -rf _site",
     "build:jekyll": "cross-env JEKYLL_ENV=production bundle exec jekyll build",
+    "optimize:math": "node optimize-math.mjs",
     "optimize:css": "node optimize-css.mjs",
     "optimize:js": "node optimize-js.mjs",
     "optimize:hash": "node fingerprint.mjs",
@@ -22,7 +24,7 @@
     "sitemap:lastmod": "node update-sitemap.mjs",
     "check": "node verify.mjs",
     "publish:docs": "node publish.mjs",
-    "build": "npm run clean && npm run build:jekyll && npm run optimize:css && npm run optimize:js && npm run optimize:hash && npm run optimize:html && npm run sitemap:lastmod && npm run check && npm run publish:docs",
+    "build": "npm run clean && npm run build:jekyll && npm run optimize:math && npm run optimize:css && npm run optimize:js && npm run optimize:hash && npm run optimize:html && npm run sitemap:lastmod && npm run check && npm run publish:docs",
     "ship": "node ship.mjs",
     "preview": "node preview.mjs"
   }

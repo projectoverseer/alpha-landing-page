@@ -59,11 +59,19 @@ const { code: squircle } = transformSync(readFileSync(SITE_JS + 'squircle.js', '
 // the next block's first token.
 writeFileSync(DEST, bootstrap + '\n' + custom + '\n' + squircle);
 
+// squircle.js survives as a file of its own, minified in place: the Chia sẻ kinh
+// nghiêm hub carries none of the main site's Bootstrap or custom.js, so it loads
+// the corner engine on its own (see _includes/chia-se-kinh-nghiem/head.html) and
+// the path is the same one the dev build already serves. The main site never
+// requests it — its copy is inlined in the bundle above.
+writeFileSync(SITE_JS + 'squircle.js', squircle);
+
 // Drop the raw sources from the output so they aren't shipped alongside the
 // bundle (the full vendored bootstrap is dev-only and must not reach _site).
-for (const f of ['bootstrap.bundle.min.js', 'custom.js', 'squircle.js']) {
+for (const f of ['bootstrap.bundle.min.js', 'custom.js']) {
   try { unlinkSync(SITE_JS + f); } catch { /* not present in this build */ }
 }
 
 const kb = (readFileSync(DEST).length / 1024).toFixed(1);
-console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap)`);
+const sq = (readFileSync(SITE_JS + 'squircle.js').length / 1024).toFixed(1);
+console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + squircle.js (${sq} KB, hub)`);

@@ -60,7 +60,7 @@ CIE định nghĩa hai góc quan sát chuẩn:
 - **2° Observer (1931):** góc nhìn hẹp, tương đương nhìn một đồng xu ở khoảng cách 50cm. Được định nghĩa từ 1931, ít dùng hơn hiện nay.
 - **10° Observer (1964):** góc nhìn rộng hơn, tương đương nhìn lòng bàn tay duỗi thẳng tay. Phản ánh đúng hơn cách mắt người thực sự quan sát một tấm vải. Được CIE khuyến nghị và là lựa chọn chuẩn trong ngành nhuộm hiện đại.
 
-Cùng một mẫu vải đo dưới D65 nhưng với 2° và 10° observer sẽ cho ra bộ L\*a\*b\* khác nhau. Vì vậy khi trao đổi số liệu giữa nhà máy và khách hàng, cần thống nhất cả nguồn sáng lẫn góc quan sát.
+Cùng một mẫu vải đo dưới D65 nhưng với 2° và 10° observer sẽ cho ra bộ $$L^*a^*b^*$$ khác nhau. Vì vậy khi trao đổi số liệu giữa nhà máy và khách hàng, cần thống nhất cả nguồn sáng lẫn góc quan sát.
 
 ## Tóm lại: các thông số cần hỏi khách hàng để hiệu chuẩn máy quang phổ
 

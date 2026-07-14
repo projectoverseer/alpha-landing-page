@@ -27,11 +27,11 @@ Một thực tế là mọi loại vải, nhất là vải nhuộm bằng thuố
 
 Đây là bước phần mềm làm thay cho mắt người. Từ bộ số phổ phản xạ, phần mềm sẽ tính cho ta bộ các giá trị đặc trưng cho một màu dưới một nguồn sáng cụ thể:
 
-- **L\*** = độ sáng tối (0 = đen, 100 = trắng)
-- **a\*** = thành phần đỏ/xanh lá
-- **b\*** = thành phần vàng/xanh dương
+- $$L^*$$ = độ sáng tối (0 = đen, 100 = trắng)
+- $$a^*$$ = thành phần đỏ/xanh lá
+- $$b^*$$ = thành phần vàng/xanh dương
 
-Có một điểm quan trọng: cùng một lần đo, cùng một bộ phổ phản xạ. Nhưng hỏi dưới D65 thì ra một bộ L\*a\*b\*, hỏi dưới TL84 thì ra bộ L\*a\*b\* khác. Đây chính là lý do tại sao máy đo màu phát hiện được metamerism mà mắt người không phát hiện được khi chỉ so dưới một nguồn sáng.
+Có một điểm quan trọng: cùng một lần đo, cùng một bộ phổ phản xạ. Nhưng hỏi dưới D65 thì ra một bộ $$L^*a^*b^*$$, hỏi dưới TL84 thì ra bộ $$L^*a^*b^*$$ khác. Đây chính là lý do tại sao máy đo màu phát hiện được metamerism mà mắt người không phát hiện được khi chỉ so dưới một nguồn sáng.
 
 {% include chia-se-kinh-nghiem/cta.html variant="note" heading="Từ máy đo đến hệ thống" text="Phần mềm quản lý công nghệ của Alpha kết nối trực tiếp với đầu đo quang phổ Datacolor tại các nhà máy đang triển khai — kết quả đo màu đi thẳng vào hệ thống, không qua ghi chép tay." %}
 

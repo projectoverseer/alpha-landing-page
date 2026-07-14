@@ -26,7 +26,7 @@ const ORIGIN = 'https://www.alphasoftwaregroup.com';
 
 // Strip the 10-hex content hash so only real markup/content differences count.
 const normalize = (html) =>
-  html.replace(/(main|chiasekinhnghiem|bundle)\.[0-9a-f]{10}\.(css|js)/g, '$1.$2');
+  html.replace(/(main|chiasekinhnghiem|bundle|squircle)\.[0-9a-f]{10}\.(css|js)/g, '$1.$2');
 
 // URL path from a <loc> → the HTML file that serves it ("/" → "index.html").
 const fileFor = (urlPath) =>

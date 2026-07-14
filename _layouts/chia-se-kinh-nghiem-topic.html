@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {% include chia-se-kinh-nghiem/head.html %}
+  </head>
+  <body class="kt">
+    <a class="kt-skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+    {% include chia-se-kinh-nghiem/topbar.html %}
+
+    {%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[page.topic] -%}
+    {%- assign kt_posts = site.posts | where: "topic", page.topic -%}
+
+    <main class="kt-shell" id="main-content">
+      {%- comment -%}
+        Unlike the hub, a topic page introduces itself: the reader arrived from a
+        tag or from search, so the heading and the one-line description say what
+        this collection is. The kicker is the way back up — the hub is this
+        page's parent, the way a topic is an article's parent.
+      {%- endcomment -%}
+      <header class="kt-topic-head">
+        <p class="kt-kicker"><a href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a></p>
+        <h1>{{ kt_topic.label }}</h1>
+        <p class="kt-standfirst">{{ kt_topic.desc }}</p>
+      </header>
+
+      {% include chia-se-kinh-nghiem/topics.html %}
+
+      {%- comment -%}
+        No drip here: a topic holds a fraction of the archive, so the whole list
+        renders at once and the page needs no script of its own.
+      {%- endcomment %}
+      {% include chia-se-kinh-nghiem/feed.html posts=kt_posts %}
+    </main>
+
+    {% include chia-se-kinh-nghiem/cta.html variant="banner" %}
+
+    <footer class="kt-footer">
+      <div class="kt-shell">
+        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/">www.alphasoftwaregroup.com</a></p>
+        <p>Bản quyền © 2026 Alpha Software. Bảo lưu mọi quyền.</p>
+      </div>
+    </footer>
+  </body>
+</html>

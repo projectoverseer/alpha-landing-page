@@ -1,26 +1,44 @@
 {%- comment -%}
-  Shared <head> for Chia sẻ kinh nghiệm pages (hub + articles). Standalone from the main
-  site's meta.html by design — the hub is a separate product with its own CSS
-  bundle and fonts. See design/chia-se-kinh-nghiem/01-philosophy.md.
+  Shared <head> for Chia sẻ kinh nghiệm pages (hub + topics + articles). Standalone from
+  the main site's meta.html by design — the hub is a separate product with its
+  own CSS bundle and fonts. See design/chia-se-kinh-nghiem/01-philosophy.md.
+
+  Three kinds of page, and every branch below turns on which one this is:
+    article — a post
+    topic   — /chu-de/<key>/, every post carrying that topic
+    hub     — /chia-se-kinh-nghiem/, the whole feed
 {%- endcomment -%}
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 
 {% include analytics.html %}
 
-{%- assign kt_is_article = false -%}
-{%- if page.layout == "chia-se-kinh-nghiem-article" -%}{%- assign kt_is_article = true -%}{%- endif -%}
-
-{%- if kt_is_article -%}
-  {%- capture kt_title %}{{ page.title }} · Chia sẻ kinh nghiệm Alpha{% endcapture -%}
-{%- else -%}
-  {%- capture kt_title %}{{ page.title }}{% endcapture -%}
-{%- endif -%}
+{%- assign kt_kind = "hub" -%}
+{%- if page.layout == "chia-se-kinh-nghiem-article" -%}{%- assign kt_kind = "article" -%}{%- endif -%}
+{%- if page.layout == "chia-se-kinh-nghiem-topic" -%}{%- assign kt_kind = "topic" -%}{%- endif -%}
+{%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[page.topic] -%}
 
 {%- comment -%}
-  Social/preview picture. Articles show their own; the hub falls back to the
-  company card. Always the JPEG, never the AVIF — Facebook and Zalo, where these
-  posts actually get shared, cannot decode AVIF.
+  A topic page has no front matter of its own beyond its key: its title and
+  description are the ones already written in the data file, so the taxonomy
+  stays a single source of truth and a new topic needs no SEO copy invented for it.
+{%- endcomment -%}
+{%- if kt_kind == "article" -%}
+  {%- capture kt_title %}{{ page.title }} · Chia sẻ kinh nghiệm Alpha{% endcapture -%}
+  {%- assign kt_desc = page.description -%}
+{%- elsif kt_kind == "topic" -%}
+  {%- capture kt_title %}{{ kt_topic.label }} — Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
+  {%- assign kt_desc = kt_topic.desc -%}
+{%- else -%}
+  {%- capture kt_title %}{{ page.title }}{% endcapture -%}
+  {%- assign kt_desc = page.description -%}
+{%- endif -%}
+{%- assign kt_desc = kt_desc | strip_newlines | strip -%}
+
+{%- comment -%}
+  Social/preview picture. Articles show their own; the hub and the topic pages
+  fall back to the company card. Always the JPEG, never the AVIF — Facebook and
+  Zalo, where these posts actually get shared, cannot decode AVIF.
 {%- endcomment -%}
 {%- assign kt_img = nil -%}
 {%- if page.image -%}{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[page.image] -%}{%- endif -%}
@@ -32,7 +50,7 @@
 {%- endif -%}
 
 <title>{{ kt_title | escape }}</title>
-<meta content="{{ page.description | strip_newlines | strip | escape }}" name="description" />
+<meta content="{{ kt_desc | escape }}" name="description" />
 <link href="{{ site.url }}{{ page.url }}" rel="canonical" />
 
 {%- comment -%}
@@ -42,7 +60,7 @@
 <meta content="max-image-preview:large, max-snippet:-1" name="robots" />
 
 <meta content="{{ kt_title | escape }}" property="og:title" />
-<meta content="{{ page.description | strip_newlines | strip | escape }}" property="og:description" />
+<meta content="{{ kt_desc | escape }}" property="og:description" />
 <meta content="{{ site.url }}{{ page.url }}" property="og:url" />
 <meta content="Alpha Software Group" property="og:site_name" />
 <meta content="vi_VN" property="og:locale" />
@@ -55,8 +73,7 @@
 <meta content="summary_large_image" name="twitter:card" />
 <meta content="{{ kt_og_image }}" name="twitter:image" />
 
-{%- if kt_is_article %}
-{%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[page.topic] -%}
+{%- if kt_kind == "article" %}
 {%- assign kt_words = content | strip_html | number_of_words -%}
 {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil -%}
 {%- assign kt_modified = page.last_modified_at | default: page.date -%}
@@ -72,7 +89,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": {{ page.title | jsonify }},
-  "description": {{ page.description | strip_newlines | strip | jsonify }},
+  "description": {{ kt_desc | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ kt_modified | date_to_xmlschema }}",
   "inLanguage": "vi",
@@ -122,7 +139,7 @@
 </script>
 {%- comment -%}
   Breadcrumbs: Google renders these in place of the raw URL in the result, and
-  they tie each article to the hub as its parent.
+  they tie each article to its topic, and the topic to the hub.
 {%- endcomment %}
 <script type="application/ld+json">
 {
@@ -131,7 +148,60 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Alpha Software", "item": "{{ site.url }}/" },
     { "@type": "ListItem", "position": 2, "name": "Chia sẻ kinh nghiệm", "item": "{{ site.url }}/chia-se-kinh-nghiem/" },
+    {%- if kt_topic %}
+    { "@type": "ListItem", "position": 3, "name": {{ kt_topic.label | jsonify }}, "item": "{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ page.topic }}/" },
+    { "@type": "ListItem", "position": 4, "name": {{ page.title | jsonify }} }
+    {%- else %}
     { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }} }
+    {%- endif %}
+  ]
+}
+</script>
+{%- elsif kt_kind == "topic" %}
+{%- assign kt_posts = site.posts | where: "topic", page.topic -%}
+<meta content="website" property="og:type" />
+{%- comment -%}
+  A topic page is a collection, and its list is the ordered thing on it — newest
+  first, exactly as rendered. Naming each post keeps the page from looking like a
+  thin doorway to Google: it IS the index of everything written on the subject.
+{%- endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ kt_topic.label | jsonify }},
+  "description": {{ kt_desc | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}",
+  "inLanguage": "vi",
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Chia sẻ kinh nghiệm — Alpha Software",
+    "url": "{{ site.url }}/chia-se-kinh-nghiem/"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ kt_posts | size }},
+    "itemListElement": [
+      {%- for post in kt_posts %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": "{{ site.url }}{{ post.url }}",
+        "name": {{ post.title | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Alpha Software", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Chia sẻ kinh nghiệm", "item": "{{ site.url }}/chia-se-kinh-nghiem/" },
+    { "@type": "ListItem", "position": 3, "name": {{ kt_topic.label | jsonify }} }
   ]
 }
 </script>
@@ -146,7 +216,7 @@
   "@context": "https://schema.org",
   "@type": "Blog",
   "name": "Chia sẻ kinh nghiệm — Alpha Software",
-  "description": {{ page.description | strip_newlines | strip | jsonify }},
+  "description": {{ kt_desc | jsonify }},
   "url": "{{ site.url }}/chia-se-kinh-nghiem/",
   "inLanguage": "vi",
   "publisher": {
@@ -184,14 +254,17 @@
 
 {%- comment -%}
   LCP preload. On an article that is the hero below the standfirst; on the hub
-  it is the newest post's card image. Preloading the AVIF with the same srcset
-  and sizes the markup uses means the browser starts the winning candidate
-  before it has even parsed the CSS — and never a second, wasted one.
+  and on a topic page it is the newest listed post's card image. Preloading the
+  AVIF with the same srcset and sizes the markup uses means the browser starts
+  the winning candidate before it has even parsed the CSS — and never a second,
+  wasted one.
 {%- endcomment -%}
 {%- assign kt_lcp = nil -%}
-{%- if kt_is_article and kt_img -%}
+{%- if kt_kind == "article" -%}
   {%- assign kt_lcp = page.image -%}
-{%- elsif kt_is_article == false -%}
+{%- elsif kt_kind == "topic" -%}
+  {%- assign kt_lcp = kt_posts.first.image -%}
+{%- else -%}
   {%- assign kt_lcp = site.posts.first.image -%}
 {%- endif -%}
 {%- if kt_lcp -%}
@@ -216,6 +289,19 @@
 <link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/inter/inter-vietnamese.woff2" rel="preload" type="font/woff2" />
 
 <link href="{{ site.url }}/css/chiasekinhnghiem.css" rel="stylesheet" />
+
+{%- comment -%}
+  The corner engine, the one piece of the main site's design language the hub
+  shares (design/07-alpha-design-language.md): it re-cuts every authored
+  border-radius as a superellipse. Deferred, and it touches nothing but the
+  corners of boxes that were already rounded — with JS off, or on a browser
+  without CSS `corner-shape`, the page is simply the same page with plain round
+  corners. That is why it is allowed on the reading pages at all (philosophy §2.6).
+
+  Same path in dev and in prod: the dev build serves the raw file, and
+  optimize-js.mjs minifies it in place, then fingerprint.mjs hashes the URL.
+{%- endcomment %}
+<script defer src="{{ site.url }}/js/squircle.js"></script>
 
 <link href="{{ site.url }}/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
 <link href="{{ site.url }}/favicon.svg" rel="icon" sizes="any" type="image/svg+xml" />

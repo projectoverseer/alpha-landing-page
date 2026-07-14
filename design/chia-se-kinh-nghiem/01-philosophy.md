@@ -72,12 +72,20 @@ optimized for the *third consecutive article*, not the first impression.
    Hard limits: **at most one mid-article CTA** per post, plus the end-of-post
    signature and the site-level contact strip. See §6.
 
-6. **Fast and still.** Reading pages (articles) ship **zero JavaScript**
-   (analytics excepted), self-hosted subset fonts, and no images that aren't
-   part of the lesson. Nothing on the page moves unless the reader moves it.
+6. **Fast and still.** Self-hosted subset fonts, no images that aren't part of
+   the lesson, nothing on the page moves unless the reader moves it.
    Transitions are hover/focus affordances only; `prefers-reduced-motion` is
-   honored. The hub is the one exception: it carries a small inline script for
-   feed paging (§5), and that script must always degrade to the full list.
+   honored.
+
+   **The script budget is two files, and both are optional to the page.**
+   `squircle.js` (~4 KB, shared with the main site) re-cuts authored corners as
+   superellipses — the one piece of the main site's design language the hub
+   borrows, added on the owner's call in July 2026. The hub additionally carries
+   a small inline script for feed paging (§5). Neither may ever be load-bearing:
+   with JS off, or on a browser that lacks CSS `corner-shape`, the corners are
+   simply round and every post is still in the list. Nothing else earns a script,
+   and **maths in particular does not** — equations are rendered to MathML at
+   build time (§4).
 
 7. **Vietnamese first.** `lang="vi"`, Vietnamese URLs (`/chia-se-kinh-nghiem/…`),
    Vietnamese microcopy. Every type decision is checked against diacritics,
@@ -104,6 +112,12 @@ used size; body text clears AAA.
 
 Rules:
 - Indigo means "you can act on this." Never use it decoratively.
+- **The one bend in that rule (owner's call, July 2026): the topic tags in
+  metadata** — the article kicker, the tag under a feed card — are links, but
+  they stay `--ink-3` grey and reveal themselves with an underline on hover.
+  A tag there labels the thing it sits under first and offers a route second.
+  The place where topics are *meant* to be clicked is the strip at the top of
+  the hub and of every topic page, and that strip is indigo (§5).
 - No shadows for hierarchy. If a surface must separate (CTA card, aside),
   use `--paper-deep` plus a `--line` border, flat.
 - Light theme only for now. Dark mode is a legitimate future amendment
@@ -123,7 +137,34 @@ Rules:
 - **No `clamp()`**: step sizes with media queries (one breakpoint ~640px).
 - Lists, tables, blockquotes inherit body type; tables get an
   `overflow-x: auto` wrapper.
-- Formulas stay inline text (no math renderer); use `×`, `÷`, `√` characters.
+
+### Maths
+
+Two different things get called "a formula" in these articles, and they are set
+differently on purpose.
+
+**A rule of thumb written in Vietnamese** — `OEE = Sẵn sàng × Hiệu suất × Chất
+lượng`, `Availability = Thời gian chạy thực tế ÷ Thời gian lên lịch chạy` — is a
+sentence, not an equation. It stays prose in a blockquote, with `×`, `÷`, `√`
+typed as characters. Wrapping Vietnamese words in maths markup would set them in
+italic maths variables and say something false about them.
+
+**An actual equation** — Greek, superscripts, subscripts, radicals, fractions —
+is written as **LaTeX between `$$…$$`** and rendered to **MathML at build time**
+(`optimize-math.mjs`, using KaTeX). Ordinary LaTeX in, static MathML out: the
+page ships no maths library, the equation is real selectable text that a screen
+reader speaks and a crawler indexes, and the original TeX travels inside the
+MathML as an `<annotation>`. This replaced (July 2026) a bad first attempt at
+typing equations as Unicode soup with `<sub>` tags.
+
+Blending: `<mi>`/`<mn>`/`<mtext>` are set in Literata so the letters in a formula
+match the letters in the sentence beside it; radicals, stretched brackets and
+Greek are left to the browser's maths font, which is the only font carrying the
+OpenType MATH table those shapes are built from. Never force Literata on them.
+
+Hard rules, both enforced by `verify.mjs`: an unrendered `\[`/`\(` fails the
+build, and **an equation is never wrapped in `**…**`** — the HTML minifier treats
+`<math>` as a block element and swallows the word space beside it.
 
 ## 5. Page anatomy
 
@@ -176,8 +217,22 @@ in the bar — no second link competing with it.
   Non-negotiable: with JS off, or if the script fails, **every post is still
   in the HTML and visible**. Paging is a comfort, never a gate — on the content
   or on the crawler.
-- Topics are metadata, not structure: they label an entry and an article, and
-  may power future filtering, but they never chop the feed into sections.
+- **The topic strip** (added July 2026) sits above the first post: every topic
+  in the library on one line, indigo, separated by `·`, **ordered by how many
+  posts carry it** so the row opens on what this library is mostly about and
+  re-orders itself as the archive grows. It is a map, not a menu bar — it links
+  *out* to the topic pages and never chops this feed into sections.
+
+**Topic page (`/chia-se-kinh-nghiem/chu-de/<key>/`)** — every post carrying one
+topic, newest first. Unlike the hub it introduces itself (heading + the topic's
+one-line description from the data file, so the taxonomy stays the single source
+of truth and no SEO copy is invented per page). Then the same topic strip, with
+the current one marked, and then the same feed — whole, no drip. Its kicker links
+back up to the hub. Every tag anywhere on the hub — the card's, the article's
+kicker, the strip — points here.
+
+- Topics remain metadata, not structure: they label an entry and an article and
+  now collect them, but they never chop the *hub* feed into sections.
 
 **Article (`/chia-se-kinh-nghiem/<slug>/`)**:
 1. Title bar (above).
@@ -229,12 +284,16 @@ Restraint rules (hard):
 ## 7. Performance, accessibility, SEO
 
 - **Budget** (article page, cold cache): HTML < 30 KB, CSS < 25 KB min,
-  fonts ≤ ~160 KB (subset woff2, self-hosted), JS 0 KB (+ GA4 deferred).
-- Semantic HTML (`article`, `time`, `nav`, `figure`); skip link; visible
+  fonts ≤ ~160 KB (subset woff2, self-hosted), JS ≤ 5 KB — squircle only
+  (+ GA4 deferred). Equations cost nothing: they ship as MathML (§4).
+- Semantic HTML (`article`, `time`, `nav`, `figure`, `math`); skip link; visible
   focus styles; AA contrast minimum everywhere.
 - Each article: canonical URL, `og:type=article`, `article:published_time`,
   JSON-LD `Article` with the author as a person. Site name stays
   "Alpha Software Group" (deliberate — see project memory).
+- Each topic page: `CollectionPage` + an `ItemList` naming every post on it, so
+  it reads to a crawler as the index of a subject and not as a thin doorway.
+  Breadcrumbs run Alpha → hub → topic → article.
 - Sitemap entries are generated from posts automatically; `lastmod` stays
   honest via the existing pipeline.
 
@@ -247,9 +306,12 @@ May change freely (amend this doc in the same commit):
 
 Must survive any redesign (change only with an explicit owner decision):
 - Single reading column and its measure; calm uniform background;
-- One accent color meaning "actionable";
-- Zero-JS **article** pages, and a hub whose every post is in the HTML
-  regardless of JS;
+- One accent color meaning "actionable" (with the one documented bend, §3);
+- **No script the page depends on**: everything must read, and every post must
+  be in the HTML, with JS off. (This replaced the old "zero-JS article pages"
+  rule when the owner added squircle in July 2026 — the bar moved from *no
+  script* to *no script that matters*. Maths is explicitly on the wrong side of
+  that line: it is rendered at build time, never in the browser.)
 - The Alpha + Chia sẻ kinh nghiệm lockup as the one mark in the title bar, and the hub
   as a feed that opens on content (no masthead);
 - CTA restraint rules, the mandatory signature, and Alpha as the copyright

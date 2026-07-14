@@ -1,0 +1,37 @@
+{%- comment -%}
+  The feed — the hub's whole page, and the body of every topic page.
+
+    {% include chia-se-kinh-nghiem/feed.html posts=site.posts defer=true %}
+    {% include chia-se-kinh-nghiem/feed.html posts=kt_posts %}
+
+  defer=true marks everything past the first batch with .is-deferred, which the
+  hub's script uses to drip older posts in on scroll. Only the hub does that; a
+  topic page is short enough to render whole.
+
+  The card is one link — title, picture, description — and the meta line sits
+  OUTSIDE it, because the topic in that line is a link of its own and an <a>
+  cannot be nested inside another <a>. That constraint is also the right design:
+  clicking anywhere on the card body means "read this post", and the topic means
+  "show me more like it". Two destinations, two links.
+{%- endcomment -%}
+<ol class="kt-feed">
+  {%- for post in include.posts %}
+  {%- assign kt_words = post.content | strip_html | number_of_words -%}
+  {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil -%}
+  {%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[post.topic] %}
+  <li class="kt-feed-item{% if include.defer and forloop.index > 6 %} is-deferred{% endif %}">
+    <a class="kt-feed-link" href="{{ site.url }}{{ post.url }}">
+      <span class="kt-feed-title">{{ post.title }}</span>
+      {%- if post.image %}
+      {% include chia-se-kinh-nghiem/thumb.html name=post.image eager=forloop.first %}
+      {%- endif %}
+      <span class="kt-feed-desc">{{ post.description }}</span>
+    </a>
+    <p class="kt-feed-meta">
+      {%- if kt_topic %}<a class="kt-feed-tag" href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ post.topic }}/">{{ kt_topic.label }}</a> · {% endif -%}
+      <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time>
+      · {{ kt_minutes }} phút đọc
+    </p>
+  </li>
+  {%- endfor %}
+</ol>

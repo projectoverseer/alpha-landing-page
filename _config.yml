@@ -28,6 +28,7 @@ exclude:
   - package.json
   - optimize-js.mjs
   - optimize-css.mjs
+  - optimize-math.mjs
   - fingerprint.mjs
   - publish.mjs
   - preview.mjs
