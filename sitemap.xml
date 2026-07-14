@@ -18,11 +18,11 @@ permalink: /sitemap.xml
         <lastmod>2026-07-02</lastmod>
     </url>
     <url>
-        <loc>{{ site.url }}/kien-thuc/</loc>
+        <loc>{{ site.url }}/chia-se-kinh-nghiem/</loc>
         <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
     </url>
 {%- comment -%}
-  Kiến Thức articles are generated from _posts automatically — a new post needs
+  Chia sẻ kinh nghiệm articles are generated from _posts automatically — a new post needs
   no sitemap edit. The emitted <lastmod> is a build-date placeholder; the
   update-sitemap.mjs step rewrites it honestly (keeps the previous date unless
   the page's built HTML actually changed).

@@ -38,7 +38,7 @@ Hãy tính thử. Xưởng 20 máy đang chạy OEE 60% — tức 48 mẻ/ngày 
 
 Nhưng phần thú vị hơn là lợi nhuận. Trong ngành nhuộm, chi phí cố định — khấu hao máy, lò hơi, mặt bằng, lương quản lý — chiếm khoảng 50% tổng chi phí. Những thứ này không thay đổi dù xưởng nhuộm 48 mẻ hay 52 mẻ. Vì vậy 4 mẻ tăng thêm đó gần như chảy thẳng vào lợi nhuận — lợi nhuận có thể tăng 15–20% trong khi doanh thu chỉ tăng 8%, với cùng nhà xưởng, cùng số máy, cùng số nhân sự.
 
-{% include kien-thuc/cta.html variant="card" %}
+{% include chia-se-kinh-nghiem/cta.html variant="card" %}
 
 ## Bạn đang ở đâu?
 
@@ -50,4 +50,4 @@ Cách đo đơn giản nhất để bắt đầu:
 
 Bài tới mình sẽ chia sẻ cụ thể hơn về cách tính OEE đúng trong ngành nhuộm.
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

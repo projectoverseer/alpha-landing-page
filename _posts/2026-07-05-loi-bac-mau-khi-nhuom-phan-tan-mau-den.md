@@ -32,6 +32,6 @@ Chọn loại thuốc nhuộm dùng chất phân tán không thuộc nhóm ligno
 
 Khi gặp lỗi bạc màu kiểu này, trước tiên nên kiểm tra tài liệu kỹ thuật của thuốc nhuộm hoặc hỏi rõ nhà cung cấp rằng chất phân tán đang dùng trong thuốc nhuộm bột là nhóm nào. Nếu nhà cung cấp không cung cấp được thông tin này thì đó cũng là một dấu hiệu cần xem lại chất lượng nguồn hàng.
 
-{% include kien-thuc/cta.html variant="inline" %}
+{% include chia-se-kinh-nghiem/cta.html variant="inline" %}
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

@@ -24,7 +24,7 @@ const errors = [];
 // ── 1. must-ship files ──────────────────────────────────────────────────────
 const MUST_SHIP = [
   'index.html', 'en/index.html', '404.html',
-  'kien-thuc/index.html',
+  'chia-se-kinh-nghiem/index.html',
   'sitemap.xml', 'robots.txt', 'site.webmanifest',
   'favicon.svg', 'favicon.ico', 'apple-touch-icon.png',
   'img/hero/hero-1920.avif',
@@ -42,7 +42,7 @@ const hashed = (dir, stem, ext) =>
   existsSync(join(SITE, dir)) &&
   readdirSync(join(SITE, dir)).some((n) => new RegExp(`^${stem}\\.[0-9a-f]{10}\\.${ext}$`).test(n));
 if (!hashed('css', 'main', 'css')) errors.push('missing fingerprinted css/main.<hash>.css');
-if (!hashed('css', 'kienthuc', 'css')) errors.push('missing fingerprinted css/kienthuc.<hash>.css');
+if (!hashed('css', 'chiasekinhnghiem', 'css')) errors.push('missing fingerprinted css/chiasekinhnghiem.<hash>.css');
 if (!hashed('js', 'bundle', 'js')) errors.push('missing fingerprinted js/bundle.<hash>.js');
 
 // ── 2 + 3. scan every built HTML page ───────────────────────────────────────

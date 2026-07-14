@@ -48,7 +48,7 @@ Nếu giá gia công 40.000đ/kg, mỗi mẻ 200kg:
 
 Nhìn theo cách khác: 17 mẻ mất mỗi tuần tương đương năng lực của gần 1 máy nhuộm chạy cả tuần. Chỉ bằng cách tối ưu quy trình khởi động và tắt máy — xưởng có thêm năng lực tương đương 1 máy nhuộm mà không cần bỏ một đồng vốn nào.
 
-{% include kien-thuc/cta.html variant="inline" %}
+{% include chia-se-kinh-nghiem/cta.html variant="inline" %}
 
 ## Vậy có cải thiện được không?
 
@@ -56,4 +56,4 @@ Hoàn toàn có, nhưng không phải bằng cách "cố gắng hơn". Cần tha
 
 Bài tới mình sẽ chia sẻ cụ thể về kẻ trộm thứ hai: thời gian chuyển đổi mặt hàng — thứ mà mỗi lần xảy ra khác nhau tùy người đứng máy, và tại sao đó là dấu hiệu của một vấn đề lớn hơn.
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

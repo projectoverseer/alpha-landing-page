@@ -6,15 +6,15 @@ url: https://www.alphasoftwaregroup.com
 baseurl: ""
 facebook_page: https://www.facebook.com/alphasoftwaregroup
 
-# Kiến Thức hub (/kien-thuc/) — posts are articles there.
+# Chia sẻ kinh nghiệm hub (/chia-se-kinh-nghiem/) — posts are articles there.
 # Layout + permalink centralized so a post's front matter stays minimal.
-permalink: /kien-thuc/:title/
+permalink: /chia-se-kinh-nghiem/:title/
 defaults:
   - scope:
       path: ""
       type: "posts"
     values:
-      layout: "kien-thuc-article"
+      layout: "chia-se-kinh-nghiem-article"
 
 # Build settings
 exclude:

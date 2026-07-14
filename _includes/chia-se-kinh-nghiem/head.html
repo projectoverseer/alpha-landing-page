@@ -1,0 +1,70 @@
+{%- comment -%}
+  Shared <head> for Chia sẻ kinh nghiệm pages (hub + articles). Standalone from the main
+  site's meta.html by design — the hub is a separate product with its own CSS
+  bundle and fonts. See design/chia-se-kinh-nghiem/01-philosophy.md.
+{%- endcomment -%}
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+
+{% include analytics.html %}
+
+{%- if page.layout == "chia-se-kinh-nghiem-article" -%}
+  {%- capture kt_title %}{{ page.title }} · Chia sẻ kinh nghiệm Alpha{% endcapture -%}
+{%- else -%}
+  {%- capture kt_title %}{{ page.title }}{% endcapture -%}
+{%- endif -%}
+<title>{{ kt_title | escape }}</title>
+<meta content="{{ page.description | strip_newlines | strip | escape }}" name="description" />
+<link href="{{ site.url }}{{ page.url }}" rel="canonical" />
+
+<meta content="{{ kt_title | escape }}" property="og:title" />
+<meta content="{{ page.description | strip_newlines | strip | escape }}" property="og:description" />
+<meta content="{{ site.url }}{{ page.url }}" property="og:url" />
+<meta content="Alpha Software Group" property="og:site_name" />
+<meta content="vi_VN" property="og:locale" />
+<meta content="summary" name="twitter:card" />
+{%- if page.layout == "chia-se-kinh-nghiem-article" %}
+<meta content="article" property="og:type" />
+<meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time" />
+<meta content="{{ site.data.chia_se_kinh_nghiem.author.name }}" property="article:author" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.description | strip_newlines | strip | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "inLanguage": "vi",
+  "author": { "@type": "Person", "name": {{ site.data.chia_se_kinh_nghiem.author.name | jsonify }} },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Alpha Software Group",
+    "url": "{{ site.url }}/"
+  },
+  "copyrightYear": "{{ page.date | date: '%Y' }}",
+  "copyrightHolder": {
+    "@type": "Organization",
+    "name": "Công ty TNHH Phát triển Phần mềm Alpha",
+    "url": "{{ site.url }}/"
+  },
+  "mainEntityOfPage": "{{ site.url }}{{ page.url }}"
+}
+</script>
+{%- else %}
+<meta content="website" property="og:type" />
+{%- endif %}
+
+<!-- Self-hosted subset fonts (see _sass/chia-se-kinh-nghiem/_fonts.scss). Preload the
+     two most-used subsets per family; latin-ext and italics load on demand. -->
+<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/literata/literata-latin.woff2" rel="preload" type="font/woff2" />
+<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/literata/literata-vietnamese.woff2" rel="preload" type="font/woff2" />
+<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/inter/inter-latin.woff2" rel="preload" type="font/woff2" />
+<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/inter/inter-vietnamese.woff2" rel="preload" type="font/woff2" />
+
+<link href="{{ site.url }}/css/chiasekinhnghiem.css" rel="stylesheet" />
+
+<link href="{{ site.url }}/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+<link href="{{ site.url }}/favicon.svg" rel="icon" sizes="any" type="image/svg+xml" />
+<link href="{{ site.url }}/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+<link href="{{ site.url }}/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+<link href="{{ site.url }}/site.webmanifest" rel="manifest" />

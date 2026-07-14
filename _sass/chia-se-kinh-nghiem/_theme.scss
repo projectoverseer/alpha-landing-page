@@ -1,0 +1,620 @@
+// ============================================================
+// Chia sẻ kinh nghiệm — the reading room's entire design system
+// Spec + rationale: design/chia-se-kinh-nghiem/01-philosophy.md
+// Deliberately standalone: no Bootstrap, nothing shared with
+// the main site's stylesheet. All classes are kt-prefixed.
+// ============================================================
+
+// Tokens (contrast-validated: body text AAA, everything else ≥ AA — §3)
+:root {
+  --paper: #faf8f2;
+  --paper-deep: #f1ede2;
+  --line: #e2dccb;
+  --ink: #292319;
+  --ink-2: #5a5342;
+  --ink-3: #6e6753;
+  --indigo: #2f4e7e;
+  --indigo-deep: #243c61;
+
+  --font-read: "Literata", Georgia, "Times New Roman", serif;
+  --font-ui: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+// ---- Base ----------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body.kt {
+  margin: 0;
+  background: var(--paper); // the one page background — calm baseline, §2.4
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kt ::selection {
+  background: rgba(47, 78, 126, 0.18);
+}
+
+.kt :focus-visible {
+  outline: 2px solid var(--indigo);
+  outline-offset: 2px;
+}
+
+.kt a {
+  color: var(--indigo);
+
+  &:hover {
+    color: var(--indigo-deep);
+  }
+}
+
+// Responsive default for article images. The brand logo opts out: its height
+// IS its design (`.kt .kt-brand-logo` outranks this rule's 0,1,1 specificity —
+// a bare `.kt-brand-logo` would silently lose to `height: auto` here).
+.kt img {
+  max-width: 100%;
+  height: auto;
+}
+
+// One reading column, one measure — nothing ever sits beside it (§4)
+.kt-shell {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.kt-skip-link {
+  position: absolute;
+  left: -999rem;
+
+  &:focus {
+    left: 1rem;
+    top: 1rem;
+    z-index: 10;
+    padding: 0.5rem 1rem;
+    background: var(--paper);
+    outline-offset: 0;
+  }
+}
+
+// ---- Title bar: the Alpha · Chia sẻ kinh nghiệm lockup --------------------------------
+
+.kt-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+// Flex so the lockup is a shrink-to-fit block (no stray inline line box, link
+// only as wide as the mark) and so the whole mark centers in the bar as one
+// object — the artwork is the tallest thing inside, so centering the box
+// centers the emblem.
+.kt-topbar .kt-shell {
+  display: flex;
+  align-items: center;
+  min-height: 3.75rem;
+}
+
+// Logo and word are ONE mark — treat "Chia sẻ kinh nghiệm" as part of the logo artwork,
+// not as text: no wrap, no underline, no link color, no divider between the
+// halves. Anything that makes it look like a word next to a logo breaks the
+// sub-brand (§5).
+// A logo is not an affordance: no hover, no active, no transition. Only the
+// keyboard focus ring (from the base :focus-visible rule) survives, because
+// that is navigation, not decoration.
+//
+// Lockup geometry (§5): "Chia sẻ kinh nghiệm" is perceptually CENTERED on the whole
+// logo (emblem + alpha + Software), never baseline-locked to any one of its
+// lines — chosen after rendered comparisons of both approaches. Flex centers
+// the word's line box on the artwork; the small `top` on the span walks the
+// remaining distance from box center to the word's optical center.
+.kt-brand {
+  --logo-h: 2.125rem; // = article H1 (34px): largest type on the page, never larger
+
+  display: inline-flex; // whitespace between the halves is dropped by flex layout
+  align-items: center;
+  padding: 0.5rem 0; // tap-target height; the shell's flex centering does the rest
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.kt .kt-brand-logo {
+  width: auto;
+  height: var(--logo-h);
+}
+
+// Size: cap height = the "alpha" wordmark's x-height. Literata caps are
+// 0.7em; alpha's x-height is 20.03/48 of the artwork — so the em is
+// (20.03/48)/0.7 = 0.596 of the logo height (≈20px at the 2.125rem logo),
+// and it re-derives automatically at the mobile logo size. The word's caps
+// then sit in alpha's lowercase band and its diacritics rise like alpha's
+// ascenders — same voice, clearly secondary to the mark.
+// Weight 700 (the H3 weight) holds its own against the wordmark's heavy
+// rounded strokes; 600-and-below reads thin beside it (rendered comparison).
+.kt-brand-name {
+  margin-left: 0.5em; // one word space at the word's own size
+  font-family: var(--font-read);
+  font-size: calc(var(--logo-h) * 0.596);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  // 0.04em drops the line-box center onto the ink center (Literata's box is
+  // ascent-heavy: baseline sits 0.9345em down a 1em line box, and "Chia sẻ kinh nghiệm"
+  // has no descenders), + 0.025em optical drop because the diacritics carry
+  // almost no visual weight. Both scale with the font, so one value serves
+  // both breakpoints.
+  top: 0.065em;
+}
+
+// ---- Hub: the feed ----------------------------------------------------------
+//
+// No masthead, no mission paragraph: the hub is a feed, and the posts are the
+// page (§5). The h1 stays in the markup for structure, hidden visually.
+
+.kt-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// Reverse-chronological, ungrouped — newest post first, older ones drip in
+// on scroll (§5). Items are hidden only while JS is running the drip.
+.kt-feed {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+}
+
+.kt-feed-item {
+  padding-bottom: 2rem;
+
+  & + & {
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+  }
+
+  a:hover .kt-feed-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+.kt-js .kt-feed-item.is-deferred {
+  display: none;
+}
+
+.kt-feed-title {
+  display: block;
+  font-family: var(--font-read);
+  font-size: 1.3125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--indigo); // indigo = actionable, §3
+}
+
+.kt-feed-desc {
+  display: block;
+  margin-top: 0.375rem;
+  font-family: var(--font-read);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.kt-feed-meta {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.84375rem;
+  color: var(--ink-3);
+}
+
+// The topic, readable at a glance from the feed. Not a link — so it carries no
+// indigo (§3); it earns its place with case and weight instead.
+.kt-feed-tag {
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+// Only meaningful while the drip is running; without JS every post is already
+// on the page, so this line stays hidden.
+.kt-feed-more {
+  display: none;
+  margin: 0;
+  padding: 1rem 0 2rem;
+  font-size: 0.875rem;
+  color: var(--ink-3);
+}
+
+.kt-js .kt-feed-more {
+  display: block;
+}
+
+// ---- Article: title block, body ---------------------------------------------
+
+.kt-article-head {
+  margin: 3.5rem 0 3rem;
+}
+
+.kt-kicker {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.kt-article-head h1 {
+  margin: 0;
+  font-family: var(--font-read);
+  font-size: 2.125rem;
+  font-weight: 620;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.kt-standfirst {
+  margin: 1.25rem 0 0;
+  font-family: var(--font-read);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.kt-byline {
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-3);
+}
+
+// The reading text itself — Literata 19px/1.75; Vietnamese stacked
+// diacritics need the tall line (§2.3).
+.kt-body {
+  font-family: var(--font-read);
+  font-size: 1.1875rem;
+  line-height: 1.75;
+
+  p,
+  ul,
+  ol,
+  blockquote {
+    margin: 0 0 1.25em;
+  }
+
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  h2 {
+    margin: 2.4em 0 0.7em;
+    font-size: 1.3125rem;
+    font-weight: 620;
+    line-height: 1.35;
+  }
+
+  h3 {
+    margin: 1.8em 0 0.5em;
+    font-size: 1.1875rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  h2 + h3 {
+    margin-top: 1em;
+  }
+
+  strong {
+    font-weight: 620;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.5rem;
+
+    li {
+      margin: 0.4em 0;
+    }
+  }
+
+  // Formulas and key rules arrive as blockquotes — a quiet flat surface,
+  // no accent color (indigo stays actionable-only, §3).
+  blockquote {
+    padding: 0.875em 1.25em;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--line);
+
+    p {
+      margin: 0;
+
+      & + p {
+        margin-top: 0.5em;
+      }
+    }
+  }
+
+  // Tables (data + Excel form templates). display:block keeps wide ones
+  // scrolling inside the column instead of breaking the page.
+  table {
+    display: block;
+    overflow-x: auto;
+    margin: 0 0 1.25em;
+    border-collapse: collapse;
+    font-family: var(--font-ui);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  th,
+  td {
+    padding: 0.5em 0.875em;
+    border: 1px solid var(--line);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  th {
+    background: var(--paper-deep);
+    font-weight: 600;
+  }
+
+  sub {
+    font-size: 0.7em;
+  }
+}
+
+// ---- Editorial CTAs (philosophy §6) ----------------------------------------
+
+.kt-cta-inline {
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.kt-cta-note,
+.kt-cta-card {
+  margin: 2em 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+
+  p {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+}
+
+.kt-cta-label {
+  margin: 0 0 0.5rem !important;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.kt-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 1rem !important;
+}
+
+// Scoped with `.kt` on purpose: buttons are <a>, so they have to outrank the
+// `.kt a` link color — otherwise the label goes indigo-on-indigo, invisible.
+.kt .kt-button {
+  display: inline-block;
+  padding: 0.5625rem 1.125rem;
+  background: var(--indigo);
+  border-radius: 0.5rem;
+  color: var(--paper);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--indigo-deep);
+    color: var(--paper);
+  }
+}
+
+.kt .kt-button-quiet {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--indigo);
+
+  &:hover {
+    background: var(--paper-deep);
+    color: var(--indigo-deep);
+  }
+}
+
+.kt-signature {
+  margin: 3rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+
+  p {
+    margin: 0;
+  }
+
+  .kt-signature-name {
+    font-family: var(--font-read);
+    font-size: 1.0625rem;
+    font-weight: 620;
+  }
+
+  .kt-signature-role {
+    margin-top: 0.25rem;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    color: var(--ink-3);
+  }
+
+  .kt-signature-canonical {
+    margin-top: 0.75rem;
+    font-family: var(--font-ui);
+    font-size: 0.84375rem;
+    line-height: 1.6;
+    color: var(--ink-3);
+  }
+}
+
+// Contact strip — site chrome, sits between content and footer.
+.kt-cta-banner {
+  margin-top: 4.5rem;
+  padding: 2.5rem 0;
+  background: var(--paper-deep);
+  border-top: 1px solid var(--line);
+}
+
+.kt-cta-banner-lead {
+  margin: 0;
+  font-family: var(--font-read);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+// ---- Series navigation ------------------------------------------------------
+
+.kt-series-nav {
+  display: grid;
+  gap: 0.75rem;
+  margin: 3rem 0 1rem;
+
+  a {
+    display: block;
+    padding: 0.875rem 1.125rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--indigo);
+
+      .kt-series-nav-title {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+    }
+  }
+}
+
+.kt-series-nav-label {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+}
+
+.kt-series-nav-title {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--font-read);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--indigo);
+}
+
+// ---- Footer -----------------------------------------------------------------
+
+.kt-footer {
+  padding: 2rem 0 3rem;
+  background: var(--paper-deep);
+
+  p {
+    margin: 0.25rem 0 0;
+    font-size: 0.84375rem;
+    color: var(--ink-3);
+  }
+}
+
+// ---- Small screens (one breakpoint, no clamp — §4) ---------------------------
+
+@media (max-width: 40rem) {
+  .kt-topbar .kt-shell {
+    min-height: 3.5rem;
+  }
+
+  // The lockup scales as one piece: the logo steps to the mobile article H1
+  // (1.75rem) and the word re-derives from --logo-h (size ratio, em-based
+  // gap and optical offset all follow).
+  .kt-brand {
+    --logo-h: 1.75rem;
+  }
+
+  .kt-feed {
+    margin-top: 1.75rem;
+  }
+
+  .kt-article-head {
+    margin-top: 2.5rem;
+  }
+
+  .kt-article-head h1 {
+    font-size: 1.75rem;
+  }
+
+  .kt-standfirst {
+    font-size: 1.125rem;
+  }
+
+  .kt-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .kt-body h2 {
+    font-size: 1.25rem;
+  }
+
+  .kt-body h3 {
+    font-size: 1.0625rem;
+  }
+
+  .kt-feed-title {
+    font-size: 1.1875rem;
+  }
+}
+
+// Nothing here moves on its own; kill the only implicit motion left.
+@media (prefers-reduced-motion: reduce) {
+  .kt *,
+  .kt *::before,
+  .kt *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

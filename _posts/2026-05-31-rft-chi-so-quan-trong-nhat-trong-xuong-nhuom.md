@@ -14,7 +14,7 @@ Mẻ đạt RFT là mẻ không châm màu, không vào máy lại để sửa, 
 
 Nên thống kê theo số mẻ mà không nên thống kê theo số mét hay số kg, vì mẻ nhỏ nếu không đạt cũng đại diện cho một trường hợp và nguyên nhân không đạt. Tính luôn mẻ nhỏ để đảm bảo trọng tâm không bị lệch.
 
-{% include kien-thuc/cta.html variant="card" heading="RFT là lý do Alpha tồn tại" text="Phần mềm Alpha Smart Dyehouse sinh ra để giải đúng bài toán này: quản lý công thức màu và đơn công nghệ, dẫn dắt đường đi công nghệ của từng mẻ và kết nối thiết bị để loại lỗi thao tác. Tại nhà máy Spica, RFT tăng từ 80% lên 90% theo mẻ sau khi triển khai." %}
+{% include chia-se-kinh-nghiem/cta.html variant="card" heading="RFT là lý do Alpha tồn tại" text="Phần mềm Alpha Smart Dyehouse sinh ra để giải đúng bài toán này: quản lý công thức màu và đơn công nghệ, dẫn dắt đường đi công nghệ của từng mẻ và kết nối thiết bị để loại lỗi thao tác. Tại nhà máy Spica, RFT tăng từ 80% lên 90% theo mẻ sau khi triển khai." %}
 
 ## Các bước giúp cải thiện RFT
 
@@ -50,4 +50,4 @@ Người hoặc team phụ trách phân tích nguyên nhân và thực hiện bi
 
 Nếu kết quả đã tốt, lãnh đạo cân nhắc ngưng trọng tâm đó và chuyển sang trọng tâm mới. Đây là cách giữ cho chương trình cải thiện luôn tập trung vào điểm còn yếu nhất.
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

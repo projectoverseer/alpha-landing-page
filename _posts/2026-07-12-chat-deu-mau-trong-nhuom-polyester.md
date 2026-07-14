@@ -44,6 +44,6 @@ Trong thực tế, chất đều màu kết hợp cả hai cơ chế nhưng có 
 
 Hiểu rõ cơ chế này bạn sẽ chọn đúng chất đều màu cho vấn đề gặp phải, và bạn sẽ thấy rằng nhiều trường hợp không cần chất đều màu. Thậm chí có nhiều trường hợp dùng chất đều màu sẽ cho kết quả không tốt về độ lặp lại màu, độ đậm màu.
 
-{% include kien-thuc/cta.html variant="note" %}
+{% include chia-se-kinh-nghiem/cta.html variant="note" %}
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

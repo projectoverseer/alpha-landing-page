@@ -74,8 +74,8 @@ Khi đo ngưng máy, ngưng là rõ ràng, công nhân dễ nhận biết để 
 
 Đây là thói quen khó xây dựng hơn bảng ngưng máy. Cần kiên nhẫn hơn trong giai đoạn đầu.
 
-{% include kien-thuc/cta.html variant="note" %}
+{% include chia-se-kinh-nghiem/cta.html variant="note" %}
 
 Bài tới mình sẽ chia sẻ thành phần cuối cùng của OEE, tỷ lệ chất lượng. Thành phần này liên quan trực tiếp đến mẻ lỗi, mẻ nhuộm lại và hạ phẩm. Những con số mà hầu hết xưởng đã có nhưng chưa đưa vào hệ thống đo lường.
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

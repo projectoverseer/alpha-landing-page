@@ -74,6 +74,6 @@ Một lưu ý khi đo độ lệch màu:
 
 Kết quả: ΔEcmc gần hơn với câu trả lời thực tế "mắt người có thấy lệch không?" so với ΔE\* thuần túy. Đây là lý do ΔEcmc được sử dụng rộng rãi trong kiểm soát màu ngành nhuộm hiện đại.
 
-{% include kien-thuc/cta.html variant="inline" %}
+{% include chia-se-kinh-nghiem/cta.html variant="inline" %}
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

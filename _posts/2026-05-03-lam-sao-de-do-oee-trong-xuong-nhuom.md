@@ -67,7 +67,7 @@ Nhìn vào từng thành phần riêng lẻ, không thành phần nào trông qu
 
 Đây là lý do tại sao đo OEE theo đúng công thức quan trọng: nó **nhân** các tổn thất lên, không cộng chúng lại. Cộng thì trông dễ chịu hơn. Nhân thì mới phản ánh thực tế.
 
-{% include kien-thuc/cta.html variant="note" %}
+{% include chia-se-kinh-nghiem/cta.html variant="note" %}
 
 ## Ghi chú thực tế
 
@@ -79,4 +79,4 @@ Con số OEE đầu tiên bạn tính ra sẽ thấp hơn bạn nghĩ. Đó khô
 
 Bài tới mình sẽ chia sẻ cụ thể hơn về "kẻ trộm thời gian vô hình": tại sao 2–4 tiếng sáng thứ Hai đang ăn mòn lợi nhuận của bạn.
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

@@ -1,0 +1,32 @@
+---
+layout: chia-se-kinh-nghiem-hub
+permalink: /chia-se-kinh-nghiem/
+title: "Chia sẻ kinh nghiệm vận hành nhà máy dệt nhuộm | Alpha Software"
+description: "Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm: đo và cải thiện OEE, RFT, kỹ thuật nhuộm và đo màu — viết từ 28 năm kinh nghiệm thực tế trong ngành."
+---
+
+{%- comment -%}
+  One chronological feed, newest first — no topic buckets, no lesson numbering.
+  Every post is rendered here; the ones past the first batch carry .is-deferred
+  and are revealed on scroll by the layout's script (see the philosophy doc §5).
+{%- endcomment -%}
+<ol class="kt-feed">
+  {%- for post in site.posts %}
+  {%- assign kt_words = post.content | strip_html | number_of_words -%}
+  {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil -%}
+  {%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[post.topic] %}
+  <li class="kt-feed-item{% if forloop.index > 6 %} is-deferred{% endif %}">
+    <a href="{{ site.url }}{{ post.url }}">
+      <span class="kt-feed-title">{{ post.title }}</span>
+      <span class="kt-feed-desc">{{ post.description }}</span>
+      <span class="kt-feed-meta">
+        {%- if kt_topic %}<span class="kt-feed-tag">{{ kt_topic.label }}</span> · {% endif -%}
+        <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time>
+        · {{ kt_minutes }} phút đọc
+      </span>
+    </a>
+  </li>
+  {%- endfor %}
+</ol>
+
+<p class="kt-feed-more" id="kt-feed-more" role="status">Đang tải thêm bài cũ hơn…</p>

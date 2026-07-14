@@ -77,6 +77,6 @@ Và một lưu ý quan trọng mà nhiều người bỏ qua:
 
 Đây là bài cuối của chuỗi lý thuyết màu sắc và đo màu.
 
-{% include kien-thuc/cta.html variant="note" %}
+{% include chia-se-kinh-nghiem/cta.html variant="note" %}
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}

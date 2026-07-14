@@ -92,8 +92,8 @@ Tuần đầu triển khai, số liệu thường không đầy đủ do công n
 
 Chỉ số sẵn sàng thấp không phải lỗi của công nhân. Nó phản ánh hệ thống vận hành.
 
-{% include kien-thuc/cta.html variant="card" %}
+{% include chia-se-kinh-nghiem/cta.html variant="card" %}
 
 Bài tới mình sẽ chia sẻ cách tính hiệu suất tốc độ, thành phần thứ hai của OEE, và cũng là thứ khó đo nhất trong ngành nhuộm.
 
-{% include kien-thuc/cta.html variant="signature" %}
+{% include chia-se-kinh-nghiem/cta.html variant="signature" %}
