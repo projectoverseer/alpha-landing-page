@@ -66,6 +66,11 @@ writeFileSync(DEST, bootstrap + '\n' + custom + '\n' + squircle);
 // requests it — its copy is inlined in the bundle above.
 writeFileSync(SITE_JS + 'squircle.js', squircle);
 
+// kt-lightbox.js is the hub's picture viewer, loaded on article pages only —
+// same treatment as squircle: minified in place, fingerprinted afterwards.
+const { code: lightbox } = transformSync(readFileSync(SITE_JS + 'kt-lightbox.js', 'utf8'), { minify: true });
+writeFileSync(SITE_JS + 'kt-lightbox.js', lightbox);
+
 // Drop the raw sources from the output so they aren't shipped alongside the
 // bundle (the full vendored bootstrap is dev-only and must not reach _site).
 for (const f of ['bootstrap.bundle.min.js', 'custom.js']) {
@@ -74,4 +79,5 @@ for (const f of ['bootstrap.bundle.min.js', 'custom.js']) {
 
 const kb = (readFileSync(DEST).length / 1024).toFixed(1);
 const sq = (readFileSync(SITE_JS + 'squircle.js').length / 1024).toFixed(1);
-console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + squircle.js (${sq} KB, hub)`);
+const lb = (readFileSync(SITE_JS + 'kt-lightbox.js').length / 1024).toFixed(1);
+console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + squircle.js (${sq} KB, hub) + kt-lightbox.js (${lb} KB, hub articles)`);

@@ -77,19 +77,27 @@ optimized for the *third consecutive article*, not the first impression.
    signature and the site-level contact strip. See §6.
 
 6. **Fast and still.** Self-hosted subset fonts, no images that aren't part of
-   the lesson, nothing on the page moves unless the reader moves it.
-   Transitions are hover/focus affordances only; `prefers-reduced-motion` is
-   honored.
+   the lesson, nothing on the page moves on its own — motion only ever *answers*
+   the reader (owner's engagement pass, July 2026): a card's picture leans in
+   under the pointer, a button press registers, the picture viewer follows the
+   hand. `prefers-reduced-motion` is honored, and for those readers the
+   answering gestures don't just lose their easing — they switch off entirely.
 
-   **The script budget is two files, and both are optional to the page.**
-   `squircle.js` (~4 KB, shared with the main site) re-cuts authored corners as
-   superellipses — the one piece of the main site's design language the hub
-   borrows, added on the owner's call in July 2026. The hub additionally carries
-   a small inline script for feed paging (§5). Neither may ever be load-bearing:
-   with JS off, or on a browser that lacks CSS `corner-shape`, the corners are
-   simply round and every post is still in the list. Nothing else earns a script,
-   and **maths in particular does not** — equations are rendered to MathML at
-   build time (§4).
+   **The script budget is three files, and all of them are optional to the
+   page.** `squircle.js` (~4 KB, shared with the main site) re-cuts authored
+   corners as superellipses — the one piece of the main site's design language
+   the hub borrows, added on the owner's call in July 2026. `kt-lightbox.js`
+   (~3 KB min, article pages only, July 2026) is the picture viewer: tapping a
+   figure opens it full-screen at its largest shipped size — these are
+   infographics and lab reports, and the reading column is not where a 1344px
+   table is read — with pinch / wheel / tap zoom and drag pan, closed by ×,
+   Esc, the backdrop, or the phone's Back button (one `pushState` per open, so
+   the Facebook-arriving Android reader's back-press closes the picture, not
+   the article). The hub additionally carries a small inline script for feed
+   paging (§5). None may ever be load-bearing: with JS off the corners are
+   simply round, a figure is simply a picture, and every post is still in the
+   list. Nothing else earns a script, and **maths in particular does not** —
+   equations are rendered to MathML at build time (§4).
 
 7. **Vietnamese first.** `lang="vi"`, Vietnamese URLs (`/chia-se-kinh-nghiem/…`),
    Vietnamese microcopy. Every type decision is checked against diacritics,
@@ -305,8 +313,9 @@ in the bar — no second link competing with it.
   archive, the way they already read Facebook. An entry carries title,
   one-line description, topic tag, date, reading time — the tag because the
   hub is otherwise the one place the reader can't see what a post is about.
-  Thumbnails are a planned addition; when they arrive they belong to the
-  entry, not to a card or a grid.
+  The thumbnail belongs to the entry, not to a card or a grid — and under the
+  pointer it leans in a touch (scale 1.04, cropped inside its frame), the
+  standard feed invitation to click. Reader-initiated, so it keeps §2.6.
 - **Endless scroll**: the page renders every post; a small script keeps the
   older ones hidden and reveals the next batch as the reader nears the bottom.
   Non-negotiable: with JS off, or if the script fails, **every post is still
@@ -341,8 +350,15 @@ on the hub — the card's, the article's kicker, the strip — points here.
 3. Body (converted post, with editorial CTAs per §6).
 4. Series footer: "Bài trước / Bài sau" within the same series — continuity
    offered, never a syllabus imposed.
-5. Contact strip (site-level, uniform): one sentence + phone / email actions.
-6. Minimal footer: legal name, © , link to main site.
+5. **Đọc tiếp** (owner's engagement pass, July 2026): up to three more
+   articles in compact thumb-and-title rows — same topic first, then the
+   newest of the rest of the hub; posts from the article's own series are
+   excluded because the series footer above already offers them. Reading time
+   shown on every row. The reader who reached the end of a post just proved
+   they read to the end — they are offered the next piece *before* the contact
+   strip asks anything of them. Plain HTML, crawler-visible, no script.
+6. Contact strip (site-level, uniform): one sentence + phone / email actions.
+7. Minimal footer: legal name, © , link to main site.
 
 ## 6. CTA policy — editorial elements with a second job
 
@@ -385,8 +401,8 @@ Restraint rules (hard):
 - **Budget** (article page, cold cache): HTML < 30 KB — the colour-deviation post,
   with 50 equations in it, sits right on the line at 30.1 KB; MathML is verbose,
   and that verbosity *is* the equation being real text — CSS < 25 KB min,
-  fonts ≤ ~200 KB (subset woff2, self-hosted), JS ≤ 5 KB — squircle only
-  (+ GA4 deferred). Equations ship as MathML, so they cost **no JavaScript at
+  fonts ≤ ~200 KB (subset woff2, self-hosted), JS ≤ 8 KB — squircle everywhere
+  plus the picture viewer on articles (+ GA4 deferred). Equations ship as MathML, so they cost **no JavaScript at
   all**; they do cost the 67 KB Alpha Math face, and only on the pages that have
   one — the `@font-face` has no `unicode-range`, so the file is fetched when a
   `<math>` element is on the page and never otherwise (§4).

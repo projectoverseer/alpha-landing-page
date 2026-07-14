@@ -1,0 +1,67 @@
+{%- comment -%}
+  "Đọc tiếp" — the end of one article offers the next one (philosophy §5).
+
+  The reader who reaches the bottom of a post is the reader most worth keeping:
+  they just proved they read to the end. This block hands them up to three more
+  articles in the compact thumb-and-title rows every feed has taught them to
+  binge on. Order of preference:
+
+    1. other posts on the SAME TOPIC, newest first — "more like what you just
+       finished" is the strongest next read;
+    2. then the newest posts from the rest of the hub, to fill up to three.
+
+  Posts in the SAME SERIES are excluded: the series nav directly above already
+  offers those, and offering a post twice on one screen reads as machinery.
+  Plain HTML, no script — it renders for every reader, crawler included.
+{%- endcomment -%}
+{%- assign kt_rn_same = site.posts | where: "topic", page.topic -%}
+{%- assign kt_rn_pool = kt_rn_same | concat: site.posts -%}
+{%- assign kt_rn_seen = "" -%}
+{%- assign kt_rn_shown = 0 -%}
+{%- capture kt_rn_items -%}
+  {%- for kt_rn_post in kt_rn_pool -%}
+    {%- if kt_rn_shown >= 3 -%}{%- break -%}{%- endif -%}
+    {%- if kt_rn_post.url == page.url -%}{%- continue -%}{%- endif -%}
+    {%- if page.series and kt_rn_post.series == page.series -%}{%- continue -%}{%- endif -%}
+    {%- if kt_rn_seen contains kt_rn_post.url -%}{%- continue -%}{%- endif -%}
+    {%- assign kt_rn_seen = kt_rn_seen | append: kt_rn_post.url | append: " " -%}
+    {%- assign kt_rn_shown = kt_rn_shown | plus: 1 -%}
+    {%- assign kt_rn_words = kt_rn_post.content | strip_html | number_of_words -%}
+    {%- assign kt_rn_minutes = kt_rn_words | divided_by: 200.0 | ceil -%}
+    {%- assign kt_rn_topic = site.data.chia_se_kinh_nghiem.topics[kt_rn_post.topic] -%}
+  <li>
+    <a class="kt-readnext-link" href="{{ site.url }}{{ kt_rn_post.url }}">
+      {%- if kt_rn_post.image -%}
+      {%- assign kt_rn_img = site.data.chia_se_kinh_nghiem.images[kt_rn_post.image] -%}
+      {%- assign kt_rn_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_rn_post.image -%}
+      {%- if kt_rn_img.sm -%}{%- assign kt_rn_wpx = 672 -%}{%- else -%}{%- assign kt_rn_wpx = kt_rn_img.w -%}{%- endif %}
+      <span class="kt-readnext-thumb">
+        <picture>
+          <source type="image/avif" srcset="{{ kt_rn_base }}-{{ kt_rn_wpx }}.avif" />
+          <img
+            src="{{ kt_rn_base }}-{{ kt_rn_wpx }}.jpg"
+            alt=""
+            width="{{ kt_rn_img.w }}"
+            height="{{ kt_rn_img.h }}"
+            decoding="async"
+            loading="lazy"
+          />
+        </picture>
+      </span>
+      {%- endif %}
+      <span class="kt-readnext-text">
+        <span class="kt-readnext-item-title">{{ kt_rn_post.title }}</span>
+        <span class="kt-readnext-meta">{% if kt_rn_topic %}{{ kt_rn_topic.label }} · {% endif %}{{ kt_rn_minutes }} phút đọc</span>
+      </span>
+    </a>
+  </li>
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if kt_rn_items contains "<li" %}
+<nav aria-label="Bài viết nên đọc tiếp" class="kt-readnext">
+  <h2 class="kt-readnext-title">Đọc tiếp</h2>
+  <ol>
+    {{ kt_rn_items }}
+  </ol>
+</nav>
+{%- endif -%}

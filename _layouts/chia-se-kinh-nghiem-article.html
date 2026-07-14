@@ -74,6 +74,13 @@
       </nav>
         {%- endif -%}
       {%- endif %}
+
+      {%- comment -%}
+        The binge loop: the reader who finished this article gets the next one
+        offered before the contact strip asks anything of them. Same-topic
+        first, same-series posts excluded (the series nav above owns those).
+      {%- endcomment %}
+      {% include chia-se-kinh-nghiem/read-next.html %}
     </main>
 
     {% include chia-se-kinh-nghiem/cta.html variant="banner" %}

@@ -50,6 +50,10 @@
 
   --font-read: "Literata", Georgia, "Times New Roman", serif;
   --font-ui: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+
+  // The hub's one easing: swift start, long soft settle. Motion here only ever
+  // answers the reader — a hover, a press, a tap — never plays on its own (§2.6).
+  --ease-glide: cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
 // ---- Base ----------------------------------------------------------------
@@ -116,6 +120,7 @@ body.kt {
 .kt-feed-more,
 .kt-figure figcaption,
 .kt-series-nav-label,
+.kt-readnext-meta,
 .kt-footer p,
 .kt-signature-role,
 .kt-signature-canonical {
@@ -325,9 +330,15 @@ body.kt {
 // 1.5× taller than they are wide, so uncropped they would each eat a whole
 // screen. Anchored to the top so an infographic's headline (the part that earns
 // the click) survives the crop.
+// The border and background live on the SPAN, not the image: on hover the
+// image scales up a touch inside the frame (below), and a border on the image
+// itself would ride the zoom and get cropped.
 .kt-feed-thumb {
   display: block;
   margin: 0.75rem 0; // the bottom margin wins over .kt-feed-desc's smaller top
+  overflow: hidden; // the hover zoom crops inside the frame instead of spilling
+  background: var(--paper-deep); // holds the space while the image decodes
+  border: 1px solid var(--line);
 
   img {
     display: block;
@@ -335,9 +346,17 @@ body.kt {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     object-position: center top;
-    background: var(--paper-deep); // holds the space while it decodes
-    border: 1px solid var(--line);
+    transition: transform 0.45s var(--ease-glide);
   }
+}
+
+// The invitation: pointing at a card leans its picture in, the same gesture
+// every feed the reader already lives in makes (owner's call, 2026-07-14 —
+// engagement pass). Reader-initiated, so it passes §2.6; the reduced-motion
+// block at the end of this file stills it completely.
+.kt-feed-link:hover .kt-feed-thumb img,
+.kt-feed-link:focus-visible .kt-feed-thumb img {
+  transform: scale(1.04);
 }
 
 .kt-feed-meta {
@@ -461,6 +480,141 @@ body.kt {
 // header's own bottom margin supplies the gap below.
 .kt-figure-lead {
   margin: 1.5rem 0 0;
+}
+
+// ---- The picture viewer (kt-lightbox.js) -------------------------------------
+//
+// Every figure is an infographic or a lab report, and the reading column is not
+// where a 1344px table is read. The script wraps each figure's <picture> in this
+// button; tapping it opens the picture full-screen at its largest shipped size,
+// zoomable. With JS off none of these classes ever reach the page.
+
+// The wrapping button disappears into the figure: the picture looks exactly as
+// it always has, but the cursor announces it can be inspected, the frame warms
+// on hover, and the press registers — motion that confirms, never decorates.
+.kt-figure-zoom {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+
+  img {
+    transition: transform 0.2s var(--ease-glide), border-color 0.2s var(--ease-glide);
+  }
+
+  &:hover img {
+    border-color: var(--ink-3);
+  }
+
+  &:active img {
+    transform: scale(0.995);
+  }
+}
+
+// The viewer itself. A warm near-black ground — ink, not #000 — so the page's
+// palette carries into the dark. Fixed, above everything, fades in 200ms (the
+// reduced-motion block at the end of this file makes it instant instead).
+.kt-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  background: rgba(21, 17, 11, 0.96);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  &.is-open {
+    opacity: 1;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+body.kt-lightbox-open {
+  overflow: hidden; // the article holds still underneath the viewer
+}
+
+.kt-lightbox-stage {
+  flex: 1;
+  min-height: 0; // a flex child must be allowed to shrink under its content
+  padding: 0.75rem;
+  overflow: hidden;
+  touch-action: none; // the stage owns every gesture: drag pans, pinch zooms
+  cursor: zoom-in;
+
+  picture {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    user-select: none;
+
+    // Applied by the script only for the tap-to-zoom snap, then removed — the
+    // live wheel/pinch/drag updates must track the hand with no easing at all.
+    &.kt-anim {
+      transition: transform 0.3s var(--ease-glide);
+    }
+  }
+
+  &.is-zoomed {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
+
+.kt-lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.75rem; // a 44px target — this is a thumb's button before a mouse's
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(250, 248, 242, 0.12);
+  color: var(--paper);
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(250, 248, 242, 0.24);
+  }
+
+  // The base :focus-visible indigo vanishes on this dark ground.
+  &:focus-visible {
+    outline-color: var(--paper);
+  }
+}
+
+// The plate note follows its picture into the dark.
+.kt-lightbox-caption {
+  margin: 0;
+  padding: 0.75rem 1.25rem 1rem;
+  font-size: 0.84375rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em; // 13.5px Inter at the opsz-14 floor, like all hub chrome
+  text-align: center;
+  color: rgba(250, 248, 242, 0.78);
 }
 
 // The reading text itself — Literata 19px/1.75; Vietnamese stacked
@@ -668,6 +822,11 @@ body.kt {
     background: var(--indigo-deep);
     color: var(--paper);
   }
+
+  // The press registers — the same "motion confirms" gesture as the main site.
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 .kt .kt-button-quiet {
@@ -768,6 +927,84 @@ body.kt {
   color: var(--indigo);
 }
 
+// ---- Đọc tiếp — the binge loop (philosophy §5) --------------------------------
+//
+// The reader who reached the end of an article is the one most worth keeping.
+// Compact thumb-and-title rows — the "up next" anatomy every feed has taught —
+// offering up to three more posts: same topic first, the rest of the hub after.
+
+.kt-readnext {
+  margin: 3rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+}
+
+.kt-readnext-title {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-read);
+  @include read(21);
+  font-weight: 620;
+  line-height: 1.35;
+}
+
+.kt-readnext-link {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  text-decoration: none;
+
+  &:hover .kt-readnext-item-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  // The same lean-in as the feed card: one gesture, everywhere a picture invites.
+  &:hover .kt-readnext-thumb img,
+  &:focus-visible .kt-readnext-thumb img {
+    transform: scale(1.04);
+  }
+}
+
+.kt-readnext-thumb {
+  flex: 0 0 8.5rem;
+  overflow: hidden;
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: center top; // an infographic's headline survives the crop
+    transition: transform 0.45s var(--ease-glide);
+  }
+}
+
+.kt-readnext-item-title {
+  display: block;
+  font-family: var(--font-read);
+  @include read(17);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--indigo); // indigo = actionable, §3
+}
+
+.kt-readnext-meta {
+  display: block;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+}
+
 // ---- Footer -----------------------------------------------------------------
 
 .kt-footer {
@@ -848,6 +1085,14 @@ body.kt {
   .kt-feed-title {
     @include read(19);
   }
+
+  .kt-readnext-thumb {
+    flex-basis: 6.5rem; // the title keeps at least half the phone's width
+  }
+
+  .kt-readnext-item-title {
+    @include read(16);
+  }
 }
 
 // Nothing here moves on its own; kill the only implicit motion left.
@@ -857,5 +1102,17 @@ body.kt {
   .kt *::after {
     transition: none !important;
     animation: none !important;
+  }
+
+  // Killing the transition alone would turn the hover/press gestures into
+  // instant jumps — for a reader who asked for no motion, they simply don't
+  // move at all. (The lightbox's zoom stays: it is the reader's own hand.)
+  .kt-feed-link:hover .kt-feed-thumb img,
+  .kt-feed-link:focus-visible .kt-feed-thumb img,
+  .kt-readnext-link:hover .kt-readnext-thumb img,
+  .kt-readnext-link:focus-visible .kt-readnext-thumb img,
+  .kt-figure-zoom:active img,
+  .kt .kt-button:active {
+    transform: none !important;
   }
 }

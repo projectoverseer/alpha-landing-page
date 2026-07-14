@@ -302,6 +302,14 @@
   optimize-js.mjs minifies it in place, then fingerprint.mjs hashes the URL.
 {%- endcomment %}
 <script defer src="{{ site.url }}/js/squircle.js"></script>
+{%- if kt_kind == "article" %}
+{%- comment -%}
+  The picture viewer (philosophy §2.6): tap a figure to inspect it full-screen
+  at its largest shipped size. Articles only — they are the only pages with
+  figures — and never load-bearing: with JS off a figure is simply a picture.
+{%- endcomment %}
+<script defer src="{{ site.url }}/js/kt-lightbox.js"></script>
+{%- endif %}
 
 <link href="{{ site.url }}/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
 <link href="{{ site.url }}/favicon.svg" rel="icon" sizes="any" type="image/svg+xml" />

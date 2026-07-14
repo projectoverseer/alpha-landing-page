@@ -29,6 +29,8 @@ const ASSETS = [
   // The hub loads the corner engine on its own — it shares no bundle with the
   // main site, whose copy is inlined in bundle.js above.
   { file: 'js/squircle.js', ref: '/js/squircle.js' },
+  // The hub's picture viewer, referenced by article pages only.
+  { file: 'js/kt-lightbox.js', ref: '/js/kt-lightbox.js' },
 ];
 
 // Insert the hash before the final extension: foo.css -> foo.<hash>.css
