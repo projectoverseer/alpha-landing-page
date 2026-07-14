@@ -227,14 +227,14 @@ body.kt {
   color: var(--ink-2);
 }
 
-// The post's picture, as a card image: below the title and description, above
-// the meta line. Cropped to 16:9 — a feed is for scanning, and the portrait
-// infographics are 1.5× taller than they are wide, so uncropped they would each
-// eat a whole screen. Anchored to the top so an infographic's headline (the
-// part that earns the click) survives the crop.
+// The post's picture, as a card image: below the title, above the description.
+// Cropped to 16:9 — a feed is for scanning, and the portrait infographics are
+// 1.5× taller than they are wide, so uncropped they would each eat a whole
+// screen. Anchored to the top so an infographic's headline (the part that earns
+// the click) survives the crop.
 .kt-feed-thumb {
   display: block;
-  margin-top: 1rem;
+  margin: 0.75rem 0; // the bottom margin wins over .kt-feed-desc's smaller top
 
   img {
     display: block;
@@ -249,7 +249,7 @@ body.kt {
 
 .kt-feed-meta {
   display: block;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.84375rem;
   color: var(--ink-3);
 }
@@ -337,8 +337,9 @@ body.kt {
   }
 }
 
-// The hero, between the title and the standfirst. Its margins are tighter than
-// a body figure's so the title block still reads as one object.
+// The hero, between the standfirst and the byline. Its margins are tighter than
+// a body figure's so the title block still reads as one object; the byline's own
+// top margin supplies the gap below.
 .kt-figure-lead {
   margin: 1.5rem 0 0;
 }

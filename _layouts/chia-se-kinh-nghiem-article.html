@@ -17,15 +17,15 @@
           {%- endif %}
           <p class="kt-kicker">{{ kt_topic.label }}</p>
           <h1>{{ page.title }}</h1>
+          <p class="kt-standfirst">{{ page.description }}</p>
           {%- comment -%}
-            The picture sits between the title and the standfirst — deliberately
-            ABOVE the description here, while the feed card puts the same picture
-            BELOW it. The owner wants to read both placements side by side.
+            The picture sits between the standfirst and the byline — deliberately
+            BELOW the description here, while the feed card puts the same picture
+            ABOVE it. The owner wants to read both placements side by side.
           {%- endcomment -%}
           {%- if page.image %}
           {% include chia-se-kinh-nghiem/figure.html name=page.image lead=true %}
           {%- endif %}
-          <p class="kt-standfirst">{{ page.description }}</p>
           {%- assign kt_words = content | strip_html | number_of_words -%}
           {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil %}
           <p class="kt-byline">

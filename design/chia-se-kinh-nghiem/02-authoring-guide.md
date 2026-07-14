@@ -54,8 +54,8 @@ caption) is ever repeated in a post.
 Then use it:
 
 - **Thumbnail** — `image: <slug>` in front matter. It becomes the feed card
-  image (16:9 crop, below the description), the article hero (uncropped, between
-  the title and the standfirst), the `og:image`, the schema `image`, the
+  image (16:9 crop, above the description), the article hero (uncropped, between
+  the standfirst and the byline), the `og:image`, the schema `image`, the
   preloaded LCP element, and an entry in the image sitemap. A post with no
   `image:` degrades cleanly: no card image, and `og:image` falls back to the
   company card.
