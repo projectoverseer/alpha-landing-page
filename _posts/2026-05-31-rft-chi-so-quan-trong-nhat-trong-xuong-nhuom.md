@@ -1,6 +1,6 @@
 ---
-title: "RFT — chỉ số quan trọng nhất trong xưởng nhuộm"
-description: "Right First Time: tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu — chỉ số chi phối tiến độ giao hàng, chi phí, sản lượng lẫn chất lượng. Cách đo và chu trình 4 bước để cải thiện."
+title: "RFT – chỉ số quan trọng nhất trong xưởng nhuộm"
+description: "Right First Time: tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu – chỉ số chi phối tiến độ giao hàng, chi phí, sản lượng lẫn chất lượng. Cách đo và chu trình 4 bước để cải thiện."
 topic: van-hanh
 image: rft-nhuom-dat-tu-lan-dau
 ---
@@ -19,7 +19,7 @@ Nên thống kê theo số mẻ mà không nên thống kê theo số mét hay s
 
 ## Các bước giúp cải thiện RFT
 
-### Bước 1 — triển khai đo đạc
+### Bước 1 – triển khai đo đạc
 
 Nếu chưa có phần mềm, dùng file Excel với các cột sau:
 
@@ -29,7 +29,7 @@ Nếu chưa có phần mềm, dùng file Excel với các cột sau:
 
 Việc ghi nhận diễn ra liên tục sau mỗi mẻ hoàn thành, không bỏ sót. Dữ liệu càng đầy đủ thì phân tích càng chính xác.
 
-### Bước 2 — phân tích số liệu và chọn trọng tâm
+### Bước 2 – phân tích số liệu và chọn trọng tâm
 
 Cuối mỗi tháng, tổng hợp và phân tích số liệu. Chọn thời gian 1 tháng để số liệu có tính thống kê đủ tin cậy.
 
@@ -41,11 +41,11 @@ Phân tích theo các góc nhìn để tìm trọng tâm. Ví dụ:
 
 Mỗi trọng tâm giao cho một người hoặc một team phụ trách. Mỗi team có KPI để phấn đấu.
 
-### Bước 3 — tìm biện pháp cải thiện
+### Bước 3 – tìm biện pháp cải thiện
 
 Người hoặc team phụ trách phân tích nguyên nhân và thực hiện biện pháp cải thiện cụ thể cho trọng tâm được giao. Tập trung vào một trọng tâm trước, không dàn trải.
 
-### Bước 4 — họp xem xét của lãnh đạo
+### Bước 4 – họp xem xét của lãnh đạo
 
 Định kỳ hàng tháng hoặc hàng quý, lãnh đạo triệu tập cuộc họp để người hoặc team phụ trách báo cáo: hành động đã thực hiện, kết quả đạt được và mục tiêu cho kỳ tới. Mục tiêu nên lấy kết quả vừa đạt được cộng thêm 5–10%.
 

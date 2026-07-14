@@ -12,7 +12,7 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://www.alphasoftwaregroup.com/en/"/>
         <xhtml:link rel="alternate" hreflang="vi" href="https://www.alphasoftwaregroup.com/"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alphasoftwaregroup.com/"/>
-        <lastmod>2026-07-02</lastmod>
+        <lastmod>2026-07-14</lastmod>
     </url>
     <url>
         <loc>https://www.alphasoftwaregroup.com/chia-se-kinh-nghiem/</loc>
@@ -103,6 +103,9 @@
     <url>
         <loc>https://www.alphasoftwaregroup.com/chia-se-kinh-nghiem/lam-sao-de-do-oee-trong-xuong-nhuom/</loc>
         <lastmod>2026-07-14</lastmod>
+        <image:image>
+            <image:loc>https://www.alphasoftwaregroup.com/img/chia-se-kinh-nghiem/cho-may-nhuom-khoi-dong-mat-thoi-gian-1264.jpg</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://www.alphasoftwaregroup.com/chia-se-kinh-nghiem/oee-cua-nha-may-nhuom/</loc>

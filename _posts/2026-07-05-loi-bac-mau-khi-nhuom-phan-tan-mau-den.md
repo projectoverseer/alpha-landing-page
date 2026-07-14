@@ -23,11 +23,11 @@ Máy lớn thì tỷ lệ phần không khí so với dung dịch không bằng 
 
 ## Cách khắc phục
 
-### Cách 1 — dùng chất chống khử
+### Cách 1 – dùng chất chống khử
 
 Thêm vào bể nhuộm các chất oxy hóa hữu cơ có tác dụng kìm hãm phản ứng khử. Thị trường có loại này. Theo kinh nghiệm thực tế, cách này không phải lúc nào cũng xử lý được triệt để.
 
-### Cách 2 — đổi thuốc nhuộm
+### Cách 2 – đổi thuốc nhuộm
 
 Chọn loại thuốc nhuộm dùng chất phân tán không thuộc nhóm lignosulfonate có tính khử. Một số hãng cung cấp thuốc nhuộm phân tán dòng "reduction stable" hoặc ghi rõ chất phân tán dùng là naphthalene sulfonate (NNO) vốn không có tính khử. Đây là cách xử lý triệt để nhất.
 

@@ -1,13 +1,13 @@
 ---
 title: "Nguyên lý máy đo màu"
-description: "Máy quang phổ biến màu sắc thành con số khách quan như thế nào: phổ phản xạ — \"dấu vân tay\" của tấm vải — và cách phần mềm tính ra L*a*b* dưới từng nguồn sáng."
+description: "Máy quang phổ biến màu sắc thành con số khách quan như thế nào: phổ phản xạ – \"dấu vân tay\" của tấm vải – và cách phần mềm tính ra L*a*b* dưới từng nguồn sáng."
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 2
 image: bo-kit-munsell-hue-test
 ---
 
-Mắt người đánh giá màu sắc chủ quan và khác nhau giữa từng người. Chưa kể khả năng không nhỏ là một người có thể kém nhạy cảm với một sắc màu nào đó. Chính vì vậy mà có một bộ kit chuẩn để test xem mắt một người có "chuẩn" không — bộ kit Munsell ở đầu bài.
+Mắt người đánh giá màu sắc chủ quan và khác nhau giữa từng người. Chưa kể khả năng không nhỏ là một người có thể kém nhạy cảm với một sắc màu nào đó. Chính vì vậy mà có một bộ kit chuẩn để test xem mắt một người có "chuẩn" không – bộ kit Munsell ở đầu bài.
 
 Máy đo màu (spectrophotometer) giải quyết vấn đề đó bằng cách đo màu thành con số khách quan, có thể so sánh và truyền đạt chính xác giữa các bên.
 
@@ -33,6 +33,6 @@ Một thực tế là mọi loại vải, nhất là vải nhuộm bằng thuố
 
 Có một điểm quan trọng: cùng một lần đo, cùng một bộ phổ phản xạ. Nhưng hỏi dưới D65 thì ra một bộ $$L^*a^*b^*$$, hỏi dưới TL84 thì ra bộ $$L^*a^*b^*$$ khác. Đây chính là lý do tại sao máy đo màu phát hiện được metamerism mà mắt người không phát hiện được khi chỉ so dưới một nguồn sáng.
 
-{% include chia-se-kinh-nghiem/cta.html variant="note" heading="Từ máy đo đến hệ thống" text="Phần mềm quản lý công nghệ của Alpha kết nối trực tiếp với đầu đo quang phổ Datacolor tại các nhà máy đang triển khai — kết quả đo màu đi thẳng vào hệ thống, không qua ghi chép tay." %}
+{% include chia-se-kinh-nghiem/cta.html variant="note" heading="Từ máy đo đến hệ thống" text="Phần mềm quản lý công nghệ của Alpha kết nối trực tiếp với đầu đo quang phổ Datacolor tại các nhà máy đang triển khai – kết quả đo màu đi thẳng vào hệ thống, không qua ghi chép tay." %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

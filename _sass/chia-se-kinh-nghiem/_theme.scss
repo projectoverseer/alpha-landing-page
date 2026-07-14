@@ -72,6 +72,16 @@ body.kt {
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+
+  // Inter Variable carries an opsz 14–32 axis too, so the px/pt trap that governs
+  // Literata (see the mixin at the top) applies here as well: left to the default
+  // `font-optical-sizing: auto`, the browser would feed Inter the CSS px number as
+  // if it were points and overshoot. But Inter is chrome only, and its largest
+  // size is this 16px base — 0.75 × 16 = 12, under Inter's opsz floor of 14 — so
+  // every UI size on the hub resolves to the same 14, Inter's text cut. Pin it
+  // once; it inherits. Every Literata rule sets its own opsz and overrides this.
+  // (If Inter is ever set large enough to leave the floor, give that rule its own.)
+  font-variation-settings: "opsz" 14;
 }
 
 .kt ::selection {
@@ -89,6 +99,27 @@ body.kt {
   &:hover {
     color: var(--indigo-deep);
   }
+}
+
+// ---- Letter-spacing (owner, 2026-07-14: decided per element, from scratch) --
+//
+// Literata always renders with the exact optical size for its rendered px (the
+// read()/opsz() mixins above), so its spacing is the maker's own at every size —
+// no Literata run on the hub carries tracking. Inter is different: it is chrome
+// only, all of it at 12–14px, and Inter's opsz axis floors at 14 (≈18.7px of
+// type). Every small chrome run therefore renders on a cut spaced for larger
+// type than it shows at, and gets back the +0.01em residual Inter's own
+// dynamic-metrics curve gives for that gap. Uppercase labels get classical caps
+// letterspacing instead (which subsumes the residual).
+.kt-feed-meta,
+.kt-byline,
+.kt-feed-more,
+.kt-figure figcaption,
+.kt-series-nav-label,
+.kt-footer p,
+.kt-signature-role,
+.kt-signature-canonical {
+  letter-spacing: 0.01em;
 }
 
 // Responsive default for article images. The brand logo opts out: its height
@@ -153,13 +184,22 @@ body.kt {
 // lines — chosen after rendered comparisons of both approaches. Flex centers
 // the word's line box on the artwork; the small `top` on the span walks the
 // remaining distance from box center to the word's optical center.
+// The container is now a plain flex row holding two separate links (§5): the
+// logo returns to the main Alpha site, the words go to the hub. Each half owns
+// its own tap target so the padding that used to sit on the anchor moves onto
+// them.
 .kt-brand {
   --logo-h: 2.125rem; // = article H1 (34px): largest type on the page, never larger
 
   display: inline-flex; // whitespace between the halves is dropped by flex layout
   align-items: center;
-  padding: 0.5rem 0; // tap-target height; the shell's flex centering does the rest
   white-space: nowrap;
+}
+
+.kt .kt-brand-logo-link {
+  display: inline-flex; // the logo half — no underline, ever (it is a mark)
+  align-items: center;
+  padding: 0.5rem 0; // tap-target height; the shell's flex centering does the rest
   text-decoration: none;
 }
 
@@ -181,14 +221,21 @@ body.kt {
 // font-size is a fraction of the logo, the fraction depends on cap height, and
 // cap height depends on the optical size. Solved as a fixed point — 20.22px of
 // type, so opsz 15.2 (and 12.5 at the mobile logo, below).
-.kt-brand-name {
+// `.kt .kt-brand-name` (0,2,0) rather than a bare class so it outranks `.kt a`
+// (0,1,1) — otherwise the words would take the indigo link colour and the hover
+// shift meant for prose links. It stays ink and underlines only on hover, the
+// standard signal that a word is its own link.
+.kt .kt-brand-name {
   margin-left: 0.5em; // one word space at the word's own size
+  padding: 0.5rem 0; // its own tap target, matching the logo half
   font-family: var(--font-read);
   font-size: calc(var(--logo-h) * 0.595);
   font-weight: 700;
+  // A wordmark, not text: set as a mark, it wants a slightly firmer, more solid
+  // fit than running prose — the one place hand-tuned negative tracking belongs.
+  letter-spacing: -0.005em;
   font-variation-settings: "opsz" 15.2;
   line-height: 1;
-  letter-spacing: -0.005em;
   color: var(--ink);
   text-decoration: none;
   position: relative;
@@ -198,6 +245,11 @@ body.kt {
   // almost no visual weight. Both scale with the font, so one value serves
   // both breakpoints.
   top: 0.065em;
+
+  &:hover {
+    color: var(--ink); // hold ink; do not take `.kt a:hover` indigo-deep
+    text-decoration: underline;
+  }
 }
 
 // ---- Hub: the feed ----------------------------------------------------------
@@ -216,46 +268,12 @@ body.kt {
   white-space: nowrap;
 }
 
-// Every topic in the library, most-written-about first — the map of the place,
-// above the first post on the hub (and nowhere else). Indigo, plain and obvious:
-// unlike the tag under a card, this row exists only to be clicked, and indigo is
-// what "you can act on this" looks like here (§3).
-.kt-topics {
-  margin: 2rem 0 0;
-  font-size: 0.9375rem;
-  line-height: 1.7;
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.2em;
-    }
-  }
-
-  // Both the "Theo chủ đề:" label and the · separators: metadata grey, so the
-  // row reads as a few blue links with quiet scaffolding, not as a sentence.
-  span {
-    color: var(--ink-3);
-  }
-}
-
-// Spaced by margin, not by a space in the markup — see the note in topics.html.
-.kt-topics-label {
-  margin-right: 0.35em;
-}
-
 // Reverse-chronological, ungrouped — newest post first, older ones drip in
 // on scroll (§5). Items are hidden only while JS is running the drip.
 .kt-feed {
   list-style: none;
   margin: 2.5rem 0 0;
   padding: 0;
-}
-
-.kt-topics + .kt-feed {
-  margin-top: 2rem;
 }
 
 .kt-feed-item {
@@ -350,8 +368,8 @@ body.kt {
 
 .kt-feed-tag {
   font-weight: 650;
-  letter-spacing: 0.07em;
   text-transform: uppercase;
+  letter-spacing: 0.08em; // letterspaced caps — same amount as the kicker, same role
 }
 
 // Only meaningful while the drip is running; without JS every post is already
@@ -384,8 +402,10 @@ body.kt {
   margin: 0 0 1rem;
   font-size: 0.8125rem;
   font-weight: 650;
-  letter-spacing: 0.09em;
   text-transform: uppercase;
+  // Letterspaced caps: capitals are drawn to lead a word, so a run of them sets
+  // too tight without air. 0.08em — the classical amount for a small caps label.
+  letter-spacing: 0.08em;
   color: var(--ink-3);
 }
 
@@ -396,7 +416,6 @@ body.kt {
   @include read(34);
   font-weight: 620;
   line-height: 1.25;
-  letter-spacing: -0.01em;
 }
 
 .kt-standfirst {
@@ -619,8 +638,8 @@ body.kt {
   font-family: var(--font-ui);
   font-size: 0.75rem;
   font-weight: 650;
-  letter-spacing: 0.09em;
   text-transform: uppercase;
+  letter-spacing: 0.1em; // caps, and smaller than the kickers — smaller caps take more air
   color: var(--ink-3);
 }
 
@@ -777,16 +796,11 @@ body.kt {
     --logo-h: 1.75rem;
   }
 
-  .kt-brand-name {
+  .kt .kt-brand-name {
     @include opsz(16.69);
   }
 
-  .kt-topics {
-    margin-top: 1.5rem;
-  }
-
-  .kt-feed,
-  .kt-topics + .kt-feed {
+  .kt-feed {
     margin-top: 1.75rem;
   }
 

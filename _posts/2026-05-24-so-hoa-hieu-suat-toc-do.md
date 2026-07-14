@@ -1,6 +1,6 @@
 ---
-title: "Số hóa hiệu suất tốc độ — thành phần thứ hai của OEE"
-description: "Máy vẫn chạy, nhìn có vẻ bình thường — nhưng chậm hơn quy trình chuẩn. Đây là tổn thất khó nắm bắt nhất, và cách đo nó bằng 2 bảng theo dõi song song trong một file Excel."
+title: "Số hóa hiệu suất tốc độ – thành phần thứ hai của OEE"
+description: "Máy vẫn chạy, nhìn có vẻ bình thường – nhưng chậm hơn quy trình chuẩn. Đây là tổn thất khó nắm bắt nhất, và cách đo nó bằng 2 bảng theo dõi song song trong một file Excel."
 topic: van-hanh
 series: so-hoa-oee
 series_part: 5
@@ -34,11 +34,11 @@ Trong thực tế, có nhiều nguyên nhân khiến một mẻ kéo dài hơn t
 
 Mỗi thứ chỉ mất 10–20 phút. Nhưng một mẻ có thể gặp 3–4 lần chờ, cộng lại chạy chậm hơn chuẩn 1–2 tiếng. Máy vẫn đang chạy nên ít ai để bút ghi nhận.
 
-## Cách đo thực tế — dùng 2 bảng trong 1 file Excel
+## Cách đo thực tế – dùng 2 bảng trong 1 file Excel
 
 Để tính được hiệu suất tốc độ và biết cần cải thiện cái gì, cần 2 bảng theo dõi song song:
 
-**Bảng 1 — thời gian thực hiện:**
+**Bảng 1 – thời gian thực hiện:**
 
 | Mã số mẻ | Mã quy trình nhuộm | Thời gian chuẩn | Thời gian thực tế |
 |---|---|---|---|
@@ -46,7 +46,7 @@ Mỗi thứ chỉ mất 10–20 phút. Nhưng một mẻ có thể gặp 3–4 l
 
 File Excel nên có thêm một bảng tra riêng lưu thời gian chuẩn của từng quy trình nhuộm. Khi công nhân nhập mã quy trình vào bảng 1, Excel tự động tra và điền thời gian chuẩn tương ứng vào cột bên cạnh. Công nhân không cần nhớ hay tra tay, chỉ cần nhập đúng mã quy trình là đủ. Cách này vừa tiết kiệm thời gian điền, vừa tránh sai sót do nhập tay thời gian chuẩn.
 
-**Bảng 2 — phân tích nguyên nhân chậm:**
+**Bảng 2 – phân tích nguyên nhân chậm:**
 
 | Mã số mẻ | Lý do chậm | Số phút |
 |---|---|---|

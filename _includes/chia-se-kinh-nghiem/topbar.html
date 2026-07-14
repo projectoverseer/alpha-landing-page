@@ -1,24 +1,26 @@
 {%- comment -%}
-  The sub-brand lockup: Alpha's logo + "Chia sẻ kinh nghiệm" — ONE mark, not a logo next
-  to a word. "Chia sẻ kinh nghiệm" is set in type but must behave like part of the logo:
-  it never wraps, never underlines, never gets link styling. It is perceptually
-  centered on the whole logo, sized so its caps match the "alpha" wordmark's
-  x-height (the lockup geometry lives in _sass/chia-se-kinh-nghiem/_theme.scss).
-  Chia sẻ kinh nghiệm is a branch of Alpha, not a separate
-  company. The lockup always links to the hub (/chia-se-kinh-nghiem/), so it doubles as
-  the way back from any article. See design/chia-se-kinh-nghiem/01-philosophy.md §5.
+  The sub-brand lockup: Alpha's logo + "Chia sẻ kinh nghiệm". Still read as one mark —
+  same baseline, never wraps, sized so the words' caps match the "alpha" wordmark's
+  x-height (lockup geometry in _sass/chia-se-kinh-nghiem/_theme.scss) — but the two
+  halves are now two destinations. The Alpha mark returns to the main site
+  ({{ site.url }}/); the words go to the hub root (/chia-se-kinh-nghiem/), so they stay
+  the way back from any article. "Chia sẻ kinh nghiệm" is a branch of Alpha, not a
+  separate company; it underlines on hover to show it is its own link, while the logo
+  does not. See design/chia-se-kinh-nghiem/01-philosophy.md §5.
 {%- endcomment -%}
 <div class="kt-topbar">
   <div class="kt-shell">
-    <a class="kt-brand" href="{{ site.url }}/chia-se-kinh-nghiem/">
-      <img
-        alt="Alpha Software"
-        class="kt-brand-logo"
-        height="34"
-        src="{{ site.url }}/img/logo/logo-alpha.svg"
-        width="120"
-      />
-      <span class="kt-brand-name">Chia sẻ kinh nghiệm</span>
-    </a>
+    <div class="kt-brand">
+      <a class="kt-brand-logo-link" href="{{ site.url }}/" aria-label="Alpha Software – trang chủ">
+        <img
+          alt="Alpha Software"
+          class="kt-brand-logo"
+          height="34"
+          src="{{ site.url }}/img/logo/logo-alpha.svg"
+          width="120"
+        />
+      </a>
+      <a class="kt-brand-name" href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a>
+    </div>
   </div>
 </div>

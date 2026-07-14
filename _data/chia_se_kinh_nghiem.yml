@@ -9,7 +9,7 @@ author:
 topics:
   van-hanh:
     label: "Vận hành & hiệu suất"
-    desc: "Đo lường và cải thiện OEE, RFT — thêm doanh thu và lợi nhuận từ chính số máy đang có."
+    desc: "Đo lường và cải thiện OEE, RFT – thêm doanh thu và lợi nhuận từ chính số máy đang có."
   ky-thuat-nhuom:
     label: "Kỹ thuật nhuộm"
     desc: "Phân tích lỗi nhuộm thường gặp và cách xử lý tận gốc, từ kinh nghiệm sản xuất thực tế."
@@ -40,13 +40,13 @@ images:
     h: 788
     sm: true
     alt: "Sơ đồ OEE của nhà máy nhuộm bằng 60%, tách theo ba thành phần sẵn sàng, hiệu suất và chất lượng: 80 mẻ lý thuyết chỉ còn 48 mẻ thực tế"
-    caption: "Xưởng 20 máy: 80 mẻ lý thuyết mỗi ngày, 48 mẻ đạt chuẩn thực tế — OEE 60%."
+    caption: "Xưởng 20 máy: 80 mẻ lý thuyết mỗi ngày, 48 mẻ đạt chuẩn thực tế – OEE 60%."
   cho-may-nhuom-khoi-dong-mat-thoi-gian:
     w: 1264
     h: 843
     sm: true
     alt: "Quản lý xưởng nhuộm ôm đầu sốt ruột đứng chờ máy nhuộm khởi động, với lời thoại “Ôi! Máy bao giờ mới chạy được!”"
-    caption: "Thời gian chờ lò hơi và lò dầu đạt nhiệt không nằm trong sổ sách nào — nhưng nó ăn hàng trăm giờ máy mỗi năm."
+    caption: "Thời gian chờ lò hơi và lò dầu đạt nhiệt không nằm trong sổ sách nào – nhưng nó ăn hàng trăm giờ máy mỗi năm."
   so-hoa-thoi-gian-ngung-may-4-buoc:
     w: 1024
     h: 1536
@@ -57,19 +57,19 @@ images:
     w: 1023
     h: 1537
     sm: true
-    alt: "Infographic hiệu suất tốc độ — thành phần thứ hai của OEE: công thức, ví dụ 100 giờ chuẩn trên 120 giờ thực tế bằng 83%, các nguyên nhân khiến mẻ chạy chậm và hai bảng Excel để đo"
+    alt: "Infographic hiệu suất tốc độ – thành phần thứ hai của OEE: công thức, ví dụ 100 giờ chuẩn trên 120 giờ thực tế bằng 83%, các nguyên nhân khiến mẻ chạy chậm và hai bảng Excel để đo"
     caption: "Hiệu suất tốc độ = tổng thời gian chuẩn của các mẻ đã hoàn thành ÷ tổng thời gian máy chạy thực tế."
   rft-nhuom-dat-tu-lan-dau:
     w: 1264
     h: 843
     sm: true
-    alt: "Hai công nhân xưởng nhuộm vỗ tay trước bảng chỉ số RFT — nhuộm đạt từ lần đầu: mục tiêu 80%, đạt được 81%"
-    caption: "RFT — tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu — là con số đáng treo lên tường xưởng."
+    alt: "Hai công nhân xưởng nhuộm vỗ tay trước bảng chỉ số RFT – nhuộm đạt từ lần đầu: mục tiêu 80%, đạt được 81%"
+    caption: "RFT – tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu – là con số đáng treo lên tường xưởng."
   pho-anh-sang-nhin-thay-380-700nm:
     w: 846
     h: 342
     sm: true
-    alt: "Phổ ánh sáng nhìn thấy trải từ 380nm đến 700nm: tím, chàm, lam, lục, vàng, cam, đỏ — bước sóng ngắn mang năng lượng cao, bước sóng dài mang năng lượng thấp"
+    alt: "Phổ ánh sáng nhìn thấy trải từ 380nm đến 700nm: tím, chàm, lam, lục, vàng, cam, đỏ – bước sóng ngắn mang năng lượng cao, bước sóng dài mang năng lượng thấp"
     caption: "Ánh sáng trắng là tập hợp các bước sóng từ 380nm đến 700nm."
   bang-nguon-sang-chuan-cie:
     w: 1117
@@ -82,7 +82,7 @@ images:
     h: 369
     sm: false
     alt: "Bộ kit Munsell Hue Test: 85 nắp màu xếp thành bốn dãy chuyển sắc liên tục, dùng để kiểm tra khả năng phân biệt sắc màu của mắt người so màu"
-    caption: "Bộ kit Munsell Hue Test — dùng để kiểm tra mắt của người làm công tác so màu."
+    caption: "Bộ kit Munsell Hue Test – dùng để kiểm tra mắt của người làm công tác so màu."
   so-do-nguyen-ly-may-quang-pho-do-mau:
     w: 1344
     h: 1028
@@ -93,7 +93,7 @@ images:
     w: 1344
     h: 733
     sm: true
-    alt: "So sánh các công thức độ lệch màu trong ngành nhuộm: ΔE* theo hệ L*a*b* và hệ L*C*h*, đặt cạnh công thức ΔE CMC có hàm trọng số — ngành dệt may nên chọn ΔE CMC tỷ lệ 2:1"
+    alt: "So sánh các công thức độ lệch màu trong ngành nhuộm: ΔE* theo hệ L*a*b* và hệ L*C*h*, đặt cạnh công thức ΔE CMC có hàm trọng số – ngành dệt may nên chọn ΔE CMC tỷ lệ 2:1"
     caption: "ΔE* coi ba thành phần lệch màu quan trọng như nhau; ΔE CMC (2:1) mới bám sát cảm nhận của mắt người."
   cua-do-aperture-may-quang-pho:
     w: 1312
@@ -106,7 +106,7 @@ images:
     h: 850
     sm: true
     alt: "Màn hình hiệu chuẩn của phần mềm đo màu với các nhóm thiết lập Specular, Aperture, UV-Filter, nút Calibrate và chu kỳ hiệu chuẩn 8 giờ"
-    caption: "Specular, Aperture và UV Filter đều được chốt ngay trên màn hình hiệu chuẩn — chọn sai ở đây là sai toàn bộ kết quả đo về sau."
+    caption: "Specular, Aperture và UV Filter đều được chốt ngay trên màn hình hiệu chuẩn – chọn sai ở đây là sai toàn bộ kết quả đo về sau."
   nhuom-phan-tan-den-bac-mau-lignosulfonate:
     w: 1344
     h: 733
@@ -124,4 +124,4 @@ images:
     h: 1024
     sm: true
     alt: "Báo cáo thử nghiệm mức độ làm chậm (retarding) của hai chất đều màu: mẫu đối chứng đậm màu nhất, mẫu A và mẫu B nhạt dần"
-    caption: "Test retarding: lấy mẫu ở 115°C — mẫu nào nhạt hơn thì chất đều màu đó làm chậm tốc độ ăn màu tốt hơn."
+    caption: "Test retarding: lấy mẫu ở 115°C – mẫu nào nhạt hơn thì chất đều màu đó làm chậm tốc độ ăn màu tốt hơn."

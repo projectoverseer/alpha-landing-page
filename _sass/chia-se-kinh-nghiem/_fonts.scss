@@ -4,18 +4,23 @@
 //
 // Three families, strict roles (design/chia-se-kinh-nghiem/01-philosophy.md §2.3):
 //   Literata   — all reading matter (variable: wght 400–900, opsz 7–72)
-//   Inter      — all chrome/UI      (variable: wght 100–900, roman only)
+//   Inter      — all chrome/UI      (Inter Variable: wght 100–900, opsz 14–32, roman)
 //   Alpha Math — the parts of an equation Literata cannot draw, and nothing else
 //
-// The declared `font-weight: 400 900` is the range the files really carry (fvar).
-// A browser CLAMPS the used weight to the range declared here, so the narrower
-// `400 700` this once said was a quiet trap: any weight above 700 would have been
-// rounded down to it without a word. Nothing asks for one today; the declaration
-// is simply true now.
+// Inter here is Inter Variable 4.1 (rsms.me), self-subset to the three Google
+// css2 ranges below — NOT Google Fonts' Inter, which ships wght-only. We take the
+// rsms build for its second axis: opsz 14–32. The subsetting recipe lives in the
+// scratchpad script; provenance/licence is the SIL OFL that ships with Inter.
 //
-// Literata's second axis, opsz, gets no declaration here on purpose. Left alone
-// the browser drives it from font-size — in the WRONG unit (see _theme.scss) —
-// so every Literata rule drives it explicitly instead.
+// The declared `font-weight: 100 900` is the range the files really carry (fvar).
+// A browser CLAMPS the used weight to the range declared here, so a narrower range
+// would be a quiet trap: any weight outside it is rounded in without a word.
+//
+// Neither font's opsz axis gets a descriptor here — there is none for opsz — and
+// both are kept off the default `font-optical-sizing: auto`, which drives the axis
+// from font-size in the WRONG unit (px into a point scale; see _theme.scss). So
+// every Literata rule sets its opsz explicitly, and Inter's is pinned once on the
+// body (all Inter is small chrome that lands on the opsz-14 floor anyway).
 //
 // Same self-hosting scheme as the main site's Public Sans (_sass/_fonts.scss):
 // the exact latin / latin-ext / vietnamese subset files Google's css2 API

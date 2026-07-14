@@ -46,17 +46,29 @@ If a view has no obvious "moment that matters," it gets **no** dye.
 
 ## 3. Type
 
-- **One face: Public Sans**, all roles — voice comes from size, weight, and
-  space, never a second font. USWDS-matched system fallback stack.
+- **One face: Inter Variable** (superseded Public Sans 2026-07-14), all roles —
+  voice comes from size, weight, and space, never a second family. Its `opsz`
+  14–32 axis does the optical work: body and chrome sit at the 14 floor, and
+  every heading and section marker is pinned to 32 — the "Inter Display" cut the
+  maker drew for large type — so all headings share one refined drawing while
+  only their size ramps across breakpoints. The big metric figures keep a
+  size-tuned optical size. No second file is loaded; 32 is the axis top of the
+  one variable font. Platform-native fallback stack.
 - **Body 16px**, lead 17px, footnote 13px. Headings step at breakpoints
   (`--fs-*` custom properties), no fluid `clamp()` (owner direction).
-- **Tracking follows size** (USWDS bands): tighten ≥22px, loosen 13px and
-  uppercase.
-- **The signature move: tabular numerals for every number that proves
-  something** (`.metric`, the section markers). Numbers that line up are the
-  typography of measurement — this is the most "Đúng" thing on the page.
-- `.kicker` — 13px, semibold, uppercase, +0.15em, slate — is the technical
-  eyebrow that marks calibrated content.
+- **Letter-spacing, from the font out**: 0 wherever an element renders near the
+  size its opsz cut was drawn for (body, nav, buttons, h1/h2, metrics). Where
+  size and cut diverge, the element gets back the residual of Inter's own
+  dynamic-metrics curve: +0.01em on 13px small text (stuck at the opsz-14
+  floor), +0.005em on h3 (20–24px on the opsz-32 display cut). Uppercase labels
+  are letterspaced classically (+0.08em).
+- **The signature move: tabular numerals for the numbers that prove something**
+  (`.metric`). Figures that line up are the typography of measurement — this is
+  the most "Đúng" thing on the page. The section markers, by contrast, are
+  proportional: a marker never sits in a column with another, so it reads as a
+  display number, not a data field.
+- `.kicker` — 13px, semibold, uppercase, slate — is the technical eyebrow that
+  marks calibrated content.
 
 ## 4. Space & shape
 
@@ -102,7 +114,7 @@ decorate.
 ## 8. Vocabulary of parts (all implemented in `_sass/_base.scss`)
 
 `.kicker` · `.metric` (+ `__unit`, `__from/__to` for deltas) ·
-`.heading-number` (calibration marker: tabular index + hairline run-out) ·
+`.heading-number` (calibration marker: Inter Display index + hairline run-out) ·
 `.btn-primary` / `.btn-ghost` on `.btn-xl` · `.service-box` ·
 `.partner-logo-card` · the parked `header.hero-precision` (kicker → headline →
 lead → dual CTA → metric strip), ready for the day the precision positioning

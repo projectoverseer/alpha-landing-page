@@ -23,13 +23,13 @@ learn_more_aria: "Tìm hiểu thêm về Alpha Software"
 
 hero_headline: "Chính xác là cốt lõi"
 hero_kicker: "Độ chính xác cho nhà máy dệt nhuộm"
-hero_lead: "Chúng tôi biến kinh nghiệm dày dạn của nhà máy thành phần mềm áp dụng đúng công nghệ cho từng mẻ nhuộm—loại bỏ những lỗi gây tái chế, nâng tỷ lệ đúng ngay từ đầu (RFT) từ mức 45–60% lên trên 90%, mang lại chất lượng ổn định và có thể chứng minh mà các thương hiệu khắt khe nhất thế giới đòi hỏi."
+hero_lead: "Chúng tôi biến kinh nghiệm dày dạn của nhà máy thành phần mềm áp dụng đúng công nghệ cho từng mẻ nhuộm – loại bỏ những lỗi gây tái chế, nâng tỷ lệ đúng ngay từ đầu (RFT) từ mức 45–60% lên trên 90%, mang lại chất lượng ổn định và có thể chứng minh mà các thương hiệu khắt khe nhất thế giới đòi hỏi."
 hero_cta_primary: "Nhận tư vấn miễn phí"
 hero_cta_secondary: "Xem cách hoạt động"
 hero_metrics_label: "Kết quả Alpha mang lại"
 hero_metric_rft_from: "45–60"
 hero_metric_rft_to: "90–92"
-hero_metric_rft_label: "Tỷ lệ đúng ngay từ đầu (RFT) — kết quả thực tế"
+hero_metric_rft_label: "Tỷ lệ đúng ngay từ đầu (RFT) – kết quả thực tế"
 hero_metric_years_value: "28"
 hero_metric_years_unit: " năm"
 hero_metric_years_label: "kinh nghiệm dệt nhuộm"
@@ -84,14 +84,14 @@ feature_customization_point_1: "Hiểu rằng mỗi nhà máy có hệ thống q
 feature_customization_point_2: "Bên cạnh đó, trong quá trình hợp tác, chúng tôi cũng có khả năng tư vấn cho khách hàng cải tiến quy trình để đạt hiệu quả và tiết kiệm."
 
 feature_ease_of_use_title: "Rất dễ sử dụng!"
-feature_ease_of_use_desc: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người—từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
+feature_ease_of_use_desc: "Chúng tôi luôn hướng đến cách vận hành phần mềm đơn giản nhất, cần ít thao tác nhất để mọi người – từ người công nhân đứng máy đến nhân viên văn phòng cho dù không có kiến thức tin học cơ bản vẫn có thể dễ dàng sử dụng được phần mềm."
 
 # --- Benefits Section ---
 
 benefits_title: "Vì sao nhà máy cần Alpha Software"
 
 benefit_quality_title: "Cải thiện rõ rệt chất lượng sản phẩm"
-benefit_quality_desc: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT—Right First Time).</strong>"
+benefit_quality_desc: "Nhờ kinh nghiệm từ thời gian dài làm kỹ thuật công nghệ trong ngành, chúng tôi biết cách ánh xạ tri thức công nghệ của chuyên gia nội bộ của nhà máy hoặc chuyên gia bên ngoài, áp dụng công nghệ đó một cách tự động, chính xác vào sản xuất nhờ đó <strong>cải thiện mạnh mẽ tỷ lệ sản phẩm đúng ngay lần đầu (RFT – Right First Time).</strong>"
 
 benefit_staffing_costs_title: "Giảm thiểu nhu cầu nhân sự"
 benefit_staffing_costs_desc: "Trong quá trình khảo sát và phát triển phần mềm, chúng tôi sẽ nhận diện những thao tác nào có thể được phần mềm tự động thực hiện. Nhờ đó làm giảm nhu cầu và chi phí nhân sự."
@@ -218,7 +218,7 @@ project_tuan_hong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
-            Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy hút
+            Quản lý công nghệ – có kết nối với đầu đo quang phổ Datacolor, máy hút
             màu phòng thí nghiệm Datacolor Autolab TF
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
@@ -231,7 +231,7 @@ project_dung_dong_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
-            Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
+            Quản lý công nghệ – có kết nối với đầu đo quang phổ Datacolor, máy rót
             màu phòng thí nghiệm COPOWER CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
@@ -250,7 +250,7 @@ project_spica_components: '<p>Các thành phần phần mềm:</p>
         <ul>
           <li>Quản lý sản xuất</li>
           <li>
-            Quản lý công nghệ—có kết nối với đầu đo quang phổ Datacolor, máy rót
+            Quản lý công nghệ – có kết nối với đầu đo quang phổ Datacolor, máy rót
             màu phòng thí nghiệm COPOWER CptLab
           </li>
           <li>Quản lý kho nguyên liệu, thành phẩm và bán thành phẩm</li>
@@ -278,7 +278,7 @@ review_nguyen_thi_nga_body: '<p>Phần mềm Alpha đã giúp SPICA kết nối 
             dàng hơn, lập kế hoạch nhuộm chính xác và kiểm soát toàn bộ quy
             trình chặt chẽ qua mã QR và hệ thống báo cáo trực quan.</p>
           <p>Sau khi triển khai phần mềm, tỷ lệ nhuộm đạt ngay lần đầu (RFT) tăng
-            từ 80% lên 90% theo mẻ, và từ 90% lên 95% theo khối lượng—hướng đến
+            từ 80% lên 90% theo mẻ, và từ 90% lên 95% theo khối lượng – hướng đến
             mục tiêu đạt 93% và 98% trong thời gian tới.</p>'
 
 review_dinh_van_hiep_body: '<p>Phần mềm Alpha Software hỗ trợ rất tốt cho công ty, nhất là
@@ -295,7 +295,7 @@ founder_title: "Nhà sáng lập"
 our_story_body: '<p class="mt-md-0">
           Alpha Software được thành lập vào năm 2021 bởi Ông Phan Đức Tuấn Anh,
           người có hơn 28 năm kinh nghiệm thực tiễn trong lĩnh vực dệt
-          may—trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
+          may – trong đó có 13 năm là kỹ thuật viên nhuộm và 15 năm làm Giám đốc
           nhà máy. Với nền tảng vững chắc về Hoá học Hữu cơ cùng sự hiểu biết
           sâu sắc về quản lý nhà máy và phát triển phần mềm, ông Tuấn Anh đã
           giúp chúng tôi cung cấp các giải pháp công nghệ thực tiễn đáp ứng nhu

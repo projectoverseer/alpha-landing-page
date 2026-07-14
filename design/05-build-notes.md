@@ -29,8 +29,12 @@ implementation proceeds.
 - **Additive tokens:** new Sass vars added alongside existing ones; existing
   variable *names* keep working, only values evolve where safe. Avoids a big‑bang
   break while sections migrate one at a time.
-- **Single font** (Public Sans) retained for v1 — Atelier feel via treatment +
-  imagery, not a second webfont (perf budget).
+- **Single font** — Inter Variable (superseded Public Sans 2026-07-14, owner
+  direction); Atelier feel via treatment + imagery, not a second webfont (perf
+  budget). One variable file carries `opsz` 14–32: body and chrome sit at the 14
+  floor, every heading and section marker is pinned to 32 (the "Inter Display"
+  cut), and the big metric figures stay size-tuned (0.75 × px). No extra family —
+  32 is the axis's top end.
 - **Slogan change:** `slogan` now carries the new brand line and flows into
   `<title>`, OG/Twitter titles and `itemprop="slogan"` — intentional and coherent.
 - New i18n keys are namespaced by section (`hero_*`, `stakes_*`, `method_*`, …).

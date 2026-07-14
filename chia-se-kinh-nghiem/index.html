@@ -2,19 +2,15 @@
 layout: chia-se-kinh-nghiem-hub
 permalink: /chia-se-kinh-nghiem/
 title: "Chia sẻ kinh nghiệm vận hành nhà máy dệt nhuộm | Alpha Software"
-description: "Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm: đo và cải thiện OEE, RFT, kỹ thuật nhuộm và đo màu — viết từ 28 năm kinh nghiệm thực tế trong ngành."
+description: "Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm: đo và cải thiện OEE, RFT, kỹ thuật nhuộm và đo màu – viết từ 28 năm kinh nghiệm thực tế trong ngành."
 ---
 
 {%- comment -%}
   One chronological feed, newest first — no topic buckets, no lesson numbering.
-  The topic strip above it is a map, not a bucket: it links out to the topic
-  pages and never chops this feed into sections.
 
   Every post is rendered here; the ones past the first batch carry .is-deferred
   and are revealed on scroll by the layout's script (see the philosophy doc §5).
 {%- endcomment -%}
-{% include chia-se-kinh-nghiem/topics.html %}
-
 {% include chia-se-kinh-nghiem/feed.html posts=site.posts defer=true %}
 
 <p class="kt-feed-more" id="kt-feed-more" role="status">Đang tải thêm bài cũ hơn…</p>

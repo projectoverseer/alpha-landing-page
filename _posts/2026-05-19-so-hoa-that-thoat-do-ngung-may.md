@@ -1,5 +1,5 @@
 ---
-title: "Số hóa thất thoát do ngưng máy — bước đầu tiên để cải thiện OEE"
+title: "Số hóa thất thoát do ngưng máy – bước đầu tiên để cải thiện OEE"
 description: "Cách xây bảng ghi nhận ngưng máy: danh mục lý do, biểu mẫu 4 thông tin, 3 tuần đo mức nền và cách đặt mục tiêu xuất phát từ dữ liệu để công nhân chấp nhận."
 topic: van-hanh
 series: so-hoa-oee
@@ -28,7 +28,7 @@ Chỉ số sẵn sàng = 130 ÷ 144 = 0,903 (hay **90,3%**)
 
 Tính được chỉ số sẵn sàng rồi nhưng làm sao để cải thiện nó thì cần **ghi nhận** được thời gian máy ngưng đầy đủ và chính xác, từ đó mới xác định được hành động nào cần triển khai. Dưới đây là kinh nghiệm triển khai thực tế của mình.
 
-## Bước 1 — tạo danh mục phân loại lý do ngưng máy
+## Bước 1 – tạo danh mục phân loại lý do ngưng máy
 
 Mỗi xưởng có đặc thù riêng nên không có danh mục chuẩn cho tất cả. Anh chị tự tạo danh mục phù hợp với xưởng mình.
 
@@ -45,7 +45,7 @@ Ví dụ một số loại ngưng máy phổ biến trong ngành nhuộm:
 
 Nguyên tắc tạo danh mục: đủ chi tiết để phân biệt được nguyên nhân, nhưng đủ đơn giản để công nhân điền nhanh mà không nhầm. 8–12 loại là vừa. Quá nhiều thì công nhân điền đại, mất ý nghĩa.
 
-## Bước 2 — tạo bảng ghi nhận thời gian ngưng máy
+## Bước 2 – tạo bảng ghi nhận thời gian ngưng máy
 
 Mỗi lần máy ngưng, công nhân ghi lại 4 thông tin:
 
@@ -62,7 +62,7 @@ Tùy điều kiện xưởng:
 
 Lưu ý quan trọng: bảng ghi nhận là của từng máy riêng lẻ, không ghi chung cho cả xưởng. Số liệu toàn xưởng chỉ tổng hợp sau khi đã có đủ số liệu từng máy.
 
-## Bước 3 — đo 3 tuần đầu tiên
+## Bước 3 – đo 3 tuần đầu tiên
 
 Đừng đặt mục tiêu ngay từ đầu. 3 tuần đầu chỉ có một mục tiêu: **ghi nhận trung thực**.
 
@@ -75,7 +75,7 @@ Hai thứ quan trọng cần nhìn vào:
 
 3 loại lớn nhất đó chính là trọng tâm cần tập trung nguồn lực để hành động, đừng nên xử lý tất cả cùng lúc.
 
-## Bước 4 — đặt mục tiêu và cải thiện
+## Bước 4 – đặt mục tiêu và cải thiện
 
 Sau khi có mức nền, đặt mục tiêu cho từng máy bằng cách cộng thêm 5–10% so với chỉ số sẵn sàng trung bình 3 tuần đầu.
 

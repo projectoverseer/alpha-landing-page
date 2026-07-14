@@ -40,7 +40,7 @@ topic: <key>
 ---
 ```
 
-The heading, the description, the post list, the topic strip, the sitemap entry
+The heading, the description, the post list, the sitemap entry
 and the structured data all come from the data file and the posts. (Two steps
 rather than one because GitHub Pages forces Jekyll into `safe` mode, so no
 generator plugin may create the page for us.)

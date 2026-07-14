@@ -34,8 +34,6 @@ const MUST_SHIP = [
   'sitemap.xml', 'robots.txt', 'site.webmanifest',
   'favicon.svg', 'favicon.ico', 'apple-touch-icon.png',
   'img/hero/hero-1920.avif',
-  'fonts/public-sans/public-sans-latin.woff2',
-  'fonts/public-sans/public-sans-vietnamese.woff2',
   'fonts/literata/literata-latin.woff2',
   'fonts/literata/literata-vietnamese.woff2',
   'fonts/literata/literata-greek.woff2',

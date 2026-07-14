@@ -85,11 +85,29 @@ $blue-pale: #c3e5f1; // pale tint (existing $light)
 
 ## 2. Typography
 
-**Keep Public Sans** as the single typeface (it is already loaded, is a clean,
-slightly technical grotesque — perfect for Calibration — and has the weights we
-need). The Atelier "premium" feeling comes from **treatment**, not a second font:
-larger display sizes, tighter tracking, generous leading, a narrow measure, and
-real material imagery. This protects the performance budget (principle 7).
+**One typeface: Inter Variable** (self-hosted; superseded Public Sans, 2026-07-14
+— owner direction). It stays a clean, slightly technical grotesque — right for
+Calibration — but adds a second axis, `opsz` 14–32, which is why it was taken:
+one file is both "Inter" at text sizes and "Inter Display" at display sizes.
+Every heading and section marker is pinned to the 32 (Display) end so they share
+one refined drawing while only their size ramps; the big metric figures stay
+size-tuned (0.75 × px); body and chrome inherit the opsz-14 floor. The axis is
+driven explicitly rather than left to `font-optical-sizing: auto`, which would
+px-drive the point-scale axis and overshoot — the same discipline the reading hub
+documents. The Atelier "premium"
+feeling still comes from **treatment**, not a second family: larger display
+sizes, generous leading, a narrow measure, and real material imagery. Self-hosted,
+so the performance/GDPR posture is unchanged (principle 7).
+
+**Letter-spacing: per element, from the font out (2026-07-14).** Inter's `opsz`
+axis carries the maker's optical spacing, so wherever an element renders at (or
+near) the size its cut was drawn for, tracking is **0** — body, nav, buttons,
+h1/h2, the metrics. Tracking exists only where the rendered size and the cut
+genuinely diverge, and the amount is the residual of Inter's own dynamic-metrics
+curve at that gap: 13px small text stuck at the opsz-14 floor (≈18.7px cut) gets
+**+0.01em**; h3 (20–24px on the opsz-32 display cut) gets **+0.005em**. Plus the
+one classical case: uppercase labels are letterspaced (`.kicker` **+0.08em**) —
+capitals are drawn for word-initial use, not whole words.
 
 > Future enhancement (optional): introduce **one** high‑contrast display serif for
 > h1/h2 only to push the Atelier craft further. Deferred for v1 — revisit if the
@@ -125,8 +143,9 @@ professionalism, expertise). Restraint reads as confidence; oversized type does 
 --btn-px:     clamp(1.25rem,   calc(1.1rem + 0.6vw),  1.5rem);    // 20 → 24
 ```
 
-- Headings: weight **700**, slight negative tracking. Keep `max-width` ch limits +
-  `overflow-wrap: break-word` safety net.
+- Headings: weight **700**. h1/h2 carry no tracking (their sizes sit close enough
+  to the opsz-32 cut's design size); h3 gets the +0.005em dynamic-metrics residual
+  (§2 above). Keep `max-width` ch limits + `overflow-wrap: break-word` safety net.
 - **Layout:** content column ≈ **1140px** (`$container-max-widths` lg ≈ `69rem +
   padding`) — the conventional max — for calm, generous left/right margins on large
   screens.
@@ -147,7 +166,6 @@ This is the visual fingerprint of measurement.
   font-feature-settings: "tnum" 1, "ss01" 1;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
-  letter-spacing: -0.02em;
   color: $dye;            // the moment that matters
   line-height: 0.95;
 }
@@ -157,13 +175,14 @@ This is the visual fingerprint of measurement.
 
 ### 2.3 Kicker / technical label (Calibration motif)
 
-Small, uppercase, letter‑spaced, slate, optionally preceded by a tick — used as
-section eyebrows and metric labels.
+Small, uppercase, slate, optionally preceded by a tick — used as section eyebrows
+and metric labels. Letterspaced **+0.08em** — the classical treatment for a run
+of capitals, which are drawn to lead a lowercase word, not to sit together.
 
 ```scss
 .kicker {
   font-size: .75rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .14em; color: $slate-500;
+  color: $slate-500;
 }
 ```
 

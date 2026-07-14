@@ -57,6 +57,7 @@ optimized for the *third consecutive article*, not the first impression.
      with true Vietnamese diacritics, a true italic, and a true **optical
      size axis** (below).
    - **Inter** — all chrome (nav, metadata, labels, buttons, captions).
+     Inter Variable (opsz 14–32), self-hosted — see the optical-size note below.
    No decorative type, no Inter Display for now — fewer voices, calmer page.
    Body text is 19px; Vietnamese stacked diacritics get line-height ≥ 1.7 so
    tone marks never collide between lines.
@@ -177,7 +178,16 @@ is what the mixin is really for: the two can never drift apart.
 
 This is the whole policy. There is no display cut, no per-heading dial, no type
 that is "pushed up the axis" for effect. A heading is drawn for the size a heading
-is; so is a caption. **Chrome stays Inter**, which has no such axis and needs none.
+is; so is a caption.
+
+**Chrome is Inter, and its axis obeys the same rule.** Inter Variable carries an
+`opsz 14–32` axis too, so it is held off `auto` exactly like Literata. But every
+piece of chrome is small — the largest is the 16px body base, and 0.75 × 16 = 12,
+below Inter's opsz floor of 14 — so the whole UI resolves to a single `opsz` 14,
+Inter's text cut. It is pinned once on the body rather than per rule; anything set
+large enough to leave the floor would take its own. In practice, then, Inter reads
+exactly as it always has — the point of vendoring the variable font is that the
+axis is now *present and correctly pinned*, not left to drive itself from pixels.
 
 One consequence worth stating: **`@font-face` declares `font-weight: 400 900`**,
 the real range in the files. A browser clamps the used weight to the declared
@@ -302,13 +312,12 @@ in the bar — no second link competing with it.
   Non-negotiable: with JS off, or if the script fails, **every post is still
   in the HTML and visible**. Paging is a comfort, never a gate — on the content
   or on the crawler.
-- **The topic strip** (added July 2026) sits above the first post, prefixed
-  "Theo chủ đề:": every topic in the library on one line, indigo, separated by
-  `·`, **ordered by how many posts carry it** so the row opens on what this
-  library is mostly about and re-orders itself as the archive grows. It is a map,
-  not a menu bar — it links *out* to the topic pages and never chops this feed
-  into sections. **It belongs to the hub and to no other page**: it is what you
-  are handed on arrival, not furniture to carry around.
+- **The topic strip** (added July 2026, **removed two weeks later** at the
+  owner's call) briefly sat above the first post, linking out to every topic
+  page. It is gone: the hub now opens straight on the feed, with nothing between
+  the title bar and the newest post. The topic pages under `/chu-de/` remain, and
+  a post still links to its own topic from the article byline — that byline is
+  the one route to them now.
 
 **Topic page (`/chia-se-kinh-nghiem/chu-de/<key>/`)** — every post carrying one
 topic, newest first. Unlike the hub it introduces itself (heading + the topic's

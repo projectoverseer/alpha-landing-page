@@ -27,7 +27,7 @@
   {%- capture kt_title %}{{ page.title }} · Chia sẻ kinh nghiệm Alpha{% endcapture -%}
   {%- assign kt_desc = page.description -%}
 {%- elsif kt_kind == "topic" -%}
-  {%- capture kt_title %}{{ kt_topic.label }} — Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
+  {%- capture kt_title %}{{ kt_topic.label }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
   {%- assign kt_desc = kt_topic.desc -%}
 {%- else -%}
   {%- capture kt_title %}{{ page.title }}{% endcapture -%}
@@ -131,7 +131,7 @@
   },
   "isPartOf": {
     "@type": "Blog",
-    "name": "Chia sẻ kinh nghiệm — Alpha Software",
+    "name": "Chia sẻ kinh nghiệm – Alpha Software",
     "url": "{{ site.url }}/chia-se-kinh-nghiem/"
   },
   "mainEntityOfPage": "{{ site.url }}{{ page.url }}"
@@ -175,7 +175,7 @@
   "inLanguage": "vi",
   "isPartOf": {
     "@type": "Blog",
-    "name": "Chia sẻ kinh nghiệm — Alpha Software",
+    "name": "Chia sẻ kinh nghiệm – Alpha Software",
     "url": "{{ site.url }}/chia-se-kinh-nghiem/"
   },
   "mainEntity": {
@@ -215,7 +215,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "name": "Chia sẻ kinh nghiệm — Alpha Software",
+  "name": "Chia sẻ kinh nghiệm – Alpha Software",
   "description": {{ kt_desc | jsonify }},
   "url": "{{ site.url }}/chia-se-kinh-nghiem/",
   "inLanguage": "vi",

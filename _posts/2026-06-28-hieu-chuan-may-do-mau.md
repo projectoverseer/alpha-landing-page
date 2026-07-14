@@ -27,7 +27,7 @@ Các thông số dưới đây phải được chọn **trước** khi bấm Cal
 
 {% include chia-se-kinh-nghiem/figure.html name="man-hinh-hieu-chuan-may-do-mau" %}
 
-### Specular (thành phần độ bóng — phản xạ gương)
+### Specular (thành phần độ bóng – phản xạ gương)
 
 Ánh sáng chiếu vào vải có hai phần: phần phản xạ khuếch tán (mang thông tin màu sắc) và phần phản xạ gương (ánh sáng bật lại như gương, không mang thông tin màu).
 

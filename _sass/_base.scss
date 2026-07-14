@@ -3,9 +3,23 @@ body {
   font-synthesis: none;
   unicode-bidi: embed;
   -webkit-font-smoothing: antialiased;
-  // Design doc §3.3 tracking: SF tightens text slightly below display sizes. Public
-  // Sans takes a small negative track on body for the same optical density.
-  letter-spacing: -0.011em;
+  // Letter-spacing policy (owner, 2026-07-14): decided per element, from the font
+  // out. Inter's opsz axis carries the maker's optical spacing, so wherever an
+  // element renders at (or near) the size its cut was drawn for, tracking stays 0
+  // — body, nav, buttons, h1/h2, the metrics. Tracking is added only where the
+  // rendered size and the cut genuinely diverge, and the amount is the residual of
+  // Inter's own dynamic-metrics curve at that gap: small 13px text stuck at the
+  // opsz-14 floor gets +0.01em, h3 sizes on the opsz-32 display cut get +0.005em.
+  // Plus the one classical case: uppercase strings (.kicker) are letterspaced,
+  // because capitals are drawn for word-initial use, not for whole words.
+  // Optical size, pinned once and inherited. Inter's opsz is a POINT scale, so the
+  // default `font-optical-sizing: auto` would feed it the CSS px number as points
+  // and overshoot by a third — the exact px/pt trap the reading hub documents. We
+  // drive the axis ourselves instead: 14 is 0.75 × the 16px body and also Inter's
+  // opsz floor, so it is correct for the body and for every rung of chrome at or
+  // below it (nav, buttons, captions). Each larger rung overrides with its own
+  // --opsz-* (headings, hero display, metrics); nothing is left to `auto`.
+  font-variation-settings: "opsz" 14;
   text-rendering: optimizeLegibility;
   quotes: "“" "”" "‘" "’";
 }
@@ -152,6 +166,18 @@ header[id] {
   --fs-quote: 1rem;
   --fs-metric: 2.25rem;
   --fs-heading-num: 1.75rem;
+
+  // Optical size. Two tokens above the opsz-14 body floor:
+  //   --opsz-display · headings and the section markers, pinned to 32 — the top of
+  //     Inter's 14–32 axis, i.e. the "Inter Display" cut the maker drew for large
+  //     type. Applied flat at every size so all headings share that one refined
+  //     drawing; only their --fs-* size ramps across breakpoints (owner direction).
+  //   --opsz-metric · the big tabular figures, still size-tuned (0.75 × px), because
+  //     a number reads as measurement, not display.
+  // Rungs at or below ~18.6px (h4/h5/h6, lead, quote, chrome) land on 14 and inherit
+  // the body pin, so they get no var of their own.
+  --opsz-display: 32;
+  --opsz-metric: 27;
   --gap-hero-metrics: 2rem;
   // Chrome stays compact on phones so the logo/buttons never dominate.
   --size-icon: 3rem;
@@ -172,6 +198,7 @@ header[id] {
     --fs-quote: 1.0625rem;
     --fs-metric: 2.625rem;
     --fs-heading-num: 2.25rem;
+    --opsz-metric: 31.5;
     --gap-hero-metrics: 3rem;
     --size-icon: 3.5rem;
     --btn-px: 1.5rem;
@@ -188,6 +215,7 @@ header[id] {
     --fs-quote: 1.0625rem;
     --fs-metric: 3rem;
     --fs-heading-num: 2.5rem;
+    --opsz-metric: 32;
     --gap-hero-metrics: 4rem;
     --size-icon: 4rem;
   }
@@ -296,30 +324,31 @@ h6,
   }
 }
 
-// Tracking (letterspacing) follows the USWDS size-based recommendations
-// (designsystem.digital.gov typesetting): tighten large text, loosen small and
-// uppercase text. Rendered-size bands at 16px root:
-//   ≥32px → -0.02em  ·  ≥22px → -0.01em  ·  <22px → normal
-//   13px small text → +0.025em  ·  uppercase eyebrows → +0.15em
+// Heading tracking, from Inter's dynamic-metrics curve. The opsz-32 display cut
+// is spaced for ~43px-and-up type. h1 and h2 render close enough to that for the
+// residual to be sub-pixel, so they stay at 0. h3 renders at 20–24px on the same
+// cut, where the curve asks for ≈+0.005em back — that half-percent re-opens the
+// display spacing to the size the heading actually shows at.
 h1,
 .h1 {
   font-size: var(--fs-h1);
+  font-variation-settings: "opsz" var(--opsz-display);
   line-height: $h1-line-height;
-  letter-spacing: -0.02em;
 }
 
 h2,
 .h2 {
   font-size: var(--fs-h2);
+  font-variation-settings: "opsz" var(--opsz-display);
   line-height: $h2-line-height;
-  letter-spacing: -0.01em;
 }
 
 h3,
 .h3 {
   font-size: var(--fs-h3);
+  font-variation-settings: "opsz" var(--opsz-display);
+  letter-spacing: 0.005em;
   line-height: $h3-line-height;
-  letter-spacing: -0.01em;
 
   &:has(.mini-h3) {
     display: flex;
@@ -335,8 +364,9 @@ h3,
 
   /* Product name (the text node / non-.mini-h3 content) renders at heading scale */
   font-size: var(--fs-h3);
+  font-variation-settings: "opsz" var(--opsz-display);
+  letter-spacing: 0.005em; // matches h3 — same size on the same display cut
   font-weight: $headings-font-weight;
-  letter-spacing: -0.01em;
   line-height: $h3-line-height;
 
   /* Reserve space on the right so long product names never slide under the arrow */
@@ -362,7 +392,6 @@ h4,
 .h4 {
   font-size: var(--fs-h4);
   line-height: $h4-line-height;
-  letter-spacing: normal; // 17–18px: below the USWDS 22px threshold for tightening
 
   &:has(.mini-h4, .h5) {
     display: flex;
@@ -376,7 +405,6 @@ h5,
   font-size: $h5-font-size;
   line-height: $h5-line-height;
   font-weight: 600;
-  letter-spacing: normal; // 17px: below the USWDS 22px threshold for tightening
 }
 
 h6,
@@ -384,7 +412,6 @@ h6,
   font-size: $h6-font-size;
   line-height: $h6-line-height;
   font-weight: 600;
-  letter-spacing: normal; // 14px: below the USWDS 22px threshold for tightening
 }
 
 big,
@@ -728,17 +755,19 @@ figcaption,
   margin-bottom: 0;
 }
 
+// 13px renders on the opsz-14 cut — Inter's axis floor, drawn for ≈18.7px — so
+// the drawing is spaced for larger type than it shows at. +0.01em is what Inter's
+// dynamic-metrics curve asks back across that gap.
 small,
 .small {
   font-size: $font-size-sm;
+  letter-spacing: 0.01em;
   line-height: $line-height-sm;
-  letter-spacing: 0.025em; // USWDS letterspacing 1 — loosen very small (13px) text
 }
 
 figcaption {
   font-size: $font-size-base;
   line-height: $line-height-base;
-  letter-spacing: normal; // 14px body size — USWDS adds tracking only below ~12px
 
   .bg-dark &,
   .bg-primary & {
@@ -879,6 +908,7 @@ blockquote> :last-child:after {
   margin: -0.625rem -0.5rem;
   font-size: $font-size-sm;
   font-weight: 600;
+  letter-spacing: 0.01em; // 13px at the opsz-14 floor — same residual as small/.small
   color: $link-color;
   transition: opacity var(--dur-fast) var(--ease-precise);
 
@@ -1242,7 +1272,10 @@ section.bg-primary {
   font-size: $font-size-sm; // 13px — the small-text rung of the type scale
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em; // USWDS letterspacing 3 — uppercase section-intro label
+  // Letterspaced caps: capitals are drawn to lead a lowercase word, so a run of
+  // them sets too tight without air. 0.08em is the classical amount for a small
+  // caps label (and quietly covers the opsz-floor residual this size carries).
+  letter-spacing: 0.08em;
   line-height: 1.2;
   color: $slate-500;
 }
@@ -1252,9 +1285,9 @@ section.bg-primary {
   font-feature-settings: "tnum" 1;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
-  letter-spacing: -0.02em;
   line-height: 0.95;
   font-size: var(--fs-metric);
+  font-variation-settings: "opsz" var(--opsz-metric);
 }
 
 .metric__unit {
@@ -1402,7 +1435,7 @@ header.hero-precision {
 
   h1 {
     font-size: var(--fs-display);
-    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" var(--opsz-display);
     line-height: 1.02;
   }
 
@@ -1594,9 +1627,11 @@ header.hero-precision {
   margin: auto;
 }
 
-// Section index marker — a measured "calibration" marker: a large tabular
-// figure in the accent colour trailed by a hairline rule across the column.
-// Replaces the heavy solid block (design/02 — "measured, not loud").
+// Section index marker — a measured "calibration" marker: a large figure in the
+// accent colour, drawn in the Inter Display cut and trailed by a hairline rule
+// across the column. Replaces the heavy solid block (design/02 — "measured, not
+// loud"). Proportional figures, not tabular: these markers never sit in a column
+// with each other, so the number reads as a display mark, not a data field.
 .heading-number {
   display: flex;
   align-items: center;
@@ -1613,11 +1648,10 @@ header.hero-precision {
 
   &::before {
     content: attr(data-number);
-    font-feature-settings: "tnum" 1;
     font-weight: 700;
     font-size: var(--fs-heading-num);
+    font-variation-settings: "opsz" var(--opsz-display);
     line-height: 0.85;
-    letter-spacing: -0.02em; // USWDS letterspacing -2 — large (28–40px) tabular figure
     color: inherit;
   }
 

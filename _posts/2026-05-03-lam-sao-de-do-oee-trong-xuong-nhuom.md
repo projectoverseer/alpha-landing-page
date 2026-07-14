@@ -4,20 +4,21 @@ description: "OEE = Sẵn sàng × Hiệu suất × Chất lượng. Cách tính
 topic: van-hanh
 series: so-hoa-oee
 series_part: 2
+image: cho-may-nhuom-khoi-dong-mat-thoi-gian
 ---
 
 Bài trước mình nói OEE của phần lớn xưởng nhuộm đang ở mức trung bình thế giới 55–60%, và gợi ý cách đo sơ bộ nhanh nhất: tổng mẻ thực tế ÷ tổng mẻ lý thuyết.
 
-Nhưng thực tế phức tạp hơn vậy. Hôm nay mình đi vào cách đo đúng — đủ để ra con số thực sự có ý nghĩa.
+Nhưng thực tế phức tạp hơn vậy. Hôm nay mình đi vào cách đo đúng – đủ để ra con số thực sự có ý nghĩa.
 
 Công thức chuẩn của OEE là:
 
 > **OEE = Availability × Performance × Quality**
 > (Mức độ sẵn sàng × Hiệu suất × Tỷ lệ đạt chất lượng)
 
-Ba thành phần — ba loại tổn thất khác nhau. Nhiều xưởng chỉ đo được một hoặc hai trong số này, rồi nhầm tưởng đó là OEE thật.
+Ba thành phần – ba loại tổn thất khác nhau. Nhiều xưởng chỉ đo được một hoặc hai trong số này, rồi nhầm tưởng đó là OEE thật.
 
-## Thành phần 1 — Availability (mức độ sẵn sàng)
+## Thành phần 1 – Availability (mức độ sẵn sàng)
 
 Câu hỏi: trong tổng thời gian máy có thể chạy, nó thực sự đang chạy bao nhiêu phần trăm?
 
@@ -29,7 +30,7 @@ Availability = 6h05 ÷ 8h = **76%**
 
 Bẫy phổ biến nhất: nhiều xưởng tính từ lúc nhân viên đến làm, không phải từ lúc máy thực sự chạy. Sai lệch này khiến Availability trông cao hơn thực tế 10–15%.
 
-## Thành phần 2 — Performance (hiệu suất, hay tốc độ)
+## Thành phần 2 – Performance (hiệu suất, hay tốc độ)
 
 Câu hỏi: khi máy đang chạy, nó chạy đúng tốc độ thiết kế không?
 
@@ -37,13 +38,13 @@ Trong ngành nhuộm, tốc độ được đo bằng chu kỳ mẻ: một mẻ 
 
 > Performance = (Thời gian chuẩn × Số mẻ thực tế) ÷ Thời gian chạy thực tế
 
-Ví dụ: công thức nhuộm chuẩn 180 phút/mẻ. Máy chạy 6 tiếng, hoàn thành 2 mẻ — nhưng mỗi mẻ thực tế mất 210 phút vì nhiệt lên chậm.
+Ví dụ: công thức nhuộm chuẩn 180 phút/mẻ. Máy chạy 6 tiếng, hoàn thành 2 mẻ – nhưng mỗi mẻ thực tế mất 210 phút vì nhiệt lên chậm.
 
 Performance = (180 × 2) ÷ 420 = **86%**
 
-Đây là tổn thất thường bị bỏ qua nhất — vì máy vẫn chạy, nhìn có vẻ ổn, nhưng thực ra đang chậm hơn thiết kế.
+Đây là tổn thất thường bị bỏ qua nhất – vì máy vẫn chạy, nhìn có vẻ ổn, nhưng thực ra đang chậm hơn thiết kế.
 
-## Thành phần 3 — Quality (tỷ lệ chất lượng)
+## Thành phần 3 – Quality (tỷ lệ chất lượng)
 
 Câu hỏi: trong số mẻ hoàn thành, bao nhiêu mẻ đạt chuẩn ngay lần đầu?
 
