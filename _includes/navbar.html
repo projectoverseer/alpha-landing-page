@@ -66,6 +66,11 @@
       <li class="nav-item">
         <a class="nav-link" href="#{{ t.toc_reviews_id }}">{{ t.toc_reviews }}</a>
       </li>
+      {% if t.toc_knowledge %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ site.url }}/kien-thuc/">{{ t.toc_knowledge }}</a>
+      </li>
+      {% endif %}
       <li class="visually-hidden nav-item">
         <a class="nav-link" href="#{{ t.toc_our_story_id }}" tabindex="-1">{{ t.toc_our_story }}</a>
       </li>

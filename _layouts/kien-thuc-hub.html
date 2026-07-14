@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {% include kien-thuc/head.html %}
+  </head>
+  <body class="kt">
+    <a class="kt-skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+    <header class="kt-masthead">
+      <div class="kt-shell">
+        <p class="kt-wordmark">Kiến thức</p>
+        <p class="kt-masthead-sub">
+          Thư viện vận hành cho nhà máy dệt nhuộm — của
+          <a href="{{ site.url }}/">Alpha Software</a>
+        </p>
+      </div>
+    </header>
+
+    <main class="kt-shell" id="main-content">
+      {{ content }}
+    </main>
+
+    {% include kien-thuc/cta.html variant="banner" %}
+
+    <footer class="kt-footer">
+      <div class="kt-shell">
+        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/">www.alphasoftwaregroup.com</a></p>
+        <p>Bản quyền © 2026 Alpha Software. Bảo lưu mọi quyền.</p>
+      </div>
+    </footer>
+  </body>
+</html>

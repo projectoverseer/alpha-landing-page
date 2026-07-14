@@ -17,9 +17,18 @@ import { writeFileSync } from 'node:fs';
 
 const CSS = '_site/css/main.css';
 
+// The Kiến Thức hub stylesheet is hand-written for exactly the pages that load
+// it (no framework, no dead code), so it skips PurgeCSS — purging it risks
+// dropping bare pseudo-element rules (::selection) for zero real savings.
+// It still gets minified below.
+const KT_CSS = '_site/css/kienthuc.css';
+
+// Hub pages load kienthuc.css, not main.css — keep them out of the purge
+// content so their markup (tables, asides, kt-* hooks) can't retain dead
+// main.css rules.
 const [{ css }] = await new PurgeCSS().purge({
   css: [CSS],
-  content: ['_site/**/*.html', '_site/**/*.js'],
+  content: ['_site/**/*.html', '!_site/kien-thuc/**', '_site/**/*.js'],
   safelist: {
     standard: ['active', 'show', 'collapsing'],
     greedy: [/data-bs-popper/],
@@ -28,3 +37,4 @@ const [{ css }] = await new PurgeCSS().purge({
 writeFileSync(CSS, css);
 
 execSync(`cleancss -O2 -o ${CSS} ${CSS}`, { stdio: 'inherit' });
+execSync(`cleancss -O2 -o ${KT_CSS} ${KT_CSS}`, { stdio: 'inherit' });

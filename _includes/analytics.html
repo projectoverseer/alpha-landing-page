@@ -1,0 +1,96 @@
+<!-- Google tag (gtag.js) -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  // Consent Mode v2 (advanced). Consent state MUST be declared before config
+  // so tags evaluate it on the very first hit.
+  //
+  // GOAL: gather as much analytics as is lawful WITHOUT a consent banner.
+  // Strategy = grant full cookie-based measurement by default, then (a) deny
+  // in regions that legally require prior opt-in, and (b) honor the Global
+  // Privacy Control opt-out signal everywhere. Denied / opted-out visitors
+  // still yield aggregate data via Consent Mode's cookieless-ping modeling.
+  //
+  // Default: granted everywhere — maximum collection where it's lawful to do
+  // so without a banner.
+  gtag('consent', 'default', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted',
+    'security_storage': 'granted'
+  });
+
+  // Override: denied in OPT-IN / strict-consent regimes, where prior opt-in
+  // is legally required and we run no banner — EU/EEA + UK + Switzerland +
+  // Canada + Korea. Google's Consent Mode *modeling* still recovers aggregate
+  // analytics from the cookieless pings.
+  //
+  // The US state-privacy regimes are intentionally NOT in this list: they are
+  // opt-OUT (not opt-in), so cookie-based analytics is lawful here with no
+  // banner PROVIDED we honor the visitor's opt-out signal — which we do via
+  // Global Privacy Control immediately below. (Privacy policy must disclose
+  // the analytics cookies and the GPC / opt-out right.) Keep under legal
+  // review — US state privacy laws are expanding. (CA = Canada, not California.)
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'region': [
+      'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE',
+      'IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE',
+      'IS','LI','NO','GB','CH',
+      'CA','KR'
+    ]
+  });
+
+  // Honor Global Privacy Control everywhere. GPC (navigator.globalPrivacyControl,
+  // mirrored by the Sec-GPC request header) is a user-set browser signal that
+  // US state privacy laws (CCPA/CPRA, Colorado, Connecticut, …) recognize as a
+  // binding opt-out. If it is set we treat the visitor as opted out and deny
+  // all non-essential storage regardless of region — this is the mechanism
+  // that makes the no-banner collection in the US opt-out states lawful.
+  if (navigator.globalPrivacyControl === true) {
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+  }
+
+  // Maximize lawful measurement when consent is denied: redact ad identifiers,
+  // and preserve ad-click attribution through URL params instead of cookies.
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+
+  gtag('js', new Date());
+  gtag('config', 'G-LZBMND9VE8', { 'anonymize_ip': true });
+
+  // Load the gtag.js library OFF the critical path. The library is ~118 KB and
+  // ~300 ms of main-thread work; running it during initial load inflated Total
+  // Blocking Time. The consent/config commands above are already queued in
+  // dataLayer, so they run the instant the library evaluates them — no hit is
+  // lost, the measurement just starts once the page is idle. Loading waits for
+  // `load`, then an idle slot (timeout-capped so it can't be starved forever).
+  function loadGtag() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-LZBMND9VE8';
+    document.head.appendChild(s);
+  }
+  function scheduleGtag() {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag, { timeout: 3000 });
+    } else {
+      setTimeout(loadGtag, 1200);
+    }
+  }
+  if (document.readyState === 'complete') {
+    scheduleGtag();
+  } else {
+    window.addEventListener('load', scheduleGtag, { once: true });
+  }
+</script>

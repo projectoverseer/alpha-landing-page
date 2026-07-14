@@ -24,6 +24,7 @@ const SITE = '_site';
 // swap covers every page regardless of the absolute URL it was built into.
 const ASSETS = [
   { file: 'css/main.css', ref: '/css/main.css' },
+  { file: 'css/kienthuc.css', ref: '/css/kienthuc.css' },
   { file: 'js/bundle.js', ref: '/js/bundle.js' },
 ];
 

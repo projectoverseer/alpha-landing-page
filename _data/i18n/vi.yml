@@ -49,6 +49,9 @@ toc_projects: "Các dự án"
 toc_projects_id: "du-an"
 toc_reviews: "Đánh giá"
 toc_reviews_id: "danh-gia"
+# Link to the Kiến Thức hub (/kien-thuc/). Vietnamese-only content, so the key
+# exists only here — navbar.html renders the item only when the key is present.
+toc_knowledge: "Kiến thức"
 toc_our_story: "Về chúng tôi"
 toc_our_story_id: "ve-chung-toi"
 toc_support: "Chăm sóc khách hàng"

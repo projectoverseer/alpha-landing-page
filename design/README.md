@@ -24,6 +24,14 @@ deliberately kept in the repo (but excluded from the Jekyll build — see
 Read them in order. 01 → 02 → 03 is the spine: **strategy decides principles,
 principles decide architecture, architecture decides the system.**
 
+## Kiến Thức — the reading hub (separate product)
+
+`kien-thuc/` holds the design docs for the knowledge hub at `/kien-thuc/`
+(`01-philosophy.md` — the design philosophy; `02-authoring-guide.md` — how to
+publish a post). The hub is deliberately **not** styled by «Đúng» or anything
+in this folder's 01–07: it is a separate product with its own design system,
+fonts, and stylesheet. Don't "align" the two without an explicit owner decision.
+
 ## What we are keeping vs. rebuilding
 
 "Redesign from the ground up" means the **design language, narrative, and

@@ -1,3 +1,6 @@
+---
+permalink: /sitemap.xml
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
@@ -14,4 +17,20 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.alphasoftwaregroup.com/"/>
         <lastmod>2026-07-02</lastmod>
     </url>
+    <url>
+        <loc>{{ site.url }}/kien-thuc/</loc>
+        <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
+    </url>
+{%- comment -%}
+  Kiến Thức articles are generated from _posts automatically — a new post needs
+  no sitemap edit. The emitted <lastmod> is a build-date placeholder; the
+  update-sitemap.mjs step rewrites it honestly (keeps the previous date unless
+  the page's built HTML actually changed).
+{%- endcomment %}
+{%- for post in site.posts %}
+    <url>
+        <loc>{{ site.url }}{{ post.url }}</loc>
+        <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
+    </url>
+{%- endfor %}
 </urlset>

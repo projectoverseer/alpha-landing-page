@@ -1,0 +1,26 @@
+Phan Đức Tuấn Anh 31/5/2026
+RFT - CHỈ SỐ QUAN TRỌNG NHẤT TRONG XƯỞNG NHUỘM
+Trong xưởng nhuộm, có một chỉ số ảnh hưởng đến gần như mọi thứ: tiến độ giao hàng, chi phí sản xuất, sản lượng và chất lượng sản phẩm cuối.
+Chỉ số đó là RFT, Right First Time, tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu.
+Mẻ đạt RFT là mẻ không châm màu, không vào máy lại để sửa, và được kiểm tra chất lượng cuối cùng đánh giá đạt.
+RFT% = Số mẻ đạt chuẩn ngay lần đầu ÷ Tổng số mẻ nhuộm × 100
+Nên thống kê theo số mẻ mà không nên thống kê theo số mét hay số Kg vì mẻ nhỏ nếu không đạt cũng đại diện cho một trường hợp và nguyên nhân không đạt, tính luôn mẻ nhỏ để đảm bảo trọng tâm không bị lệch.
+CÁC BƯỚC GIÚP CẢI THIỆN RFT
+BƯỚC 1 - TRIỂN KHAI ĐO ĐẠC
+Nếu chưa có phần mềm, dùng file Excel với các cột sau:
+Mã số mẻ | Mặt hàng | Số lượng | Mã tổ hợp màu | Mã máy nhuộm | Đạt RFT (Đạt/Không đạt) | Nguyên nhân
+Việc ghi nhận diễn ra liên tục sau mỗi mẻ hoàn thành, không bỏ sót. Dữ liệu càng đầy đủ thì phân tích càng chính xác.
+BƯỚC 2 - PHÂN TÍCH SỐ LIỆU VÀ CHỌN TRỌNG TÂM
+Cuối mỗi tháng, tổng hợp và phân tích số liệu. Chọn thời gian 1 tháng để số liệu có tính thống kê đủ tin cậy.
+Phân tích theo các góc nhìn để tìm trọng tâm. Ví dụ:
+20% nhóm tổ hợp màu có RFT thấp nhất
+20% nhóm mặt hàng có RFT thấp nhất
+20% nhóm máy nhuộm có RFT thấp nhất
+Mỗi trọng tâm giao cho một người hoặc một team phụ trách. Mỗi team có KPI để phấn đấu.
+BƯỚC 3 - TÌM BIỆN PHÁP CẢI THIỆN
+Người hoặc team phụ trách phân tích nguyên nhân và thực hiện biện pháp cải thiện cụ thể cho trọng tâm được giao. Tập trung vào một trọng tâm trước, không dàn trải.
+BƯỚC 4 - HỌP XEM XÉT CỦA LÃNH ĐẠO
+Định kỳ hàng tháng hoặc hàng quý, lãnh đạo triệu tập cuộc họp để người hoặc team phụ trách báo cáo: hành động đã thực hiện, kết quả đạt được và mục tiêu cho kỳ tới. Mục tiêu nên lấy kết quả vừa đạt được cộng thêm 5-10%
+Nếu kết quả đã tốt, lãnh đạo cân nhắc ngưng trọng tâm đó và chuyển sang trọng tâm mới. Đây là cách giữ cho chương trình cải thiện luôn tập trung vào điểm còn yếu nhất.
+Công ty TNHH Phát Triển Phần Mềm Alpha:
+Website: https://www.alphasoftwaregroup.com/

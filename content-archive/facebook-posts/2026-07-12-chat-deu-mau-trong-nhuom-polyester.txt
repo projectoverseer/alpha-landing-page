@@ -1,0 +1,29 @@
+Phan Đức Tuấn Anh 12/7/2026
+CHẤT ĐỀU MÀU TRONG NHUỘM POLYESTER - VAI TRÒ VÀ CÁCH SỬ DỤNG
+VÌ SAO NHUỘM KHÔNG ĐỀU MÀU?
+Thuốc nhuộm phân tán không tan trong nước mà tồn tại dạng hạt cực nhỏ lơ lửng trong bể nhuộm. Khi nhiệt độ tăng lên trên 100°C, cấu trúc sợi polyester mới bắt đầu giãn nở, tạo lỗ xốp để hạt màu chui vào.
+Tốc độ hấp phụ thuốc nhuộm của sợi polyester diễn ra rất nhanh trong vùng nhiệt độ tới hạn 110-130°C. Không có chất đều màu, thuốc nhuộm lao vào sợi một cách hỗn loạn. Vùng nào tiếp xúc trước hút màu trước, gây loang màu cục bộ.
+MÀU NHẠT KHÓ NHUỘM ĐỀU HƠN MÀU ĐẬM
+Với màu nhạt, lượng thuốc nhuộm ít, mức độ cạnh tranh giữa các hạt thuốc nhuộm với các thể xốp trong xơ ít nên chúng đi vào xơ rất nhanh trong khi chưa kịp phân bố đều.
+Với màu đậm, lượng thuốc nhuộm lớn, các hạt thuốc nhuộm vào xơ trước cản trở lượng thuốc nhuộm còn trong dung dịch làm cho tốc độ đi vào xơ chậm dần. Vì vậy mà màu đậm dễ đều màu hơn.
+HAI CƠ CHẾ HOẠT ĐỘNG CỦA CHẤT ĐỀU MÀU.
+THỨ NHẤT - RETARDING (LÀM CHẬM):
+Chất đều màu chiếm chỗ trên sợi hoặc giữ hạt màu trong dung dịch, không cho thuốc nhuộm đi vào sợi quá nhanh ở giai đoạn đầu gia nhiệt.
+THỨ HAI - LEVELING (DỊCH CHUYỂN):
+Ở giai đoạn giữ nhiệt 130°C, chất đều màu giúp thuốc nhuộm đã đi vào vùng đậm chuyển ra, hòa lại vào dung dịch và di chuyển sang vùng nhạt hơn. Liên tục sửa lỗi trong suốt 45-60 phút giữ nhiệt.
+Trong thực tế,  chất đều màu kết hợp cả hai cơ chế nhưng có chất nghiên về levelling nhiều hơn; có chất nghiên về retarding nhiều hơn. Nhiệm vụ của kỹ thuật là chọn dòng sản phẩm thiên về cơ chế nào phù hợp với điều kiện máy móc và loại thuốc nhuộm đang sử dụng.
+KHI NÀO ƯU TIÊN RETARDING, KHI NÀO ƯU TIÊN LEVELING?
+ƯU TIÊN RETARDING KHI:
+Thuốc nhuộm có tốc độ ăn màu nhanh, nhạy với tốc độ tăng nhiệt
+Máy nhuộm cũ, tốc độ tuần hoàn dịch nhuộm chậm
+Nhuộm các tông màu rất nhạt.
+ƯU TIÊN LEVELLING KHI
+Vải có mật độ dày, thiết kế chặt, dòng chảy xuyên thấu kém dẫn đến thuốc nhuộm khó dịch chuyển từ chỗ đậm đến chỗ nhạt.
+CÁCH TEST TẠI PHÒNG LAB
+TEST RETARDING:
+Nhuộm hai mẫu vải cùng công thức màu nhạt, một mẫu có chất đều màu đối chứng, một mẫu có chất đều màu cần khảo sát. Ngắt máy và lấy mẫu ngay khi nhiệt độ chạm 115°C. So sánh độ đậm màu hai mẫu. Mẫu có tính Retarding tốt sẽ nhạt hơn.
+TEST LEVELING:
+Chuẩn bị một miếng vải đã nhuộm màu đậm và một miếng vải trắng cùng trọng lượng. Cho cả cặp vào cốc nhuộm cùng chất đều màu cần test, nâng nhiệt lên 130°C, giữ 45 phút, không cho thêm thuốc nhuộm. Chất đều màu có hiệu ứng leveling càng mạnh thì miếng vải trắng sẽ dây màu lên màu càng đậm.
+Hiểu rõ cơ chế này bạn sẽ chọn đúng chất đều màu cho vấn đề gặp phải và bạn sẽ thấy rằng nhiều trường hợp không cần chất đều màu. Thậm chí có nhiều trường hợp dùng chất đều màu sẽ cho kết quả không tốt về độ lập lại màu, độ đậm màu.
+Công ty TNHH Phát Triển Phần Mềm Alpha: phát triển phần mềm chuyên cho ngành Dệt - Nhuộm.
+Website: https://www.alphasoftwaregroup.com/

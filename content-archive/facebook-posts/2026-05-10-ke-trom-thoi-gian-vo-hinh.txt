@@ -1,0 +1,32 @@
+Phan Đức Tuấn Anh 10/5/2026
+KẺ TRỘM THỜI GIAN VÔ HÌNH - TẠI SAO SÁNG THỨ HAI LÀ NGÀY MẤT TIỀN NHẤT TRONG TUẦN?
+Bài trước mình nói đến 3 nguyên nhân chính làm mất OEE trong xưởng nhuộm. Hôm nay đi sâu vào nguyên nhân đầu tiên và tính thử xem nó đang lấy đi bao nhiêu tiền của bạn mỗi năm.
+VẤN ĐỀ ÍT AI ĐO
+Sáng thứ Hai, công nhân vào xưởng đúng giờ. Máy móc nguyên vẹn. Không có sự cố gì. Nhưng chưa nhuộm được mẻ nào.
+Lý do: hệ thống nhiệt chưa sẵn sàng.
+Trong xưởng nhuộm, có hai hệ thống nhiệt song song cần khởi động:
+THỨ NHẤT - Lò hơi:
+Nhóm lò và chờ đủ áp suất hơi tối thiểu 7 kgf mất khoảng 2 tiếng. Nhưng 20 máy không thể đồng thời lấy hơi, phải lần lượt từng nhóm. Thêm 1- 2 tiếng nữa.
+THỨ HAI - Lò dầu tải nhiệt:
+lò dầu tải nhiệt cần nhóm lò và chờ dầu lên đủ nhiệt độ vận hành: 2-2.5 tiếng. Sau đó các máy sử dụng nhiệt như máy sấy, máy căng kim lần lượt lên đủ nhiệt: thêm 1-1.5 tiếng.
+Tổng cộng: xưởng mất 3-4 tiếng sáng thứ Hai chỉ để "hâm nóng" hệ thống chưa nhuộm được mẻ nào.
+NHƯNG CÒN MỘT ĐẦU NỮA BỊ BỎ QUÊN
+Ít ai để ý: cuối tuần cũng mất thời gian tương tự nhưng theo chiều ngược lại.
+Các máy sử dụng nhiệt không thể tắt đột ngột, phải làm nguội đến nhiệt độ an toàn trước khi ngưng. Lò dầu tải nhiệt cũng vậy, phải làm nguội dầu đến ngưỡng an toàn mới được ngưng lò.
+Thực tế: cuối ca thứ Bảy, các máy phải ngưng nhuộm sớm ít nhất 1 tiếng để đủ thời gian làm nguội an toàn. 1 tiếng đó, máy đang dừng trong khi vẫn còn trong ca làm việc.
+CON SỐ THỰC SỰ
+Mỗi tuần một xưởng 20 máy mất:
+Sáng thứ Hai: ~4 tiếng × 20 máy = 80 giờ máy
+Cuối tuần: ~1 tiếng × 20 máy = 20 giờ máy
+Tổng: 100 giờ máy/tuần
+Quy ra mẻ (mỗi mẻ ~6 tiếng): khoảng 17 mẻ mất mỗi tuần.
+Nếu giá gia công 40.000đ/kg, mỗi mẻ 200kg:
+17 mẻ × 8.000.000đ × 52 tuần = gần 7 tỷ đồng/năm
+(200kg/mẻ chỉ là ví dụ để có con số tham khảo. Bạn tự điền khối lượng mẻ thực tế của xưởng mình để có con số sát hơn.)
+Nhìn theo cách khác: 17 mẻ mất mỗi tuần tương đương năng lực của gần 1 máy nhuộm chạy cả tuần. Chỉ bằng cách tối ưu quy trình khởi động và tắt máy - xưởng có thêm năng lực tương đương 1 máy nhuộm mà không cần bỏ một đồng vốn nào.
+VẬY CÓ CẢI THIỆN ĐƯỢC KHÔNG?
+Hoàn toàn có, nhưng không phải bằng cách "cố gắng hơn". Cần thay đổi cách tổ chức vận hành.
+Bài tới mình sẽ chia sẻ cụ thể về kẻ trộm thứ hai: thời gian chuyển đổi mặt hàng - thứ mà mỗi lần xảy ra khác nhau tùy người đứng máy, và tại sao đó là dấu hiệu của một vấn đề lớn hơn.
+Bạn nào đang theo dõi chỉ số này tại xưởng, comment chia sẻ kinh nghiệm nhé.
+Bài viết thuộc bản quyền của Phan Đức Tuấn Anh - Founder Công ty TNHH Phát Triển Phần Mềm Alpha:
+Website: https://www.alphasoftwaregroup.com/

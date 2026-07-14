@@ -1,0 +1,25 @@
+# Data for the Kiến Thức hub (/kien-thuc/) — topics, series, author.
+# Design reference: design/kien-thuc/01-philosophy.md
+
+author:
+  name: "Phan Đức Tuấn Anh"
+  role: "Nhà sáng lập Alpha Software"
+
+# Hub sections, in display order. Posts declare `topic: <key>` in front matter.
+topics:
+  van-hanh:
+    label: "Vận hành & hiệu suất"
+    desc: "Đo lường và cải thiện OEE, RFT — thêm doanh thu và lợi nhuận từ chính số máy đang có."
+  ky-thuat-nhuom:
+    label: "Kỹ thuật nhuộm"
+    desc: "Phân tích lỗi nhuộm thường gặp và cách xử lý tận gốc, từ kinh nghiệm sản xuất thực tế."
+  do-mau:
+    label: "Màu sắc & đo màu"
+    desc: "Lý thuyết màu sắc, máy quang phổ và quy trình so màu chuẩn giữa nhà máy và khách hàng."
+
+# Series metadata. Posts declare `series: <key>` + `series_part: n`.
+series:
+  so-hoa-oee:
+    label: "Số hóa OEE trong xưởng nhuộm"
+  ly-thuyet-mau-sac:
+    label: "Lý thuyết màu sắc trong ngành nhuộm"

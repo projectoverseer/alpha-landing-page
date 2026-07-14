@@ -6,10 +6,21 @@ url: https://www.alphasoftwaregroup.com
 baseurl: ""
 facebook_page: https://www.facebook.com/alphasoftwaregroup
 
+# Kiến Thức hub (/kien-thuc/) — posts are articles there.
+# Layout + permalink centralized so a post's front matter stays minimal.
+permalink: /kien-thuc/:title/
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "kien-thuc-article"
+
 # Build settings
 exclude:
   - node_modules/
   - .assets_backup/
+  - content-archive/
   - design/
   - docs/
   - performance-audits/
