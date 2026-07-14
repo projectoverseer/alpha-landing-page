@@ -89,6 +89,8 @@ _includes/        page skeleton + one file per section + SVG icons
 _sass/_base.scss  all component styles (imported last from css/main.scss)
 css/main.scss     design tokens (color/type/space) + Bootstrap variable layer
 js/               custom.js (nav/reviews/email) · squircle.js (φ³ corners)
+fonts/            self-hosted woff2 subsets — Public Sans (site) · Literata +
+                  Inter (hub) · Alpha Math (hub equations; see fonts/math/README.md)
 design/           strategy, principles, design system, build notes (00–07)
 performance-audits/  Lighthouse history + Cloudflare change log
 docs/             BUILT OUTPUT — never edit by hand, always via npm run build

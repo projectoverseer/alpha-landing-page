@@ -53,9 +53,29 @@ const decode = (s) =>
 // ourselves, so unwrap it and keep the markup to the <math> element alone.
 const unwrap = (html) => html.replace(/^<span class="katex">/, '').replace(/<\/span>$/, '');
 
+// Variables are set UPRIGHT here — no italic L, C, S. Two reasons, and the
+// second is the one that matters.
+//
+// It is the owner's call: in a Vietnamese dyehouse, ΔE* and S_L are written
+// upright on the spec sheet and on the machine, and the article should look like
+// the trade it is written for, not like a physics paper.
+//
+// And it is the only way to keep the letters in Literata. A bare <mi> has no
+// font-style — the browser instead applies `text-transform: math-auto`, which
+// SWAPS THE CHARACTER: L (U+004C) becomes 𝐿 (U+1D43F, Mathematical Italic
+// Capital L). No reading face has glyphs in that block, so every variable fell
+// out of Literata and into whatever maths font the OS shipped — which is exactly
+// what made the equations look foreign. `mathvariant="normal"` (the one
+// mathvariant value MathML Core kept) turns the substitution off, and the plain
+// ASCII letter renders in the body face like the rest of the sentence.
+//
+// KaTeX already writes it on multi-letter identifiers (\mathrm{CMC}) and on Δ;
+// the regex only matches an <mi> that carries no attribute at all.
+const upright = (html) => html.replaceAll('<mi>', '<mi mathvariant="normal">');
+
 const render = (tex, displayMode, file) => {
   try {
-    return unwrap(katex.renderToString(decode(tex), { output: 'mathml', displayMode }));
+    return upright(unwrap(katex.renderToString(decode(tex), { output: 'mathml', displayMode })));
   } catch (err) {
     throw new Error(`optimize:math  ✗ ${file}\n      ${tex.trim()}\n      ${err.message}`);
   }

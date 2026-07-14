@@ -24,6 +24,7 @@ exclude:
   - design/
   - docs/
   - performance-audits/
+  - fonts/math/README.md   # dev note; GUST-FONT-LICENSE.txt DOES ship, with the font
   - package-lock.json
   - package.json
   - optimize-js.mjs

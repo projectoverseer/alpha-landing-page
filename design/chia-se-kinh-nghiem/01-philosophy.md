@@ -56,9 +56,11 @@ optimized for the *third consecutive article*, not the first impression.
      descriptions). A serif commissioned for long-form screen reading,
      with true Vietnamese diacritics and a true italic.
    - **Inter** — all chrome (nav, metadata, labels, buttons, captions).
-   No decorative type, no third family, no Inter Display for now — fewer
-   voices, calmer page. Body text is 19px; Vietnamese stacked diacritics
-   get line-height ≥ 1.7 so tone marks never collide between lines.
+   No decorative type, no Inter Display for now — fewer voices, calmer page.
+   Body text is 19px; Vietnamese stacked diacritics get line-height ≥ 1.7 so
+   tone marks never collide between lines.
+   *(**Alpha Math** is not a third voice — it draws the radicals and stretched
+   brackets no reading face can, and nothing else. See §4, Maths.)*
 
 4. **Calm, uniform baseline.** One background across the whole page. No
    alternating section tints, no dividers where whitespace can do the job.
@@ -146,8 +148,8 @@ differently on purpose.
 **A rule of thumb written in Vietnamese** — `OEE = Sẵn sàng × Hiệu suất × Chất
 lượng`, `Availability = Thời gian chạy thực tế ÷ Thời gian lên lịch chạy` — is a
 sentence, not an equation. It stays prose in a blockquote, with `×`, `÷`, `√`
-typed as characters. Wrapping Vietnamese words in maths markup would set them in
-italic maths variables and say something false about them.
+typed as characters. Wrapping Vietnamese words in maths markup would say
+something false about them.
 
 **An actual equation** — Greek, superscripts, subscripts, radicals, fractions —
 is written as **LaTeX between `$$…$$`** and rendered to **MathML at build time**
@@ -157,14 +159,40 @@ reader speaks and a crawler indexes, and the original TeX travels inside the
 MathML as an `<annotation>`. This replaced (July 2026) a bad first attempt at
 typing equations as Unicode soup with `<sub>` tags.
 
-Blending: `<mi>`/`<mn>`/`<mtext>` are set in Literata so the letters in a formula
-match the letters in the sentence beside it; radicals, stretched brackets and
-Greek are left to the browser's maths font, which is the only font carrying the
-OpenType MATH table those shapes are built from. Never force Literata on them.
+An equation is set in the reading face and belongs to the sentence around it.
+Three decisions get it there, and the third is the one that makes the other two
+work:
 
-Hard rules, both enforced by `verify.mjs`: an unrendered `\[`/`\(` fails the
-build, and **an equation is never wrapped in `**…**`** — the HTML minifier treats
-`<math>` as a block element and swallows the word space beside it.
+1. **Letters, digits and words are Literata** (`mi`, `mn`, `mtext`), so the ΔE\*
+   inside a formula is the same shape as the ΔE\* in the paragraph beside it.
+   Greek is part of that: Literata's **greek subset** is self-hosted for one
+   letter, Δ, which carries the whole colour-deviation post.
+2. **Everything else is Alpha Math** — the radical, brackets stretched around a
+   fraction, the operators. It is a subset of TeX Gyre Schola Math (New Century
+   Schoolbook), chosen because it is the maths face built on Literata's virtues:
+   sturdy serifs, low contrast, large x-height. It exists because *only a font
+   with an OpenType `MATH` table can draw a √ sized to its contents*, and no
+   reading face has one. Left to itself, the browser reaches for whatever its OS
+   ships — Cambria Math, Latin Modern, STIX — and the equations look like a
+   different website on every machine. Provenance and licence:
+   `fonts/math/README.md`.
+3. **Variables are upright, never italic.** An italic variable is not the letter
+   it looks like: the browser applies `text-transform: math-auto` and *substitutes
+   the character* — `L` becomes `𝐿` (U+1D43F, Mathematical Italic Capital L), a
+   codepoint no reading face on earth has a glyph for. So an italic variable
+   cannot be Literata; it always falls back to the OS maths font. Upright is the
+   owner's call *and* the only way to keep the letters in the body face.
+   `optimize-math.mjs` writes `mathvariant="normal"` on every `<mi>`.
+
+Hard rules, all three enforced by `verify.mjs`: an unrendered `\[`/`\(` fails the
+build; a bare `<mi>` fails the build; and **an equation is never wrapped in
+`**…**`** — the HTML minifier treats `<math>` as a block element and swallows the
+word space beside it.
+
+Where a subscript is wanted but maths markup is not — a heading, which stays
+plain text — use `<sub>`: `## ΔE<sub>CMC</sub>: …`. Search engines read it as
+ordinary text. In `title:` / `description:` front matter, where even that is
+impossible, write it out: `ΔE CMC (2:1)`.
 
 ## 5. Page anatomy
 
@@ -217,28 +245,33 @@ in the bar — no second link competing with it.
   Non-negotiable: with JS off, or if the script fails, **every post is still
   in the HTML and visible**. Paging is a comfort, never a gate — on the content
   or on the crawler.
-- **The topic strip** (added July 2026) sits above the first post: every topic
-  in the library on one line, indigo, separated by `·`, **ordered by how many
-  posts carry it** so the row opens on what this library is mostly about and
-  re-orders itself as the archive grows. It is a map, not a menu bar — it links
-  *out* to the topic pages and never chops this feed into sections.
+- **The topic strip** (added July 2026) sits above the first post, prefixed
+  "Theo chủ đề:": every topic in the library on one line, indigo, separated by
+  `·`, **ordered by how many posts carry it** so the row opens on what this
+  library is mostly about and re-orders itself as the archive grows. It is a map,
+  not a menu bar — it links *out* to the topic pages and never chops this feed
+  into sections. **It belongs to the hub and to no other page**: it is what you
+  are handed on arrival, not furniture to carry around.
 
 **Topic page (`/chia-se-kinh-nghiem/chu-de/<key>/`)** — every post carrying one
 topic, newest first. Unlike the hub it introduces itself (heading + the topic's
 one-line description from the data file, so the taxonomy stays the single source
-of truth and no SEO copy is invented per page). Then the same topic strip, with
-the current one marked, and then the same feed — whole, no drip. Its kicker links
-back up to the hub. Every tag anywhere on the hub — the card's, the article's
-kicker, the strip — points here.
+of truth and no SEO copy is invented per page) — and then it gets out of the way.
+No kicker, no strip of the other topics, no drip: **the page is its list**, and
+the way back up is the lockup in the title bar (owner's call). Every tag anywhere
+on the hub — the card's, the article's kicker, the strip — points here.
 
 - Topics remain metadata, not structure: they label an entry and an article and
   now collect them, but they never chop the *hub* feed into sections.
 
 **Article (`/chia-se-kinh-nghiem/<slug>/`)**:
 1. Title bar (above).
-2. Title block: topic label (Inter, small caps feel), H1, standfirst
-   (description), byline — author · date · reading time. **No "bài n/N"** —
-   an article is a piece of writing, not a lesson in a course.
+2. Title block: topic label (Inter, small caps feel), H1, **byline** — author ·
+   date · reading time — then the standfirst (description), then the picture.
+   The byline sits directly under the title because it is the line that says
+   *you are reading an article*, and the reader should meet it before the prose,
+   not after the picture. **No "bài n/N"** — an article is a piece of writing,
+   not a lesson in a course.
 3. Body (converted post, with editorial CTAs per §6).
 4. Series footer: "Bài trước / Bài sau" within the same series — continuity
    offered, never a syllabus imposed.
@@ -283,9 +316,14 @@ Restraint rules (hard):
 
 ## 7. Performance, accessibility, SEO
 
-- **Budget** (article page, cold cache): HTML < 30 KB, CSS < 25 KB min,
-  fonts ≤ ~160 KB (subset woff2, self-hosted), JS ≤ 5 KB — squircle only
-  (+ GA4 deferred). Equations cost nothing: they ship as MathML (§4).
+- **Budget** (article page, cold cache): HTML < 30 KB — the colour-deviation post,
+  with 50 equations in it, sits right on the line at 30.1 KB; MathML is verbose,
+  and that verbosity *is* the equation being real text — CSS < 25 KB min,
+  fonts ≤ ~200 KB (subset woff2, self-hosted), JS ≤ 5 KB — squircle only
+  (+ GA4 deferred). Equations ship as MathML, so they cost **no JavaScript at
+  all**; they do cost the 67 KB Alpha Math face, and only on the pages that have
+  one — the `@font-face` has no `unicode-range`, so the file is fetched when a
+  `<math>` element is on the page and never otherwise (§4).
 - Semantic HTML (`article`, `time`, `nav`, `figure`, `math`); skip link; visible
   focus styles; AA contrast minimum everywhere.
 - Each article: canonical URL, `og:type=article`, `article:published_time`,

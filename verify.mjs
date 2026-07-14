@@ -38,8 +38,10 @@ const MUST_SHIP = [
   'fonts/public-sans/public-sans-vietnamese.woff2',
   'fonts/literata/literata-latin.woff2',
   'fonts/literata/literata-vietnamese.woff2',
+  'fonts/literata/literata-greek.woff2',
   'fonts/inter/inter-latin.woff2',
   'fonts/inter/inter-vietnamese.woff2',
+  'fonts/math/alpha-math.woff2',
 ];
 for (const f of MUST_SHIP) {
   if (!existsSync(join(SITE, f))) errors.push(`missing required file: ${f}`);
@@ -79,6 +81,15 @@ for (const name of htmlFiles) {
   // so the rule is simply never to write `**$$…$$**`, and this is the tripwire.
   if (/<(strong|em)><math[\s\S]*?<\/math><\/\1>/.test(html)) {
     errors.push(`${name}: an equation is wrapped in <strong>/<em> — the minifier eats the space beside it; drop the ** ** around the $$…$$`);
+  }
+
+  // A bare <mi> is an italic variable, and an italic variable is not the letter
+  // it looks like: the browser substitutes its Mathematical Italic codepoint,
+  // which Literata has no glyph for, so it drops out of the body face and into
+  // the OS maths font. optimize:math writes mathvariant="normal" on every one —
+  // if a bare <mi> reaches the page, that step regressed.
+  if (/<mi>/.test(html)) {
+    errors.push(`${name}: an <mi> lost its mathvariant="normal" — the variable will render italic, in the wrong font`);
   }
 
   const refs = new Set();

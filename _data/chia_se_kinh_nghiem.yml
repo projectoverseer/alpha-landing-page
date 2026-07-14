@@ -93,8 +93,8 @@ images:
     w: 1344
     h: 733
     sm: true
-    alt: "So sánh các công thức độ lệch màu trong ngành nhuộm: ΔE* theo hệ L*a*b* và hệ L*C*h*, đặt cạnh công thức ΔEcmc có hàm trọng số — ngành dệt may nên chọn ΔEcmc tỷ lệ 2:1"
-    caption: "ΔE* coi ba thành phần lệch màu quan trọng như nhau; ΔEcmc(2:1) mới bám sát cảm nhận của mắt người."
+    alt: "So sánh các công thức độ lệch màu trong ngành nhuộm: ΔE* theo hệ L*a*b* và hệ L*C*h*, đặt cạnh công thức ΔE CMC có hàm trọng số — ngành dệt may nên chọn ΔE CMC tỷ lệ 2:1"
+    caption: "ΔE* coi ba thành phần lệch màu quan trọng như nhau; ΔE CMC (2:1) mới bám sát cảm nhận của mắt người."
   cua-do-aperture-may-quang-pho:
     w: 1312
     h: 425

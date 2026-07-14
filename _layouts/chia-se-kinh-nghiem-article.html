@@ -23,15 +23,12 @@
           {%- endcomment %}
           <p class="kt-kicker"><a href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ page.topic }}/">{{ kt_topic.label }}</a></p>
           <h1>{{ page.title }}</h1>
-          <p class="kt-standfirst">{{ page.description }}</p>
           {%- comment -%}
-            The picture sits between the standfirst and the byline — deliberately
-            BELOW the description here, while the feed card puts the same picture
-            ABOVE it. The owner wants to read both placements side by side.
+            The byline goes directly under the title — who wrote this, when, and
+            how long it will take. It is the line that says "you are reading an
+            article, not a page", so the reader meets it before the standfirst
+            rather than after the picture (owner's call).
           {%- endcomment -%}
-          {%- if page.image %}
-          {% include chia-se-kinh-nghiem/figure.html name=page.image lead=true %}
-          {%- endif %}
           {%- assign kt_words = content | strip_html | number_of_words -%}
           {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil %}
           <p class="kt-byline">
@@ -39,6 +36,15 @@
             · <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time>
             · {{ kt_minutes }} phút đọc
           </p>
+          <p class="kt-standfirst">{{ page.description }}</p>
+          {%- comment -%}
+            The picture closes the title block — deliberately BELOW the
+            description here, while the feed card puts the same picture ABOVE it.
+            The owner wants to read both placements side by side.
+          {%- endcomment -%}
+          {%- if page.image %}
+          {% include chia-se-kinh-nghiem/figure.html name=page.image lead=true %}
+          {%- endif %}
         </header>
 
         <div class="kt-body">

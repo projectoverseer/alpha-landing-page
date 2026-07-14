@@ -1,6 +1,6 @@
 ---
-title: "Các giá trị trả về từ máy đo màu: L*a*b*, ΔE* và ΔEcmc"
-description: "Ý nghĩa bộ số CIELAB theo hai hệ tọa độ, độ lệch màu ΔE* và giới hạn của nó — và vì sao ngành dệt may dùng ΔEcmc(2:1) để khớp với cảm nhận thật của mắt người."
+title: "Các giá trị trả về từ máy đo màu: L*a*b*, ΔE* và ΔE CMC"
+description: "Ý nghĩa bộ số CIELAB theo hai hệ tọa độ, độ lệch màu ΔE* và giới hạn của nó — và vì sao ngành dệt may dùng ΔE CMC (2:1) để khớp với cảm nhận thật của mắt người."
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 3
@@ -53,27 +53,27 @@ Hai điểm mắt người khác với toán học:
 
 Đây là giới hạn cốt lõi của $$\Delta E^*$$: con số toán học không phản ánh đúng cảm nhận thực tế của mắt người.
 
-## ΔEcmc: giải pháp cho vấn đề trên
+## ΔE<sub>CMC</sub>: giải pháp cho vấn đề trên
 
-$$\Delta E_{\mathrm{cmc}}$$ ra đời năm 1984, do Ủy ban Đo màu của Hiệp hội Nhà nhuộm và Thợ nhuộm Anh (CMC) phát triển, để giải quyết đúng vấn đề đó.
+$$\Delta E_{\mathrm{CMC}}$$ ra đời năm 1984, do Ủy ban Đo màu của Hiệp hội Nhà nhuộm và Thợ nhuộm Anh (CMC) phát triển, để giải quyết đúng vấn đề đó.
 
 Công thức:
 
-$$\Delta E_{\mathrm{cmc}} = \sqrt{\left(\frac{\Delta L^*}{l\,S_L}\right)^2 + \left(\frac{\Delta C^*}{c\,S_C}\right)^2 + \left(\frac{\Delta h^*}{S_H}\right)^2}$$
+$$\Delta E_{\mathrm{CMC}} = \sqrt{\left(\frac{\Delta L^*}{l\,S_L}\right)^2 + \left(\frac{\Delta C^*}{c\,S_C}\right)^2 + \left(\frac{\Delta h^*}{S_H}\right)^2}$$
 
-Như bạn thấy, $$\Delta E_{\mathrm{cmc}}$$ cũng là căn bậc hai của 3 thành phần $$\Delta L^*$$, $$\Delta C^*$$ và $$\Delta h^*$$ như công thức $$\Delta E^*$$ trong hệ tọa độ cực, nhưng mỗi thành phần được nhân với một cụm trọng số.
+Như bạn thấy, $$\Delta E_{\mathrm{CMC}}$$ cũng là căn bậc hai của 3 thành phần $$\Delta L^*$$, $$\Delta C^*$$ và $$\Delta h^*$$ như công thức $$\Delta E^*$$ trong hệ tọa độ cực, nhưng mỗi thành phần được nhân với một cụm trọng số.
 
 Trong đó $$S_L$$, $$S_C$$, $$S_H$$ là các hàm trọng số phụ thuộc vào vị trí màu trong không gian màu. $$l$$ và $$c$$ là hệ số do người dùng chọn, thường dùng tỷ lệ 2:1 trong ngành nhuộm, nghĩa là dung sai cho độ sáng tối được nới gấp đôi so với dung sai của ánh màu.
 
 Để có được các trọng số $$S_L$$, $$S_C$$, $$S_H$$, người ta thực hiện khảo sát so sánh độ lệch khi đo bằng máy và nhận xét bằng mắt của người với quy mô rất lớn rồi tinh chỉnh các hệ số này.
 
-Nhiều người nói "không gian màu cmc" — đó là phát biểu sai vì không có không gian màu như vậy. Nó chỉ là "công thức cmc" để "bóp méo" có chủ đích không gian màu CIELAB: kéo giãn hoặc nén các vùng màu sao cho độ lệch màu tính được phản ánh đúng hơn với cảm nhận của mắt người. Vùng màu tối được nén lại, vùng màu tươi sáng được kéo giãn ra.
+Nhiều người nói "không gian màu CMC" — đó là phát biểu sai vì không có không gian màu như vậy. Nó chỉ là "công thức CMC" để "bóp méo" có chủ đích không gian màu CIELAB: kéo giãn hoặc nén các vùng màu sao cho độ lệch màu tính được phản ánh đúng hơn với cảm nhận của mắt người. Vùng màu tối được nén lại, vùng màu tươi sáng được kéo giãn ra.
 
 Một lưu ý khi đo độ lệch màu:
 
-> Với ngành dệt – may, bạn nhớ chọn $$\Delta E_{\mathrm{cmc}}(2{:}1)$$ khi đo màu trên máy quang phổ.
+> Với ngành dệt – may, bạn nhớ chọn $$\Delta E_{\mathrm{CMC}}(2{:}1)$$ khi đo màu trên máy quang phổ.
 
-Kết quả: $$\Delta E_{\mathrm{cmc}}$$ gần hơn với câu trả lời thực tế "mắt người có thấy lệch không?" so với $$\Delta E^*$$ thuần túy. Đây là lý do $$\Delta E_{\mathrm{cmc}}$$ được sử dụng rộng rãi trong kiểm soát màu ngành nhuộm hiện đại.
+Kết quả: $$\Delta E_{\mathrm{CMC}}$$ gần hơn với câu trả lời thực tế "mắt người có thấy lệch không?" so với $$\Delta E^*$$ thuần túy. Đây là lý do $$\Delta E_{\mathrm{CMC}}$$ được sử dụng rộng rãi trong kiểm soát màu ngành nhuộm hiện đại.
 
 {% include chia-se-kinh-nghiem/cta.html variant="inline" %}
 

@@ -1,7 +1,8 @@
 {%- comment -%}
   Every topic in the library, on one line, as links to the topic pages
-  (/chia-se-kinh-nghiem/chu-de/<key>/). Sits above the first post on the hub and
-  on every topic page — the one place the reader can see the whole map.
+  (/chia-se-kinh-nghiem/chu-de/<key>/). Sits above the first post on the hub, and
+  only there — it is the map you are handed on arrival. A topic page does not
+  repeat it: that page has one job, its own list (owner's call).
 
   Ordered by how many posts carry the topic, most first: the strip should open on
   what this library is mostly about, and it re-orders itself as the archive grows.
@@ -29,10 +30,15 @@
 {%- endfor -%}
 {%- assign kt_rows = kt_rows | sort | reverse -%}
 <nav aria-label="Chủ đề" class="kt-topics">
+  {%- comment -%}
+    The label is spaced by CSS, not by a space in the markup — the minifier is
+    free to collapse whitespace between these inline elements, and it does.
+  {%- endcomment -%}
+  <span class="kt-topics-label">Theo chủ đề:</span>
   {%- for kt_row in kt_rows -%}
   {%- assign kt_key = kt_row | split: "|" | last -%}
   {%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[kt_key] -%}
   {%- unless forloop.first %}<span aria-hidden="true"> · </span>{% endunless -%}
-  <a href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ kt_key }}/"{% if page.topic == kt_key %} aria-current="page"{% endif %}>{{ kt_topic.label }}</a>
+  <a href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ kt_key }}/">{{ kt_topic.label }}</a>
   {%- endfor %}
 </nav>

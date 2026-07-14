@@ -15,16 +15,14 @@
       {%- comment -%}
         Unlike the hub, a topic page introduces itself: the reader arrived from a
         tag or from search, so the heading and the one-line description say what
-        this collection is. The kicker is the way back up — the hub is this
-        page's parent, the way a topic is an article's parent.
+        this collection is — and then it gets out of the way. No kicker, no strip
+        of the other topics: this page has one job, which is the list below it,
+        and the way back up is the lockup in the title bar (owner's call).
       {%- endcomment -%}
       <header class="kt-topic-head">
-        <p class="kt-kicker"><a href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a></p>
         <h1>{{ kt_topic.label }}</h1>
         <p class="kt-standfirst">{{ kt_topic.desc }}</p>
       </header>
-
-      {% include chia-se-kinh-nghiem/topics.html %}
 
       {%- comment -%}
         No drip here: a topic holds a fraction of the archive, so the whole list

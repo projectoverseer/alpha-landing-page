@@ -121,7 +121,11 @@ library. A malformed formula fails the build, loudly.
 So: **never type an equation by hand as Unicode with `<sub>` tags again.** That
 is what `ΔEcmc = √[(ΔL*/lS<sub>L</sub>)²…]` was, and it was wrong on every count.
 
-Three rules:
+The letters come out **upright and in Literata**, matching the prose around them
+— that is deliberate and automatic; you do not write `\mathrm{}` around your
+variables to get it. Write `S_L`, not `\mathrm{S}_\mathrm{L}`.
+
+Four rules:
 
 1. **Never bold or italicise an equation** — no `**$$…$$**`. The HTML minifier
    treats `<math>` as a block element and swallows the word space next to it
@@ -133,6 +137,13 @@ Three rules:
    plain text by nature (they become the `<title>`, the og: tags, the feed card).
 3. **A single `*` is safe in a heading; `L*a*b*` is not** — Markdown reads the
    inner pair as emphasis, so that one still needs `L\*a\*b\*`.
+4. **A subscript in a heading is `<sub>`, not maths**: `## ΔE<sub>CMC</sub>: …`.
+   Google reads it as ordinary text; it costs nothing. In `title:` and
+   `description:`, where not even HTML is allowed, spell it out — `ΔE CMC (2:1)`,
+   the way the trade writes it on a spec sheet.
+
+An acronym in a subscript is set in **capitals** (`\Delta E_{\mathrm{CMC}}`,
+`ΔE<sub>CMC</sub>`) — CMC is a committee, not a word.
 
 ## 4. Insert CTAs
 

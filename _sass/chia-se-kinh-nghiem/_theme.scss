@@ -179,9 +179,9 @@ body.kt {
 }
 
 // Every topic in the library, most-written-about first — the map of the place,
-// above the first post (hub) and under the heading (topic page). Indigo, plain
-// and obvious: unlike the tag under a card, this row exists only to be clicked,
-// and indigo is what "you can act on this" looks like here (§3).
+// above the first post on the hub (and nowhere else). Indigo, plain and obvious:
+// unlike the tag under a card, this row exists only to be clicked, and indigo is
+// what "you can act on this" looks like here (§3).
 .kt-topics {
   margin: 2rem 0 0;
   font-size: 0.9375rem;
@@ -196,15 +196,16 @@ body.kt {
     }
   }
 
-  // The topic you are already reading: still a link (it is the canonical URL of
-  // this list), but weighted so the row shows you where you are.
-  a[aria-current="page"] {
-    font-weight: 600;
-  }
-
+  // Both the "Theo chủ đề:" label and the · separators: metadata grey, so the
+  // row reads as a few blue links with quiet scaffolding, not as a sentence.
   span {
     color: var(--ink-3);
   }
+}
+
+// Spaced by margin, not by a space in the markup — see the note in topics.html.
+.kt-topics-label {
+  margin-right: 0.35em;
 }
 
 // Reverse-chronological, ungrouped — newest post first, older ones drip in
@@ -336,7 +337,7 @@ body.kt {
 }
 
 // A topic page introduces its collection, then hands over to the feed — so its
-// header has no bottom margin of its own; the topics strip below supplies it.
+// header has no bottom margin of its own; the feed's own top margin supplies it.
 .kt-topic-head {
   margin: 3.5rem 0 0;
 }
@@ -368,8 +369,9 @@ body.kt {
   color: var(--ink-2);
 }
 
+// Directly under the title, above the standfirst: the line that says "article".
 .kt-byline {
-  margin: 1.5rem 0 0;
+  margin: 1rem 0 0;
   font-size: 0.875rem;
   color: var(--ink-3);
 }
@@ -397,9 +399,9 @@ body.kt {
   }
 }
 
-// The hero, between the standfirst and the byline. Its margins are tighter than
-// a body figure's so the title block still reads as one object; the byline's own
-// top margin supplies the gap below.
+// The hero closes the title block, under the standfirst. Its top margin is
+// tighter than a body figure's so the block still reads as one object; the
+// header's own bottom margin supplies the gap below.
 .kt-figure-lead {
   margin: 1.5rem 0 0;
 }
@@ -505,14 +507,22 @@ body.kt {
   // so the equation arrives as real, selectable, speakable, indexable text and
   // the page still ships no math library.
   //
-  // Blending it with Literata is two rules, not one. Letters and numbers are set
-  // in Literata, so a ΔE* inside a formula is the same shape as the ΔE* in the
-  // sentence beside it. Everything a reading face has no glyph for — the radical
-  // sign, brackets stretched around a fraction, the Greek — is left to the
-  // browser's math font, the only font carrying the OpenType MATH table those
-  // constructions are built from. Forcing Literata on them buys a matching serif
-  // and pays for it with a stunted radical over a full-height fraction.
+  // An equation is set in the body face and reads as part of the sentence around
+  // it. Two rules get it there.
+  //
+  // 1. Letters, digits and words are Literata — so the ΔE* inside a formula is
+  //    the same shape as the ΔE* in the paragraph beside it. This only works
+  //    because the letters are NOT italic (optimize-math.mjs writes
+  //    mathvariant="normal" on every <mi>): left alone, a browser replaces a
+  //    variable with its Mathematical Italic codepoint — L becomes U+1D43F, a
+  //    character no reading face on earth has a glyph for — and the letter drops
+  //    silently out of Literata into the OS maths font. Upright variables are the
+  //    owner's call AND the only way to keep them in the body face.
+  // 2. Everything else — the radical, brackets stretched around a fraction, the
+  //    operators — is Alpha Math (_fonts.scss), the one font here with the
+  //    OpenType MATH table those shapes are built from.
   math {
+    font-family: "Alpha Math", math;
     font-size: 1.0625em; // math sets optically small against a serif this size
     line-height: normal; // the body's 1.75 would inflate every fraction row
   }
@@ -521,6 +531,7 @@ body.kt {
   mn,
   mtext {
     font-family: var(--font-read);
+    font-style: normal; // belt and braces: older Gecko italicised <mi> by style
   }
 
   // A display equation gets the same quiet slab as the rule-of-thumb blockquotes
