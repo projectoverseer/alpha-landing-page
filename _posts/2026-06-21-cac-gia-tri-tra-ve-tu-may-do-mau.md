@@ -4,6 +4,7 @@ description: "Ý nghĩa bộ số CIELAB theo hai hệ tọa độ, độ lệch
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 3
+image: cong-thuc-do-lech-mau-delta-e-cmc
 ---
 
 Sau khi đo xong, máy trả về một bộ số. Bài này giải thích ý nghĩa các con số đó.

@@ -2,6 +2,7 @@
 title: "Chất đều màu trong nhuộm polyester — vai trò và cách sử dụng"
 description: "Vì sao nhuộm không đều màu, hai cơ chế retarding – leveling của chất đều màu, khi nào ưu tiên cơ chế nào, và cách test nhanh cả hai tính chất tại phòng lab."
 topic: ky-thuat-nhuom
+image: test-dich-chuyen-mau-leveling
 ---
 
 ## Vì sao nhuộm không đều màu?
@@ -39,6 +40,8 @@ Trong thực tế, chất đều màu kết hợp cả hai cơ chế nhưng có 
 ## Cách test tại phòng lab
 
 **Test retarding:** nhuộm hai mẫu vải cùng công thức màu nhạt, một mẫu có chất đều màu đối chứng, một mẫu có chất đều màu cần khảo sát. Ngắt máy và lấy mẫu ngay khi nhiệt độ chạm 115°C. So sánh độ đậm màu hai mẫu. Mẫu có tính retarding tốt sẽ nhạt hơn.
+
+{% include chia-se-kinh-nghiem/figure.html name="test-retarding-chat-deu-mau" %}
 
 **Test leveling:** chuẩn bị một miếng vải đã nhuộm màu đậm và một miếng vải trắng cùng trọng lượng. Cho cả cặp vào cốc nhuộm cùng chất đều màu cần test, nâng nhiệt lên 130°C, giữ 45 phút, không cho thêm thuốc nhuộm. Chất đều màu có hiệu ứng leveling càng mạnh thì miếng vải trắng sẽ dây màu lên càng đậm.
 

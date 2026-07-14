@@ -4,6 +4,7 @@ description: "Ánh sáng trắng là gì, vì sao phải so màu dưới nguồn
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 1
+image: pho-anh-sang-nhin-thay-380-700nm
 ---
 
 Tuần trước có bạn "đặt hàng" mình viết về so màu và đo màu nên mình dành thời gian để tổng hợp lại các kiến thức lý thuyết liên quan. Đề tài này khá nhiều điểm nên phải qua nhiều kỳ mình mới trình bày xong. Bạn nào quan tâm thì theo dõi nhé.
@@ -11,8 +12,6 @@ Tuần trước có bạn "đặt hàng" mình viết về so màu và đo màu 
 ## Phần 1 — ánh sáng là gì?
 
 Ánh sáng trắng không phải một màu duy nhất. Nó là tập hợp của nhiều tia sáng có bước sóng khác nhau, trải dài từ 380nm đến 700nm. Mỗi bước sóng tương ứng với một màu sắc mà mắt người nhận biết được.
-
-<!-- [Hình] Phổ ánh sáng nhìn thấy: dải màu theo bước sóng 380–700nm -->
 
 Hiện tượng cầu vồng chính là minh họa rõ nhất: ánh sáng mặt trời bị các hạt nước phân tách thành từng dải màu riêng theo bước sóng.
 
@@ -22,7 +21,7 @@ Khi được ánh sáng chiếu vào, vật chất hấp thụ một số bướ
 
 Mỗi nguồn sáng có thành phần bước sóng khác nhau. Cùng một tấm vải, nhìn dưới các nguồn sáng khác nhau sẽ cho màu sắc khác nhau. Để hai người cảm nhận màu sắc giống nhau thì trước tiên phải nhìn vật dưới cùng nguồn sáng. Để có được điều đó, CIE (Ủy ban Chiếu sáng Quốc tế) đưa ra quy chuẩn về nguồn sáng chuẩn được đặc trưng.
 
-<!-- [Hình] Bảng một số nguồn sáng chuẩn CIE thường dùng (D65, TL84, CWF, A, ...) -->
+{% include chia-se-kinh-nghiem/figure.html name="bang-nguon-sang-chuan-cie" %}
 
 Lưu ý: không phải cứ đưa mẫu ra ngoài trời là tương đương D65. Trời nhiều mây khác trời nắng, buổi sáng khác buổi chiều. D65 là nguồn sáng được kiểm định chính xác, không phải ánh sáng tự nhiên ngẫu nhiên.
 

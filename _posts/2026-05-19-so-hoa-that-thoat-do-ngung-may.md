@@ -4,6 +4,7 @@ description: "Cách xây bảng ghi nhận ngưng máy: danh mục lý do, biể
 topic: van-hanh
 series: so-hoa-oee
 series_part: 4
+image: so-hoa-thoi-gian-ngung-may-4-buoc
 ---
 
 Qua các bài trước, hầu hết mọi người đều đã nhận biết được các dạng tổn thất thời gian trong xưởng nhuộm. Tuy nhiên mình chưa biết anh chị đã "số hóa" được chúng chưa? Nếu chưa, tham khảo cách triển khai dưới đây nhé.

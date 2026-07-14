@@ -227,9 +227,29 @@ body.kt {
   color: var(--ink-2);
 }
 
+// The post's picture, as a card image: below the title and description, above
+// the meta line. Cropped to 16:9 — a feed is for scanning, and the portrait
+// infographics are 1.5× taller than they are wide, so uncropped they would each
+// eat a whole screen. Anchored to the top so an infographic's headline (the
+// part that earns the click) survives the crop.
+.kt-feed-thumb {
+  display: block;
+  margin-top: 1rem;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--paper-deep); // holds the space while it decodes
+    border: 1px solid var(--line);
+  }
+}
+
 .kt-feed-meta {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   font-size: 0.84375rem;
   color: var(--ink-3);
 }
@@ -292,6 +312,35 @@ body.kt {
   margin: 1.5rem 0 0;
   font-size: 0.875rem;
   color: var(--ink-3);
+}
+
+// ---- Pictures ---------------------------------------------------------------
+
+// Full measure, never cropped: these are infographics and lab reports — the
+// reader has to be able to READ them, so the crop that serves the feed would
+// destroy them here. Caption in the chrome face, quiet, like a print plate note.
+.kt-figure {
+  margin: 2rem 0;
+
+  img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line);
+  }
+
+  figcaption {
+    margin-top: 0.625rem;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+}
+
+// The hero, between the title and the standfirst. Its margins are tighter than
+// a body figure's so the title block still reads as one object.
+.kt-figure-lead {
+  margin: 1.5rem 0 0;
 }
 
 // The reading text itself — Literata 19px/1.75; Vietnamese stacked

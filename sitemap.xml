@@ -2,7 +2,7 @@
 permalink: /sitemap.xml
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.alphasoftwaregroup.com/</loc>
         <xhtml:link rel="alternate" hreflang="vi" href="https://www.alphasoftwaregroup.com/"/>
@@ -26,11 +26,22 @@ permalink: /sitemap.xml
   no sitemap edit. The emitted <lastmod> is a build-date placeholder; the
   update-sitemap.mjs step rewrites it honestly (keeps the previous date unless
   the page's built HTML actually changed).
+
+  Each article also declares its picture through the image sitemap extension, so
+  the infographics can be found in Google Images on their own — a second doorway
+  into the article. Google reads only <image:loc> today (the caption/title tags
+  were retired), so the alt text in the markup is what describes them.
 {%- endcomment %}
 {%- for post in site.posts %}
     <url>
         <loc>{{ site.url }}{{ post.url }}</loc>
         <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
+{%- if post.image %}
+{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[post.image] %}
+        <image:image>
+            <image:loc>{{ site.url }}/img/chia-se-kinh-nghiem/{{ post.image }}-{{ kt_img.w }}.jpg</image:loc>
+        </image:image>
+{%- endif %}
     </url>
 {%- endfor %}
 </urlset>

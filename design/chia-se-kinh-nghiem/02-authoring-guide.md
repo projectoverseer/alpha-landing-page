@@ -22,6 +22,7 @@ description: "1–2 sentences. Shown as the hub list entry, the article standfir
 topic: van-hanh          # key from _data/chia_se_kinh_nghiem.yml → topics; labels the article
 series: so-hoa-oee       # optional — key from _data/chia_se_kinh_nghiem.yml → series
 series_part: 3           # required if series is set; orders prev/next only
+image: rft-nhuom-dat-tu-lan-dau   # optional — key from _data/chia_se_kinh_nghiem.yml → images
 ---
 ```
 
@@ -30,6 +31,39 @@ New topics/series: add the key to `_data/chia_se_kinh_nghiem.yml` first.
 `series_part` is ordering metadata, never shown to the reader — the hub is a
 chronological feed and articles carry no "bài n/N" tag (philosophy §5). The
 newest post always leads the hub, so write each post to stand alone.
+
+## 2b. Add the pictures
+
+Every picture is declared once, in `_data/chia_se_kinh_nghiem.yml` → `images`,
+and referenced everywhere by its slug. Nothing about an image (size, alt,
+caption) is ever repeated in a post.
+
+1. **Make the derivatives.** Each slug ships as `<slug>-<width>.avif` and
+   `<slug>-<width>.jpg` in `img/chia-se-kinh-nghiem/`: one at the source width
+   (capped at 1344 = 2× the 672px reading column) and, when the source is over
+   800px, one at 672. AVIF is what readers get; the JPEG is the fallback **and**
+   the `og:image` — Facebook and Zalo cannot decode AVIF.
+2. **Name it for search.** The filename is a ranking signal: hyphenated, no
+   diacritics, describing the picture (`cua-do-aperture-may-quang-pho`), not
+   `IMG_2027`.
+3. **Register it** in the data file with `w`/`h` (the largest derivative), `sm`
+   (is there a 672 variant?), `alt` and `caption`. Alt = what the picture *says*
+   to someone who cannot see it. Never keyword stuffing — Google demotes it and
+   it fails the reader anyway.
+
+Then use it:
+
+- **Thumbnail** — `image: <slug>` in front matter. It becomes the feed card
+  image (16:9 crop, below the description), the article hero (uncropped, between
+  the title and the standfirst), the `og:image`, the schema `image`, the
+  preloaded LCP element, and an entry in the image sitemap. A post with no
+  `image:` degrades cleanly: no card image, and `og:image` falls back to the
+  company card.
+- **In the body** — `{% include chia-se-kinh-nghiem/figure.html name="<slug>" %}`
+  at the paragraph the picture teaches, never as decoration.
+
+A picture used as the thumbnail is **not** repeated in the body — the hero
+already showed it.
 
 ## 3. Convert the body
 

@@ -4,6 +4,7 @@ description: "Máy vẫn chạy, nhìn có vẻ bình thường — nhưng chậ
 topic: van-hanh
 series: so-hoa-oee
 series_part: 5
+image: so-hoa-hieu-suat-toc-do-oee
 ---
 
 Bài trước mình hướng dẫn cách ghi nhận thời gian ngưng máy để tính chỉ số sẵn sàng. Hôm nay đến thành phần thứ hai, hiệu suất tốc độ.

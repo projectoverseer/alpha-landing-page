@@ -4,6 +4,7 @@ description: "Xưởng 20 máy lý thuyết chạy 80 mẻ/ngày nhưng chỉ ho
 topic: van-hanh
 series: so-hoa-oee
 series_part: 1
+image: oee-nha-may-nhuom-60-phan-tram
 ---
 
 Nếu xưởng bạn có 20 máy nhuộm, mỗi máy chạy bình quân 4 mẻ/ngày — lý thuyết là 80 mẻ mỗi ngày.

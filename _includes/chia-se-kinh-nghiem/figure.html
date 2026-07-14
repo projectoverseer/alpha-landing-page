@@ -1,0 +1,46 @@
+{%- comment -%}
+  A picture in an article — the hero above the standfirst, or an illustration in
+  the body. Everything about the image (alt, caption, intrinsic size, whether a
+  672px derivative exists) comes from the `images` map in
+  _data/chia_se_kinh_nghiem.yml, so a caller only names the slug:
+
+    {% include chia-se-kinh-nghiem/figure.html name="rft-nhuom-dat-tu-lan-dau" %}
+    {% include chia-se-kinh-nghiem/figure.html name="..." lead=true %}
+
+  lead=true marks the hero: it is above the fold and is therefore the LCP
+  element, so it loads eagerly at high priority (head.html preloads it too).
+  Everything else is lazy.
+
+  AVIF first, JPEG fallback — and the JPEG is what og:image points at, because
+  Facebook and Zalo cannot read AVIF.
+{%- endcomment -%}
+{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[include.name] -%}
+{%- if kt_img -%}
+{%- assign kt_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: include.name -%}
+{%- capture kt_srcset_avif %}{% if kt_img.sm %}{{ kt_base }}-672.avif 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.avif {{ kt_img.w }}w{% endcapture -%}
+{%- capture kt_srcset_jpg %}{% if kt_img.sm %}{{ kt_base }}-672.jpg 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.jpg {{ kt_img.w }}w{% endcapture -%}
+{%- comment -%} The reading column is 42rem wide with 1.25rem of padding each side. {%- endcomment -%}
+{%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 2.5rem), 632px" -%}
+<figure class="kt-figure{% if include.lead %} kt-figure-lead{% endif %}">
+  <picture>
+    <source
+      type="image/avif"
+      srcset="{{ kt_srcset_avif }}"
+      sizes="{{ kt_sizes }}"
+    />
+    <img
+      src="{{ kt_base }}-{{ kt_img.w }}.jpg"
+      srcset="{{ kt_srcset_jpg }}"
+      sizes="{{ kt_sizes }}"
+      alt="{{ kt_img.alt | escape }}"
+      width="{{ kt_img.w }}"
+      height="{{ kt_img.h }}"
+      decoding="async"
+      {% if include.lead %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+    />
+  </picture>
+  {%- if kt_img.caption %}
+  <figcaption>{{ kt_img.caption }}</figcaption>
+  {%- endif %}
+</figure>
+{%- endif -%}

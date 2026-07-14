@@ -1,0 +1,38 @@
+{%- comment -%}
+  The feed thumbnail — the same picture as the article's hero, but cropped to a
+  16:9 card (CSS does the crop) so a tall infographic cannot swallow the feed.
+
+  It sits INSIDE the feed item's <a>, so: no <figure>/<figcaption> here (a
+  caption inside a link would be read out as part of the link text) and no alt
+  text either — the link already carries the title and description, and an alt
+  that repeats them is noise for a screen-reader user. Decorative-in-context,
+  so alt="".
+
+    {% include chia-se-kinh-nghiem/thumb.html name="..." eager=true %}
+{%- endcomment -%}
+{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[include.name] -%}
+{%- if kt_img -%}
+{%- assign kt_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: include.name -%}
+{%- capture kt_srcset_avif %}{% if kt_img.sm %}{{ kt_base }}-672.avif 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.avif {{ kt_img.w }}w{% endcapture -%}
+{%- capture kt_srcset_jpg %}{% if kt_img.sm %}{{ kt_base }}-672.jpg 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.jpg {{ kt_img.w }}w{% endcapture -%}
+{%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 2.5rem), 632px" -%}
+<span class="kt-feed-thumb">
+  <picture>
+    <source
+      type="image/avif"
+      srcset="{{ kt_srcset_avif }}"
+      sizes="{{ kt_sizes }}"
+    />
+    <img
+      src="{{ kt_base }}-{{ kt_img.w }}.jpg"
+      srcset="{{ kt_srcset_jpg }}"
+      sizes="{{ kt_sizes }}"
+      alt=""
+      width="{{ kt_img.w }}"
+      height="{{ kt_img.h }}"
+      decoding="async"
+      {% if include.eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+    />
+  </picture>
+</span>
+{%- endif -%}

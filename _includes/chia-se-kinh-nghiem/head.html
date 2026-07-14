@@ -8,38 +8,103 @@
 
 {% include analytics.html %}
 
-{%- if page.layout == "chia-se-kinh-nghiem-article" -%}
+{%- assign kt_is_article = false -%}
+{%- if page.layout == "chia-se-kinh-nghiem-article" -%}{%- assign kt_is_article = true -%}{%- endif -%}
+
+{%- if kt_is_article -%}
   {%- capture kt_title %}{{ page.title }} · Chia sẻ kinh nghiệm Alpha{% endcapture -%}
 {%- else -%}
   {%- capture kt_title %}{{ page.title }}{% endcapture -%}
 {%- endif -%}
+
+{%- comment -%}
+  Social/preview picture. Articles show their own; the hub falls back to the
+  company card. Always the JPEG, never the AVIF — Facebook and Zalo, where these
+  posts actually get shared, cannot decode AVIF.
+{%- endcomment -%}
+{%- assign kt_img = nil -%}
+{%- if page.image -%}{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[page.image] -%}{%- endif -%}
+{%- if kt_img -%}
+  {%- assign kt_img_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: page.image -%}
+  {%- capture kt_og_image %}{{ kt_img_base }}-{{ kt_img.w }}.jpg{% endcapture -%}
+{%- else -%}
+  {%- capture kt_og_image %}{{ site.url }}/img/logo/alpha-open-graph.png{% endcapture -%}
+{%- endif -%}
+
 <title>{{ kt_title | escape }}</title>
 <meta content="{{ page.description | strip_newlines | strip | escape }}" name="description" />
 <link href="{{ site.url }}{{ page.url }}" rel="canonical" />
+
+{%- comment -%}
+  Let Google show the full-size picture and an unclipped snippet — the default
+  is a thumbnail, and these posts live or die on the infographic in the result.
+{%- endcomment %}
+<meta content="max-image-preview:large, max-snippet:-1" name="robots" />
 
 <meta content="{{ kt_title | escape }}" property="og:title" />
 <meta content="{{ page.description | strip_newlines | strip | escape }}" property="og:description" />
 <meta content="{{ site.url }}{{ page.url }}" property="og:url" />
 <meta content="Alpha Software Group" property="og:site_name" />
 <meta content="vi_VN" property="og:locale" />
-<meta content="summary" name="twitter:card" />
-{%- if page.layout == "chia-se-kinh-nghiem-article" %}
+<meta content="{{ kt_og_image }}" property="og:image" />
+{%- if kt_img %}
+<meta content="{{ kt_img.w }}" property="og:image:width" />
+<meta content="{{ kt_img.h }}" property="og:image:height" />
+<meta content="{{ kt_img.alt | escape }}" property="og:image:alt" />
+{%- endif %}
+<meta content="summary_large_image" name="twitter:card" />
+<meta content="{{ kt_og_image }}" name="twitter:image" />
+
+{%- if kt_is_article %}
+{%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[page.topic] -%}
+{%- assign kt_words = content | strip_html | number_of_words -%}
+{%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil -%}
+{%- assign kt_modified = page.last_modified_at | default: page.date -%}
 <meta content="article" property="og:type" />
 <meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time" />
+<meta content="{{ kt_modified | date_to_xmlschema }}" property="article:modified_time" />
 <meta content="{{ site.data.chia_se_kinh_nghiem.author.name }}" property="article:author" />
+{%- if kt_topic %}
+<meta content="{{ kt_topic.label }}" property="article:section" />
+{%- endif %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "BlogPosting",
   "headline": {{ page.title | jsonify }},
   "description": {{ page.description | strip_newlines | strip | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ kt_modified | date_to_xmlschema }}",
   "inLanguage": "vi",
-  "author": { "@type": "Person", "name": {{ site.data.chia_se_kinh_nghiem.author.name | jsonify }} },
+  {%- if kt_img %}
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ kt_og_image }}",
+    "width": {{ kt_img.w }},
+    "height": {{ kt_img.h }},
+    "caption": {{ kt_img.alt | jsonify }}
+  },
+  {%- endif %}
+  {%- if kt_topic %}
+  "articleSection": {{ kt_topic.label | jsonify }},
+  {%- endif %}
+  "wordCount": {{ kt_words }},
+  "timeRequired": "PT{{ kt_minutes }}M",
+  "isAccessibleForFree": true,
+  "author": {
+    "@type": "Person",
+    "name": {{ site.data.chia_se_kinh_nghiem.author.name | jsonify }},
+    "jobTitle": {{ site.data.chia_se_kinh_nghiem.author.role | jsonify }},
+    "worksFor": { "@type": "Organization", "name": "Công ty TNHH Phát triển Phần mềm Alpha" }
+  },
   "publisher": {
     "@type": "Organization",
     "name": "Alpha Software Group",
-    "url": "{{ site.url }}/"
+    "url": "{{ site.url }}/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.url }}/img/logo/alpha-open-graph.png"
+    }
   },
   "copyrightYear": "{{ page.date | date: '%Y' }}",
   "copyrightHolder": {
@@ -47,11 +112,100 @@
     "name": "Công ty TNHH Phát triển Phần mềm Alpha",
     "url": "{{ site.url }}/"
   },
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Chia sẻ kinh nghiệm — Alpha Software",
+    "url": "{{ site.url }}/chia-se-kinh-nghiem/"
+  },
   "mainEntityOfPage": "{{ site.url }}{{ page.url }}"
+}
+</script>
+{%- comment -%}
+  Breadcrumbs: Google renders these in place of the raw URL in the result, and
+  they tie each article to the hub as its parent.
+{%- endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Alpha Software", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Chia sẻ kinh nghiệm", "item": "{{ site.url }}/chia-se-kinh-nghiem/" },
+    { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }} }
+  ]
 }
 </script>
 {%- else %}
 <meta content="website" property="og:type" />
+{%- comment -%}
+  The hub as a Blog whose posts are listed newest-first — the same order the
+  feed renders in, so what a crawler reads matches what a reader sees.
+{%- endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Chia sẻ kinh nghiệm — Alpha Software",
+  "description": {{ page.description | strip_newlines | strip | jsonify }},
+  "url": "{{ site.url }}/chia-se-kinh-nghiem/",
+  "inLanguage": "vi",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Alpha Software Group",
+    "url": "{{ site.url }}/",
+    "logo": { "@type": "ImageObject", "url": "{{ site.url }}/img/logo/alpha-open-graph.png" }
+  },
+  "blogPost": [
+    {%- for post in site.posts %}
+    {
+      "@type": "BlogPosting",
+      "headline": {{ post.title | jsonify }},
+      "description": {{ post.description | strip_newlines | strip | jsonify }},
+      "datePublished": "{{ post.date | date_to_xmlschema }}",
+      "url": "{{ site.url }}{{ post.url }}"{% if post.image %},
+      "image": "{{ site.url }}/img/chia-se-kinh-nghiem/{{ post.image }}-{{ site.data.chia_se_kinh_nghiem.images[post.image].w }}.jpg"{% endif %},
+      "author": { "@type": "Person", "name": {{ site.data.chia_se_kinh_nghiem.author.name | jsonify }} }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Alpha Software", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Chia sẻ kinh nghiệm" }
+  ]
+}
+</script>
+{%- endif %}
+
+{%- comment -%}
+  LCP preload. On an article that is the hero above the standfirst; on the hub
+  it is the newest post's card image. Preloading the AVIF with the same srcset
+  and sizes the markup uses means the browser starts the winning candidate
+  before it has even parsed the CSS — and never a second, wasted one.
+{%- endcomment -%}
+{%- assign kt_lcp = nil -%}
+{%- if kt_is_article and kt_img -%}
+  {%- assign kt_lcp = page.image -%}
+{%- elsif kt_is_article == false -%}
+  {%- assign kt_lcp = site.posts.first.image -%}
+{%- endif -%}
+{%- if kt_lcp -%}
+{%- assign kt_lcp_img = site.data.chia_se_kinh_nghiem.images[kt_lcp] -%}
+{%- assign kt_lcp_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_lcp -%}
+<link
+  as="image"
+  fetchpriority="high"
+  href="{{ kt_lcp_base }}-{{ kt_lcp_img.w }}.avif"
+  imagesizes="(max-width: 42rem) calc(100vw - 2.5rem), 632px"
+  imagesrcset="{% if kt_lcp_img.sm %}{{ kt_lcp_base }}-672.avif 672w, {% endif %}{{ kt_lcp_base }}-{{ kt_lcp_img.w }}.avif {{ kt_lcp_img.w }}w"
+  rel="preload"
+  type="image/avif"
+/>
 {%- endif %}
 
 <!-- Self-hosted subset fonts (see _sass/chia-se-kinh-nghiem/_fonts.scss). Preload the
