@@ -141,42 +141,50 @@ Rules:
 - Lists, tables, blockquotes inherit body type; tables get an
   `overflow-x: auto` wrapper.
 
-### Optical size — the reading cut and the display cut
+### Optical size — every size gets the drawing it was cut for
 
-There is no "Literata Display" family to install, and we do not want one.
-Literata is a single variable font with an **optical size axis** (`opsz` 7–72),
-and the display cut is the top of it. Between the ends the face is redrawn, not
-merely scaled: at `opsz` 72 it carries **~23% less ink** than at 12 (finer
-hairlines, sharper serifs), sets **~4% tighter**, and stands its **caps taller**
-(0.700 em → 0.730 em). At the text end it thickens and opens up so it can survive
-being small. This is what a typeface did for four centuries when a punchcutter
-cut a size; the axis is that dial, restored.
+There is no "Literata Display" family, and we do not want one. Literata is a
+single variable font with an **optical size axis** (`opsz` 7–72), and along it
+the face is *redrawn*, not scaled: toward the small end it thickens, opens up and
+sets wider so it survives being tiny; toward the large end it thins its hairlines,
+tightens its fit and stands its caps taller (0.700 em → 0.730 em at the extreme,
+with ~23% less ink). This is what a punchcutter did for four centuries — cut a
+separate drawing for each size. The axis is that practice, restored.
 
-So the hub uses both cuts, and the split follows the one that already exists —
-reading matter versus everything else:
+**The axis is a POINT scale.** OpenType defines the `opsz` value as the size the
+type is actually set at, *in points*. A screen has no physical size, so browsers
+hand the axis the raw CSS px number instead ([csswg-drafts#4430]): the default
+`font-optical-sizing: auto` therefore asks every element for the drawing of type
+**one third larger than it really is**. Our 19px body was being drawn for 19pt — a
+size it is never set at.
 
-- **Reading matter takes the drawing meant for its size.**
-  `font-optical-sizing: auto` — the browser sets `opsz` from `font-size`, so the
-  19px body is drawn at `opsz` 19. That is the browser's default, and it is
-  declared anyway, because it is a decision, not an accident.
-- **Headings go to the display end** (`--opsz-display: 72`): the two H1s, the
-  in-article H2/H3, and the hub's feed titles. Type this size is looked at before
-  it is read, and the display cut is the drawing for being looked at. Their
-  **weight is untouched** — hierarchy still comes from 620/700 against the body's
-  400; the cut changes the drawing, not the emphasis.
-- **Chrome stays Inter**, which has no such axis and needs none.
+So the hub does not use `auto`. **1px = 0.75pt**, and every Literata rule states
+its own optical size through a Sass mixin that cannot be used without one:
 
-`--opsz-display` is the single dial. If the smaller headings ever read too fine
-next to the body, lower it — do not start pinning per-heading values.
+```scss
+@mixin read($px) {
+  font-size: $px * 0.0625rem;
+  font-variation-settings: "opsz" #{$px * 0.75};
+}
+```
 
-Two consequences that are easy to miss, and both are load-bearing:
+`read(34)` for the H1 → `opsz` 25.5. `read(19)` for the body → 14.25.
+`read(16)` for a feed description → 12. Sizes that are em- or calc-derived (the
+letters inside an equation, a subscript, the wordmark) use `opsz()` alone, with
+the pixel size worked out by hand and written in the comment. Every size steps
+down at the mobile breakpoint, so **every optical size steps down with it** — that
+is what the mixin is really for: the two can never drift apart.
 
-1. **`@font-face` must declare `font-weight: 400 900`** — the real range in the
-   files. A browser clamps the used weight to the declared range, so the old
-   `400 700` would silently round the lockup's 760 (below) down to 700.
-2. **The display cut moves the caps**, and the brand lockup is calibrated against
-   cap height (§5). Switching the wordmark to it without re-deriving the ratio
-   would have grown the word 4% and broken the mark. See §5.
+This is the whole policy. There is no display cut, no per-heading dial, no type
+that is "pushed up the axis" for effect. A heading is drawn for the size a heading
+is; so is a caption. **Chrome stays Inter**, which has no such axis and needs none.
+
+One consequence worth stating: **`@font-face` declares `font-weight: 400 900`**,
+the real range in the files. A browser clamps the used weight to the declared
+range, so the `400 700` this once said would have silently rounded any heavier
+weight down without a word.
+
+[csswg-drafts#4430]: https://github.com/w3c/csswg-drafts/issues/4430
 
 ### Maths
 
@@ -253,24 +261,20 @@ logo**: its ink box (it has no descenders) is centered on the artwork's
 vertical center, then dropped a further 0.025 em because the diacritics carry
 almost no visual weight.
 
-The word is set in the **display cut** (§4) — as every wordmark is: a logo is
-drawn large and then used small. That is not a switch you can simply flip here,
-because two of the lockup's numbers are calibrated against the artwork and the
-display cut moves both. Both were re-derived, so the mark's size and colour are
-unchanged and only its drawing is finer:
+**Size: the word's cap height equals the "alpha" wordmark's x-height.** alpha's
+x-height is 20.03/48 of the artwork, so the em is (20.03/48) ÷ cap-height × logo
+height = **0.595** × logo height (≈20.2px at the 2.125rem logo), and the mobile
+size re-derives from the same ratio. Its caps sit in alpha's lowercase band and
+its diacritics rise like alpha's ascenders: same voice, clearly secondary to the
+mark it belongs to. Weight 700 (the H3 weight) holds against the wordmark's heavy
+rounded strokes; 600-and-below reads thin beside it.
 
-- **Size: the word's cap height equals the "alpha" wordmark's x-height.** alpha's
-  x-height is 20.03/48 of the artwork, so the em is (20.03/48) ÷ cap-height ×
-  logo height. The display cut stands Literata's caps at **0.730 em**, not the
-  text cut's 0.700 — so the ratio is **0.572**, where on the text cut it was
-  0.596. Same rendered cap height; the mobile size re-derives from the same
-  ratio. Its caps sit in alpha's lowercase band and its diacritics rise like
-  alpha's ascenders: same voice, clearly secondary to the mark it belongs to.
-- **Weight 760, not 700.** The display cut is ~14% less ink at this size, and
-  thin was already rejected here (600 was tried and lost to the wordmark's heavy
-  rounded strokes). 760 puts the ink back where 700 had it — measured at −2.4%,
-  which is nothing — so the display cut costs the mark no colour. This is the
-  weight that requires the `400 900` `@font-face` range (§4).
+The lockup is the one place the optical size cannot come from the `read()` mixin
+(§4), and it is **circular**: the word's size is a fraction of the logo, the
+fraction depends on Literata's cap height, and cap height *moves with the optical
+size*. Solved as a fixed point — the word lands at 20.22px, so it is cut for
+`opsz` **15.2** (and 12.5 at the mobile logo). Change the logo height and this has
+to be re-solved, not guessed.
 
 The word stays
 warm ink — borrowing the logo's blue would put a third blue next to indigo,

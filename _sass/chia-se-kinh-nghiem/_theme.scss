@@ -5,6 +5,38 @@
 // the main site's stylesheet. All classes are kt-prefixed.
 // ============================================================
 
+// ---- Optical size: every size gets the drawing it was cut for (§4) ----------
+//
+// Literata's opsz axis is a POINT scale — OpenType defines the value as the size
+// the type is actually set at, in points. A screen has no physical size, so
+// browsers hand the axis the CSS px number instead: `font-optical-sizing: auto`
+// (the default, and what this hub shipped with) asks every element for the
+// drawing of type ONE THIRD LARGER than it really is. The 19px body was being
+// drawn for 19pt — a size it is never set at.
+//
+// 1px = 0.75pt. That conversion is the whole of this mixin, and it is the only
+// thing standing between us and the wrong cut on every line of the site.
+//
+// So: a Literata size is never written without its optical size. `read()` where
+// the size is in px; `opsz()` alone where the size is em- or calc-derived and the
+// px value has to be worked out by hand.
+//
+// (csswg-drafts#4430 tracks the px/pt mismatch. Until it is resolved, driving the
+// axis ourselves is also the only way every browser agrees on the drawing.)
+
+@function pt($px) {
+  @return $px * 0.75;
+}
+
+@mixin read($px) {
+  font-size: $px * 0.0625rem;
+  font-variation-settings: "opsz" #{pt($px)};
+}
+
+@mixin opsz($px) {
+  font-variation-settings: "opsz" #{pt($px)};
+}
+
 // Tokens (contrast-validated: body text AAA, everything else ≥ AA — §3)
 :root {
   --paper: #faf8f2;
@@ -18,37 +50,6 @@
 
   --font-read: "Literata", Georgia, "Times New Roman", serif;
   --font-ui: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
-
-  // Literata's display cut — see the optical-sizing block below. Tune here.
-  --opsz-display: 72;
-}
-
-// ---- Optical sizing: the two cuts of Literata (§2.3) -----------------------
-//
-// There is no "Literata Display" family to install. Literata is one variable
-// font with an OPTICAL SIZE axis (opsz 7–72), and the display cut is simply the
-// top of it: at opsz 72 the face carries ~23% less ink than at 12 — finer
-// hairlines, sharper serifs — sets ~4% tighter, and stands its caps taller
-// (0.700em → 0.730em). At the text end it thickens and opens up to survive being
-// small. Same family, two drawings, and the axis is the dial between them.
-//
-// Reading matter takes the drawing meant for its size — `auto` is the browser's
-// default, but it is declared here because it is a decision, not an accident:
-// the body at 19px is drawn at opsz 19, sturdy, and that is why it reads well.
-//
-// Headings leave the ramp and go to the display end, where the face was drawn to
-// be looked at rather than read. Weight is untouched — the hierarchy still comes
-// from 620/700 against the body's 400; the display cut only changes the drawing.
-body.kt {
-  font-optical-sizing: auto;
-}
-
-.kt-article-head h1,
-.kt-topic-head h1,
-.kt-feed-title,
-.kt-body h2,
-.kt-body h3 {
-  font-variation-settings: "opsz" var(--opsz-display);
 }
 
 // ---- Base ----------------------------------------------------------------
@@ -167,30 +168,25 @@ body.kt {
   height: var(--logo-h);
 }
 
-// The wordmark is the display cut, like every wordmark: a logo is drawn large
-// and then set small, which is exactly what the top of the opsz axis is. It is
-// also the one place the display cut cannot simply be switched on, because the
-// lockup is calibrated against the artwork in two ways that opsz moves:
-//
 // Size: cap height = the "alpha" wordmark's x-height. alpha's x-height is
-// 20.03/48 of the artwork, so the em is (20.03/48)/cap-height of the logo
-// height — and the display cut stands Literata's caps TALLER (0.700em → 0.730em),
-// which is why the ratio is 0.572 here and not the 0.596 it was on the text cut.
-// Same rendered cap height as before, to the pixel; it re-derives automatically
-// at the mobile logo size. The word's caps sit in alpha's lowercase band and its
-// diacritics rise like alpha's ascenders — same voice, clearly secondary.
+// 20.03/48 of the artwork and Literata's caps are 0.7016 em at the size this
+// lands on, so the em is (20.03/48)/0.7016 = 0.595 of the logo height (≈20.2px
+// at the 2.125rem logo), and it re-derives at the mobile logo size. The word's
+// caps then sit in alpha's lowercase band and its diacritics rise like alpha's
+// ascenders — same voice, clearly secondary to the mark.
+// Weight 700 (the H3 weight) holds its own against the wordmark's heavy
+// rounded strokes; 600-and-below reads thin beside it (rendered comparison).
 //
-// Weight: the display cut is ~14% less ink at this size, and 600-and-below was
-// already rejected as too thin beside the wordmark's heavy rounded strokes
-// (rendered comparison). 760 puts the ink back where 700 had it (measured: -2.4%,
-// i.e. nothing), so the mark keeps its colour and gains only the finer drawing.
-// 760 is also why _fonts.scss must declare the full 400–900 range.
+// The optical size is the one number here that cannot come from the mixin: the
+// font-size is a fraction of the logo, the fraction depends on cap height, and
+// cap height depends on the optical size. Solved as a fixed point — 20.22px of
+// type, so opsz 15.2 (and 12.5 at the mobile logo, below).
 .kt-brand-name {
   margin-left: 0.5em; // one word space at the word's own size
   font-family: var(--font-read);
-  font-size: calc(var(--logo-h) * 0.572);
-  font-weight: 760;
-  font-variation-settings: "opsz" var(--opsz-display);
+  font-size: calc(var(--logo-h) * 0.595);
+  font-weight: 700;
+  font-variation-settings: "opsz" 15.2;
   line-height: 1;
   letter-spacing: -0.005em;
   color: var(--ink);
@@ -291,7 +287,7 @@ body.kt {
 .kt-feed-title {
   display: block;
   font-family: var(--font-read);
-  font-size: 1.3125rem;
+  @include read(21);
   font-weight: 600;
   line-height: 1.4;
   color: var(--indigo); // indigo = actionable, §3
@@ -301,7 +297,7 @@ body.kt {
   display: block;
   margin-top: 0.375rem;
   font-family: var(--font-read);
-  font-size: 1rem;
+  @include read(16);
   line-height: 1.65;
   color: var(--ink-2);
 }
@@ -397,7 +393,7 @@ body.kt {
 .kt-topic-head h1 {
   margin: 0;
   font-family: var(--font-read);
-  font-size: 2.125rem;
+  @include read(34);
   font-weight: 620;
   line-height: 1.25;
   letter-spacing: -0.01em;
@@ -406,7 +402,7 @@ body.kt {
 .kt-standfirst {
   margin: 1.25rem 0 0;
   font-family: var(--font-read);
-  font-size: 1.25rem;
+  @include read(20);
   line-height: 1.6;
   color: var(--ink-2);
 }
@@ -452,7 +448,7 @@ body.kt {
 // diacritics need the tall line (§2.3).
 .kt-body {
   font-family: var(--font-read);
-  font-size: 1.1875rem;
+  @include read(19);
   line-height: 1.75;
 
   p,
@@ -469,14 +465,14 @@ body.kt {
 
   h2 {
     margin: 2.4em 0 0.7em;
-    font-size: 1.3125rem;
+    @include read(21);
     font-weight: 620;
     line-height: 1.35;
   }
 
   h3 {
     margin: 1.8em 0 0.5em;
-    font-size: 1.1875rem;
+    @include read(19);
     font-weight: 700;
     line-height: 1.4;
   }
@@ -539,8 +535,11 @@ body.kt {
     font-weight: 600;
   }
 
+  // 0.7 × the body's 19px ≈ 13.3px of type, and it gets the drawing for 13.3px —
+  // small type is exactly where the sturdier cut earns its keep.
   sub {
     font-size: 0.7em;
+    @include opsz(13.3);
   }
 
   // ---- Equations (MathML) ---------------------------------------------------
@@ -569,11 +568,14 @@ body.kt {
     line-height: normal; // the body's 1.75 would inflate every fraction row
   }
 
+  // The letters inside an equation are set 1.0625em of the body = 20.19px, so
+  // they take that drawing — not the body's, which they would otherwise inherit.
   mi,
   mn,
   mtext {
     font-family: var(--font-read);
     font-style: normal; // belt and braces: older Gecko italicised <mi> by style
+    @include opsz(20.19);
   }
 
   // A display equation gets the same quiet slab as the rule-of-thumb blockquotes
@@ -606,7 +608,7 @@ body.kt {
 
   p {
     margin: 0;
-    font-size: 1.0625rem;
+    @include read(17);
     line-height: 1.65;
     color: var(--ink-2);
   }
@@ -671,7 +673,7 @@ body.kt {
 
   .kt-signature-name {
     font-family: var(--font-read);
-    font-size: 1.0625rem;
+    @include read(17);
     font-weight: 620;
   }
 
@@ -702,7 +704,7 @@ body.kt {
 .kt-cta-banner-lead {
   margin: 0;
   font-family: var(--font-read);
-  font-size: 1.125rem;
+  @include read(18);
   line-height: 1.65;
 }
 
@@ -741,7 +743,7 @@ body.kt {
   display: block;
   margin-top: 0.25rem;
   font-family: var(--font-read);
-  font-size: 1rem;
+  @include read(16);
   font-weight: 600;
   line-height: 1.45;
   color: var(--indigo);
@@ -769,9 +771,14 @@ body.kt {
 
   // The lockup scales as one piece: the logo steps to the mobile article H1
   // (1.75rem) and the word re-derives from --logo-h (size ratio, em-based
-  // gap and optical offset all follow).
+  // gap and optical offset all follow). Only the optical size cannot follow on
+  // its own — the word lands at 16.69px here, so it is cut for 12.5.
   .kt-brand {
     --logo-h: 1.75rem;
+  }
+
+  .kt-brand-name {
+    @include opsz(16.69);
   }
 
   .kt-topics {
@@ -788,30 +795,44 @@ body.kt {
     margin-top: 2.5rem;
   }
 
+  // Every size steps down here, so every optical size steps down with it —
+  // that is the whole point of the mixin: the two can't drift apart.
   .kt-article-head h1,
   .kt-topic-head h1 {
-    font-size: 1.75rem;
+    @include read(28);
   }
 
   .kt-standfirst {
-    font-size: 1.125rem;
+    @include read(18);
   }
 
   .kt-body {
-    font-size: 1.0625rem;
+    @include read(17);
     line-height: 1.7;
   }
 
   .kt-body h2 {
-    font-size: 1.25rem;
+    @include read(20);
   }
 
   .kt-body h3 {
-    font-size: 1.0625rem;
+    @include read(17);
+  }
+
+  // Both are sized in em off the body, which just got smaller: the equation's
+  // letters land at 18.06px and a subscript at 11.9px.
+  .kt-body mi,
+  .kt-body mn,
+  .kt-body mtext {
+    @include opsz(18.06);
+  }
+
+  .kt-body sub {
+    @include opsz(11.9);
   }
 
   .kt-feed-title {
-    font-size: 1.1875rem;
+    @include read(19);
   }
 }
 

@@ -8,10 +8,14 @@
 //   Alpha Math — the parts of an equation Literata cannot draw, and nothing else
 //
 // The declared `font-weight: 400 900` is the range the files really carry (fvar).
-// It matters: a browser CLAMPS the used weight to the range declared here, so the
-// old, narrower `400 700` would have silently rounded the lockup's 760 down to
-// 700. Literata's second axis, opsz, needs no declaration — the browser drives it
-// from font-size, and _theme.scss decides where it is driven to.
+// A browser CLAMPS the used weight to the range declared here, so the narrower
+// `400 700` this once said was a quiet trap: any weight above 700 would have been
+// rounded down to it without a word. Nothing asks for one today; the declaration
+// is simply true now.
+//
+// Literata's second axis, opsz, gets no declaration here on purpose. Left alone
+// the browser drives it from font-size — in the WRONG unit (see _theme.scss) —
+// so every Literata rule drives it explicitly instead.
 //
 // Same self-hosting scheme as the main site's Public Sans (_sass/_fonts.scss):
 // the exact latin / latin-ext / vietnamese subset files Google's css2 API
