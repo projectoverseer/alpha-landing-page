@@ -18,6 +18,37 @@
 
   --font-read: "Literata", Georgia, "Times New Roman", serif;
   --font-ui: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+
+  // Literata's display cut — see the optical-sizing block below. Tune here.
+  --opsz-display: 72;
+}
+
+// ---- Optical sizing: the two cuts of Literata (§2.3) -----------------------
+//
+// There is no "Literata Display" family to install. Literata is one variable
+// font with an OPTICAL SIZE axis (opsz 7–72), and the display cut is simply the
+// top of it: at opsz 72 the face carries ~23% less ink than at 12 — finer
+// hairlines, sharper serifs — sets ~4% tighter, and stands its caps taller
+// (0.700em → 0.730em). At the text end it thickens and opens up to survive being
+// small. Same family, two drawings, and the axis is the dial between them.
+//
+// Reading matter takes the drawing meant for its size — `auto` is the browser's
+// default, but it is declared here because it is a decision, not an accident:
+// the body at 19px is drawn at opsz 19, sturdy, and that is why it reads well.
+//
+// Headings leave the ramp and go to the display end, where the face was drawn to
+// be looked at rather than read. Weight is untouched — the hierarchy still comes
+// from 620/700 against the body's 400; the display cut only changes the drawing.
+body.kt {
+  font-optical-sizing: auto;
+}
+
+.kt-article-head h1,
+.kt-topic-head h1,
+.kt-feed-title,
+.kt-body h2,
+.kt-body h3 {
+  font-variation-settings: "opsz" var(--opsz-display);
 }
 
 // ---- Base ----------------------------------------------------------------
@@ -136,19 +167,30 @@ body.kt {
   height: var(--logo-h);
 }
 
-// Size: cap height = the "alpha" wordmark's x-height. Literata caps are
-// 0.7em; alpha's x-height is 20.03/48 of the artwork — so the em is
-// (20.03/48)/0.7 = 0.596 of the logo height (≈20px at the 2.125rem logo),
-// and it re-derives automatically at the mobile logo size. The word's caps
-// then sit in alpha's lowercase band and its diacritics rise like alpha's
-// ascenders — same voice, clearly secondary to the mark.
-// Weight 700 (the H3 weight) holds its own against the wordmark's heavy
-// rounded strokes; 600-and-below reads thin beside it (rendered comparison).
+// The wordmark is the display cut, like every wordmark: a logo is drawn large
+// and then set small, which is exactly what the top of the opsz axis is. It is
+// also the one place the display cut cannot simply be switched on, because the
+// lockup is calibrated against the artwork in two ways that opsz moves:
+//
+// Size: cap height = the "alpha" wordmark's x-height. alpha's x-height is
+// 20.03/48 of the artwork, so the em is (20.03/48)/cap-height of the logo
+// height — and the display cut stands Literata's caps TALLER (0.700em → 0.730em),
+// which is why the ratio is 0.572 here and not the 0.596 it was on the text cut.
+// Same rendered cap height as before, to the pixel; it re-derives automatically
+// at the mobile logo size. The word's caps sit in alpha's lowercase band and its
+// diacritics rise like alpha's ascenders — same voice, clearly secondary.
+//
+// Weight: the display cut is ~14% less ink at this size, and 600-and-below was
+// already rejected as too thin beside the wordmark's heavy rounded strokes
+// (rendered comparison). 760 puts the ink back where 700 had it (measured: -2.4%,
+// i.e. nothing), so the mark keeps its colour and gains only the finer drawing.
+// 760 is also why _fonts.scss must declare the full 400–900 range.
 .kt-brand-name {
   margin-left: 0.5em; // one word space at the word's own size
   font-family: var(--font-read);
-  font-size: calc(var(--logo-h) * 0.596);
-  font-weight: 700;
+  font-size: calc(var(--logo-h) * 0.572);
+  font-weight: 760;
+  font-variation-settings: "opsz" var(--opsz-display);
   line-height: 1;
   letter-spacing: -0.005em;
   color: var(--ink);

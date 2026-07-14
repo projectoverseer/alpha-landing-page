@@ -3,9 +3,15 @@
 // -------------------------------------
 //
 // Three families, strict roles (design/chia-se-kinh-nghiem/01-philosophy.md §2.3):
-//   Literata   — all reading matter (variable wght 400–700 + optical sizing)
-//   Inter      — all chrome/UI      (variable wght 100–900, roman only)
+//   Literata   — all reading matter (variable: wght 400–900, opsz 7–72)
+//   Inter      — all chrome/UI      (variable: wght 100–900, roman only)
 //   Alpha Math — the parts of an equation Literata cannot draw, and nothing else
+//
+// The declared `font-weight: 400 900` is the range the files really carry (fvar).
+// It matters: a browser CLAMPS the used weight to the range declared here, so the
+// old, narrower `400 700` would have silently rounded the lockup's 760 down to
+// 700. Literata's second axis, opsz, needs no declaration — the browser drives it
+// from font-size, and _theme.scss decides where it is driven to.
 //
 // Same self-hosting scheme as the main site's Public Sans (_sass/_fonts.scss):
 // the exact latin / latin-ext / vietnamese subset files Google's css2 API
@@ -21,7 +27,7 @@
 @font-face {
   font-family: "Literata";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
@@ -31,7 +37,7 @@
 @font-face {
   font-family: "Literata";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-latin-ext.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
@@ -41,7 +47,7 @@
 @font-face {
   font-family: "Literata";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-vietnamese.woff2") format("woff2");
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
@@ -51,7 +57,7 @@
 @font-face {
   font-family: "Literata";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-greek.woff2") format("woff2");
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1,
@@ -62,7 +68,7 @@
 @font-face {
   font-family: "Literata";
   font-style: italic;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-italic-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
@@ -72,7 +78,7 @@
 @font-face {
   font-family: "Literata";
   font-style: italic;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-italic-latin-ext.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
@@ -82,7 +88,7 @@
 @font-face {
   font-family: "Literata";
   font-style: italic;
-  font-weight: 400 700;
+  font-weight: 400 900;
   font-display: swap;
   src: url("/fonts/literata/literata-italic-vietnamese.woff2") format("woff2");
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,

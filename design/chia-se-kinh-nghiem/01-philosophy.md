@@ -54,7 +54,8 @@ optimized for the *third consecutive article*, not the first impression.
 3. **Typography does the design.** Two families, strict roles:
    - **Literata** — all reading matter (article body, article headings,
      descriptions). A serif commissioned for long-form screen reading,
-     with true Vietnamese diacritics and a true italic.
+     with true Vietnamese diacritics, a true italic, and a true **optical
+     size axis** (below).
    - **Inter** — all chrome (nav, metadata, labels, buttons, captions).
    No decorative type, no Inter Display for now — fewer voices, calmer page.
    Body text is 19px; Vietnamese stacked diacritics get line-height ≥ 1.7 so
@@ -140,6 +141,43 @@ Rules:
 - Lists, tables, blockquotes inherit body type; tables get an
   `overflow-x: auto` wrapper.
 
+### Optical size — the reading cut and the display cut
+
+There is no "Literata Display" family to install, and we do not want one.
+Literata is a single variable font with an **optical size axis** (`opsz` 7–72),
+and the display cut is the top of it. Between the ends the face is redrawn, not
+merely scaled: at `opsz` 72 it carries **~23% less ink** than at 12 (finer
+hairlines, sharper serifs), sets **~4% tighter**, and stands its **caps taller**
+(0.700 em → 0.730 em). At the text end it thickens and opens up so it can survive
+being small. This is what a typeface did for four centuries when a punchcutter
+cut a size; the axis is that dial, restored.
+
+So the hub uses both cuts, and the split follows the one that already exists —
+reading matter versus everything else:
+
+- **Reading matter takes the drawing meant for its size.**
+  `font-optical-sizing: auto` — the browser sets `opsz` from `font-size`, so the
+  19px body is drawn at `opsz` 19. That is the browser's default, and it is
+  declared anyway, because it is a decision, not an accident.
+- **Headings go to the display end** (`--opsz-display: 72`): the two H1s, the
+  in-article H2/H3, and the hub's feed titles. Type this size is looked at before
+  it is read, and the display cut is the drawing for being looked at. Their
+  **weight is untouched** — hierarchy still comes from 620/700 against the body's
+  400; the cut changes the drawing, not the emphasis.
+- **Chrome stays Inter**, which has no such axis and needs none.
+
+`--opsz-display` is the single dial. If the smaller headings ever read too fine
+next to the body, lower it — do not start pinning per-heading values.
+
+Two consequences that are easy to miss, and both are load-bearing:
+
+1. **`@font-face` must declare `font-weight: 400 900`** — the real range in the
+   files. A browser clamps the used weight to the declared range, so the old
+   `400 700` would silently round the lockup's 760 (below) down to 700.
+2. **The display cut moves the caps**, and the brand lockup is calibrated against
+   cap height (§5). Switching the wordmark to it without re-deriving the ratio
+   would have grown the word 4% and broken the mark. See §5.
+
 ### Maths
 
 Two different things get called "a formula" in these articles, and they are set
@@ -213,13 +251,28 @@ approaches were rendered and compared; baseline-locking always privileges one
 line and orphans the rest). **"Chia sẻ kinh nghiệm" is perceptually centered on the
 logo**: its ink box (it has no descenders) is centered on the artwork's
 vertical center, then dropped a further 0.025 em because the diacritics carry
-almost no visual weight. **Size: the word's cap height equals the "alpha"
-wordmark's x-height** — Literata caps are 0.7 em and alpha's x-height is
-20.03/48 of the artwork, so the em is 0.596 × logo height (≈20px at the
-2.125rem logo), and the mobile size re-derives from the same ratio. Its caps
-sit in alpha's lowercase band and its diacritics rise like alpha's ascenders:
-same voice, clearly secondary to the mark it belongs to. Weight 700 (the H3
-weight) holds against the wordmark's heavy rounded strokes. The word stays
+almost no visual weight.
+
+The word is set in the **display cut** (§4) — as every wordmark is: a logo is
+drawn large and then used small. That is not a switch you can simply flip here,
+because two of the lockup's numbers are calibrated against the artwork and the
+display cut moves both. Both were re-derived, so the mark's size and colour are
+unchanged and only its drawing is finer:
+
+- **Size: the word's cap height equals the "alpha" wordmark's x-height.** alpha's
+  x-height is 20.03/48 of the artwork, so the em is (20.03/48) ÷ cap-height ×
+  logo height. The display cut stands Literata's caps at **0.730 em**, not the
+  text cut's 0.700 — so the ratio is **0.572**, where on the text cut it was
+  0.596. Same rendered cap height; the mobile size re-derives from the same
+  ratio. Its caps sit in alpha's lowercase band and its diacritics rise like
+  alpha's ascenders: same voice, clearly secondary to the mark it belongs to.
+- **Weight 760, not 700.** The display cut is ~14% less ink at this size, and
+  thin was already rejected here (600 was tried and lost to the wordmark's heavy
+  rounded strokes). 760 puts the ink back where 700 had it — measured at −2.4%,
+  which is nothing — so the display cut costs the mark no colour. This is the
+  weight that requires the `400 900` `@font-face` range (§4).
+
+The word stays
 warm ink — borrowing the logo's blue would put a third blue next to indigo,
 and indigo means "actionable" (§3). The gap is one word space at the word's
 own size: the mark reads as a single phrase. Chia sẻ kinh nghiệm is a branch of
