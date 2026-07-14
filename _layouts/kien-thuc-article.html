@@ -6,24 +6,16 @@
   <body class="kt">
     <a class="kt-skip-link" href="#main-content">Chuyển đến nội dung chính</a>
 
-    <nav aria-label="Kiến thức" class="kt-topbar">
-      <div class="kt-shell">
-        <a class="kt-topbar-back" href="{{ site.url }}/kien-thuc/">← Kiến thức</a>
-        <a class="kt-topbar-brand" href="{{ site.url }}/">Alpha Software</a>
-      </div>
-    </nav>
+    {% include kien-thuc/topbar.html %}
 
     <main class="kt-shell" id="main-content">
       <article>
         <header class="kt-article-head">
           {%- assign kt_topic = site.data.kien_thuc.topics[page.topic] -%}
           {%- if page.series -%}
-            {%- assign kt_series = site.data.kien_thuc.series[page.series] -%}
             {%- assign kt_episodes = site.posts | where: "series", page.series | sort: "series_part" -%}
           {%- endif %}
-          <p class="kt-kicker">
-            {{ kt_topic.label }}{% if page.series %} · {{ kt_series.label }} — bài {{ page.series_part }}/{{ kt_episodes.size }}{% endif %}
-          </p>
+          <p class="kt-kicker">{{ kt_topic.label }}</p>
           <h1>{{ page.title }}</h1>
           <p class="kt-standfirst">{{ page.description }}</p>
           {%- assign kt_words = content | strip_html | number_of_words -%}

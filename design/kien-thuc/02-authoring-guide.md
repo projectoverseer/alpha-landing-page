@@ -19,13 +19,17 @@ Layout and permalink (`/kien-thuc/<slug>/`) come from `_config.yml` defaults.
 ---
 title: "Sentence-case title — never the Facebook ALL CAPS"
 description: "1–2 sentences. Shown as the hub list entry, the article standfirst, and the meta description. Write it as a hook, not a summary of headings."
-topic: van-hanh          # key from _data/kien_thuc.yml → topics
+topic: van-hanh          # key from _data/kien_thuc.yml → topics; labels the article
 series: so-hoa-oee       # optional — key from _data/kien_thuc.yml → series
-series_part: 3           # required if series is set; drives bài n/N + prev/next
+series_part: 3           # required if series is set; orders prev/next only
 ---
 ```
 
 New topics/series: add the key to `_data/kien_thuc.yml` first.
+
+`series_part` is ordering metadata, never shown to the reader — the hub is a
+chronological feed and articles carry no "bài n/N" tag (philosophy §5). The
+newest post always leads the hub, so write each post to stand alone.
 
 ## 3. Convert the body
 

@@ -72,10 +72,12 @@ optimized for the *third consecutive article*, not the first impression.
    Hard limits: **at most one mid-article CTA** per post, plus the end-of-post
    signature and the site-level contact strip. See §6.
 
-6. **Fast and still.** Reading pages ship **zero JavaScript** (analytics
-   excepted), self-hosted subset fonts, and no images that aren't part of the
-   lesson. Nothing on the page moves unless the reader moves it. Transitions
-   are hover/focus affordances only; `prefers-reduced-motion` is honored.
+6. **Fast and still.** Reading pages (articles) ship **zero JavaScript**
+   (analytics excepted), self-hosted subset fonts, and no images that aren't
+   part of the lesson. Nothing on the page moves unless the reader moves it.
+   Transitions are hover/focus affordances only; `prefers-reduced-motion` is
+   honored. The hub is the one exception: it carries a small inline script for
+   feed paging (§5), and that script must always degrade to the full list.
 
 7. **Vietnamese first.** `lang="vi"`, Vietnamese URLs (`/kien-thuc/…`),
    Vietnamese microcopy. Every type decision is checked against diacritics,
@@ -125,20 +127,66 @@ Rules:
 
 ## 5. Page anatomy
 
-**Hub (`/kien-thuc/`)** — a library index, not a news feed:
-- Masthead: wordmark "Kiến thức" + one-line mission + quiet link back to the
-  main site.
-- Articles grouped by **chuyên đề (topic)**, and inside a topic listed in
-  **reading order** (oldest first — series are meant to be studied in
-  sequence). Each entry: title, date, reading time, one-line description.
-  No thumbnails, no cards, no grid — a table of contents you can trust.
+**Title bar (every page)** — the sub-brand lockup: the Alpha Software logo
+followed by the word "Kiến thức". **Alpha Kiến Thức is one logo, not a logo
+beside a word.** "Kiến thức" is set in Literata for now, but it is treated as
+artwork, not as text: it never wraps, never underlines, never takes link color,
+and nothing (no hairline, no dot, no pipe) is drawn between the two halves. The
+mark has **no hover and no active state at all** — a logo is identity, not an
+affordance; only the keyboard focus ring applies. The logo is sized to the
+article H1 (2.125rem, 1.75rem on small screens): the largest type on the page,
+never larger.
+
+The lockup is composed like a professional sub-brand mark (Google Cloud, FedEx
+Express), harmonized with the **whole** logo — emblem, "alpha", and the
+"Software" tagline — never baseline-locked to any single line of it (both
+approaches were rendered and compared; baseline-locking always privileges one
+line and orphans the rest). **"Kiến thức" is perceptually centered on the
+logo**: its ink box (it has no descenders) is centered on the artwork's
+vertical center, then dropped a further 0.025 em because the diacritics carry
+almost no visual weight. **Size: the word's cap height equals the "alpha"
+wordmark's x-height** — Literata caps are 0.7 em and alpha's x-height is
+20.03/48 of the artwork, so the em is 0.596 × logo height (≈20px at the
+2.125rem logo), and the mobile size re-derives from the same ratio. Its caps
+sit in alpha's lowercase band and its diacritics rise like alpha's ascenders:
+same voice, clearly secondary to the mark it belongs to. Weight 700 (the H3
+weight) holds against the wordmark's heavy rounded strokes. The word stays
+warm ink — borrowing the logo's blue would put a third blue next to indigo,
+and indigo means "actionable" (§3). The gap is one word space at the word's
+own size: the mark reads as a single phrase. Kiến thức is a branch of
+Alpha, not a second brand. The lockup always links to `/kien-thuc/`, so it is
+also the way back from any article. Sticky, hairline bottom border, nothing else
+in the bar — no second link competing with it.
+
+**Hub (`/kien-thuc/`)** — one reverse-chronological feed:
+- **No masthead, no mission paragraph. The feed starts right under the title
+  bar.** The hub is a home feed — YouTube, Facebook — where the content is the
+  page. Chrome and prose about the library steal the first screen from the
+  articles. (The `<h1>` stays in the markup for structure and search, hidden
+  visually; the lockup already says where the reader is.)
+- **A single stream, newest first. No topic buckets, no numbered lessons.**
+  The reader lands on the latest thinking and scrolls back through the
+  archive, the way they already read Facebook. An entry carries title,
+  one-line description, topic tag, date, reading time — the tag because the
+  hub is otherwise the one place the reader can't see what a post is about.
+  Thumbnails are a planned addition; when they arrive they belong to the
+  entry, not to a card or a grid.
+- **Endless scroll**: the page renders every post; a small script keeps the
+  older ones hidden and reveals the next batch as the reader nears the bottom.
+  Non-negotiable: with JS off, or if the script fails, **every post is still
+  in the HTML and visible**. Paging is a comfort, never a gate — on the content
+  or on the crawler.
+- Topics are metadata, not structure: they label an entry and an article, and
+  may power future filtering, but they never chop the feed into sections.
 
 **Article (`/kien-thuc/<slug>/`)**:
-1. Top bar: "← Kiến thức" + Alpha wordmark. Sticky, hairline border.
+1. Title bar (above).
 2. Title block: topic label (Inter, small caps feel), H1, standfirst
-   (description), byline — author · date · reading time.
+   (description), byline — author · date · reading time. **No "bài n/N"** —
+   an article is a piece of writing, not a lesson in a course.
 3. Body (converted post, with editorial CTAs per §6).
-4. Series footer: "Bài trước / Bài sau" within the same series.
+4. Series footer: "Bài trước / Bài sau" within the same series — continuity
+   offered, never a syllabus imposed.
 5. Contact strip (site-level, uniform): one sentence + phone / email actions.
 6. Minimal footer: legal name, © , link to main site.
 
@@ -156,8 +204,14 @@ Variants (see `02-authoring-guide.md` for exact usage):
   genuinely intersects the product (e.g. OEE tracking → Smart Dyehouse).
 - `banner` — contact strip with tel/mail actions (used by the layout, not
   usually inside articles).
-- `signature` — author signature + first-published canonical URL. **Every
-  article ends with this.**
+- `signature` — author signature + copyright line + first-published canonical
+  URL. **Every article ends with this.**
+
+**Copyright**: the articles are **the company's**, not the author's. Phan Đức
+Tuấn Anh is credited as the author (byline, signature, JSON-LD `author`), but
+the copyright holder in every signature, footer and structured-data field is
+Công ty TNHH Phát triển Phần mềm Alpha (Alpha Software). Never write "bản quyền
+của <tác giả>".
 
 **The second job (copy resilience)**: every variant embeds absolute
 `https://www.alphasoftwaregroup.com/…` URLs and the brand/author name in
@@ -194,8 +248,12 @@ May change freely (amend this doc in the same commit):
 Must survive any redesign (change only with an explicit owner decision):
 - Single reading column and its measure; calm uniform background;
 - One accent color meaning "actionable";
-- Zero-JS reading pages;
-- CTA restraint rules and the mandatory signature;
+- Zero-JS **article** pages, and a hub whose every post is in the HTML
+  regardless of JS;
+- The Alpha + Kiến thức lockup as the one mark in the title bar, and the hub
+  as a feed that opens on content (no masthead);
+- CTA restraint rules, the mandatory signature, and Alpha as the copyright
+  holder of every article;
 - Literata-for-reading / Inter-for-chrome role split (families may be
   swapped, roles may not);
 - Vietnamese-first.

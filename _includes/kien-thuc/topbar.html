@@ -1,0 +1,24 @@
+{%- comment -%}
+  The sub-brand lockup: Alpha's logo + "Kiến thức" — ONE mark, not a logo next
+  to a word. "Kiến thức" is set in type but must behave like part of the logo:
+  it never wraps, never underlines, never gets link styling. It is perceptually
+  centered on the whole logo, sized so its caps match the "alpha" wordmark's
+  x-height (the lockup geometry lives in _sass/kien-thuc/_theme.scss).
+  Kiến thức is a branch of Alpha, not a separate
+  company. The lockup always links to the hub (/kien-thuc/), so it doubles as
+  the way back from any article. See design/kien-thuc/01-philosophy.md §5.
+{%- endcomment -%}
+<div class="kt-topbar">
+  <div class="kt-shell">
+    <a class="kt-brand" href="{{ site.url }}/kien-thuc/">
+      <img
+        alt="Alpha Software"
+        class="kt-brand-logo"
+        height="34"
+        src="{{ site.url }}/img/logo/logo-alpha.svg"
+        width="120"
+      />
+      <span class="kt-brand-name">Kiến thức</span>
+    </a>
+  </div>
+</div>

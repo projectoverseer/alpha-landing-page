@@ -5,41 +5,28 @@ title: "Kiến thức vận hành nhà máy dệt nhuộm | Alpha Software"
 description: "Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm: đo và cải thiện OEE, RFT, kỹ thuật nhuộm và đo màu — viết từ 28 năm kinh nghiệm thực tế trong ngành."
 ---
 
-<div class="kt-intro">
-  <p>
-    Kinh nghiệm vận hành, kỹ thuật nhuộm và đo màu — viết cho chủ nhà máy và
-    quản lý xưởng muốn tăng sản lượng, chất lượng và lợi nhuận từ chính số máy
-    đang có. Mỗi chuyên đề nên đọc theo thứ tự từ trên xuống.
-  </p>
-</div>
+{%- comment -%}
+  One chronological feed, newest first — no topic buckets, no lesson numbering.
+  Every post is rendered here; the ones past the first batch carry .is-deferred
+  and are revealed on scroll by the layout's script (see the philosophy doc §5).
+{%- endcomment -%}
+<ol class="kt-feed">
+  {%- for post in site.posts %}
+  {%- assign kt_words = post.content | strip_html | number_of_words -%}
+  {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil -%}
+  {%- assign kt_topic = site.data.kien_thuc.topics[post.topic] %}
+  <li class="kt-feed-item{% if forloop.index > 6 %} is-deferred{% endif %}">
+    <a href="{{ site.url }}{{ post.url }}">
+      <span class="kt-feed-title">{{ post.title }}</span>
+      <span class="kt-feed-desc">{{ post.description }}</span>
+      <span class="kt-feed-meta">
+        {%- if kt_topic %}<span class="kt-feed-tag">{{ kt_topic.label }}</span> · {% endif -%}
+        <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time>
+        · {{ kt_minutes }} phút đọc
+      </span>
+    </a>
+  </li>
+  {%- endfor %}
+</ol>
 
-{% for kt_topic in site.data.kien_thuc.topics %}
-{%- assign kt_key = kt_topic[0] -%}
-{%- assign kt_meta = kt_topic[1] -%}
-{%- assign kt_posts = site.posts | where: "topic", kt_key | sort: "date" -%}
-{%- if kt_posts.size > 0 %}
-<section class="kt-topic">
-  <h2>{{ kt_meta.label }}</h2>
-  <p class="kt-topic-desc">{{ kt_meta.desc }}</p>
-  <ol class="kt-list">
-    {%- for post in kt_posts %}
-    {%- assign kt_words = post.content | strip_html | number_of_words -%}
-    {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil %}
-    <li class="kt-list-item">
-      <a href="{{ site.url }}{{ post.url }}">
-        <span class="kt-list-title">{{ post.title }}</span>
-        <span class="kt-list-desc">{{ post.description }}</span>
-        <span class="kt-list-meta">
-          {%- if post.series -%}
-            {{ site.data.kien_thuc.series[post.series].label }} · bài {{ post.series_part }} ·
-          {% endif -%}
-          <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time>
-          · {{ kt_minutes }} phút đọc
-        </span>
-      </a>
-    </li>
-    {%- endfor %}
-  </ol>
-</section>
-{%- endif %}
-{% endfor %}
+<p class="kt-feed-more" id="kt-feed-more" role="status">Đang tải thêm bài cũ hơn…</p>

@@ -59,6 +59,9 @@ body.kt {
   }
 }
 
+// Responsive default for article images. The brand logo opts out: its height
+// IS its design (`.kt .kt-brand-logo` outranks this rule's 0,1,1 specificity —
+// a bare `.kt-brand-logo` would silently lose to `height: auto` here).
 .kt img {
   max-width: 100%;
   height: auto;
@@ -85,66 +88,110 @@ body.kt {
   }
 }
 
-// ---- Hub: masthead + topic index ------------------------------------------
+// ---- Title bar: the Alpha · Kiến thức lockup --------------------------------
 
-.kt-masthead {
-  padding: 4.5rem 0 0.5rem;
+.kt-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
 }
 
-.kt-wordmark {
-  margin: 0;
+// Flex so the lockup is a shrink-to-fit block (no stray inline line box, link
+// only as wide as the mark) and so the whole mark centers in the bar as one
+// object — the artwork is the tallest thing inside, so centering the box
+// centers the emblem.
+.kt-topbar .kt-shell {
+  display: flex;
+  align-items: center;
+  min-height: 3.75rem;
+}
+
+// Logo and word are ONE mark — treat "Kiến thức" as part of the logo artwork,
+// not as text: no wrap, no underline, no link color, no divider between the
+// halves. Anything that makes it look like a word next to a logo breaks the
+// sub-brand (§5).
+// A logo is not an affordance: no hover, no active, no transition. Only the
+// keyboard focus ring (from the base :focus-visible rule) survives, because
+// that is navigation, not decoration.
+//
+// Lockup geometry (§5): "Kiến thức" is perceptually CENTERED on the whole
+// logo (emblem + alpha + Software), never baseline-locked to any one of its
+// lines — chosen after rendered comparisons of both approaches. Flex centers
+// the word's line box on the artwork; the small `top` on the span walks the
+// remaining distance from box center to the word's optical center.
+.kt-brand {
+  --logo-h: 2.125rem; // = article H1 (34px): largest type on the page, never larger
+
+  display: inline-flex; // whitespace between the halves is dropped by flex layout
+  align-items: center;
+  padding: 0.5rem 0; // tap-target height; the shell's flex centering does the rest
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.kt .kt-brand-logo {
+  width: auto;
+  height: var(--logo-h);
+}
+
+// Size: cap height = the "alpha" wordmark's x-height. Literata caps are
+// 0.7em; alpha's x-height is 20.03/48 of the artwork — so the em is
+// (20.03/48)/0.7 = 0.596 of the logo height (≈20px at the 2.125rem logo),
+// and it re-derives automatically at the mobile logo size. The word's caps
+// then sit in alpha's lowercase band and its diacritics rise like alpha's
+// ascenders — same voice, clearly secondary to the mark.
+// Weight 700 (the H3 weight) holds its own against the wordmark's heavy
+// rounded strokes; 600-and-below reads thin beside it (rendered comparison).
+.kt-brand-name {
+  margin-left: 0.5em; // one word space at the word's own size
   font-family: var(--font-read);
-  font-size: 2.25rem;
-  font-weight: 650;
-  letter-spacing: -0.01em;
+  font-size: calc(var(--logo-h) * 0.596);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  // 0.04em drops the line-box center onto the ink center (Literata's box is
+  // ascent-heavy: baseline sits 0.9345em down a 1em line box, and "Kiến thức"
+  // has no descenders), + 0.025em optical drop because the diacritics carry
+  // almost no visual weight. Both scale with the font, so one value serves
+  // both breakpoints.
+  top: 0.065em;
 }
 
-.kt-masthead-sub {
-  margin: 0.5rem 0 0;
-  color: var(--ink-2);
-  font-size: 0.9375rem;
+// ---- Hub: the feed ----------------------------------------------------------
+//
+// No masthead, no mission paragraph: the hub is a feed, and the posts are the
+// page (§5). The h1 stays in the markup for structure, hidden visually.
+
+.kt-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.kt-intro {
-  margin-top: 2rem;
-
-  p {
-    margin: 0;
-    font-family: var(--font-read);
-    font-size: 1.125rem;
-    line-height: 1.7;
-    color: var(--ink-2);
-  }
-}
-
-.kt-topic {
-  margin-top: 4rem;
-
-  > h2 {
-    margin: 0;
-    font-size: 0.8125rem;
-    font-weight: 650;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-}
-
-.kt-topic-desc {
-  margin: 0.625rem 0 0;
-  color: var(--ink-2);
-  font-size: 0.9375rem;
-}
-
-.kt-list {
+// Reverse-chronological, ungrouped — newest post first, older ones drip in
+// on scroll (§5). Items are hidden only while JS is running the drip.
+.kt-feed {
   list-style: none;
-  margin: 1.5rem 0 0;
+  margin: 2.5rem 0 0;
   padding: 0;
 }
 
-.kt-list-item {
+.kt-feed-item {
+  padding-bottom: 2rem;
+
   & + & {
-    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
   }
 
   a {
@@ -152,13 +199,17 @@ body.kt {
     text-decoration: none;
   }
 
-  a:hover .kt-list-title {
+  a:hover .kt-feed-title {
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
 }
 
-.kt-list-title {
+.kt-js .kt-feed-item.is-deferred {
+  display: none;
+}
+
+.kt-feed-title {
   display: block;
   font-family: var(--font-read);
   font-size: 1.3125rem;
@@ -167,7 +218,7 @@ body.kt {
   color: var(--indigo); // indigo = actionable, §3
 }
 
-.kt-list-desc {
+.kt-feed-desc {
   display: block;
   margin-top: 0.375rem;
   font-family: var(--font-read);
@@ -176,44 +227,36 @@ body.kt {
   color: var(--ink-2);
 }
 
-.kt-list-meta {
+.kt-feed-meta {
   display: block;
   margin-top: 0.5rem;
   font-size: 0.84375rem;
   color: var(--ink-3);
 }
 
-// ---- Article: top bar, title block, body ----------------------------------
-
-.kt-topbar {
-  position: sticky;
-  top: 0;
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
-
-  .kt-shell {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 3rem;
-  }
-
-  a {
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.2em;
-    }
-  }
+// The topic, readable at a glance from the feed. Not a link — so it carries no
+// indigo (§3); it earns its place with case and weight instead.
+.kt-feed-tag {
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
-.kt-topbar-brand {
+// Only meaningful while the drip is running; without JS every post is already
+// on the page, so this line stays hidden.
+.kt-feed-more {
+  display: none;
+  margin: 0;
+  padding: 1rem 0 2rem;
+  font-size: 0.875rem;
   color: var(--ink-3);
-  font-weight: 600;
 }
+
+.kt-js .kt-feed-more {
+  display: block;
+}
+
+// ---- Article: title block, body ---------------------------------------------
 
 .kt-article-head {
   margin: 3.5rem 0 3rem;
@@ -387,12 +430,14 @@ body.kt {
   margin-top: 1rem !important;
 }
 
-.kt-button {
+// Scoped with `.kt` on purpose: buttons are <a>, so they have to outrank the
+// `.kt a` link color — otherwise the label goes indigo-on-indigo, invisible.
+.kt .kt-button {
   display: inline-block;
   padding: 0.5625rem 1.125rem;
   background: var(--indigo);
   border-radius: 0.5rem;
-  color: #fff;
+  color: var(--paper);
   font-family: var(--font-ui);
   font-size: 0.9375rem;
   font-weight: 600;
@@ -401,11 +446,11 @@ body.kt {
 
   &:hover {
     background: var(--indigo-deep);
-    color: #fff;
+    color: var(--paper);
   }
 }
 
-.kt-button-quiet {
+.kt .kt-button-quiet {
   background: transparent;
   box-shadow: inset 0 0 0 1px var(--line);
   color: var(--indigo);
@@ -519,12 +564,19 @@ body.kt {
 // ---- Small screens (one breakpoint, no clamp — §4) ---------------------------
 
 @media (max-width: 40rem) {
-  .kt-masthead {
-    padding-top: 3rem;
+  .kt-topbar .kt-shell {
+    min-height: 3.5rem;
   }
 
-  .kt-wordmark {
-    font-size: 1.875rem;
+  // The lockup scales as one piece: the logo steps to the mobile article H1
+  // (1.75rem) and the word re-derives from --logo-h (size ratio, em-based
+  // gap and optical offset all follow).
+  .kt-brand {
+    --logo-h: 1.75rem;
+  }
+
+  .kt-feed {
+    margin-top: 1.75rem;
   }
 
   .kt-article-head {
@@ -552,7 +604,7 @@ body.kt {
     font-size: 1.0625rem;
   }
 
-  .kt-list-title {
+  .kt-feed-title {
     font-size: 1.1875rem;
   }
 }
