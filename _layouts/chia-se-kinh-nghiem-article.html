@@ -39,6 +39,18 @@
             </a>
             <span class="kt-byline-meta">· <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time> · {{ kt_minutes }} phút đọc</span>
           </div>
+          {%- comment -%}
+            A series used to reveal itself only at the bottom of the piece, in
+            the prev/next cards. The reader deciding whether to invest ten
+            minutes deserves to know at the top that this is one part of a
+            path (overhaul, 2026-07-15) — so a quiet metadata line follows the
+            byline. Same grey, same quiet-link pattern as the topic tag; no
+            part number here ("bài n/N" stays banned on articles, §5).
+          {%- endcomment -%}
+          {%- if page.series -%}
+            {%- assign kt_series_data = site.data.chia_se_kinh_nghiem.series[page.series] %}
+          <p class="kt-series-line">Bài viết trong series <a href="{{ site.url }}/chia-se-kinh-nghiem/series/{{ page.series }}/">{{ kt_series_data.label }}</a></p>
+          {%- endif %}
           <p class="kt-standfirst">{{ page.description }}</p>
           {%- comment -%}
             The picture closes the title block — deliberately BELOW the
@@ -54,6 +66,14 @@
           {{ content }}
         </div>
       </article>
+
+      {%- comment -%}
+        The share block sits directly after the piece (after the signature the
+        author closed it with): the reader who just finished is the one who
+        knows whether it was worth a colleague's time. Before the series nav
+        and Đọc tiếp — passing a good article on outranks the next click.
+      {%- endcomment %}
+      {% include chia-se-kinh-nghiem/share.html %}
 
       {%- if page.series -%}
         {%- assign kt_series = site.data.chia_se_kinh_nghiem.series[page.series] -%}

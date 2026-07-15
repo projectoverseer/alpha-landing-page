@@ -1,0 +1,51 @@
+{%- comment -%}
+  The share block — the article hands the reader a way to pass it on
+  (overhaul, 2026-07-15; philosophy §5 item 5, spec in 03-element-spec.md).
+
+  The hub exists to encourage learning AND sharing, and until this block the
+  page had no share affordance at all. Two actions, no more:
+
+    · Facebook — where the audience actually lives and where these posts were
+      born. A plain sharer URL, no SDK, no tracking script.
+    · Sao chép liên kết — covers everything else, Zalo above all: the way a
+      link really travels between Vietnamese factory people is pasted into a
+      Zalo chat. (A Zalo button proper needs their SDK — a script the budget
+      does not owe it.)
+
+  The lead sentence is editorial, not chrome: Literata italic, the same voice
+  as a kt-cta-inline aside — an author asking a small favor, not a toolbar.
+  No share counts, no icon row, no floating anything (§2.1).
+
+  Progressive: the copy button ships [hidden] and is revealed by the inline
+  script only when the Clipboard API is really there. With JS off the reader
+  still has the Facebook link and the address bar; nothing dead is shown.
+{%- endcomment -%}
+{%- capture kt_share_url -%}{{ site.url }}{{ page.url }}{%- endcapture -%}
+<aside aria-label="Chia sẻ bài viết" class="kt-share">
+  <p class="kt-share-lead">Nếu bài viết hữu ích, hãy chia sẻ cho đồng nghiệp của bạn.</p>
+  <p class="kt-cta-actions">
+    <a class="kt-button kt-button-quiet" href="https://www.facebook.com/sharer/sharer.php?u={{ kt_share_url | url_encode }}" rel="noopener nofollow" target="_blank">Chia sẻ lên Facebook</a>
+    <button class="kt-button kt-button-quiet kt-share-copy" data-url="{{ kt_share_url }}" hidden type="button">Sao chép liên kết</button>
+  </p>
+</aside>
+<script>
+  // Reveal the copy button only where it can actually work; swap its label
+  // for two seconds as the confirmation — the button itself is the feedback,
+  // no toast, nothing appears anywhere else on the page.
+  (function () {
+    var btn = document.querySelector(".kt-share-copy");
+    if (!btn || !navigator.clipboard || !window.isSecureContext) return;
+    btn.hidden = false;
+    var label = btn.textContent;
+    var timer;
+    btn.addEventListener("click", function () {
+      navigator.clipboard.writeText(btn.getAttribute("data-url")).then(function () {
+        btn.textContent = "Đã sao chép liên kết";
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.textContent = label;
+        }, 2000);
+      });
+    });
+  })();
+</script>

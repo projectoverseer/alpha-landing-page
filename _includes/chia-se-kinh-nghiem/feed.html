@@ -28,6 +28,13 @@
       <span class="kt-feed-desc">{{ post.description }}</span>
     </a>
     <p class="kt-feed-meta">
+      {%- comment -%}
+        parts=true (the series page only): the card leads with its place in the
+        reading order. The hub still never numbers a post — "bài n/N" stays
+        banned on articles and in the hub feed (philosophy §5) — but a series
+        page IS the syllabus, and there the order is the page's whole point.
+      {%- endcomment -%}
+      {%- if include.parts and post.series_part %}<span class="kt-feed-part">Phần {{ post.series_part }}</span> · {% endif -%}
       {%- if kt_topic %}<a class="kt-feed-tag" href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ post.topic }}/">{{ kt_topic.label }}</a> · {% endif -%}
       <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time>
       · {{ kt_minutes }} phút đọc

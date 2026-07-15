@@ -21,6 +21,13 @@
       {%- endcomment -%}
       <header class="kt-topic-head">
         <h1><span class="kt-head-prefix">Chủ đề:</span> {{ kt_topic.label }}</h1>
+        {%- comment -%}
+          The topic's one-line description from the data file, rendered as the
+          standfirst (philosophy §5 always specified this introduction; the
+          overhaul of 2026-07-15 finally renders it). Single source of truth:
+          the same line is the page's meta description.
+        {%- endcomment -%}
+        <p class="kt-standfirst">{{ kt_topic.desc }}</p>
       </header>
 
       {%- comment -%}

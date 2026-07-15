@@ -20,9 +20,25 @@
       {%- endcomment -%}
       <header class="kt-series-head">
         <h1><span class="kt-head-prefix">Series:</span> {{ kt_series.label }}</h1>
+        {%- comment -%}
+          A series is the hub's learning path, and its page sells the path
+          (overhaul, 2026-07-15): the standfirst says what the reader will be
+          able to do, and the commitment line under it says exactly what it
+          costs — n parts, m minutes. A finishable syllabus is an attractive
+          one; a bare list is not. The total is the sum of the per-post
+          minutes (each ceil-ed, matching every reading-time on the hub).
+        {%- endcomment -%}
+        <p class="kt-standfirst">{{ kt_series.desc }}</p>
+        {%- assign kt_total_minutes = 0 -%}
+        {%- for kt_part in kt_posts -%}
+          {%- assign kt_words = kt_part.content | strip_html | number_of_words -%}
+          {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil -%}
+          {%- assign kt_total_minutes = kt_total_minutes | plus: kt_minutes -%}
+        {%- endfor -%}
+        <p class="kt-collection-meta">{{ kt_posts | size }} bài · khoảng {{ kt_total_minutes }} phút đọc · đọc theo thứ tự từ bài 1</p>
       </header>
 
-      {% include chia-se-kinh-nghiem/feed.html posts=kt_posts %}
+      {% include chia-se-kinh-nghiem/feed.html posts=kt_posts parts=true %}
     </main>
 
     {% include chia-se-kinh-nghiem/cta.html variant="banner" %}

@@ -117,6 +117,9 @@ body.kt {
 // letterspacing instead (which subsumes the residual).
 .kt-feed-meta,
 .kt-byline,
+.kt-series-line,
+.kt-collection-meta,
+.kt-series-card-meta,
 .kt-feed-more,
 .kt-figure figcaption,
 .kt-series-nav-label,
@@ -511,6 +514,7 @@ body.kt {
 .kt .kt-feed-tag,
 .kt .kt-kicker a,
 .kt .kt-feed-series,
+.kt .kt-series-line a,
 .kt .kt-series-nav-series a {
   color: inherit;
   text-decoration: none;
@@ -608,6 +612,26 @@ body.kt {
   @include read(20);
   line-height: 1.6;
   color: var(--ink-2);
+}
+
+// "Bài viết trong series <tên>" — under the byline, above the standfirst: the
+// reader deciding whether to start learns at the top that the piece is one
+// part of a path (overhaul, 2026-07-15). Metadata grey, and the series name is
+// a quiet link (the shared hover-underline group above) — it labels first,
+// routes second, exactly like the topic tag.
+.kt-series-line {
+  margin: 0.625rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-3);
+}
+
+// The series page's commitment line — "n bài · khoảng m phút đọc · đọc theo
+// thứ tự từ bài 1" — under the standfirst. Plain chrome metadata: the promise
+// is in the standfirst, this line is the price tag, and a price tag is quiet.
+.kt-collection-meta {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-3);
 }
 
 // Directly under the title, above the standfirst: the line that says "article".
@@ -1017,6 +1041,8 @@ body.kt-lightbox-open {
 .kt .kt-button {
   display: inline-block;
   padding: 0.5625rem 1.125rem;
+  border: 0; // the share block's copy button is a real <button>; strip its UA chrome
+  cursor: pointer;
   background: var(--indigo);
   border-radius: 0.5rem;
   color: var(--paper);
@@ -1046,6 +1072,114 @@ body.kt-lightbox-open {
     background: var(--paper-deep);
     color: var(--indigo-deep);
   }
+}
+
+// ---- Share block (overhaul, 2026-07-15; spec: 03-element-spec.md) ------------
+//
+// After the signature, before the series nav: the reader who just finished is
+// asked — in the author's own editorial voice, Literata italic like a
+// kt-cta-inline aside — to pass the piece on. Two quiet buttons, no icon row,
+// no counts, nothing floats (§2.1). The copy button ships hidden and is
+// revealed by the include's inline script only where the Clipboard API works.
+.kt-share {
+  margin: 2rem 0 0;
+}
+
+.kt-share-lead {
+  margin: 0;
+  font-family: var(--font-read);
+  @include read(17);
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+// The confirmation is the button itself: its label swaps to "Đã sao chép liên
+// kết" for two seconds. Reserve no width — the Vietnamese labels are close
+// enough in length that the row barely breathes, and a fixed width would be
+// chrome for a state almost nobody holds.
+
+// ---- Series rail: "Đọc theo chuyên đề" (overhaul, 2026-07-15) -----------------
+//
+// The hub's learning paths, waiting at the END of the feed — the hub still
+// opens on content (§8), and the reader who ran out of archive is handed a
+// syllabus instead of a dead end. Same seam as Đọc tiếp: hairline top border,
+// Literata section title at the read-next scale — one shape for every
+// "here is more" block on the hub.
+.kt-series-rail {
+  margin: 3rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.kt-rail-title {
+  margin: 0;
+  font-family: var(--font-read);
+  @include read(21);
+  font-weight: 620;
+  line-height: 1.35;
+}
+
+.kt-rail-lead {
+  margin: 0.5rem 0 1.25rem;
+  font-family: var(--font-read);
+  @include read(16);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.kt-rail-cards {
+  display: grid;
+  gap: 0.75rem;
+}
+
+// One card, one destination: the whole card is the link to the series page, so
+// it takes the series-nav card's anatomy — hairline border, 0.5rem radius
+// (re-cut by squircle.js like every authored corner), border warms to indigo
+// under the pointer while the title underlines. Indigo title = actionable (§3);
+// desc and meta stay reading-grey and metadata-grey.
+.kt .kt-series-card {
+  display: block;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--indigo);
+  }
+
+  &:hover .kt-series-card-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+.kt-series-card-title {
+  display: block;
+  font-family: var(--font-read);
+  @include read(18);
+  font-weight: 620;
+  line-height: 1.4;
+  color: var(--indigo);
+}
+
+.kt-series-card-desc {
+  display: block;
+  margin-top: 0.375rem;
+  font-family: var(--font-read);
+  @include read(16);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.kt-series-card-meta {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  color: var(--ink-3);
 }
 
 .kt-signature {
@@ -1364,6 +1498,16 @@ body.kt-lightbox-open {
   }
 
   .kt-readnext-item-title {
+    @include read(16);
+  }
+
+  // The rail's cards step down with everything else (and take the drawing cut
+  // for the smaller size, as always).
+  .kt-series-card-title {
+    @include read(17);
+  }
+
+  .kt-share-lead {
     @include read(16);
   }
 }

@@ -73,7 +73,15 @@ would miss). The numbered principles below are applications of this one.
      size axis** (below).
    - **Inter** — all chrome (nav, metadata, labels, buttons, captions).
      Inter Variable (opsz 14–32), self-hosted — see the optical-size note below.
-   No decorative type, no Inter Display for now — fewer voices, calmer page.
+   No decorative type, and **no Inter Display** — considered again in the
+   2026-07-15 overhaul and rejected with a reason this time, not a "for now":
+   Display is Inter's cut for large sizes (the opsz axis's far end, ~20px+),
+   and the hub has no large chrome. Every heading a reader *reads* is reading
+   matter and therefore Literata; the chrome never exceeds the 16px UI base,
+   which sits below even Inter's opsz floor of 14pt (§4). A face cut for big
+   type with nothing big to set is a third voice with no lines. The one large
+   non-reading element, the lockup's "Chia sẻ kinh nghiệm", is deliberately
+   Literata-as-artwork (§5) — the documented exception.
    Body text is 19px; Vietnamese stacked diacritics get line-height ≥ 1.7 so
    tone marks never collide between lines.
    *(**Alpha Math** is not a third voice — it draws the radicals and stretched
@@ -114,7 +122,9 @@ would miss). The numbered principles below are applications of this one.
    — Absolute Neutrality's flagship (§2). The title is always a link back to the
    top of its collection (a collection name is a destination); articles and the
    hub feed name a single thing, not a collection, so they get no scroll title. The hub additionally carries a small inline script for feed
-   paging (§5). None may ever be load-bearing: with JS off the corners are
+   paging (§5), and articles one for the share block's copy-link button
+   (2026-07-15 overhaul): the button ships `hidden` and is revealed only where
+   the Clipboard API actually works, so nobody is shown a dead control. None may ever be load-bearing: with JS off the corners are
    simply round, a figure is simply a picture, the bar simply keeps the
    lockup, and every post is still in the list. Nothing else earns a script,
    and **maths in particular does not** — equations are rendered to MathML at
@@ -348,6 +358,14 @@ in the bar — no second link competing with it.
   the title bar and the newest post. The topic pages under `/chu-de/` remain, and
   a post still links to its own topic from the article byline — that byline is
   the one route to them now.
+- **The series rail** (overhaul, 2026-07-15): "Đọc theo chuyên đề", waiting at
+  the **end** of the feed — one card per series (name, description, part count,
+  total reading time), the whole card a link to the series page. It is not the
+  topic strip returning: the hub still opens straight on the newest post, and
+  the rail only meets the reader who has scrolled out the archive — the moment
+  an end-of-list dead end becomes an offer of a structured path. Plain HTML,
+  after the drip's sentinel, so crawlers and no-JS readers see it as the last
+  thing after the complete list.
 
 **Topic page (`/chia-se-kinh-nghiem/chu-de/<key>/`)** — every post carrying one
 topic, newest first. Unlike the hub it introduces itself (heading + the topic's
@@ -360,6 +378,16 @@ on the hub — the card's, the article's kicker, the strip — points here.
 - Topics remain metadata, not structure: they label an entry and an article and
   now collect them, but they never chop the *hub* feed into sections.
 
+**Series page (`/chia-se-kinh-nghiem/series/<key>/`)** — a series is the hub's
+learning path, and its page sells the path (overhaul, 2026-07-15): heading,
+then the series description as a standfirst (what the reader will be able to
+do), then the **commitment line** — "n bài · khoảng m phút đọc · đọc theo thứ
+tự từ bài 1" — a finishable syllabus is an attractive one, and this line is its
+price tag. The list runs in reading order (part 1 first) and each card's meta
+line leads with "Phần n": the "bài n/N" ban holds on articles and in the hub
+feed, but the series page *is* the syllabus, and there the order is the page's
+whole point.
+
 **Article (`/chia-se-kinh-nghiem/<slug>/`)**:
 1. Title bar (above).
 2. Title block: topic label (Inter, small caps feel), H1, **byline** — author ·
@@ -367,19 +395,36 @@ on the hub — the card's, the article's kicker, the strip — points here.
    The byline sits directly under the title because it is the line that says
    *you are reading an article*, and the reader should meet it before the prose,
    not after the picture. **No "bài n/N"** — an article is a piece of writing,
-   not a lesson in a course.
+   not a lesson in a course. If the piece belongs to a series, a quiet metadata
+   line under the byline says so — "Bài viết trong series <tên>", grey, the
+   name a quiet link (overhaul, 2026-07-15): the reader deciding whether to
+   invest ten minutes learns at the top that this is one part of a path,
+   instead of discovering it in the footer.
 3. Body (converted post, with editorial CTAs per §6).
-4. Series footer: "Bài trước / Bài sau" within the same series — continuity
+4. **Share block** (overhaul, 2026-07-15): directly after the signature — the
+   reader who just finished is the one who knows whether it was worth a
+   colleague's time, and passing a good article on outranks the next click.
+   One editorial sentence in the author's voice (Literata italic, the
+   kt-cta-inline register): "Nếu bài viết hữu ích, hãy chia sẻ cho đồng nghiệp
+   của bạn." Then two quiet buttons and never more: **Chia sẻ lên Facebook**
+   (plain sharer URL — where the audience lives and where these posts were
+   born; no SDK, no tracking) and **Sao chép liên kết** (which is how a link
+   really travels here: pasted into a Zalo chat; a Zalo button proper demands
+   their SDK, a script the budget does not owe it). No icon row, no counts,
+   nothing floats (§2.1). The copy button ships `hidden` and a tiny inline
+   script reveals it only where the Clipboard API works; the confirmation is
+   the button's own label swapping to "Đã sao chép liên kết" for two seconds.
+5. Series footer: "Bài trước / Bài sau" within the same series — continuity
    offered, never a syllabus imposed.
-5. **Đọc tiếp** (owner's engagement pass, July 2026): up to three more
+6. **Đọc tiếp** (owner's engagement pass, July 2026): up to three more
    articles in compact thumb-and-title rows — same topic first, then the
    newest of the rest of the hub; posts from the article's own series are
    excluded because the series footer above already offers them. Reading time
    shown on every row. The reader who reached the end of a post just proved
    they read to the end — they are offered the next piece *before* the contact
    strip asks anything of them. Plain HTML, crawler-visible, no script.
-6. Contact strip (site-level, uniform): one sentence + phone / email actions.
-7. Minimal footer: legal name, © , link to main site.
+7. Contact strip (site-level, uniform): one sentence + phone / email actions.
+8. Minimal footer: legal name, © , link to main site.
 
 ## 6. CTA policy — editorial elements with a second job
 

@@ -1,0 +1,43 @@
+{%- comment -%}
+  "Đọc theo chuyên đề" — the hub's learning paths, offered at the END of the
+  feed (overhaul, 2026-07-15; spec in 03-element-spec.md).
+
+  Placement is the whole design. The hub still opens straight on the newest
+  post (protected, philosophy §8), and the topic strip that once sat above the
+  feed was removed by the owner — this block does not bring it back. It waits
+  where the feed runs out: the reader who scrolled the archive is exactly the
+  one ready to be handed a structured path instead of an end-of-list dead end.
+
+  One card per series, whole card one link to the series page. Each card says
+  what the path teaches (the series desc, the same single-source line the
+  series page and its meta description use) and what it costs (n parts,
+  total minutes) — a finishable course is an attractive one.
+
+  Plain HTML in document order: while the feed's drip is running the rail sits
+  after the sentinel, and the IntersectionObserver's 600px look-ahead loads the
+  remaining batches before the reader ever reaches it, so it renders at the
+  true end of the feed. With JS off it is simply the last thing after the
+  complete list. Crawlers see every series from the hub root.
+{%- endcomment -%}
+<nav aria-label="Chuyên đề" class="kt-series-rail">
+  <h2 class="kt-rail-title">Đọc theo chuyên đề</h2>
+  <p class="kt-rail-lead">Các loạt bài viết theo trình tự, từ khái niệm đến cách làm – đọc lần lượt từ bài đầu tiên.</p>
+  <div class="kt-rail-cards">
+    {%- for kt_rail_pair in site.data.chia_se_kinh_nghiem.series -%}
+      {%- assign kt_rail_key = kt_rail_pair[0] -%}
+      {%- assign kt_rail_series = kt_rail_pair[1] -%}
+      {%- assign kt_rail_posts = site.posts | where: "series", kt_rail_key -%}
+      {%- assign kt_rail_minutes = 0 -%}
+      {%- for kt_rail_post in kt_rail_posts -%}
+        {%- assign kt_rail_words = kt_rail_post.content | strip_html | number_of_words -%}
+        {%- assign kt_rail_m = kt_rail_words | divided_by: 200.0 | ceil -%}
+        {%- assign kt_rail_minutes = kt_rail_minutes | plus: kt_rail_m -%}
+      {%- endfor %}
+    <a class="kt-series-card" href="{{ site.url }}/chia-se-kinh-nghiem/series/{{ kt_rail_key }}/">
+      <span class="kt-series-card-title">{{ kt_rail_series.label }}</span>
+      <span class="kt-series-card-desc">{{ kt_rail_series.desc }}</span>
+      <span class="kt-series-card-meta">{{ kt_rail_posts | size }} bài · khoảng {{ kt_rail_minutes }} phút đọc</span>
+    </a>
+    {%- endfor %}
+  </div>
+</nav>
