@@ -4,40 +4,56 @@
   /* ======================================================================== *
    *  Squircle engine — CSS `corner-shape` edition.
    *
-   *  Replaces the old SVG/clip-path renderer. Instead of rebuilding every
-   *  rounded element as an SVG path, it asks the browser to reshape the corner
-   *  itself via `corner-shape: superellipse(K)`, keeping native antialiasing,
-   *  borders, backgrounds and transitions intact.
+   *  Reshapes every rounded corner from a circular arc into a superellipse,
+   *  via `corner-shape: superellipse(K)`, keeping native antialiasing,
+   *  borders, backgrounds and transitions intact. The goal is neutrality:
+   *  the reader should see the button label or the image, never the box
+   *  around them.
    *
-   *  THE CORNER SHAPE IS FIXED at n = phi^3 (the golden ratio cubed), a gentle
-   *  superellipse sitting just past the n = 4 "squircle" sweet spot. Because n
-   *  never changes, every derived number below is precomputed — nothing about
-   *  the shape is recalculated at runtime.
+   *  WHY A SUPERELLIPSE READS AS "NO CORNER". A circular border-radius joins
+   *  the straight edge with a curvature jump (0 to 1/r at the tangent point);
+   *  the eye picks that point up as "here the corner starts". A superellipse
+   *  with exponent n > 2 meets the edges with zero curvature, so the bend
+   *  fades in gradually and nothing marks where it begins.
    *
-   *      n      = phi^3                = 4.2360679774997900
-   *      K      = log2(n)             ~= 2.0827   (CSS superellipse() param)
-   *      SCALE  = depth-match factor  ~= 1.9404   (see below)
-   *
-   *  DEPTH MATCH (SCALE). A superellipse of radius r is shallower at the 45°
-   *  corner than a circle of the same r, so a raw swap would make every corner
-   *  read as "less round". SCALE enlarges the radius so the superellipse's
-   *  corner DEPTH equals the original circle's depth — the silhouette stays as
-   *  close to the page's authored border-radius as the shape allows, neither
-   *  visibly shrunk nor enlarged:
+   *  DEPTH IS THE INVARIANT. What registers as "how rounded" is the 45°
+   *  depth of the corner cut. Every corner drawn here keeps the exact depth
+   *  of the authored circular radius:
    *
    *      depth(r, n) = r * sqrt(2) * (1 - 2^(-1/n))
-   *      SCALE = (1 - 2^(-1/2)) / (1 - 2^(-1/n))      (the sqrt(2)'s cancel)
    *
-   *  SAFE FALLBACK. On any browser without `corner-shape` (everything before
-   *  Chromium 139) the script returns immediately and never touches a single
-   *  style — every element keeps its original, unmodified border-radius.
+   *  so a superellipse needs its radius enlarged to s*r to match the circle
+   *  of radius r, with  s(n) = (1 - 2^(-1/2)) / (1 - 2^(-1/n)).
+   *
+   *  ADAPTIVE SMOOTHING. One fixed exponent cannot serve every element: at
+   *  the ceiling n = phi^3 (the golden ratio cubed, a gentle superellipse
+   *  just past the n = 4 "squircle" sweet spot) the depth-matched radius is
+   *  ~1.94x the authored one, which outgrows small elements — a 44px-tall
+   *  button with a 12px radius has no room for a 23px corner, and clamping
+   *  the radius per axis (the old approach) made exactly those corners
+   *  shallow and slightly lopsided. So the exponent adapts per element:
+   *  invert s(n) for the radius scale that actually fits,
+   *
+   *      s = min(SCALE, headroom)          headroom = half-side / max radius
+   *      n = -1 / log2(1 - DEPTH / s)      (s = SCALE -> phi^3 ... s = 1 -> 2)
+   *
+   *  Elements with room get the full golden smoothing; tight ones slide
+   *  continuously down toward the plain authored circle (n = 2, which is
+   *  rendered identically to no intervention). Depth is never sacrificed
+   *  and no corner is ever distorted; only the length of the blend varies.
+   *  Because n is a continuous function of size, resizing never "pops".
+   *
+   *  SAFE FALLBACK. On any browser without `corner-shape: superellipse()`
+   *  (everything before Chromium 139) the script returns immediately and
+   *  never touches a single style — every element keeps its original,
+   *  unmodified border-radius.
    * ======================================================================== */
 
-  // ---- precomputed constants (n = phi^3, fixed) ---------------------------
-  const CORNER_PARAM = '2.0827';            // K = log2(phi^3), 4-dp
-  const SCALE = 1.9404128895326194;         // depth-match radius multiplier
-  const FULLY_ROUND_EPS = 0.5;              // px tolerance for "this is a circle"
-  const SLICE_MAX_NODES = 1500;             // elements measured per idle slice
+  // ---- precomputed constants ----------------------------------------------
+  const SCALE = 1.9404128895326194;  // depth-match radius scale at n = phi^3
+  const DEPTH = 1 - Math.SQRT1_2;    // circle depth coefficient, ~0.2928932
+  const ROUND_EPS = 1.01;            // <=1% headroom: keep the native circle
+  const SLICE_MAX_NODES = 1500;      // elements measured per idle slice
 
   // Tags that never paint a rounded box: skip them BEFORE the (costly)
   // getComputedStyle read instead of measuring then discarding. This only trims
@@ -47,15 +63,10 @@
   const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'BR', 'WBR']);
 
   // ---- capability gate ----------------------------------------------------
-  // `corner-shape` lands in Chromium 139+. Anywhere else: do nothing, cleanly,
-  // leaving the authored border-radius exactly as the stylesheet set it.
-  if (!(window.CSS && CSS.supports && CSS.supports('corner-shape', 'squircle'))) return;
-
-  // Prefer the tunable function so the exact exponent is honoured; otherwise
-  // fall back to the `squircle` keyword (n = 4), the closest built-in shape.
-  const CORNER_SHAPE = CSS.supports('corner-shape', 'superellipse(2)')
-    ? 'superellipse(' + CORNER_PARAM + ')'
-    : 'squircle';
+  // The tunable superellipse() function lands with `corner-shape` in Chromium
+  // 139+. Anywhere else: do nothing, cleanly, leaving the authored
+  // border-radius exactly as the stylesheet set it.
+  if (!(window.CSS && CSS.supports && CSS.supports('corner-shape', 'superellipse(2.0827)'))) return;
 
   // ---- state --------------------------------------------------------------
   const seen = new WeakSet();    // element queued/measured at most once
@@ -73,7 +84,8 @@
           const corners = ORIG.get(el);
           if (!corners || !el.isConnected) continue;
           const out = compute(el, corners);
-          if (out.radius) write(el, out.radius);
+          if (out.kind === 'shape') write(el, out);
+          else if (out.kind === 'native') release(el);
         }
       })
     : null;
@@ -121,62 +133,78 @@
     parsePair(cs.borderBottomLeftRadius),
   ];
 
-  const cornersEqual = (a, b) => {
-    for (let i = 0; i < 4; i++) {
-      if (Math.abs(a[i][0] - b[i][0]) > 0.01) return false;
-      if (Math.abs(a[i][1] - b[i][1]) > 0.01) return false;
-    }
-    return true;
-  };
-
-  // Match (scale to preserve corner depth), then per-axis clamp. Capping each
-  // corner at half its side keeps the sum along every edge within the side, so
-  // the browser never fires its own proportional shrink.
-  // Returns { radius: string|null, clamped: bool }. null => no rounded corners.
+  // Decide what an element's corners should be. Returns one of:
+  //   { kind: 'skip' }    no rounded corners authored — nothing to do
+  //   { kind: 'native' }  rounded, but no headroom (circle/pill): the browser's
+  //                       own rendering is already the right answer
+  //   { kind: 'shape', radius, shape, constrained }
+  //
+  // The scale s is uniform across all four corners (and both axes), so the
+  // authored proportions between corners are preserved exactly — the fitting
+  // never introduces ellipticity or asymmetry the stylesheet didn't ask for.
   function compute(el, corners) {
     const fitH = el.offsetWidth / 2;
     const fitV = el.offsetHeight / 2;
-    const fitMin = Math.min(fitH, fitV);
     const laidOut = fitH > 0 && fitV > 0;
 
-    let maxR = 0;
+    let maxRh = 0, maxRv = 0;
     for (let i = 0; i < 4; i++) {
-      if (corners[i][0] > maxR) maxR = corners[i][0];
-      if (corners[i][1] > maxR) maxR = corners[i][1];
+      if (corners[i][0] > maxRh) maxRh = corners[i][0];
+      if (corners[i][1] > maxRv) maxRv = corners[i][1];
     }
-    if (maxR === 0) return { radius: null, clamped: false };  // not rounded
+    if (maxRh === 0 && maxRv === 0) return { kind: 'skip' };
 
-    // Circle / pill (detected on the ORIGINAL radius, before scaling): a
-    // squircle can't be a true circle, so leave it perfectly round.
-    if (laidOut && maxR >= fitMin - FULLY_ROUND_EPS)
-      return { radius: null, clamped: false };
+    // Headroom: how far the largest radius could grow before a corner box
+    // passes half a side (past that the browser starts shrinking radii, and
+    // at 1x the element is already a circle/pill — which a superellipse can
+    // never improve on, so leave it perfectly round).
+    const room = laidOut
+      ? Math.min(maxRh > 0 ? fitH / maxRh : Infinity, maxRv > 0 ? fitV / maxRv : Infinity)
+      : Infinity;
+    if (room <= ROUND_EPS) return { kind: 'native' };
 
-    const capH = fitH > 0 ? fitH : Infinity;
-    const capV = fitV > 0 ? fitV : Infinity;
+    // Fit the smoothing to the room: full golden-ratio blend when it fits,
+    // continuously gentler when it doesn't. Depth stays authored throughout.
+    const s = Math.min(SCALE, room);
+    const n = -1 / Math.log2(1 - DEPTH / s);
+    const shape = 'superellipse(' + Math.log2(n).toFixed(4) + ')';
 
-    let clamped = !laidOut;   // zero-size now -> revisit once it has a box
+    const capH = laidOut ? fitH : Infinity;
+    const capV = laidOut ? fitV : Infinity;
     let elliptical = false;
     const H = new Array(4), V = new Array(4);
     for (let i = 0; i < 4; i++) {
-      const th = corners[i][0] * SCALE;
-      const tv = corners[i][1] * SCALE;
-      const sh = Math.min(th, capH);
-      const sv = Math.min(tv, capV);
-      if (th > capH + 0.01 || tv > capV + 0.01) clamped = true;
+      const sh = Math.min(corners[i][0] * s, capH);  // caps only absorb float error
+      const sv = Math.min(corners[i][1] * s, capV);
       if (Math.abs(sh - sv) > 0.01) elliptical = true;
       H[i] = sh; V[i] = sv;
     }
 
-    const f = (n) => n.toFixed(2) + 'px';
+    const f = (x) => x.toFixed(2) + 'px';
     const radius = elliptical
       ? H.map(f).join(' ') + ' / ' + V.map(f).join(' ')
       : H.map(f).join(' ');
-    return { radius, clamped };
+    // Constrained (or not yet laid out) elements depend on their size: watch
+    // them so the blend re-fits as room appears or disappears.
+    return { kind: 'shape', radius, shape, constrained: !laidOut || s < SCALE - 0.001 };
   }
 
-  function write(el, radius) {
-    el.style.setProperty('corner-shape', CORNER_SHAPE, 'important');
-    el.style.setProperty('border-radius', radius, 'important');
+  function write(el, out) {
+    el.style.setProperty('corner-shape', out.shape, 'important');
+    el.style.setProperty('border-radius', out.radius, 'important');
+  }
+
+  // Hand the corners back to the browser (circle/pill territory).
+  function release(el) {
+    el.style.removeProperty('corner-shape');
+    el.style.removeProperty('border-radius');
+  }
+
+  function observeResize(el) {
+    if (resizeObserver && !tracked.has(el)) {
+      tracked.add(el);
+      resizeObserver.observe(el);
+    }
   }
 
   // ---- the work slice (initial sweep + newly added nodes) -----------------
@@ -197,8 +225,8 @@
 
       const corners = readCorners(getComputedStyle(el));
       const out = compute(el, corners);
-      if (!out.radius) continue;
-      jobs.push({ el, radius: out.radius, clamped: out.clamped, corners });
+      if (out.kind !== 'shape') continue;
+      jobs.push({ el, out, corners });
     }
 
     if (i < chunk.length) {
@@ -208,14 +236,11 @@
 
     // WRITE PHASE: writes + observer hookups, no interleaved reads.
     for (let j = 0; j < jobs.length; j++) {
-      const { el, radius, clamped, corners } = jobs[j];
-      write(el, radius);
+      const { el, out, corners } = jobs[j];
+      write(el, out);
       ORIG.set(el, corners);  // store BASE radii so recompute is exact
       managed.add(el);        // ...and follow its border-radius from now on
-      if (resizeObserver && clamped && !tracked.has(el)) {
-        tracked.add(el);
-        resizeObserver.observe(el);
-      }
+      if (out.constrained) observeResize(el);
     }
 
     if (pending.length || roots.length) schedule();
@@ -231,8 +256,8 @@
   function recompute(el) {
     if (!el.isConnected) return;
 
-    const prev = ORIG.get(el);
     const prevBR = el.style.getPropertyValue('border-radius');
+    const prevShape = el.style.getPropertyValue('corner-shape');
 
     // Reveal the stylesheet's *target* radius: drop our override and freeze the
     // transition so getComputedStyle returns the final value, not a mid-tween one.
@@ -240,11 +265,10 @@
     el.style.removeProperty('border-radius');
     const corners = readCorners(getComputedStyle(el));   // forced flush -> target
     const out = compute(el, corners);
-    const next = out.radius;
 
     ORIG.set(el, corners);
 
-    if (!next) {
+    if (out.kind === 'skip') {
       // No rounded corners now. Tween our radius down to 0 (keeping the squircle
       // shape, which is invisible at 0) so the corners shrink in step with the
       // element's own border-radius transition instead of snapping. Stay managed
@@ -258,8 +282,20 @@
       return;
     }
 
-    if (prev && cornersEqual(prev, corners)) {
-      // Authored radius is unchanged (the class flip touched something else):
+    if (out.kind === 'native') {
+      // Circle/pill territory now: give the corners back to the browser, but
+      // tween there from our old value rather than snapping.
+      if (prevBR) {
+        el.style.setProperty('border-radius', prevBR, 'important');
+        getComputedStyle(el).borderRadius;   // commit baseline
+      }
+      el.style.removeProperty('transition');
+      release(el);
+      return;
+    }
+
+    if (out.radius === prevBR && out.shape === prevShape) {
+      // Same output as before (the class flip touched something else):
       // re-seat our frozen value and commit it while transitions are still off,
       // so releasing the transition can't tween from the bare unscaled target.
       if (prevBR) {
@@ -278,7 +314,8 @@
       getComputedStyle(el).borderRadius;   // commit baseline
     }
     el.style.removeProperty('transition');
-    write(el, next);
+    write(el, out);
+    if (out.constrained) observeResize(el);
   }
 
   // ---- observe the page ---------------------------------------------------
