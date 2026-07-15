@@ -31,6 +31,8 @@ const ASSETS = [
   { file: 'js/squircle.js', ref: '/js/squircle.js' },
   // The hub's picture viewer, referenced by article pages only.
   { file: 'js/kt-lightbox.js', ref: '/js/kt-lightbox.js' },
+  // The hub's scroll title, referenced by every hub page but the hub root.
+  { file: 'js/kt-topbar.js', ref: '/js/kt-topbar.js' },
 ];
 
 // Insert the hash before the final extension: foo.css -> foo.<hash>.css

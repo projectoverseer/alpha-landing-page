@@ -52,6 +52,7 @@ if (!hashed('css', 'chiasekinhnghiem', 'css')) errors.push('missing fingerprinte
 if (!hashed('js', 'bundle', 'js')) errors.push('missing fingerprinted js/bundle.<hash>.js');
 if (!hashed('js', 'squircle', 'js')) errors.push('missing fingerprinted js/squircle.<hash>.js');
 if (!hashed('js', 'kt-lightbox', 'js')) errors.push('missing fingerprinted js/kt-lightbox.<hash>.js');
+if (!hashed('js', 'kt-topbar', 'js')) errors.push('missing fingerprinted js/kt-topbar.<hash>.js');
 
 // ── 2 + 3. scan every built HTML page ───────────────────────────────────────
 const htmlFiles = readdirSync(SITE, { recursive: true })

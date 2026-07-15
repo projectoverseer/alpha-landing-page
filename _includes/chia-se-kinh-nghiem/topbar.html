@@ -3,12 +3,31 @@
   same baseline, never wraps, sized so the words' caps match the "alpha" wordmark's
   x-height (lockup geometry in _sass/chia-se-kinh-nghiem/_theme.scss) — but the two
   halves are now two destinations. The Alpha mark returns to the main site
-  ({{ site.url }}/); the words go to the hub root (/chia-se-kinh-nghiem/), so they stay
+  ({{ site.url }}/) — in the same tab: a reader who clicks it by accident gets
+  back with the Back button, and a surprise new tab breaks that (owner's call,
+  2026-07-15). The words go to the hub root (/chia-se-kinh-nghiem/), so they stay
   the way back from any article. "Chia sẻ kinh nghiệm" is a branch of Alpha, not a
   separate company; it underlines on hover to show it is its own link, while the logo
   does not. See design/chia-se-kinh-nghiem/01-philosophy.md §5.
+
+  .kt-brand-swap is the stage for the scroll title (kt-topbar.js): on a
+  collection page the script drops a .kt-bar-title link in here and crossfades
+  it with the name once the h1 scrolls out under the bar. With JS off — or on
+  any page without the title — the wrapper is just a box around the name and
+  nothing moves.
+
+  data-kt-title-href marks the pages whose h1 names a collection — chủ đề,
+  series, tác giả — like an album name (owner's framing, 2026-07-15): there
+  the scroll title becomes a link that puts the reader back at the top of the
+  collection. An article's h1 names one piece, not a collection, so articles
+  carry no attribute and get no scroll title at all — the bar keeps the plain
+  lockup (owner's call, 2026-07-15).
 {%- endcomment -%}
-<div class="kt-topbar">
+{%- assign kt_bar_href = nil -%}
+{%- if page.layout == "chia-se-kinh-nghiem-topic" or page.layout == "chia-se-kinh-nghiem-series" or page.layout == "chia-se-kinh-nghiem-author" -%}
+  {%- capture kt_bar_href %}{{ site.url }}{{ page.url }}{% endcapture -%}
+{%- endif -%}
+<div class="kt-topbar"{% if kt_bar_href %} data-kt-title-href="{{ kt_bar_href }}"{% endif %}>
   <div class="kt-shell">
     <div class="kt-brand">
       <a class="kt-brand-logo-link" href="{{ site.url }}/" aria-label="Alpha Software – trang chủ">
@@ -20,7 +39,10 @@
           width="120"
         />
       </a>
-      <a class="kt-brand-name" href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a>
+      <span aria-hidden="true" class="kt-brand-sep"></span>
+      <span class="kt-brand-swap">
+        <a class="kt-brand-name" href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a>
+      </span>
     </div>
   </div>
 </div>

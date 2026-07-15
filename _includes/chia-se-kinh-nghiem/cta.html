@@ -23,7 +23,7 @@
     {{ include.text }}
   {%- else -%}
     Bài viết thuộc thư viện <a href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a> của
-    <a href="{{ site.url }}/">Alpha Software</a> – phần mềm chuyên cho ngành dệt – nhuộm.
+    <a href="{{ site.url }}/" rel="noopener" target="_blank">Alpha Software</a> – phần mềm chuyên cho ngành dệt – nhuộm.
   {%- endif -%}
 </p>
 
@@ -38,7 +38,7 @@
       lý nhà máy của người sáng lập Alpha Software – công ty phát triển phần mềm
       chuyên cho ngành dệt – nhuộm.
     {%- endif -%}
-    <a href="{{ site.url }}/">www.alphasoftwaregroup.com</a>
+    <a href="{{ site.url }}/" rel="noopener" target="_blank">www.alphasoftwaregroup.com</a>
   </p>
 </aside>
 
@@ -56,7 +56,7 @@
   </p>
   {%- capture kt_card_href -%}{{ site.url }}/#san-pham{%- endcapture -%}
   <p class="kt-cta-actions">
-    <a class="kt-button" href="{{ include.href | default: kt_card_href }}">{{ include.button | default: "Tìm hiểu Alpha Smart Dyehouse" }}</a>
+    <a class="kt-button" href="{{ include.href | default: kt_card_href }}" rel="noopener" target="_blank">{{ include.button | default: "Tìm hiểu Alpha Smart Dyehouse" }}</a>
   </p>
 </aside>
 
@@ -70,25 +70,25 @@
     <p class="kt-cta-actions">
       <a class="kt-button" href="tel:+84983505002">Gọi 0983&nbsp;505&nbsp;002</a>
       <a class="kt-button kt-button-quiet" href="mailto:{{ site.email }}">Gửi email</a>
-      <a class="kt-button kt-button-quiet" href="{{ site.facebook_page }}" rel="noopener external" target="_blank">Facebook</a>
+      <a class="kt-button kt-button-quiet" href="{{ site.facebook_page }}" rel="noopener external nofollow" target="_blank">Facebook</a>
     </p>
   </div>
 </aside>
 
 {%- when "signature" -%}
 <footer class="kt-signature">
-  <div class="kt-signature-id">
+  <a class="kt-author-link kt-signature-id" href="{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ kt_author.slug }}/">
     {% include chia-se-kinh-nghiem/avatar.html size=48 class="kt-signature-avatar" %}
-    <div class="kt-signature-lines">
-      <p class="kt-signature-name"><a class="kt-author-link" href="{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ kt_author.slug }}/">{{ kt_author.name }}</a></p>
-      <p class="kt-signature-role">{{ kt_author.role }} – phần mềm chuyên cho ngành dệt – nhuộm</p>
-    </div>
-  </div>
+    <span class="kt-signature-lines">
+      <span class="kt-signature-name kt-author-name">{{ kt_author.name }}</span>
+      <span class="kt-signature-role">{{ kt_author.role }} – phần mềm chuyên cho ngành dệt – nhuộm</span>
+    </span>
+  </a>
   <p class="kt-signature-canonical">
     Bản quyền © {{ page.date | date: "%Y" }} Công ty TNHH Phát triển Phần mềm Alpha
     (Alpha Software). Đăng lần đầu tại
     <a href="{{ site.url }}{{ page.url }}">www.alphasoftwaregroup.com{{ page.url }}</a>
-    · <a href="{{ site.facebook_page }}" rel="noopener external">Facebook Alpha Software</a>
+    · <a href="{{ site.facebook_page }}" rel="noopener external nofollow" target="_blank">Facebook Alpha Software</a>
   </p>
 </footer>
 

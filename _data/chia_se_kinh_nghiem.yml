@@ -27,11 +27,15 @@ topics:
     desc: "Lý thuyết màu sắc, máy quang phổ và quy trình so màu chuẩn giữa nhà máy và khách hàng."
 
 # Series metadata. Posts declare `series: <key>` + `series_part: n`.
+# Each series also has a page (/chia-se-kinh-nghiem/series/<key>/) that lists
+# its parts in reading order; `desc` is that page's standfirst and meta description.
 series:
   so-hoa-oee:
     label: "Số hóa OEE trong xưởng nhuộm"
+    desc: "Từ con số OEE 60% đến cách đo và số hóa từng thành phần – loạt bài giúp xưởng nhuộm tìm lại số giờ máy đang thất thoát mỗi ngày."
   ly-thuyet-mau-sac:
     label: "Lý thuyết màu sắc trong ngành nhuộm"
+    desc: "Ánh sáng, nguyên lý máy quang phổ, các giá trị L*a*b* và quy trình hiệu chuẩn – nền tảng để so màu chuẩn giữa nhà máy và khách hàng."
 
 # Image library for the hub. One entry per picture, keyed by its file slug in
 # img/chia-se-kinh-nghiem/ — the alt text, caption and intrinsic size live here

@@ -71,6 +71,11 @@ writeFileSync(SITE_JS + 'squircle.js', squircle);
 const { code: lightbox } = transformSync(readFileSync(SITE_JS + 'kt-lightbox.js', 'utf8'), { minify: true });
 writeFileSync(SITE_JS + 'kt-lightbox.js', lightbox);
 
+// kt-topbar.js is the hub's scroll title, loaded on every hub page but the
+// hub root — same treatment again.
+const { code: topbar } = transformSync(readFileSync(SITE_JS + 'kt-topbar.js', 'utf8'), { minify: true });
+writeFileSync(SITE_JS + 'kt-topbar.js', topbar);
+
 // Drop the raw sources from the output so they aren't shipped alongside the
 // bundle (the full vendored bootstrap is dev-only and must not reach _site).
 for (const f of ['bootstrap.bundle.min.js', 'custom.js']) {
@@ -80,4 +85,5 @@ for (const f of ['bootstrap.bundle.min.js', 'custom.js']) {
 const kb = (readFileSync(DEST).length / 1024).toFixed(1);
 const sq = (readFileSync(SITE_JS + 'squircle.js').length / 1024).toFixed(1);
 const lb = (readFileSync(SITE_JS + 'kt-lightbox.js').length / 1024).toFixed(1);
-console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + squircle.js (${sq} KB, hub) + kt-lightbox.js (${lb} KB, hub articles)`);
+const tb = (readFileSync(SITE_JS + 'kt-topbar.js').length / 1024).toFixed(1);
+console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + squircle.js (${sq} KB, hub) + kt-lightbox.js (${lb} KB, hub articles) + kt-topbar.js (${tb} KB, hub subpages)`);

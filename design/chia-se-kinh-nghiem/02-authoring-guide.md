@@ -26,7 +26,20 @@ image: rft-nhuom-dat-tu-lan-dau   # optional — key from _data/chia_se_kinh_ngh
 ---
 ```
 
-New series: add the key to `_data/chia_se_kinh_nghiem.yml` first.
+**New series — two steps**, same shape as a new topic. Add the key (with
+`label` and `desc`) to `_data/chia_se_kinh_nghiem.yml` → `series`, then create
+its page — `chia-se-kinh-nghiem/series/<key>.html`, nothing but front matter —
+
+```yaml
+---
+layout: chia-se-kinh-nghiem-series
+permalink: /chia-se-kinh-nghiem/series/<key>/
+series: <key>
+---
+```
+
+The series page lists its parts in reading order (part 1 first), and every
+part's prev/next cards carry a "Series <label>" line linking back to it.
 
 **New topic — two steps.** Add the key (with `label` and `desc`) to
 `_data/chia_se_kinh_nghiem.yml` → `topics`, then create its page:

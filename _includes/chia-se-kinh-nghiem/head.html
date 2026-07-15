@@ -3,9 +3,11 @@
   the main site's meta.html by design — the hub is a separate product with its
   own CSS bundle and fonts. See design/chia-se-kinh-nghiem/01-philosophy.md.
 
-  Three kinds of page, and every branch below turns on which one this is:
+  The kinds of page, and every branch below turns on which one this is:
     article — a post
     topic   — /chu-de/<key>/, every post carrying that topic
+    series  — /series/<key>/, a series' parts in reading order
+    author  — /tac-gia/<slug>/, everything the author wrote
     hub     — /chia-se-kinh-nghiem/, the whole feed
 {%- endcomment -%}
 <meta charset="utf-8" />
@@ -17,7 +19,9 @@
 {%- if page.layout == "chia-se-kinh-nghiem-article" -%}{%- assign kt_kind = "article" -%}{%- endif -%}
 {%- if page.layout == "chia-se-kinh-nghiem-topic" -%}{%- assign kt_kind = "topic" -%}{%- endif -%}
 {%- if page.layout == "chia-se-kinh-nghiem-author" -%}{%- assign kt_kind = "author" -%}{%- endif -%}
+{%- if page.layout == "chia-se-kinh-nghiem-series" -%}{%- assign kt_kind = "series" -%}{%- endif -%}
 {%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[page.topic] -%}
+{%- assign kt_series = site.data.chia_se_kinh_nghiem.series[page.series] -%}
 {%- assign kt_author = site.data.chia_se_kinh_nghiem.author -%}
 
 {%- comment -%}
@@ -31,6 +35,9 @@
 {%- elsif kt_kind == "topic" -%}
   {%- capture kt_title %}{{ kt_topic.label }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
   {%- assign kt_desc = kt_topic.desc -%}
+{%- elsif kt_kind == "series" -%}
+  {%- capture kt_title %}Series {{ kt_series.label }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
+  {%- assign kt_desc = kt_series.desc -%}
 {%- elsif kt_kind == "author" -%}
   {%- capture kt_title %}Tác giả: {{ kt_author.name }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
   {%- assign kt_desc = kt_author.bio -%}
@@ -210,6 +217,54 @@
   ]
 }
 </script>
+{%- elsif kt_kind == "series" %}
+{%- assign kt_posts = site.posts | where: "series", page.series | sort: "series_part" -%}
+<meta content="website" property="og:type" />
+{%- comment -%}
+  A series page is a collection whose order IS the reading order — part 1
+  first, exactly as the feed renders it — so the list declares itself ascending.
+{%- endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ kt_series.label | jsonify }},
+  "description": {{ kt_desc | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}",
+  "inLanguage": "vi",
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Chia sẻ kinh nghiệm – Alpha Software",
+    "url": "{{ site.url }}/chia-se-kinh-nghiem/"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "numberOfItems": {{ kt_posts | size }},
+    "itemListElement": [
+      {%- for post in kt_posts %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": "{{ site.url }}{{ post.url }}",
+        "name": {{ post.title | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Alpha Software", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Chia sẻ kinh nghiệm", "item": "{{ site.url }}/chia-se-kinh-nghiem/" },
+    { "@type": "ListItem", "position": 3, "name": {{ kt_series.label | jsonify }} }
+  ]
+}
+</script>
 {%- elsif kt_kind == "author" %}
 {%- assign kt_posts = site.posts -%}
 <meta content="profile" property="og:type" />
@@ -322,7 +377,7 @@
 {%- assign kt_lcp = nil -%}
 {%- if kt_kind == "article" -%}
   {%- assign kt_lcp = page.image -%}
-{%- elsif kt_kind == "topic" -%}
+{%- elsif kt_kind == "topic" or kt_kind == "series" -%}
   {%- assign kt_lcp = kt_posts.first.image -%}
 {%- else -%}
   {%- assign kt_lcp = site.posts.first.image -%}
@@ -362,6 +417,19 @@
   optimize-js.mjs minifies it in place, then fingerprint.mjs hashes the URL.
 {%- endcomment %}
 <script defer src="{{ site.url }}/js/squircle.js"></script>
+{%- if kt_kind == "topic" or kt_kind == "series" or kt_kind == "author" %}
+{%- comment -%}
+  The scroll title (philosophy §2.6): once the page's h1 scrolls under the
+  bar, its text takes the brand name's place there, so the bar keeps saying
+  which COLLECTION the reader is in — and, since a collection name is a
+  destination, links back to the top of it. Only the collection pages (chủ đề,
+  series, tác giả); an article's h1 names one piece, not a collection the bar
+  can point back to, so articles keep the plain lockup (owner's call,
+  2026-07-15). The hub is out too — its h1 is hidden and IS the brand name.
+  Never load-bearing: with JS off the lockup just stays.
+{%- endcomment %}
+<script defer src="{{ site.url }}/js/kt-topbar.js"></script>
+{%- endif %}
 {%- if kt_kind == "article" %}
 {%- comment -%}
   The picture viewer (philosophy §2.6): tap a figure to inspect it full-screen

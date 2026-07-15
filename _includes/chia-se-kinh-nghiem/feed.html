@@ -31,6 +31,14 @@
       {%- if kt_topic %}<a class="kt-feed-tag" href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ post.topic }}/">{{ kt_topic.label }}</a> · {% endif -%}
       <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time>
       · {{ kt_minutes }} phút đọc
+      {%- comment -%}
+        Third destination, same "Series <tên>" line the prev/next cards carry —
+        except on the series' own page, where every card would repeat it.
+      {%- endcomment -%}
+      {%- if post.series and post.series != page.series -%}
+        {%- assign kt_feed_series = site.data.chia_se_kinh_nghiem.series[post.series] %}
+      · Series <a class="kt-feed-series" href="{{ site.url }}/chia-se-kinh-nghiem/series/{{ post.series }}/">{{ kt_feed_series.label }}</a>
+      {%- endif %}
     </p>
   </li>
   {%- endfor %}

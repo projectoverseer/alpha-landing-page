@@ -8,25 +8,20 @@
 
     {% include chia-se-kinh-nghiem/topbar.html %}
 
-    {%- assign kt_topic = site.data.chia_se_kinh_nghiem.topics[page.topic] -%}
-    {%- assign kt_posts = site.posts | where: "topic", page.topic -%}
+    {%- assign kt_series = site.data.chia_se_kinh_nghiem.series[page.series] -%}
+    {%- assign kt_posts = site.posts | where: "series", page.series | sort: "series_part" -%}
 
     <main class="kt-shell" id="main-content">
       {%- comment -%}
-        Unlike the hub, a topic page names itself: the reader arrived from a tag
-        or from search, so the heading says what this collection is — and then it
-        gets out of the way. No standfirst, no kicker, no strip of the other
-        topics: this page has one job, which is the list below it, and the way
-        back up is the lockup in the title bar (owner's call).
+        A series page mirrors the topic page — heading, then the feed — with one
+        difference: the list runs in READING order (part 1 first), because a
+        series is a course to follow, not an archive to browse. The reader
+        arrives here from the "Series …" line in an article's prev/next cards.
       {%- endcomment -%}
-      <header class="kt-topic-head">
-        <h1><span class="kt-head-prefix">Chủ đề:</span> {{ kt_topic.label }}</h1>
+      <header class="kt-series-head">
+        <h1><span class="kt-head-prefix">Series:</span> {{ kt_series.label }}</h1>
       </header>
 
-      {%- comment -%}
-        No drip here: a topic holds a fraction of the archive, so the whole list
-        renders at once and the page needs no script of its own.
-      {%- endcomment %}
       {% include chia-se-kinh-nghiem/feed.html posts=kt_posts %}
     </main>
 

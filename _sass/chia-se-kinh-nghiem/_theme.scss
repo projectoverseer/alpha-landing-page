@@ -120,6 +120,7 @@ body.kt {
 .kt-feed-more,
 .kt-figure figcaption,
 .kt-series-nav-label,
+.kt-series-nav-series,
 .kt-readnext-meta,
 .kt-footer p,
 .kt-signature-role,
@@ -177,18 +178,19 @@ body.kt {
 }
 
 // Logo and word are ONE mark — treat "Chia sẻ kinh nghiệm" as part of the logo artwork,
-// not as text: no wrap, no underline, no link color, no divider between the
-// halves. Anything that makes it look like a word next to a logo breaks the
-// sub-brand (§5).
+// not as text: no wrap, no underline, no link color. A hairline separator now
+// stands between the halves (owner's call, 2026-07-15, superseding the earlier
+// no-divider rule): since the lockup became two destinations, the rule marks
+// where one link ends and the other begins.
 // A logo is not an affordance: no hover, no active, no transition. Only the
 // keyboard focus ring (from the base :focus-visible rule) survives, because
 // that is navigation, not decoration.
 //
-// Lockup geometry (§5): "Chia sẻ kinh nghiệm" is perceptually CENTERED on the whole
-// logo (emblem + alpha + Software), never baseline-locked to any one of its
-// lines — chosen after rendered comparisons of both approaches. Flex centers
-// the word's line box on the artwork; the small `top` on the span walks the
-// remaining distance from box center to the word's optical center.
+// Lockup geometry (§5): "Chia sẻ kinh nghiệm" is CENTERED on the whole logo
+// (emblem + alpha + Software), never baseline-locked to any one of its lines —
+// chosen after rendered comparisons of both approaches. Flex centers the word's
+// line box on the artwork; no by-eye offset rides on top of that (owner removed
+// the optical nudges, 2026-07-15 — the geometry stands on its own).
 // The container is now a plain flex row holding two separate links (§5): the
 // logo returns to the main Alpha site, the words go to the hub. Each half owns
 // its own tap target so the padding that used to sit on the anchor moves onto
@@ -199,6 +201,7 @@ body.kt {
   display: inline-flex; // whitespace between the halves is dropped by flex layout
   align-items: center;
   white-space: nowrap;
+  min-width: 0; // let the scroll title truncate instead of pushing the bar wide
 }
 
 .kt .kt-brand-logo-link {
@@ -211,6 +214,18 @@ body.kt {
 .kt .kt-brand-logo {
   width: auto;
   height: var(--logo-h);
+}
+
+// The hairline between the two halves of the lockup — decoration, not text, so
+// the markup hides it from assistive tech. Sized against the logo so both
+// breakpoints inherit the right proportion; the gaps on either side match the
+// word space the name already keeps (0.5em at its ≈20px type ≈ 0.625rem).
+.kt-brand-sep {
+  align-self: center;
+  width: 1px;
+  height: calc(var(--logo-h) * 0.65);
+  margin-left: 0.625rem;
+  background: var(--line);
 }
 
 // Size: cap height = the "alpha" wordmark's x-height. alpha's x-height is
@@ -230,31 +245,149 @@ body.kt {
 // (0,1,1) — otherwise the words would take the indigo link colour and the hover
 // shift meant for prose links. It stays ink and underlines only on hover, the
 // standard signal that a word is its own link.
+// The stage for the scroll title: the name and the page title share one grid
+// cell, so the crossfade happens in place and neither reflows the lockup. The
+// word space the name used to carry as its own margin moves up here (same em,
+// same size), so both occupants start at the same x. min-width: 0 down the
+// chain lets the cell shrink under a long title instead of widening the bar.
+.kt-brand-swap {
+  display: grid;
+  align-items: center;
+  min-width: 0;
+  margin-left: 0.5em; // one word space at the name's size
+  font-size: calc(var(--logo-h) * 0.595); // the name's size, so that em holds
+
+  > * {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+}
+
 .kt .kt-brand-name {
-  margin-left: 0.5em; // one word space at the word's own size
   padding: 0.5rem 0; // its own tap target, matching the logo half
   font-family: var(--font-read);
   font-size: calc(var(--logo-h) * 0.595);
   font-weight: 700;
-  // A wordmark, not text: set as a mark, it wants a slightly firmer, more solid
-  // fit than running prose — the one place hand-tuned negative tracking belongs.
-  letter-spacing: -0.005em;
   font-variation-settings: "opsz" 15.2;
   line-height: 1;
   color: var(--ink);
   text-decoration: none;
-  position: relative;
-  // 0.04em drops the line-box center onto the ink center (Literata's box is
-  // ascent-heavy: baseline sits 0.9345em down a 1em line box, and "Chia sẻ kinh nghiệm"
-  // has no descenders), + 0.025em optical drop because the diacritics carry
-  // almost no visual weight. Both scale with the font, so one value serves
-  // both breakpoints.
-  top: 0.065em;
 
   &:hover {
     color: var(--ink); // hold ink; do not take `.kt a:hover` indigo-deep
     text-decoration: underline;
   }
+}
+
+// ---- Scroll title: the page's h1 takes the name's place ---------------------
+//
+// On a collection page (topic, series, author), kt-topbar.js drops the h1's
+// text into .kt-brand-swap and, once the real h1 has scrolled away under the
+// bar, swaps the name out for it — the bar keeps saying which collection the
+// reader is in. Articles are out (their h1 names one piece, not a collection);
+// the hub is out (its h1 is the feed heading). The owner's model case is
+// Facebook's profile page, where the section bar turns into the profile's
+// name: a very fast fade with a subtle slide in from the bottom.
+//
+// The animation is governed by Absolute Neutrality (the owner's core design
+// philosophy, named July 2026 — design/chia-se-kinh-nghiem/01-philosophy.md
+// §2): 98% of readers must never notice it, yet feel worse were it taken
+// away. Near-snap speed IS the neutrality — anything slow enough to watch is
+// slow enough to distract — but a true snap reads as abrupt and draws the eye
+// to the snapping itself, so a sliver of transition remains. Opacity leads
+// (0.12s), a whisper of vertical travel (0.35em ≈ 6px, below what registers
+// as "movement") settles a beat later (0.18s) — the title rises in from
+// below like the content it stands for, and the same transitions run
+// backwards on the way up. Plain `ease` throughout: any signature curve
+// would be a signature, and this must not have one.
+//
+// visibility rides along zero-length but DELAYED past the fade on whichever
+// line is leaving, so the hidden link drops out of the tab order and away
+// from assistive tech only after it has finished fading; the line arriving
+// gets its delay zeroed so it is visible for its own fade-in.
+
+.kt .kt-brand-name,
+.kt .kt-bar-title {
+  transition:
+    opacity 0.12s ease,
+    transform 0.18s ease,
+    visibility 0s linear 0.18s;
+}
+
+// The scroll title itself (created by kt-topbar.js, aria-hidden — it repeats
+// what the page's h1 already announces). A step below the name: this is
+// wayfinding, not a second wordmark, so it takes the reading face at bar-title
+// scale — semibold, half the logo height (≈17px against the name's 20) — and
+// one line, clipped to an ellipsis. No hand-tuned tracking or optical nudge:
+// those were cut for the wordmark; this is text.
+.kt .kt-bar-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-read);
+  font-size: calc(var(--logo-h) * 0.5);
+  @include opsz(17);
+  font-weight: 600;
+  line-height: 1.4; // room for Vietnamese diacritics inside the clip box
+  color: var(--ink);
+  text-decoration: none; // the link signals on hover only
+  opacity: 0;
+  transform: translateY(0.35em);
+  visibility: hidden;
+
+  &:hover {
+    color: var(--ink); // hold ink; the link variant must not take `.kt a:hover`
+  }
+}
+
+// The scroll title is always a link back to the top of its own collection page
+// (kt-topbar.js only runs on chủ đề / series / tác giả) — the title names a
+// collection, like an album name, and clicking an album name takes you to the
+// album. Underline on hover, the same signal the brand name uses.
+.kt a.kt-bar-title:hover {
+  text-decoration: underline;
+}
+
+.kt-topbar.is-titled .kt-brand-name {
+  opacity: 0;
+  transform: translateY(-0.35em);
+  visibility: hidden;
+}
+
+.kt-topbar.is-titled .kt-bar-title {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s; // arriving: visible from the first frame of its fade
+}
+
+.kt-topbar:not(.is-titled) .kt-brand-name {
+  transition-delay: 0s; // same, for the name on the way back
+}
+
+// The travel is motion; the fade is not. Under reduced motion the swap is a
+// plain short crossfade — still not a snap, which reads as a glitch.
+@media (prefers-reduced-motion: reduce) {
+  .kt .kt-brand-name,
+  .kt .kt-bar-title {
+    transition:
+      opacity 0.12s ease,
+      visibility 0s linear 0.12s;
+  }
+
+  .kt .kt-bar-title,
+  .kt-topbar.is-titled .kt-brand-name {
+    transform: none;
+  }
+}
+
+// One frame without transitions, set by kt-topbar.js when the page loads
+// already scrolled (anchor link, restored position): the bar must START in its
+// titled state, because a swap animating during load is the one moment this
+// whole section would call attention to itself.
+.kt-topbar.kt-swap-instant .kt-brand-name,
+.kt-topbar.kt-swap-instant .kt-bar-title {
+  transition: none;
 }
 
 // ---- Hub: the feed ----------------------------------------------------------
@@ -376,7 +509,9 @@ body.kt {
 // underline on hover is what tells the reader this one is a link too. (Owner's
 // call — it bends §3, deliberately.) Scoped with `.kt` to outrank `.kt a`.
 .kt .kt-feed-tag,
-.kt .kt-kicker a {
+.kt .kt-kicker a,
+.kt .kt-feed-series,
+.kt .kt-series-nav-series a {
   color: inherit;
   text-decoration: none;
 
@@ -415,8 +550,11 @@ body.kt {
 
 // A topic page introduces its collection, then hands over to the feed — so its
 // header has no bottom margin of its own; the feed's own top margin supplies it.
+// The series, author and hub headers are the same shape.
 .kt-topic-head,
-.kt-author-head {
+.kt-series-head,
+.kt-author-head,
+.kt-hub-head {
   margin: 3.5rem 0 0;
 }
 
@@ -454,7 +592,9 @@ body.kt {
 
 .kt-article-head h1,
 .kt-topic-head h1,
-.kt-author-head h1 {
+.kt-series-head h1,
+.kt-author-head h1,
+.kt-hub-head h1 {
   margin: 0;
   font-family: var(--font-read);
   @include read(34);
@@ -481,10 +621,6 @@ body.kt {
   color: var(--ink-3);
 }
 
-.kt-byline-text {
-  margin: 0;
-}
-
 // ---- Author avatar + link ---------------------------------------------------
 
 // The author's portrait, cropped to a circle. The FILE is already square
@@ -501,15 +637,24 @@ body.kt {
   border: 1px solid var(--line);
 }
 
-// The author's name, wherever it appears (byline, signature, and links in from
-// the feed one day), is a link to their page. It reads as text and earns its
+// The author's identity — portrait AND name — is one link to their page: the
+// two are a single entity, so a hover or a click on either lands on both
+// (owner's call, 2026-07-15). The anchor is the flex row that used to be the
+// byline/signature wrapper, so the avatar sits at the left of the name exactly
+// as before, now inside the same tap target. It reads as text and earns its
 // underline on hover — the same quiet-link pattern the topic tag uses, so a
 // byline never lights up indigo. Scoped with `.kt` to outrank `.kt a`.
 .kt .kt-author-link {
+  display: inline-flex; // hug avatar + name, so the tap target is the mark, not the row
+  align-items: center;
+  gap: 0.625rem; // avatar → name, the byline's old wrapper gap (signature widens it)
   color: inherit;
   text-decoration: none;
 
-  &:hover {
+  // Only the NAME underlines on hover, never the portrait or the role that
+  // rides along inside the same link — the underline answers the word, the way
+  // a quiet link always has.
+  &:hover .kt-author-name {
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
@@ -912,20 +1057,25 @@ body.kt-lightbox-open {
     margin: 0;
   }
 
-  // The credit line: portrait at the left, name and role stacked beside it.
+  // The credit line: portrait at the left, name and role stacked beside it. The
+  // whole row is the author link now (.kt-author-link supplies the flex + the
+  // name-only hover underline), so a click on the portrait, the name or the role
+  // all reach the author's page — one entity (owner's call, 2026-07-15). Only
+  // the wider gap is local to the signature.
   .kt-signature-id {
-    display: flex;
-    align-items: center;
     gap: 0.875rem;
   }
 
   .kt-signature-name {
+    display: block;
     font-family: var(--font-read);
     @include read(17);
     font-weight: 620;
+    color: var(--ink); // hold ink under .kt-author-link's inherited link colour
   }
 
   .kt-signature-role {
+    display: block;
     margin-top: 0.25rem;
     font-family: var(--font-ui);
     font-size: 0.875rem;
@@ -962,22 +1112,39 @@ body.kt-lightbox-open {
   display: grid;
   gap: 0.75rem;
   margin: 3rem 0 1rem;
+}
 
-  a {
-    display: block;
-    padding: 0.875rem 1.125rem;
-    border: 1px solid var(--line);
-    border-radius: 0.5rem;
-    text-decoration: none;
+// The card is a <div> with two links in it — the article, and the series' own
+// page — because an <a> cannot nest inside another <a> (the feed card lives
+// with the same constraint). The article link stretches over the whole card
+// with its ::after; the series link paints above that stretch, so both stay
+// clickable.
+.kt-series-prev,
+.kt-series-next {
+  position: relative;
+  padding: 0.875rem 1.125rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
 
-    &:hover {
-      border-color: var(--indigo);
+  &:hover,
+  &:focus-within {
+    border-color: var(--indigo);
+  }
+}
 
-      .kt-series-nav-title {
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
-      }
-    }
+.kt-series-nav-link {
+  display: block;
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  &:hover .kt-series-nav-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 }
 
@@ -995,6 +1162,19 @@ body.kt-lightbox-open {
   font-weight: 600;
   line-height: 1.45;
   color: var(--indigo);
+}
+
+// "Series <tên series>" — the card's second destination, closing the card
+// under the title (owner's call, 2026-07-15). Metadata grey like the label;
+// the linked name follows the kicker's quiet-link pattern.
+.kt-series-nav-series {
+  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+
+  a {
+    position: relative; // paints above the stretched article link
+  }
 }
 
 // ---- Đọc tiếp — the binge loop (philosophy §5) --------------------------------
@@ -1108,13 +1288,20 @@ body.kt-lightbox-open {
     @include opsz(16.69);
   }
 
+  // The scroll title re-derives from --logo-h too; it lands at 14px here.
+  .kt .kt-bar-title {
+    @include opsz(14);
+  }
+
   .kt-feed {
     margin-top: 1.75rem;
   }
 
   .kt-article-head,
   .kt-topic-head,
-  .kt-author-head {
+  .kt-series-head,
+  .kt-author-head,
+  .kt-hub-head {
     margin-top: 2.5rem;
   }
 
@@ -1122,7 +1309,9 @@ body.kt-lightbox-open {
   // that is the whole point of the mixin: the two can't drift apart.
   .kt-article-head h1,
   .kt-topic-head h1,
-  .kt-author-head h1 {
+  .kt-series-head h1,
+  .kt-author-head h1,
+  .kt-hub-head h1 {
     @include read(28);
   }
 

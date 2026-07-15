@@ -15,11 +15,15 @@
 
     <main class="kt-shell" id="main-content">
       {%- comment -%}
-        No masthead: the feed is the page (§5). The h1 is here for document
-        structure and search engines, not for the reader — the lockup in the
-        title bar already says what this place is.
+        The feed opens with its heading — "Bài viết mới nhất" (Latest posts).
+        The hub used to hide its h1 and let the title-bar lockup speak for the
+        page; the owner now wants the reader met by a plain, honest label for
+        the list below it (owner's call, 2026-07-15). It is still the real page
+        h1, and the lockup still names the place.
       {%- endcomment -%}
-      <h1 class="kt-visually-hidden">Chia sẻ kinh nghiệm vận hành nhà máy dệt nhuộm – Alpha Software</h1>
+      <header class="kt-hub-head">
+        <h1>Bài viết mới nhất</h1>
+      </header>
       {{ content }}
     </main>
 
@@ -27,7 +31,7 @@
 
     <footer class="kt-footer">
       <div class="kt-shell">
-        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/">www.alphasoftwaregroup.com</a></p>
+        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/" rel="noopener" target="_blank">www.alphasoftwaregroup.com</a></p>
         <p>Bản quyền © 2026 Alpha Software. Bảo lưu mọi quyền.</p>
       </div>
     </footer>

@@ -40,6 +40,21 @@ optimized for the *third consecutive article*, not the first impression.
 
 ## 2. Principles
 
+**Absolute Neutrality** — the principle over the principles, named by the
+owner (July 2026). Every piece of craft on the hub — an animation, a curve, a
+spacing decision — is tuned so that 98% of readers never notice it exists,
+yet they feel it, and they would feel worse were it taken away. It is so far
+in the background, and so ingrained, that people take it for granted. The
+test of any detail is not "does it delight" but "does it disappear": the
+moment attention moves from the content to the detail, the detail has failed.
+Both edges of the target cut: anything slow, springy, or signature enough to
+watch fails on one side, and a hard snap fails on the other — abruptness
+draws the eye to the snapping itself. The sweet spot is fast, fluid, and
+forgettable (the owner's model case: Facebook's profile page, where the
+section bar turns into the profile's name — a very fast fade with a subtle
+slide in from the bottom that almost nobody could describe, and everybody
+would miss). The numbered principles below are applications of this one.
+
 1. **The text is the interface.** Everything on an article page exists to
    serve the act of reading. If an element doesn't help the reader understand
    or continue, it goes. No sidebars, no popups, no floating share buttons,
@@ -83,7 +98,7 @@ optimized for the *third consecutive article*, not the first impression.
    hand. `prefers-reduced-motion` is honored, and for those readers the
    answering gestures don't just lose their easing — they switch off entirely.
 
-   **The script budget is three files, and all of them are optional to the
+   **The script budget is four files, and all of them are optional to the
    page.** `squircle.js` (~4 KB, shared with the main site) re-cuts authored
    corners as superellipses — the one piece of the main site's design language
    the hub borrows, added on the owner's call in July 2026. `kt-lightbox.js`
@@ -93,11 +108,17 @@ optimized for the *third consecutive article*, not the first impression.
    table is read — with pinch / wheel / tap zoom and drag pan, closed by ×,
    Esc, the backdrop, or the phone's Back button (one `pushState` per open, so
    the Facebook-arriving Android reader's back-press closes the picture, not
-   the article). The hub additionally carries a small inline script for feed
+   the article). `kt-topbar.js` (~1 KB min, the collection pages only — chủ đề,
+   series, tác giả — July 2026) is the scroll title: once the page's h1 has
+   scrolled away under the bar, the wordmark crossfades into the h1's own text
+   — Absolute Neutrality's flagship (§2). The title is always a link back to the
+   top of its collection (a collection name is a destination); articles and the
+   hub feed name a single thing, not a collection, so they get no scroll title. The hub additionally carries a small inline script for feed
    paging (§5). None may ever be load-bearing: with JS off the corners are
-   simply round, a figure is simply a picture, and every post is still in the
-   list. Nothing else earns a script, and **maths in particular does not** —
-   equations are rendered to MathML at build time (§4).
+   simply round, a figure is simply a picture, the bar simply keeps the
+   lockup, and every post is still in the list. Nothing else earns a script,
+   and **maths in particular does not** — equations are rendered to MathML at
+   build time (§4).
 
 7. **Vietnamese first.** `lang="vi"`, Vietnamese URLs (`/chia-se-kinh-nghiem/…`),
    Vietnamese microcopy. Every type decision is checked against diacritics,

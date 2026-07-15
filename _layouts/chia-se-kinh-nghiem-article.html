@@ -33,12 +33,11 @@
           {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil %}
           {%- assign kt_author = site.data.chia_se_kinh_nghiem.author -%}
           <div class="kt-byline">
-            {% include chia-se-kinh-nghiem/avatar.html size=40 class="kt-byline-avatar" %}
-            <p class="kt-byline-text">
-              <a class="kt-author-link" href="{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ kt_author.slug }}/">{{ kt_author.name }}</a>
-              · <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time>
-              · {{ kt_minutes }} phút đọc
-            </p>
+            <a class="kt-author-link" href="{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ kt_author.slug }}/">
+              {% include chia-se-kinh-nghiem/avatar.html size=40 class="kt-byline-avatar" %}
+              <span class="kt-author-name">{{ kt_author.name }}</span>
+            </a>
+            <span class="kt-byline-meta">· <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time> · {{ kt_minutes }} phút đọc</span>
           </div>
           <p class="kt-standfirst">{{ page.description }}</p>
           {%- comment -%}
@@ -57,23 +56,43 @@
       </article>
 
       {%- if page.series -%}
+        {%- assign kt_series = site.data.chia_se_kinh_nghiem.series[page.series] -%}
         {%- assign kt_prev_part = page.series_part | minus: 1 -%}
         {%- assign kt_next_part = page.series_part | plus: 1 -%}
         {%- assign kt_prev = kt_episodes | where: "series_part", kt_prev_part | first -%}
         {%- assign kt_next = kt_episodes | where: "series_part", kt_next_part | first -%}
+        {%- comment -%}
+          Each card is a <div> holding two destinations, not one big <a> — the
+          series line links to the series' own page, and an <a> cannot nest
+          inside another <a> (same constraint, and the same two-link design, as
+          the feed card). Reading order inside the card: direction label, the
+          article title, then "Series <tên>" under them (owner's call,
+          2026-07-15). The article link wraps the label and the title and
+          stretches itself over the whole card in CSS, so clicking anywhere
+          else still means "read that part".
+        {%- endcomment -%}
+        {%- capture kt_series_line -%}
+          <p class="kt-series-nav-series">Series <a href="{{ site.url }}/chia-se-kinh-nghiem/series/{{ page.series }}/">{{ kt_series.label }}</a></p>
+        {%- endcapture -%}
         {%- if kt_prev or kt_next %}
       <nav aria-label="Các bài trong chuỗi" class="kt-series-nav">
         {%- if kt_prev %}
-        <a class="kt-series-prev" href="{{ site.url }}{{ kt_prev.url }}">
-          <span class="kt-series-nav-label">← Bài trước</span>
-          <span class="kt-series-nav-title">{{ kt_prev.title }}</span>
-        </a>
+        <div class="kt-series-prev">
+          <a class="kt-series-nav-link" href="{{ site.url }}{{ kt_prev.url }}">
+            <span class="kt-series-nav-label">← Bài trước</span>
+            <span class="kt-series-nav-title">{{ kt_prev.title }}</span>
+          </a>
+          {{ kt_series_line }}
+        </div>
         {%- endif %}
         {%- if kt_next %}
-        <a class="kt-series-next" href="{{ site.url }}{{ kt_next.url }}">
-          <span class="kt-series-nav-label">Bài sau →</span>
-          <span class="kt-series-nav-title">{{ kt_next.title }}</span>
-        </a>
+        <div class="kt-series-next">
+          <a class="kt-series-nav-link" href="{{ site.url }}{{ kt_next.url }}">
+            <span class="kt-series-nav-label">Bài sau →</span>
+            <span class="kt-series-nav-title">{{ kt_next.title }}</span>
+          </a>
+          {{ kt_series_line }}
+        </div>
         {%- endif %}
       </nav>
         {%- endif -%}
@@ -91,7 +110,7 @@
 
     <footer class="kt-footer">
       <div class="kt-shell">
-        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/">www.alphasoftwaregroup.com</a></p>
+        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/" rel="noopener" target="_blank">www.alphasoftwaregroup.com</a></p>
         <p>Bản quyền © 2026 Alpha Software. Bảo lưu mọi quyền.</p>
       </div>
     </footer>
