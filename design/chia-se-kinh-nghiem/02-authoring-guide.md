@@ -82,6 +82,58 @@ Then use it:
 A picture used as the thumbnail is **not** repeated in the body — the hero
 already showed it.
 
+## 2c. Author avatars — how to crop one
+
+The circular portrait in the byline, the signature and the author page is a
+**square file** that CSS merely rounds off. Never rely on CSS to crop a
+non-square photo into a circle — `border-radius: 50%` on a 3:4 image is an
+ellipse (we shipped that once).
+
+For a new author, cut two squares from their full portrait
+(`img/portraits/chan-dung-<slug>-2x.jpg`) and save them as
+`chan-dung-<slug>-vuong-96.jpg` and `-vuong-192.jpg`. 192 covers the largest
+placement (the 96px author-page card at 2× density); 96 covers the byline (40px)
+and signature (48px); `avatar.html`'s `srcset`/`sizes` picks between them.
+
+**Framing the square** — mark three lines on the photo first: top of head,
+eye line, chin. Then choose the crop window so that, within the square:
+
+- **eyes sit at ~38–40 % of the frame height** (the upper-third line — where a
+  viewer instinctively looks first; centring the eyes leaves dead headroom and
+  drowns the face);
+- **headroom is ~5 %** (avatars read small, so crop tight; a sliver of air above
+  the hair keeps it from feeling decapitated);
+- **the bottom edge lands at the collar/upper chest**, never mid-neck (a crop
+  that ends at the neck reads as a floating head);
+- **the face is centred horizontally on the bridge of the nose** — shift the
+  window sideways to do it; in a circle an off-centre face is twice as visible
+  as in a rectangle;
+- remember **the circle cuts the corners**: shoulders may clip, the head must
+  not.
+
+Resize with a proper resampler (Lanczos), JPEG quality ~82, 4:4:4 chroma
+(faces at avatar size lose visibly to subsampling; the files are tiny anyway).
+One-off script, needs `npm i --no-save sharp`:
+
+```js
+import sharp from "sharp";
+// window values come from the three marked lines, per the rules above
+const crop = { left: 24, top: 8, width: 480, height: 480 };
+for (const size of [192, 96])
+  await sharp("img/portraits/chan-dung-<slug>-2x.jpg")
+    .extract(crop)
+    .resize(size, size, { kernel: "lanczos3" })
+    .jpeg({ quality: 82, mozjpeg: true, chromaSubsampling: "4:4:4" })
+    .toFile(`img/portraits/chan-dung-<slug>-vuong-${size}.jpg`);
+```
+
+(The values above are Mr. Tuấn Anh's actual crop: on his 504×672 portrait, a
+480px window at (24, 8) puts the eyes at 39 %, headroom at 6 %, chin at 86 %,
+nose bridge on the vertical axis.)
+
+Finally point the author's `portrait:` key in `_data/chia_se_kinh_nghiem.yml`
+at the base name (without `-vuong-*`); `avatar.html` appends the rest.
+
 ## 3. Convert the body
 
 - ALL-CAPS section headers → `##` sentence case; sub-points (`THỨ NHẤT…`) →

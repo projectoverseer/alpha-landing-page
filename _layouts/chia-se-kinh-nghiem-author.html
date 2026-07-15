@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {% include chia-se-kinh-nghiem/head.html %}
+  </head>
+  <body class="kt">
+    <a class="kt-skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+    {% include chia-se-kinh-nghiem/topbar.html %}
+
+    {%- assign kt_author = site.data.chia_se_kinh_nghiem.author -%}
+    {%- comment -%}
+      One author writes the whole hub today, so "their posts" is every post. If a
+      second author ever joins, this becomes a `where: "author", page.author`.
+    {%- endcomment -%}
+    {%- assign kt_posts = site.posts -%}
+
+    <main class="kt-shell" id="main-content">
+      {%- comment -%}
+        Like a topic page, an author page introduces its collection and then
+        hands over to the feed. The heading names whose work this is; the card
+        under it says who they are, with the same circular portrait the byline
+        and signature carry.
+      {%- endcomment -%}
+      <header class="kt-author-head">
+        <h1><span class="kt-head-prefix">Tác giả:</span> {{ kt_author.name }}</h1>
+        <div class="kt-author-card">
+          {% include chia-se-kinh-nghiem/avatar.html size=96 class="kt-author-card-avatar" %}
+          <div class="kt-author-card-body">
+            <p class="kt-author-card-bio">{{ kt_author.bio }}</p>
+          </div>
+        </div>
+      </header>
+
+      {% include chia-se-kinh-nghiem/feed.html posts=kt_posts %}
+    </main>
+
+    {% include chia-se-kinh-nghiem/cta.html variant="banner" %}
+
+    <footer class="kt-footer">
+      <div class="kt-shell">
+        <p>Công ty TNHH Phát triển Phần mềm Alpha · <a href="{{ site.url }}/">www.alphasoftwaregroup.com</a></p>
+        <p>Bản quyền © 2026 Alpha Software. Bảo lưu mọi quyền.</p>
+      </div>
+    </footer>
+  </body>
+</html>

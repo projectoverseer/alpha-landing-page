@@ -31,11 +31,15 @@
           {%- endcomment -%}
           {%- assign kt_words = content | strip_html | number_of_words -%}
           {%- assign kt_minutes = kt_words | divided_by: 200.0 | ceil %}
-          <p class="kt-byline">
-            {{ site.data.chia_se_kinh_nghiem.author.name }}
-            · <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time>
-            · {{ kt_minutes }} phút đọc
-          </p>
+          {%- assign kt_author = site.data.chia_se_kinh_nghiem.author -%}
+          <div class="kt-byline">
+            {% include chia-se-kinh-nghiem/avatar.html size=40 class="kt-byline-avatar" %}
+            <p class="kt-byline-text">
+              <a class="kt-author-link" href="{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ kt_author.slug }}/">{{ kt_author.name }}</a>
+              · <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time>
+              · {{ kt_minutes }} phút đọc
+            </p>
+          </div>
           <p class="kt-standfirst">{{ page.description }}</p>
           {%- comment -%}
             The picture closes the title block — deliberately BELOW the

@@ -4,6 +4,15 @@
 author:
   name: "Phan Đức Tuấn Anh"
   role: "Nhà sáng lập Alpha Software"
+  # Slug for the author page (/chia-se-kinh-nghiem/tac-gia/<slug>/) and the file
+  # slug of the portrait in img/portraits/ (a -2x.jpg sibling exists too).
+  slug: "phan-duc-tuan-anh"
+  portrait: "chan-dung-ong-phan-duc-tuan-anh"
+  # Shown on the author page's intro card and used as its meta description.
+  bio: >-
+    Nhà sáng lập Alpha Software, với hơn 28 năm gắn bó với ngành dệt nhuộm –
+    13 năm làm kỹ thuật viên nhuộm và 15 năm làm giám đốc nhà máy. Anh viết
+    loạt bài này từ chính những gì đã đo, đã sai và đã sửa ngay trên sàn xưởng.
 
 # Hub sections, in display order. Posts declare `topic: <key>` in front matter.
 topics:

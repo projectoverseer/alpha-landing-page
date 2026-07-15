@@ -77,8 +77,13 @@
 
 {%- when "signature" -%}
 <footer class="kt-signature">
-  <p class="kt-signature-name">{{ kt_author.name }}</p>
-  <p class="kt-signature-role">{{ kt_author.role }} – phần mềm chuyên cho ngành dệt – nhuộm</p>
+  <div class="kt-signature-id">
+    {% include chia-se-kinh-nghiem/avatar.html size=48 class="kt-signature-avatar" %}
+    <div class="kt-signature-lines">
+      <p class="kt-signature-name"><a class="kt-author-link" href="{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ kt_author.slug }}/">{{ kt_author.name }}</a></p>
+      <p class="kt-signature-role">{{ kt_author.role }} – phần mềm chuyên cho ngành dệt – nhuộm</p>
+    </div>
+  </div>
   <p class="kt-signature-canonical">
     Bản quyền © {{ page.date | date: "%Y" }} Công ty TNHH Phát triển Phần mềm Alpha
     (Alpha Software). Đăng lần đầu tại

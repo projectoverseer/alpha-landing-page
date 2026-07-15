@@ -1,0 +1,31 @@
+{%- comment -%}
+  The author's portrait as a circular avatar. The square is cut in the FILE
+  (`<portrait>-vuong-96/192.jpg` — see design/chia-se-kinh-nghiem/
+  02-authoring-guide.md for how a new author's portrait gets cropped); CSS only
+  rounds it off (border-radius: 50% in .kt-avatar). Rounding a non-square in
+  CSS gives an ellipse, which is how we learned to crop the file first.
+
+    {% include chia-se-kinh-nghiem/avatar.html size=44 class="kt-byline-avatar" %}
+
+  size  = the circle in px (width AND height attrs, so the row never reflows
+          once the picture loads). The srcset carries 96 and 192px squares and
+          `sizes` tells the browser the drawn size, so it picks the smallest
+          file that stays sharp at its own pixel density.
+  class = an extra class for the caller's context.
+
+  Decorative: the author's NAME is always right beside it, so a screen reader
+  gains nothing from an alt that repeats it. alt="".
+{%- endcomment -%}
+{%- assign kt_author = site.data.chia_se_kinh_nghiem.author -%}
+{%- assign kt_av_size = include.size | default: 44 -%}
+{%- assign kt_av_base = site.url | append: "/img/portraits/" | append: kt_author.portrait | append: "-vuong" -%}
+<img
+  alt=""
+  class="kt-avatar{% if include.class %} {{ include.class }}{% endif %}"
+  height="{{ kt_av_size }}"
+  loading="lazy"
+  sizes="{{ kt_av_size }}px"
+  src="{{ kt_av_base }}-192.jpg"
+  srcset="{{ kt_av_base }}-96.jpg 96w, {{ kt_av_base }}-192.jpg 192w"
+  width="{{ kt_av_size }}"
+/>

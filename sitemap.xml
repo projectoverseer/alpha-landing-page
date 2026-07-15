@@ -21,6 +21,10 @@ permalink: /sitemap.xml
         <loc>{{ site.url }}/chia-se-kinh-nghiem/</loc>
         <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
     </url>
+    <url>
+        <loc>{{ site.url }}/chia-se-kinh-nghiem/tac-gia/{{ site.data.chia_se_kinh_nghiem.author.slug }}/</loc>
+        <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
+    </url>
 {%- comment -%}
   One page per topic, listed straight from the taxonomy — a new topic gets its
   sitemap entry as soon as it has a page and a post.

@@ -330,13 +330,12 @@ body.kt {
 // 1.5× taller than they are wide, so uncropped they would each eat a whole
 // screen. Anchored to the top so an infographic's headline (the part that earns
 // the click) survives the crop.
-// The border and background live on the SPAN, not the image: on hover the
-// image scales up a touch inside the frame (below), and a border on the image
-// itself would ride the zoom and get cropped.
+// The border and background live on the SPAN, not the image, and the frame
+// clips the image so the crop stays inside its border.
 .kt-feed-thumb {
   display: block;
   margin: 0.75rem 0; // the bottom margin wins over .kt-feed-desc's smaller top
-  overflow: hidden; // the hover zoom crops inside the frame instead of spilling
+  overflow: hidden;
   background: var(--paper-deep); // holds the space while the image decodes
   border: 1px solid var(--line);
 
@@ -346,17 +345,20 @@ body.kt {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     object-position: center top;
-    transition: transform 0.45s var(--ease-glide);
+    transition: transform 0.3s var(--ease-glide);
   }
 }
 
-// The invitation: pointing at a card leans its picture in, the same gesture
-// every feed the reader already lives in makes (owner's call, 2026-07-14 —
-// engagement pass). Reader-initiated, so it passes §2.6; the reduced-motion
-// block at the end of this file stills it completely.
+// The thumbnail leans in on hover — barely. The first cut (4%) read as a lunge
+// and the owner pulled it entirely; a still card then answered a hover with
+// nothing but a distant underline, which felt dead. 2% is the compromise
+// (owner's call, 2026-07-15): the reader's hand gets an immediate answer from
+// the thing it is pointing at, without the picture performing. Under
+// prefers-reduced-motion the blanket transition kill makes the same 2% land
+// instantly — feedback stays, motion goes.
 .kt-feed-link:hover .kt-feed-thumb img,
 .kt-feed-link:focus-visible .kt-feed-thumb img {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 .kt-feed-meta {
@@ -413,8 +415,30 @@ body.kt {
 
 // A topic page introduces its collection, then hands over to the feed — so its
 // header has no bottom margin of its own; the feed's own top margin supplies it.
-.kt-topic-head {
+.kt-topic-head,
+.kt-author-head {
   margin: 3.5rem 0 0;
+}
+
+// The author page's intro card: portrait at the left, role and short bio beside
+// it. It sits between the heading and the feed of everything they have written.
+.kt-author-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin: 1.5rem 0 0;
+}
+
+.kt-author-card-body {
+  min-width: 0; // let the bio wrap instead of forcing the row wider
+}
+
+.kt-author-card-bio {
+  margin: 0;
+  font-family: var(--font-read);
+  @include read(17);
+  line-height: 1.6;
+  color: var(--ink-2);
 }
 
 .kt-kicker {
@@ -429,7 +453,8 @@ body.kt {
 }
 
 .kt-article-head h1,
-.kt-topic-head h1 {
+.kt-topic-head h1,
+.kt-author-head h1 {
   margin: 0;
   font-family: var(--font-read);
   @include read(34);
@@ -446,10 +471,48 @@ body.kt {
 }
 
 // Directly under the title, above the standfirst: the line that says "article".
+// The author's portrait sits at the left of it, tying the piece to a face.
 .kt-byline {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
   margin: 1rem 0 0;
   font-size: 0.875rem;
   color: var(--ink-3);
+}
+
+.kt-byline-text {
+  margin: 0;
+}
+
+// ---- Author avatar + link ---------------------------------------------------
+
+// The author's portrait, cropped to a circle. The FILE is already square
+// (`-vuong-*.jpg`, framed on the face — the crop recipe is in
+// design/chia-se-kinh-nghiem/02-authoring-guide.md), so border-radius alone
+// makes a true circle; aspect-ratio pins it even where a global
+// `img { height: auto }` would let the attrs drift.
+.kt-avatar {
+  flex: 0 0 auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--paper-deep); // holds the circle while the photo decodes
+  border: 1px solid var(--line);
+}
+
+// The author's name, wherever it appears (byline, signature, and links in from
+// the feed one day), is a link to their page. It reads as text and earns its
+// underline on hover — the same quiet-link pattern the topic tag uses, so a
+// byline never lights up indigo. Scoped with `.kt` to outrank `.kt a`.
+.kt .kt-author-link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 }
 
 // ---- Pictures ---------------------------------------------------------------
@@ -849,6 +912,13 @@ body.kt-lightbox-open {
     margin: 0;
   }
 
+  // The credit line: portrait at the left, name and role stacked beside it.
+  .kt-signature-id {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
   .kt-signature-name {
     font-family: var(--font-read);
     @include read(17);
@@ -965,12 +1035,6 @@ body.kt-lightbox-open {
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
-
-  // The same lean-in as the feed card: one gesture, everywhere a picture invites.
-  &:hover .kt-readnext-thumb img,
-  &:focus-visible .kt-readnext-thumb img {
-    transform: scale(1.04);
-  }
 }
 
 .kt-readnext-thumb {
@@ -985,8 +1049,15 @@ body.kt-lightbox-open {
     aspect-ratio: 16 / 10;
     object-fit: cover;
     object-position: center top; // an infographic's headline survives the crop
-    transition: transform 0.45s var(--ease-glide);
+    transition: transform 0.3s var(--ease-glide);
   }
+}
+
+// The same 2% lean-in as the feed thumbs — one gesture, everywhere a card
+// answers a pointer.
+.kt-readnext-link:hover .kt-readnext-thumb img,
+.kt-readnext-link:focus-visible .kt-readnext-thumb img {
+  transform: scale(1.02);
 }
 
 .kt-readnext-item-title {
@@ -1042,15 +1113,28 @@ body.kt-lightbox-open {
   }
 
   .kt-article-head,
-  .kt-topic-head {
+  .kt-topic-head,
+  .kt-author-head {
     margin-top: 2.5rem;
   }
 
   // Every size steps down here, so every optical size steps down with it —
   // that is the whole point of the mixin: the two can't drift apart.
   .kt-article-head h1,
-  .kt-topic-head h1 {
+  .kt-topic-head h1,
+  .kt-author-head h1 {
     @include read(28);
+  }
+
+  // At phone width a 96px portrait squeezes the bio into a 5-word column;
+  // 72px keeps the face readable and gives the words their measure back.
+  .kt-author-card {
+    gap: 1rem;
+  }
+
+  .kt-author-card-avatar {
+    width: 4.5rem;
+    height: 4.5rem;
   }
 
   .kt-standfirst {
@@ -1095,7 +1179,10 @@ body.kt-lightbox-open {
   }
 }
 
-// Nothing here moves on its own; kill the only implicit motion left.
+// Nothing here moves on its own; kill the only implicit motion left. The
+// thumbnail lean-in survives as feedback — the blanket transition kill just
+// makes it land instantly instead of gliding (deliberate: the answer to the
+// reader's pointer stays, the motion goes).
 @media (prefers-reduced-motion: reduce) {
   .kt *,
   .kt *::before,
@@ -1104,13 +1191,9 @@ body.kt-lightbox-open {
     animation: none !important;
   }
 
-  // Killing the transition alone would turn the hover/press gestures into
-  // instant jumps — for a reader who asked for no motion, they simply don't
-  // move at all. (The lightbox's zoom stays: it is the reader's own hand.)
-  .kt-feed-link:hover .kt-feed-thumb img,
-  .kt-feed-link:focus-visible .kt-feed-thumb img,
-  .kt-readnext-link:hover .kt-readnext-thumb img,
-  .kt-readnext-link:focus-visible .kt-readnext-thumb img,
+  // Killing the transition alone would turn the press gestures into instant
+  // jumps — for a reader who asked for no motion, they simply don't move at
+  // all. (The lightbox's zoom stays: it is the reader's own hand.)
   .kt-figure-zoom:active img,
   .kt .kt-button:active {
     transform: none !important;
