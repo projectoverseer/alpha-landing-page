@@ -74,9 +74,12 @@ If a view has no obvious "moment that matters," it gets **no** dye.
 
 - 4px base grid throughout (`$spacers`); section rhythm 48/72/96px; content
   column ≈ 1140px with generous margins. Whitespace is the confidence signal.
-- **Corners are continuous** — the φ³ superellipse (`squircle.js`,
-  `corner-shape: superellipse(2.0827)`) applied progressively where supported.
-  φ is a *finishing splash*, never the structural backbone (owner rule).
+- **Corners are continuous** — the n = 4 squircle (`squircle.js`,
+  `corner-shape: superellipse(2)`, radius depth-matched ×1.8409) applied
+  progressively where supported; the exponent eases back toward the authored
+  circle on elements too small to fit the full curve, so depth is never lost.
+  Corner geometry follows the squircle convention, **not** φ — φ stays a
+  *finishing splash*, never the structural backbone (owner rule).
 - Hairlines are translucent (`rgba` separators) so they adapt to any surface.
 
 ## 5. Imagery & scrims

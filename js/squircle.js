@@ -25,23 +25,33 @@
    *  so a superellipse needs its radius enlarged to s*r to match the circle
    *  of radius r, with  s(n) = (1 - 2^(-1/2)) / (1 - 2^(-1/n)).
    *
-   *  ADAPTIVE SMOOTHING. One fixed exponent cannot serve every element: at
-   *  the ceiling n = phi^3 (the golden ratio cubed, a gentle superellipse
-   *  just past the n = 4 "squircle" sweet spot) the depth-matched radius is
-   *  ~1.94x the authored one, which outgrows small elements — a 44px-tall
-   *  button with a 12px radius has no room for a 23px corner, and clamping
-   *  the radius per axis (the old approach) made exactly those corners
-   *  shallow and slightly lopsided. So the exponent adapts per element:
-   *  invert s(n) for the radius scale that actually fits,
+   *  WHY n = 4. That is the squircle proper (x^4 + y^4 = r^4), and the value
+   *  CSS itself names: `corner-shape: squircle` is defined as superellipse(2),
+   *  and K = log2(4) = 2. Depth-matching pins both the 45deg depth and the edge
+   *  tangency, which leaves very little room for the exponent to matter — over
+   *  the whole plausible range (n = 4 "squircle" through n ~ 5, the exponent
+   *  often fitted to Apple's icon) the depth-matched corners differ by well
+   *  under a tenth of a pixel at any realistic radius. So there is nothing to
+   *  buy by tuning n past the convention, and n = 4 keeps the smallest
+   *  depth-matched radius (1.84x vs 2.26x at n = 5), which is what decides how
+   *  many elements have the room to be smoothed at all.
+   *
+   *  ADAPTIVE SMOOTHING. One fixed exponent cannot serve every element: at the
+   *  ceiling n = 4 the depth-matched radius is ~1.84x the authored one, which
+   *  outgrows small elements — a 44px-tall button with a 12px radius has no
+   *  room for a 22px corner, and clamping the radius per axis (the old
+   *  approach) made exactly those corners shallow and slightly lopsided. So the
+   *  exponent adapts per element: invert s(n) for the radius scale that
+   *  actually fits,
    *
    *      s = min(SCALE, headroom)          headroom = half-side / max radius
-   *      n = -1 / log2(1 - DEPTH / s)      (s = SCALE -> phi^3 ... s = 1 -> 2)
+   *      n = -1 / log2(1 - DEPTH / s)      (s = SCALE -> 4 ... s = 1 -> 2)
    *
-   *  Elements with room get the full golden smoothing; tight ones slide
-   *  continuously down toward the plain authored circle (n = 2, which is
-   *  rendered identically to no intervention). Depth is never sacrificed
-   *  and no corner is ever distorted; only the length of the blend varies.
-   *  Because n is a continuous function of size, resizing never "pops".
+   *  Elements with room get the full squircle; tight ones slide continuously
+   *  down toward the plain authored circle (n = 2, which is rendered
+   *  identically to no intervention). Depth is never sacrificed and no corner
+   *  is ever distorted; only the length of the blend varies. Because n is a
+   *  continuous function of size, resizing never "pops".
    *
    *  SAFE FALLBACK. On any browser without `corner-shape: superellipse()`
    *  (everything before Chromium 139) the script returns immediately and
@@ -50,7 +60,7 @@
    * ======================================================================== */
 
   // ---- precomputed constants ----------------------------------------------
-  const SCALE = 1.9404128895326194;  // depth-match radius scale at n = phi^3
+  const SCALE = 1.8408964152537137;  // depth-match radius scale at n = 4
   const DEPTH = 1 - Math.SQRT1_2;    // circle depth coefficient, ~0.2928932
   const ROUND_EPS = 1.01;            // <=1% headroom: keep the native circle
   const SLICE_MAX_NODES = 1500;      // elements measured per idle slice
@@ -66,7 +76,7 @@
   // The tunable superellipse() function lands with `corner-shape` in Chromium
   // 139+. Anywhere else: do nothing, cleanly, leaving the authored
   // border-radius exactly as the stylesheet set it.
-  if (!(window.CSS && CSS.supports && CSS.supports('corner-shape', 'superellipse(2.0827)'))) return;
+  if (!(window.CSS && CSS.supports && CSS.supports('corner-shape', 'superellipse(2)'))) return;
 
   // ---- state --------------------------------------------------------------
   const seen = new WeakSet();    // element queued/measured at most once
@@ -163,8 +173,8 @@
       : Infinity;
     if (room <= ROUND_EPS) return { kind: 'native' };
 
-    // Fit the smoothing to the room: full golden-ratio blend when it fits,
-    // continuously gentler when it doesn't. Depth stays authored throughout.
+    // Fit the smoothing to the room: full squircle when it fits, continuously
+    // gentler when it doesn't. Depth stays authored throughout.
     const s = Math.min(SCALE, room);
     const n = -1 / Math.log2(1 - DEPTH / s);
     const shape = 'superellipse(' + Math.log2(n).toFixed(4) + ')';
