@@ -171,9 +171,14 @@ $dark-accent-blue: $secondary-dark; // #009cde — secondary marks / links on da
 // Inter Variable is the single sans (self-hosted; @font-face in _sass/_fonts.scss).
 // The system stack behind it is the platform-native ordering Inter's own docs
 // recommend as a fallback — Inter was drawn to sit optically close to -apple-system
-// / Segoe UI, so the swap from the fallback is nearly invisible. Inter carries an
-// opsz 14–32 axis that we drive ourselves per type rung (see _base.scss); at the
-// display end that axis IS "Inter Display", so no separate display family is loaded.
+// / Segoe UI, so the swap from the fallback is nearly invisible.
+//
+// Inter carries an opsz 14–32 axis, driven by `font-optical-sizing: auto` on the
+// body (the maker's own recommended usage; the reasoning is written out in full in
+// _base.scss). The top of that axis IS "Inter Display" — Rasmus ships it as a
+// separate static family, but in the variable file it is simply opsz 32, so one
+// file covers Text, Display AND every optical size between them. That is why no
+// second display family is loaded, and why nothing here pins the axis by hand.
 $font-family-sans-serif:
   "Inter",
   -apple-system,

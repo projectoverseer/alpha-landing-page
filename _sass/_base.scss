@@ -2,42 +2,79 @@ body {
   direction: ltr;
   font-synthesis: none;
   unicode-bidi: embed;
-  -webkit-font-smoothing: antialiased;
-  // Letter-spacing policy (owner, 2026-07-14): decided per element, from the font
-  // out. Inter's opsz axis carries the maker's optical spacing, so wherever an
-  // element renders at (or near) the size its cut was drawn for, tracking stays 0
-  // — body, nav, buttons, h1/h2, the metrics. Tracking is added only where the
-  // rendered size and the cut genuinely diverge, and the amount is the residual of
-  // Inter's own dynamic-metrics curve at that gap: small 13px text stuck at the
-  // opsz-14 floor gets +0.01em, h3 sizes on the opsz-32 display cut get +0.005em.
-  // Plus the one classical case: uppercase strings (.kicker) are letterspaced,
-  // because capitals are drawn for word-initial use, not for whole words.
-  // Optical size, pinned once and inherited. Inter's opsz is a POINT scale, so the
-  // default `font-optical-sizing: auto` would feed it the CSS px number as points
-  // and overshoot by a third — the exact px/pt trap the reading hub documents. We
-  // drive the axis ourselves instead: 14 is 0.75 × the 16px body and also Inter's
-  // opsz floor, so it is correct for the body and for every rung of chrome at or
-  // below it (nav, buttons, captions). Each larger rung overrides with its own
-  // --opsz-* (headings, hero display, metrics); nothing is left to `auto`.
-  font-variation-settings: "opsz" 14;
-  text-rendering: optimizeLegibility;
+
+  // Optical size (2026-07-28) — handed back to the font.
+  //
+  // Inter's opsz axis (14–32) IS its size-dependent spacing: ~8% of total advance
+  // from the "Text" cut to the "Display" cut, with a real drawing at every step
+  // in between. Nothing is baked in per size — Inter carries no `trak` table — so
+  // the axis only does its work if something moves it.
+  //
+  // Whether that axis reads as POINTS or as PIXELS is a per-font fact, not a
+  // universal one, and this site and the reading hub land on opposite sides of it:
+  //
+  //   Literata  · its STAT names the stops "7pt" / "12pt" / "36pt" / "72pt", and
+  //              the bottom of the range only makes sense as points (7px is not a
+  //              size anything is set at; 7pt is a footnote). The hub converts,
+  //              0.75 × px, and must keep converting.
+  //   Inter     · its STAT names the stops "Text" (14) and "Display" (32) — no
+  //              unit anywhere — and the inter.css that ships in the 4.1 release
+  //              gives the maker's own recommended usage as
+  //              `font-optical-sizing: auto`, i.e. the CSS px number every engine
+  //              feeds the axis. 14 is then the canonical 14px UI label and 32 the
+  //              32px display line, which is how a screen-first face is drawn.
+  //
+  // This stylesheet sets Inter and nothing else, so `auto` is the faithful reading
+  // here. Driving the axis by hand at 0.75 × px was running every rung a third low
+  // — the 16px body was being drawn by the 14 cut, an h3 at 20–24px by the 32.
+  //
+  // `auto` also follows the USED font-size, so a reader on a larger default text
+  // size or browser zoom gets the drawing for the size they actually see. A pinned
+  // number is frozen at ours.
+  font-optical-sizing: auto;
+
+  // Standard ligatures + contextual alternates from the font's own tables — the
+  // two features Inter's docs enable by name. This matches the engine default;
+  // stated so no reset downstream can quietly turn text shaping off.
+  font-variant-ligatures: common-ligatures contextual;
+
+  // Letter-spacing policy (2026-07-28): the font does it, so nothing here does.
+  // With the axis following the rendered size, Inter's own tracking curve is
+  // applied continuously and correctly at every rung, and a fixed letter-spacing
+  // would fight it at all of them. The old residuals (+0.01em on 13px text,
+  // +0.005em on h3) measured the gap between a rung's real size and a hand-pinned
+  // optical size; with nothing pinned there is no gap left to pay back.
+  // The one survivor is classical rather than metric: a run of CAPITALS (.kicker)
+  // is letterspaced, because capitals are drawn to lead a lowercase word, not to
+  // stand in a row of their own.
+
   quotes: "“" "”" "‘" "’";
 }
 
+// Form controls do not inherit the document font, so the rendering rules have to
+// be restated for them.
+//
+// Gone from this block (2026-07-28), for the same "as the maker drew it" reason:
+//   · -webkit-font-smoothing: antialiased / -moz-osx-font-smoothing: grayscale
+//     A no-op on Windows, and where they do bite — macOS, iOS — they force a
+//     lighter rasterisation than the weight the font actually carries. A rule that
+//     either does nothing or renders type thinner than drawn has no case here.
+//   · text-rendering: optimizeLegibility — in Blink it only switches on kerning
+//     and ligatures, which `font-kerning` and `font-variant-ligatures` above now
+//     state outright and portably, and it carries a cost on long documents.
+//   · -moz-font-feature-settings: "kern" — a fallback for a Firefox that predates
+//     `font-kerning` (2014). In current Firefox it is an alias of
+//     `font-feature-settings`, so leaving it !important here would clobber any
+//     feature the site ever wants on a control.
 body,
 button,
 input,
 select,
 textarea {
   font-synthesis: none !important;
-  // Kerning: the standard `font-kerning` is the cross-browser switch (every modern
-  // engine); the proprietary `-moz-font-feature-settings: "kern"` is kept only as a
-  // belt-and-braces fallback for legacy Firefox. Both force pair-kerning on rather
-  // than leaving it to the browser's size-dependent "auto".
+  // The standard, cross-engine switch: force pair-kerning on rather than leaving
+  // it to the browser's size-dependent "auto".
   font-kerning: normal !important;
-  -moz-font-feature-settings: "kern" !important;
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
 }
 
 body,
@@ -167,17 +204,12 @@ header[id] {
   --fs-metric: 2.25rem;
   --fs-heading-num: 1.75rem;
 
-  // Optical size. Two tokens above the opsz-14 body floor:
-  //   --opsz-display · headings and the section markers, pinned to 32 — the top of
-  //     Inter's 14–32 axis, i.e. the "Inter Display" cut the maker drew for large
-  //     type. Applied flat at every size so all headings share that one refined
-  //     drawing; only their --fs-* size ramps across breakpoints (owner direction).
-  //   --opsz-metric · the big tabular figures, still size-tuned (0.75 × px), because
-  //     a number reads as measurement, not display.
-  // Rungs at or below ~18.6px (h4/h5/h6, lead, quote, chrome) land on 14 and inherit
-  // the body pin, so they get no var of their own.
-  --opsz-display: 32;
-  --opsz-metric: 27;
+  // No --opsz-* tokens. Optical size is `font-optical-sizing: auto` on the body
+  // (see the note there): every rung above gets the drawing for the px it renders
+  // at, and the axis clamps itself at 14 and 32. The display sizes (--fs-display,
+  // --fs-h1, --fs-metric, --fs-heading-num) sit at or past 32px on every
+  // breakpoint, so they land on the "Display" cut exactly as before; h2/h3 now get
+  // the intermediate drawings that used to be skipped over.
   --gap-hero-metrics: 2rem;
   // Chrome stays compact on phones so the logo/buttons never dominate.
   --size-icon: 3rem;
@@ -198,7 +230,6 @@ header[id] {
     --fs-quote: 1.0625rem;
     --fs-metric: 2.625rem;
     --fs-heading-num: 2.25rem;
-    --opsz-metric: 31.5;
     --gap-hero-metrics: 3rem;
     --size-icon: 3.5rem;
     --btn-px: 1.5rem;
@@ -215,7 +246,6 @@ header[id] {
     --fs-quote: 1.0625rem;
     --fs-metric: 3rem;
     --fs-heading-num: 2.5rem;
-    --opsz-metric: 32;
     --gap-hero-metrics: 4rem;
     --size-icon: 4rem;
   }
@@ -324,30 +354,26 @@ h6,
   }
 }
 
-// Heading tracking, from Inter's dynamic-metrics curve. The opsz-32 display cut
-// is spaced for ~43px-and-up type. h1 and h2 render close enough to that for the
-// residual to be sub-pixel, so they stay at 0. h3 renders at 20–24px on the same
-// cut, where the curve asks for ≈+0.005em back — that half-percent re-opens the
-// display spacing to the size the heading actually shows at.
+// Headings carry no optical size and no tracking of their own: `font-optical-sizing`
+// on the body gives each one the cut for the px it actually renders at. h1 (and the
+// hero display line) sit past 32px on every breakpoint, so they still land on the
+// "Display" drawing; h2 and h3 now get the intermediate ones — the whole reason for
+// having an axis instead of two static families.
 h1,
 .h1 {
   font-size: var(--fs-h1);
-  font-variation-settings: "opsz" var(--opsz-display);
   line-height: $h1-line-height;
 }
 
 h2,
 .h2 {
   font-size: var(--fs-h2);
-  font-variation-settings: "opsz" var(--opsz-display);
   line-height: $h2-line-height;
 }
 
 h3,
 .h3 {
   font-size: var(--fs-h3);
-  font-variation-settings: "opsz" var(--opsz-display);
-  letter-spacing: 0.005em;
   line-height: $h3-line-height;
 
   &:has(.mini-h3) {
@@ -364,8 +390,6 @@ h3,
 
   /* Product name (the text node / non-.mini-h3 content) renders at heading scale */
   font-size: var(--fs-h3);
-  font-variation-settings: "opsz" var(--opsz-display);
-  letter-spacing: 0.005em; // matches h3 — same size on the same display cut
   font-weight: $headings-font-weight;
   line-height: $h3-line-height;
 
@@ -755,13 +779,35 @@ figcaption,
   margin-bottom: 0;
 }
 
-// 13px renders on the opsz-14 cut — Inter's axis floor, drawn for ≈18.7px — so
-// the drawing is spaced for larger type than it shows at. +0.01em is what Inter's
-// dynamic-metrics curve asks back across that gap.
+// Line-breaking for body text.
+//   text-wrap: pretty     — no single-word last line. Blink only re-scores the
+//                           last few lines of a block, so it stays cheap even on
+//                           the long pages. Headings are left out on purpose:
+//                           `balance` there would restyle the type ramp.
+//   overflow-wrap: break-word — a long URL, part number or hash wraps instead of
+//                           pushing a horizontal scrollbar across the page. It
+//                           only engages when a token genuinely cannot fit, so
+//                           ordinary prose is untouched.
+p,
+li,
+dd,
+blockquote,
+figcaption {
+  text-wrap: pretty;
+}
+
+p,
+li,
+dd,
+blockquote {
+  overflow-wrap: break-word;
+}
+
+// 13px sits just under Inter's opsz floor of 14, so it renders on the "Text" cut —
+// the drawing meant for exactly this size. No tracking to pay back.
 small,
 .small {
   font-size: $font-size-sm;
-  letter-spacing: 0.01em;
   line-height: $line-height-sm;
 }
 
@@ -908,7 +954,6 @@ blockquote> :last-child:after {
   margin: -0.625rem -0.5rem;
   font-size: $font-size-sm;
   font-weight: 600;
-  letter-spacing: 0.01em; // 13px at the opsz-14 floor — same residual as small/.small
   color: $link-color;
   transition: opacity var(--dur-fast) var(--ease-precise);
 
@@ -1272,9 +1317,12 @@ section.bg-primary {
   font-size: $font-size-sm; // 13px — the small-text rung of the type scale
   font-weight: 600;
   text-transform: uppercase;
-  // Letterspaced caps: capitals are drawn to lead a lowercase word, so a run of
-  // them sets too tight without air. 0.08em is the classical amount for a small
-  // caps label (and quietly covers the opsz-floor residual this size carries).
+  // Letterspaced caps — the one tracking value that survives the move to
+  // `font-optical-sizing: auto`, because it answers a question the optical size
+  // axis does not: capitals are drawn to lead a lowercase word, so a run of them
+  // sets too tight without air. 0.08em is the classical amount for a small caps
+  // label. (Inter also ships `cpsp`, the maker's own capital spacing, but it is
+  // an optical correction of ~0.016em — a fifth of what a label like this wants.)
   letter-spacing: 0.08em;
   line-height: 1.2;
   color: $slate-500;
@@ -1287,7 +1335,6 @@ section.bg-primary {
   font-weight: 700;
   line-height: 0.95;
   font-size: var(--fs-metric);
-  font-variation-settings: "opsz" var(--opsz-metric);
 }
 
 .metric__unit {
@@ -1435,7 +1482,6 @@ header.hero-precision {
 
   h1 {
     font-size: var(--fs-display);
-    font-variation-settings: "opsz" var(--opsz-display);
     line-height: 1.02;
   }
 
@@ -1650,7 +1696,6 @@ header.hero-precision {
     content: attr(data-number);
     font-weight: 700;
     font-size: var(--fs-heading-num);
-    font-variation-settings: "opsz" var(--opsz-display);
     line-height: 0.85;
     color: inherit;
   }

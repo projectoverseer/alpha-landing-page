@@ -7,12 +7,14 @@
 
 // ---- Optical size: every size gets the drawing it was cut for (§4) ----------
 //
-// Literata's opsz axis is a POINT scale — OpenType defines the value as the size
-// the type is actually set at, in points. A screen has no physical size, so
-// browsers hand the axis the CSS px number instead: `font-optical-sizing: auto`
-// (the default, and what this hub shipped with) asks every element for the
-// drawing of type ONE THIRD LARGER than it really is. The 19px body was being
-// drawn for 19pt — a size it is never set at.
+// Literata's opsz axis is a POINT scale, and TypeTogether say so in the font
+// itself: its STAT table names the stops "7pt", "12pt", "36pt", "72pt", and the
+// bottom of the range only parses as points — 7px is not a size anything is ever
+// set at, while 7pt is a footnote. A screen has no physical size, so browsers hand
+// the axis the CSS px number instead: `font-optical-sizing: auto` (the default,
+// and what this hub shipped with) asks every element for the drawing of type ONE
+// THIRD LARGER than it really is. The 19px body was being drawn for 19pt — a size
+// it is never set at.
 //
 // 1px = 0.75pt. That conversion is the whole of this mixin, and it is the only
 // thing standing between us and the wrong cut on every line of the site.
@@ -23,6 +25,16 @@
 //
 // (csswg-drafts#4430 tracks the px/pt mismatch. Until it is resolved, driving the
 // axis ourselves is also the only way every browser agrees on the drawing.)
+//
+// INTER IS THE OTHER CASE, and 2026-07-28 split the two apart. The unit is not a
+// universal fact about `opsz` — it is a choice each maker makes and records. Inter
+// names its stops "Text" (14) and "Display" (32), with no unit anywhere, and the
+// inter.css that ships in the 4.1 release gives Rasmus's own recommended usage as
+// `font-optical-sizing: auto` — the px number. Read that way the axis lands where
+// a screen-first face should: 14 is the canonical 14px UI label, 32 the 32px
+// display line. So Inter on this hub is left to `auto` (set on body.kt below) and
+// only Literata converts. Every Literata rule already carries its own explicit
+// opsz through these mixins, which overrides `auto` wherever it applies.
 
 @function pt($px) {
   @return $px * 0.75;
@@ -75,17 +87,25 @@ body.kt {
   font-family: var(--font-ui);
   font-size: 1rem;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
 
-  // Inter Variable carries an opsz 14–32 axis too, so the px/pt trap that governs
-  // Literata (see the mixin at the top) applies here as well: left to the default
-  // `font-optical-sizing: auto`, the browser would feed Inter the CSS px number as
-  // if it were points and overshoot. But Inter is chrome only, and its largest
-  // size is this 16px base — 0.75 × 16 = 12, under Inter's opsz floor of 14 — so
-  // every UI size on the hub resolves to the same 14, Inter's text cut. Pin it
-  // once; it inherits. Every Literata rule sets its own opsz and overrides this.
-  // (If Inter is ever set large enough to leave the floor, give that rule its own.)
-  font-variation-settings: "opsz" 14;
+  // Inter carries an opsz 14–32 axis too, but read in px rather than points (the
+  // split is argued out at the top of this file). `auto` is the maker's own
+  // recommended usage and it is safe to set globally here: it only reaches Inter,
+  // because every Literata rule states its own converted opsz and an explicit
+  // `font-variation-settings` outranks `font-optical-sizing`.
+  //
+  // In practice the hub's chrome is 12–16px, so most of it still resolves to 14 —
+  // Inter's floor and its "Text" cut. The difference from the old hard pin is that
+  // the axis now follows the size that is really rendered, including a reader on a
+  // larger default text size or browser zoom.
+  //
+  // `-webkit-font-smoothing: antialiased` was removed here at the same time: a
+  // no-op on Windows, and on macOS/iOS it rasterises type lighter than the weight
+  // the font actually carries — the opposite of what this file is for.
+  font-optical-sizing: auto;
+
+  // Standard ligatures + contextual alternates, from the fonts' own tables.
+  font-variant-ligatures: common-ligatures contextual;
 }
 
 .kt ::selection {
@@ -105,31 +125,42 @@ body.kt {
   }
 }
 
-// ---- Letter-spacing (owner, 2026-07-14: decided per element, from scratch) --
+// ---- Line breaking ----------------------------------------------------------
 //
-// Literata always renders with the exact optical size for its rendered px (the
-// read()/opsz() mixins above), so its spacing is the maker's own at every size —
-// no Literata run on the hub carries tracking. Inter is different: it is chrome
-// only, all of it at 12–14px, and Inter's opsz axis floors at 14 (≈18.7px of
-// type). Every small chrome run therefore renders on a cut spaced for larger
-// type than it shows at, and gets back the +0.01em residual Inter's own
-// dynamic-metrics curve gives for that gap. Uppercase labels get classical caps
-// letterspacing instead (which subsumes the residual).
-.kt-feed-meta,
-.kt-byline,
-.kt-series-line,
-.kt-collection-meta,
-.kt-series-card-meta,
-.kt-feed-more,
-.kt-figure figcaption,
-.kt-series-nav-label,
-.kt-series-nav-series,
-.kt-readnext-meta,
-.kt-footer p,
-.kt-signature-role,
-.kt-signature-canonical {
-  letter-spacing: 0.01em;
+// This is a reading room, so it gets the two rules that only matter over long
+// stretches of prose. `pretty` stops a paragraph ending on a single stranded word
+// — Blink only re-scores the last few lines, so it stays cheap on the longest
+// posts. `break-word` sends a long URL or part number onto the next line instead
+// of pushing a horizontal scrollbar across the page, and only engages when a token
+// genuinely cannot fit. Headings are left out: `balance` there would restyle the
+// measure the type ramp was built on.
+.kt p,
+.kt li,
+.kt dd,
+.kt blockquote,
+.kt figcaption {
+  text-wrap: pretty;
 }
+
+.kt p,
+.kt li,
+.kt dd,
+.kt blockquote {
+  overflow-wrap: break-word;
+}
+
+// ---- Letter-spacing (2026-07-28: none, except caps) -------------------------
+//
+// Both faces now render at the optical size drawn for the size they show at —
+// Literata through the read()/opsz() mixins, Inter through `font-optical-sizing:
+// auto` — so the spacing on every run is the maker's own and nothing on the hub
+// carries body tracking. The +0.01em that small Inter chrome used to get was the
+// residual for a 12–14px run sitting on a cut "drawn for ≈18.7px"; that gap was an
+// artefact of reading Inter's axis in points. Read in px, 13.5px chrome sits half
+// a unit under the 14 floor and there is nothing to pay back.
+//
+// Uppercase labels keep their classical caps letterspacing further down: capitals
+// are drawn to lead a lowercase word, which is a question no optical size answers.
 
 // Responsive default for article images. The brand logo opts out: its height
 // IS its design (`.kt .kt-brand-logo` outranks this rule's 0,1,1 specificity —
@@ -844,7 +875,6 @@ body.kt-lightbox-open {
   padding: 0.75rem 1.25rem 1rem;
   font-size: 0.84375rem;
   line-height: 1.5;
-  letter-spacing: 0.01em; // 13.5px Inter at the opsz-14 floor, like all hub chrome
   text-align: center;
   color: rgba(250, 248, 242, 0.78);
 }
