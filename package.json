@@ -22,6 +22,7 @@
     "optimize:hash": "node fingerprint.mjs",
     "optimize:html": "html-minifier-terser --collapse-whitespace --remove-comments --collapse-boolean-attributes --remove-redundant-attributes --remove-empty-attributes --remove-style-link-type-attributes --remove-script-type-attributes --decode-entities --use-short-doctype --sort-attributes --sort-class-name --minify-js true --minify-css true --input-dir _site --output-dir _site --file-ext html",
     "sitemap:lastmod": "node update-sitemap.mjs",
+  "submit:indexnow": "node indexnow.mjs",
     "check": "node verify.mjs",
     "publish:docs": "node publish.mjs",
     "build": "npm run clean && npm run build:jekyll && npm run optimize:math && npm run optimize:css && npm run optimize:js && npm run optimize:hash && npm run optimize:html && npm run sitemap:lastmod && npm run check && npm run publish:docs",

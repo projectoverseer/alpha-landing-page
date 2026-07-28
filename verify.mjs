@@ -32,6 +32,8 @@ const MUST_SHIP = [
   'chia-se-kinh-nghiem/chu-de/ky-thuat-nhuom/index.html',
   'chia-se-kinh-nghiem/chu-de/do-mau/index.html',
   'sitemap.xml', 'robots.txt', 'site.webmanifest',
+  '3ae395cbc31836c28cb9d7e68ff15aec.txt', // IndexNow key — indexnow.mjs must find it live
+
   'favicon.svg', 'favicon.ico', 'apple-touch-icon.png',
   'img/hero/hero-1920.avif',
   'fonts/literata/literata-latin.woff2',

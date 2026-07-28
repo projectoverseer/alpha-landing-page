@@ -37,6 +37,7 @@ exclude:
   - ship.mjs
   - verify.mjs
   - update-sitemap.mjs
+  - indexnow.mjs
   - README.md
   - .gitignore
   - Gemfile
