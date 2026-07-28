@@ -460,7 +460,19 @@ body.kt {
   text-decoration: none;
 }
 
+// `display: block` is load-bearing, not tidiness. The mark is wrapped in a
+// <picture> now (dark mode swaps the artwork), and that wrapper — not the img —
+// is the flex item, so the img went back to being INLINE inside it. An inline
+// image sits on a text baseline, and the line box around it keeps the strut's
+// descender space below that baseline: at the bar's 16px/1.6 that is ~8.7px of
+// empty box under a 34px mark. `align-items: center` then centres the box, not
+// the artwork, and the logo rides ~4px high — which is exactly the "pushed to
+// the top of its viewBox" the owner saw (worse on phones, where the same 8.7px
+// hangs off a 28px mark). Blocking the img kills the line box: the picture then
+// hugs the artwork and centres on it. Same reason the figures, thumbs and the
+// lightbox all block their images.
 .kt .kt-brand-logo {
+  display: block;
   width: auto;
   height: var(--logo-h);
 }
