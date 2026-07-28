@@ -39,7 +39,7 @@ const MUST_SHIP = [
   'fonts/literata/literata-greek.woff2',
   'fonts/inter/inter-latin.woff2',
   'fonts/inter/inter-vietnamese.woff2',
-  'fonts/math/alpha-math.woff2',
+  'fonts/math/alpha-math-2.woff2',
 ];
 for (const f of MUST_SHIP) {
   if (!existsSync(join(SITE, f))) errors.push(`missing required file: ${f}`);
