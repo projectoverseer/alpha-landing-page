@@ -271,17 +271,28 @@ a {
 // the failure this whole system exists to fix.
 header,
 section.bg-dark,
-section.bg-primary,
-.navbar:not(.nav-active) {
+section.bg-primary {
   --focus: #{$fg-on-dark};
   --focus-halo: #{$ink-950};
 }
+
+// The BAR is deliberately not in that list. It has three surfaces and only two
+// of them are dark, so the pair is set alongside the bar's ink, in the same two
+// mixins, by the same argument — see the block above `.navbar`.
+//
+// This was the second half of the caret bug and the more serious one. Written
+// as `.navbar:not(.nav-active) { --focus: white }`, a phone at the top of the
+// page — an opaque warm bar — handed its links a WHITE ring on a #fdf1eb
+// ground: 1.11:1, against the 3:1 WCAG 2.2 SC 1.4.11 asks of a focus
+// indicator. A keyboard or switch user on a phone had no visible focus at all
+// until they scrolled. Nobody would have reported it, because the readers it
+// fails are not the ones sending screenshots.
 
 // ...and back again for the menus that open OUT of the transparent bar onto
 // their own light surface.
 .navbar .dropdown-menu {
   --focus: #{$focus};
-  --focus-halo: #{$surface};
+  --focus-halo: #{$surface-sunk};
 }
 
 // (A `@include media-breakpoint-down(md) { .container-fluid { --bs-gutter-x:
@@ -762,7 +773,9 @@ big,
     margin-top: 1.5em;
   }
 
-  // Code blocks
+  // Code blocks. A listing is data, and data is set on the cool grey
+  // (main.scss §2) — never on the blue tint, which is reserved for the two
+  // trust moments, and never warm.
   pre {
     background: $ink-50;
     @include corner($r-2);
@@ -818,12 +831,24 @@ big,
     margin: 2em 0;
   }
 
-  // Highlighted text
+  // Highlighted text. A PAIR, and the loud half of the pair whose quiet half is
+  // ::selection — one dye at two concentrations (main.scss §2). It was
+  // `rgba($dye-300,.2)`, which is the same colour this resolves to on white and
+  // an unmeasurable one anywhere else; naming the ink as well makes it correct
+  // on the warm band and inside a quote too.
   mark {
-    background: rgba($dye-300, 0.2);
+    background: $mark-bg;
+    color: $mark-fg;
     border-radius: $r-1;
     padding: 0.0625em 0.25em;
-    color: inherit;
+  }
+
+  // A marked run keeps its identity while it is being dragged over: the
+  // selection deepens the mark rather than replacing it, so the reader can
+  // still see which words were marked. Same device as the reading hub.
+  mark::selection {
+    background: $dye-300;
+    color: $fg;
   }
 
   // Images outside figures
@@ -873,10 +898,19 @@ big,
     }
   }
 
-  // Blockquotes within prose (nested/inline, not the review blockquotes)
+  // Blockquotes within prose (nested/inline, not the review blockquotes).
+  // The same GROUND as a review — the quote surface, the palest logo blue —
+  // because both are "these are not Alpha's words" and the site should say
+  // that one way. An aside has no portrait or attribution to enclose, so
+  // instead of the card it takes the classic rule down the speaker's side
+  // ($accent, 3.59:1 on this ground, over SC 1.4.11's 3:1). The TYPE also
+  // differs, and should: a review is evidence and is set at full ink, a quoted
+  // rule of thumb inside an article is an aside and is set muted.
   blockquote {
+    background: $surface-quote;
     border-left: 3px solid $accent;
-    padding-left: step(5);
+    border-radius: 0 $r-2 $r-2 0;
+    padding: step(4) step(5);
     margin-left: 0;
     font-style: italic;
     color: $fg-muted;
@@ -915,8 +949,12 @@ dd {
   }
 }
 
-.bg-gray-100 {
-  background: $ink-50 !important;
+// The strip that closes the page. It is furniture, not content, so it takes
+// the quiet cool grey — the reader has reached the building's back wall. (It
+// used to be `.bg-gray-100`, a utility name; the name now says which part of
+// the page it is.)
+.footer-strip {
+  background: $surface-footer;
 }
 
 .hr {
@@ -935,7 +973,7 @@ dd {
   }
 
   .bg-dark & {
-    color: $blue-100;
+    color: $accent-cool-on-dark;
   }
 }
 
@@ -1065,17 +1103,48 @@ blockquote> :last-child:after {
   content: close-quote;
 }
 
-// A modest, inline accent quotation mark opens the review — a quiet "this is a
-// quote" cue that lets the block keep reading like written prose, not a billboard.
+// ─── A REVIEW IS A PERSON, THEIR WORDS, AND THEIR NAME — ONE OBJECT ───
+//
+// Two rounds of owner feedback shaped this. First: "nó giống hệt như những
+// paragraph text khác mà Alpha viết" — the quote was typographically identical
+// to Alpha's own prose. Then the fix (a warm ground and a dye rule on the
+// blockquote alone) still didn't satisfy, and the diagnosis is that it styled
+// the WORDS while the thing that proves a review is real was floating outside
+// the styling: the portrait. A photograph of the speaker above an unrelated
+// tinted box is a picture and a paragraph; the same photograph enclosed with
+// the words and the name is testimony.
+//
+// So the card is the device — the standard, instantly-read testimonial
+// pattern: portrait, quotation, attribution, one bordered ground. The ground
+// is $surface-quote, the palest rung of the logo's own blue: blue is the
+// owner's stated trust colour, and a customer vouching for Alpha is the page's
+// purest trust moment. (The warm ground was rejected with the rest of the warm
+// surfaces, main.scss §1.)
+//
+// What deliberately does NOT change is the type. design/07 §7.5 sets a review
+// at reading size with paragraph leading because it is a paragraph somebody
+// wrote, not a pulled quote to be admired — enlarging it would turn a customer
+// into a billboard. The words are enclosed, not amplified.
+.review-card {
+  height: 100%; // both cards in the row hold the same depth
+  background: $surface-quote;
+  border: 1px solid $line;
+  @include corner($r-4);
+  padding: step(5);
+}
+
 .blockquote {
   color: $fg;
 
+  // The quotation marks are the one dye spark inside the card — glyphs, so
+  // they take $accent-strong: 5.41:1 on this ground, over the 4.5:1 SC 1.4.3
+  // asks of text.
   > :first-child::before,
   > :last-child::after {
     font-size: 1.5em;
     font-weight: 700;
     line-height: 0;
-    color: $accent;
+    color: $accent-strong;
     vertical-align: -0.32em;
   }
 
@@ -1090,7 +1159,16 @@ blockquote> :last-child:after {
 
 .blockquote-footer {
   color: $fg-muted;
-  padding-left: $text-tab-width;
+
+  // Bootstrap opens this with "\2014" — AN EM DASH, printed in front of every
+  // customer's name on the page, in both languages. Em dashes are out of
+  // reader-facing text on this site (they read as machine-written), and this
+  // one had survived because it is generated by the framework rather than typed
+  // into the copy, so no sweep of the Vietnamese ever saw it. A spaced en dash
+  // is what the rest of the site uses.
+  &::before {
+    content: "\2013\00a0";
+  }
 }
 
 // ─── "Show original in Vietnamese" deep link ───
@@ -1103,25 +1181,26 @@ blockquote> :last-child:after {
 .service-box[id] {
   position: relative;
   scroll-margin-top: calc(#{$navbar-height-sm} + #{step(5)});
-  @include corner($r-4); // harmless while transparent; gives the lit tint/glow round corners
 
   @include media-breakpoint-up(md) {
     scroll-margin-top: calc(#{$navbar-height} + #{step(6)});
   }
 }
 
-// Deep-link cue (design doc §10/§12 "feedback"): when a /#review-… link lands on a card, a soft,
-// brand-tinted wash lights up the card and is HELD while the page glides toward it, then eases
-// out once the scroll settles — a gentle "here it is" highlight, present the whole way in (no
-// flash on a white card). JS adds .is-flashing the moment the card is on screen and, on arrival
-// (timed to `scrollend`, so the hold spans the full travel time), swaps it for .is-settling to
-// run the fade. The tint is on the card's OWN background + a soft glow (painted behind its
-// content, above the page) so the quote and portrait stay crisp; no negative z-index.
+// Deep-link cue (design doc §10/§12 "feedback"): when a /#review-… link lands on a card, a soft
+// dye ring lights the card up and is HELD while the page glides toward it, then eases out once
+// the scroll settles — a gentle "here it is" highlight, present the whole way in. JS adds
+// .is-flashing the moment the card is on screen and, on arrival (timed to `scrollend`, so the
+// hold spans the full travel time), swaps it for .is-settling to run the fade.
+//
+// The lit values ride the .review-card, which owns the ground and the corner — the ring hugs
+// the card's own shape. The old background wash went with the card: it existed because a ring
+// alone was too little on a bare white column, and the card's opaque quote ground would only
+// have muddied under a translucent orange film.
 //
 // HELD state: lit and static — no transition, no animation — so it shows instantly on load and
 // stays put for however long the glide lasts.
-.service-box[id].is-flashing {
-  background-color: rgba($accent, 0.11);
+.service-box[id].is-flashing .review-card {
   box-shadow:
     0 0 0 3px rgba($accent, 0.24),
     0 12px 30px rgba($accent, 0.16);
@@ -1129,22 +1208,20 @@ blockquote> :last-child:after {
 
 // SETTLE-OUT: a keyframe animation eases the lit values back to transparent. Driven by an
 // animation (not a transition) because a transition out of a `transition:none` held state is
-// suppressed in Chromium and snaps; a keyframe reliably interpolates both background and the
-// box-shadow (transparent endpoints share the held state's structure, so nothing jumps).
-.service-box[id].is-settling {
+// suppressed in Chromium and snaps; a keyframe reliably interpolates the box-shadow
+// (transparent endpoints share the held state's structure, so nothing jumps).
+.service-box[id].is-settling .review-card {
   animation: review-settle var(--t-settle) var(--ease) forwards;
 }
 
 @keyframes review-settle {
   from {
-    background-color: rgba($accent, 0.11);
     box-shadow:
       0 0 0 3px rgba($accent, 0.24),
       0 12px 30px rgba($accent, 0.16);
   }
 
   to {
-    background-color: rgba($accent, 0);
     box-shadow:
       0 0 0 3px rgba($accent, 0),
       0 12px 30px rgba($accent, 0);
@@ -1156,15 +1233,15 @@ blockquote> :last-child:after {
 // reduce-motion override doesn't snap it away. (The site-wide policy still governs everything
 // else.) The held .is-flashing state has no animation, so it's unaffected either way.
 @media (prefers-reduced-motion: reduce) {
-  .service-box[id].is-settling {
+  .service-box[id].is-settling .review-card {
     animation-duration: 900ms !important;
   }
 }
 
-// Sits just under the attribution; aligned to the same text indent.
+// Sits just under the attribution, flush with it — everything in the card
+// hangs off the card's own padding edge.
 .original-review {
   margin-top: 0.75em;
-  padding-left: $text-tab-width;
 }
 
 // Design doc §11 "plain" button: text-only, the one accent color signals
@@ -1441,11 +1518,81 @@ section.bg-primary {
   color: $fg-muted;
 }
 
-// The navigation bar is a quiet, opaque chrome layer: a clean white surface that
-// lifts off the content with a hairline separator + a soft, diffuse shadow
-// (§9) — no translucent blur material.
+// ════════════════════════════════════════════════════════════════════════════
+// THE BAR HAS THREE STATES, NOT TWO — and that is the whole of the bug
+// the owner caught twice.
+//
+//   ≥md, at the top of the hero   transparent over a photograph   → white ink
+//   ≥md, scrolled                 the chrome surface              → dark ink
+//   <md, ALWAYS                   the chrome surface              → dark ink
+//
+// There are three surfaces but only one class, `.nav-active`, and it answers
+// "has the reader scrolled?" — not "what am I sitting on?". Written as
+// `&:not(.nav-active) { .nav-link { color: white } }`, the third state inherits
+// the first state's ink while the media query underneath it has already swapped
+// in the second state's surface. White ink on a white bar.
+//
+// On a phone at the top of the page that made the language switcher's caret —
+// `currentColor`, and the only thing saying the flag is a control — invisible.
+// Which is exactly the bug reported one pass ago in its other half, when the
+// same caret came out dark on the dark hero: both times the colour was
+// following the STATE and the surface was somewhere else.
+//
+// So the ink is stated per SURFACE, in a mixin, and used once per surface. A
+// fourth surface can only be added by naming which of the two it is.
+// ════════════════════════════════════════════════════════════════════════════
+
+// Each mixin carries the focus pair as well as the ink, because they answer the
+// same question — what am I sitting on? — and splitting them is how the bar
+// ended up with one right answer and one wrong one.
+@mixin navbar-ink-on-dark {
+  --focus: #{$fg-on-dark};
+  --focus-halo: #{$ink-950};
+
+  .nav-link {
+    color: $fg-on-dark;
+
+    &:hover {
+      color: $navbar-dark-hover-color;
+    }
+  }
+}
+
+@mixin navbar-ink-on-light {
+  --focus: #{$focus};
+  --focus-halo: #{$surface-chrome};
+
+  .nav-link {
+    color: $fg;
+
+    // The chrome answers a pointer with the bar's ONE accent — the same colour
+    // the active link already carries, so pointing at a link previews the state
+    // it would take. $dye-700 is 5.2:1 on the chrome surface.
+    &:hover {
+      color: $navbar-light-hover-color;
+    }
+
+    &.active {
+      color: $navbar-light-active-color;
+    }
+
+    // An open menu's toggle is not "where you are", so it keeps plain ink.
+    &.show:not(.active) {
+      color: $fg;
+    }
+  }
+}
+
+// The navigation bar is a quiet, opaque chrome layer that lifts off the content
+// with a hairline separator + a soft, diffuse shadow (§9) — no translucent blur
+// material.
+//
+// Its surface is WHITE — an owner decision (2026-07-28, twice in one day: the
+// warm greige bar was tried and rejected outright). White chrome over white
+// paper separates by the hairline and the shadow, not by a fill, which is the
+// standard, unremarkable answer.
 .navbar {
-  background: $white;
+  background: $surface-chrome;
   border-bottom: 0.5px solid $line;
   box-shadow: var(--box-shadow-menu);
 
@@ -1572,30 +1719,19 @@ section.bg-primary {
     }
 
     // Everything in the bar is white over the photograph — the links AND the
-    // language switcher's caret, which is `currentColor`.
-    //
-    // The caret is the one that was wrong. It is not inside `.navbar-nav` (it
-    // sits in `.navbar-actions` beside the call button), so nothing ever gave
-    // it `--bs-nav-link-color`: `color: var(--bs-nav-link-color)` was invalid
-    // at computed-value time and fell back to the inherited body ink — dark
-    // ink, on a dark photograph, at the top of the page. The set before this
-    // one shipped a second SVG in a pale grey to paper over exactly that, and
-    // deleting it in favour of `currentColor` was right ONLY if currentColor
-    // is stated. It was not. It is now.
-    .nav-link {
-      color: $fg-on-dark;
+    // language switcher's caret, which is `currentColor`. The caret is not
+    // inside `.navbar-nav` (it sits in `.navbar-actions` beside the call
+    // button), so nothing ever gave it `--bs-nav-link-color`; it takes its
+    // colour from here, like every other mark in the bar.
+    @include navbar-ink-on-dark;
 
-      &:hover {
-        color: $navbar-dark-hover-color;
-      }
-    }
-
-    // Phones (<md) get the solid white chrome at every scroll position. The
-    // deferential transparent-over-hero treatment is reserved for ≥md, where the
-    // section nav is visible; on phones only the logo + language switcher show,
-    // and the white surface keeps them legible over the dark hero from the start.
+    // …EXCEPT ON A PHONE, where this state's SURFACE is the chrome, not the
+    // photograph. Below md there is no section nav and the bar is opaque at
+    // every scroll position, so the deferential transparent treatment simply
+    // does not apply — and neither does its ink. Omitting this second half is
+    // what left the caret white-on-white at the top of the page.
     @include media-breakpoint-down(md) {
-      background: $white;
+      background: $surface-chrome;
       border-bottom-color: $line;
       box-shadow: var(--box-shadow-menu);
 
@@ -1606,12 +1742,14 @@ section.bg-primary {
       .logo-color {
         opacity: 1;
       }
+
+      @include navbar-ink-on-light;
     }
   }
 
-  // Once content scrolls under it, the bar lifts onto the white chrome surface.
+  // Once content scrolls under it, the bar lifts onto the chrome surface.
   &.nav-active {
-    background: $white;
+    background: $surface-chrome;
     border-bottom-color: $line;
     box-shadow: var(--box-shadow-menu);
 
@@ -1623,40 +1761,11 @@ section.bg-primary {
       opacity: 1;
     }
 
-    // ...and ink on the white chrome. Stated here rather than left to
-    // `--bs-navbar-color`, because that variable is set twice — `.navbar` gives
-    // it $fg and `.navbar[data-bs-theme="dark"]` gives it #fff, and the theme
-    // attribute is on this element, so the framework's answer for BOTH bar
-    // states is white. One value cannot serve a bar that is transparent over a
-    // photograph and then white; the state class is the only thing that knows
-    // which it currently is, so the state class owns the colour.
-    .nav-link {
-      color: $fg;
-
-      // The white bar answers a pointer now (owner's ask, 2026-07-28). It used
-      // to answer with nothing at all, so the same control was live over the
-      // hero and dead once you scrolled. It takes the ACTIVE colour rather than
-      // a third one: the bar carries one accent, and pointing at a link
-      // previews the state it would take — which is how the dark bar has always
-      // worked. $dye-700 is 5.8:1 on white.
-      &:hover {
-        color: $navbar-light-hover-color;
-      }
-
-      &.active {
-        color: $navbar-light-active-color;
-      }
-
-      &.nav-link-active-blue {
-        &.active {
-          color: $blue-800;
-        }
-      }
-
-      &.show:not(.active) {
-        color: $fg;
-      }
-    }
+    // Stated here rather than left to `--bs-navbar-color`, because that
+    // variable is set twice — `.navbar` gives it $fg and
+    // `.navbar[data-bs-theme="dark"]` gives it #fff, and the theme attribute is
+    // on this element, so the framework's answer for every bar state is white.
+    @include navbar-ink-on-light;
   }
 }
 
@@ -1947,7 +2056,7 @@ header.hero-precision {
   }
 
   .hero__kicker {
-    color: $blue-100;
+    color: $accent-cool-on-dark;
     margin-bottom: step(4);
   }
 
@@ -2205,8 +2314,12 @@ header.hero-precision {
   border-radius: 0;
   color: $accent;
 
+  // On the blue band the marker takes the brand's cool half, at the logo's own
+  // wordmark blue (7.39:1 on $surface-alt). The owner tested the dye number on
+  // a tinted band and called the mix overstimulating — the band is monochrome
+  // cool on purpose: one calm hue, no second accent competing with it.
   .bg-light & {
-    color: $blue-700;
+    color: $accent-cool;
   }
 
   &::before {

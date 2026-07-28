@@ -56,7 +56,15 @@
         <a class="nav-link" href="#{{ t.toc_overview_id }}" tabindex="-1">{{ t.toc_overview }}</a>
       </li>
       <li class="visually-hidden nav-item">
-        <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}" tabindex="-1">{{ t.toc_benefits }}</a>
+        {%- comment -%}
+          This anchor used to carry `nav-link-active-blue`, a per-item override
+          giving the Lợi ích link a blue active colour instead of the bar's dye
+          one. It existed because the section it points at used to be a pale
+          blue band. The band is warm now (main.scss §3), so the override was
+          pointing at a colour that had left the page — and a bar that carries
+          one accent should not have one link answering in another.
+        {%- endcomment -%}
+        <a class="nav-link" href="#{{ t.toc_benefits_id }}" tabindex="-1">{{ t.toc_benefits }}</a>
       </li>
       <li class="nav-item dropdown">
         <a

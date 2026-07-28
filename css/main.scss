@@ -8,9 +8,17 @@
 //
 // Reading order: RAMPS (raw material) → ROLES (what a colour is FOR) →
 // BOOTSTRAP BRIDGE (the names the framework reads) → type → space → shape →
-// components. Nothing below the ramps ever names a hex code; nothing in
-// _sass/_base.scss ever names a ramp rung. That is the whole discipline: you
-// pick a colour by naming its job, so two people cannot pick differently.
+// components. Nothing below the ramps ever names a hex code. That is the whole
+// discipline: you pick a colour by naming its job, so two people cannot pick
+// differently.
+//
+// This header used to claim that _sass/_base.scss never names a ramp rung
+// either. It does, in about a dozen places, and always has — so the claim was
+// simply untrue and is now stated as the rule it actually is: a COMPONENT names
+// a role; the two things allowed to reach past a role and take a rung directly
+// are an INTERACTION STATE walking its own ramp ($dye-600 on hover, $ink-600
+// under prefers-contrast) and a NON-TEXT LINE. Everything else that was doing
+// it has been given a role in this pass.
 //
 // Rules shared with the reading hub — space, corner geometry, tap target,
 // motion, focus — live in _sass/_quy-cu.scss. Design language: design/07.
@@ -43,6 +51,11 @@ $black: #000;
 //   950 17.4  900 15.9  800 12.6  700 9.9   600 7.6
 //   500  7.3 ✓AAA text        450 5.3 ✓AA text      400 4.6 ✓AA text (floor)
 //   300  2.8 ✗ non-text only  200 1.7  100 1.3  50 1.2  25 1.1
+//
+// The 25 rung left once (its one job, the menu surface, moved to the warm
+// shell) and came back the same day the shell went: the owner rejected warm
+// furniture on this page outright, so menus and wells are cool again and 25
+// holds its old job.
 $ink-950: #07151f;
 $ink-900: #0b1b2b;
 $ink-800: #102a3c;
@@ -57,40 +70,103 @@ $ink-100: #d6e0e7;
 $ink-50: #e9eff3;
 $ink-25: #f6f9fb;
 
-// DYE — the industry's own colour, earned honestly. Reserved for the moment
-// that matters; never a wash. Ordered by lightness so the interaction states
-// read off the ramp instead of being invented: rest 700 → hover 600 → press
-// 800 (a control warms when pointed at and deepens when pressed).
-//   300 2.4 ✗  400 3.1 ✗  500 3.8 ✗ (large text / marks only)
+// DYE — the industry's own colour, and Alpha's. Every rung below is either a
+// stop taken straight out of the logo file or a measured interaction state
+// derived from one. Reserved for the moment that matters; never a wash.
+// Ordered by lightness so the interaction states read off the ramp instead of
+// being invented: rest 700 → hover 600 → press 800 (a control warms when
+// pointed at and deepens when pressed).
+//   300 2.4 ✗  500 3.8 ✗ (large text / marks only)
 //   600 4.9 ✓  700 5.8 ✓ (small accent text, CTA fill)  800 7.0 ✓
-$dye-300: #ff8f1c;
-$dye-400: #ff6a1a;
-$dye-500: #e35205; // the brand mark
-$dye-600: #c9420c;
-$dye-700: #b8390a;
-$dye-800: #a33208;
+//
+// `#ff6a1a` used to sit between 300 and 500 as the on-dark accent. It is in
+// neither the mark nor the product, and 300 — which IS in the mark — measures
+// 7.63:1 on $ink-900 against its 6.08:1, so the brighter, honest one was also
+// the more legible one. One accent on dark, not two.
+$dye-300: #ff8f1c; // logo, ribbon highlight
+$dye-500: #e35205; // logo, the brand mark itself
+$dye-600: #c9420c; // hover  (derived)
+$dye-700: #b8390a; // the product's own AlphaLinkBrush — small accent text, CTA fill
+$dye-800: #a33208; // pressed (derived)
 
 // BLUE — the cool counterpoint. Blue says "you can act on this"; dye says
-// "this is the point." Four blues went in here (#06c link, #0071e3 focus,
-// #004c97 icons, #004080 nav-active) that nobody could have told apart in a
-// line-up; what survives is one interactive blue plus the two deep marks that
-// are genuinely a different job.
-//   100 on ink-900 13.1 ✓   400 on ink-900 5.0 ✓
-//   600 on white 5.6 ✓      700 on white 8.5 ✓      800 on white 10.3 ✓
-$blue-100: #c3e5f1;
+// "this is the point." Alpha's blue is a single hue: measured in CIELCh the
+// logo's own globe stops sit at h 275–284°, and so does every rung here. What
+// changes down the ramp is lightness, not colour.
+//
+//   100 #8dc8e8  logo, the pale globe edge     on ink-900  9.6 ✓
+//   400 #009cde  logo                          on ink-900  5.7 ✓
+//   600 #0066cc  L* 44.0 h 284° — see below    on white    5.6 ✓
+//   700 #004c97  logo, the wordmark's blue     on white    8.5 ✓
+//   800 #003865  logo, the deepest globe stop  on white   12.0 ✓
+//
+// 600 IS Alpha blue: h 284° against the wordmark's 283°, one hue, two
+// lightnesses. It cannot be replaced by 700 even though 700 is the literal
+// logo colour, and the reason is a measurement, not a preference. Links here
+// are not underlined at rest, so WCAG technique G183 asks for 3:1 between the
+// link and the body text around it. Against $fg: 600 gives 3.13:1 ✓, 700 gives
+// 2.06:1 ✗, 800 gives 1.46:1 ✗. The window for an un-underlined link on this
+// page is 4.5:1 minimum on white and 5.81:1 maximum, and only 600 is in it.
+// (#c3e5f1 and #004080, which used to hold 100 and 800, were off the hue axis
+// and in nothing Alpha has ever printed.)
+// The two light rungs are DERIVED, not picked: $blue-100 — the palest blue
+// Alpha actually prints, the globe's edge — composited on the page at 12% and
+// 24%, the same compositing rule that generates $selection-bg. So the tints
+// cannot drift off-brand: they are the logo's own blue, dilute. Measured
+// (CIELCh): both land at h 239°, C* 3.1 / 6.2 — the retired grey band was
+// C* 2.9 at the same lightness, so 50 has TWICE its colour and none of its
+// overcast. On 50 every text tier still clears AA: $fg 15.2, $fg-muted 6.4,
+// $fg-subtle 4.61, $link 4.86 — 24% is the deepest strength that holds, so it
+// is a floor, not a preference.
+$blue-25: #f1f8fc; // blue-100 @ 12% — a quoted surface
+$blue-50: #e4f2f9; // blue-100 @ 24% — the one tinted band
+$blue-100: #8dc8e8;
 $blue-400: #009cde;
 $blue-600: #0066cc; // links AND the focus ring — one interactive blue
 $blue-700: #004c97;
-$blue-800: #004080;
+$blue-800: #003865;
+
+// THERE IS NO WARM NEUTRAL ON THIS SITE, and that is an owner decision, made
+// twice in one day. The product's brand guide splits neutrals by role ("greige
+// ấm = trung tính của VỎ · xám lạnh = trung tính của LÕI dữ liệu"), and a
+// four-rung warm shell ramp ($dye-500 dilute at 4–20%) was transplanted here to
+// carry the bar, the menus, the footer strip, the tinted band and the quotes.
+// The owner's verdict on seeing it: "Thật sự tệ … cái abomination này" — the
+// bar must be white, the greys must lean blue like the product's own cool
+// neutrals, the band must go blue.
+//
+// The lesson worth the comment: the greige rule works in the app because an
+// app is DENSE — its shell is a thin frame around a cool data core, so warm
+// stays a whisper. This page is 90% white paper; paint its chrome and bands
+// warm and the warmth IS the page. On the web, Alpha's warmth is the dye and
+// only the dye: section markers, CTAs, selection and marks, the quote rule.
+// Blue — "neutrality, professionalism, precision, trust" in the owner's own
+// words — is the temperature of every surface.
 
 // ────────────────────────────────────────────────────────────────────────────
 // 2. ROLES — what a colour is FOR. This is the layer _base.scss reads.
 // ────────────────────────────────────────────────────────────────────────────
 
 // — Surfaces
+//
+// THE PAGE IS COOL; THE DYE IS A SPARK. One sentence, and it decides every
+// surface on the site without anyone having to ask:
+//
+//   White — the page itself, and the bar over it. Uniform, calm, standard.
+//   Cool grey (the ink ramp) — furniture: menus, wells, the footer strip,
+//     code. A breath of blue in every grey, like the product's own core.
+//   Pale logo blue — the two places the page addresses a PERSON and asks for
+//     trust: the Lợi ích band and a customer speaking in their own words.
+//     Blue is Alpha's stated trust colour; these are its trust moments.
+//   Dye — never a surface. Marks, markers, CTAs, selection, the quote rule:
+//     the brand's signal budget, spent in sparks (product guide §2c: "nếu mọi
+//     thứ đều khẩn cấp, sẽ không có gì là khẩn cấp").
 $surface: $white; // the page. Uniform, and it stays uniform (design/07 §7.4)
-$surface-alt: $ink-50; // the one tinted band (Lợi ích); see the note in §3
+$surface-chrome: $white; // the bar — white, an owner decision (see the ramp note)
+$surface-alt: $blue-50; // the one tinted band (Lợi ích); see the note in §3
+$surface-quote: $blue-25; // a person speaking in their own words
 $surface-sunk: $ink-25; // menus, wells
+$surface-footer: $ink-50; // the strip that closes the page
 $surface-dark: $ink-900; // the CTA panel
 $surface-deep: $ink-950; // hero splash / deepest ground
 
@@ -115,24 +191,49 @@ $line-strong: rgba(14, 27, 39, 0.22); // the edge of a container
 $line-on-dark: rgba(255, 255, 255, 0.18);
 
 // — Interactive
-$link: $blue-600;
-$link-on-tint: $blue-700; // $blue-600 is 4.19 on $blue-100 — under AA
+$link: $blue-600; // the ONLY rung that clears G183 — see the ramp note
 $accent: $dye-500; // marks, large figures, the section markers
 $accent-strong: $dye-700; // small accent text and CTA fill (AA on white)
-$accent-on-dark: $dye-400; // brightened one step so it stays vivid on ink
+$accent-on-dark: $dye-300; // the mark's own bright ribbon stop, 7.6:1 on ink
 $focus: $blue-600; // on dark surfaces _base.scss redeclares --focus: white
 
-// — Selection. A PAIR, both opaque, because a translucent wash cannot be
-//   guaranteed: measured, the old rgba($accent,.24) put $link at 4.07:1 and
-//   $fg-subtle at 3.86:1 — both under SC 1.4.3 — and no alpha strong enough to
-//   see kept them above it. The background is exactly what that wash composited
-//   to on the white page, so the page looks the same and only the promise is
-//   new. Argued out in _base.scss; the measurement is $fg on it at 12.70:1.
-$selection-bg: #f8d5c3;
-$selection-fg: $fg;
+// — The brand's OTHER half. Dye and blue are one pairing, not two colours, and
+//   these are the two places where the cool half carries the mark instead: on
+//   the blue band, which is monochrome-cool ON PURPOSE (the owner tried the
+//   dye number there and called the result overstimulating — one calm colour,
+//   not two accents fighting), and on the deep panels, where dye would compete
+//   with the dye hairline above them. Both are the logo's own blues.
+//     $blue-700 on $surface-alt   7.39:1     $blue-100 on $surface-dark 9.6:1
+$accent-cool: $blue-700;
+$accent-cool-on-dark: $blue-100;
 
-// — Icons
-$icon: $blue-700;
+// — Selection, and marking. TWO GESTURES, ONE DYE, TWO CONCENTRATIONS.
+//
+//   A selection is what the MACHINE is holding for a moment.  dye @ 24%
+//   A mark is what the READER decided to leave behind.        dye-300 @ 58%
+//
+// Both opaque, background AND colour, because a translucent wash cannot be
+// guaranteed: measured, the old rgba($accent,.24) put $link at 4.07:1 and
+// $fg-subtle at 3.86:1 — both under SC 1.4.3 — and no alpha strong enough to
+// see kept them above it.
+//
+// The two percentages are the whole rule, and they are the same two on the
+// reading hub, composited on its paper instead of this one. That is what makes
+// a highlight recognisable as Alpha's on a site that shares no other colour
+// with this one: not a swatch copied across, a RECIPE. One dye, two depths of
+// shade — which is the thing our readers do for a living.
+//   $fg on $selection-bg 12.70:1 ✓     $fg on $mark-bg 12.28:1 ✓
+$selection-bg: #f8d5c3; // = $dye-500 at 24% on white
+$selection-fg: $fg;
+$mark-bg: #ffbe7b; // = $dye-300 at 58% on white
+$mark-fg: $fg;
+
+// — Icons. The deepest logo blue, and a step below $link on purpose: a 48px
+//   glyph carries weight the way a line of text cannot, and keeping the two
+//   apart stops a feature icon reading as something you can click. It is also
+//   exactly the product's AlphaIconBrush, so the same drawing in the app and on
+//   the site is the same colour.
+$icon: $blue-800;
 $icon-on-dark: $ink-50;
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -164,11 +265,28 @@ $border-color: $line;
 // is not white. It predates the owner's "the calm white baseline is sacred"
 // rule (design/07 §7.4) and it is the single thing on the page that breaks it.
 //
-// Two changes, no third: the tint moves from #c3e5f1 — a saturated pale cyan
-// that belonged to no ramp and sat 1.33:1 off white — onto $ink-50, which is
-// the page's own neutral one step down and a quieter 1.16:1. So the band still
-// marks the section and no longer announces it, and the page now has exactly
-// one neutral family.
+// Its history is four colours long, and each move was made for a stated
+// reason:
+//   #c3e5f1  a saturated pale cyan belonging to no ramp, 1.33:1 off white
+//   $ink-50  the page's own cool neutral, quieter at 1.16:1 — the owner read
+//            it as an overcast sky about to rain, which is a fair description
+//            of a 2.9-chroma grey at hue 244°
+//   the warm shell (dye @ 12%, #fceae1) — rejected outright the same day it
+//            shipped: with the dye number restored on it the owner still found
+//            it overstimulating, and the whole warm-surface direction went
+//            with it ("Thật sự tệ")
+//   $blue-50 the logo's palest blue at 24%, 1.15:1, L* 94.6 — the same weight
+//            on the page as both rejected tints, but at C* 6.2 it is twice the
+//            colour of the overcast grey. Not grey, not warm: SKY, the
+//            temperature the owner named for "neutrality, professionalism,
+//            precision, trust" — which is what a benefits section is selling.
+//
+// The band stays monochrome-cool: blue number, blue icons, no dye. The owner
+// tested dye-on-warm here and called it overstimulating; one calm hue is the
+// point.
+//
+// It cannot go deeper. 24% is the strength where $fg-subtle still clears AA
+// (4.61:1) and $link clears 4.86:1; at 28% the caption tier drops under 4.5.
 //
 // Deleting the band entirely is one attribute in _includes/benefits.html and
 // is the owner's call, not this file's.
@@ -282,13 +400,39 @@ $container-padding-x: step(5) * 2; // 48px — 24px of gutter each side
 // 6. LAYOUT
 // ────────────────────────────────────────────────────────────────────────────
 
+// ── THE QUOTES ON "2xl" ARE LOAD-BEARING. DO NOT REMOVE THEM. ───────────────
+//
+// They are the fix for the intermittent `String can't be coerced into Integer`
+// that has failed this build at random for months, and the reason is worth the
+// paragraph because nothing about the symptom points at this line.
+//
+// Unquoted, `2xl` is not an identifier — it is a Sass NUMBER: the value 2 with
+// the unit `xl`. (Proved: `type-of()` returns "number" for it and "string" for
+// every other key here.) So this map had five String keys and one Number key.
+//
+// Ruby Sass 3.7 checks a map literal for duplicate keys by putting them in a
+// `Set`, which is a Hash — and on a hash-BUCKET collision Ruby falls back to
+// `eql?`. `Sass::Script::Value::Number#eql?` ends in `(num1 - num2).abs`, and
+// subtracting a String from an Integer raises. Ruby randomises its string hash
+// seed per process, so whether the String key lands in the Number key's bucket
+// is decided fresh on every single build.
+//
+// Measured: 60 compiles of this map unquoted → 1 failure. 60 compiles with the
+// key quoted → 0. That is the whole bug. It is not the toolchain being flaky on
+// Windows, it is not `.sass-cache` (the previous diagnosis, which was wrong —
+// the failure recurred on a run where clean had just deleted it), and it is not
+// transient in the sense of "will go away".
+//
+// Quoting is safe here because nothing references this breakpoint by name:
+// `2xl` appears in no mixin call anywhere in the project, and Bootstrap's
+// generated class names interpolate identically either way.
 $grid-breakpoints: (
   xs: 0,
   sm: 30rem,
   md: 48rem,
   lg: 64rem,
   xl: 80rem,
-  2xl: 96rem,
+  "2xl": 96rem,
 );
 
 // ~1140px, the conventional maximum — generous left/right margins on a large
@@ -375,10 +519,11 @@ $navbar-light-color: $fg;
 // dead the moment you scrolled, which is the same control behaving two ways.
 //
 // It is the ACTIVE colour, not a third one, and that is on purpose: the bar
-// carries one accent, and pointing at a link previews the state it would take.
-// The dark bar already worked this way ($navbar-dark-hover-color and
-// $navbar-dark-active-color are both $dye-300). $dye-700 measures 5.8:1 on
-// white, so the hover state clears AA as normal text on its own.
+// carries ONE accent — there are no per-item exceptions left — and pointing at
+// a link previews the state it would take. The dark bar already worked this way
+// ($navbar-dark-hover-color and $navbar-dark-active-color are both $dye-300).
+// $dye-700 measures 7.0:1 on the white bar, so the hover state clears AA
+// as normal text on its own.
 $navbar-light-hover-color: $link-alt-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
@@ -395,6 +540,9 @@ $navbar-dark-active-color: $link-alt-hover-dark-color;
 
 $dropdown-spacer: 0;
 $dropdown-padding-y: 0;
+// A menu is furniture, so it is the cool grey, and its three states walk the
+// ink ramp the way a button walks the dye ramp: rest → hover → pressed, each
+// one step down. $fg holds 16.5 / 15.0 / 13.0:1 across them.
 $dropdown-bg: $surface-sunk;
 $dropdown-link-color: $fg;
 $dropdown-link-hover-color: $dropdown-link-color;

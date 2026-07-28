@@ -32,29 +32,51 @@ If a view has no obvious "moment that matters," it gets **no** dye.
 Structure: **ramps → roles → Bootstrap bridge** (see 08 §6). A component names a
 *role*; only the role layer names a hex. Every pairing that ships is measured.
 
-- **Ink** `#07151f → #f6f9fb` — ONE cool neutral ramp, twelve rungs, covering
-  dark surfaces, every text tier, hairlines and fills. Alpha's neutrals are
-  *cool* (a breath of blue in every gray): the color of measurement, water, and
-  machine steel — never warm beige, never pure black. It replaced four
-  overlapping ramps (`$gray-*`, `$ink-*`, `$slate-*`, `$mist-*/$paper-*`), two
-  of which held the same colour under different names.
-- Separation comes from hairlines and air, not boxes and tints (owner rule: the
-  white baseline stays uniform — the one surviving band is 08 §6.2).
-- **Dye** `#e35205`, deep `#b8390a`, bright `#ff6a1a`, tint `#fdece2` — the
-  industry's own color, earned honestly. Contrast contract: small text never
-  uses raw `$dye` (fails AA on white); small accent text and CTA fills use
-  `$dye-deep` (white on it ≈ 5:1 ✓). Buttons ride the ramp:
-  rest `$dye-deep` → hover `#c9420c` → pressed `#a33208`.
-- **Blue** `#004c97` / `#009cde` — links and the cool counterpoint. Blue says
-  "you can act on this"; dye says "this is the point."
-- `::selection` is a **pair**, `#f8d5c3` with `$fg` ink — the same warm dye
-  tint the old translucent wash composited to on white, now opaque so it is
-  correct on the tinted band and over the hero as well. The brand shows up in
-  the act of reading closely, without adding a single element. The measurement
-  and the AA failure that forced the change are 08 §5.1, along with the rule for
-  what may and may not be selected. (The hub answers the same gesture with a
-  quiet straw yellow, and keeps the loud marker yellow for `<mark>`; selection
-  colour is *look*, and look belongs to each product — 08 §0.)
+**The one sentence that decides every surface — the page is cool, the dye is a
+spark** (08 §6.3). Every neutral surface is white or a blue-leaning cool: the
+bar is white, menus and the footer strip are the cool grey, and the two places
+the page asks a person for trust — the Lợi ích band and a customer's review
+card — take the logo's own palest blue, dilute. Warmth appears only as the dye,
+in sparks: markers, CTAs, selection and marks, quotation marks. (A full warm
+shell was transplanted from the product's *"greige ấm = trung tính của VỎ"*
+rule and rejected by the owner on sight the same day — the history, and why the
+rule could not transfer to a white page, are 08 §6.3.)
+
+- **Ink** `#07151f → #f6f9fb` — ONE cool neutral ramp covering dark surfaces,
+  every text tier, hairlines and fills. Alpha's neutrals are *cool* (a breath of
+  blue in every gray): the color of measurement, water, and machine steel — and
+  the key rungs are the product's own greys (`$fg` = its ink `#0E1B27`,
+  `$fg-muted` = its `#46586A`, exactly). It replaced four overlapping ramps
+  (`$gray-*`, `$ink-*`, `$slate-*`, `$mist-*/$paper-*`), two of which held the
+  same colour under different names.
+- **The two tints are derived, not picked**: `$blue-25/50` is `$blue-100` — the
+  palest blue Alpha prints — composited on the page at 12 / 24%, the same
+  compositing rule that generates `$selection-bg`. They cannot drift off-brand
+  because they **are** the logo's blue, dilute. 24% is the deepest strength
+  that holds AA for every text tier: a floor, not a preference.
+- Separation still comes from hairlines and air, not boxes and tints (owner
+  rule: the white baseline stays uniform — the one surviving band is 08 §6.2).
+- **Dye** `#e35205` (the mark itself), bright `#ff8f1c`, deep `#b8390a` — the
+  industry's own color, earned honestly, and every rung is either a stop taken
+  out of the logo file or a measured interaction state derived from one.
+  Contrast contract: small text never uses raw `$dye` (fails AA on white); small
+  accent text and CTA fills use `$dye-700` (white on it ≈ 5:1 ✓). Buttons ride
+  the ramp: rest `#b8390a` → hover `#c9420c` → pressed `#a33208`.
+- **Blue** — one hue. Measured in CIELCh every blue in the logo sits at h
+  275–284°, and so does every rung: `#8dc8e8` / `#009cde` / `#0066cc` /
+  `#004c97` / `#003865`. Blue says "you can act on this"; dye says "this is the
+  point." `$link` stays `#0066cc` and *cannot* be the wordmark's `#004c97`,
+  because links here are not underlined and WCAG G183 needs 3:1 against body
+  text — `#0066cc` gives 3.13, `#004c97` gives 2.06 (08 §6.4). Icons take the
+  deepest rung, one step off links, so a feature glyph never reads as clickable.
+- **Selection and marking are a recipe, not two swatches**: a selection is
+  `$dye-500` at **24%**, a mark is `$dye-300` at **58%**, composited on whatever
+  paper the product uses. Both opaque (background *and* ink) because a
+  translucent wash cannot be guaranteed on four grounds — the AA failure that
+  forced it is 08 §5.1, along with the rule for what may and may not be
+  selected. The hub runs the identical two percentages on its own paper, which
+  is how two products that share no colour, typeface or voice still share a
+  reflex.
 - **Icons are Material Symbols, Outlined, fill 0, weight 400, grade 0**, at the
   optical size they actually render at — the full argument, the axis table, the
   per-icon audit and the "a glyph rides an action, never a label" rule are 08
@@ -144,8 +166,14 @@ moves to decorate.
 `.navbar-call` (the chrome's one-tap dialler — the main page's purpose, made
 reachable on a phone) · `.actions` (a CTA row that stacks
 full-width under sm) · `.kicker` · `.metric` (+ `__unit`, `__from/__to`) ·
-`.heading-number` (calibration marker: Inter Display index + hairline run-out) ·
+`.heading-number` (calibration marker: Inter Display index + hairline run-out;
+dye on white, and the wordmark blue on the blue band — the band is monochrome
+cool on purpose, 08 §6.2) ·
 `.btn-primary` / `.btn-ghost` on `.btn-xl` · `.service-box` ·
-`.partner-logo-card` · the parked `header.hero-precision` (kicker → headline →
+`.partner-logo-card` · `.review-card` (the testimonial device: portrait, words
+and name enclosed on the pale-blue quote ground — a review is testimony, not a
+styled paragraph; 08 §9.5) · `.prose blockquote` (an aside inside an article:
+same quote ground, a 3px dye rule down the speaker's side, muted italic type) ·
+`.footer-strip` · the parked `header.hero-precision` (kicker → headline →
 lead → dual CTA → metric strip), ready for the day the precision positioning
 is approved for the Vietnamese page.

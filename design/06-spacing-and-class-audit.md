@@ -33,9 +33,12 @@ naturalness directive (design/01 §6a). Values are **measured from the live rend
   `col`, `col-{md-5,md-7,12}`, `align-items-start`, `ms-auto`, `mx-auto`, `me-md-0`, `w-100`.
 - **Spacing utilities in markup:** `mt-0`, `mb-0`, `mt-3`, `mt-4`, `mt-8`, `mt-12`,
   `mt-16`, `mb-16`, `my-0`, `px-0`, `pt-2`, `pb-2`, `pb-0`.
-- **Colour / surface:** `bg-light` (benefits, pale blue), `bg-dark` (about, navy),
-  `bg-primary` (support — overridden to deep‑ink CTA), `bg-gray-100` (footer bar),
-  `text-center`, `text-secondary`, `text-tertiary`.
+- **Colour / surface:** `bg-light` (benefits — pale blue at the time of this
+  audit; after a grey and a rejected warm detour it is pale blue again, now
+  derived from the logo's own `#8dc8e8`, 08 §6.2), `bg-dark` (about, navy),
+  `bg-primary` (support — overridden to deep‑ink CTA), `bg-gray-100` (footer bar
+  — renamed `footer-strip` 2026-07-28; the old name described a colour it no
+  longer held), `text-center`, `text-secondary`, `text-tertiary`.
 - **Components:** `heading-number`, `service-box`, `bi`, `spaced-items`, `card`,
   `partner-logo-card`, `stretched-link`, `accordion*`, `blockquote*`, `prose`,
   `client-portrait`, `hr`, `btn-primary`, `btn-xl`, `nav-link`, `navbar*`, `dropdown*`.

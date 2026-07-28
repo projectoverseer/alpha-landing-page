@@ -342,24 +342,57 @@ also what every browser's own selection does, and standard behaviour is the
 house rule. The cost is that the text tiers flatten while selected, which is
 what a native selection has always done and lasts as long as the drag.
 
-| | background | text | measured |
-|---|---|---|---|
-| main site | `#f8d5c3` | `$fg` | 12.70:1 |
-| hub, selection | `#f0e5bb` | `--ink` | 12.33:1 |
-| hub, `<mark>` | `#fcf691` | `--ink` | 13.89:1 |
-| hub, selection over a mark | `#e9d98a` | `--ink` | 11.0:1 |
-| forced-colors | `Highlight` | `HighlightText` | the system's |
-
-`#f8d5c3` is *exactly* what the old wash composited to on white, so the main
-page looks unchanged and only the guarantee is new.
-
 **Selecting is not highlighting** (owner, 2026-07-28). The hub briefly gave
 selection the literal ink of a Stabilo Boss, `#fff200`. That spends the page's
 loudest yellow on its shortest-lived state and leaves nothing for a real
-highlight to be. The pair is designed as a pair now: selection is low-chroma
-(C\* 22) and quiet, the mark is high-chroma (C\* 50) and loud, ΔC\* 28 between
-them, and `mark::selection` deepens rather than replaces so a marked run stays
+highlight to be. They are designed as a pair now: selection quiet, the mark
+loud, and `mark::selection` deepens rather than replaces so a marked run stays
 visible while it is being dragged over.
+
+### One dye, two concentrations (2026-07-28)
+
+The second pass of that pair replaced the picked values with a **recipe**, after
+the owner asked for the hub's highlight to lean toward Alpha's orange. The rule
+is two percentages:
+
+> **A selection is `$dye-500` at 24%. A mark is `$dye-300` at 58%.**
+> Composited on whatever paper the product uses.
+
+| | background | text | measured |
+|---|---|---|---|
+| main site, selection | `#f8d5c3` = dye @ 24% on white | `$fg` | 12.70:1 |
+| main site, `<mark>` | `#ffbe7b` = dye-300 @ 58% on white | `$fg` | 10.71:1 |
+| hub, selection | `#f4d0b9` = dye @ 24% on paper | `--ink` | 10.80:1 |
+| hub, `<mark>` | `#fdbb76` = dye-300 @ 58% on paper | `--ink` | 9.30:1 |
+| hub, selection over a mark | `#f8a862` | `--ink` | 7.98:1 |
+| forced-colors | `Highlight` | `HighlightText` | the system's |
+
+`#f8d5c3` was *already* exactly dye @ 24% on white — it is what the original
+translucent wash composited to — so the main page has never looked different;
+the recipe was there before it was written down.
+
+**Why this is the brand answer and a swatch is not.** These two products share
+no colour, no typeface and no voice, and they must not. What they can share is a
+*reflex*: drag across text on either one and the paper warms with the same dye
+at the same strength. A value copied between them would be a coincidence
+maintained by hand. A recipe is a rule, and it extends to any surface either
+product grows later.
+
+It is also the trade's own metaphor, which is not decoration: one dye at two
+concentrations is what a lab-dip *is*.
+
+**On the hue.** The hub's yellow pair sat at h 97–103°, which is the paper's own
+hue — the highlight was the page becoming more of what it already was. Alpha's
+dye is h 50°. The new pair lands at h 60° and h 70°: leaning, which is what was
+asked, and not arriving, because a mark at the dye's own hue and that lightness
+is a peach rather than a pen.
+
+**On measuring "can you tell these apart".** ΔE between the new pair is 29.3;
+the yellow pair it replaces measured 29.1. Nothing was given up to move the hue.
+Note that a **WCAG contrast ratio is the wrong instrument for this question** —
+these differ mostly in chroma, which luminance cannot see. Scored as a ratio,
+the accepted yellow pair was 1.13:1. Use ΔE for "different colour", contrast for
+"legible on".
 
 ### What may be selected
 
@@ -446,10 +479,116 @@ is not white, and it is the single thing that breaks the owner's *"the calm
 white baseline is sacred"* rule (design/07 §7.4). It predates that rule.
 
 It has not been deleted — that is the owner's call, and it is one attribute in
-`_includes/benefits.html`. It has been made quieter and brought into the family:
-the tint moved from `#c3e5f1`, a saturated pale cyan belonging to no ramp and
-sitting 1.33:1 off white, onto `$ink-50` — the page's own neutral one step down,
-1.16:1. The band still marks the section and no longer announces it.
+`_includes/benefits.html`. Its colour has now moved four times:
+
+| | | |
+|---|---|---|
+| `#c3e5f1` | 1.33:1 | a saturated pale cyan belonging to no ramp |
+| `$ink-50` `#e9eff3` | 1.16:1 | the page's own cool neutral — quieter, and the version the owner read as *"hơi xám xám, giống như bầu trời u ám chuẩn bị mưa"* |
+| the warm shell `#fceae1` | 1.17:1 | Alpha's orange at 12% — rejected the same day it shipped, along with the whole warm-surface direction (§6.3) |
+| `$blue-50` `#e4f2f9` | 1.15:1 | **the logo's palest blue (`#8dc8e8`) at 24%** — L\* 94.6, C\* 6.2, h 239° |
+
+Every move held the band's weight steady (all four sit at L\* 89–95, the last
+three within one L\* of each other); what moved was hue. The final value answers
+the overcast complaint by the numbers: the grey the owner read as rain had
+chroma 2.9, and `$blue-50` has 6.2 at the same lightness — twice the colour,
+unambiguously sky, still nowhere near a "coloured box".
+
+**Why blue.** The owner's own brand sentence: orange is innovation, blue is
+*"neutrality, professionalism, precision, và trust"* — and a benefits band is
+the page asking to be trusted. The owner chose this direction explicitly
+(keep the blue number, make the band blue) after testing the alternative — the
+dye number on a tinted band — and finding it overstimulating. The band is
+therefore **monochrome cool on purpose**: blue number (`$blue-700`, 7.39:1),
+blue icons, no dye anywhere on it. One calm hue.
+
+**Why derived.** `$blue-25/50` is `$blue-100` composited on the page at 12 /
+24% — the same compositing rule that generates `$selection-bg` and the hub's
+highlights. The tint cannot drift off-brand: it is the logo's own blue, dilute.
+
+**Why not deeper.** 24% is the strength where `$fg-subtle` still clears AA
+(4.61:1) and `$link` sits at 4.86:1; at 28% the caption tier drops under 4.5.
+A floor, not a preference.
+
+### 6.3 The warm-shell experiment, run and rejected — the page is cool, the dye is a spark (2026-07-28)
+
+This section used to argue the opposite of what it now records, and the history
+is worth more than the tidiness of deleting it.
+
+**The experiment.** The product's brand guide splits Alpha's neutrals by role —
+*"greige ấm = trung tính của VỎ · xám lạnh = trung tính của LÕI dữ liệu"* — and
+after the owner asked for the brand in *"từng viên gạch"*, that rule was
+transplanted here whole: a four-rung warm ramp (`$dye-500` dilute at 4–20%)
+carried the bar, the menus, the footer strip, the tinted band and the quote
+grounds.
+
+**The verdict, hours later:** *"Thật sự tệ. Tại sao bạn có thể nhìn vào cái
+abomination này và nói nó 'neutral' hay 'thân thiện'."* The bar must be white.
+The greys must lean blue, like the product's own cool neutrals. The band must
+go blue. Warm surfaces are out.
+
+**Why the rule did not transfer.** In the app the greige is honest to its own
+sentence: the shell is a thin frame around a dense, cool data core, so warm
+stays a whisper at the edges. This page is 90% white paper — tint its chrome
+and bands warm and the warmth stops being a frame and becomes the page. Same
+rule, different geometry, opposite result. The measured warning was already
+there: the "whisper" covered the single most-seen surface on the site.
+
+**The standing rule now:**
+
+> The page is white and cool. Blue — the owner's stated colour of neutrality,
+> professionalism, precision and trust — is the temperature of every neutral
+> surface. **Warmth is the dye and only the dye**: section markers, CTAs,
+> selection and marks, the quotation marks. The brand's "tỉ lệ nhất định" is a
+> calm blue field with orange sparks, exactly like the logo.
+
+| surface | temperature |
+|---|---|
+| the page, and the bar over it | white |
+| menus, wells, the footer strip, code | cool grey (the ink ramp) |
+| the Lợi ích band and the review cards — the two trust moments | pale logo blue (`$blue-25/50`) |
+| selection, `<mark>`, markers, CTAs, quote marks | dye — sparks, never a plane |
+
+What survives from the transplant: the *derivation* habit (every tint is a logo
+colour composited on the page — §5.1's recipe, `$blue-25/50`), the three-surface
+bar fix, the focus-ring repair, the em-dash gate, and the ink ramp being the
+product's own greys (`$fg` = the product ink `#0E1B27`, `$fg-muted` = its
+`#46586A` exactly). What does not survive is any warm neutral. The build now
+gates this in **both directions**: every tinted surface must lean blue, and the
+opaque bar must be white (verify.mjs).
+
+### 6.4 Which blues, and the one that could not change
+
+Measured in CIELCh, every blue in the logo file sits at hue **275–284°**. So
+does every rung of the site's blue ramp. Alpha's blue is one hue; what changes
+down the ramp is lightness.
+
+Two rungs were not from the mark and have been replaced with stops that are:
+
+| was | now | where |
+|---|---|---|
+| `#c3e5f1` | `#8dc8e8` | `$blue-100` — the pale globe edge |
+| `#004080` | `#003865` | `$blue-800` — the deepest globe stop, and the product's own `AlphaIconBrush` |
+
+**`$link` stays `#0066cc`, and this is the interesting one.** The obvious move
+was to make the site's most-repeated colour the wordmark's own `#004c97`. It
+fails. Links here are not underlined at rest, so WCAG technique **G183** asks
+for 3:1 between the link and the body text around it:
+
+| | on white | vs `$fg` (G183) |
+|---|---|---|
+| `#0066cc` | 5.57 ✓ | **3.13 ✓** |
+| `#004c97` | 8.47 ✓ | 2.06 ✗ |
+| `#003865` | 11.98 ✓ | 1.46 ✗ |
+
+The window for an un-underlined link on this page is 4.5:1 minimum on white and
+5.81:1 maximum, and only `#0066cc` is inside it. It is also h 284° against the
+wordmark's 283° — the same colour, one lightness up. It was never invented; it
+was undocumented.
+
+`$icon` moved the other way, to `$blue-800`: a 48px glyph carries weight a line
+of text cannot, and keeping icons a step off `$link` stops a feature icon
+reading as something clickable.
 
 ---
 
@@ -559,6 +698,54 @@ Also: `.navbar .nav-link` is `white-space: nowrap`. It replaced a
 `overflow: hidden` and a non-wrapping line, and had neither) and would have been
 the wrong answer anyway — "Các sản ph…" is exactly the partial information loss
 design/00 §2.1 forbids.
+
+#### The bar has THREE surfaces and one state class
+
+This is the single most productive bug in the project so far: it has shipped
+three separate visible faults, in three passes, and every one of them was the
+same mistake.
+
+| | surface | ink |
+|---|---|---|
+| ≥md, at the top of the hero | transparent over a photograph | white |
+| ≥md, scrolled | the chrome surface | dark |
+| **<md, always** | **the chrome surface** | **dark** |
+
+There is one state class, `.nav-active`, and it answers *"has the reader
+scrolled?"* — which happens to imply *"am I opaque?"* at ≥md and says nothing at
+all below md, where the bar is opaque at every scroll position. Written as
+`&:not(.nav-active) { .nav-link { color: white } }`, the third row silently
+inherits the first row's ink while the media query underneath has already
+swapped in the second row's background.
+
+What it shipped:
+
+1. The language switcher's caret came out **dark ink on the dark hero**, because
+   the caret is `currentColor` and sits in `.navbar-actions`, outside
+   `.navbar-nav`, so nothing ever gave it `--bs-nav-link-color`.
+2. Fixed — and then the same caret came out **white on the white phone bar**,
+   invisible at the top of the page. Reported by the owner twice.
+3. And, found while fixing (2), `--focus`/`--focus-halo` had the identical
+   shape: `.navbar:not(.nav-active)` handed its links a **white focus ring on a
+   `#fdf1eb` bar** at 1.11:1, against the 3:1 SC 1.4.11 asks. A keyboard or
+   switch user on a phone had **no visible focus at all** until they scrolled.
+   Nobody reported that one, because the readers it fails are not the ones
+   sending screenshots.
+
+**The rule:** the bar's ink and its focus pair are properties of its **SURFACE**,
+never of its state class. Both live in one of two mixins — `navbar-ink-on-dark`
+and `navbar-ink-on-light` — and each surface includes exactly one. A fourth
+surface can only be added by saying which of the two it is.
+
+`verify.mjs` gates it against the built CSS: wherever the bar is opaque, its
+link colour must equal the colour the *other* opaque state uses, and it must
+redeclare `--focus-halo`. No hex is written into the gate, so it follows the
+tokens.
+
+**One accent, no exceptions.** `nav-link-active-blue` — a per-item override
+giving the *Lợi ích* link a blue active colour — is deleted, and stays deleted
+even though the band it pointed at is blue again (§6.2): the bar carries ONE
+accent, and a per-item exception is how the last three navbar bugs got in.
 
 ### 8.2 Chia sẻ kinh nghiệm: be read, be shared, send them onward
 
@@ -697,6 +884,76 @@ and the moment it is most needed is the first screen, before anyone has
 scrolled. A control that only announces itself after you scroll is a control you
 have to discover twice.
 
+(The bar's colour handling was still wrong after this — the caret then went
+invisible on the opaque phone bar. The full account, and the rule that finally
+settled it, is §8.1 *"The bar has THREE surfaces and one state class"*.)
+
+---
+
+## 9.5 Quotation — a quote has to look like one
+
+The owner's report on the customer reviews: *"nó giống hệt như những paragraph
+text khác mà Alpha viết."* Measured, it was. `--fs-quote` is `1rem`, the body
+size: same family, same weight, same leading, same ink, same white ground as
+every sentence Alpha writes. Two small orange quotation marks were the entire
+difference between Alpha's voice and a customer's.
+
+Typography has a settled order of strength for marking a quotation:
+
+| | device | had it |
+|---|---|---|
+| 1 | an enclosing ground | ✗ |
+| 2 | indentation from the measure | ✗ |
+| 3 | a rule down the speaker's side | ✗ |
+| 4 | quotation marks | ✓ |
+| 5 | a size or style change | — |
+| 6 | an attribution | ✓ |
+
+The first fix gave the blockquote 1–4 and 6 (a warm ground and a dye rule on
+the words alone) and the owner was still not satisfied — *"Tôi vẫn chưa hài
+lòng với style của phần quote đâu."* The diagnosis worth recording: it styled
+the WORDS while the thing that proves a review is real sat outside the styling.
+Each review already ships with a photograph of the speaker, and that photograph
+was floating above an unrelated tinted box. A portrait above a paragraph is a
+picture and some text; a portrait **enclosed with** the words and the name is
+testimony.
+
+**So the device is now the card** — `.review-card`, the standard testimonial
+pattern, one presentational wrapper in `reviews.html`: portrait, quotation,
+attribution, original-language link, one bordered ground (`$surface-quote`,
+the palest logo blue — blue is the trust colour, and a customer vouching for
+Alpha is the page's purest trust moment), `corner($r-4)`, `height: 100%` so
+the two cards in the row hold the same depth. The deep-link glow rides the
+card now, ring-only — the old background wash existed because a ring alone was
+too little on a bare white column.
+
+`.prose blockquote` (an aside inside an article — no portrait, no attribution
+to enclose) keeps the classic form instead: the same quote ground with a 3px
+`$accent` rule down the speaker's side (3.59:1, over SC 1.4.11's 3:1).
+
+**5 deliberately does not change.** design/07 §7.5 sets a review at reading size
+with paragraph leading because it is a paragraph somebody wrote, not a pulled
+quote to be admired. Enlarging it would turn a customer into a billboard. The
+words are enclosed, not amplified. The quotation marks stay the card's one dye
+spark, at `$accent-strong` (5.41:1 on the card, over SC 1.4.3's 4.5:1).
+
+### The em dash nobody could find
+
+Bootstrap draws `content: "\2014\00A0"` in front of every `.blockquote-footer`.
+So an **em dash was printed before each customer's name, in both languages**, on
+a site whose standing rule is that em dashes never reach a reader.
+
+It survived the whole life of the project because the rule was enforced by
+reading the copy, and this em dash is not in the copy — it is not in the `.yml`
+files, not in the includes, not in the rendered HTML. A search of the built
+pages for `—` returns zero. It is generated by the stylesheet.
+
+Now a spaced en dash, and gated both ways in `verify.mjs`: the *last*
+`.blockquote-footer::before` declaration must not carry `\2014`, and no built
+page may contain a literal `—`. **The general lesson is the one worth keeping: a
+content rule that is only enforced against content files cannot see generated
+content.**
+
 ### 9.4 Rules
 
 Regenerate the whole set — never hand-download one icon — so the setting cannot
@@ -729,9 +986,15 @@ not to a page.
 11. Is the icon Material Symbols at the one setting, regenerated not
     hand-picked — and does it name the thing beside it, or a mood? (§9, §9.1)
 12. Does the glyph ride an **action**? A label already labels itself. (§9.2)
-13. If you broke a rule, is the reason written next to the code?
+13. Is the surface white, cool grey, or one of the two pale-blue trust
+    moments? **A warm surface is not an option** — the owner rejected the whole
+    warm-shell direction on sight, and the build gates it. Warmth is the dye,
+    spent in sparks. (§6.3)
+14. If it changes appearance with a state class, does that class actually know
+    what the element is sitting **on**? (§8.1)
+15. If you broke a rule, is the reason written next to the code?
 
-Rule 14: **a green build is not evidence.** The `@font-feature-values` bug, the
+Rule 16: **a green build is not evidence.** The `@font-feature-values` bug, the
 `corner-shape` gate and the purged `:focus-visible` all exist because a
 stylesheet can lose its whole point and still compile, minify, verify and
 render. The focus one is the sharpest: it failed *only in production*, and the
@@ -739,9 +1002,22 @@ thing it removed was the accessibility feature. If a thing matters and can fail
 silently, it gets a gate in `verify.mjs` — and the gate gets proved by breaking
 the build on purpose.
 
-Rule 15: **a decision written down is not the same as a decision that is right.**
+Rule 17: **a decision written down is not the same as a decision that is right.**
 Three things in this document were argued for at length and then reversed one
 pass later: the superellipse corner (§2.1), merging the chevron and the caret
 (§9.3), and hiding the section anchors from the wrong breakpoint (§8.1). Each
 had a tidy rule behind it. Prose is not evidence either — go and look at what
 ships.
+
+Rule 18: **"transient" is a diagnosis you have not made yet.** The build failed
+with `String can't be coerced into Integer` at random for months. It was written
+off as the toolchain being flaky on Windows, then confidently — and wrongly —
+blamed on a stale `.sass-cache/`. It was one unquoted map key, reproducible on
+demand at 1 run in 60 (design/05). Anything that fails intermittently fails for
+a reason, and a reason that only shows up 1 time in 60 is found by running it 60
+times, not by reasoning about it.
+
+Rule 19: **check the other half.** Every one of the bar's three shipped colour
+bugs (§8.1) was a rule that named one surface correctly and left a second
+surface reading a value meant for the first. When you fix a state-dependent
+value, enumerate the states first and count them.

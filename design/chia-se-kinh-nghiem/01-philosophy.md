@@ -159,26 +159,51 @@ used size; body text clears AAA.
 | `--ink` | `#292319` | Reading text (≈13.6:1 on paper) |
 | `--ink-2` | `#5A5342` | Secondary: descriptions, standfirst (≥6:1) |
 | `--ink-3` | `#6E6753` | Metadata, captions (≥4.5:1) |
-| `--indigo` | `#2F4E7E` | Links, accents — the only action color (≥6:1) |
-| `--indigo-deep` | `#243C61` | Hover/active, button fill |
+| `--indigo` | `#004C97` | Links, accents — the only action color (≥7.9:1) |
+| `--indigo-deep` | `#003865` | Hover/active, button fill |
+
+**The indigo is Alpha's blue now** (2026-07-28). It was `#2F4E7E`, and measured
+in CIELCh that is L\* 33.0 h 279° against the logo wordmark's L\* 32.7 h 283° —
+the *same colour at two thirds of the chroma*. So this is not a new hue on the
+page; it is the hue that was already here, at the saturation the mark actually
+prints at. Contrast is unchanged to a rounding error (7.87 → 7.97 on paper) and
+every pairing improves slightly. Both rungs are now the exact two the software
+uses (`AlphaActionBrush` / `AlphaIconBrush`), so a reader who runs Alpha in
+their dyehouse meets the same blue on the day they read this.
 
 **Selecting is not highlighting.** These are two gestures and they get two
-colours, designed as a pair:
+colours, designed as a pair — and the pair is *derived*, by the same recipe the
+main site uses:
+
+> **A selection is `$dye-500` at 24%. A mark is `$dye-300` at 58%.**
+> Composited on this hub's paper instead of the main site's white.
 
 | | | | |
 |---|---|---|---|
-| `::selection` | `#F0E5BB` | L\* 90.8 · C\* 22 | the paper going warm under your hand |
-| `mark` | `#FCF691` | L\* 95.4 · C\* 50 | the marker — the loud one |
-| `mark::selection` | `#E9D98A` | | a marked run stays visible while it is dragged over |
+| `::selection` | `#F4D0B9` | L\* 85.9 · C\* 18.5 · h 60° | the paper warming under your hand |
+| `mark` | `#FDBB76` | L\* 80.6 · C\* 46.9 · h 70° | an amber marker — the loud one |
+| `mark::selection` | `#F8A862` | | a marked run stays visible while it is dragged over |
 
 A **selection** is something the machine is holding for a moment; it disappears
 the instant you click elsewhere. A **highlight** is something the reader decided
 to leave on the page. Between 2026-07-15 and 2026-07-28 selection was the actual
 ink of a Stabilo Boss, `#FFF200` — which spends the page's loudest yellow on its
 shortest-lived state and leaves nothing for a real highlight to be. The owner
-caught it: *"bản chất select text không phải là highlight."* ΔC\* between the
-two is now **28**, so they cannot be confused at a glance, and a highlight
-feature added later stays legible under a selection dragged across it.
+caught it: *"bản chất select text không phải là highlight."*
+
+**On the hue** (owner, 2026-07-28: *"hue của nó nên ngả về hướng màu cam
+Alpha"*). The straw-yellow pair that replaced the Stabilo sat at h 97–103°,
+which is the **paper's own hue** — so the highlight was the page becoming more
+of what it already was. Alpha's dye is h 50°. These land at h 60° and h 70°:
+leaning, which is what was asked, and not arriving, because a mark at the dye's
+own hue and this lightness is a peach rather than a pen.
+
+**ΔE between the pair is 29.3.** The yellow pair it replaces measured 29.1, so
+nothing was given up to move the hue: they still cannot be confused at a glance,
+and a highlight feature added later stays legible under a selection dragged
+across it. (A WCAG contrast *ratio* is the wrong instrument for that question —
+these differ mostly in chroma, which luminance cannot see. Scored as a ratio the
+accepted yellow pair was 1.13:1.)
 
 **Both are opaque — background AND colour.** A translucent wash has to be
 re-measured on every ground it can land on, and this hub has four: paper,
@@ -186,11 +211,17 @@ re-measured on every ground it can land on, and this hub has four: paper,
 picture viewer, and a marked run. On `--paper-deep` the old wash put the caption
 tier at **4.40:1**, under the 4.5 SC 1.4.3 asks. Naming the ink as well makes
 one pairing correct everywhere, including on grounds nobody has invented yet:
-`--ink` measures **12.33:1** on the selection and **13.89:1** on the mark.
+`--ink` measures **10.80:1** on the selection, **9.30:1** on the mark and
+**7.98:1** on a selected mark.
 
-The main site keeps its dye tint, opaque on the same reasoning — selection
-colour is *look*, and look belongs to each product (08 §0, §5.1). And nothing a
-reader might quote is ever made unselectable; the policy is 08 §5.1.
+**Why a recipe and not a swatch.** These two products share no colour, no
+typeface and no voice, and they must not (08 §0). What they *can* share is a
+reflex: drag across text on either one and the paper warms with the same dye at
+the same strength. A value copied between them would be a coincidence maintained
+by hand; a recipe is a rule, and it extends to any surface either product grows
+later. It is also the trade's own metaphor — one dye at two concentrations is
+what a lab-dip is. Nothing a reader might quote is ever made unselectable; the
+policy is 08 §5.1.
 
 **Pictures keep square corners** — in the feed, in Đọc tiếp and in the article
 (owner asked, 2026-07-28). A rounded corner is a *screen* convention: a card, a

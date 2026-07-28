@@ -63,8 +63,19 @@
   --ink: #292319;
   --ink-2: #5a5342;
   --ink-3: #6e6753;
-  --indigo: #2f4e7e;
-  --indigo-deep: #243c61;
+  // The hub's one accent, and now Alpha's own blue rather than a blue that
+  // merely resembled it. Measured in CIELCh the old #2f4e7e was L* 33.0 h 279°
+  // and the logo's wordmark blue is L* 32.7 h 283° — the SAME colour at two
+  // thirds of the chroma. So this is not a new hue on the page, it is the hue
+  // that was already here, at the saturation the mark actually prints at.
+  // Contrast is unchanged to a rounding error (7.87 → 7.97 on paper) and every
+  // pairing improves slightly; white on it as a button fill goes 8.36 → 8.47.
+  //
+  // The deep rung follows to the logo's deepest globe stop. Both are the same
+  // two values the product uses (AlphaActionBrush / AlphaIconBrush), so a
+  // reader who uses the software meets the same blue on the day they read this.
+  --indigo: #004c97;
+  --indigo-deep: #003865;
 
   --font-read: "Literata", Georgia, "Times New Roman", serif;
   --font-ui: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
@@ -159,19 +170,36 @@ body.kt {
 // the page's loudest yellow on its shortest-lived state, and leaves nothing for
 // a real highlight to be.
 //
-// So the two are designed as a pair, and the pair is the point:
+// So the two are designed as a pair, and the pair is the point.
 //
-//   SELECTION  #f0e5bb  L* 90.8  C* 22   the paper going warm under your hand.
-//              Quiet, low chroma, unmistakably present (1.19× the paper's own
-//              luminance) and unmistakably not a pen.
-//   MARK       #fcf691  L* 95.4  C* 50   the marker. Half again as light and
-//              more than twice as chromatic — the loud one, kept for the thing
-//              a reader chose to keep.
+// THE HUE MOVED TO ALPHA'S ORANGE (owner, 2026-07-28: "hue của nó nên ngả về
+// hướng màu cam Alpha"). The straw yellow that stood here was h 97° — which is
+// the PAPER's own hue, so the highlight was the page going more of what it
+// already was. Alpha's dye is h 50°. These are h 60° and h 70°: leaning, which
+// is what was asked, and not arriving, because a mark at the dye's own hue and
+// this lightness is a peach rather than a pen.
 //
-// ΔC* between them is 28. They cannot be mistaken for each other at a glance,
-// which is what the owner asked for: a highlight feature added later stays
+// They are not picked, they are DERIVED, by the rule that already produced the
+// main site's selection: one dye, two concentrations, composited on whatever
+// paper the product happens to use.
+//
+//   SELECTION  $dye-500 @ 24%  #f4d0b9  L* 85.9  C* 18.5  h 60°
+//              The identical 24% the main site puts on white. Same gesture,
+//              same recipe, different paper — which is the only way two
+//              products that share no other colour can share a reflex.
+//   MARK       $dye-300 @ 58%  #fdbb76  L* 80.6  C* 46.9  h 70°
+//              The logo's bright ribbon stop, laid on heavily. An amber
+//              marker: still the loud one, still unmistakably a pen.
+//
+// ΔE between them is 29.3. The yellow pair they replace measured 29.1, so
+// nothing was given up to move the hue — a highlight feature added later stays
 // legible under a selection dragged across it, and `mark::selection` below
-// makes sure the mark is still visible while it is selected.
+// keeps the mark visible while it is selected (ΔE 35.8 against plain selected
+// text).
+//
+// A luminance contrast ratio is the wrong instrument for that last question,
+// by the way: these differ mostly in chroma, and WCAG contrast cannot see
+// chroma. Measured as a ratio the accepted yellow pair scored 1.13:1.
 //
 // BOTH ARE OPAQUE, background AND colour, for the same reason the main site's
 // are (argued in _sass/_base.scss): a translucent wash has to be re-measured on
@@ -180,9 +208,9 @@ body.kt {
 // marked run. On paper-deep the old wash put the caption tier at 4.40:1, under
 // the 4.5 SC 1.4.3 asks. Naming the ink as well makes one pairing correct
 // everywhere, including on grounds nobody has invented yet.
-//   --ink #292319 on #f0e5bb — 12.33:1 ✓     on #fcf691 — 13.89:1 ✓
+//   --ink #292319 on #f4d0b9 — 10.80:1 ✓  on #fdbb76 — 9.30:1 ✓  on #f8a862 — 7.98:1 ✓
 .kt ::selection {
-  background: #f0e5bb;
+  background: #f4d0b9;
   color: var(--ink);
 }
 
@@ -190,14 +218,14 @@ body.kt {
 // deepens it rather than replacing it, so a reader dragging over a highlight
 // can still see which words were highlighted.
 .kt mark {
-  background: #fcf691;
+  background: #fdbb76;
   color: var(--ink);
   border-radius: $r-1;
   padding: 0.05em 0.2em;
 }
 
 .kt mark::selection {
-  background: #e9d98a;
+  background: #f8a862;
   color: var(--ink);
 }
 

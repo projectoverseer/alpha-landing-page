@@ -24,6 +24,64 @@ implementation proceeds.
 5. **JS** — metric count‑up + RFT gauge (reduced‑motion safe); keep nav/dropdown/email JS.
 6. **Verify** — `bundle exec jekyll build`; check contrast, keyboard, reduced‑motion; perf (LCP preload, AVIF, lean CSS); then `npm run ship`.
 
+## The intermittent build failure, solved (2026-07-28)
+
+For months this build died at random with:
+
+```text
+Conversion error: Jekyll::Converters::Scss encountered an error while
+converting 'css/main.scss': String can't be coerced into Integer
+sass-3.7.4/lib/sass/script/value/number.rb:409:in `-'
+```
+
+It was written off as the Windows toolchain being flaky, then diagnosed as a
+stale `.sass-cache/` — **that diagnosis was wrong**, and it was disproved the
+next time the failure appeared on a run where `npm run clean` had just deleted
+the cache.
+
+**The actual cause is one unquoted map key.**
+
+`$grid-breakpoints` in `css/main.scss` held `2xl: 96rem`. In Sass, `2xl` is not
+an identifier — it is a **number**: the value `2` with the unit `xl`. Proved:
+
+```scss
+$m: (xs: 0, sm: 30rem, 2xl: 96rem);
+@each $k, $v in $m { .k-#{$k} { content: "#{type-of($k)}"; } }
+// .k-xs  → "string"
+// .k-sm  → "string"
+// .k-2xl → "number"      ← the whole bug
+```
+
+So the map had five String keys and one Number key. Ruby Sass 3.7 checks a map
+literal for duplicate keys by putting them in a `Set` (`map_literal.rb:54`),
+which is backed by a Hash — and on a hash **bucket collision** Ruby falls back
+to `eql?`. `Sass::Script::Value::Number#eql?` ends in `(num1 - num2).abs`, and
+subtracting a String from an Integer raises `TypeError`.
+
+Ruby randomises its string hash seed per process, so whether the String key
+lands in the Number key's bucket is decided fresh on **every single build**.
+That is the entire source of the randomness.
+
+Measured, 60 compiles each:
+
+| map | failures |
+|---|---|
+| `(xs: 0, … 2xl: 96rem)` | **1 / 60** |
+| `(xs: 0, … "2xl": 96rem)` | 0 / 60 |
+
+**Fix:** quote the key. Safe here because nothing references that breakpoint by
+name, and Bootstrap's generated class names interpolate identically either way.
+
+**Gated:** `verify.mjs` now scans `css/*.scss` and `_sass/*.scss` and fails the
+build on any map key that starts with a digit *and* contains a letter (`2xl`,
+`3d`, `2x`). A key of pure digits is **not** flagged and must not be — the space
+ladder in `_quy-cu.scss` is `(0: 0, 1: 4px, …)` and a map whose keys are all
+numbers is perfectly safe. The bug needs a *mix*, and a mix only ever happens by
+accident, which is exactly when the key looks like a word and is not one.
+
+`npm run clean` still removes `.sass-cache/`. That is harmless hygiene, not a
+fix, and should not be mistaken for one again.
+
 ## Decisions / conventions
 
 - **Additive tokens:** new Sass vars added alongside existing ones; existing

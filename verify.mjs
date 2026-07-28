@@ -248,6 +248,178 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
+// ---- no map key may start with a digit unless it is quoted ----
+//
+// The one gate here that reads SOURCE rather than output, because the failure
+// it guards destroys the build before there is any output to inspect.
+//
+// `2xl:` in a Sass map is a Number (2, unit "xl"), not an identifier. Mixing a
+// Number key with String keys makes Ruby Sass 3.7 raise `String can't be
+// coerced into Integer` from its duplicate-key check — but only when the two
+// keys collide in the same hash bucket, which Ruby re-randomises on every
+// process. Measured at roughly 1 build in 60. It cost this project months of
+// "the toolchain is flaky on Windows" and one confidently wrong diagnosis.
+//
+// It cannot be caught downstream and it cannot be caught by reading the file,
+// so it is caught here. Quote the key.
+{
+  const scssFiles = [
+    ...readdirSync('css').filter((f) => f.endsWith('.scss')).map((f) => join('css', f)),
+    ...readdirSync('_sass').filter((f) => f.endsWith('.scss')).map((f) => join('_sass', f)),
+  ];
+  for (const f of scssFiles) {
+    const src = readFileSync(f, 'utf8');
+    // A map entry is `key: value,` on its own line. What is flagged is a key
+    // that starts with a digit AND contains a letter — `2xl`, `3d`, `2x` — i.e.
+    // something written as a name that Sass reads as a number-with-a-unit.
+    //
+    // A key of pure digits (`0:`, `1:`, `11:` — the space ladder in
+    // _quy-cu.scss) is NOT flagged and must not be: it is a deliberate numeric
+    // key, and a map whose keys are ALL numbers is perfectly safe. The bug
+    // needs a MIX, and a mix only happens by accident, which is exactly when
+    // the key looks like a word and is not one.
+    for (const m of src.matchAll(/^\s{2,}(\d[\w-]*[a-zA-Z][\w-]*)\s*:\s*[^;]+,\s*$/gm)) {
+      errors.push(
+        `${f}: map key \`${m[1]}\` starts with a digit and is unquoted — ` +
+          `Sass reads it as a NUMBER, which makes the build fail at random (~1 in 60)`,
+      );
+    }
+  }
+}
+
+// ---- the bar's ink follows its SURFACE, not its state class ----
+//
+// The navigation bar has THREE surfaces and one state class. `.nav-active` says
+// "the reader has scrolled", which happens to imply "I am opaque" at ≥md and
+// says nothing at all below md, where the bar is opaque at every scroll
+// position. Twice now that gap has shipped a real bug: once with dark ink on
+// the dark hero photograph, once with white ink — and a white focus ring — on
+// the opaque light bar of a phone at the top of the page.
+//
+// Neither is catchable by reading the Sass, because both halves look right on
+// their own; the fault is the one that is missing. So it is checked here, on
+// the built CSS, against the value the OTHER opaque state uses. No hex is
+// written into this file: if the tokens move, the gate moves with them.
+{
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith('main.') && f.endsWith('.css'),
+  );
+  if (file) {
+    const css = readFileSync(join(SITE, 'css', file), 'utf8');
+
+    // The ink the bar uses when it is opaque and scrolled — our reference.
+    const lit = css.match(/\.navbar\.nav-active\s+\.nav-link\{color:([^;}]+)/);
+    // The phone breakpoint, where the bar is opaque WITHOUT .nav-active.
+    const phone = css.match(/@media\s*\(max-width:47\.98rem\)\{(.*?)\}\}/s);
+
+    if (!lit) {
+      errors.push(`css/${file}: no .navbar.nav-active .nav-link colour — the bar's light ink is gone`);
+    } else if (!phone) {
+      errors.push(`css/${file}: the phone-breakpoint navbar block is missing`);
+    } else {
+      const block = phone[1];
+      const opaque = /\.navbar:not\(\.nav-active\)\{background:(?!transparent)/.test(block);
+      const ink = block.match(/\.navbar:not\(\.nav-active\)\s+\.nav-link\{color:([^;}]+)/);
+      if (opaque && (!ink || ink[1].trim() !== lit[1].trim())) {
+        errors.push(
+          `css/${file}: the bar is opaque under md but its links are not using the light ink ` +
+            `(${ink ? ink[1].trim() : 'no rule'} vs ${lit[1].trim()}) — the caret goes invisible`,
+        );
+      }
+      if (opaque && !/\.navbar:not\(\.nav-active\)\{[^}]*--focus-halo/.test(block)) {
+        errors.push(
+          `css/${file}: the opaque phone bar never redeclares --focus-halo — ` +
+            `a keyboard user gets a white ring on a white bar (SC 1.4.11)`,
+        );
+      }
+    }
+  }
+}
+
+// ---- no warm surface, and the bar is white ----
+//
+// The owner's 2026-07-28 verdict, given twice in one day: warm greige surfaces
+// (a warm bar, a warm band, warm menus) are rejected on this page outright —
+// "the navbar must have a white background", the tints must lean blue. The
+// band's history is four colours long (main.scss §3); the failure this guards
+// is the quiet drift back in either direction — someone re-imports the
+// product's warm shell because the product looks good, or greys the band down
+// because grey is what a tint usually is.
+//
+// Tested as RELATIONS, not values, so it survives any future retune: on every
+// tinted surface blue must lead red (a warm plane cannot pass), and the bar's
+// opaque state must be white exactly (an owner decision, stated as one).
+{
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith('main.') && f.endsWith('.css'),
+  );
+  if (file) {
+    const css = readFileSync(join(SITE, 'css', file), 'utf8');
+    const surfaces = [
+      ['the one tinted band', /--bs-light:\s*(#[0-9a-f]{6})/i],
+      ['the footer strip', /\.footer-strip\{background:(#[0-9a-f]{6})/i],
+      ['the review card', /\.review-card\{[^}]*background:(#[0-9a-f]{6})/i],
+    ];
+    for (const [name, re] of surfaces) {
+      const m = css.match(re);
+      if (!m) {
+        errors.push(`css/${file}: cannot find ${name} — the cool-surface gate cannot run`);
+        continue;
+      }
+      const [r, , b] = [1, 3, 5].map((i) => parseInt(m[1].slice(i, i + 2), 16));
+      if (b <= r) {
+        errors.push(
+          `css/${file}: ${name} is ${m[1]} — red at or above blue, i.e. a warm surface ` +
+            `(rejected by the owner 2026-07-28; main.scss §1)`,
+        );
+      }
+    }
+    const bar = css.match(/\.navbar\.nav-active\{[^}]*background:(#[0-9a-f]{3,6}|white)\b/i);
+    if (!bar) {
+      errors.push(`css/${file}: cannot find the opaque bar's background — the white-bar gate cannot run`);
+    } else if (!/^#fff(fff)?$|^white$/i.test(bar[1])) {
+      errors.push(
+        `css/${file}: the opaque bar is ${bar[1]}, not white — owner decision 2026-07-28`,
+      );
+    }
+  }
+}
+
+// ---- no em dash reaches a reader, including through CSS ----
+//
+// Em dashes are out of reader-facing text on this site. That rule was being
+// enforced by reading the copy, which is why one survived for the life of the
+// project: Bootstrap draws `content: "\2014\00A0"` in front of every
+// `.blockquote-footer`, so an em dash was printed before each customer's name
+// in both languages while never appearing in a single .yml file. A sweep of the
+// HTML finds nothing, because it is not in the HTML.
+//
+// So both halves are checked: generated content in the CSS, and the rendered
+// text itself.
+for (const stem of ['main', 'chiasekinhnghiem']) {
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith(`${stem}.`) && f.endsWith('.css'),
+  );
+  if (!file) continue;
+  const css = readFileSync(join(SITE, 'css', file), 'utf8');
+  // Last one wins in the cascade, so only the last declaration matters.
+  const decls = [...css.matchAll(/\.blockquote-footer::before\{content:"([^"]*)"/g)];
+  const last = decls.at(-1);
+  if (last && /\\2014|—/.test(last[1])) {
+    errors.push(
+      `css/${file}: .blockquote-footer::before still prints an em dash ("${last[1]}") ` +
+        `— it is set on every reviewer's name`,
+    );
+  }
+}
+
+for (const name of htmlFiles) {
+  const html = readFileSync(join(SITE, name), 'utf8');
+  if (html.includes('—')) {
+    errors.push(`${name}: an em dash reached the rendered page (use a spaced en dash)`);
+  }
+}
+
 if (errors.length) {
   console.error('  check        ✗ build verification FAILED:');
   for (const e of errors) console.error(`      - ${e}`);

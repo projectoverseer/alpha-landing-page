@@ -25,7 +25,7 @@ bundle exec jekyll serve   # dev server with live rebuild (unoptimized)
 
 | Step | Script | What it does |
 |---|---|---|
-| `clean` | shx | wipe `_site/` **and `.sass-cache/`** |
+| `clean` | shx | wipe `_site/` and `.sass-cache/` |
 | `build:jekyll` | Jekyll (production env) | render pages from `_includes/` + `_data/i18n/` |
 | `optimize:math` | `optimize-math.mjs` | render the LaTeX in the Chia sẻ kinh nghiệm articles to static MathML (KaTeX) — no maths library ships, and the equations stay real, indexable text |
 | `optimize:css` | `optimize-css.mjs` | PurgeCSS (API, greedy popper safelist) → clean-css `-O2` |
@@ -55,6 +55,13 @@ directly in the final output.
 - Sass gotcha: never put an inline `//` comment after a CSS custom-property
   value — it breaks the compressed production build (details in
   `design/05-build-notes.md`).
+- Sass gotcha: **a map key that starts with a digit must be quoted**
+  (`"2xl": 96rem`). Unquoted, Sass reads it as a *number* — `2` with the unit
+  `xl` — and a map holding both number and string keys makes Ruby Sass 3.7 die
+  with `String can't be coerced into Integer` on roughly 1 build in 60,
+  depending on Ruby's per-process hash seed. This was the long-standing
+  "toolchain is flaky on Windows" failure; it was never flakiness. `npm run
+  check` now fails the build on an unquoted digit-leading key.
 
 ## Deploying
 
