@@ -86,9 +86,11 @@
   // ANSWERS the reader — a hover, a press, a tap — and never plays on its own.
   @include motion-tokens;
 
-  // The reading room is paper, so the ring is indigo; the picture viewer is a
-  // dark ground and redeclares it below. One token, correct on both.
+  // The reading room is paper, so the ring is indigo on a paper halo; the
+  // picture viewer is a dark ground and redeclares the pair below. Two tokens,
+  // correct on both, and the same two the main site uses (quy-cu §5).
   --focus: var(--indigo);
+  --focus-halo: var(--paper);
 }
 
 // ---- Base ----------------------------------------------------------------
@@ -146,8 +148,29 @@ body.kt {
     character-variant(curved-one);
 }
 
+// The highlighter. #fff200 is the actual ink in a Stabilo Boss or a Sharpie
+// Accent, not a yellow chosen to look like one, and at 40% over paper it lands
+// on #fcf691 — the colour a marker leaves on a real page.
+//
+// It is here because of what this product IS. The hub is paper, a book serif
+// and warm ink, and the one thing a reader does to a page that matters to them
+// is mark it. Selecting text is also the first move of quoting us to someone
+// else, which is the hub's whole job: be read, and be shared. So the gesture is
+// answered with the object it is imitating. Nothing is added to the page to
+// achieve it — this is one declaration.
+//
+// Measured against every text tier that can fall inside a selection, because a
+// highlight that eats the words is worse than no highlight:
+//   ink #292319   13.89:1      indigo link #2f4e7e   7.46:1
+//   ink-2 #5a5342  6.81:1      ink-3 caption #6e6753 5.02:1
+// and in the picture viewer, where the same wash lands on near-black, paper
+// text still reads at 5.16:1.
+//
+// The main site keeps its dye-orange wash. That is deliberate and it is the quy
+// củ line: selection colour is LOOK, and look belongs to each product. A reader
+// there is meant to pick up a phone, not a marker.
 .kt ::selection {
-  background: rgba(47, 78, 126, 0.18);
+  background: rgba(255, 242, 0, 0.4);
 }
 
 .kt :focus-visible {
@@ -837,9 +860,10 @@ body.kt {
 // palette carries into the dark. Fixed, above everything, fades in 200ms (the
 // reduced-motion block at the end of this file makes it instant instead).
 .kt-lightbox {
-  // A dark ground: the ring flips to paper, exactly as the main site's dark
-  // panels flip theirs to white. One token, two products, same reasoning.
+  // A dark ground: the pair flips to paper-on-ink, exactly as the main site's
+  // dark panels flip theirs. Two tokens, two products, same reasoning.
   --focus: var(--paper);
+  --focus-halo: #15110b;
 
   position: fixed;
   inset: 0;

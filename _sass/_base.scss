@@ -1,3 +1,22 @@
+// ─── The chevron, painted as a shape rather than a picture ───
+//
+// Every "this opens downward" on the site — the accordion header, the products
+// dropdown, a <details> marker in prose — is this one file, masked so it takes
+// currentColor. That is the whole reason it is a mask and not a background
+// image: an SVG with a fill baked into it cannot follow the control it belongs
+// to, which is why there used to be a second copy of the file in a lighter grey
+// and a media query to choose between them. A masked shape has no colour of its
+// own, so it is correct on the white bar, over the hero photograph, in a state
+// nobody has thought of yet, and — the case the old one actually failed — in
+// forced-colors mode, where a baked fill is thrown away and the chevron simply
+// vanished. There is now nothing to keep in sync.
+@mixin chevron-down {
+  background-color: currentColor;
+  background-image: none;
+  -webkit-mask: url(#{$chevron-down}) center / contain no-repeat;
+  mask: url(#{$chevron-down}) center / contain no-repeat;
+}
+
 body {
   direction: ltr;
   font-synthesis: none;
@@ -128,27 +147,44 @@ a {
   background: rgba($accent, 0.24);
 }
 
-// ─── Focus: one ring, stated once ───
+// ─── Focus: one ring, ours, stated once ───
 // Every focusable thing on the site — link, button, menu row, accordion header,
-// skip link, the language switcher — takes this and nothing else. It used to be
-// declared separately on four components with three different offsets, which is
-// how the hero's CTA ended up with a ring nobody had measured against the
-// photograph behind it. The colour comes from --focus, which dark surfaces
-// redeclare, so the ring is correct on any ground with nothing to remember here.
-:focus-visible {
+// skip link, the language switcher, the call button — takes this and nothing
+// else. Full argument in quy-cu §5; the short version is that it is a two-tone
+// box-shadow rather than an outline, so it follows the superellipse corner
+// instead of drawing a rounder rectangle beside it.
+//
+// THE SELECTOR LIST IS NOT DECORATION. Bootstrap declares its own focus styles
+// at specificity 0,2,0 (`.btn:focus-visible`, `.accordion-button:focus`,
+// `.nav-link:focus-visible`), and a bare `:focus-visible` is 0,1,0 — so before
+// this list existed the ring was drawn by us on plain links, by Bootstrap on
+// buttons, and by nobody at all on the accordion header. Each class named here
+// is a component the framework would otherwise take back. Adding a component
+// that ships its own focus style means adding it here; nothing else changes.
+:focus-visible,
+.btn:focus-visible,
+.accordion-button:focus-visible,
+.nav-link:focus-visible,
+.navbar-call:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.skip-link:focus-visible {
   @include focus-ring;
 }
 
-// Bootstrap's components carry their own box-shadow rings. Ours is an outline,
-// which does not affect layout and does not fight a component's real shadow, so
-// the framework's version is turned off wherever it appears.
-.btn:focus-visible,
-.accordion-button:focus-visible,
-.dropdown-item:focus-visible,
-.nav-link:focus-visible,
-.form-control:focus-visible {
-  box-shadow: none;
+// Rows flush with a menu edge turn the same ring inward (quy-cu §5).
+.dropdown-item:focus-visible {
+  @include focus-ring-inset;
 }
+
+// (No global `position: relative; z-index: 1` on :focus-visible. A box-shadow
+// ring can be painted over by a later sibling's background, so that lift is the
+// standard defence — but it is not needed here and was checked rather than
+// assumed: Bootstrap already sets `position: relative` + `z-index: 3` on the
+// accordion header, menu rows use the inset ring, nav links have no background
+// to paint over anything, and the CTA row's gap is 12px against a 5px ring.
+// Adding it would have meant overriding `position` on every focusable element
+// on the site to solve a collision none of them have.)
 
 // Design doc §10/§13: honor Reduce Motion — replace movement with near-instant change
 // and disable parallax/specular transitions.
@@ -160,19 +196,26 @@ a {
 
 // The ring adapts to what it lands on. On every dark surface — the hero
 // photograph, the About panel, the CTA panel — the brand blue drops to
-// 2.4–3.1:1 and white rises to 13.6–17.4:1, so the token flips and every
+// 2.4–3.1:1 and white rises to 13.6–17.4:1, so the pair flips and every
 // focusable child inherits it with nothing to remember at the call site.
+//
+// BOTH tokens move together, always. Flipping only the ring would leave a white
+// halo under a white ring and the two would read as one 5px smear; flipping
+// only the halo would leave the blue ring failing on the photograph, which is
+// the failure this whole system exists to fix.
 header,
 section.bg-dark,
 section.bg-primary,
 .navbar:not(.nav-active) {
   --focus: #{$fg-on-dark};
+  --focus-halo: #{$ink-950};
 }
 
 // ...and back again for the menus that open OUT of the transparent bar onto
 // their own light surface.
 .navbar .dropdown-menu {
   --focus: #{$focus};
+  --focus-halo: #{$surface};
 }
 
 // (A `@include media-breakpoint-down(md) { .container-fluid { --bs-gutter-x:
@@ -257,11 +300,14 @@ header[id] {
   //   these three; nothing hand-times any more.
   @include motion-tokens;
 
-  // — Focus. The ring colour, not the ring: dark surfaces below redeclare it
-  //   (quy-cu §5). Measured — no single colour clears the 3:1 that WCAG 2.2
-  //   SC 1.4.11 asks of a focus indicator on BOTH the white page and the hero
-  //   photograph, and the control that was failing was the hero's own CTA.
+  // — Focus. The two tones, not the ring (quy-cu §5): --focus is the indicator,
+  //   --focus-halo separates it from whatever the control is filled with. Dark
+  //   surfaces below redeclare BOTH. Measured — no single colour clears the 3:1
+  //   that WCAG 2.2 SC 1.4.11 asks of a focus indicator on BOTH the white page
+  //   and the hero photograph, and the control that was failing that test was
+  //   the hero's own CTA.
   --focus: #{$focus};
+  --focus-halo: #{$surface};
 
   // The one named exception to the three durations, and it is a different KIND
   // of motion: --t-1/2/3 are replies to a reader's hand, this is an arrival cue
@@ -333,9 +379,10 @@ header[id] {
 }
 
 // The skip link paints itself onto the focus blue, so it is a dark surface of
-// its own and takes the dark ring — the same one token, not a second rule.
+// its own and takes the dark pair — the same two tokens, not a second rule.
 .skip-link {
   --focus: #{$fg-on-dark};
+  --focus-halo: #{$ink-950};
 
   position: fixed;
   top: step(3);
@@ -703,9 +750,7 @@ big,
         display: inline-block;
         width: 1em;
         height: 1em;
-        background-image: url("../img/svg/ui_icons/accordion-button-icon.svg");
-        background-repeat: no-repeat;
-        background-size: 100%;
+        @include chevron-down;
         transition: transform var(--t-3) var(--ease);
         flex-shrink: 0;
       }
@@ -1104,6 +1149,14 @@ blockquote> :last-child:after {
   }
 }
 
+// The accordion's chevron, on the same terms as the dropdown's: a masked shape
+// in the header's own colour, not a picture with a grey baked into it. Bootstrap
+// paints this pseudo-element from --bs-accordion-btn-icon, which main.scss sets
+// to `none` so nothing is drawn underneath.
+.accordion-button::after {
+  @include chevron-down;
+}
+
 .accordion-button,
 .dropdown-item {
   transition: $accordion-transition;
@@ -1147,12 +1200,8 @@ blockquote> :last-child:after {
   background: none;
   border: none;
 
-  // The one exception to the shared ring's `outline-offset: 2px`: a menu row is
-  // flush with the menu's edge, so an outward ring would be clipped by the
-  // rounded container. It turns inward and keeps its width and colour.
-  &:focus-visible {
-    outline-offset: -3px;
-  }
+  // (The inward-turning ring for menu rows is declared with the rest of the
+  // focus system near the top of this file, not here — quy-cu §5.)
 }
 
 // Flag chips (language switcher toggle + menu items). The authored border-radius
@@ -1195,23 +1244,17 @@ blockquote> :last-child:after {
     content: "" !important;
     border: none !important;
 
-    background-image: $dropdown-toggler-icon;
-
-    // The dark (light-colored) chevron is only correct while the bar is
-    // transparent/deferential over the hero — a state reserved for ≥md. Below
-    // md the bar is forced solid white at every scroll position (see the
-    // `media-breakpoint-down(md)` block above), so the chevron must stay dark
-    // there too; without this scoping it wrongly stayed light on mobile.
-    @include media-breakpoint-up(md) {
-      .navbar:not(.nav-active) & {
-        background-image: $dropdown-toggler-icon-dark;
-      }
-    }
-
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 100% 100%;
-    /* Make it fill the pseudo-element */
+    // It follows the link's own colour now, so the whole light/dark swap this
+    // rule used to carry is gone: there was a second SVG in a paler grey, a
+    // `media-breakpoint-up(md)` wrapper, and a `.navbar:not(.nav-active)`
+    // scope, all to answer the question "what colour is the bar right now?" —
+    // a question currentColor answers by itself, correctly, at every width and
+    // in every state including the ones nobody enumerated.
+    //
+    // It also changed SHAPE. This was `arrow_drop_down`, a filled triangle,
+    // while the accordion three sections below used `keyboard_arrow_down`, a
+    // chevron. Same sentence, two different glyphs, on one page.
+    @include chevron-down;
 
     display: inline-block;
     width: 1em;
@@ -1223,14 +1266,13 @@ blockquote> :last-child:after {
   }
 }
 
-.accordion-button {
-  &:not(.collapsed):focus:not(:focus-visible) {
-    box-shadow: inset 0 calc(-1 * var(--#{$prefix}accordion-border-width)) 0 var(--#{$prefix}accordion-border-color);
-  }
-
-  &.collapsed:focus:not(:focus-visible) {
-    box-shadow: none;
-  }
+// An OPEN accordion header keeps the hairline that divides it from its own
+// body. That line is drawn with an inset box-shadow, so it has to be restated
+// for the pointer-focus state or clicking the header erases the divider.
+// (Bootstrap's own focus ring no longer competes for this property — it is
+// switched off at the variable in main.scss §8.)
+.accordion-button:not(.collapsed):focus:not(:focus-visible) {
+  box-shadow: inset 0 calc(-1 * var(--#{$prefix}accordion-border-width)) 0 var(--#{$prefix}accordion-border-color);
 }
 
 // Support / CTA section. Redesigned from a flat orange flood to a disciplined
@@ -1336,7 +1378,43 @@ section.bg-primary {
   .nav-link {
     font-size: $font-size-base;
     line-height: $nav-link-line-height;
-    text-overflow: ellipsis;
+
+    // A label is a phrase, not a paragraph. "Chia sẻ kinh nghiệm" breaking
+    // after "kinh" turns one nav item into two lines of ragged text and pushes
+    // the whole bar out of its fixed height — which is what was happening.
+    //
+    // This replaced `text-overflow: ellipsis`, which had never done anything:
+    // it needs `overflow: hidden` and a non-wrapping line to take effect and
+    // had neither, so it was inert. It would also have been the wrong answer —
+    // "Các sản ph…" is exactly the partial information loss design/00 §2.1
+    // forbids. The bar is made to fit instead (see .nav-item--toc below).
+    white-space: nowrap;
+  }
+
+  // Table-of-contents anchors: the drawer's, not the bar's. Reasoning is in
+  // _includes/navbar.html; the short version is that a long page scrolls itself
+  // and the chrome is for what it cannot do. `lg` is the navbar's own collapse
+  // breakpoint ($navbar-expand-lg on _includes/page.html), so this is exactly
+  // "hidden once the drawer becomes a bar" and cannot drift from it.
+  //
+  // `display: none`, deliberately, and NOT `visually-hidden` — which was the
+  // tempting choice, because three entries in this same list already use it.
+  //
+  // The reason is focus order. `visually-hidden` keeps an element focusable, so
+  // a keyboard user on a wide screen would tab into four links they cannot see:
+  // WCAG 2.2 SC 2.4.7 Focus Visible, failed, and the ring this same commit was
+  // rebuilt to fix would be drawn on nothing. The three existing entries get
+  // away with it only because they carry `tabindex="-1"`, and a media query
+  // cannot add an attribute.
+  //
+  // Nothing is actually lost: every one of these sections has its own <h2>, and
+  // heading navigation is how a screen-reader user moves through a page this
+  // long. Under lg the anchors are fully present, visible and tabbable for
+  // everyone.
+  @include media-breakpoint-up(lg) {
+    .nav-item--toc {
+      display: none;
+    }
   }
 
   // Fade between the transparent (over-hero) and white (scrolled) states. Applied
@@ -2068,29 +2146,20 @@ header.hero-precision {
     border: 1px solid CanvasText !important;
   }
 
-  // The "sneaky" chevrons (accordion toggle, products dropdown caret, prose
-  // <details> marker) are background-image SVGs with a baked-in fill — they don't
-  // recolor and can vanish on the forced background. Repaint each through a mask so
-  // the shape takes a system color matching its control.
+  // The chevrons are masked shapes in currentColor everywhere now, not
+  // background images with a fill baked in, so they already survive this mode
+  // rather than vanishing into the forced background. All that is left to say
+  // is which SYSTEM colour each control's text takes — and the mask follows it.
   .accordion-button::after {
     background-color: ButtonText;
-    background-image: none !important;
-    -webkit-mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
-    mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
   }
 
   .dropdown-toggle::after {
     background-color: LinkText;
-    background-image: none !important;
-    -webkit-mask: url("../img/svg/ui_icons/dropdown-toggler-icon.svg") center / contain no-repeat;
-    mask: url("../img/svg/ui_icons/dropdown-toggler-icon.svg") center / contain no-repeat;
   }
 
   .prose details summary::before {
     background-color: CanvasText;
-    background-image: none !important;
-    -webkit-mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
-    mask: url("../img/svg/ui_icons/accordion-button-icon.svg") center / contain no-repeat;
   }
 }
 

@@ -197,6 +197,49 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
+// ---- the focus ring survived PurgeCSS ----
+// Third instance of the same failure shape, and the one that matters most: the
+// ring is declared once, and its FIRST selector is a bare `:focus-visible` so
+// that every ordinary link inherits it without being listed. PurgeCSS has no
+// class or element to match a bare pseudo-class against and removes it — only
+// in production, silently, leaving a build that looks correct in `jekyll serve`
+// and ships with no focus indicator on most of the page. That is a WCAG 2.2
+// SC 2.4.7 failure introduced by a minifier, which is not a thing anyone will
+// think to look for. The safelist in optimize-css.mjs holds it; this makes sure.
+for (const stem of ['main', 'chiasekinhnghiem']) {
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith(`${stem}.`) && f.endsWith('.css'),
+  );
+  if (!file) continue;
+  const css = readFileSync(join(SITE, 'css', file), 'utf8');
+
+  // `:focus-visible` standing alone in its own compound selector — nothing
+  // joined to it. It may still have an ancestor: the hub scopes its ring as
+  // `.kt :focus-visible` because `.kt` is on <body>, which reaches everything
+  // just the same. What must NOT be the only form present is the attached kind
+  // (`.btn:focus-visible`), because that is an enumeration and whatever is not
+  // on the list ships with no indicator.
+  //
+  // So: allow start-of-file, `}`, `,` or whitespace before the colon; reject a
+  // class, element or id character.
+  if (!/(?:^|[},]|\s):focus-visible\s*[,{]/.test(css)) {
+    errors.push(
+      `css/${file}: the bare :focus-visible selector was purged — ordinary links ship with no focus ring`,
+    );
+  }
+  // Both tones, or the ring is one flat colour against one of its two grounds.
+  for (const token of ['--focus', '--focus-halo']) {
+    if (!css.includes(`var(${token})`)) {
+      errors.push(`css/${file}: nothing reads var(${token}) — the two-tone focus ring is broken`);
+    }
+  }
+  // Windows High Contrast throws box-shadow away; this branch is the only thing
+  // drawing focus there.
+  if (!/forced-colors/.test(css) || !/[Hh]ighlight/.test(css)) {
+    errors.push(`css/${file}: no forced-colors focus fallback — the ring vanishes in High Contrast`);
+  }
+}
+
 if (errors.length) {
   console.error('  check        ✗ build verification FAILED:');
   for (const e of errors) console.error(`      - ${e}`);

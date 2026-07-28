@@ -192,38 +192,83 @@ and a control that answers nothing reads as broken.
 
 ---
 
-## 5. Focus — one ring, and it adapts to its surface
+## 5. Focus — our own ring, drawn by us, on every control
 
 ```scss
-:focus-visible { @include focus-ring; }   // 3px solid var(--focus), offset 2px
+@include focus-ring;   // box-shadow: 0 0 0 2px var(--focus-halo),
+                       //             0 0 0 5px var(--focus)
 ```
 
-The colour is a custom property. **Light surfaces get the product's interactive
-colour; dark surfaces redeclare it to white.** One token, inherited, nothing to
-remember at the call site.
+**It is a `box-shadow`, not an `outline`, and that is the whole design.** Two
+reasons, in order of how certain we are of them:
 
-This was a real failure, not a tidy-up. The old ring was `#0071e3` at every
-scroll position, and against the hero scrim it measures **2.89:1** — under the
-3:1 WCAG 2.2 SC 1.4.11 asks of a focus indicator. The control it was failing on
-is the hero's primary call to action: the most important button on a site whose
-entire job is to be contacted. A keyboard user could not see where they were.
+1. **It wins the cascade.** This one is certain and it is decisive. Bootstrap
+   ships `.btn:focus-visible{outline:0}`, `.accordion-button:focus{outline:0}`
+   and `.nav-link:focus-visible{outline:0}` — all specificity 0,2,0 against a
+   bare `:focus-visible` at 0,1,0, read straight out of the shipped CSS. The
+   site was drawing **three different focus treatments**: ours on plain links,
+   Bootstrap's own ring on buttons, and *nothing at all* on the accordion
+   header, where their `outline:0` and our `box-shadow:none` cancelled each
+   other out. Moving to box-shadow means we stop contesting the `outline`
+   property entirely. The framework's rings are now switched off at the
+   variable (`main.scss` §8) and our rule names every component that would
+   otherwise take itself back.
+2. **It rendered wrong.** Observed: the ring drew as a shape that did not match
+   the button it surrounded, and fragments survived after focus moved on.
+   **Per spec this should not happen** — MDN lists `outline` among the
+   properties that follow `corner-shape`, alongside `background`, `border` and
+   `box-shadow` — so this is a young implementation rather than a property-level
+   gap, and it may be fixed upstream later. It is still what shipped and what a
+   reader saw. A box-shadow is painted with the element's own border-box
+   decoration instead of in a separate outline pass, so it composites and
+   repaints with the element and leaves nothing behind.
 
-No single colour clears 3:1 on both grounds — the brand blue is 5.57:1 on white
-and 2.43:1 on the scrim; white is 13.55:1 on the scrim and invisible on the
-page. Hence the token.
+Reason 1 alone would justify the change. Reason 2 is why it looked *broken*
+rather than merely inconsistent.
 
-| ring | on | ratio |
-|---|---|---|
-| `#0066cc` | white / tint / menu | 5.57 / 4.80 / 5.26 |
-| `#fff` | ink panel / hero scrim / ink-950 | 17.41 / 13.55 / 18.48 |
-| `--indigo` | hub paper | 7.87 |
-| `--paper` | hub picture viewer | 17.44 |
+### Two tones, because one colour cannot do this job
 
-The ring used to be declared separately on four components with three different
-offsets. It is now declared once. The single documented exception is the
-dropdown menu row, which turns its ring **inward** (`outline-offset: -3px`)
-because it is flush with the menu's own rounded edge and an outward ring would
-be clipped.
+The ring must be visible against **both** the control it surrounds and the
+ground that control sits on, and those are different colours. So:
+
+```text
+  control  │ halo 2px │ ring 3px │  page
+```
+
+The halo separates the ring from the control's fill; the ring is the indicator.
+**Both tokens flip together** on dark surfaces — flipping only the ring leaves a
+white halo under a white ring and the two smear into one 5px band.
+
+| surface | ring | halo | measured |
+|---|---|---|---|
+| light page | `#0066cc` | `#ffffff` | ring on white **5.57:1**, halo on the dye button **4.63:1** |
+| ink surface | `#ffffff` | `#07151f` | ring on the hero scrim **13.55:1**, halo against the ring **17.42:1** |
+| hub paper | `--indigo` | `--paper` | **7.87:1** |
+| hub viewer | `--paper` | `#15110b` | **17.44:1** |
+
+This began as a real failure. The old ring was `#0071e3` at every scroll
+position and measures **2.89:1** on the hero scrim — under the 3:1 WCAG 2.2
+SC 1.4.11 asks of a focus indicator, on the hero's own call to action, which is
+the most important button on a site whose entire job is to be contacted.
+
+The one documented exception is the dropdown menu row, which turns the same ring
+**inward** (`focus-ring-inset`) because it is flush with the menu's own rounded
+edge. Order reverses there: ring outermost against the menu edge, halo inside it
+against the row's hover fill.
+
+### Two things that will bite
+
+- **`forced-colors` throws box-shadow away.** The mixin carries a
+  `@media (forced-colors: active)` branch that redraws the ring as
+  `outline: 3px solid Highlight`. Without it the ring vanishes for exactly the
+  readers least able to lose it.
+- **PurgeCSS eats the bare `:focus-visible`.** It has no class or element to
+  match a bare pseudo-class against, so it removed it — in production only,
+  silently — and shipped a build with a ring on buttons and *nothing* on the
+  ordinary links that make up most of the page. It is safelisted in
+  `optimize-css.mjs` and `verify.mjs` fails the build if it goes missing again,
+  along with either tone and the forced-colors branch. All three gates were
+  proved to fire by deliberately corrupting the built CSS.
 
 ---
 
@@ -349,6 +394,38 @@ What changed:
 - **`.actions`**: a row of calls to action that stacks full-width under sm. A
   button only as wide as its own label is a desktop object; a thumb is aiming.
 
+#### The bar carries what the page cannot do for itself
+
+Adding the call button used up the last of the bar's width, and the six nav
+labels started wrapping to a second line inside a fixed-height bar. The rule
+that settled it is not "what fits" but **what belongs in chrome**:
+
+> This is one long page. It can scroll to its own sections — a reader does that
+> with a thumb, and does it without being told. What it *cannot* do on its own
+> is open a specific product panel, cross to the reading hub, dial us, or change
+> language.
+
+So the expanded bar keeps **Sản phẩm ▾** (a real menu that opens a named product
+panel) and **Chia sẻ kinh nghiệm** (the route to the other product), plus the
+call button and the language switcher. The four section anchors carry
+`nav-item--toc` and appear **only in the drawer**, under `lg` — which is the
+navbar's own collapse breakpoint, so the rule cannot drift from it. On a phone a
+table of contents for an eight-section page is genuinely useful and there is a
+column of room for it; on a wide bar it needed ~648px against ~565px free.
+
+`display: none`, deliberately, and not `visually-hidden` — which was tempting,
+because three entries in that same list already use it. `visually-hidden` keeps
+an element **focusable**, so a keyboard user on a wide screen would tab into
+four links they cannot see: SC 2.4.7 Focus Visible, failed, with the ring drawn
+on nothing. The existing three get away with it only because they carry
+`tabindex="-1"`, and a media query cannot add an attribute.
+
+Also: `.navbar .nav-link` is `white-space: nowrap`. It replaced a
+`text-overflow: ellipsis` that had never done anything (it needs
+`overflow: hidden` and a non-wrapping line, and had neither) and would have been
+the wrong answer anyway — "Các sản ph…" is exactly the partial information loss
+design/00 §2.1 forbids.
+
 ### 8.2 Chia sẻ kinh nghiệm: be read, be shared, send them onward
 
 - **The device's own share sheet** (`navigator.share`), first in the row. On a
@@ -362,20 +439,82 @@ What changed:
 
 ---
 
-## 9. Before you add anything
+## 9. Icons — one family, one setting, no exceptions
+
+Every icon on the site is **Material Symbols**, and every one of them is drawn
+at the same point in that family's four-axis space. The axes are not options to
+pick per icon; they are set once, here, and the set is regenerated from them.
+
+| axis | value | why |
+|---|---|---|
+| **style** | Outlined | Inter has flat terminals and a rational grotesque skeleton. Rounded's ball terminals fight it; Sharp's square cuts contradict the squircle corner. Outlined is the neutral middle and the family's own default. |
+| **fill** | 0 | Fill is a *state* axis — it means selected / active / on. Nothing here has an icon with a selected state, and spending the axis now leaves nothing to say "active" with later. |
+| **weight** | 400 | Our UI text is 400–600, and Material at 400 carries roughly the same stem-to-size ratio as Inter Regular (~1/12 vs ~1/11), so icon and label read at one weight. |
+| **grade** | 0 | See below — this one was considered and rejected. |
+| **optical size** | matched to the rendered size | 48 for the feature icons (they render 48/56/64px), 24 for the chevron, 20 for the inline 1em glyphs. |
+
+**Optical size is the axis that was actually doing damage.** It is a real design
+axis, not a file size: at small sizes a glyph needs more internal air and
+simpler detail, at large sizes it can be finer. Downloading one size and scaling
+it is how you get a hairline mush at 16px or a blunt slab at 64px.
+
+**Grade was rejected on purpose.** `GRAD` changes stroke thickness *without*
+changing the icon's width, and it exists for exactly our case: light strokes on
+a dark ground bloom optically, so Material's own guidance is −25 for icons on
+dark. Our dark-surface icons render at 1em ≈ 15–16px, where that correction is
+well under a pixel, and taking it would mean shipping a second near-identical
+copy of the phone glyph plus a rule for remembering which is which. Invisible
+complexity is the thing this document exists to prevent.
+
+### What was wrong
+
+The old set was downloaded piecemeal over a long period at settings nobody
+recorded. Evidence, not impression: **every canonical Material export uses
+`viewBox="0 -960 960 960"`, and five of the eleven did not** (offsets of 80,
+119, 120, 133 and 160), while path complexity ran 1.5–3× the canonical set at
+the same nominal size — `psychology` was 1575 B against 873 B. Those are the
+fingerprints of mixed `wght` and `opsz`.
+
+Two glyphs also said the same sentence differently: the accordion used
+`keyboard_arrow_down` (a chevron) and the products dropdown used
+`arrow_drop_down` (a filled triangle). One page, two objects, one meaning.
+
+### The chevron is a mask, not a picture
+
+There is now **one** `chevron-down.svg` with no `fill` attribute at all,
+consumed through `mask` + `currentColor` (`@mixin chevron-down`). It replaced
+three files. A fill baked into an SVG cannot follow the control it belongs to,
+which is why there used to be a second copy in a paler grey and a media query to
+choose between them — and why, in `forced-colors`, both were thrown away and the
+chevron simply vanished. A masked shape has no colour of its own, so it is
+correct on the white bar, over the hero photograph, in High Contrast, and in
+states nobody has enumerated. Neither of the two baked greys (`#676767`,
+`#ececec`) was a rung of the ink ramp.
+
+Regenerate the whole set — never hand-download one icon — so the setting cannot
+drift again. The reading hub deliberately has **no icons**: it is a reading
+room, and its chrome is words.
+
+---
+
+## 10. Before you add anything
 
 1. Is the value a rung of the ladder? (§1)
 2. Does the corner use `squircle()` with one of the five radii? (§2)
 3. Is every control ≥ 44px? (§3)
 4. Is the transition one of `--t-1/2/3` on `--ease`? (§4)
-5. Does the focus ring come from `:focus-visible` and `--focus`? (§5)
+5. Does focus come from the shared ring, with **both** tones? (§5)
 6. Did you name a **role**, or did you write a hex? (§6)
 7. Did you measure the contrast, or assume it? (§6.1)
 8. Is anything a reader must read or tap below 14px? (§7)
 9. Does it serve this page's purpose, or only look like it does? (§8)
-10. If you broke a rule, is the reason written next to the code?
+10. Is the icon Material Symbols at the one setting, regenerated not hand-picked? (§9)
+11. If you broke a rule, is the reason written next to the code?
 
-Rule 11: **a green build is not evidence.** The `@font-feature-values` bug and
-the `corner-shape` gate both exist because a stylesheet can lose its whole point
-and still compile, minify, verify and render. If a thing matters and can fail
-silently, it gets a gate in `verify.mjs`.
+Rule 12: **a green build is not evidence.** The `@font-feature-values` bug, the
+`corner-shape` gate and the purged `:focus-visible` all exist because a
+stylesheet can lose its whole point and still compile, minify, verify and
+render. The focus one is the sharpest: it failed *only in production*, and the
+thing it removed was the accessibility feature. If a thing matters and can fail
+silently, it gets a gate in `verify.mjs` — and the gate gets proved by breaking
+the build on purpose.

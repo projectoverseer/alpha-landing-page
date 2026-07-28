@@ -181,30 +181,103 @@ $tap: 2.75rem;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 5. FOCUS — one ring, and it adapts to its surface
+// 5. FOCUS — our own ring, drawn by us, on every control
 // ─────────────────────────────────────────────────────────────────────────────
 //
-// Measured, because this was a real failure. The old ring was #0071e3 at every
-// scroll position, and against the hero scrim it lands at 2.89:1 — under the
-// 3:1 that WCAG 2.2 SC 1.4.11 requires of a focus indicator. The control it
-// was failing on is the hero's primary call to action: the single most
-// important button on a site whose entire job is to be contacted. A keyboard
-// user could not see where they were.
+// THIS RING IS DRAWN WITH box-shadow, NOT outline, AND THAT IS THE WHOLE POINT.
 //
-// No single colour clears 3:1 on both a white page and an ink photograph — the
-// brand blue is 5.57:1 on white and 2.43:1 on the scrim; white is 13.55:1 on
-// the scrim and invisible on the page. So the ring is a custom property and
-// dark surfaces re-declare it. One rule, one token, correct everywhere,
-// nothing to remember at the call site.
+// It was an `outline: 3px solid var(--focus); outline-offset: 2px`. Two reasons
+// it is not any more, in order of how sure we are of them:
 //
-//   light surfaces  → the product's interactive colour (blue / indigo)
-//   dark surfaces   → white
+//  1. THE CASCADE. This one is certain and it is decisive. Bootstrap ships
+//     `.btn:focus-visible{outline:0}`, `.accordion-button:focus{outline:0}` and
+//     `.nav-link:focus-visible{outline:0}` — all specificity 0,2,0 against a
+//     bare `:focus-visible` at 0,1,0. Read straight out of the shipped CSS. So
+//     the site was drawing THREE different focus treatments: ours on plain
+//     links, Bootstrap's own ring on buttons, and on the accordion header
+//     nothing whatsoever, because their `outline: 0` and our `box-shadow: none`
+//     cancelled each other out. Moving to box-shadow means we stop contesting
+//     the `outline` property at all; we out-specify their box-shadow once, in
+//     one rule in _base.scss, and never again at a call site.
 //
-// 3px, offset 2px: thick enough to see at arm's length, offset so it reads as
-// a ring around the shape rather than a new border on it.
-@mixin focus-ring {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
+//  2. HOW IT RENDERED. Observed, on the owner's screen: the ring drew as a
+//     shape that did not match the button it surrounded, and fragments of it
+//     survived after focus moved on. Note that per spec this SHOULD work —
+//     MDN lists `outline` among the properties that follow `corner-shape`,
+//     alongside `background`, `border` and `box-shadow`. So this is the
+//     implementation being young, not the property being wrong, and it may
+//     well be fixed upstream later. It is still what shipped and what a reader
+//     saw. A box-shadow is painted with the element's own border-box
+//     decoration rather than in a separate outline pass, so it composites and
+//     repaints with the element and does not leave anything behind.
+//
+// Reason 1 alone would be enough. Reason 2 is why it looked broken rather than
+// merely inconsistent.
+//
+// TWO TONES, because one colour cannot do this job. The ring has to be visible
+// against BOTH the thing it surrounds and the ground that thing sits on, and
+// those are different colours — a white ring on a white page is invisible, a
+// blue ring on a dye-orange button is mud. So:
+//
+//     ┌─────────────────┐
+//     │ control         │  ← the control's own fill, whatever it is
+//     ├─────────────────┤
+//     │ halo   2px      │  ← separates ring from control  (--focus-halo)
+//     ├─────────────────┤
+//     │ ring   3px      │  ← the indicator proper         (--focus)
+//     └─────────────────┘   ← the page behind it
+//
+// Both tokens flip together on dark surfaces, so the pair is always the page's
+// own value against the page's own opposite. Measured, on the two grounds this
+// site actually has:
+//
+//   light page   ring #0066cc on #ffffff          5.57:1  ✓  (SC 1.4.11 → 3:1)
+//                halo #ffffff on the dye button   4.63:1  ✓
+//   ink surface  ring #ffffff on the hero scrim  13.55:1  ✓
+//                halo #07151f against that ring  17.42:1  ✓
+//
+// 5px total. Flush to the control — no offset gap, because the gap is what made
+// the old ring read as a separate floating rectangle instead of an edge.
+//
+// $under: an optional shadow layer to keep UNDERNEATH the ring, for the one or
+// two controls whose resting box-shadow is load-bearing. Everything else passes
+// nothing and gets the ring alone.
+$focus-halo-width: 2px;
+$focus-ring-thickness: 3px;
+
+@mixin focus-ring($under: null) {
+  $halo: 0 0 0 $focus-halo-width var(--focus-halo);
+  $ring: 0 0 0 ($focus-halo-width + $focus-ring-thickness) var(--focus);
+
+  @if $under {
+    box-shadow: $under, $halo, $ring;
+  } @else {
+    box-shadow: $halo, $ring;
+  }
+
+  // Windows High Contrast and friends throw box-shadow away entirely, so the
+  // ring would disappear for exactly the readers least able to afford losing
+  // it. `Highlight` is the system's own focus colour and is guaranteed to
+  // contrast with `Canvas`; this branch never renders anywhere else.
+  @media (forced-colors: active) {
+    outline: $focus-ring-thickness solid Highlight;
+    outline-offset: $focus-halo-width;
+  }
+}
+
+// Menu rows are flush with their container's edge, so an outward ring would
+// spill past the menu's own corner. This one turns inward and keeps its
+// thickness, its colours and its order — ring outermost, against the menu edge;
+// halo inside it, against the row's hover fill.
+@mixin focus-ring-inset {
+  box-shadow:
+    inset 0 0 0 $focus-ring-thickness var(--focus),
+    inset 0 0 0 ($focus-halo-width + $focus-ring-thickness) var(--focus-halo);
+
+  @media (forced-colors: active) {
+    outline: $focus-ring-thickness solid Highlight;
+    outline-offset: -$focus-ring-thickness;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

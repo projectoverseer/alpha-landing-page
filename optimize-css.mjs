@@ -120,7 +120,17 @@ const [{ css }] = await new PurgeCSS().purge({
   content: ['_site/**/*.html', '!_site/chia-se-kinh-nghiem/**', '_site/**/*.js'],
   safelist: {
     standard: ['active', 'show', 'collapsing'],
-    greedy: [/data-bs-popper/],
+    // `:focus-visible` — the site's focus ring is declared once, and the first
+    // selector in that rule is a BARE `:focus-visible` so that every plain link
+    // gets it without being enumerated. PurgeCSS has no class or element to
+    // match a bare pseudo-class against, so it removes it — silently, and only
+    // in the production build, which is the worst place for it to happen. The
+    // shipped CSS then had a ring on buttons and menu rows and NOTHING on the
+    // ordinary links that make up most of the page.
+    //
+    // This is the same hazard the `KT_CSS` note below describes for ::selection,
+    // and it costs 621 bytes minified to close.
+    greedy: [/data-bs-popper/, /:focus-visible/],
   },
 });
 writeFileSync(CSS, css);

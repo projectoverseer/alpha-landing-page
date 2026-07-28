@@ -154,12 +154,28 @@ used size; body text clears AAA.
 |---|---|---|
 | `--paper` | `#FAF8F2` | Page ground — the only page background |
 | `--paper-deep` | `#F1EDE2` | Asides, CTA cards, table stripes |
-| `--line` | `#E2DCCB` | Hairline borders |
+| `--line` | `#D5CBAF` | Hairline borders (was `#E2DCCB` at 1.29:1 — near-invisible on a phone in daylight, on the only edge a series card has; now 1.52:1) |
 | `--ink` | `#292319` | Reading text (≈13.6:1 on paper) |
 | `--ink-2` | `#5A5342` | Secondary: descriptions, standfirst (≥6:1) |
 | `--ink-3` | `#6E6753` | Metadata, captions (≥4.5:1) |
 | `--indigo` | `#2F4E7E` | Links, accents — the only action color (≥6:1) |
 | `--indigo-deep` | `#243C61` | Hover/active, button fill |
+
+**The highlighter.** `::selection` is `rgba(255, 242, 0, 0.4)` — `#FFF200` is
+the actual ink in a Stabilo Boss or a Sharpie Accent, not a yellow picked to
+resemble one, and at 40% over paper it lands on `#FCF691`: the colour a marker
+leaves on a real page. It is here because of what this product is. The hub is
+paper, a book serif and warm ink, and the one thing a reader does to a page that
+matters to them is mark it — and selecting text is also the first move of
+quoting us to someone else, which is the whole job (§1). The gesture is answered
+with the object it imitates, in one declaration, adding nothing to the page.
+
+Measured against every text tier that can fall inside a selection, because a
+highlight that eats the words is worse than no highlight: ink **13.89:1**,
+indigo link **7.46:1**, `--ink-2` **6.81:1**, `--ink-3` caption **5.02:1**; and
+in the picture viewer, where the same wash lands on near-black, paper text still
+reads at **5.16:1**. The main site keeps its dye-orange wash — selection colour
+is *look*, and look belongs to each product (08 §0).
 
 Rules:
 - Indigo means "you can act on this." Never use it decoratively.

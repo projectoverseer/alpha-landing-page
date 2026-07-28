@@ -323,14 +323,26 @@ $hr-border-width: 2px;
 // 8. FOCUS
 // ────────────────────────────────────────────────────────────────────────────
 //
-// The ring itself is the shared `focus-ring` mixin (quy-cu §5) and its colour
-// is the --focus custom property, which dark surfaces redeclare. These exist
-// only so Bootstrap's own focus styles land on the same values.
-$focus-ring-width: 3px;
-$focus-ring-opacity: 1;
-$focus-ring-color: $focus;
-$focus-ring-blur: 0;
-$focus-ring-box-shadow: 0 0 0 $focus-ring-width $focus-ring-color;
+// The ring is OURS: the shared `focus-ring` mixin (quy-cu §5), a two-tone
+// box-shadow, stated once in _base.scss for every control on the site.
+//
+// Everything below switches Bootstrap's competing rings OFF at the source.
+// The framework ships four of them — `.btn:focus-visible`,
+// `.accordion-button:focus`, `.nav-link:focus-visible` and the `.focus-ring`
+// utility — each at specificity 0,2,0, and each one was either overpainting
+// ours or, on the accordion, cancelling it and leaving the header with no
+// indicator at all. Killing them here rather than fighting them per component
+// means there is exactly one rule on the site that draws focus.
+//
+// `:focus` (mouse) is included deliberately: clicking an accordion header used
+// to leave a 3px ring sitting there until something else took focus. A pointer
+// user already knows where they clicked.
+$focus-ring-box-shadow: none;
+$btn-focus-box-shadow: none;
+$btn-focus-width: 0;
+$accordion-button-focus-border-color: $line;
+$input-btn-focus-box-shadow: none;
+$input-focus-box-shadow: none;
 
 // ────────────────────────────────────────────────────────────────────────────
 // 9. LINKS
@@ -372,8 +384,17 @@ $dropdown-link-active-state-bg: $ink-100;
 $dropdown-border-width: $border-width;
 $dropdown-border-color: $border-color;
 $dropdown-border-radius: $r-2;
-$dropdown-toggler-icon: url("../img/svg/ui_icons/dropdown-toggler-icon.svg");
-$dropdown-toggler-icon-dark: url("../img/svg/ui_icons/dropdown-toggler-icon-dark.svg");
+// ONE chevron for every "this opens downward" on the site, and no fill baked
+// into it — it is painted through `mask` + currentColor (see _base.scss), so it
+// is always exactly the colour of the control it belongs to.
+//
+// It replaced three files. The accordion used `keyboard_arrow_down` (a chevron)
+// and the dropdown used `arrow_drop_down` (a filled triangle): two different
+// objects saying the same sentence. Each carried a hard-coded grey — #676767
+// and #ececec, neither of which is a rung of the ink ramp — and the second file
+// existed only because the first could not change colour, which then needed a
+// media query to choose between them. All of that is gone.
+$chevron-down: "../img/svg/ui_icons/chevron-down.svg";
 
 // A menu row is a control, so it gets the control's target. 12px above and
 // below a 16px/1.6 line = 44px exactly. It used to be 4px, giving 32px.
@@ -397,10 +418,13 @@ $accordion-button-bg: $dropdown-bg;
 $accordion-button-color: $fg;
 $accordion-button-active-bg: $accordion-button-bg;
 $accordion-button-active-color: $accordion-button-color;
-$accordion-button-focus-box-shadow: $focus-ring-box-shadow;
+$accordion-button-focus-box-shadow: $focus-ring-box-shadow; // none — §8
 $accordion-icon-transform: rotate(180deg);
-$accordion-button-icon: url("../img/svg/ui_icons/accordion-button-icon.svg");
-$accordion-button-active-icon: url("../img/svg/ui_icons/accordion-button-icon.svg");
+// Bootstrap paints ::after with these as background-image. _base.scss replaces
+// that with a mask so the chevron takes currentColor; these stay `none` so the
+// framework does not also paint a second, uncoloured copy underneath it.
+$accordion-button-icon: none;
+$accordion-button-active-icon: none;
 $accordion-icon-width: $h3-font-size;
 $accordion-body-padding-y: step(5);
 

@@ -48,7 +48,14 @@ Structure: **ramps → roles → Bootstrap bridge** (see 08 §6). A component na
 - **Blue** `#004c97` / `#009cde` — links and the cool counterpoint. Blue says
   "you can act on this"; dye says "this is the point."
 - Even `::selection` carries a quiet dye wash — the brand shows up in the act
-  of reading closely, without adding a single element.
+  of reading closely, without adding a single element. (The reading hub answers
+  the same gesture with a **highlighter yellow** instead; selection colour is
+  *look*, and look belongs to each product — 08 §0. A reader here is meant to
+  pick up a phone, not a marker.)
+- **Icons are Material Symbols, Outlined, fill 0, weight 400, grade 0**, at the
+  optical size they actually render at — the full argument and the axis table
+  are 08 §9. Feature icons are inlined SVG at `--size-icon` (48/56/64px); the
+  one chevron is a `mask` in `currentColor`, so it needs no colour of its own.
 
 ## 3. Type
 
@@ -130,8 +137,9 @@ moves to decorate.
 ## 8. Vocabulary of parts (all implemented in `_sass/_base.scss`)
 
 `.navbar-call` (the chrome's one-tap dialler — the main page's purpose, made
-reachable on a phone) · `.actions` (a CTA row that stacks full-width under sm) ·
-`.kicker` · `.metric` (+ `__unit`, `__from/__to` for deltas) ·
+reachable on a phone) · `.nav-item--toc` (a section anchor: shown in the drawer,
+hidden once the drawer becomes a bar) · `.actions` (a CTA row that stacks
+full-width under sm) · `.kicker` · `.metric` (+ `__unit`, `__from/__to`) ·
 `.heading-number` (calibration marker: Inter Display index + hairline run-out) ·
 `.btn-primary` / `.btn-ghost` on `.btn-xl` · `.service-box` ·
 `.partner-logo-card` · the parked `header.hero-precision` (kicker → headline →

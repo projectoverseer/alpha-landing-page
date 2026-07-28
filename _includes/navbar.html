@@ -18,15 +18,33 @@
     />
   </a>
 
+  {%- comment -%}
+    THE BAR CARRIES WHAT THE PAGE CANNOT DO FOR ITSELF.
+
+    This is one long page. It can scroll to its own sections — a reader does
+    that with a thumb, and does it without being told. What it cannot do on its
+    own is open a specific product panel, cross to the reading hub, dial us, or
+    change language. Those four are chrome; a section anchor is not.
+
+    So the anchors below are marked `nav-item--toc` and shown only in the drawer
+    (under lg), where there is a column of room and a table of contents is
+    genuinely useful on an eight-section page held in one hand. On the expanded
+    bar they would need ~648px against ~565px of free width and the labels wrapped
+    to a second line — measured on the live build, not guessed.
+
+    Nothing is deleted. Every anchor stays in the DOM, in reading order, in the
+    tab order, and in the accessibility tree at every width; below lg it is also
+    visible. What changes is only what a wide screen shows.
+  {%- endcomment -%}
   <div class="collapse navbar-collapse" id="navbar-collapse">
     <ul class="navbar-nav ms-auto">
       <li class="visually-hidden nav-item">
         <a class="nav-link" href="#{{ t.toc_hero_id }}" tabindex="-1">{{ t.toc_hero }}</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item nav-item--toc">
         <a class="nav-link" href="#{{ t.toc_overview_id }}">{{ t.toc_overview }}</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item nav-item--toc">
         <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}">{{ t.toc_benefits }}</a>
       </li>
       <li class="nav-item dropdown">
@@ -60,10 +78,10 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item">
+      <li class="nav-item nav-item--toc">
         <a class="nav-link" href="#{{ t.toc_projects_id }}">{{ t.toc_projects }}</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item nav-item--toc">
         <a class="nav-link" href="#{{ t.toc_reviews_id }}">{{ t.toc_reviews }}</a>
       </li>
       {% if t.toc_knowledge %}
