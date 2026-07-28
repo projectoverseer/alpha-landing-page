@@ -38,6 +38,43 @@ body {
   // stated so no reset downstream can quietly turn text shaping off.
   font-variant-ligatures: common-ligatures contextual;
 
+  // Chosen alternates (2026-07-28). Three of Inter's 22 optional sets; the names
+  // and the case for each are in _fonts.scss. All three were picked on the same
+  // test: does it make the page warmer WITHOUT costing a reader anything.
+  //
+  //   round-punctuation (ss03) · the one that carries the change. Inter's default
+  //     comma and quotes are angled wedges that read as prime/inch marks; these
+  //     are the round book forms. Vietnamese runs long clauses, so this lands in
+  //     nearly every sentence, and a comma with a tail is further from a full stop
+  //     than a wedge is.
+  //   open-digits (ss01) · open 4/6/9, flat-topped 3. Friendlier and more legible
+  //     at once — the openness that lightens them is the same openness that keeps
+  //     3 out of 8 and 6/9 out of 8.
+  //   curved-one (cv01) · a scooped flag on the "1", warmer than the default
+  //     straight wedge and further from a bare "I"/"l".
+  //
+  // Deliberately NOT on, having been drawn and looked at rather than guessed:
+  //   cv11 single-storey "a" · the big one, and the wrong one. It turns Inter
+  //     into a geometric primer face, and a one-storey "a" is measurably nearer
+  //     to "o"/"d" for a low-vision reader. Friendliness that costs legibility is
+  //     not the trade this site wants.
+  //   cv06 simplified "u" · rounder, but it deletes the spur that keeps "u" from
+  //     being a mirrored "n" — and Vietnamese is full of nu/un ("nuôi", "người").
+  //   cv10 "G" with spur · asked for, but it runs the wrong way: the spur is the
+  //     stiffer, more formal grotesque form, not the friendlier one.
+  //   cv05 "l" with tail, cv08 serifed "I" · disambiguation forms for code and
+  //     data. In running prose they read as a technical tic, and a lone serif on
+  //     one letter of a sans is exactly the kind of seam that gets noticed.
+  //   cv12/cv13 compact "f"/"t" · narrower, i.e. tighter — the opposite direction.
+  //   zero (slashed) · reads engineering, not welcoming.
+  //   ss05–ss08 circled/squared/square punctuation · decorative; ss08 is the
+  //     literal inverse of ss03.
+  //   cpsp capital spacing · measured, and it is a plain SinglePos over 621
+  //     glyphs with no context test, so it would space a sentence-initial capital
+  //     too. Correct only for all-caps runs, which are letterspaced by hand here.
+  font-variant-alternates: styleset(round-punctuation, open-digits)
+    character-variant(curved-one);
+
   // Letter-spacing policy (2026-07-28): the font does it, so nothing here does.
   // With the axis following the rendered size, Inter's own tracking curve is
   // applied continuously and correctly at every rung, and a fixed letter-spacing
@@ -1324,13 +1361,26 @@ section.bg-primary {
   // label. (Inter also ships `cpsp`, the maker's own capital spacing, but it is
   // an optical correction of ~0.016em — a fifth of what a label like this wants.)
   letter-spacing: 0.08em;
+  // Case-sensitive forms: Inter redraws hyphen, en/em dash, colon, parens,
+  // bullet, @ and * for a run of capitals, lifting them off the lowercase
+  // optical centre — measured, the hyphen rises 110/2048 em and the colon 221.
+  // Without it a dash in an all-caps label sits visibly low, as if it had fallen
+  // out of the line. No CSS keyword maps to `case`, so it is named as a tag; a
+  // different property from the alternates above, so the two compose rather than
+  // one replacing the other.
+  font-feature-settings: "case" 1;
   line-height: 1.2;
   color: $slate-500;
 }
 
 // Metric — large tabular figure; the signature typographic move
 .metric {
-  font-feature-settings: "tnum" 1;
+  // `font-feature-settings: "tnum" 1` was here alongside this line, doing the
+  // same job twice — and doing harm, because font-feature-settings REPLACES the
+  // whole inherited list, so it was set to knock body's chosen alternates back
+  // out of exactly the numbers most worth reading. font-variant-numeric is a
+  // separate longhand and composes. (Inter draws the tabular "1" in the cv01
+  // shape too, so the metric figures match body copy.)
   font-variant-numeric: tabular-nums;
   font-weight: 700;
   line-height: 0.95;

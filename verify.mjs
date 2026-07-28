@@ -114,6 +114,54 @@ for (const name of htmlFiles) {
   }
 }
 
+// ---- @font-feature-values survived minification ----
+//
+// This block binds the names `font-variant-alternates` uses (open-digits,
+// round-punctuation, curved-one) to the Inter family. clean-css cannot parse it
+// and mangles it into something that still LOOKS present but binds nothing —
+// see the long note in optimize-css.mjs. The failure is invisible: no console
+// error, no layout shift, no broken page, just Inter's default wedge commas and
+// closed digits quietly back. So assert the shape, not the substring.
+for (const stem of ['main', 'chiasekinhnghiem']) {
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith(`${stem}.`) && f.endsWith('.css'),
+  );
+  if (!file) continue; // MUST_SHIP already covers a missing stylesheet
+  const css = readFileSync(join(SITE, 'css', file), 'utf8');
+
+  const at = css.indexOf('@font-feature-values');
+  if (at === -1) {
+    errors.push(`css/${file}: @font-feature-values block is missing`);
+    continue;
+  }
+  // Brace-match the block, then require both nested at-rules INSIDE it. The
+  // mangled form hoists @character-variant out to the top level, so a plain
+  // "does the file contain @character-variant" test would pass on broken CSS.
+  let depth = 0;
+  let end = -1;
+  for (let p = css.indexOf('{', at); p < css.length && p !== -1; p++) {
+    if (css[p] === '{') depth++;
+    else if (css[p] === '}' && --depth === 0) {
+      end = p;
+      break;
+    }
+  }
+  const block = end === -1 ? '' : css.slice(at, end + 1);
+  for (const nested of ['@styleset', '@character-variant']) {
+    if (!block.includes(nested)) {
+      errors.push(`css/${file}: ${nested} not inside @font-feature-values (minifier mangled it)`);
+    }
+  }
+  for (const value of ['open-digits', 'round-punctuation', 'curved-one']) {
+    if (!block.includes(value)) {
+      errors.push(`css/${file}: feature value "${value}" lost from @font-feature-values`);
+    }
+  }
+  if (!css.includes('font-variant-alternates')) {
+    errors.push(`css/${file}: @font-feature-values present but nothing uses it`);
+  }
+}
+
 if (errors.length) {
   console.error('  check        ✗ build verification FAILED:');
   for (const e of errors) console.error(`      - ${e}`);

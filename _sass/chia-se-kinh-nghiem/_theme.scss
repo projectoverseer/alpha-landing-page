@@ -106,6 +106,21 @@ body.kt {
 
   // Standard ligatures + contextual alternates, from the fonts' own tables.
   font-variant-ligatures: common-ligatures contextual;
+
+  // Chosen alternates (2026-07-28) — declared once here for the whole hub, and
+  // correct on both fonts precisely because it is NOT a raw tag list. The names
+  // are bound to the "Inter" family in _fonts.scss, so this line reaches the
+  // chrome (nav, kickers, meta, bylines, captions, buttons) and passes straight
+  // through the Literata article text, which never sees it.
+  //
+  // That distinction is load-bearing rather than tidy: Literata also has an ss01
+  // and it is "Adscript alternates", a Greek iota form. Written as
+  // `font-feature-settings: "ss01" 1` this rule would have switched that on in
+  // every article. Nothing needs declaring for Literata anyway — a book serif's
+  // commas and quotes are already the round forms ss03 gives Inter, which is why
+  // only one of the two fonts needed the change at all.
+  font-variant-alternates: styleset(round-punctuation, open-digits)
+    character-variant(curved-one);
 }
 
 .kt ::selection {
@@ -561,6 +576,8 @@ body.kt {
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.08em; // letterspaced caps — same amount as the kicker, same role
+  // Cap-height punctuation for a run of capitals (see .kt-kicker).
+  font-feature-settings: "case" 1;
 }
 
 // Only meaningful while the drip is running; without JS every post is already
@@ -622,6 +639,12 @@ body.kt {
   // Letterspaced caps: capitals are drawn to lead a word, so a run of them sets
   // too tight without air. 0.08em — the classical amount for a small caps label.
   letter-spacing: 0.08em;
+  // Case-sensitive forms — the second half of setting capitals properly. Both
+  // Inter and Literata redraw hyphen, dash, colon, parens and bullet for a caps
+  // run, lifting them off the lowercase optical centre; without it a dash in an
+  // all-caps label sits visibly low. Safe on either font: `case` means the same
+  // thing in both, which is exactly what is NOT true of the ss/cv tags.
+  font-feature-settings: "case" 1;
   color: var(--ink-3);
 }
 
@@ -1056,6 +1079,7 @@ body.kt-lightbox-open {
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.1em; // caps, and smaller than the kickers — smaller caps take more air
+  font-feature-settings: "case" 1; // cap-height punctuation (see .kt-kicker)
   color: var(--ink-3);
 }
 

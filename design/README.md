@@ -12,7 +12,8 @@ deliberately kept in the repo (but excluded from the Jekyll build — see
 
 | # | Document | Question it answers |
 |---|----------|--------------------|
-| 00 | `README.md` (this file) | What are we doing and why, at a glance? |
+| — | `README.md` (this file) | What are we doing and why, at a glance? |
+| 00 | `00-alpha-philosophy.md` | **The root document.** What does Alpha believe, across the software *and* the website — and where do the two deliberately differ? Written 2026-07-28 from AP's own words; everything below is this applied to one surface. |
 | 01 | `01-strategy-and-positioning.md` | What is the business *really* selling, to whom, and how do we say it? |
 | 02 | `02-design-principles.md` | What does "precision" mean as design — the rules every screen must obey? |
 | 03 | `03-information-architecture.md` | What sections exist, in what order, and what is each one's job? |

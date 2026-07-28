@@ -159,3 +159,33 @@
   font-display: swap;
   src: url("/fonts/math/alpha-math.woff2") format("woff2");
 }
+
+// -------------------------------------
+// Named OpenType alternates (2026-07-28)
+// -------------------------------------
+//
+// The hub is a separate stylesheet, so it needs its own copy of the names the
+// main site declares in _sass/_fonts.scss — that file's comment carries the full
+// reasoning. The short version, and the reason this hub is the exact case the
+// mechanism exists for:
+//
+// `@font-feature-values` is keyed BY FAMILY. The hub sets body copy in Literata
+// and chrome in Inter, so one inherited `font-variant-alternates` on `.kt`
+// resolves differently per element depending on which family actually renders it
+// — Inter's chrome takes the three switches, Literata's prose ignores them.
+//
+// That is not a nicety here. Literata HAS an `ss01` and it is "Adscript
+// alternates" (Greek iota subscript); a raw `font-feature-settings: "ss01" 1`
+// would have turned that on across every article. Nothing is declared for
+// Literata: it is a book serif whose commas and quotes are already round, so the
+// one change worth making to Inter is one it never needed.
+@font-feature-values "Inter" {
+  @styleset {
+    open-digits: 1; // ss01 — open 4/6/9, flat-topped 3
+    round-punctuation: 3; // ss03 — round comma/semicolon tail, true curly quotes
+  }
+
+  @character-variant {
+    curved-one: 1; // cv01 — scooped flag on the "1"
+  }
+}
