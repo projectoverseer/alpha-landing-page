@@ -161,17 +161,16 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
-// ---- the superellipse corner survived minification ----
+// ---- the squircle stays off ----
 //
-// Same shape of failure as the @font-feature-values bug above, and the same
-// reason it needs a gate: js/squircle.js was deleted 2026-07-28 and the corner
-// is now four lines of CSS inside `@supports (corner-shape: superellipse(2))`.
-// If a future minifier does not understand that at-rule and drops it, or drops
-// the unknown `corner-shape` property, every corner on both products quietly
-// reverts to a circular arc. No console error, no layout shift, no broken page
-// — just the design detail the whole thing was for, gone. So assert the block
-// is there AND that a scaled radius came with it (the depth match is the point;
-// `corner-shape` alone with the authored radius would be a shallower corner).
+// This gate used to assert the OPPOSITE: that `@supports (corner-shape:
+// superellipse(2))` had survived minification. The squircle was switched off
+// 2026-07-28 (owner: "hơi unconventional" — quy-cu §2), so the check flips.
+// It is kept rather than deleted because the failure it guards is the same
+// either way: a corner geometry that changes without anyone noticing. A stray
+// `corner-shape` reintroduced by a copied snippet would give one browser a
+// different silhouette from every other, which is exactly the split the
+// deactivation was for.
 for (const stem of ['main', 'chiasekinhnghiem']) {
   const file = readdirSync(join(SITE, 'css')).find(
     (f) => f.startsWith(`${stem}.`) && f.endsWith('.css'),
@@ -179,21 +178,30 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   if (!file) continue;
   const css = readFileSync(join(SITE, 'css', file), 'utf8');
 
-  // The condition holds a function call, so its own parentheses nest:
-  // `@supports (corner-shape:superellipse(2)){`. Match up to the block's brace
-  // rather than to the first `)`, which lands inside superellipse().
-  const blocks = css.match(/@supports\s*\([^{]*corner-shape[^{]*\{/g) || [];
-  if (!blocks.length) {
-    errors.push(`css/${file}: no @supports (corner-shape) block — the squircle corner was dropped`);
-    continue;
+  if (/corner-shape/.test(css)) {
+    errors.push(
+      `css/${file}: corner-shape is back — the squircle is meant to be off (quy-cu §2)`,
+    );
   }
-  if (!/corner-shape\s*:\s*superellipse\(2\)/.test(css)) {
-    errors.push(`css/${file}: @supports (corner-shape) present but nothing sets superellipse(2)`);
+  // The depth-matched radii the squircle needed: 8 × 1.8409 = 14.7272,
+  // 12 × = 22.0908, 16 × = 29.4544. Any of those surviving means a call site is
+  // still scaling by hand.
+  if (/border-radius:\s*(?:14\.7|22\.09|29\.45)/.test(css)) {
+    errors.push(`css/${file}: a depth-matched radius survived — a call site is still × 1.8409`);
   }
-  // 8 × 1.8409 = 14.7272, 12 × = 22.0908, 16 × = 29.4544. A whole-pixel radius
-  // inside the block means the depth match was lost somewhere.
-  if (!/border-radius:\s*\d+\.\d+px/.test(css)) {
-    errors.push(`css/${file}: no depth-matched radius (n.nnnn px) — squircle() lost its scale`);
+
+  // ---- the focus ring has ONE shape ----
+  // The ring is a box-shadow, so it copies the silhouette of whatever it
+  // surrounds — and a run of inline text has none, which is how the site ended
+  // up with rounded rings on the buttons and hard rectangles on the links. One
+  // zero-specificity rule supplies the floor (quy-cu §5). It is written with
+  // `:where()`, which is precisely the kind of selector a minifier or PurgeCSS
+  // is most likely to mangle, and losing it fails silently: the ring is still
+  // there, just two different shapes again.
+  if (!/:where\([^)]*:focus-visible[^)]*\)\s*\{[^}]*border-radius/.test(css)) {
+    errors.push(
+      `css/${file}: the :where(:focus-visible) radius is gone — the ring is two shapes again`,
+    );
   }
 }
 

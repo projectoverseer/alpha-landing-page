@@ -115,9 +115,10 @@ would miss). The numbered principles below are applications of this one.
 
    **The script budget is three files, and all of them are optional to the
    page.** It was four until 2026-07-28, when `squircle.js` was deleted: the
-   superellipse corner it computed at runtime is now four lines of CSS in
-   `_sass/_quy-cu.scss` (design/08 §2), so the hub loads no script at all to
-   draw a corner. `kt-lightbox.js`
+   superellipse corner it computed at runtime moved into CSS and was then
+   switched off entirely later the same day (design/08 §2.1), so the hub loads
+   no script at all to draw a corner and no longer draws a special one.
+   `kt-lightbox.js`
    (~3 KB min, article pages only, July 2026) is the picture viewer: tapping a
    figure opens it full-screen at its largest shipped size — these are
    infographics and lab reports, and the reading column is not where a 1344px
@@ -161,21 +162,47 @@ used size; body text clears AAA.
 | `--indigo` | `#2F4E7E` | Links, accents — the only action color (≥6:1) |
 | `--indigo-deep` | `#243C61` | Hover/active, button fill |
 
-**The highlighter.** `::selection` is `rgba(255, 242, 0, 0.4)` — `#FFF200` is
-the actual ink in a Stabilo Boss or a Sharpie Accent, not a yellow picked to
-resemble one, and at 40% over paper it lands on `#FCF691`: the colour a marker
-leaves on a real page. It is here because of what this product is. The hub is
-paper, a book serif and warm ink, and the one thing a reader does to a page that
-matters to them is mark it — and selecting text is also the first move of
-quoting us to someone else, which is the whole job (§1). The gesture is answered
-with the object it imitates, in one declaration, adding nothing to the page.
+**Selecting is not highlighting.** These are two gestures and they get two
+colours, designed as a pair:
 
-Measured against every text tier that can fall inside a selection, because a
-highlight that eats the words is worse than no highlight: ink **13.89:1**,
-indigo link **7.46:1**, `--ink-2` **6.81:1**, `--ink-3` caption **5.02:1**; and
-in the picture viewer, where the same wash lands on near-black, paper text still
-reads at **5.16:1**. The main site keeps its dye-orange wash — selection colour
-is *look*, and look belongs to each product (08 §0).
+| | | | |
+|---|---|---|---|
+| `::selection` | `#F0E5BB` | L\* 90.8 · C\* 22 | the paper going warm under your hand |
+| `mark` | `#FCF691` | L\* 95.4 · C\* 50 | the marker — the loud one |
+| `mark::selection` | `#E9D98A` | | a marked run stays visible while it is dragged over |
+
+A **selection** is something the machine is holding for a moment; it disappears
+the instant you click elsewhere. A **highlight** is something the reader decided
+to leave on the page. Between 2026-07-15 and 2026-07-28 selection was the actual
+ink of a Stabilo Boss, `#FFF200` — which spends the page's loudest yellow on its
+shortest-lived state and leaves nothing for a real highlight to be. The owner
+caught it: *"bản chất select text không phải là highlight."* ΔC\* between the
+two is now **28**, so they cannot be confused at a glance, and a highlight
+feature added later stays legible under a selection dragged across it.
+
+**Both are opaque — background AND colour.** A translucent wash has to be
+re-measured on every ground it can land on, and this hub has four: paper,
+`--paper-deep` (cards, blockquotes, table heads, the footer), the near-black
+picture viewer, and a marked run. On `--paper-deep` the old wash put the caption
+tier at **4.40:1**, under the 4.5 SC 1.4.3 asks. Naming the ink as well makes
+one pairing correct everywhere, including on grounds nobody has invented yet:
+`--ink` measures **12.33:1** on the selection and **13.89:1** on the mark.
+
+The main site keeps its dye tint, opaque on the same reasoning — selection
+colour is *look*, and look belongs to each product (08 §0, §5.1). And nothing a
+reader might quote is ever made unselectable; the policy is 08 §5.1.
+
+**Pictures keep square corners** — in the feed, in Đọc tiếp and in the article
+(owner asked, 2026-07-28). A rounded corner is a *screen* convention: a card, a
+tile, a thing the OS drew. This hub is a printed page — hairline rules, a book
+serif, a caption set like a plate note — and a picture on a printed page is a
+plate. Each already carries a 1px frame doing the job the main site's radius
+does for a bare photograph on white. It is also the same picture in three
+places, at three sizes; if the feed rounded them and the article did not, the
+object would change shape as the reader walked toward it. The boxes a reader
+*touches* still take the corner — `.kt-button`, `.kt-series-card`,
+`.kt-cta-note` — because those are controls, and a control is a screen object.
+The avatar stays a circle, which is a face, not a plate.
 
 Rules:
 - Indigo means "you can act on this." Never use it decoratively.
@@ -523,7 +550,7 @@ Must survive any redesign (change only with an explicit owner decision):
   line: it is rendered at build time, never in the browser. (The bar briefly
   loosened from *no script* to *no script that matters* when squircle.js was
   added in July 2026; deleting it on 2026-07-28 put the hub back under the
-  stricter reading, with the corner intact — see design/08 §2.)
+  stricter reading — see design/08 §2.2.)
 - The Alpha + Chia sẻ kinh nghiệm lockup as the one mark in the title bar, and the hub
   as a feed that opens on content (no masthead);
 - CTA restraint rules, the mandatory signature, and Alpha as the copyright

@@ -24,33 +24,45 @@
     This is one long page. It can scroll to its own sections — a reader does
     that with a thumb, and does it without being told. What it cannot do on its
     own is open a specific product panel, cross to the reading hub, dial us, or
-    change language. Those four are chrome; a section anchor is not.
+    change language. Those four are chrome; a section anchor is not. On the
+    expanded bar the anchors needed ~648px against ~565px of free width and the
+    labels wrapped to a second line — measured on the live build, not guessed.
 
-    So the anchors below are marked `nav-item--toc` and shown only in the drawer
-    (under lg), where there is a column of room and a table of contents is
-    genuinely useful on an eight-section page held in one hand. On the expanded
-    bar they would need ~648px against ~565px of free width and the labels wrapped
-    to a second line — measured on the live build, not guessed.
+    CORRECTION, 2026-07-28: the previous pass hid them with a `nav-item--toc`
+    class above lg, on the stated reasoning that below lg they lived in a
+    drawer. There is no drawer. This navbar has no toggler — `.navbar-collapse`
+    is plain `.collapse`, so under lg it is `display: none` and the entire list
+    is already invisible there. Hiding them above lg hid them from the only
+    width that ever showed them.
 
-    Nothing is deleted. Every anchor stays in the DOM, in reading order, in the
-    tab order, and in the accessibility tree at every width; below lg it is also
-    visible. What changes is only what a wide screen shows.
+    So they are `visually-hidden` + `tabindex="-1"` now, which is exactly what
+    the three anchors below and above this block already were, and what they
+    should have been from the start: present in the DOM and in the
+    accessibility tree, out of the tab order (so no keyboard user lands on a
+    link they cannot see — SC 2.4.7), and still there for scrollspy, which needs
+    a link per observed section to track the whole page.
+
+    KNOWN AND NOT FIXED HERE: because there is no drawer, `Các sản phẩm` and the
+    hub link are invisible below 1024px too — that is, to four out of five
+    readers. That is a bigger change than this pass, and it is flagged rather
+    than quietly patched.
   {%- endcomment -%}
   <div class="collapse navbar-collapse" id="navbar-collapse">
     <ul class="navbar-nav ms-auto">
       <li class="visually-hidden nav-item">
         <a class="nav-link" href="#{{ t.toc_hero_id }}" tabindex="-1">{{ t.toc_hero }}</a>
       </li>
-      <li class="nav-item nav-item--toc">
-        <a class="nav-link" href="#{{ t.toc_overview_id }}">{{ t.toc_overview }}</a>
+      <li class="visually-hidden nav-item">
+        <a class="nav-link" href="#{{ t.toc_overview_id }}" tabindex="-1">{{ t.toc_overview }}</a>
       </li>
-      <li class="nav-item nav-item--toc">
-        <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}">{{ t.toc_benefits }}</a>
+      <li class="visually-hidden nav-item">
+        <a class="nav-link nav-link-active-blue" href="#{{ t.toc_benefits_id }}" tabindex="-1">{{ t.toc_benefits }}</a>
       </li>
       <li class="nav-item dropdown">
         <a
           aria-expanded="false"
           class="nav-link dropdown-toggle"
+          data-bs-display="static"
           data-bs-toggle="dropdown"
           href="#{{ t.toc_products_id }}"
           role="button"
@@ -78,11 +90,11 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item nav-item--toc">
-        <a class="nav-link" href="#{{ t.toc_projects_id }}">{{ t.toc_projects }}</a>
+      <li class="visually-hidden nav-item">
+        <a class="nav-link" href="#{{ t.toc_projects_id }}" tabindex="-1">{{ t.toc_projects }}</a>
       </li>
-      <li class="nav-item nav-item--toc">
-        <a class="nav-link" href="#{{ t.toc_reviews_id }}">{{ t.toc_reviews }}</a>
+      <li class="visually-hidden nav-item">
+        <a class="nav-link" href="#{{ t.toc_reviews_id }}" tabindex="-1">{{ t.toc_reviews }}</a>
       </li>
       {% if t.toc_knowledge %}
       <li class="nav-item">
@@ -121,6 +133,7 @@
     <a
       aria-expanded="false"
       class="nav-link dropdown-toggle language-switcher"
+      data-bs-display="static"
       data-bs-toggle="dropdown"
       href="#"
       role="button"

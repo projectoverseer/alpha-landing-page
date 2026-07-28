@@ -25,7 +25,7 @@ interface at all (Absolute Neutrality, philosophy §2).
 |---|---|---|
 | **Indigo text** | `--indigo`, hover `--indigo-deep` | "You can act on this." The only action color. Never decorative. |
 | **Quiet link** | inherits its line's grey; hover: `--ink` + underline (`text-underline-offset: 0.2em`) | "This labels the thing it sits under first, and offers a route second." Topic tags, series lines, the kicker, byline/signature author, the brand name. |
-| **Card** | 1px `--line` border, 8px superellipse corner (`squircle($r-2)`, design/08 §2), flat, no shadow; hover: border warms to `--indigo`, title underlines | "This whole surface is one destination." Series prev/next, series rail cards. |
+| **Card** | 1px `--line` border, 8px corner (`corner($r-2)`, design/08 §2), flat, no shadow; hover: border warms to `--indigo`, title underlines | "This whole surface is one destination." Series prev/next, series rail cards. |
 | **Button** | `.kt-button`: indigo fill, paper text, Inter 600 15px; `:active` scale 0.98. `.kt-button-quiet`: transparent, hairline inset, indigo text | Filled = the primary action of its row; quiet = a peer action. |
 | **Metadata line** | Inter 400, 13–14px, `--ink-3`, +0.01em residual tracking | "Facts about the thing above, not the thing itself." |
 | **Kicker / tag caps** | Inter 650, `--fs-label` 13px, uppercase, +0.08em, `case` on | "A label naming a category." |

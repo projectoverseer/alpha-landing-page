@@ -2,10 +2,24 @@
   <p class="h5">{{ t.legal_name }}</p>
   <address class="big">
     <dl>
+      {%- comment -%}
+        No glyph on the phone row and none on the email row (2026-07-28, and it
+        is the answer to "should email get an icon too?" — no).
+
+        A glyph earns its place when it says something the words do not. In this
+        list the <dt> already says "Số điện thoại" and "Email", so a handset and
+        an envelope beside them repeat the label in a second alphabet. The
+        handset that used to sit here has moved to where it does work: the three
+        buttons that DIAL. A glyph rides an action, never a label.
+
+        The external-link mark stays on Facebook, because "opens somewhere else"
+        is the one thing no word on this row says — and it sits INSIDE the
+        anchor now, so it is part of the link's hit area, its focus ring and its
+        hover, instead of a stray object standing after it.
+      {%- endcomment -%}
       <dt>{{ t.footer_label_phone }}:</dt>
       <dd>
         <a href="tel:+84983505002">{{ t.display_phone }}</a>
-        {% include icon-phone.html %}
         <small class="text-secondary">
           {{ t.male_title }} <span lang="vi">Tuấn Anh</span>, {{ t.director_title }} {{ t.of }} Alpha
         </small>
@@ -23,8 +37,7 @@
           href="{{ site.facebook_page }}"
           rel="nofollow noopener external"
           target="_blank"
-        >Facebook</a>
-        {% include icon-external-link.html %}
+        >Facebook{% include icon-external-link.html %}</a>
       </dd>
       <!-- <dt>{{ t.footer_label_hours }}:</dt>
       <dd>8:00 &ndash; 11:00 ({{ t.footer_hours_morning }})</dd>

@@ -122,9 +122,17 @@ $accent-strong: $dye-700; // small accent text and CTA fill (AA on white)
 $accent-on-dark: $dye-400; // brightened one step so it stays vivid on ink
 $focus: $blue-600; // on dark surfaces _base.scss redeclares --focus: white
 
+// — Selection. A PAIR, both opaque, because a translucent wash cannot be
+//   guaranteed: measured, the old rgba($accent,.24) put $link at 4.07:1 and
+//   $fg-subtle at 3.86:1 — both under SC 1.4.3 — and no alpha strong enough to
+//   see kept them above it. The background is exactly what that wash composited
+//   to on the white page, so the page looks the same and only the promise is
+//   new. Argued out in _base.scss; the measurement is $fg on it at 12.70:1.
+$selection-bg: #f8d5c3;
+$selection-fg: $fg;
+
 // — Icons
 $icon: $blue-700;
-$icon-quiet: $ink-500;
 $icon-on-dark: $ink-50;
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -361,12 +369,25 @@ $link-hover-decoration: underline;
 
 $navbar-padding-y: 0;
 $navbar-light-color: $fg;
-$navbar-light-hover-color: $navbar-light-color;
+// The white bar answers a pointer the same way the transparent one does. It
+// used to answer with nothing at all — this was `$navbar-light-color`, i.e.
+// hover meant "stay exactly as you are" — so the bar was live over the hero and
+// dead the moment you scrolled, which is the same control behaving two ways.
+//
+// It is the ACTIVE colour, not a third one, and that is on purpose: the bar
+// carries one accent, and pointing at a link previews the state it would take.
+// The dark bar already worked this way ($navbar-dark-hover-color and
+// $navbar-dark-active-color are both $dye-300). $dye-700 measures 5.8:1 on
+// white, so the hover state clears AA as normal text on its own.
+$navbar-light-hover-color: $link-alt-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
 $navbar-nav-link-padding-x: step(3);
 $nav-link-font-weight: 600;
-$nav-link-transition: none;
+// A colour flip is the shortest of the three durations — "the answer to a
+// finger" (quy-cu §4). It was `none`, which made the new hover state land as a
+// jump-cut.
+$nav-link-transition: color var(--t-1) var(--ease);
 $nav-link-line-height: $tap; // 44px — the bar's links are thumb targets too
 $navbar-dark-color: $fg-on-dark;
 $navbar-dark-hover-color: $link-alt-hover-dark-color;
@@ -384,17 +405,19 @@ $dropdown-link-active-state-bg: $ink-100;
 $dropdown-border-width: $border-width;
 $dropdown-border-color: $border-color;
 $dropdown-border-radius: $r-2;
-// ONE chevron for every "this opens downward" on the site, and no fill baked
-// into it — it is painted through `mask` + currentColor (see _base.scss), so it
-// is always exactly the colour of the control it belongs to.
+// Two downward marks, because they are two different sentences — the chevron
+// for "this expands in place" (accordion, <details>) and the caret for "a menu
+// opens over the page" (the two dropdown toggles). The argument, including why
+// the pass before this was wrong to merge them, is at the top of _base.scss.
 //
-// It replaced three files. The accordion used `keyboard_arrow_down` (a chevron)
-// and the dropdown used `arrow_drop_down` (a filled triangle): two different
-// objects saying the same sentence. Each carried a hard-coded grey — #676767
-// and #ececec, neither of which is a rung of the ink ramp — and the second file
-// existed only because the first could not change colour, which then needed a
-// media query to choose between them. All of that is gone.
+// Neither carries a fill: both are painted through `mask` + currentColor, so
+// each is exactly the colour of the control it belongs to. That is what
+// replaced the three files this used to be — one chevron and TWO copies of the
+// caret, in hard-coded greys (#676767 and #ececec, neither a rung of the ink
+// ramp), the second copy existing only because the first could not change
+// colour, which then needed a media query to choose between them.
 $chevron-down: "../img/svg/ui_icons/chevron-down.svg";
+$caret-down: "../img/svg/ui_icons/caret-down.svg";
 
 // A menu row is a control, so it gets the control's target. 12px above and
 // below a 16px/1.6 line = 44px exactly. It used to be 4px, giving 32px.

@@ -62,67 +62,52 @@ $step: (
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 2. SHAPE — the corner, and why it is CSS now
+// 2. SHAPE — one plain corner, five radii
 // ─────────────────────────────────────────────────────────────────────────────
 //
-// A circular border-radius joins the straight edge with a curvature jump (0 to
-// 1/r at the tangent point) and the eye reads that point as "here the corner
-// starts". A superellipse with n > 2 meets the edge at zero curvature, so the
-// bend fades in and nothing marks where it begins. That is the whole argument,
-// and it is Absolute Neutrality in one shape: 98% of readers never see it, and
-// they would feel the page get harder if it went.
+// THE SQUIRCLE IS OFF (owner's call, 2026-07-28: "hơi unconventional"). Every
+// corner on both products is now an ordinary circular `border-radius` and
+// nothing else. The argument for keeping it here is not that the superellipse
+// was wrong — it is that a corner nobody can name is doing its job, and this
+// one had started asking to be discussed. Absolute Neutrality cuts both ways:
+// a detail that survives only because it is explained is no longer neutral.
 //
-// DEPTH IS THE INVARIANT. What registers as "how rounded" is the 45° depth of
-// the corner cut:
+// It also cost more than it looked. `corner-shape` is a 2025 property with one
+// engine behind it, so the page was drawing TWO different silhouettes side by
+// side — Chromium 139+ got the superellipse, every iPhone in the country got
+// the circle — and the depth-matched radius (× 1.8409) meant the two rounded
+// by visibly different amounts wherever the fallback landed. On top of that
+// its young implementation is what put a mismatched ring around the buttons
+// and left fragments behind after focus moved (§5). One shape, everywhere,
+// beats a better shape in one browser.
 //
-//     depth(r, n) = r · √2 · (1 − 2^(−1/n))
+// What is kept, and what a later reader needs if this is ever revisited: the
+// depth of a 45° corner cut is depth(r, n) = r · √2 · (1 − 2^(−1/n)), so an
+// n = 4 superellipse must have its radius grown by 1.8409 to sit as deep as
+// the circle of radius r. That number is why the old CSS looked the way it
+// did. It is recorded here and used nowhere.
 //
-// so a superellipse needs its radius grown by
-//
-//     s(n) = (1 − 2^(−1/2)) / (1 − 2^(−1/n))
-//
-// to sit at the same depth as the circle of radius r. At n = 4 — the squircle
-// proper, x⁴ + y⁴ = r⁴, and what `corner-shape: superellipse(2)` means, since
-// the argument is log₂(n) — that scale is 1.8409.
-//
-// THIS USED TO BE A SCRIPT (js/squircle.js, deleted 2026-07-28). It swept the
-// whole document with getComputedStyle, kept a MutationObserver on
-// documentElement, a ResizeObserver on constrained elements, and wrote inline
-// !important styles over the stylesheet — 16 KB of main-thread work on every
-// page, on phones, to produce values that were knowable at authoring time.
-// Four fifths of our readers are on a phone. A design detail that costs them
-// scroll frames is not neutral, whatever it looks like.
-//
-// The one thing the script did that CSS cannot is fit the exponent to elements
-// with no room for the full curve (a 44px-tall button cannot hold a 22px
-// corner). That case is handled here by knowing the sizes: every call site
-// below has been checked, and where the depth-matched radius would pass half
-// the shorter side the browser's own proportional shrink (CSS Backgrounds
-// §5.5) lands within a fraction of a pixel of what the script computed. The
-// script was solving at runtime a problem with eleven known answers.
-//
-// Browsers without `corner-shape` (everything before Chromium 139, all of iOS
-// today) get the authored circular radius and nothing else changes — which is
-// exactly what they got before.
-$squircle-scale: 1.8409;
+// (js/squircle.js — the 16 KB runtime sweep that predated the CSS — stays
+// deleted. Four fifths of our readers are on a phone; a corner is not worth a
+// MutationObserver.)
 
 // Five radii, and each one is bound to a KIND of object rather than a size, so
 // the question "which radius?" is answered by "what is it?" and never by taste.
 // The main site had nine rungs of which four were used; the hub had one value
 // written out four times. This is the whole vocabulary for both.
-$r-1: 4px; // flags, code, tiny chips
+$r-1: 4px; // flags, code, tiny chips, the focus ring's own floor
 $r-2: 8px; // inputs, menus, small controls, the hub's cards and buttons
 $r-3: 12px; // buttons
 $r-4: 16px; // cards, images, accordion
 $r-5: 24px; // portraits, large panels
 
-@mixin squircle($r) {
+// Named `corner`, not `squircle`, because it now cuts a plain one and a mixin
+// whose name outlives its behaviour is how a codebase starts lying. It stays a
+// mixin rather than becoming a bare `border-radius:` at 20 call sites so that
+// "which radius?" is still answered by naming the object — and so a future
+// change of mind lands in one place.
+@mixin corner($r) {
   border-radius: $r;
-
-  @supports (corner-shape: superellipse(2)) {
-    border-radius: $r * $squircle-scale;
-    corner-shape: superellipse(2);
-  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -202,17 +187,29 @@ $tap: 2.75rem;
 //
 //  2. HOW IT RENDERED. Observed, on the owner's screen: the ring drew as a
 //     shape that did not match the button it surrounded, and fragments of it
-//     survived after focus moved on. Note that per spec this SHOULD work —
-//     MDN lists `outline` among the properties that follow `corner-shape`,
-//     alongside `background`, `border` and `box-shadow`. So this is the
-//     implementation being young, not the property being wrong, and it may
-//     well be fixed upstream later. It is still what shipped and what a reader
-//     saw. A box-shadow is painted with the element's own border-box
-//     decoration rather than in a separate outline pass, so it composites and
-//     repaints with the element and does not leave anything behind.
+//     survived after focus moved on. Per spec this SHOULD work — MDN lists
+//     `outline` among the properties that follow `corner-shape` — so it was
+//     the implementation being young, not the property being wrong. The
+//     squircle has since been switched off (§2), which removes the cause; the
+//     ring stays a box-shadow because reason 1 is unaffected by that and is on
+//     its own decisive. A box-shadow is painted with the element's own
+//     border-box decoration rather than in a separate outline pass, so it
+//     composites and repaints with the element and leaves nothing behind.
 //
-// Reason 1 alone would be enough. Reason 2 is why it looked broken rather than
-// merely inconsistent.
+// THE RING HAS A SHAPE OF ITS OWN, and this is the second thing the owner
+// caught: on a plain text link the ring came out a hard rectangle while every
+// control on the page wore a rounded one. A box-shadow copies the silhouette
+// of what it surrounds, which is right for a control — a button's ring is that
+// button, 5px bigger — but a run of inline text HAS no silhouette, so it was
+// copying `border-radius: 0` and the site ended up with two kinds of focus
+// ring depending on what happened to be focused.
+//
+// So: where there is a silhouette the ring still copies it; where there is
+// none it brings the smallest rung, $r-1. That is one rule, it is declared at
+// zero specificity (`:where`) so that anything with a shape of its own wins
+// automatically and forever, and it means a reader never sees two shapes of
+// ring on one page.
+$focus-radius: $r-1;
 //
 // TWO TONES, because one colour cannot do this job. The ring has to be visible
 // against BOTH the thing it surrounds and the ground that thing sits on, and
@@ -244,6 +241,15 @@ $tap: 2.75rem;
 // nothing and gets the ring alone.
 $focus-halo-width: 2px;
 $focus-ring-thickness: 3px;
+
+// The ring's own corner is applied by each product in ONE rule, written at
+// zero specificity so anything with a shape of its own wins automatically:
+//
+//     :where(:focus-visible) { border-radius: $focus-radius; }
+//
+// It is not folded into the mixin below on purpose. `focus-ring` is included
+// inside selectors that DO have a silhouette (`.btn:focus-visible`), and a
+// radius in there would overwrite theirs.
 
 @mixin focus-ring($under: null) {
   $halo: 0 0 0 $focus-halo-width var(--focus-halo);

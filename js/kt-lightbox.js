@@ -66,9 +66,15 @@
     closeBtn.type = 'button';
     closeBtn.className = 'kt-lightbox-close';
     closeBtn.setAttribute('aria-label', 'Đóng');
+    // Material Symbols `close`, Outlined / fill 0 / wght 400 / GRAD 0 / opsz 24
+    // — the same setting as every other icon on the site (design/08 §9). It was
+    // a hand-drawn stroked X, and it was the last icon anywhere that came from
+    // somewhere else; it was missed in the 2026-07-28 sweep because it lives in
+    // JavaScript rather than in an include. Filled path, not a stroke, so it
+    // scales and rasterises like the rest of the set.
     closeBtn.innerHTML =
-      '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">' +
-      '<path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+      '<svg viewBox="0 -960 960 960" width="22" height="22" fill="currentColor" aria-hidden="true" focusable="false">' +
+      '<path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>';
     closeBtn.addEventListener('click', function () { close(false); });
 
     stage = document.createElement('div');

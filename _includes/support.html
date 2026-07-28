@@ -1,10 +1,15 @@
 <section class="bg-primary" id="{{ t.toc_support_id }}">
   <div class="container">
     <h2>{{ t.support_title }}</h2>
+    {%- comment -%}
+      The handset that used to stand after the number here is gone: the sentence
+      already opens with "Hãy gọi", so the glyph was saying the verb a second
+      time. It survives on the button below, where a glyph is how a filled pill
+      is recognised before it is read.
+    {%- endcomment -%}
     <p class="big">
       {{ t.support_call_prompt }}
       <a href="tel:+84983505002">{{ t.display_phone }}</a>
-      {% include icon-phone.html %}
       {{ t.support_email_prompt }}
       <a
         href="mailto:{{ site.email }}"
@@ -26,7 +31,7 @@
         class="btn-ghost btn-xl"
         href="mailto:{{ site.email }}"
         onclick="copyEmailToClipboard(this, '{{ t.copied_email_message }}')"
-      >{{ t.support_cta }}</a>
+      >{% include icon-email.html %}{{ t.support_cta }}</a>
     </div>
   </div>
 </section>

@@ -58,7 +58,15 @@ toc_reviews: "Đánh giá"
 toc_reviews_id: "danh-gia"
 # Link to the Chia sẻ kinh nghiệm hub (/chia-se-kinh-nghiem/). Vietnamese-only content, so the key
 # exists only here — navbar.html renders the item only when the key is present.
-toc_knowledge: "Chia sẻ kinh nghiệm"
+#
+# "Blog" leads the name on purpose (2026-07-28). On its own, "Chia sẻ kinh
+# nghiệm" is a VERB PHRASE, and in a row of nav items a verb phrase reads as
+# something you do here — closer to a feedback form than to a place. Every other
+# item in the bar is a noun. "Blog" makes it a place in one word that every
+# Vietnamese reader already pictures, and the rest of the label still matches
+# what the destination calls itself in its own lockup, which is the whole
+# wayfinding contract: you clicked X, you arrived at X.
+toc_knowledge: "Blog Chia sẻ kinh nghiệm"
 toc_our_story: "Về chúng tôi"
 toc_our_story_id: "ve-chung-toi"
 toc_support: "Chăm sóc khách hàng"

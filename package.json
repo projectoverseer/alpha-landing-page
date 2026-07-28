@@ -14,7 +14,7 @@
     "picomatch": "^2.3.2"
   },
   "scripts": {
-    "clean": "shx rm -rf _site",
+    "clean": "shx rm -rf _site .sass-cache",
     "build:jekyll": "cross-env JEKYLL_ENV=production bundle exec jekyll build",
     "optimize:math": "node optimize-math.mjs",
     "optimize:css": "node optimize-css.mjs",

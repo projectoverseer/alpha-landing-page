@@ -47,15 +47,20 @@ Structure: **ramps → roles → Bootstrap bridge** (see 08 §6). A component na
   rest `$dye-deep` → hover `#c9420c` → pressed `#a33208`.
 - **Blue** `#004c97` / `#009cde` — links and the cool counterpoint. Blue says
   "you can act on this"; dye says "this is the point."
-- Even `::selection` carries a quiet dye wash — the brand shows up in the act
-  of reading closely, without adding a single element. (The reading hub answers
-  the same gesture with a **highlighter yellow** instead; selection colour is
-  *look*, and look belongs to each product — 08 §0. A reader here is meant to
-  pick up a phone, not a marker.)
+- `::selection` is a **pair**, `#f8d5c3` with `$fg` ink — the same warm dye
+  tint the old translucent wash composited to on white, now opaque so it is
+  correct on the tinted band and over the hero as well. The brand shows up in
+  the act of reading closely, without adding a single element. The measurement
+  and the AA failure that forced the change are 08 §5.1, along with the rule for
+  what may and may not be selected. (The hub answers the same gesture with a
+  quiet straw yellow, and keeps the loud marker yellow for `<mark>`; selection
+  colour is *look*, and look belongs to each product — 08 §0.)
 - **Icons are Material Symbols, Outlined, fill 0, weight 400, grade 0**, at the
-  optical size they actually render at — the full argument and the axis table
-  are 08 §9. Feature icons are inlined SVG at `--size-icon` (48/56/64px); the
-  one chevron is a `mask` in `currentColor`, so it needs no colour of its own.
+  optical size they actually render at — the full argument, the axis table, the
+  per-icon audit and the "a glyph rides an action, never a label" rule are 08
+  §9. Feature icons are inlined SVG at `--size-icon` (48/56/64px). Two downward
+  marks, both `mask` in `currentColor` so neither needs a colour of its own:
+  the **chevron** for *expands in place*, the **caret** for *a menu opens*.
 
 ## 3. Type
 
@@ -92,12 +97,12 @@ Structure: **ramps → roles → Bootstrap bridge** (see 08 §6). A component na
 - The **quy củ space ladder** (08 §1) — one 4px ladder, eleven rungs, shared
   with the reading hub. Section rhythm 48/64/96px; content column ≈ 1140px with
   generous margins. Whitespace is the confidence signal.
-- **Corners are continuous** — the n = 4 squircle, `corner-shape:
-  superellipse(2)` with the radius depth-matched ×1.8409, from the shared
-  `squircle()` mixin (08 §2). Five radii, each bound to a kind of object. It is
-  pure CSS as of 2026-07-28; `js/squircle.js` was deleted. Corner geometry
-  follows the squircle convention, **not** φ — φ stays a *finishing splash*,
-  never the structural backbone (owner rule).
+- **Corners are plain** — an ordinary circular `border-radius` from the shared
+  `corner()` mixin (08 §2). Five radii, each bound to a kind of object. The
+  superellipse was switched off 2026-07-28 (owner: *"hơi unconventional"*) and
+  `js/squircle.js` was deleted before it; the reasoning, and the two bugs the
+  superellipse was causing, are 08 §2.1. Corner geometry does **not** follow φ —
+  φ stays a *finishing splash*, never the structural backbone (owner rule).
 - Hairlines are translucent (`rgba` separators) so they adapt to any surface.
 
 ## 5. Imagery & scrims
@@ -137,8 +142,7 @@ moves to decorate.
 ## 8. Vocabulary of parts (all implemented in `_sass/_base.scss`)
 
 `.navbar-call` (the chrome's one-tap dialler — the main page's purpose, made
-reachable on a phone) · `.nav-item--toc` (a section anchor: shown in the drawer,
-hidden once the drawer becomes a bar) · `.actions` (a CTA row that stacks
+reachable on a phone) · `.actions` (a CTA row that stacks
 full-width under sm) · `.kicker` · `.metric` (+ `__unit`, `__from/__to`) ·
 `.heading-number` (calibration marker: Inter Display index + hairline run-out) ·
 `.btn-primary` / `.btn-ghost` on `.btn-xl` · `.service-box` ·

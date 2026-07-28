@@ -1,20 +1,35 @@
-// ─── The chevron, painted as a shape rather than a picture ───
+// ─── The two downward marks, painted as shapes rather than pictures ───
 //
-// Every "this opens downward" on the site — the accordion header, the products
-// dropdown, a <details> marker in prose — is this one file, masked so it takes
-// currentColor. That is the whole reason it is a mask and not a background
-// image: an SVG with a fill baked into it cannot follow the control it belongs
-// to, which is why there used to be a second copy of the file in a lighter grey
-// and a media query to choose between them. A masked shape has no colour of its
-// own, so it is correct on the white bar, over the hero photograph, in a state
-// nobody has thought of yet, and — the case the old one actually failed — in
-// forced-colors mode, where a baked fill is thrown away and the chevron simply
-// vanished. There is now nothing to keep in sync.
-@mixin chevron-down {
+// TWO, not one, and 2026-07-28 got this wrong in the other direction. The pass
+// before this collapsed both into a single chevron on the grounds that they say
+// the same sentence. They do not:
+//
+//   chevron  keyboard_arrow_down  "this expands IN PLACE"  — the accordion
+//                                  header, a <details> in prose. The content
+//                                  appears below and pushes the page down.
+//   caret    arrow_drop_down      "a MENU opens over the page" — the products
+//                                  dropdown, the language switcher. A floating
+//                                  list, chosen from, that then goes away.
+//
+// Those are different gestures and every system that ships both distinguishes
+// them the same way: Material's own semantics, Bootstrap's native
+// `.dropdown-toggle::after` (a solid triangle), GitHub Primer. Apple and Fluent
+// use a chevron for both, so it is not universal — but we are on Bootstrap,
+// drawing with Material, and agreeing with the two things we build on beats a
+// tidier rule that agrees with neither.
+//
+// What the earlier pass got RIGHT and this keeps: both are masks, not images.
+// An SVG with a fill baked in cannot follow the control it belongs to, which is
+// why there used to be a second copy of one file in a lighter grey and a media
+// query to choose between them. A masked shape has no colour of its own, so it
+// is correct on the white bar, over the hero photograph, in a state nobody has
+// thought of yet, and — the case the old one actually failed — in forced-colors
+// mode, where a baked fill is thrown away and the mark simply vanished.
+@mixin mask-icon($src) {
   background-color: currentColor;
   background-image: none;
-  -webkit-mask: url(#{$chevron-down}) center / contain no-repeat;
-  mask: url(#{$chevron-down}) center / contain no-repeat;
+  -webkit-mask: url(#{$src}) center / contain no-repeat;
+  mask: url(#{$src}) center / contain no-repeat;
 }
 
 body {
@@ -140,11 +155,35 @@ a {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
+// ─── Selection ───
+//
 // Text selection carries a quiet dye wash — a small brand signature that shows
-// up everywhere without adding a single element. Translucent so it reads
-// correctly over light and dark surfaces alike.
+// up everywhere without adding a single element.
+//
+// IT IS AN OPAQUE PAIR NOW, background AND colour, not a translucent wash, and
+// that is a correctness fix rather than a taste one. Measured, the wash that
+// shipped — rgba($accent, .24) — landed these on the white page:
+//
+//     $fg        12.75:1  ✓        $fg-subtle  3.86:1  ✗
+//     $fg-muted   5.36:1  ✓        $link       4.07:1  ✗
+//
+// So selecting a paragraph made its links and its metadata HARDER to read than
+// they were unselected, and both fell under the 4.5:1 that SC 1.4.3 asks of
+// normal text. The muted tiers sit at 5.3 and 5.6 to begin with; any
+// translucent wash strong enough to see spends the whole margin. Lowering the
+// alpha until every tier survived took the selection down to barely visible.
+//
+// Naming the colour as well removes the arithmetic entirely: one pairing,
+// measured once, correct on the white page, on the tinted band, over the hero
+// photograph and on any surface nobody has invented yet. It is also what every
+// browser's own selection does, and standard behaviour is the house rule.
+//
+// #f8d5c3 is EXACTLY what rgba($accent, .24) composited to on white, so the
+// page a reader already knows is unchanged; only the guarantee is new.
+//   $fg #0e1b27 on #f8d5c3 — 12.70:1 ✓
 ::selection {
-  background: rgba($accent, 0.24);
+  background: $selection-bg;
+  color: $selection-fg;
 }
 
 // ─── Focus: one ring, ours, stated once ───
@@ -163,7 +202,6 @@ a {
 // that ships its own focus style means adding it here; nothing else changes.
 :focus-visible,
 .btn:focus-visible,
-.accordion-button:focus-visible,
 .nav-link:focus-visible,
 .navbar-call:focus-visible,
 .form-control:focus-visible,
@@ -172,9 +210,37 @@ a {
   @include focus-ring;
 }
 
-// Rows flush with a menu edge turn the same ring inward (quy-cu §5).
-.dropdown-item:focus-visible {
+// The ring's own corner (quy-cu §5). A box-shadow copies the silhouette of what
+// it surrounds, which is right for a control and wrong for a run of inline
+// text: a link has no silhouette, so the ring was copying `border-radius: 0`
+// and coming out a hard rectangle while every button on the page wore a rounded
+// one. This is the floor for everything that draws no shape of its own.
+//
+// `:where()` scores 0,0,0 on purpose. Every object with a corner states it in a
+// class rule — .btn-xl, .navbar-call, .skip-link, .locale-flag, the accordion's
+// first and last headers — and a class rule beats zero at any source position.
+// So this needs no exception list and cannot go stale.
+:where(:focus-visible) {
+  border-radius: $focus-radius;
+}
+
+// Rows flush with a container's edge turn the same ring INWARD (quy-cu §5).
+// There are exactly two on the site and they are the same object: a full-width
+// strip sitting against the inside of a bordered box. An outward ring on either
+// spills 4px past the box's own edge — over the menu's corner, or over the
+// accordion items above and below — so it turns in instead, and then it is
+// drawn on the strip's own shape: square in the middle of the stack, rounded at
+// the two ends, exactly like the item it sits in.
+.dropdown-item:focus-visible,
+.accordion-button:focus-visible {
   @include focus-ring-inset;
+}
+
+// ...and both keep the square corner the :where() floor would otherwise give
+// them, because a flush strip has no corner of its own. Bootstrap already says
+// so for `.accordion-button`; the menu row does not.
+.dropdown-item {
+  border-radius: 0;
 }
 
 // (No global `position: relative; z-index: 1` on :focus-visible. A box-shadow
@@ -391,11 +457,47 @@ header[id] {
   padding: step(3) step(4);
   background: $focus;
   color: $white;
-  @include squircle($r-2);
+  @include corner($r-2);
   font-weight: 600;
   text-decoration: none;
 }
 
+// ─── What may be selected, and what may not ───
+//
+// ONE RULE, and it is about what ends up in the reader's clipboard:
+//
+//   If a reader could reasonably want to QUOTE it, it stays selectable. If
+//   dragging across it would put something in the clipboard that they did not
+//   ask for and cannot use, it does not.
+//
+// So everything that carries meaning stays: every paragraph, heading, list,
+// caption, review, the phone number, the email address, the company name, the
+// metadata. That is not a courtesy — this page exists to be quoted into a
+// message to a colleague, and a site that fights `Ctrl+C` is a site that
+// fights being recommended. Nothing below is a "don't copy our text" rule and
+// nothing here is ever applied to prose.
+//
+// Three kinds of thing are excluded, each for its own reason:
+//
+//   ARTWORK — a logo is a picture, and a drag across the header should not
+//     leave a half-highlighted mark behind. (These also take `pointer-events:
+//     none` so the image cannot be dragged out as a file.)
+//   CHROME — the bar's labels and the menu rows are furniture. A reader
+//     dragging down the page from the very top would otherwise start their
+//     selection with "Các sản phẩm". Every browser and every OS treats its own
+//     chrome this way. The call button is chrome too, but its NUMBER is not, so
+//     the exclusion stops at the nav links and menu rows and never reaches it.
+//   GENERATED MARKS — `.heading-number` is `content: attr(data-number)`, i.e.
+//     the "01" the section markers draw. Firefox copies generated content into
+//     the clipboard and Chromium sometimes does, so quoting a section could
+//     silently arrive as "01 Giới thiệu". The element holds nothing else, so
+//     the whole element is excluded rather than the pseudo-element, which is
+//     the part browsers disagree about.
+//
+// The blockquote's `open-quote`/`close-quote` marks are deliberately NOT here:
+// those ARE the content — design/07 §7.5, the reviews are quoted in real curly
+// quotation marks because they are a direct record of what someone said — so a
+// reader copying a review should get them.
 .select-disabled,
 .navbar-logo,
 .partner-logo-card .partner-logo {
@@ -403,6 +505,12 @@ header[id] {
   user-select: none;
   pointer-events: none;
   -webkit-user-drag: none;
+}
+
+.navbar .nav-link,
+.dropdown-item,
+.heading-number {
+  user-select: none;
 }
 
 .text-secondary {
@@ -628,7 +736,7 @@ big,
     padding-bottom: 56.25%; // 16:9
     height: 0;
     overflow: hidden;
-    @include squircle($r-3);
+    @include corner($r-3);
     margin-top: 1.5em;
     background: $surface-deep;
 
@@ -649,7 +757,7 @@ big,
   video {
     max-width: 100%;
     height: auto;
-    @include squircle($r-3);
+    @include corner($r-3);
     display: block;
     margin-top: 1.5em;
   }
@@ -657,7 +765,7 @@ big,
   // Code blocks
   pre {
     background: $ink-50;
-    @include squircle($r-2);
+    @include corner($r-2);
     padding: step(4) step(5);
     overflow-x: auto;
     margin-top: 1em;
@@ -689,7 +797,7 @@ big,
     max-width: 100%;
 
     img {
-      @include squircle($r-3);
+      @include corner($r-3);
       max-width: 100%;
       height: auto;
       display: block;
@@ -722,13 +830,13 @@ big,
   img:not(.bi) {
     max-width: 100%;
     height: auto;
-    @include squircle($r-3);
+    @include corner($r-3);
   }
 
   // Collapsible / details-summary (native HTML collapsible)
   details {
     border: $border-width solid $border-color;
-    @include squircle($r-3);
+    @include corner($r-3);
     padding: step(4) step(5);
     margin-top: 1em;
 
@@ -750,7 +858,7 @@ big,
         display: inline-block;
         width: 1em;
         height: 1em;
-        @include chevron-down;
+        @include mask-icon($chevron-down);
         transition: transform var(--t-3) var(--ease);
         flex-shrink: 0;
       }
@@ -841,19 +949,6 @@ a {
     color: inherit;
   }
 
-  &+svg.external-link-icon,
-  &+svg.phone-icon {
-    color: $icon-quiet;
-    display: inline-block;
-    position: relative;
-    top: -0.0625rem;
-
-    .bg-dark &,
-    .bg-primary & {
-      color: $icon-on-dark;
-    }
-  }
-
   &:not(.nav-link, .btn-xl, .dropdown-item, .navbar-call):hover,
   .partner-logo-card:has(a.stretched-link:hover)+div & {
     color: $link-hover-color;
@@ -863,17 +958,30 @@ a {
     .bg-primary & {
       color: $white;
     }
-
-    &+svg.external-link-icon,
-    &+svg.phone-icon {
-      color: $link-hover-color;
-
-      .bg-dark &,
-      .bg-primary & {
-        color: $white;
-      }
-    }
   }
+}
+
+// ─── The mark on a link that leaves ───
+//
+// It sits INSIDE the anchor now. It used to be an adjacent sibling — `<a>…</a>`
+// then `<svg>` — which meant the one thing on the page saying "this opens
+// somewhere else" was not part of the link: outside its hit area, outside its
+// focus ring, unmoved by its hover, and read by a screen reader as a stray
+// object after the sentence rather than as part of the destination. Moving it
+// in costs one character in six includes and deletes fourteen lines of CSS
+// here, because everything the old rules had to restate — the colour on light
+// surfaces, the colour on the two dark panels, the hover colour on each, and
+// the whole forced-colors block that carried the same four cases again — is
+// what `currentColor` means.
+//
+// The one deliberate change of appearance: it is no longer painted a quieter
+// grey than its link. A mark that belongs to a link is the link.
+.external-link-icon {
+  display: inline-block;
+  position: relative;
+  top: -0.0625rem;
+  margin-left: 0.15em;
+  flex-shrink: 0;
 }
 
 .a {
@@ -995,7 +1103,7 @@ blockquote> :last-child:after {
 .service-box[id] {
   position: relative;
   scroll-margin-top: calc(#{$navbar-height-sm} + #{step(5)});
-  @include squircle($r-4); // harmless while transparent; gives the lit tint/glow round corners
+  @include corner($r-4); // harmless while transparent; gives the lit tint/glow round corners
 
   @include media-breakpoint-up(md) {
     scroll-margin-top: calc(#{$navbar-height} + #{step(6)});
@@ -1097,19 +1205,26 @@ blockquote> :last-child:after {
 /* ─── Corners on the framework's own boxes ───
 
    js/squircle.js used to sweep the whole document, so every Bootstrap component
-   that happened to carry a radius got the superellipse for free. With the sweep
-   gone (see _quy-cu.scss §2) the four that actually appear on this site name it
-   themselves. That is the trade the deletion asks for and it is the right way
-   round: the shape is now a decision written in the stylesheet, not a side
-   effect of a script running over elements nobody chose. */
+   that happened to carry a radius got its corner for free. With the sweep gone
+   (see _quy-cu.scss §2) the ones that actually appear on this site name it
+   themselves.
+
+   `.accordion-item` IS NOT IN THIS LIST, and that is the whole of the bug the
+   owner reported — "viền ngoài bị cong khi viền trong thẳng". An accordion is
+   ONE stack with two round ends, not four round boxes: Bootstrap rounds
+   `:first-of-type` at the top, `:last-of-type` at the bottom, and leaves every
+   join between them square, because a join is where two items meet and a curve
+   there is a gap. Naming `.accordion-item` here overrode all of that with a
+   blanket radius on every item, so each one curved away from its neighbour
+   while the buttons inside stayed straight. Bootstrap's own rules were right;
+   this line was the thing beating them. */
 .card,
-.accordion-item,
 .partner-logo-card {
-  @include squircle($r-4);
+  @include corner($r-4);
 }
 
 .dropdown-menu {
-  @include squircle($r-2);
+  @include corner($r-2);
 }
 
 /* ─── Accordion ─── */
@@ -1120,41 +1235,26 @@ blockquote> :last-child:after {
   max-width: none;
 }
 
-/* The button inside the item carries its own corners, and they have to be cut
-   the same way as the item's or the circular one peeks out from behind the
-   superellipse. `corner-shape` applies to whichever corners have a radius, so
-   setting it here leaves the square ones square and only re-cuts these two.
-   (Clipping the item with overflow:hidden would be shorter and would also eat
-   the focus ring, which is the one thing on an accordion that must not be
-   clipped.) */
-.accordion-item:first-of-type> :first-child {
-  border-top-left-radius: $accordion-inner-border-radius;
-  border-top-right-radius: $accordion-inner-border-radius;
+/* The item's own corner and the button's inside it are DIFFERENT NUMBERS on
+   purpose, and that is the second half of what looked wrong: 16px outside,
+   15px inside. Two curves separated by a 1px border are parallel only when the
+   inner radius is the outer minus that border — Bootstrap's own
+   `$accordion-inner-border-radius: subtract($accordion-border-radius, $border-width)`.
+   What broke it was scaling both by 1.8409 for the superellipse: 29.45 against
+   27.61, a 1.84px gap held apart by a 1px line, so the inner curve ran visibly
+   tight inside the outer one. With the squircle off the two are concentric
+   again and nothing here has to say so.
 
-  @supports (corner-shape: superellipse(2)) {
-    border-top-left-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
-    border-top-right-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
-    corner-shape: superellipse(2);
-  }
-}
-
-.accordion-item:last-of-type>.collapsed:first-child {
-  border-bottom-left-radius: $accordion-inner-border-radius;
-  border-bottom-right-radius: $accordion-inner-border-radius;
-
-  @supports (corner-shape: superellipse(2)) {
-    border-bottom-left-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
-    border-bottom-right-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
-    corner-shape: superellipse(2);
-  }
-}
+   Bootstrap already rounds the first item's header and the last item's
+   collapsed header; the rules that used to live here were re-stating that in
+   order to re-cut the shape, and there is no shape left to re-cut. */
 
 // The accordion's chevron, on the same terms as the dropdown's: a masked shape
 // in the header's own colour, not a picture with a grey baked into it. Bootstrap
 // paints this pseudo-element from --bs-accordion-btn-icon, which main.scss sets
 // to `none` so nothing is drawn underneath.
 .accordion-button::after {
-  @include chevron-down;
+  @include mask-icon($chevron-down);
 }
 
 .accordion-button,
@@ -1204,16 +1304,13 @@ blockquote> :last-child:after {
   // focus system near the top of this file, not here — quy-cu §5.)
 }
 
-// Flag chips (language switcher toggle + menu items). The authored border-radius
-// is what squircle.js reads and reshapes into a superellipse corner — it depth-
-// matches, so the silhouette still reads as this radius, just with continuous
-// corners. Browsers without `corner-shape` keep the plain rounded rectangle as a
-// clean fallback. The hairline inset ring gives the flag a defined edge on both
-// the white (scrolled) and deep-ink (over-hero) surfaces — the US flag's white
-// stripe would otherwise bleed into the white chrome.
+// Flag chips (language switcher toggle + menu items). $r-1 is the smallest rung
+// — a flag is a tiny chip and reads as one. The hairline inset ring gives it a
+// defined edge on both the white (scrolled) and deep-ink (over-hero) surfaces:
+// the US flag's white stripe would otherwise bleed into the white chrome.
 .locale-flag {
   flex-shrink: 0;
-  @include squircle($r-1);
+  @include corner($r-1);
   box-shadow: inset 0 0 0 0.5px rgba($black, 0.18);
 }
 
@@ -1240,21 +1337,28 @@ blockquote> :last-child:after {
     box-shadow: none !important;
   }
 
+  // The caret — `arrow_drop_down`, the mark for "a menu opens here" (see the
+  // mask-icon note at the top of this file). It replaces Bootstrap's own
+  // border-triangle with the Material drawing of the same object, so the one
+  // shape on the page that was not from the icon set now is.
+  //
+  // It follows the link's own colour, so the light/dark swap this rule used to
+  // carry is gone: there was a second SVG in a paler grey, a
+  // `media-breakpoint-up(md)` wrapper and a `.navbar:not(.nav-active)` scope,
+  // all to answer "what colour is the bar right now?" — a question
+  // currentColor answers by itself, at every width and in every state.
+  //
+  // IT SHOWS IN BOTH BAR STATES, including the transparent one, and that is
+  // deliberate. It is not decoration: it is the only thing on the language
+  // switcher that says the flag is a control rather than a picture of a flag,
+  // and the moment it is most needed is the moment the bar is transparent —
+  // the first screen, the first-time reader. A control that only announces
+  // itself after you scroll is a control you have to discover twice.
   &:after {
     content: "" !important;
     border: none !important;
 
-    // It follows the link's own colour now, so the whole light/dark swap this
-    // rule used to carry is gone: there was a second SVG in a paler grey, a
-    // `media-breakpoint-up(md)` wrapper, and a `.navbar:not(.nav-active)`
-    // scope, all to answer the question "what colour is the bar right now?" —
-    // a question currentColor answers by itself, correctly, at every width and
-    // in every state including the ones nobody enumerated.
-    //
-    // It also changed SHAPE. This was `arrow_drop_down`, a filled triangle,
-    // while the accordion three sections below used `keyboard_arrow_down`, a
-    // chevron. Same sentence, two different glyphs, on one page.
-    @include chevron-down;
+    @include mask-icon($caret-down);
 
     display: inline-block;
     width: 1em;
@@ -1264,6 +1368,38 @@ blockquote> :last-child:after {
     margin-left: 0;
     vertical-align: -0.27em;
   }
+}
+
+// ─── The bar's menus position themselves ───
+//
+// The one-frame jump the owner caught — the language menu snapping from
+// right-aligned to left-aligned as the pointer leaves — is Popper being torn
+// down while our fade is still running. Bootstrap's `_completeHide()` destroys
+// the Popper instance (which removes the inline `transform` it had written) and
+// strips the `data-bs-popper` attribute (which is what
+// `.dropdown-menu-end[data-bs-popper]{right:0;left:auto}` hangs off). Both
+// happen on the FIRST frame of a 200ms opacity transition that keeps the menu
+// on screen, so the reader watches it move while it fades.
+//
+// The fix is to stop asking a positioning engine for an answer we already know.
+// `data-bs-display="static"` on both toggles (see _includes/navbar.html) skips
+// Popper entirely; these rules then state the position unconditionally, so
+// there is nothing to remove and nothing to jump. Both menus hang off a
+// `position: relative` `.dropdown`, so this is the same geometry Popper was
+// computing — measured against the shipped build, not assumed.
+.navbar .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: auto;
+  left: 0;
+  margin-top: $dropdown-spacer;
+}
+
+// ...except the language menu, which hangs from the bar's right edge like the
+// flag above it.
+.navbar .language-switcher-menu {
+  right: 0;
+  left: auto;
 }
 
 // An OPEN accordion header keeps the hairline that divides it from its own
@@ -1387,35 +1523,19 @@ section.bg-primary {
     // it needs `overflow: hidden` and a non-wrapping line to take effect and
     // had neither, so it was inert. It would also have been the wrong answer —
     // "Các sản ph…" is exactly the partial information loss design/00 §2.1
-    // forbids. The bar is made to fit instead (see .nav-item--toc below).
+    // forbids. The bar is made to fit instead (see the note below).
     white-space: nowrap;
   }
 
-  // Table-of-contents anchors: the drawer's, not the bar's. Reasoning is in
-  // _includes/navbar.html; the short version is that a long page scrolls itself
-  // and the chrome is for what it cannot do. `lg` is the navbar's own collapse
-  // breakpoint ($navbar-expand-lg on _includes/page.html), so this is exactly
-  // "hidden once the drawer becomes a bar" and cannot drift from it.
-  //
-  // `display: none`, deliberately, and NOT `visually-hidden` — which was the
-  // tempting choice, because three entries in this same list already use it.
-  //
-  // The reason is focus order. `visually-hidden` keeps an element focusable, so
-  // a keyboard user on a wide screen would tab into four links they cannot see:
-  // WCAG 2.2 SC 2.4.7 Focus Visible, failed, and the ring this same commit was
-  // rebuilt to fix would be drawn on nothing. The three existing entries get
-  // away with it only because they carry `tabindex="-1"`, and a media query
-  // cannot add an attribute.
-  //
-  // Nothing is actually lost: every one of these sections has its own <h2>, and
-  // heading navigation is how a screen-reader user moves through a page this
-  // long. Under lg the anchors are fully present, visible and tabbable for
-  // everyone.
-  @include media-breakpoint-up(lg) {
-    .nav-item--toc {
-      display: none;
-    }
-  }
+  // (The section anchors used to be `.nav-item--toc`, hidden from lg up on the
+  // reasoning that below lg they lived in a drawer. THERE IS NO DRAWER — this
+  // navbar has no toggler at all, so `.collapse.navbar-collapse` is
+  // `display: none` under lg and the whole list is already invisible there.
+  // The class hid them from the only width that ever showed them, which is a
+  // roundabout way of deleting something. They are `visually-hidden` +
+  // `tabindex="-1"` in the markup now, exactly like the three anchors that were
+  // already handled that way: out of sight, out of the tab order, still there
+  // for scrollspy and still in the accessibility tree.)
 
   // Fade between the transparent (over-hero) and white (scrolled) states. Applied
   // at every width so phones get the same deferential transparent hero treatment
@@ -1451,13 +1571,22 @@ section.bg-primary {
       opacity: 1;
     }
 
-    .nav-item .nav-link {
-      &:focus {
-        color: initial;
-      }
+    // Everything in the bar is white over the photograph — the links AND the
+    // language switcher's caret, which is `currentColor`.
+    //
+    // The caret is the one that was wrong. It is not inside `.navbar-nav` (it
+    // sits in `.navbar-actions` beside the call button), so nothing ever gave
+    // it `--bs-nav-link-color`: `color: var(--bs-nav-link-color)` was invalid
+    // at computed-value time and fell back to the inherited body ink — dark
+    // ink, on a dark photograph, at the top of the page. The set before this
+    // one shipped a second SVG in a pale grey to paper over exactly that, and
+    // deleting it in favour of `currentColor` was right ONLY if currentColor
+    // is stated. It was not. It is now.
+    .nav-link {
+      color: $fg-on-dark;
 
       &:hover {
-        color: $navbar-dark-hover-color !important; // override nav link focus color
+        color: $navbar-dark-hover-color;
       }
     }
 
@@ -1494,7 +1623,26 @@ section.bg-primary {
       opacity: 1;
     }
 
+    // ...and ink on the white chrome. Stated here rather than left to
+    // `--bs-navbar-color`, because that variable is set twice — `.navbar` gives
+    // it $fg and `.navbar[data-bs-theme="dark"]` gives it #fff, and the theme
+    // attribute is on this element, so the framework's answer for BOTH bar
+    // states is white. One value cannot serve a bar that is transparent over a
+    // photograph and then white; the state class is the only thing that knows
+    // which it currently is, so the state class owns the colour.
     .nav-link {
+      color: $fg;
+
+      // The white bar answers a pointer now (owner's ask, 2026-07-28). It used
+      // to answer with nothing at all, so the same control was live over the
+      // hero and dead once you scrolled. It takes the ACTIVE colour rather than
+      // a third one: the bar carries one accent, and pointing at a link
+      // previews the state it would take — which is how the dark bar has always
+      // worked. $dye-700 is 5.8:1 on white.
+      &:hover {
+        color: $navbar-light-hover-color;
+      }
+
       &.active {
         color: $navbar-light-active-color;
       }
@@ -1506,7 +1654,7 @@ section.bg-primary {
       }
 
       &.show:not(.active) {
-        color: initial;
+        color: $fg;
       }
     }
   }
@@ -1548,7 +1696,7 @@ section.bg-primary {
   // than 24. The 44px height, which is the part that matters to a thumb, is
   // untouched.
   padding: 0 step(4);
-  @include squircle($r-3);
+  @include corner($r-3);
   background: $accent-strong;
   // A boundary that holds on both grounds. Measured: the dye fill is 5.79:1
   // against the white scrolled bar but only ~2.3:1 against the ink-scrimmed
@@ -1915,7 +2063,7 @@ header.hero-precision {
   cursor: pointer;
   user-select: none;
   text-decoration: none;
-  @include squircle($btn-border-radius);
+  @include corner($btn-border-radius);
   border: none;
   transition: transform var(--t-1) var(--ease),
     background var(--t-1) var(--ease),
@@ -1930,6 +2078,23 @@ header.hero-precision {
   &:active {
     transform: scale(0.97);
   }
+}
+
+// ─── The glyph that leads a button's label ───
+//
+// Two of them, and only two: the handset on the three buttons that dial, and
+// the envelope on the one that writes. This is where a glyph earns its place —
+// a filled pill with a handset in it is recognised before it is read, which on
+// a phone, held one-handed, in a mill, is the difference between finding the
+// call button and looking for it. The same glyph beside a phone NUMBER earns
+// nothing, and has been taken out of the footer list and the support sentence,
+// where the words already said "Số điện thoại" and "Hãy gọi".
+//
+// One size for both, so the two buttons in the closing CTA row read as a pair.
+.btn-xl>.phone-icon,
+.btn-xl>.mail-icon {
+  flex-shrink: 0;
+  font-size: 1.15em;
 }
 
 :is(a, button).btn-secondary {
@@ -2001,7 +2166,7 @@ header.hero-precision {
 }
 
 .client-portrait {
-  @include squircle($card-border-radius);
+  @include corner($card-border-radius);
 }
 
 .partner-logo-card {
@@ -2101,20 +2266,13 @@ header.hero-precision {
     color: LinkText;
   }
 
-  // The small inline link icons (phone / external-link) sit beside a link and must
-  // match it on EVERY surface — including the dark support / our-story panels whose
-  // `.bg-primary`/`.bg-dark` color rules outrank a plain selector here and would
-  // otherwise force them to body CanvasText (the inconsistency seen in ho-tro).
-  // !important wins that, and the hover rule recolors them with the link.
-  svg.external-link-icon,
-  svg.phone-icon {
-    color: LinkText !important;
-  }
-
-  a:hover+svg.external-link-icon,
-  a:hover+svg.phone-icon {
-    color: Highlight !important;
-  }
+  // (The block that forced `svg.external-link-icon` and `svg.phone-icon` to
+  // LinkText, and to Highlight on hover, is gone. It existed because the icons
+  // were siblings of their links and so inherited the SECTION's colour instead
+  // of the link's — which on the two dark panels meant body CanvasText, the
+  // inconsistency that showed up in ho-tro. Inside the anchor they are
+  // currentColor on the link, so the system colours reach them by themselves,
+  // in every state, including ones nobody listed.)
 
   // Inline-SVG feature icons follow the forced text color (they're currentColor).
   .bi {
@@ -2146,10 +2304,11 @@ header.hero-precision {
     border: 1px solid CanvasText !important;
   }
 
-  // The chevrons are masked shapes in currentColor everywhere now, not
-  // background images with a fill baked in, so they already survive this mode
-  // rather than vanishing into the forced background. All that is left to say
-  // is which SYSTEM colour each control's text takes — and the mask follows it.
+  // The chevron and the caret are masked shapes in currentColor everywhere now,
+  // not background images with a fill baked in, so they already survive this
+  // mode rather than vanishing into the forced background. All that is left to
+  // say is which SYSTEM colour each control's text takes — and the mask follows
+  // it.
   .accordion-button::after {
     background-color: ButtonText;
   }
@@ -2160,6 +2319,14 @@ header.hero-precision {
 
   .prose details summary::before {
     background-color: CanvasText;
+  }
+
+  // A selection here is the system's own, not ours (forced-colors replaces both
+  // sides of the pair). Say so rather than leaving two brand colours that the
+  // OS is about to discard anyway.
+  ::selection {
+    background: Highlight;
+    color: HighlightText;
   }
 }
 

@@ -25,7 +25,7 @@ bundle exec jekyll serve   # dev server with live rebuild (unoptimized)
 
 | Step | Script | What it does |
 |---|---|---|
-| `clean` | shx | wipe `_site/` |
+| `clean` | shx | wipe `_site/` **and `.sass-cache/`** |
 | `build:jekyll` | Jekyll (production env) | render pages from `_includes/` + `_data/i18n/` |
 | `optimize:math` | `optimize-math.mjs` | render the LaTeX in the Chia sẻ kinh nghiệm articles to static MathML (KaTeX) — no maths library ships, and the equations stay real, indexable text |
 | `optimize:css` | `optimize-css.mjs` | PurgeCSS (API, greedy popper safelist) → clean-css `-O2` |

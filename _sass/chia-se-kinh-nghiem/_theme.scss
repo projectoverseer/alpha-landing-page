@@ -148,33 +148,68 @@ body.kt {
     character-variant(curved-one);
 }
 
-// The highlighter. #fff200 is the actual ink in a Stabilo Boss or a Sharpie
-// Accent, not a yellow chosen to look like one, and at 40% over paper it lands
-// on #fcf691 — the colour a marker leaves on a real page.
+// ---- Selecting, and marking: two gestures, two colours ----------------------
 //
-// It is here because of what this product IS. The hub is paper, a book serif
-// and warm ink, and the one thing a reader does to a page that matters to them
-// is mark it. Selecting text is also the first move of quoting us to someone
-// else, which is the hub's whole job: be read, and be shared. So the gesture is
-// answered with the object it is imitating. Nothing is added to the page to
-// achieve it — this is one declaration.
+// SELECTING IS NOT HIGHLIGHTING, and the pass before this confused them. It
+// gave selection the actual ink of a Stabilo Boss (#fff200) on the argument
+// that a reading room should answer a drag with a marker. But a marker is
+// something the READER decides to leave on the page, and a selection is
+// something the MACHINE is holding for a moment — it disappears the instant
+// you click elsewhere. Dressing the transient one as the permanent one spends
+// the page's loudest yellow on its shortest-lived state, and leaves nothing for
+// a real highlight to be.
 //
-// Measured against every text tier that can fall inside a selection, because a
-// highlight that eats the words is worse than no highlight:
-//   ink #292319   13.89:1      indigo link #2f4e7e   7.46:1
-//   ink-2 #5a5342  6.81:1      ink-3 caption #6e6753 5.02:1
-// and in the picture viewer, where the same wash lands on near-black, paper
-// text still reads at 5.16:1.
+// So the two are designed as a pair, and the pair is the point:
 //
-// The main site keeps its dye-orange wash. That is deliberate and it is the quy
-// củ line: selection colour is LOOK, and look belongs to each product. A reader
-// there is meant to pick up a phone, not a marker.
+//   SELECTION  #f0e5bb  L* 90.8  C* 22   the paper going warm under your hand.
+//              Quiet, low chroma, unmistakably present (1.19× the paper's own
+//              luminance) and unmistakably not a pen.
+//   MARK       #fcf691  L* 95.4  C* 50   the marker. Half again as light and
+//              more than twice as chromatic — the loud one, kept for the thing
+//              a reader chose to keep.
+//
+// ΔC* between them is 28. They cannot be mistaken for each other at a glance,
+// which is what the owner asked for: a highlight feature added later stays
+// legible under a selection dragged across it, and `mark::selection` below
+// makes sure the mark is still visible while it is selected.
+//
+// BOTH ARE OPAQUE, background AND colour, for the same reason the main site's
+// are (argued in _sass/_base.scss): a translucent wash has to be re-measured on
+// every ground it can land on, and this hub has four — paper, paper-deep (cards,
+// blockquotes, table heads, the footer), the near-black picture viewer, and a
+// marked run. On paper-deep the old wash put the caption tier at 4.40:1, under
+// the 4.5 SC 1.4.3 asks. Naming the ink as well makes one pairing correct
+// everywhere, including on grounds nobody has invented yet.
+//   --ink #292319 on #f0e5bb — 12.33:1 ✓     on #fcf691 — 13.89:1 ✓
 .kt ::selection {
-  background: rgba(255, 242, 0, 0.4);
+  background: #f0e5bb;
+  color: var(--ink);
+}
+
+// A marked run keeps its identity while it is being selected: the selection
+// deepens it rather than replacing it, so a reader dragging over a highlight
+// can still see which words were highlighted.
+.kt mark {
+  background: #fcf691;
+  color: var(--ink);
+  border-radius: $r-1;
+  padding: 0.05em 0.2em;
+}
+
+.kt mark::selection {
+  background: #e9d98a;
+  color: var(--ink);
 }
 
 .kt :focus-visible {
   @include focus-ring;
+}
+
+// The ring's own corner, at zero specificity so every shaped thing on the hub —
+// .kt-button, .kt-series-card, the round .kt-lightbox-close, the avatar — keeps
+// its own. Same rule, same reasoning, same number as the main site (quy-cu §5).
+:where(.kt :focus-visible) {
+  border-radius: $focus-radius;
 }
 
 .kt a {
@@ -794,6 +829,28 @@ body.kt {
 }
 
 // ---- Pictures ---------------------------------------------------------------
+//
+// EVERY PICTURE ON THIS HUB HAS SQUARE CORNERS, in the feed, in Đọc tiếp and in
+// the article, and that is a decision rather than an omission (owner asked,
+// 2026-07-28). Two reasons, and they agree:
+//
+//   A rounded corner is a SCREEN convention — a card, a tile, a chip, a thing
+//   the OS drew. This hub is a printed page: hairline rules, a book serif, warm
+//   ink, a caption set like a plate note. A picture on a printed page is a
+//   plate, and a plate is square. It is also the only place the hub's look
+//   parts company with the main site's, where photographs sit bare on white and
+//   take $r-4 so they read as placed rather than dropped. Here every picture
+//   already has a 1px frame doing that job.
+//
+//   And it is the same picture in three places. A thumbnail in the feed, the
+//   same thumbnail in Đọc tiếp, and the full plate at the top of the article
+//   are one object seen at three sizes; if the feed rounded them and the
+//   article did not, the object would change shape as the reader walked toward
+//   it. One answer for all three, or none.
+//
+// The boxes a reader TOUCHES still take the corner — .kt-button,
+// .kt-series-card, .kt-cta-note — because those are controls, and a control is
+// a screen object. The avatar stays a circle, which is a face, not a plate.
 
 // Full measure, never cropped: these are infographics and lab reports — the
 // reader has to be able to READ them, so the crop that serves the feed would
@@ -1117,7 +1174,7 @@ body.kt-lightbox-open {
   padding: step(5) step(6);
   background: var(--paper-deep);
   border: 1px solid var(--line);
-  @include squircle($r-2);
+  @include corner($r-2);
 
   p {
     margin: 0;
@@ -1156,7 +1213,7 @@ body.kt-lightbox-open {
   border: 0; // the share block's copy button is a real <button>; strip its UA chrome
   cursor: pointer;
   background: var(--indigo);
-  @include squircle($r-2);
+  @include corner($r-2);
   color: var(--paper);
   font-family: var(--font-ui);
   font-size: var(--fs-ui);
@@ -1254,7 +1311,7 @@ body.kt-lightbox-open {
   display: block;
   padding: step(4) step(5);
   border: 1px solid var(--line);
-  @include squircle($r-2);
+  @include corner($r-2);
   text-decoration: none;
 
   &:hover,
@@ -1370,7 +1427,7 @@ body.kt-lightbox-open {
   position: relative;
   padding: step(4) step(5);
   border: 1px solid var(--line);
-  @include squircle($r-2);
+  @include corner($r-2);
 
   &:hover,
   &:focus-within {
