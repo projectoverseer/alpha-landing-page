@@ -50,7 +50,14 @@
 }
 
 // Tokens (contrast-validated: body text AAA, everything else ≥ AA — §3)
+//
+// TWO THEMES, ONE TOKEN LAYER. Dark mode (owner asked, 2026-07-28) is exactly
+// the amendment philosophy §3 reserved: a second set of values for the same
+// tokens, switched by the reader's own OS setting — never a per-component
+// override, never a toggle button on the page. The dark block sits right
+// below this one so the two sets are read side by side.
 :root {
+  color-scheme: light; // tells the UA (scrollbars, form controls) which side it is on
   --paper: #faf8f2;
   --paper-deep: #f1ede2;
   // The hairline. It was #e2dccb, which sits 1.29:1 off the paper — measured,
@@ -102,6 +109,77 @@
   // correct on both, and the same two the main site uses (quy-cu §5).
   --focus: var(--indigo);
   --focus-halo: var(--paper);
+
+  // Selection and mark as tokens, so the dark theme can retune the one of the
+  // three that depends on the paper. The values and the derivation (one dye,
+  // two concentrations, composited on this paper) are argued at the
+  // ::selection rule below — these lines only NAME them.
+  --selection-bg: #f4d0b9; // $dye-500 @ 24% on THIS paper — recomputes per theme
+  --mark-bg: #fdbb76; // $dye-300 @ 58% on the LIT paper — theme-invariant, see below
+  --mark-ink: #292319; // the lit theme's ink, pinned: it rides the mark, not the page
+  --mark-selected-bg: #f8a862;
+}
+
+// ---- Dark: the same room with the lights off (owner asked, 2026-07-28) ------
+//
+// The dark palette is not a new palette; it is the light one READ BACKWARDS,
+// which is what a reading room at night actually is. The page ground comes
+// from the lit theme's own ink family (h 76–84°, the warm brown-black the hub
+// already trusted for its text and its picture viewer), and the text comes
+// from the lit paper (dark ink h 93° against lit paper h 97° — the same warm
+// off-white, one step down so a 19px serif doesn't sizzle on black). Nothing
+// here is a Material grey: the room stays warm at night.
+//
+//   --paper       #1e1913   the ink family as ground (viewer kin: #15110b)
+//   --paper-deep  #2b241a   asides/cards LIFT in the dark (in light they sink)
+//   --line        #4c4232   hairline, 1.77:1 on paper — same "hair not rule" weight
+//   --ink         #ede5d2   body 13.91:1 ✓AAA on paper, 12.22 on paper-deep
+//   --ink-2       #c9bda4   9.39 / 8.25 ✓
+//   --ink-3       #a89c84   6.44 / 5.66 ✓ (contract floor is 4.5)
+//   --indigo      #62b5e5   the logo's own light globe stop — links 7.69:1 ✓
+//   --indigo-deep #8dc8e8   the palest stop: at night "stronger" means LIGHTER,
+//                           so hover climbs the ramp the other way (9.60:1)
+//
+// Buttons need no new rule: fill var(--indigo) with var(--paper) text becomes
+// light-blue with warm-black text, 7.69:1 (hover 9.60) — the token swap alone
+// keeps every pairing over its floor, which is the whole point of a token layer.
+//
+// Selection re-composites ($dye-500 @ 24% on the DARK paper → #4d2710, h 55°,
+// ink on it 10.38:1): a selection is the paper warming under your hand, and
+// the paper changed. The MARK does not move: a highlight is the reader's own
+// pen laid ON the page, and pen ink does not dim when the lights go out —
+// besides, the 58% recipe composited on near-black measures 4.1:1 against
+// light text and 3.6 against dark, a mid-tone no ink can sit on. So the mark
+// keeps its lit pair (#fdbb76 / #292319, 9.30:1) and reads as the one lit
+// object on the dark page, which is exactly what a highlighter is for.
+//
+// ONE written exception below the tokens (philosophy §3 allows a token layer,
+// not per-component theming): the article plates. The infographics are white
+// paper documents; full-strength on a dark ground they glare like a phone in
+// a dark bedroom — brightness(.9) takes the edge off without costing the
+// smallest label its legibility (a 10% dim moves a 21:1 plate to ~17:1). The
+// picture viewer is exempt on purpose: the reader ASKED to inspect that plate,
+// so it opens at full strength (the overlay mounts on <body>, outside these
+// selectors).
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #1e1913;
+    --paper-deep: #2b241a;
+    --line: #4c4232;
+    --ink: #ede5d2;
+    --ink-2: #c9bda4;
+    --ink-3: #a89c84;
+    --indigo: #62b5e5;
+    --indigo-deep: #8dc8e8;
+    --selection-bg: #4d2710;
+  }
+
+  .kt-figure img,
+  .kt-feed-thumb img,
+  .kt-readnext-thumb img {
+    filter: brightness(0.9);
+  }
 }
 
 // ---- Base ----------------------------------------------------------------
@@ -209,8 +287,12 @@ body.kt {
 // the 4.5 SC 1.4.3 asks. Naming the ink as well makes one pairing correct
 // everywhere, including on grounds nobody has invented yet.
 //   --ink #292319 on #f4d0b9 — 10.80:1 ✓  on #fdbb76 — 9.30:1 ✓  on #f8a862 — 7.98:1 ✓
+// (The values live in the token layer above as --selection-bg / --mark-* so
+// the dark theme can retune the paper-dependent one; the ink rides --ink for
+// the selection — correct on both papers — and --mark-ink for the mark, which
+// is pinned to the lit ink because the mark itself never changes theme.)
 .kt ::selection {
-  background: #f4d0b9;
+  background: var(--selection-bg);
   color: var(--ink);
 }
 
@@ -218,15 +300,15 @@ body.kt {
 // deepens it rather than replacing it, so a reader dragging over a highlight
 // can still see which words were highlighted.
 .kt mark {
-  background: #fdbb76;
-  color: var(--ink);
+  background: var(--mark-bg);
+  color: var(--mark-ink);
   border-radius: $r-1;
   padding: 0.05em 0.2em;
 }
 
 .kt mark::selection {
-  background: #f8a862;
-  color: var(--ink);
+  background: var(--mark-selected-bg);
+  color: var(--mark-ink);
 }
 
 .kt :focus-visible {
@@ -300,6 +382,14 @@ body.kt {
   max-width: 42rem;
   margin-inline: auto;
   padding-inline: step(5);
+}
+
+// The bar is sticky, so a followed anchor (kramdown writes an id on every
+// heading, and readers do arrive on #phần-2--… links) must not land with its
+// first line hidden under the bar: bar height (3.75rem, 3.5 on phones — see
+// the small-screens block) plus a breath of air.
+.kt [id] {
+  scroll-margin-top: 4.75rem;
 }
 
 .kt-skip-link {
@@ -947,7 +1037,11 @@ body.kt {
 .kt-lightbox {
   // A dark ground: the pair flips to paper-on-ink, exactly as the main site's
   // dark panels flip theirs. Two tokens, two products, same reasoning.
-  --focus: var(--paper);
+  // LITERALS, not var(--paper): the viewer is the same dark room in both
+  // themes, and in dark mode var(--paper) is itself near-black — the ring
+  // would have been a dark ring on a dark ground, invisible to exactly the
+  // keyboard reader it exists for.
+  --focus: #faf8f2;
   --focus-halo: #15110b;
 
   position: fixed;
@@ -1024,7 +1118,7 @@ body.kt-lightbox-open {
   border: 0;
   border-radius: 50%;
   background: rgba(250, 248, 242, 0.12);
-  color: var(--paper);
+  color: #faf8f2; // literal for the same reason as the ring: the viewer never changes theme
   cursor: pointer;
 
   &:hover {
@@ -1240,6 +1334,10 @@ body.kt-lightbox-open {
   padding: step(2) step(5);
   border: 0; // the share block's copy button is a real <button>; strip its UA chrome
   cursor: pointer;
+  // The press already answers the finger (scale, below); the UA's grey flash
+  // on top of it is two answers to one tap. Only where feedback exists —
+  // everything without its own press state keeps the UA's.
+  -webkit-tap-highlight-color: transparent;
   background: var(--indigo);
   @include corner($r-2);
   color: var(--paper);
@@ -1605,6 +1703,23 @@ body.kt-lightbox-open {
 @media (max-width: 40rem) {
   .kt-topbar .kt-shell {
     min-height: 3.5rem;
+  }
+
+  // The bar is 4px shorter here; anchor landings follow it down.
+  .kt [id] {
+    scroll-margin-top: 4.25rem;
+  }
+
+  // The feed's 32px-above, 32px-below seam is right at a desk; on a phone the
+  // same seam costs 64px of a 700px screen PER POST while scanning. 24px each
+  // side keeps the hairline breathing (48px post to post) and gives a whole
+  // extra post back to every screenful of scrolling.
+  .kt-feed-item {
+    padding-bottom: 1.5rem;
+
+    & + & {
+      padding-top: 1.5rem;
+    }
   }
 
   // The lockup scales as one piece: the logo steps to the mobile article H1

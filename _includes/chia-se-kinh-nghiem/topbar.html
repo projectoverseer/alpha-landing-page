@@ -31,13 +31,25 @@
   <div class="kt-shell">
     <div class="kt-brand">
       <a class="kt-brand-logo-link" href="{{ site.url }}/" aria-label="Alpha Software – trang chủ">
-        <img
-          alt="Alpha Software"
-          class="kt-brand-logo"
-          height="34"
-          src="{{ site.url }}/img/logo/logo-alpha.svg"
-          width="120"
-        />
+        {%- comment -%}
+          Dark mode swaps the printed logo for the white silhouette (the same
+          asset the main site's navbar uses over its dark hero): the wordmark's
+          deep blues vanish on a near-black page. <picture> + media does the
+          swap in the browser with no script and fetches only the matching one.
+        {%- endcomment -%}
+        <picture>
+          <source
+            media="(prefers-color-scheme: dark)"
+            srcset="{{ site.url }}/img/logo/logo-alpha-silhouette.svg"
+          />
+          <img
+            alt="Alpha Software"
+            class="kt-brand-logo"
+            height="34"
+            src="{{ site.url }}/img/logo/logo-alpha.svg"
+            width="120"
+          />
+        </picture>
       </a>
       <span aria-hidden="true" class="kt-brand-sep"></span>
       <span class="kt-brand-swap">

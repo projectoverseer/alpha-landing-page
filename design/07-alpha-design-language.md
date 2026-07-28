@@ -34,10 +34,12 @@ Structure: **ramps → roles → Bootstrap bridge** (see 08 §6). A component na
 
 **The one sentence that decides every surface — the page is cool, the dye is a
 spark** (08 §6.3). Every neutral surface is white or a blue-leaning cool: the
-bar is white, menus and the footer strip are the cool grey, and the two places
-the page asks a person for trust — the Lợi ích band and a customer's review
-card — take the logo's own palest blue, dilute. Warmth appears only as the dye,
-in sparks: markers, CTAs, selection and marks, quotation marks. (A full warm
+bar is white; menus, the footer strip and the quote grounds are the cool grey
+(a quote sits on neutral grey by owner decision — a witness's ground should be
+colourless so the words read as theirs); and the one place the page asks for
+trust in Alpha's own name — the Lợi ích band — takes the logo's palest blue,
+dilute. Warmth appears only as the dye, in sparks: markers, CTAs, selection
+and marks, quotation marks. (A full warm
 shell was transplanted from the product's *"greige ấm = trung tính của VỎ"*
 rule and rejected by the owner on sight the same day — the history, and why the
 rule could not transfer to a white page, are 08 §6.3.)
@@ -171,8 +173,9 @@ dye on white, and the wordmark blue on the blue band — the band is monochrome
 cool on purpose, 08 §6.2) ·
 `.btn-primary` / `.btn-ghost` on `.btn-xl` · `.service-box` ·
 `.partner-logo-card` · `.review-card` (the testimonial device: portrait, words
-and name enclosed on the pale-blue quote ground — a review is testimony, not a
-styled paragraph; 08 §9.5) · `.prose blockquote` (an aside inside an article:
+and name enclosed on the neutral grey quote ground — a review is testimony, not
+a styled paragraph, and a witness's ground is colourless; 08 §9.5) ·
+`.prose blockquote` (an aside inside an article:
 same quote ground, a 3px dye rule down the speaker's side, muted italic type) ·
 `.footer-strip` · the parked `header.hero-precision` (kicker → headline →
 lead → dual CTA → metric strip), ready for the day the precision positioning

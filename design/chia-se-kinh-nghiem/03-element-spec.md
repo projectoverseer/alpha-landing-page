@@ -27,7 +27,7 @@ interface at all (Absolute Neutrality, philosophy §2).
 | **Quiet link** | inherits its line's grey; hover: `--ink` + underline (`text-underline-offset: 0.2em`) | "This labels the thing it sits under first, and offers a route second." Topic tags, series lines, the kicker, byline/signature author, the brand name. |
 | **Card** | 1px `--line` border, 8px corner (`corner($r-2)`, design/08 §2), flat, no shadow; hover: border warms to `--indigo`, title underlines | "This whole surface is one destination." Series prev/next, series rail cards. |
 | **Button** | `.kt-button`: indigo fill, paper text, Inter 600 15px; `:active` scale 0.98. `.kt-button-quiet`: transparent, hairline inset, indigo text | Filled = the primary action of its row; quiet = a peer action. |
-| **Metadata line** | Inter 400, 13–14px, `--ink-3`, +0.01em residual tracking | "Facts about the thing above, not the thing itself." |
+| **Metadata line** | Inter 400, 13–14px, `--ink-3`, no tracking (the axis follows the rendered size since 2026-07-28) | "Facts about the thing above, not the thing itself." |
 | **Kicker / tag caps** | Inter 650, `--fs-label` 13px, uppercase, +0.08em, `case` on | "A label naming a category." |
 | **Seam** | 1px `--line` top border + 2rem top padding | "The piece has ended; what follows is offered, not part of it." Signature, Đọc tiếp, series rail. |
 | **Editorial aside** | Literata italic, `--ink-2` | "The author speaking to you directly, outside the lesson." Inline CTA, share lead. |
@@ -38,7 +38,8 @@ reader *reads* — titles, descriptions, body, standfirsts, asides, card titles
 and descs — is **Literata**, always through `read()`/`opsz()` so every size
 gets the drawing it was cut for (§4 of the philosophy). Everything that is
 *apparatus* — metadata, labels, buttons, captions, tables, footer — is
-**Inter**, pinned at opsz 14. **Inter Display is not used**: it is the cut for
+**Inter**, on `font-optical-sizing: auto` (its axis reads px, the maker's own
+usage; at the hub's 12–16px chrome it resolves to the 14 floor, the Text cut). **Inter Display is not used**: it is the cut for
 large sizes and the hub has no large chrome; every large piece of type is
 reading matter and therefore Literata (philosophy §2.3, decision documented
 2026-07-15). Two documented exceptions, both deliberate:
@@ -69,11 +70,20 @@ reading matter and therefore Literata (philosophy §2.3, decision documented
 - **Position**: the only chrome above the content, on every page. Nothing
   else may enter this bar.
 
-### Skip link, focus, selection
+### Skip link, focus, selection, scheme
 
-- Skip link first in DOM, off-screen until focused. Focus ring: 2px
-  `--indigo`, offset 2px, everywhere (paper-colored on the lightbox's dark
-  ground). Selection: indigo at 18%.
+- Skip link first in DOM, off-screen until focused. Focus ring: the shared
+  two-tone box-shadow pair (design/08 §5) — `--focus` = indigo on a
+  `--focus-halo` = paper halo; both flip with the theme, and the lightbox
+  holds lit-paper literals because it is dark in both schemes. Selection:
+  `$dye-500` @ 24% composited on the current paper (`--selection-bg`);
+  `mark` is `$dye-300` @ 58% on the *lit* paper, theme-invariant
+  (philosophy §3).
+- **Two colour schemes, one markup** (2026-07-28): `prefers-color-scheme`
+  swaps the token layer, `theme-color` per scheme in `head.html`, the lockup
+  swaps to the white silhouette via `<picture>`. No toggle on the page.
+- Anchor landings clear the sticky bar: every `[id]` carries
+  `scroll-margin-top` of bar height + air (4.75rem / 4.25rem mobile).
 
 ### Contact strip (`.kt-cta-banner`)
 

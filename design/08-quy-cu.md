@@ -502,9 +502,12 @@ dye number on a tinted band — and finding it overstimulating. The band is
 therefore **monochrome cool on purpose**: blue number (`$blue-700`, 7.39:1),
 blue icons, no dye anywhere on it. One calm hue.
 
-**Why derived.** `$blue-25/50` is `$blue-100` composited on the page at 12 /
-24% — the same compositing rule that generates `$selection-bg` and the hub's
+**Why derived.** `$blue-50` is `$blue-100` composited on the page at 24% —
+the same compositing rule that generates `$selection-bg` and the hub's
 highlights. The tint cannot drift off-brand: it is the logo's own blue, dilute.
+(A 12% rung, `$blue-25`, briefly carried the review cards; the owner moved
+those to neutral grey the same day — see §9.5 — leaving this band as the one
+blue surface on the site.)
 
 **Why not deeper.** 24% is the strength where `$fg-subtle` still clears AA
 (4.61:1) and `$link` sits at 4.86:1; at 28% the caption tier drops under 4.5.
@@ -545,12 +548,16 @@ there: the "whisper" covered the single most-seen surface on the site.
 | surface | temperature |
 |---|---|
 | the page, and the bar over it | white |
-| menus, wells, the footer strip, code | cool grey (the ink ramp) |
-| the Lợi ích band and the review cards — the two trust moments | pale logo blue (`$blue-25/50`) |
+| menus, wells, the footer strip, code, the quote grounds | cool grey (the ink ramp) |
+| the Lợi ích band — the page asking for trust in Alpha's name | pale logo blue (`$blue-50`) |
 | selection, `<mark>`, markers, CTAs, quote marks | dye — sparks, never a plane |
 
+(The review cards spent a few hours on pale blue before the owner moved them
+to the grey row: *"nền và viền tông màu neutral như gray- thì trông nó sẽ
+trustworthy và khách quan hơn"* — a witness's ground should be colourless. §9.5.)
+
 What survives from the transplant: the *derivation* habit (every tint is a logo
-colour composited on the page — §5.1's recipe, `$blue-25/50`), the three-surface
+colour composited on the page — §5.1's recipe, `$blue-50`), the three-surface
 bar fix, the focus-ring repair, the em-dash gate, and the ink ramp being the
 product's own greys (`$fg` = the product ink `#0E1B27`, `$fg-muted` = its
 `#46586A` exactly). What does not survive is any warm neutral. The build now
@@ -682,16 +689,15 @@ still there for scrollspy, which needs a link per observed section.
 the hub link are invisible below 1024px — that is, to four out of five readers.
 That is a larger change than a styling pass and it is flagged, not patched.
 
-#### The label has to be a noun
+#### The label is the destination's bare name
 
-`toc_knowledge` became **"Blog Chia sẻ kinh nghiệm"** (owner asked for something
-easier to picture, 2026-07-28). On its own, *Chia sẻ kinh nghiệm* is a **verb
-phrase**, and in a row of nav items a verb phrase reads as something you *do*
-here — closer to a feedback form than to a place. Every other item in the bar is
-a noun. "Blog" makes it a place in one word every Vietnamese reader already
-pictures, and the rest of the label still matches what the destination calls
-itself in its own lockup — which is the whole wayfinding contract: you clicked
-X, you arrived at X.
+`toc_knowledge` is **"Chia sẻ kinh nghiệm"** (owner decision, 2026-07-28,
+reversing a same-day "Blog " prefix). The prefix was argued from grammar — the
+bare phrase is a verb phrase, and a verb phrase in a nav row can read as an
+action — but the owner cut it: it made the bar's longest item longer still,
+and the hub's own lockup is just *Chia sẻ kinh nghiệm*, so the bare name is
+what satisfies the wayfinding contract (you clicked X, you arrived at X). The
+lesson: when grammar and the destination's own name disagree, the name wins.
 
 Also: `.navbar .nav-link` is `white-space: nowrap`. It replaced a
 `text-overflow: ellipsis` that had never done anything (it needs
@@ -920,22 +926,28 @@ testimony.
 
 **So the device is now the card** — `.review-card`, the standard testimonial
 pattern, one presentational wrapper in `reviews.html`: portrait, quotation,
-attribution, original-language link, one bordered ground (`$surface-quote`,
-the palest logo blue — blue is the trust colour, and a customer vouching for
-Alpha is the page's purest trust moment), `corner($r-4)`, `height: 100%` so
-the two cards in the row hold the same depth. The deep-link glow rides the
-card now, ring-only — the old background wash existed because a ring alone was
-too little on a bare white column.
+attribution, original-language link, one bordered ground (`$surface-quote`),
+`corner($r-4)`, `height: 100%` so the two cards in the row hold the same
+depth. The deep-link glow rides the card now, ring-only — the old background
+wash existed because a ring alone was too little on a bare white column.
+
+**The ground is neutral grey, not blue** (owner, 2026-07-28, same day the blue
+version shipped): *"nền và viền tông màu neutral như gray- thì trông nó sẽ
+trustworthy và khách quan hơn."* The reasoning holds up: a review is somebody
+else's words, and a brand-coloured ground reads as Alpha framing the witness.
+Grey ground + grey hairline says "presented without decoration", which is what
+objectivity looks like. `$surface-quote` = `$ink-25`; the Lợi ích band is now
+the site's only blue surface.
 
 `.prose blockquote` (an aside inside an article — no portrait, no attribution
 to enclose) keeps the classic form instead: the same quote ground with a 3px
-`$accent` rule down the speaker's side (3.59:1, over SC 1.4.11's 3:1).
+`$accent` rule down the speaker's side (3.63:1, over SC 1.4.11's 3:1).
 
 **5 deliberately does not change.** design/07 §7.5 sets a review at reading size
 with paragraph leading because it is a paragraph somebody wrote, not a pulled
 quote to be admired. Enlarging it would turn a customer into a billboard. The
 words are enclosed, not amplified. The quotation marks stay the card's one dye
-spark, at `$accent-strong` (5.41:1 on the card, over SC 1.4.3's 4.5:1).
+spark, at `$accent-strong` (5.48:1 on the card, over SC 1.4.3's 4.5:1).
 
 ### The em dash nobody could find
 
@@ -986,15 +998,19 @@ not to a page.
 11. Is the icon Material Symbols at the one setting, regenerated not
     hand-picked — and does it name the thing beside it, or a mood? (§9, §9.1)
 12. Does the glyph ride an **action**? A label already labels itself. (§9.2)
-13. Is the surface white, cool grey, or one of the two pale-blue trust
-    moments? **A warm surface is not an option** — the owner rejected the whole
-    warm-shell direction on sight, and the build gates it. Warmth is the dye,
-    spent in sparks. (§6.3)
+13. Is the surface white, cool grey, or the one pale-blue band? **A warm
+    surface is not an option** — the owner rejected the whole warm-shell
+    direction on sight, and the build gates it. Warmth is the dye, spent in
+    sparks. (§6.3; the quote grounds are the grey row — owner decision.)
 14. If it changes appearance with a state class, does that class actually know
     what the element is sitting **on**? (§8.1)
-15. If you broke a rule, is the reason written next to the code?
+15. On the hub: does the change hold in BOTH colour schemes? A new colour goes
+    into the token layer (both blocks), gets measured on both papers, and
+    never ships as a per-component dark override
+    (design/chia-se-kinh-nghiem/01 §3; the build gates the dark block).
+16. If you broke a rule, is the reason written next to the code?
 
-Rule 16: **a green build is not evidence.** The `@font-feature-values` bug, the
+Rule 17: **a green build is not evidence.** The `@font-feature-values` bug, the
 `corner-shape` gate and the purged `:focus-visible` all exist because a
 stylesheet can lose its whole point and still compile, minify, verify and
 render. The focus one is the sharpest: it failed *only in production*, and the

@@ -12,6 +12,12 @@
 {%- endcomment -%}
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
+{%- comment -%}
+  The browser chrome (phone status bar, tab strip) takes the page's own paper,
+  one value per scheme — the same two --paper values the token layer declares.
+{%- endcomment %}
+<meta content="#faf8f2" media="(prefers-color-scheme: light)" name="theme-color" />
+<meta content="#1e1913" media="(prefers-color-scheme: dark)" name="theme-color" />
 
 {% include analytics.html %}
 

@@ -385,6 +385,47 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
+// ---- the hub's dark mode ships, whole ----
+//
+// Dark mode on Chia sẻ kinh nghiệm (owner asked, 2026-07-28) is a token layer:
+// one @media (prefers-color-scheme: dark) block that re-declares --paper and
+// its family. The failure this guards is the quiet one: a CSS optimizer or a
+// refactor drops the media block (or the token re-declarations inside it), the
+// light theme still renders perfectly, and nobody notices until a night-time
+// phone reader gets a searing white page. Tested as a relation plus presence:
+// the dark block must exist, must re-set --paper and --ink, and the dark
+// paper must actually be dark (its red channel below 0x80 — the light paper's
+// is 0xfa, so the two cannot be confused).
+{
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith('chiasekinhnghiem.') && f.endsWith('.css'),
+  );
+  if (file) {
+    const css = readFileSync(join(SITE, 'css', file), 'utf8');
+    const dark = css.match(/@media\s*\(prefers-color-scheme:\s*dark\)\{(.*?)\}\}/s);
+    if (!dark) {
+      errors.push(
+        `css/${file}: no prefers-color-scheme:dark block — the hub's dark mode is gone ` +
+          `(owner asked for it 2026-07-28; _theme.scss token layer)`,
+      );
+    } else {
+      const paper = dark[1].match(/--paper:\s*(#[0-9a-f]{6})/i);
+      const ink = dark[1].match(/--ink:\s*(#[0-9a-f]{6})/i);
+      if (!paper || !ink) {
+        errors.push(
+          `css/${file}: the dark block no longer re-declares --paper and --ink — ` +
+            `the token layer is broken, dark readers get a half-themed page`,
+        );
+      } else if (parseInt(paper[1].slice(1, 3), 16) >= 0x80) {
+        errors.push(
+          `css/${file}: dark-mode --paper is ${paper[1]} — not a dark paper; ` +
+            `the scheme swap would flash a light page at a dark-mode reader`,
+        );
+      }
+    }
+  }
+}
+
 // ---- no em dash reaches a reader, including through CSS ----
 //
 // Em dashes are out of reader-facing text on this site. That rule was being

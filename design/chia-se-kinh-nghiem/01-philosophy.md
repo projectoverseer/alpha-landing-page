@@ -245,8 +245,53 @@ Rules:
   the hub and of every topic page, and that strip is indigo (§5).
 - No shadows for hierarchy. If a surface must separate (CTA card, aside),
   use `--paper-deep` plus a `--line` border, flat.
-- Light theme only for now. Dark mode is a legitimate future amendment
-  (§8) — add it as a token layer, never as per-component overrides.
+
+### Dark mode — the same room with the lights off (2026-07-28)
+
+Dark mode shipped as exactly the amendment this section used to reserve: **a
+token layer switched by `prefers-color-scheme`**, no toggle on the page, no
+per-component theming. The dark palette is the light one read backwards — the
+page ground comes from the lit theme's own warm ink family, the text from the
+lit paper, so the room stays warm at night and never turns Material-grey:
+
+| Token | Dark value | Measured |
+|---|---|---|
+| `--paper` | `#1E1913` | the ink family as ground (viewer kin `#15110B`) |
+| `--paper-deep` | `#2B241A` | asides/cards *lift* in the dark (in light they sink) |
+| `--line` | `#4C4232` | 1.77:1 on paper — the same "hair, not rule" weight |
+| `--ink` | `#EDE5D2` | body 13.91:1 ✓AAA (12.22 on `--paper-deep`) |
+| `--ink-2` | `#C9BDA4` | 9.39 / 8.25 ✓ |
+| `--ink-3` | `#A89C84` | 6.44 / 5.66 ✓ (contract floor 4.5) |
+| `--indigo` | `#62B5E5` | the logo's light globe stop — links 7.69:1 ✓ |
+| `--indigo-deep` | `#8DC8E8` | at night "stronger" means *lighter*: hover climbs the ramp the other way (9.60:1) |
+
+Buttons re-pair themselves by the token swap alone (light-blue fill, warm-black
+text, 7.69:1) — which is the point of a token layer. **Selection re-composites**
+($dye-500 @ 24% on the dark paper → `#4D2710`, ink on it 10.38:1): a selection
+is the paper warming, and the paper changed. **The mark does not move**: a
+highlight is the reader's own pen laid *on* the page, pen ink does not dim when
+the lights go out — and the 58% recipe on near-black measures 4.1:1 / 3.6:1, a
+mid-tone no ink can sit on. So `mark` keeps its lit pair (`#FDBB76`/`#292319`,
+9.30:1), the one lit object on the dark page.
+
+The written exceptions, all three in the name of "never per-component":
+
+- **The plates dim 10%** (`brightness(.9)` on figure/feed/Đọc-tiếp images):
+  white infographics on a dark ground glare like a phone in a dark bedroom; a
+  21:1 plate keeps ~17:1. The picture viewer is exempt — the reader *asked* to
+  inspect that plate, so it opens at full strength.
+- **The lockup swaps to the white silhouette** (`<picture>` + `media` in
+  `topbar.html`, the same asset the main navbar uses over its dark hero): the
+  wordmark's deep blues vanish on near-black, and no script is spent on it.
+- **The picture viewer never changes theme** — it is the same dark room in
+  both schemes, so its focus pair and close button hold literals; `var(--paper)`
+  there would have drawn a dark ring on a dark ground in dark mode.
+
+`color-scheme` rides the token blocks (scrollbars and form controls follow),
+and `head.html` declares one `theme-color` per scheme so the phone's own chrome
+takes the page's paper. `verify.mjs` gates the whole thing: the built hub CSS
+must contain the dark block, it must re-declare `--paper`/`--ink`, and the dark
+paper must actually be dark.
 
 ## 4. Typography & layout
 
@@ -301,14 +346,18 @@ This is the whole policy. There is no display cut, no per-heading dial, no type
 that is "pushed up the axis" for effect. A heading is drawn for the size a heading
 is; so is a caption.
 
-**Chrome is Inter, and its axis obeys the same rule.** Inter Variable carries an
-`opsz 14–32` axis too, so it is held off `auto` exactly like Literata. But every
-piece of chrome is small — the largest is the 16px body base, and 0.75 × 16 = 12,
-below Inter's opsz floor of 14 — so the whole UI resolves to a single `opsz` 14,
-Inter's text cut. It is pinned once on the body rather than per rule; anything set
-large enough to leave the floor would take its own. In practice, then, Inter reads
-exactly as it always has — the point of vendoring the variable font is that the
-axis is now *present and correctly pinned*, not left to drive itself from pixels.
+**Chrome is Inter, and its axis reads a different unit — so it takes the
+opposite setting** (2026-07-28; the full split is argued at the top of
+`_theme.scss`). The `opsz` unit is not a universal fact: it is a choice each
+maker records. Literata's STAT table names its stops in points, so Literata
+converts (the mixins above). Inter names its stops "Text" (14) and "Display"
+(32) with no unit, and its maker's own shipped CSS drives it with
+`font-optical-sizing: auto` — the px number. So Inter is left on `auto`, set
+once on `body.kt`; the hub's chrome is 12–16px, so in practice it resolves to
+Inter's 14 floor, its Text cut, and follows the reader's own zoom or larger
+default text size correctly. Every Literata rule's explicit
+`font-variation-settings` outranks the `auto`, which is what keeps the two
+policies from touching.
 
 One consequence worth stating: **`@font-face` declares `font-weight: 400 900`**,
 the real range in the files. A browser clamps the used weight to the declared
@@ -570,8 +619,10 @@ Restraint rules (hard):
 
 May change freely (amend this doc in the same commit):
 - Type scale tuning, spacing tuning, new CTA variants, image/figure
-  treatment when photos arrive, dark mode (as a token layer), RSS feed,
-  print stylesheet, topic taxonomy growth.
+  treatment when photos arrive, RSS feed, print stylesheet, topic taxonomy
+  growth. (Dark mode used to sit in this list; it shipped 2026-07-28 as the
+  token layer §3 asked for, and its *mechanism* — tokens only, OS-switched —
+  now belongs to the protected list below.)
 
 Must survive any redesign (change only with an explicit owner decision):
 - Single reading column and its measure; calm uniform background;

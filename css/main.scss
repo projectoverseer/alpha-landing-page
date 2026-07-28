@@ -109,16 +109,17 @@ $dye-800: #a33208; // pressed (derived)
 // page is 4.5:1 minimum on white and 5.81:1 maximum, and only 600 is in it.
 // (#c3e5f1 and #004080, which used to hold 100 and 800, were off the hue axis
 // and in nothing Alpha has ever printed.)
-// The two light rungs are DERIVED, not picked: $blue-100 — the palest blue
-// Alpha actually prints, the globe's edge — composited on the page at 12% and
-// 24%, the same compositing rule that generates $selection-bg. So the tints
-// cannot drift off-brand: they are the logo's own blue, dilute. Measured
-// (CIELCh): both land at h 239°, C* 3.1 / 6.2 — the retired grey band was
-// C* 2.9 at the same lightness, so 50 has TWICE its colour and none of its
-// overcast. On 50 every text tier still clears AA: $fg 15.2, $fg-muted 6.4,
-// $fg-subtle 4.61, $link 4.86 — 24% is the deepest strength that holds, so it
-// is a floor, not a preference.
-$blue-25: #f1f8fc; // blue-100 @ 12% — a quoted surface
+// The light rung is DERIVED, not picked: $blue-100 — the palest blue
+// Alpha actually prints, the globe's edge — composited on the page at 24%,
+// the same compositing rule that generates $selection-bg. So the tint cannot
+// drift off-brand: it is the logo's own blue, dilute. Measured (CIELCh):
+// h 239°, C* 6.2 — the retired grey band was C* 2.9 at the same lightness,
+// so this has TWICE its colour and none of its overcast. Every text tier
+// still clears AA on it: $fg 15.2, $fg-muted 6.4, $fg-subtle 4.61, $link
+// 4.86 — 24% is the deepest strength that holds, so it is a floor, not a
+// preference. (A 12% rung, $blue-25, briefly carried the review cards; the
+// owner moved those to neutral grey the same day — "trông nó sẽ trustworthy
+// và khách quan hơn" — leaving the band as the one blue surface.)
 $blue-50: #e4f2f9; // blue-100 @ 24% — the one tinted band
 $blue-100: #8dc8e8;
 $blue-400: #009cde;
@@ -154,17 +155,20 @@ $blue-800: #003865;
 //
 //   White — the page itself, and the bar over it. Uniform, calm, standard.
 //   Cool grey (the ink ramp) — furniture: menus, wells, the footer strip,
-//     code. A breath of blue in every grey, like the product's own core.
-//   Pale logo blue — the two places the page addresses a PERSON and asks for
-//     trust: the Lợi ích band and a customer speaking in their own words.
-//     Blue is Alpha's stated trust colour; these are its trust moments.
+//     code — AND the quote grounds. A breath of blue in every grey, like the
+//     product's own core. The quotes sat on pale blue for a few hours; the
+//     owner moved them to grey ("nền và viền tông màu neutral như gray- thì
+//     trông nó sẽ trustworthy và khách quan hơn") — a witness's ground should
+//     be colourless, so the testimony reads as theirs, not as Alpha's framing.
+//   Pale logo blue — ONE surface: the Lợi ích band, the place the page asks
+//     for trust in Alpha's own name. Blue is Alpha's stated trust colour.
 //   Dye — never a surface. Marks, markers, CTAs, selection, the quote rule:
 //     the brand's signal budget, spent in sparks (product guide §2c: "nếu mọi
 //     thứ đều khẩn cấp, sẽ không có gì là khẩn cấp").
 $surface: $white; // the page. Uniform, and it stays uniform (design/07 §7.4)
 $surface-chrome: $white; // the bar — white, an owner decision (see the ramp note)
 $surface-alt: $blue-50; // the one tinted band (Lợi ích); see the note in §3
-$surface-quote: $blue-25; // a person speaking in their own words
+$surface-quote: $ink-25; // a person speaking in their own words — neutral, objective
 $surface-sunk: $ink-25; // menus, wells
 $surface-footer: $ink-50; // the strip that closes the page
 $surface-dark: $ink-900; // the CTA panel

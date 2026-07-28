@@ -899,11 +899,13 @@ big,
   }
 
   // Blockquotes within prose (nested/inline, not the review blockquotes).
-  // The same GROUND as a review — the quote surface, the palest logo blue —
+  // The same GROUND as a review — the quote surface, a neutral cool grey —
   // because both are "these are not Alpha's words" and the site should say
-  // that one way. An aside has no portrait or attribution to enclose, so
+  // that one way. Neutral by owner decision: a coloured ground frames the
+  // words as Alpha's; grey lets them read as the speaker's ("trustworthy và
+  // khách quan hơn"). An aside has no portrait or attribution to enclose, so
   // instead of the card it takes the classic rule down the speaker's side
-  // ($accent, 3.59:1 on this ground, over SC 1.4.11's 3:1). The TYPE also
+  // ($accent, 3.63:1 on this ground, over SC 1.4.11's 3:1). The TYPE also
   // differs, and should: a review is evidence and is set at full ink, a quoted
   // rule of thumb inside an article is an aside and is set muted.
   blockquote {
@@ -1116,10 +1118,12 @@ blockquote> :last-child:after {
 //
 // So the card is the device — the standard, instantly-read testimonial
 // pattern: portrait, quotation, attribution, one bordered ground. The ground
-// is $surface-quote, the palest rung of the logo's own blue: blue is the
-// owner's stated trust colour, and a customer vouching for Alpha is the page's
-// purest trust moment. (The warm ground was rejected with the rest of the warm
-// surfaces, main.scss §1.)
+// is $surface-quote — NEUTRAL grey, not blue, an owner decision made the same
+// day the blue version shipped: a review is somebody else's words, and a
+// coloured ground reads as Alpha framing them. Grey ground + grey hairline =
+// "we present this without decoration", which is what objectivity looks like.
+// (The warm ground was rejected with the rest of the warm surfaces,
+// main.scss §1.)
 //
 // What deliberately does NOT change is the type. design/07 §7.5 sets a review
 // at reading size with paragraph leading because it is a paragraph somebody
@@ -1137,7 +1141,7 @@ blockquote> :last-child:after {
   color: $fg;
 
   // The quotation marks are the one dye spark inside the card — glyphs, so
-  // they take $accent-strong: 5.41:1 on this ground, over the 4.5:1 SC 1.4.3
+  // they take $accent-strong: 5.48:1 on this ground, over the 4.5:1 SC 1.4.3
   // asks of text.
   > :first-child::before,
   > :last-child::after {
