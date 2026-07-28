@@ -4,8 +4,16 @@
 @charset "utf-8";
 
 // Chia sẻ kinh nghiệm (/chia-se-kinh-nghiem/) — standalone stylesheet for the reading hub.
-// Not shared with main.css by design: the hub is a separate product.
+// Not shared with main.css by design: the hub is a separate product with its
+// own colour, its own faces and its own voice.
 // See design/chia-se-kinh-nghiem/01-philosophy.md.
+//
+// What it DOES share with the main site is `quy-cu` — the space ladder, the
+// corner geometry, the 44px tap target, one motion curve and one focus ring.
+// Those are physics, not taste: a reader who follows a link from the article
+// to the company page should not feel the ground change under them.
+// See design/08-quy-cu.md.
 
+@import "quy-cu";
 @import "chia-se-kinh-nghiem/fonts";
 @import "chia-se-kinh-nghiem/theme";

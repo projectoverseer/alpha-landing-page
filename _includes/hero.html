@@ -2,13 +2,27 @@
   <div class="container header-content">
     <h1 itemprop="slogan">{{ t.slogan }}</h1>
     <p class="big">{{ t.description }}</p>
-    <a
-      aria-label="{{ t.learn_more_aria }}"
-      class="btn-primary btn-xl mt-4"
-      data-squircle-radius
-      href="#{{ t.toc_overview_id }}"
-    >
-      {{ t.learn_more }}
-    </a>
+    {%- comment -%}
+      Two actions, in the order a cold visitor needs them: read on first, reach
+      a human second. The call is the ghost button rather than the filled one
+      because the page has not earned a phone call yet at this point — but it
+      is on the first screen and the number is legible, which on its own says
+      that a real person answers.
+
+      .actions stacks them full-width under sm and sets them side by side above
+      it (_base.scss). A button only as wide as its own label is a desktop
+      object; four out of five of our readers are aiming a thumb.
+    {%- endcomment -%}
+    <div class="actions mt-5">
+      <a
+        aria-label="{{ t.learn_more_aria }}"
+        class="btn-primary btn-xl"
+        href="#{{ t.toc_overview_id }}"
+      >{{ t.learn_more }}</a>
+      <a
+        class="btn-ghost btn-xl"
+        href="tel:+84983505002"
+      >{% include icon-phone.html %}{{ t.hero_call }}</a>
+    </div>
   </div>
 </header>

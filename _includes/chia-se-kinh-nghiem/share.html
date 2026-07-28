@@ -2,15 +2,21 @@
   The share block — the article hands the reader a way to pass it on
   (overhaul, 2026-07-15; philosophy §5 item 5, spec in 03-element-spec.md).
 
-  The hub exists to encourage learning AND sharing, and until this block the
-  page had no share affordance at all. Two actions, no more:
+  The hub exists to encourage learning AND sharing. Three actions, no more,
+  and the first of them is new (2026-07-28):
 
-    · Facebook — where the audience actually lives and where these posts were
-      born. A plain sharer URL, no SDK, no tracking script.
-    · Sao chép liên kết — covers everything else, Zalo above all: the way a
-      link really travels between Vietnamese factory people is pasted into a
-      Zalo chat. (A Zalo button proper needs their SDK — a script the budget
-      does not owe it.)
+    · Chia sẻ — the DEVICE's own share sheet, via navigator.share. Four out of
+      five of our readers are on a phone, and on a phone this one button is
+      Zalo, Messenger, SMS and everything else the reader already has, in the
+      UI they already know, with their own contacts in it. Zalo is how a link
+      actually travels between Vietnamese factory people, and this reaches it
+      without asking the page to carry Zalo's SDK. Nothing but a button and
+      eight lines of script, and it is only shown where the API exists.
+    · Facebook — where the audience also lives and where these posts were
+      born. A plain sharer URL, no SDK, no tracking script. It stays because
+      desktop has no share sheet, and because Facebook is a destination the
+      author posts to deliberately, not just a contact.
+    · Sao chép liên kết — the floor: anywhere neither of the above works.
 
   The lead sentence is editorial, not chrome: Literata italic, the same voice
   as a kt-cta-inline aside — an author asking a small favor, not a toolbar.
@@ -24,22 +30,41 @@
 <aside aria-label="Chia sẻ bài viết" class="kt-share">
   <p class="kt-share-lead">Nếu bài viết hữu ích, hãy chia sẻ cho đồng nghiệp của bạn.</p>
   <p class="kt-cta-actions">
+    <button class="kt-button kt-share-native" data-title="{{ page.title | escape }}" data-url="{{ kt_share_url }}" hidden type="button">Chia sẻ</button>
     <a class="kt-button kt-button-quiet" href="https://www.facebook.com/sharer/sharer.php?u={{ kt_share_url | url_encode }}" rel="noopener nofollow" target="_blank">Chia sẻ lên Facebook</a>
     <button class="kt-button kt-button-quiet kt-share-copy" data-url="{{ kt_share_url }}" hidden type="button">Sao chép liên kết</button>
   </p>
 </aside>
 <script>
-  // Reveal the copy button only where it can actually work; swap its label
-  // for two seconds as the confirmation — the button itself is the feedback,
-  // no toast, nothing appears anywhere else on the page.
+  // Both buttons ship [hidden] and are revealed only where their API really
+  // exists, so nothing dead is ever shown. With JS off the reader still has the
+  // Facebook link and the address bar.
   (function () {
+    var url = "{{ kt_share_url }}";
+
+    // The device's own share sheet. Shown first because on a phone it is the
+    // one that reaches Zalo. A cancelled sheet rejects with AbortError, which
+    // is a reader changing their mind, not a failure — so it is swallowed and
+    // nothing appears on the page.
+    var share = document.querySelector(".kt-share-native");
+    if (share && navigator.share) {
+      share.hidden = false;
+      share.addEventListener("click", function () {
+        navigator
+          .share({ title: share.getAttribute("data-title"), url: share.getAttribute("data-url") })
+          .catch(function () {});
+      });
+    }
+
+    // Copy: the confirmation IS the button — its label swaps for two seconds.
+    // No toast, nothing appears anywhere else on the page.
     var btn = document.querySelector(".kt-share-copy");
     if (!btn || !navigator.clipboard || !window.isSecureContext) return;
     btn.hidden = false;
     var label = btn.textContent;
     var timer;
     btn.addEventListener("click", function () {
-      navigator.clipboard.writeText(btn.getAttribute("data-url")).then(function () {
+      navigator.clipboard.writeText(btn.getAttribute("data-url") || url).then(function () {
         btn.textContent = "Đã sao chép liên kết";
         clearTimeout(timer);
         timer = setTimeout(function () {

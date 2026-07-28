@@ -28,7 +28,6 @@ const ASSETS = [
   { file: 'js/bundle.js', ref: '/js/bundle.js' },
   // The hub loads the corner engine on its own — it shares no bundle with the
   // main site, whose copy is inlined in bundle.js above.
-  { file: 'js/squircle.js', ref: '/js/squircle.js' },
   // The hub's picture viewer, referenced by article pages only.
   { file: 'js/kt-lightbox.js', ref: '/js/kt-lightbox.js' },
   // The hub's scroll title, referenced by every hub page but the hub root.

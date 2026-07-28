@@ -125,34 +125,69 @@ a {
 // up everywhere without adding a single element. Translucent so it reads
 // correctly over light and dark surfaces alike.
 ::selection {
-  background: rgba($dye, 0.24);
+  background: rgba($accent, 0.24);
+}
+
+// ─── Focus: one ring, stated once ───
+// Every focusable thing on the site — link, button, menu row, accordion header,
+// skip link, the language switcher — takes this and nothing else. It used to be
+// declared separately on four components with three different offsets, which is
+// how the hero's CTA ended up with a ring nobody had measured against the
+// photograph behind it. The colour comes from --focus, which dark surfaces
+// redeclare, so the ring is correct on any ground with nothing to remember here.
+:focus-visible {
+  @include focus-ring;
+}
+
+// Bootstrap's components carry their own box-shadow rings. Ours is an outline,
+// which does not affect layout and does not fight a component's real shadow, so
+// the framework's version is turned off wherever it appears.
+.btn:focus-visible,
+.accordion-button:focus-visible,
+.dropdown-item:focus-visible,
+.nav-link:focus-visible,
+.form-control:focus-visible {
+  box-shadow: none;
 }
 
 // Design doc §10/§13: honor Reduce Motion — replace movement with near-instant change
 // and disable parallax/specular transitions.
 @media (prefers-reduced-motion: reduce) {
   * {
-    scroll-behavior: auto;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    @include reduced-motion-reset;
   }
 }
 
-@include media-breakpoint-down(md) {
-  .container-fluid {
-    --bs-gutter-x: 16px;
-  }
+// The ring adapts to what it lands on. On every dark surface — the hero
+// photograph, the About panel, the CTA panel — the brand blue drops to
+// 2.4–3.1:1 and white rises to 13.6–17.4:1, so the token flips and every
+// focusable child inherits it with nothing to remember at the call site.
+header,
+section.bg-dark,
+section.bg-primary,
+.navbar:not(.nav-active) {
+  --focus: #{$fg-on-dark};
 }
+
+// ...and back again for the menus that open OUT of the transparent bar onto
+// their own light surface.
+.navbar .dropdown-menu {
+  --focus: #{$focus};
+}
+
+// (A `@include media-breakpoint-down(md) { .container-fluid { --bs-gutter-x:
+// 16px } }` rule lived here. It set the ROW gutter inside .container-fluid, and
+// the only .container-fluid on the site — the footer's copyright bar — holds no
+// row. It had been inert for as long as it had existed.)
 
 section {
-  // Standard section rhythm: 48 / 72 / 96px (was 55 / 88 / 132) — denser, more
-  // conventional. Decoupled from the spacer keys so it doesn't shrink the .hr or
-  // hero margin that also reference $spacers-24.
-  padding: 3rem 0;
+  // Section rhythm, straight off the ladder: 48 / 72 / 96px. Written as steps
+  // rather than raw rem so the page rhythm and the component rhythm cannot drift
+  // apart — they are the same eleven numbers.
+  padding: step(8) 0;
 
   @include media-breakpoint-up(md) {
-    padding: 4.5rem 0;
+    padding: step(9) 0;
 
     p,
     li {
@@ -161,7 +196,7 @@ section {
   }
 
   @include media-breakpoint-up(lg) {
-    padding: 6rem 0;
+    padding: step(10) 0;
   }
 }
 
@@ -176,20 +211,20 @@ section {
 // air up top), which reads better on wide screens; mobile lands tighter.
 section[id],
 header[id] {
-  scroll-margin-top: 1.5rem; // compact: 01 settles ~16px below the bar ($navbar-height-sm)
+  scroll-margin-top: step(5); // compact: 01 settles ~16px below the bar ($navbar-height-sm)
 }
 
 @include media-breakpoint-up(md) {
   section[id],
   header[id] {
-    scroll-margin-top: 1rem; // ~24px below the bar ($navbar-height)
+    scroll-margin-top: step(4); // ~24px below the bar ($navbar-height)
   }
 }
 
 @include media-breakpoint-up(lg) {
   section[id],
   header[id] {
-    scroll-margin-top: 0.5rem; // padding does the rest — content sits a touch lower
+    scroll-margin-top: step(2); // padding does the rest — content sits a touch lower
   }
 }
 
@@ -217,13 +252,22 @@ header[id] {
     inset 0px 1px 2px rgba(255, 255, 255, 0.18),
     inset 0px 2px 3px rgba(0, 0, 0, 0.1);
 
-  // — Motion tokens. Design doc §10: swift, soft, decelerating. The default ease is
-  //   the recommended cubic-bezier(.2,.8,.2,1); durations sit in the ~.16–.4s
-  //   band (micro-feedback short, surface transitions longer).
-  --ease-precise: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --dur-fast: 160ms;
-  --dur-base: 280ms;
-  --dur-slow: 400ms;
+  // — Motion. One curve, three durations, shared with the reading hub
+  //   (_sass/_quy-cu.scss §4). Every transition on this stylesheet is one of
+  //   these three; nothing hand-times any more.
+  @include motion-tokens;
+
+  // — Focus. The ring colour, not the ring: dark surfaces below redeclare it
+  //   (quy-cu §5). Measured — no single colour clears the 3:1 that WCAG 2.2
+  //   SC 1.4.11 asks of a focus indicator on BOTH the white page and the hero
+  //   photograph, and the control that was failing was the hero's own CTA.
+  --focus: #{$focus};
+
+  // The one named exception to the three durations, and it is a different KIND
+  // of motion: --t-1/2/3 are replies to a reader's hand, this is an arrival cue
+  // that has to outlast a smooth-scroll across the page. Named so it cannot be
+  // mistaken for someone's afternoon (see .service-box[id].is-settling).
+  --t-settle: 1100ms;
 
   // Type scale, stepped at breakpoints instead of fluid clamp() (per owner
   // direction: no clamp; change scale at viewport breakpoints). These are the
@@ -247,11 +291,12 @@ header[id] {
   // --fs-h1, --fs-metric, --fs-heading-num) sit at or past 32px on every
   // breakpoint, so they land on the "Display" cut exactly as before; h2/h3 now get
   // the intermediate drawings that used to be skipped over.
-  --gap-hero-metrics: 2rem;
+  --gap-hero-metrics: #{step(6)};
   // Chrome stays compact on phones so the logo/buttons never dominate.
   --size-icon: 3rem;
-  --btn-h: 2.75rem;
-  --btn-px: 1.25rem;
+  // The shared 44px tap target (quy-cu §3). Not a look — a measurement.
+  --btn-h: #{$tap};
+  --btn-px: #{step(5)};
 }
 
 // Regular size class (tablet+). Step the display/heading scale up; design doc §15
@@ -267,9 +312,8 @@ header[id] {
     --fs-quote: 1.0625rem;
     --fs-metric: 2.625rem;
     --fs-heading-num: 2.25rem;
-    --gap-hero-metrics: 3rem;
+    --gap-hero-metrics: #{step(8)};
     --size-icon: 3.5rem;
-    --btn-px: 1.5rem;
   }
 }
 
@@ -283,27 +327,26 @@ header[id] {
     --fs-quote: 1.0625rem;
     --fs-metric: 3rem;
     --fs-heading-num: 2.5rem;
-    --gap-hero-metrics: 4rem;
+    --gap-hero-metrics: #{step(9)};
     --size-icon: 4rem;
   }
 }
 
+// The skip link paints itself onto the focus blue, so it is a dark surface of
+// its own and takes the dark ring — the same one token, not a second rule.
 .skip-link {
+  --focus: #{$fg-on-dark};
+
   position: fixed;
-  top: map-get($spacers, 2);
-  left: map-get($spacers, 2);
+  top: step(3);
+  left: step(3);
   z-index: 9999;
-  padding: map-get($spacers, 2) map-get($spacers, 3);
-  background: $focus-ring-color;
+  padding: step(3) step(4);
+  background: $focus;
   color: $white;
-  border-radius: $border-radius-lg;
+  @include squircle($r-2);
   font-weight: 600;
   text-decoration: none;
-
-  &:focus {
-    outline: 2px solid $white;
-    outline-offset: 2px;
-  }
 }
 
 .select-disabled,
@@ -316,11 +359,11 @@ header[id] {
 }
 
 .text-secondary {
-  color: $text-secondary !important;
+  color: $fg-muted !important;
 }
 
 .text-tertiary {
-  color: $text-tertiary !important;
+  color: $fg-subtle !important;
 }
 
 // Dark-surface variants — on dark panels these muted tiers must use the white
@@ -329,12 +372,12 @@ header[id] {
 // overrides at the end of this file.
 .bg-dark .text-secondary,
 .bg-primary .text-secondary {
-  color: $text-dark-secondary !important;
+  color: $fg-on-dark-muted !important;
 }
 
 .bg-dark .text-tertiary,
 .bg-primary .text-tertiary {
-  color: $text-dark-tertiary !important;
+  color: $fg-on-dark-subtle !important;
 }
 
 // Never let a long word (e.g. "Transformation") or a long URL push past the
@@ -431,7 +474,7 @@ h3,
   line-height: $h3-line-height;
 
   /* Reserve space on the right so long product names never slide under the arrow */
-  padding-right: calc(#{$accordion-padding-x} + #{$accordion-icon-width} + #{map-get($spacers, 3)});
+  padding-right: calc(#{$accordion-padding-x} + #{$accordion-icon-width} + #{step(4)});
 
   /* Lift the arrow out of column flow and pin it to the vertical centre of the
      whole button regardless of how tall the two-line heading grows */
@@ -516,7 +559,7 @@ big,
   th,
   td {
     text-align: left;
-    padding: map-get($spacers, 2) map-get($spacers, 3);
+    padding: step(3) step(4);
     border-bottom: $border-width solid $border-color;
     vertical-align: top;
   }
@@ -524,7 +567,7 @@ big,
   th {
     font-weight: 600;
     border-bottom-width: 2px;
-    border-bottom-color: $gray-400;
+    border-bottom-color: $ink-300;
   }
 
   tr:last-child td {
@@ -538,9 +581,9 @@ big,
     padding-bottom: 56.25%; // 16:9
     height: 0;
     overflow: hidden;
-    border-radius: $border-radius-xl;
+    @include squircle($r-3);
     margin-top: 1.5em;
-    background: $gray-950;
+    background: $surface-deep;
 
     iframe,
     video,
@@ -559,16 +602,16 @@ big,
   video {
     max-width: 100%;
     height: auto;
-    border-radius: $border-radius-xl;
+    @include squircle($r-3);
     display: block;
     margin-top: 1.5em;
   }
 
   // Code blocks
   pre {
-    background: $gray-100;
-    border-radius: $border-radius-lg;
-    padding: map-get($spacers, 3) map-get($spacers, 4);
+    background: $ink-50;
+    @include squircle($r-2);
+    padding: step(4) step(5);
     overflow-x: auto;
     margin-top: 1em;
     font-family: $font-family-monospace;
@@ -580,8 +623,8 @@ big,
   code {
     font-family: $font-family-monospace;
     font-size: 0.875em;
-    background: $gray-100;
-    border-radius: $border-radius-sm;
+    background: $ink-50;
+    border-radius: $r-1;
     padding: 0.125em 0.3125em;
   }
 
@@ -599,16 +642,16 @@ big,
     max-width: 100%;
 
     img {
-      border-radius: $border-radius-xl;
+      @include squircle($r-3);
       max-width: 100%;
       height: auto;
       display: block;
     }
 
     figcaption {
-      color: $text-secondary;
+      color: $fg-muted;
       font-size: $font-size-sm;
-      margin-top: map-get($spacers, 1);
+      margin-top: step(1);
       padding-left: 0;
     }
   }
@@ -622,8 +665,8 @@ big,
 
   // Highlighted text
   mark {
-    background: rgba($accent, 0.2);
-    border-radius: $border-radius-xs;
+    background: rgba($dye-300, 0.2);
+    border-radius: $r-1;
     padding: 0.0625em 0.25em;
     color: inherit;
   }
@@ -632,14 +675,14 @@ big,
   img:not(.bi) {
     max-width: 100%;
     height: auto;
-    border-radius: $border-radius-xl;
+    @include squircle($r-3);
   }
 
   // Collapsible / details-summary (native HTML collapsible)
   details {
     border: $border-width solid $border-color;
-    border-radius: $border-radius-xl;
-    padding: map-get($spacers, 3) map-get($spacers, 4);
+    @include squircle($r-3);
+    padding: step(4) step(5);
     margin-top: 1em;
 
     summary {
@@ -649,7 +692,7 @@ big,
       list-style: none;
       display: flex;
       align-items: center;
-      gap: map-get($spacers, 2);
+      gap: step(3);
 
       &::-webkit-details-marker {
         display: none;
@@ -663,7 +706,7 @@ big,
         background-image: url("../img/svg/ui_icons/accordion-button-icon.svg");
         background-repeat: no-repeat;
         background-size: 100%;
-        transition: transform 240ms ease;
+        transition: transform var(--t-3) var(--ease);
         flex-shrink: 0;
       }
     }
@@ -673,17 +716,17 @@ big,
     }
 
     &[open]>summary {
-      margin-bottom: map-get($spacers, 3);
+      margin-bottom: step(4);
     }
   }
 
   // Blockquotes within prose (nested/inline, not the review blockquotes)
   blockquote {
-    border-left: 3px solid $primary;
-    padding-left: map-get($spacers, 4);
+    border-left: 3px solid $accent;
+    padding-left: step(5);
     margin-left: 0;
     font-style: italic;
-    color: $text-secondary;
+    color: $fg-muted;
   }
 }
 
@@ -720,26 +763,26 @@ dd {
 }
 
 .bg-gray-100 {
-  background: $gray-100 !important;
+  background: $ink-50 !important;
 }
 
 .hr {
   // outline: $hr-border-width / 2 solid currentColor;
   height: $hr-border-width;
-  width: map-get($spacers, 24);
+  width: step(11);
   margin-left: auto;
   margin-right: auto;
-  border-radius: $border-radius-2xl;
+  border-radius: $r-1;
 
   background: currentColor;
-  color: $primary;
+  color: $accent;
 
   .bg-primary & {
-    color: $text-dark;
+    color: $fg-on-dark;
   }
 
   .bg-dark & {
-    color: $primary-inverted-dark;
+    color: $blue-100;
   }
 }
 
@@ -753,27 +796,20 @@ a {
     color: inherit;
   }
 
-  &:focus-visible,
-  &.nav-link:focus-visible {
-    outline-offset: 1px;
-    outline: $focus-ring-outline;
-    box-shadow: none;
-  }
-
   &+svg.external-link-icon,
   &+svg.phone-icon {
-    color: $icon-color;
+    color: $icon-quiet;
     display: inline-block;
     position: relative;
     top: -0.0625rem;
 
     .bg-dark &,
     .bg-primary & {
-      color: $dark-icon-color;
+      color: $icon-on-dark;
     }
   }
 
-  &:not(.nav-link, .btn-xl, .dropdown-item):hover,
+  &:not(.nav-link, .btn-xl, .dropdown-item, .navbar-call):hover,
   .partner-logo-card:has(a.stretched-link:hover)+div & {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
@@ -854,7 +890,7 @@ figcaption {
 
   .bg-dark &,
   .bg-primary & {
-    color: $text-dark-secondary;
+    color: $fg-on-dark-muted;
   }
 }
 
@@ -879,14 +915,14 @@ blockquote> :last-child:after {
 // A modest, inline accent quotation mark opens the review — a quiet "this is a
 // quote" cue that lets the block keep reading like written prose, not a billboard.
 .blockquote {
-  color: $text;
+  color: $fg;
 
   > :first-child::before,
   > :last-child::after {
     font-size: 1.5em;
     font-weight: 700;
     line-height: 0;
-    color: $dye;
+    color: $accent;
     vertical-align: -0.32em;
   }
 
@@ -900,7 +936,7 @@ blockquote> :last-child:after {
 }
 
 .blockquote-footer {
-  color: $text-secondary;
+  color: $fg-muted;
   padding-left: $text-tab-width;
 }
 
@@ -913,11 +949,11 @@ blockquote> :last-child:after {
 // ($navbar-height-sm/$navbar-height) plus a little air so the card clears the chrome (design doc §2).
 .service-box[id] {
   position: relative;
-  scroll-margin-top: 5rem;
-  border-radius: 1.25rem; // harmless while transparent; gives the lit tint/glow round corners
+  scroll-margin-top: calc(#{$navbar-height-sm} + #{step(5)});
+  @include squircle($r-4); // harmless while transparent; gives the lit tint/glow round corners
 
   @include media-breakpoint-up(md) {
-    scroll-margin-top: 6rem;
+    scroll-margin-top: calc(#{$navbar-height} + #{step(6)});
   }
 }
 
@@ -932,10 +968,10 @@ blockquote> :last-child:after {
 // HELD state: lit and static — no transition, no animation — so it shows instantly on load and
 // stays put for however long the glide lasts.
 .service-box[id].is-flashing {
-  background-color: rgba($dye, 0.11);
+  background-color: rgba($accent, 0.11);
   box-shadow:
-    0 0 0 3px rgba($dye, 0.24),
-    0 12px 30px rgba($dye, 0.16);
+    0 0 0 3px rgba($accent, 0.24),
+    0 12px 30px rgba($accent, 0.16);
 }
 
 // SETTLE-OUT: a keyframe animation eases the lit values back to transparent. Driven by an
@@ -943,22 +979,22 @@ blockquote> :last-child:after {
 // suppressed in Chromium and snaps; a keyframe reliably interpolates both background and the
 // box-shadow (transparent endpoints share the held state's structure, so nothing jumps).
 .service-box[id].is-settling {
-  animation: review-settle 1100ms var(--ease-precise) forwards;
+  animation: review-settle var(--t-settle) var(--ease) forwards;
 }
 
 @keyframes review-settle {
   from {
-    background-color: rgba($dye, 0.11);
+    background-color: rgba($accent, 0.11);
     box-shadow:
-      0 0 0 3px rgba($dye, 0.24),
-      0 12px 30px rgba($dye, 0.16);
+      0 0 0 3px rgba($accent, 0.24),
+      0 12px 30px rgba($accent, 0.16);
   }
 
   to {
-    background-color: rgba($dye, 0);
+    background-color: rgba($accent, 0);
     box-shadow:
-      0 0 0 3px rgba($dye, 0),
-      0 12px 30px rgba($dye, 0);
+      0 0 0 3px rgba($accent, 0),
+      0 12px 30px rgba($accent, 0);
   }
 }
 
@@ -978,21 +1014,25 @@ blockquote> :last-child:after {
   padding-left: $text-tab-width;
 }
 
-// Design doc §11 "plain" button: text-only, the one accent color signals interactivity,
-// Semibold, a leading translate glyph. The visual is small but the hit area is a
-// full 44px via invisible padding pulled back with equal negative margin (§2), so
-// the rhythm is unchanged. Press dims swiftly (§10); hover underline comes from the
-// global link rule.
+// Design doc §11 "plain" button: text-only, the one accent color signals
+// interactivity, Semibold, a leading translate glyph. The visual is small but
+// the hit area is the shared 44px — grown with padding and pulled back with
+// equal negative margin by the tap-target mixin (quy-cu §3), so the rhythm is
+// unchanged. The 14px label sets a 1.35rem line box; the mixin does the rest.
+// Press dims swiftly; hover underline comes from the global link rule.
 .original-review-link {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
-  padding: 0.625rem 0.5rem;
-  margin: -0.625rem -0.5rem;
+  @include tap-target(1.35rem);
+  padding-left: step(2);
+  padding-right: step(2);
+  margin-left: -1 * step(2);
+  margin-right: -1 * step(2);
   font-size: $font-size-sm;
   font-weight: 600;
   color: $link-color;
-  transition: opacity var(--dur-fast) var(--ease-precise);
+  transition: opacity var(--t-1) var(--ease);
 
   &:active {
     opacity: 0.6;
@@ -1009,6 +1049,24 @@ blockquote> :last-child:after {
 /* No hamburger toggler exists — the section nav is desktop-only by design; on
    mobile the page is navigated by scrolling. (The toggler markup was removed.) */
 
+/* ─── Corners on the framework's own boxes ───
+
+   js/squircle.js used to sweep the whole document, so every Bootstrap component
+   that happened to carry a radius got the superellipse for free. With the sweep
+   gone (see _quy-cu.scss §2) the four that actually appear on this site name it
+   themselves. That is the trade the deletion asks for and it is the right way
+   round: the shape is now a decision written in the stylesheet, not a side
+   effect of a script running over elements nobody chose. */
+.card,
+.accordion-item,
+.partner-logo-card {
+  @include squircle($r-4);
+}
+
+.dropdown-menu {
+  @include squircle($r-2);
+}
+
 /* ─── Accordion ─── */
 
 /* Accordion headers are <h3> elements and would inherit the global h* max-width.
@@ -1017,14 +1075,33 @@ blockquote> :last-child:after {
   max-width: none;
 }
 
+/* The button inside the item carries its own corners, and they have to be cut
+   the same way as the item's or the circular one peeks out from behind the
+   superellipse. `corner-shape` applies to whichever corners have a radius, so
+   setting it here leaves the square ones square and only re-cuts these two.
+   (Clipping the item with overflow:hidden would be shorter and would also eat
+   the focus ring, which is the one thing on an accordion that must not be
+   clipped.) */
 .accordion-item:first-of-type> :first-child {
   border-top-left-radius: $accordion-inner-border-radius;
   border-top-right-radius: $accordion-inner-border-radius;
+
+  @supports (corner-shape: superellipse(2)) {
+    border-top-left-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
+    border-top-right-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
+    corner-shape: superellipse(2);
+  }
 }
 
 .accordion-item:last-of-type>.collapsed:first-child {
   border-bottom-left-radius: $accordion-inner-border-radius;
   border-bottom-right-radius: $accordion-inner-border-radius;
+
+  @supports (corner-shape: superellipse(2)) {
+    border-bottom-left-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
+    border-bottom-right-radius: calc(#{$accordion-inner-border-radius} * #{$squircle-scale});
+    corner-shape: superellipse(2);
+  }
 }
 
 .accordion-button,
@@ -1048,8 +1125,8 @@ blockquote> :last-child:after {
   visibility: hidden;
   opacity: 0;
   transition:
-    visibility 0s linear 240ms,
-    opacity 240ms cubic-bezier(0.4, 0, 0.6, 1);
+    visibility 0s linear var(--t-2),
+    opacity var(--t-2) var(--ease);
   pointer-events: none;
   /* Prevent interaction when hidden */
 }
@@ -1070,9 +1147,11 @@ blockquote> :last-child:after {
   background: none;
   border: none;
 
+  // The one exception to the shared ring's `outline-offset: 2px`: a menu row is
+  // flush with the menu's edge, so an outward ring would be clipped by the
+  // rounded container. It turns inward and keeps its width and colour.
   &:focus-visible {
-    outline: $focus-ring-outline;
-    outline-offset: -2px;
+    outline-offset: -3px;
   }
 }
 
@@ -1085,7 +1164,7 @@ blockquote> :last-child:after {
 // stripe would otherwise bleed into the white chrome.
 .locale-flag {
   flex-shrink: 0;
-  border-radius: $border-radius-svg;
+  @include squircle($r-1);
   box-shadow: inset 0 0 0 0.5px rgba($black, 0.18);
 }
 
@@ -1110,11 +1189,6 @@ blockquote> :last-child:after {
   &:focus:not(:focus-visible) {
     outline: 0 !important;
     box-shadow: none !important;
-  }
-
-  &:focus-visible {
-    outline: $focus-ring-outline;
-    box-shadow: none;
   }
 
   &:after {
@@ -1163,13 +1237,13 @@ blockquote> :last-child:after {
 // deep-ink panel: dye is reserved for the spotlight (top hairline + the button),
 // not used as a full-bleed wash. Only the support section uses section.bg-primary.
 section.bg-primary {
-  background: $ink-900 !important;
-  color: $text-dark;
-  border-top: 0.25rem solid $dye;
+  background: $surface-dark !important;
+  color: $fg-on-dark;
+  border-top: 0.25rem solid $accent;
 }
 
 section.bg-dark {
-  color: $text-dark;
+  color: $fg-on-dark;
 }
 
 // Print fidelity: browsers strip background fills when printing to save ink, but
@@ -1186,7 +1260,7 @@ section.bg-primary {
 }
 
 .copyright-text {
-  color: $text-secondary;
+  color: $fg-muted;
 }
 
 // The navigation bar is a quiet, opaque chrome layer: a clean white surface that
@@ -1194,7 +1268,7 @@ section.bg-primary {
 // (§9) — no translucent blur material.
 .navbar {
   background: $white;
-  border-bottom: 0.5px solid $separator;
+  border-bottom: 0.5px solid $line;
   box-shadow: var(--box-shadow-menu);
 
   // viewport-fit=cover lets the bar's surface bleed up under the Dynamic Island;
@@ -1205,37 +1279,50 @@ section.bg-primary {
   padding-top: env(safe-area-inset-top);
   height: calc(#{$navbar-height} + env(safe-area-inset-top));
 
-  // On phones the logo was dominating: scale the brand down by √φ (170→132,
-  // 48→37) and shorten the bar so it matches the now-smaller type and buttons.
-  @include media-breakpoint-down(md) {
-    height: calc(#{$navbar-height-sm} + env(safe-area-inset-top));
-
-    .navbar-brand {
-      width: 132px;
-      height: 37px;
-    }
-
-    .navbar-logo {
-      width: 132px;
-    }
-  }
+  // ONE LINE, ALWAYS. Bootstrap's navbar wraps by default, and the bar now
+  // carries a call button as well as the logo and the language switcher. At
+  // 320px — an old iPhone SE, a folded Galaxy — those three would have wrapped
+  // onto a second row inside a bar with a fixed height, which is the chrome
+  // silently coming apart.
+  //
+  // "Partial information loss is more dangerous than total loss" (design/00
+  // §2.1) is the owner's own print rule and it is the same rule here: no
+  // clipping, no ellipsis, no second row. The brand is allowed to SHRINK
+  // instead — it holds its aspect ratio and scales down proportionally, so a
+  // narrow phone gets a smaller logo, never half a logo. The controls hold
+  // their 44px targets throughout, because a target is a measurement.
+  flex-wrap: nowrap;
 
   .navbar-brand {
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 170px;
-    height: 48px;
-    flex-shrink: 0;
+    display: block;
+    // grow: never past its drawn size · shrink: as far as the bar needs
+    flex: 0 1 170px;
+    min-width: 0;
+    aspect-ratio: 170 / 48;
+  }
+
+  // AFTER the base rule, not before it. A media query adds no specificity, so
+  // a phone override written above the rule it is overriding simply loses. It
+  // had been losing: the brand box was 170px wide on every phone while the
+  // logo inside it was 132, leaving 38px of dead chrome to the right of the
+  // mark — which is precisely the room the call button now needs.
+  @include media-breakpoint-down(md) {
+    height: calc(#{$navbar-height-sm} + env(safe-area-inset-top));
+
+    // On phones the logo was dominating: brand steps down by √φ (170→132).
+    .navbar-brand {
+      flex-basis: 132px;
+    }
   }
 
   .navbar-logo {
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+    inset: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 0;
-    transition: opacity 240ms cubic-bezier(0.28, 0.11, 0.32, 1);
+    transition: opacity var(--t-2) var(--ease);
   }
 
   .logo-white {
@@ -1256,17 +1343,19 @@ section.bg-primary {
   // at every width so phones get the same deferential transparent hero treatment
   // as desktop — below lg only the logo + language switcher show, so the inline
   // link recolors below are simply inert there.
-  transition: background var(--dur-base) var(--ease-precise),
-    border-color var(--dur-base) var(--ease-precise),
-    box-shadow var(--dur-base) var(--ease-precise);
+  transition: background var(--t-3) var(--ease),
+    border-color var(--t-3) var(--ease),
+    box-shadow var(--t-3) var(--ease);
   will-change: background;
 
-  @include media-breakpoint-up(md) {
-    .language-switcher {
-      padding-left: $navbar-nav-link-padding-x;
-      padding-right: $navbar-nav-link-padding-x;
-      margin-right: -1 * $navbar-nav-link-padding-x;
-    }
+  // One padding at every width (it used to be 16px below md and 12px above, for
+  // no reason anyone could state). The negative right margin pulls the flag's
+  // optical edge onto the container's, so the chip's hit area overhangs into
+  // the gutter without the flag itself looking inset.
+  .language-switcher {
+    padding-left: $navbar-nav-link-padding-x;
+    padding-right: $navbar-nav-link-padding-x;
+    margin-right: -1 * $navbar-nav-link-padding-x;
   }
 
   // At the top of the hero the bar yields entirely to the content
@@ -1300,7 +1389,7 @@ section.bg-primary {
     // and the white surface keeps them legible over the dark hero from the start.
     @include media-breakpoint-down(md) {
       background: $white;
-      border-bottom-color: $separator;
+      border-bottom-color: $line;
       box-shadow: var(--box-shadow-menu);
 
       .logo-white {
@@ -1316,7 +1405,7 @@ section.bg-primary {
   // Once content scrolls under it, the bar lifts onto the white chrome surface.
   &.nav-active {
     background: $white;
-    border-bottom-color: $separator;
+    border-bottom-color: $line;
     box-shadow: var(--box-shadow-menu);
 
     .logo-white {
@@ -1334,7 +1423,7 @@ section.bg-primary {
 
       &.nav-link-active-blue {
         &.active {
-          color: $figure-secondary;
+          color: $blue-800;
         }
       }
 
@@ -1342,6 +1431,103 @@ section.bg-primary {
         color: initial;
       }
     }
+  }
+}
+
+// ─── The call button ───
+//
+// This page has one job — be trusted, then be contacted — and until now the
+// phone number first appeared in section 8 of 8. On a phone, which is four out
+// of five of our readers, that is roughly six screens of scrolling. The bar
+// held a logo and a flag: nothing to act on.
+//
+// So the number moves into the chrome, on every page, at every scroll position.
+// One tap opens the dialler. It is filled dye because dye is "the moment that
+// matters" (design/07 §1) and this is the moment; it stays identical over the
+// transparent hero bar and the white scrolled bar, because a control that
+// changes appearance under you is a control you have to re-read.
+//
+// It does NOT hide on mobile and appear on desktop, or vice versa. Whoever the
+// reader is, on whatever they are holding, the way to reach a human is in the
+// same place.
+// The controls never shrink — a 44px target is a measurement, not a preference,
+// so when the bar runs out of room it is the logo that gives way, not the thumb.
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: step(2);
+  flex: 0 0 auto;
+}
+
+.navbar-call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  height: $tap;
+  // The bar is the tightest row on the site, so the button runs one rung
+  // narrower than the page's buttons (--btn-px) — 16px of side padding rather
+  // than 24. The 44px height, which is the part that matters to a thumb, is
+  // untouched.
+  padding: 0 step(4);
+  @include squircle($r-3);
+  background: $accent-strong;
+  // A boundary that holds on both grounds. Measured: the dye fill is 5.79:1
+  // against the white scrolled bar but only ~2.3:1 against the ink-scrimmed
+  // hero photograph the bar is transparent over — under the 3:1 that WCAG 2.2
+  // SC 1.4.11 asks of a control's own edge, so at the top of the page you could
+  // read the label but not see where the button ended.
+  //
+  // A white hairline fixes it and needs no state to do so: over the hero it is
+  // 4.6:1 and draws the edge; on the white bar it is white on white and simply
+  // is not there. The button therefore never changes appearance under the
+  // reader — it is the same object, correctly bounded on both.
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
+  color: $white;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--t-1) var(--ease), transform var(--t-1) var(--ease);
+
+  // The bar is dark over the hero and white after it. A filled control is
+  // legible on both, so nothing here is stateful — but the ring around it is,
+  // and it inherits --focus from whichever the bar currently is.
+  &:hover {
+    background: $dye-600;
+    color: $white;
+    text-decoration: none;
+  }
+
+  &:active {
+    background: $dye-800;
+    transform: scale(0.97);
+  }
+
+  // The glyph leads the number the way it does in the footer — one icon, one
+  // meaning, everywhere on the site.
+  .phone-icon {
+    font-size: 1.1em;
+    flex-shrink: 0;
+  }
+}
+
+// On a phone the bar has room for the logo, this, and the flag — but not for
+// eleven digits as well. Under md the button says "Gọi"/"Call"; from md the
+// number itself shows, because a number a reader can read before tapping is a
+// number they can also write down.
+.navbar-call__number {
+  display: none;
+
+  @include media-breakpoint-up(md) {
+    display: inline;
+  }
+}
+
+.navbar-call__short {
+  @include media-breakpoint-up(md) {
+    display: none;
   }
 }
 
@@ -1370,7 +1556,7 @@ section.bg-primary {
   // one replacing the other.
   font-feature-settings: "case" 1;
   line-height: 1.2;
-  color: $slate-500;
+  color: $fg-subtle;
 }
 
 // Metric — large tabular figure; the signature typographic move
@@ -1391,17 +1577,17 @@ section.bg-primary {
   font-size: 0.5em;
   font-weight: 600;
   margin-left: 0.08em;
-  color: $slate-500;
+  color: $fg-subtle;
 }
 
 // Ghost button — secondary action, reads on dark and light
 :is(a, button).btn-ghost {
-  color: $text-dark;
+  color: $fg-on-dark;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.5);
 
   &:hover {
-    color: $text-dark;
+    color: $fg-on-dark;
     background: rgba(255, 255, 255, 0.12);
   }
 
@@ -1428,7 +1614,7 @@ header {
   // env() insets add the device's own safe gaps and resolve to 0 where there are none,
   // so this is inert on plain screens.
   padding-top: calc(#{$navbar-height-sm} + env(safe-area-inset-top));
-  padding-bottom: calc(#{map-get($spacers, 6)} + env(safe-area-inset-bottom));
+  padding-bottom: calc(#{step(6)} + env(safe-area-inset-bottom));
 
   background-position: center;
 
@@ -1451,8 +1637,8 @@ header {
       url("../img/hero/hero-1920.jpg") type("image/jpeg") 1x);
 
   background-size: cover;
-  background-color: $ink-950; // ink splash color while the hero image is loading
-  color: $text-dark;
+  background-color: $surface-deep; // ink splash color while the hero image is loading
+  color: $fg-on-dark;
 
   .header-content {
     // Vertical placement is owned by the flex centering above. No fixed top margin
@@ -1476,17 +1662,26 @@ header {
 // copyright bar's text above it (extra bottom padding = its existing pb-2 + the
 // inset) while the bar's gray surface still bleeds to the very bottom edge.
 footer > .container-fluid {
-  padding-bottom: calc(#{map-get($spacers, 2)} + env(safe-area-inset-bottom));
+  padding-bottom: calc(#{step(3)} + env(safe-area-inset-bottom));
 }
 
 // In landscape on notched iPhones the Dynamic Island sits at the left/right edge.
 // max() keeps the standard gutter normally and only widens it to the safe inset
 // when the device actually has one, so body content never tucks under the cutout.
 // (Design doc §2 safe areas; the navbar + footer share this .container.)
+// One page gutter, on both products: step 5 (24px), the same value the reading
+// hub's .kt-shell uses. The container used to sit at half the row gutter — 12px
+// — while .container-fluid sat at 24, so the site had two page edges depending
+// on which wrapper a section happened to use. 12px is also under the
+// conventional minimum: on a 375px phone it puts a paragraph 12px from the
+// glass, which reads as cramped rather than calm.
+//
+// max() keeps the standard gutter and only widens it to the device's own inset
+// when there is one, so body content never tucks under a landscape notch.
 @supports (padding: max(0px)) {
   .container {
-    padding-left: max(var(--#{$prefix}gutter-x, #{$grid-gutter-width}) * 0.5, env(safe-area-inset-left));
-    padding-right: max(var(--#{$prefix}gutter-x, #{$grid-gutter-width}) * 0.5, env(safe-area-inset-right));
+    padding-left: max(#{step(5)}, env(safe-area-inset-left));
+    padding-right: max(#{step(5)}, env(safe-area-inset-right));
   }
 }
 
@@ -1498,7 +1693,7 @@ header.hero-precision {
   align-items: flex-end;
   min-height: 100vh; // fallback for browsers without svh
   min-height: 100svh;
-  background-color: $ink-950; // splash color while the hero image is loading
+  background-color: $surface-deep; // splash color while the hero image is loading
 
   /* fallback */
   background-image:
@@ -1515,19 +1710,19 @@ header.hero-precision {
   .header-content {
     width: 100%;
     margin-top: 0;
-    padding-top: map-get($spacers, 16);
-    padding-bottom: map-get($spacers, 10);
+    padding-top: step(9);
+    padding-bottom: step(8);
 
     @include media-breakpoint-up(md) {
       margin-top: 0;
-      padding-top: map-get($spacers, 22);
-      padding-bottom: map-get($spacers, 12);
+      padding-top: step(11);
+      padding-bottom: step(9);
     }
   }
 
   .hero__kicker {
-    color: $blue-pale;
-    margin-bottom: map-get($spacers, 3);
+    color: $blue-100;
+    margin-bottom: step(4);
   }
 
   h1 {
@@ -1537,30 +1732,30 @@ header.hero-precision {
 
   .hero__lead {
     max-width: 60ch;
-    color: $text-dark-secondary;
-    margin-top: map-get($spacers, 4);
+    color: $fg-on-dark-muted;
+    margin-top: step(5);
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: map-get($spacers, 3);
-    margin-top: map-get($spacers, 6);
+    gap: step(4);
+    margin-top: step(6);
   }
 
   .hero__metrics {
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap-hero-metrics);
-    margin-top: map-get($spacers, 9);
-    padding-top: map-get($spacers, 5);
+    margin-top: step(8);
+    padding-top: step(5);
     border-top: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .metric-block {
     display: flex;
     flex-direction: column-reverse; // number on top; DOM keeps dt→dd order
-    gap: map-get($spacers, 1);
+    gap: step(1);
 
     dt,
     dd {
@@ -1573,34 +1768,34 @@ header.hero-precision {
   }
 
   .metric--rft .metric__to {
-    color: $dye-bright; // the win — the single moment that matters
+    color: $accent-on-dark; // the win — the single moment that matters
   }
 
   .metric--rft .metric__from {
-    color: $mist-300;
+    color: $ink-200;
   }
 
   .metric--rft .metric__sep {
-    color: $slate-400;
+    color: $ink-300;
     margin: 0 0.18em;
   }
 
   .metric .metric__unit {
-    color: $mist-300;
+    color: $ink-200;
   }
 
   .metric-block .kicker {
-    color: $mist-300;
+    color: $ink-200;
   }
 }
 
 .service-box {
-  // Inter-item gap: was 44px ($spacers-8) — too large when items stack. 32px is a
-  // standard feature-grid gap. The row cancels the last row's padding (see below).
-  padding-bottom: 2rem;
+  // Inter-item gap: 32px, the standard feature-grid step. The row cancels the
+  // last row's padding (see below).
+  padding-bottom: step(6);
 
   .row:has(&) {
-    margin-bottom: -2rem + $paragraph-margin-bottom;
+    margin-bottom: -1 * step(6);
   }
 
   // Title → list rhythm: lists here had 0 top margin (title touched the first
@@ -1629,6 +1824,9 @@ header.hero-precision {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  // A leading glyph sits one word space from its label — inert when there is
+  // no glyph, so every button takes the same rule.
+  gap: 0.45em;
   padding: 0 var(--btn-px);
   height: var(--btn-h);
   min-width: 30px;
@@ -1639,11 +1837,11 @@ header.hero-precision {
   cursor: pointer;
   user-select: none;
   text-decoration: none;
-  border-radius: $btn-border-radius;
+  @include squircle($btn-border-radius);
   border: none;
-  transition: transform var(--dur-fast) var(--ease-precise),
-    background var(--dur-fast) linear,
-    color var(--dur-fast) linear;
+  transition: transform var(--t-1) var(--ease),
+    background var(--t-1) var(--ease),
+    color var(--t-1) var(--ease);
 
   &:hover {
     text-decoration: none;
@@ -1657,7 +1855,7 @@ header.hero-precision {
 }
 
 :is(a, button).btn-secondary {
-  @include btn-default(#000, $text-dark);
+  @include btn-default(#000, $fg-on-dark);
 
   &:hover {
     color: #000;
@@ -1666,7 +1864,7 @@ header.hero-precision {
 
   &:active,
   &:focus-visible {
-    background: $gray-200;
+    background: $ink-100;
   }
 }
 
@@ -1684,6 +1882,32 @@ header.hero-precision {
   }
 }
 
+// ─── .actions — a row of calls to action ───
+//
+// Four out of five of our readers are holding a phone. A button that is only
+// as wide as its own label is a desktop object: on a phone it is a small
+// target somewhere in the left half of the screen, and the reader has to aim.
+// So below sm the row becomes a stack and every button fills the column — the
+// standard mobile pattern, and the one a thumb is built for. From sm up they
+// sit side by side at their natural width, which is the standard desktop one.
+//
+// The gap is one rung and the wrap is automatic, so this holds one button or
+// three without a second class.
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: step(3);
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    align-items: stretch;
+
+    > :is(a, button).btn-xl {
+      width: 100%;
+    }
+  }
+}
+
 .bi,
 .partner-logo {
   max-width: 100%;
@@ -1695,15 +1919,15 @@ header.hero-precision {
   // Icons are now inline SVG painted with `fill: currentColor`, so this drives
   // their color. Brand blue on light sections; in forced-colors the system forces
   // it to CanvasText (handled in the high-contrast block at end of file).
-  color: $secondary;
+  color: $icon;
 }
 
 .client-portrait {
-  border-radius: $card-border-radius;
+  @include squircle($card-border-radius);
 }
 
 .partner-logo-card {
-  height: map-get($scales, 30);
+  height: 15rem;
   background: white;
 
   a.stretched-link {
@@ -1731,15 +1955,15 @@ header.hero-precision {
 .heading-number {
   display: flex;
   align-items: center;
-  gap: map-get($spacers, 3);
+  gap: step(4);
   width: 100%;
   height: auto;
   background: none;
   border-radius: 0;
-  color: $dye;
+  color: $accent;
 
   .bg-light & {
-    color: $blue;
+    color: $blue-700;
   }
 
   &::before {
@@ -1757,7 +1981,7 @@ header.hero-precision {
     height: $hr-border-width;
     background: currentColor;
     opacity: 0.22;
-    border-radius: $border-radius-2xl;
+    border-radius: $r-1;
   }
 }
 
@@ -1877,27 +2101,27 @@ header.hero-precision {
 @media (prefers-contrast: more) {
 
   .navbar {
-    border-bottom: 1px solid $slate-600;
+    border-bottom: 1px solid $fg-muted;
   }
 
   .dropdown-menu,
   .card,
   .accordion-item {
-    border-color: $slate-600 !important;
+    border-color: $fg-muted !important;
   }
 
   // Full border (not just color) so #spica-card's `border: none` also gets an edge.
   .partner-logo-card {
-    border: 1px solid $slate-600 !important;
+    border: 1px solid $fg-muted !important;
   }
 
   // Muted tiers on LIGHT surfaces → darker.
   .text-secondary {
-    color: $text !important;
+    color: $fg !important;
   }
 
   .text-tertiary {
-    color: $text-secondary !important;
+    color: $fg-muted !important;
   }
 
   // Muted tiers + captions on DARK surfaces → fully opaque white.
@@ -1911,7 +2135,7 @@ header.hero-precision {
   }
 
   // Content links readable beyond color (skip nav items, buttons, dropdown items).
-  a:not(.nav-link, .btn-xl, .dropdown-item) {
+  a:not(.nav-link, .btn-xl, .dropdown-item, .navbar-call) {
     text-decoration: underline;
   }
 }

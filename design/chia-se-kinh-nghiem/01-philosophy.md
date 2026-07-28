@@ -8,6 +8,13 @@ reference library for Vietnamese dyehouse operations knowledge.
 **Status**: living document. Refine it, don't route around it. Every future
 change to the hub should either follow this document or amend it first.
 
+**Scope**: this document owns the hub's *look and voice* — paper, Literata,
+indigo, the reading measure, the pace. It does **not** own how the hub behaves:
+space, corner geometry, tap target, motion timing, the focus ring and the
+contrast contract come from `design/08-quy-cu.md`, which the marketing site
+obeys identically (owner's decision, 2026-07-28). The two products look
+different on purpose and behave the same on purpose.
+
 ---
 
 ## 1. What this is (and is not)
@@ -106,10 +113,11 @@ would miss). The numbered principles below are applications of this one.
    hand. `prefers-reduced-motion` is honored, and for those readers the
    answering gestures don't just lose their easing — they switch off entirely.
 
-   **The script budget is four files, and all of them are optional to the
-   page.** `squircle.js` (~4 KB, shared with the main site) re-cuts authored
-   corners as superellipses — the one piece of the main site's design language
-   the hub borrows, added on the owner's call in July 2026. `kt-lightbox.js`
+   **The script budget is three files, and all of them are optional to the
+   page.** It was four until 2026-07-28, when `squircle.js` was deleted: the
+   superellipse corner it computed at runtime is now four lines of CSS in
+   `_sass/_quy-cu.scss` (design/08 §2), so the hub loads no script at all to
+   draw a corner. `kt-lightbox.js`
    (~3 KB min, article pages only, July 2026) is the picture viewer: tapping a
    figure opens it full-screen at its largest shipped size — these are
    infographics and lab reports, and the reading column is not where a 1344px
@@ -467,8 +475,9 @@ Restraint rules (hard):
 - **Budget** (article page, cold cache): HTML < 30 KB — the colour-deviation post,
   with 50 equations in it, sits right on the line at 30.1 KB; MathML is verbose,
   and that verbosity *is* the equation being real text — CSS < 25 KB min,
-  fonts ≤ ~200 KB (subset woff2, self-hosted), JS ≤ 8 KB — squircle everywhere
-  plus the picture viewer on articles (+ GA4 deferred). Equations ship as MathML, so they cost **no JavaScript at
+  fonts ≤ ~200 KB (subset woff2, self-hosted), JS ≤ 6 KB — the picture viewer on
+  articles, the scroll title on collection pages (+ GA4 deferred); a hub page
+  that is neither carries **no** script of ours at all. Equations ship as MathML, so they cost **no JavaScript at
   all**; they do cost the 67 KB Alpha Math face, and only on the pages that have
   one — the `@font-face` has no `unicode-range`, so the file is fetched when a
   `<math>` element is on the page and never otherwise (§4).
@@ -494,10 +503,11 @@ Must survive any redesign (change only with an explicit owner decision):
 - Single reading column and its measure; calm uniform background;
 - One accent color meaning "actionable" (with the one documented bend, §3);
 - **No script the page depends on**: everything must read, and every post must
-  be in the HTML, with JS off. (This replaced the old "zero-JS article pages"
-  rule when the owner added squircle in July 2026 — the bar moved from *no
-  script* to *no script that matters*. Maths is explicitly on the wrong side of
-  that line: it is rendered at build time, never in the browser.)
+  be in the HTML, with JS off. Maths is explicitly on the wrong side of that
+  line: it is rendered at build time, never in the browser. (The bar briefly
+  loosened from *no script* to *no script that matters* when squircle.js was
+  added in July 2026; deleting it on 2026-07-28 put the hub back under the
+  stricter reading, with the corner intact — see design/08 §2.)
 - The Alpha + Chia sẻ kinh nghiệm lockup as the one mark in the title bar, and the hub
   as a feed that opens on content (no masthead);
 - CTA restraint rules, the mandatory signature, and Alpha as the copyright

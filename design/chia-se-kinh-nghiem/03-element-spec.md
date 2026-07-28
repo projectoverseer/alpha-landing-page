@@ -25,13 +25,13 @@ interface at all (Absolute Neutrality, philosophy §2).
 |---|---|---|
 | **Indigo text** | `--indigo`, hover `--indigo-deep` | "You can act on this." The only action color. Never decorative. |
 | **Quiet link** | inherits its line's grey; hover: `--ink` + underline (`text-underline-offset: 0.2em`) | "This labels the thing it sits under first, and offers a route second." Topic tags, series lines, the kicker, byline/signature author, the brand name. |
-| **Card** | 1px `--line` border, 0.5rem radius (re-cut by squircle.js), flat, no shadow; hover: border warms to `--indigo`, title underlines | "This whole surface is one destination." Series prev/next, series rail cards. |
+| **Card** | 1px `--line` border, 8px superellipse corner (`squircle($r-2)`, design/08 §2), flat, no shadow; hover: border warms to `--indigo`, title underlines | "This whole surface is one destination." Series prev/next, series rail cards. |
 | **Button** | `.kt-button`: indigo fill, paper text, Inter 600 15px; `:active` scale 0.98. `.kt-button-quiet`: transparent, hairline inset, indigo text | Filled = the primary action of its row; quiet = a peer action. |
 | **Metadata line** | Inter 400, 13–14px, `--ink-3`, +0.01em residual tracking | "Facts about the thing above, not the thing itself." |
-| **Kicker / tag caps** | Inter 650, 13–13.5px, uppercase, +0.08em | "A label naming a category." |
+| **Kicker / tag caps** | Inter 650, `--fs-label` 13px, uppercase, +0.08em, `case` on | "A label naming a category." |
 | **Seam** | 1px `--line` top border + 2rem top padding | "The piece has ended; what follows is offered, not part of it." Signature, Đọc tiếp, series rail. |
 | **Editorial aside** | Literata italic, `--ink-2` | "The author speaking to you directly, outside the lesson." Inline CTA, share lead. |
-| **Answering motion** | 0.2–0.3s `--ease-glide`, only ever on hover/press/gesture | "The page felt your hand." Nothing moves on its own; reduced-motion switches gestures off entirely, not just their easing. |
+| **Answering motion** | `--t-2`/`--t-3` on `--ease`, the shared curve (design/08 §4), only ever on hover/press/gesture | "The page felt your hand." Nothing moves on its own; reduced-motion switches gestures off entirely, not just their easing. |
 
 **Face assignment rule (the first question, answered once):** everything a
 reader *reads* — titles, descriptions, body, standfirsts, asides, card titles
@@ -88,7 +88,7 @@ reading matter and therefore Literata (philosophy §2.3, decision documented
 
 ### Footer (`.kt-footer`)
 
-- Inter 13.5px `--ink-3` on `--paper-deep`: legal name, main-site link,
+- Inter `--fs-meta` 14px `--ink-3` on `--paper-deep`: legal name, main-site link,
   copyright. Apparatus, smallest voice on the page.
 
 ---
@@ -105,7 +105,7 @@ is the first thing on the page (protected, philosophy §8).
 | Feed item title | Literata `read(21)` (19) 600, **indigo**, underline on hover | The title is the invitation; indigo says "readable now". Wording: the article's own title, sentence case always. |
 | Feed thumbnail | 16:9 crop, top-anchored, hairline frame, `--paper-deep` while decoding; hover: 2% lean-in, 0.3s glide | Crop keeps the feed scannable; top anchor keeps the infographic's headline. 2% is the owner-tuned answer to the pointer. |
 | Feed description | Literata `read(16)` /1.65 `--ink-2` | Reading matter — it is the article's first sentence in spirit. |
-| Feed meta line | Inter 13.5px `--ink-3`; topic tag in caps 650/+0.08em as quiet link; date `<time>`; "n phút đọc"; "Series <tên>" quiet link when applicable | Outside the card link (links don't nest — and the split is right: card = "read this", tag = "more like this"). Reading time on every entry: an honest price tag lowers the cost of starting. |
+| Feed meta line | Inter `--fs-meta` 14px `--ink-3`; topic tag in caps 650/+0.08em as quiet link; date `<time>`; "n phút đọc"; "Series <tên>" quiet link when applicable | Outside the card link (links don't nest — and the split is right: card = "read this", tag = "more like this"). Reading time on every entry: an honest price tag lowers the cost of starting. |
 | Drip status | Inter 14px `--ink-3`, JS-only | "Đang tải thêm bài cũ hơn…" — visible only while the drip runs; with JS off every post is simply present. |
 | **Series rail** (new) | Seam; h2 "Đọc theo chuyên đề" Literata `read(21)` 620; lead Literata `read(16)` `--ink-2`; cards per §0 (title `read(18)`/17 620 indigo, desc `read(16)` `--ink-2`, meta Inter 13px `--ink-3`) | At the **end** of the feed: the hub still opens on content, and the reader who ran out of archive is handed a syllabus instead of a dead end. Lead wording: "Các loạt bài viết theo trình tự, từ khái niệm đến cách làm – đọc lần lượt từ bài đầu tiên." Meta wording: "n bài · khoảng m phút đọc". |
 
@@ -158,8 +158,8 @@ prev/next → Đọc tiếp → contact strip → footer.
 | Blockquote / display equation | `--paper-deep` slab, 3px `--line` left edge | Vietnamese rules of thumb stay prose; real equations are build-time MathML — letters Literata, machinery Alpha Math, variables upright (§4). One kind of object to the scanning eye. |
 | Tables | Inter 15px, hairline grid, `--paper-deep` header, scrolls inside the column | Data is apparatus. |
 | Mid-article CTA | ≤ 1 per post, editorial register only (§6) | Never inside a numbered sequence. |
-| Signature | Seam; 48px avatar + name Literata `read(17)` 620 + role Inter 14px, all one quiet link; canonical line Inter 13.5px | Mandatory — it is the watermark for scraped copies. Copyright is Alpha's, never the author's. |
-| **Share block** (new) | Lead: Literata `read(17)`/(16) *italic* `--ink-2` — the editorial-aside register. Actions: two `.kt-button-quiet` — "Chia sẻ lên Facebook" (sharer URL, no SDK) and "Sao chép liên kết" (`<button>`, ships `hidden`, revealed by inline script only where the Clipboard API works; label swaps to "Đã sao chép liên kết" for 2s as the whole confirmation) | Lead wording: "Nếu bài viết hữu ích, hãy chia sẻ cho đồng nghiệp của bạn." — a small favor asked by the author, conditional on the article having earned it. Copy-link is the Zalo path: links here travel pasted into Zalo chats, and a real Zalo button demands an SDK the script budget does not owe it. No icon row, no counts, nothing floats. Placed straight after the signature: the reader who finished knows whether it was worth a colleague's time, and passing it on outranks the next click — so it precedes series nav and Đọc tiếp. |
+| Signature | Seam; 48px avatar + name Literata `read(17)` 620 + role Inter 14px, all one quiet link; canonical line Inter `--fs-meta` 14px | Mandatory — it is the watermark for scraped copies. Copyright is Alpha's, never the author's. |
+| **Share block** | Lead: Literata `read(17)`/(16) *italic* `--ink-2` — the editorial-aside register. Actions: **"Chia sẻ"** (a filled `.kt-button`, `navigator.share`, ships `hidden`, revealed only where the API exists — on a phone this one button IS Zalo, Messenger and SMS, in the UI the reader already has; added 2026-07-28) then two `.kt-button-quiet` — "Chia sẻ lên Facebook" (sharer URL, no SDK) and "Sao chép liên kết" (`<button>`, ships `hidden`, revealed by inline script only where the Clipboard API works; label swaps to "Đã sao chép liên kết" for 2s as the whole confirmation) | Lead wording: "Nếu bài viết hữu ích, hãy chia sẻ cho đồng nghiệp của bạn." — a small favor asked by the author, conditional on the article having earned it. Copy-link is the Zalo path: links here travel pasted into Zalo chats, and a real Zalo button demands an SDK the script budget does not owe it. No icon row, no counts, nothing floats. Placed straight after the signature: the reader who finished knows whether it was worth a colleague's time, and passing it on outranks the next click — so it precedes series nav and Đọc tiếp. |
 | Series prev/next | Cards per §0; direction label Inter 13px, title Literata `read(16)` 600 indigo, "Series <tên>" quiet link | Continuity offered, never a syllabus imposed. |
 | Đọc tiếp | Seam; h2 Literata `read(21)` 620; rows: 8.5rem (6.5) 16:10 thumb + title Literata `read(17)`/(16) 600 indigo + meta Inter 13px | Same topic first, own series excluded; reading time on every row. Plain HTML. |
 

@@ -21,6 +21,7 @@ deliberately kept in the repo (but excluded from the Jekyll build — see
 | 05 | `05-build-notes.md` | How the redesign maps onto the existing Jekyll/Bootstrap stack and pipeline. *(living doc, updated during implementation)* |
 | 06 | `06-spacing-and-class-audit.md` | Measured spacing/class audit of the live page (the evidence behind passes 5–7). |
 | 07 | `07-alpha-design-language.md` | **«Đúng» — Alpha's own named design language.** The self-contained reference distilled from 01–04 as built; start here when styling anything new. |
+| 08 | `08-quy-cu.md` | **Quy củ — the rules BOTH products obey.** Space, corner geometry, tap target, motion, focus, the contrast contract, and what each site is trying to achieve. Implemented in `_sass/_quy-cu.scss`, which `main.scss` and `chiasekinhnghiem.scss` both import. 07 is how the main site *looks*; 08 is how everything *behaves*. |
 
 Read them in order. 01 → 02 → 03 is the spine: **strategy decides principles,
 principles decide architecture, architecture decides the system.**
@@ -32,6 +33,11 @@ principles decide architecture, architecture decides the system.**
 publish a post). The hub is deliberately **not** styled by «Đúng» or anything
 in this folder's 01–07: it is a separate product with its own design system,
 fonts, and stylesheet. Don't "align" the two without an explicit owner decision.
+
+**The one thing they DO share is `08-quy-cu.md`** (owner's decision,
+2026-07-28: *"develop a quy củ that the entire website will adhere to"*). Colour,
+type and voice stay separate; space, corner geometry, tap target, motion, focus
+and the contrast contract are the same on both. Look ≠ behaviour.
 
 ## What we are keeping vs. rebuilding
 

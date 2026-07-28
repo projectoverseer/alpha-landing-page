@@ -80,6 +80,25 @@
     </ul>
   </div>
 
+  {%- comment -%}
+    The call button. This page exists to be trusted and then contacted, and
+    until now the number first appeared in section 8 of 8 — about six screens
+    down on a phone, which is four out of five of our readers. It lives in the
+    chrome now, at every scroll position, on every width: one tap opens the
+    dialler.
+
+    Under md the label is the verb; from md the number itself shows, because a
+    number a reader can read is a number they can also write down. The
+    aria-label always carries the full number, so a screen reader hears it
+    whatever the viewport.
+  {%- endcomment -%}
+  <div class="navbar-actions">
+    <a
+      aria-label="{{ t.nav_call_aria }}"
+      class="navbar-call"
+      href="tel:+84983505002"
+    >{% include icon-phone.html %}<span aria-hidden="true" class="navbar-call__short">{{ t.nav_call_short }}</span><span aria-hidden="true" class="navbar-call__number">{{ t.display_phone }}</span></a>
+
   <div class="nav-item dropdown">
     <a
       aria-expanded="false"
@@ -122,5 +141,6 @@
       </li>
       {% endfor %}
     </ul>
+  </div>
   </div>
 </div>

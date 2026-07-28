@@ -53,7 +53,13 @@
 :root {
   --paper: #faf8f2;
   --paper-deep: #f1ede2;
-  --line: #e2dccb;
+  // The hairline. It was #e2dccb, which sits 1.29:1 off the paper — measured,
+  // that is close to invisible on a phone held in daylight, and on this hub the
+  // hairline is doing real work: it is the only edge a series card has, and the
+  // only thing separating one post in the feed from the next. #d5cbaf is
+  // 1.52:1, still unmistakably a hair and not a rule, and 18% more of it
+  // reaches a reader who "bị tật khúc xạ, cận thị, viễn thị, loạn".
+  --line: #d5cbaf;
   --ink: #292319;
   --ink-2: #5a5342;
   --ink-3: #6e6753;
@@ -63,9 +69,26 @@
   --font-read: "Literata", Georgia, "Times New Roman", serif;
   --font-ui: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
 
-  // The hub's one easing: swift start, long soft settle. Motion here only ever
-  // answers the reader — a hover, a press, a tap — never plays on its own (§2.6).
-  --ease-glide: cubic-bezier(0.2, 0.6, 0.2, 1);
+  // Chrome type. Three sizes, not five: this file used to carry 0.75 / 0.8125 /
+  // 0.84375 / 0.875 / 0.9375rem — twelve to fifteen pixels, five values inside
+  // three pixels, and no reader alive could tell you which was which or why.
+  //   --fs-label  13  UPPERCASE labels only (caps read larger than lowercase)
+  //   --fs-meta   14  bylines, captions, dates, footer, everything metadata
+  //   --fs-ui     15  buttons, table body — chrome you act on or read across
+  --fs-label: 0.8125rem;
+  --fs-meta: 0.875rem;
+  --fs-ui: 0.9375rem;
+
+  // Motion and focus come from the shared rules layer (_sass/_quy-cu.scss §4,
+  // §5), the same values the main site uses. The hub's own --ease-glide was
+  // cubic-bezier(.2,.6,.2,1) against the site's (.2,.8,.2,1): two curves nobody
+  // could distinguish, maintained separately. Motion here still only ever
+  // ANSWERS the reader — a hover, a press, a tap — and never plays on its own.
+  @include motion-tokens;
+
+  // The reading room is paper, so the ring is indigo; the picture viewer is a
+  // dark ground and redeclares it below. One token, correct on both.
+  --focus: var(--indigo);
 }
 
 // ---- Base ----------------------------------------------------------------
@@ -128,8 +151,7 @@ body.kt {
 }
 
 .kt :focus-visible {
-  outline: 2px solid var(--indigo);
-  outline-offset: 2px;
+  @include focus-ring;
 }
 
 .kt a {
@@ -185,11 +207,13 @@ body.kt {
   height: auto;
 }
 
-// One reading column, one measure — nothing ever sits beside it (§4)
+// One reading column, one measure — nothing ever sits beside it (§4).
+// The gutter is the space ladder's step 5, the same 24px the main site's
+// container uses, so the page edge sits in the same place on both products.
 .kt-shell {
   max-width: 42rem;
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: step(5);
 }
 
 .kt-skip-link {
@@ -313,7 +337,14 @@ body.kt {
 }
 
 .kt .kt-brand-name {
-  padding: 0.5rem 0; // its own tap target, matching the logo half
+  // Its own tap target, matching the logo half. The word sets at ~20px, so
+  // 0.5rem of padding gave a 36px target — under the 44 the shared rules ask
+  // for (quy-cu §3), and this is the link that takes a reader back to the hub
+  // from anywhere. The mixin grows the target and pulls the extra back, so the
+  // lockup does not move.
+  display: inline-flex;
+  align-items: center;
+  @include tap-target(1.25rem);
   font-family: var(--font-read);
   font-size: calc(var(--logo-h) * 0.595);
   font-weight: 700;
@@ -358,9 +389,9 @@ body.kt {
 .kt .kt-brand-name,
 .kt .kt-bar-title {
   transition:
-    opacity 0.12s ease,
-    transform 0.18s ease,
-    visibility 0s linear 0.18s;
+    opacity var(--t-1) var(--ease),
+    transform var(--t-2) var(--ease),
+    visibility 0s linear var(--t-2);
 }
 
 // The scroll title itself (created by kt-topbar.js, aria-hidden — it repeats
@@ -420,8 +451,8 @@ body.kt {
   .kt .kt-brand-name,
   .kt .kt-bar-title {
     transition:
-      opacity 0.12s ease,
-      visibility 0s linear 0.12s;
+      opacity var(--t-1) var(--ease),
+      visibility 0s linear var(--t-1);
   }
 
   .kt .kt-bar-title,
@@ -527,7 +558,7 @@ body.kt {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     object-position: center top;
-    transition: transform 0.3s var(--ease-glide);
+    transition: transform var(--t-3) var(--ease);
   }
 }
 
@@ -545,7 +576,7 @@ body.kt {
 
 .kt-feed-meta {
   margin: 0.5rem 0 0;
-  font-size: 0.84375rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -573,6 +604,7 @@ body.kt {
 }
 
 .kt-feed-tag {
+  font-size: var(--fs-label);
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.08em; // letterspaced caps — same amount as the kicker, same role
@@ -586,7 +618,7 @@ body.kt {
   display: none;
   margin: 0;
   padding: 1rem 0 2rem;
-  font-size: 0.875rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -632,8 +664,8 @@ body.kt {
 }
 
 .kt-kicker {
-  margin: 0 0 1rem;
-  font-size: 0.8125rem;
+  margin: 0 0 step(4);
+  font-size: var(--fs-label);
   font-weight: 650;
   text-transform: uppercase;
   // Letterspaced caps: capitals are drawn to lead a word, so a run of them sets
@@ -675,7 +707,7 @@ body.kt {
 // routes second, exactly like the topic tag.
 .kt-series-line {
   margin: 0.625rem 0 0;
-  font-size: 0.875rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -684,7 +716,7 @@ body.kt {
 // is in the standfirst, this line is the price tag, and a price tag is quiet.
 .kt-collection-meta {
   margin: 0.75rem 0 0;
-  font-size: 0.875rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -695,7 +727,7 @@ body.kt {
   align-items: center;
   gap: 0.625rem;
   margin: 1rem 0 0;
-  font-size: 0.875rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -755,7 +787,7 @@ body.kt {
   figcaption {
     margin-top: 0.625rem;
     font-family: var(--font-ui);
-    font-size: 0.875rem;
+    font-size: var(--fs-meta);
     line-height: 1.5;
     color: var(--ink-3);
   }
@@ -789,7 +821,7 @@ body.kt {
   -webkit-tap-highlight-color: transparent;
 
   img {
-    transition: transform 0.2s var(--ease-glide), border-color 0.2s var(--ease-glide);
+    transition: transform var(--t-2) var(--ease), border-color var(--t-2) var(--ease);
   }
 
   &:hover img {
@@ -805,6 +837,10 @@ body.kt {
 // palette carries into the dark. Fixed, above everything, fades in 200ms (the
 // reduced-motion block at the end of this file makes it instant instead).
 .kt-lightbox {
+  // A dark ground: the ring flips to paper, exactly as the main site's dark
+  // panels flip theirs to white. One token, two products, same reasoning.
+  --focus: var(--paper);
+
   position: fixed;
   inset: 0;
   z-index: 50;
@@ -812,7 +848,7 @@ body.kt {
   flex-direction: column;
   background: rgba(21, 17, 11, 0.96);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--t-2) var(--ease);
 
   &.is-open {
     opacity: 1;
@@ -853,7 +889,7 @@ body.kt-lightbox-open {
     // Applied by the script only for the tap-to-zoom snap, then removed — the
     // live wheel/pinch/drag updates must track the hand with no easing at all.
     &.kt-anim {
-      transition: transform 0.3s var(--ease-glide);
+      transition: transform var(--t-3) var(--ease);
     }
   }
 
@@ -885,18 +921,13 @@ body.kt-lightbox-open {
   &:hover {
     background: rgba(250, 248, 242, 0.24);
   }
-
-  // The base :focus-visible indigo vanishes on this dark ground.
-  &:focus-visible {
-    outline-color: var(--paper);
-  }
 }
 
 // The plate note follows its picture into the dark.
 .kt-lightbox-caption {
   margin: 0;
   padding: 0.75rem 1.25rem 1rem;
-  font-size: 0.84375rem;
+  font-size: var(--fs-meta);
   line-height: 1.5;
   text-align: center;
   color: rgba(250, 248, 242, 0.78);
@@ -976,7 +1007,7 @@ body.kt-lightbox-open {
     margin: 0 0 1.25em;
     border-collapse: collapse;
     font-family: var(--font-ui);
-    font-size: 0.9375rem;
+    font-size: var(--fs-ui);
     line-height: 1.5;
   }
 
@@ -1059,10 +1090,10 @@ body.kt-lightbox-open {
 .kt-cta-note,
 .kt-cta-card {
   margin: 2em 0;
-  padding: 1.25rem 1.5rem;
+  padding: step(5) step(6);
   background: var(--paper-deep);
   border: 1px solid var(--line);
-  border-radius: 0.5rem;
+  @include squircle($r-2);
 
   p {
     margin: 0;
@@ -1073,9 +1104,9 @@ body.kt-lightbox-open {
 }
 
 .kt-cta-label {
-  margin: 0 0 0.5rem !important;
+  margin: 0 0 step(2) !important;
   font-family: var(--font-ui);
-  font-size: 0.75rem;
+  font-size: var(--fs-label);
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.1em; // caps, and smaller than the kickers — smaller caps take more air
@@ -1093,15 +1124,18 @@ body.kt-lightbox-open {
 // Scoped with `.kt` on purpose: buttons are <a>, so they have to outrank the
 // `.kt a` link color — otherwise the label goes indigo-on-indigo, invisible.
 .kt .kt-button {
-  display: inline-block;
-  padding: 0.5625rem 1.125rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: $tap;
+  padding: step(2) step(5);
   border: 0; // the share block's copy button is a real <button>; strip its UA chrome
   cursor: pointer;
   background: var(--indigo);
-  border-radius: 0.5rem;
+  @include squircle($r-2);
   color: var(--paper);
   font-family: var(--font-ui);
-  font-size: 0.9375rem;
+  font-size: var(--fs-ui);
   font-weight: 600;
   line-height: 1.4;
   text-decoration: none;
@@ -1188,15 +1222,15 @@ body.kt-lightbox-open {
 }
 
 // One card, one destination: the whole card is the link to the series page, so
-// it takes the series-nav card's anatomy — hairline border, 0.5rem radius
-// (re-cut by squircle.js like every authored corner), border warms to indigo
+// it takes the series-nav card's anatomy — hairline border, the shared 8px
+// superellipse corner (quy-cu §2), border warms to indigo
 // under the pointer while the title underlines. Indigo title = actionable (§3);
 // desc and meta stay reading-grey and metadata-grey.
 .kt .kt-series-card {
   display: block;
-  padding: 1rem 1.125rem;
+  padding: step(4) step(5);
   border: 1px solid var(--line);
-  border-radius: 0.5rem;
+  @include squircle($r-2);
   text-decoration: none;
 
   &:hover,
@@ -1232,7 +1266,7 @@ body.kt-lightbox-open {
   display: block;
   margin-top: 0.5rem;
   font-family: var(--font-ui);
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -1266,14 +1300,14 @@ body.kt-lightbox-open {
     display: block;
     margin-top: 0.25rem;
     font-family: var(--font-ui);
-    font-size: 0.875rem;
+    font-size: var(--fs-meta);
     color: var(--ink-3);
   }
 
   .kt-signature-canonical {
     margin-top: 0.75rem;
     font-family: var(--font-ui);
-    font-size: 0.84375rem;
+    font-size: var(--fs-meta);
     line-height: 1.6;
     color: var(--ink-3);
   }
@@ -1310,9 +1344,9 @@ body.kt-lightbox-open {
 .kt-series-prev,
 .kt-series-next {
   position: relative;
-  padding: 0.875rem 1.125rem;
+  padding: step(4) step(5);
   border: 1px solid var(--line);
-  border-radius: 0.5rem;
+  @include squircle($r-2);
 
   &:hover,
   &:focus-within {
@@ -1338,7 +1372,7 @@ body.kt-lightbox-open {
 
 .kt-series-nav-label {
   display: block;
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -1357,7 +1391,7 @@ body.kt-lightbox-open {
 // the linked name follows the kicker's quiet-link pattern.
 .kt-series-nav-series {
   margin: 0.25rem 0 0;
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 
   a {
@@ -1417,7 +1451,7 @@ body.kt-lightbox-open {
     aspect-ratio: 16 / 10;
     object-fit: cover;
     object-position: center top; // an infographic's headline survives the crop
-    transition: transform 0.3s var(--ease-glide);
+    transition: transform var(--t-3) var(--ease);
   }
 }
 
@@ -1440,7 +1474,7 @@ body.kt-lightbox-open {
 .kt-readnext-meta {
   display: block;
   margin-top: 0.375rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   color: var(--ink-3);
 }
 
@@ -1452,7 +1486,7 @@ body.kt-lightbox-open {
 
   p {
     margin: 0.25rem 0 0;
-    font-size: 0.84375rem;
+    font-size: var(--fs-meta);
     color: var(--ink-3);
   }
 }

@@ -18,6 +18,13 @@ description: "Alpha Software đang tái định nghĩa cách quản lý sản xu
 learn_more: "Tìm hiểu thêm"
 learn_more_aria: "Tìm hiểu thêm về Alpha Software"
 
+# The call affordance in the fixed bar and in the hero. The short label shows
+# under md, where the bar has no room for eleven digits; the aria-label always
+# carries the full number, so a screen reader hears it at any viewport.
+nav_call_short: "Gọi"
+nav_call_aria: "Gọi Alpha Software: 0983 505 002"
+hero_call: "Gọi 0983 505 002"
+
 # --- Hero Section (PARKED precision hero — see _includes/hero-precision.html) ---
 # Khi bật lại hero "precision", đặt `slogan` = `hero_headline` để khớp <title>/OG.
 

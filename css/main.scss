@@ -2,183 +2,184 @@
 ---
 
 @charset "utf-8";
+
+// ════════════════════════════════════════════════════════════════════════════
+// Alpha Software — the main site's token layer
+//
+// Reading order: RAMPS (raw material) → ROLES (what a colour is FOR) →
+// BOOTSTRAP BRIDGE (the names the framework reads) → type → space → shape →
+// components. Nothing below the ramps ever names a hex code; nothing in
+// _sass/_base.scss ever names a ramp rung. That is the whole discipline: you
+// pick a colour by naming its job, so two people cannot pick differently.
+//
+// Rules shared with the reading hub — space, corner geometry, tap target,
+// motion, focus — live in _sass/_quy-cu.scss. Design language: design/07.
+// The system and its reasoning: design/08-quy-cu.md.
+// ════════════════════════════════════════════════════════════════════════════
+
 @import "fonts";
+@import "quy-cu";
 @import "bootstrap/functions";
 
-// -------------------------------------
-// Color Variables
-// -------------------------------------
+// ────────────────────────────────────────────────────────────────────────────
+// 1. RAMPS — raw material. Never referenced outside section 2.
+// ────────────────────────────────────────────────────────────────────────────
 
-$primary: #e35205;
-$primary-dark: #e67300;
-$primary-inverted-dark: #8dc8e8;
-$fill-primary: #c63527;
-$figure-primary: #b33f04;
-
-$accent: #ff8f1c;
-$fill-accent: #e35205;
-
-$secondary: #004c97;
-$secondary-dark: #009cde;
-$fill-secondary: #003865;
-$figure-secondary: #004080;
-
-$background: #fff;
-$light: #c3e5f1;
-$dark: #00263e;
-
-// Neutral ramp — shifted subtly cool ("ink") to align with the precision brand.
-// Low saturation on surfaces so whites stay clean; text colors lean more slate.
 $white: #fff;
 $black: #000;
-$gray-50: #f6f8fa;
-$gray-100: #eaeef2;
-$gray-200: #dfe5ea;
-$gray-300: #cad4dc;
-$gray-400: #aab6c0;
-$gray-500: #8b97a3;
-$gray-600: #5b6976;
-$gray-700: #3b4753;
-$gray-750: #2c333a;
-$gray-800: #1f262d;
-$gray-900: #151b21;
-$gray-950: #0b1119;
 
-// — Label hierarchy (design doc §4.2): neutral foreground in decreasing strength.
-// The spec expresses these as ink-with-decreasing-alpha. We keep the brand's tuned
-// cool-ink SOLIDS for the two read-critical levels (they clear WCAG AA with more
-// margin than the spec's lighter alphas — doc §13 is non-negotiable), and use
-// alpha only for the decorative quaternary/placeholder levels.
-$text: #0e1b27; // label — primary text
-$text-secondary: #46586a; // secondaryLabel — subtitles, supporting (AA on white)
-$text-tertiary: #5b6e7f; // tertiaryLabel — captions, hints (≈5.3:1 on white: AA for normal text; was #6f8294 ≈3.96:1 which failed AA on the project-year labels)
-$text-quaternary: rgba(14, 27, 39, 0.22); // quaternaryLabel — watermark level
-$placeholder-color: rgba(14, 27, 39, 0.40);
-
-$body-color: $text;
-
-// Dark-surface label hierarchy (white with decreasing alpha), per design doc §4.2.
-$text-dark: #fff;
-$text-dark-secondary: rgba(255, 255, 255, 0.66);
-$text-dark-tertiary: rgba(255, 255, 255, 0.42);
-
-// Separators are hairline + translucent (design doc §4.2 / §9): separation by tone +
-// blur, not heavy boxes. Alpha-based so it adapts to whatever sits behind it.
-$separator: rgba(14, 27, 39, 0.14);
-$separator-dark: rgba(255, 255, 255, 0.18);
-$border-color: $separator;
-
-// System fills (design doc §4.4): translucent grays for small UI shapes (chips,
-// fields, segmented tracks) — they adapt to the content behind them.
-$fill-1: rgba(99, 114, 128, 0.18);
-$fill-2: rgba(99, 114, 128, 0.14);
-$fill-3: rgba(99, 114, 128, 0.10);
-$fill-4: rgba(99, 114, 128, 0.07);
-
-$icon-color: $gray-600; // closest to $text-secondary
-$icon-active-color: $gray-700;
-$dark-icon-color: $gray-100; // closest to $text-dark-secondary
-
-// -------------------------------------
-// Precision Redesign Tokens (design/04-design-system.md)
-// Calibration x Atelier · cool ink base + reserved dye accent.
-// Additive: introduced alongside the legacy vars so sections migrate one by one.
-// -------------------------------------
-
-// Ink — cool structural neutrals (surfaces, dark sections, near-black text)
+// INK — one cool neutral ramp, top to bottom, and the only neutral on the
+// site. It replaces four overlapping ramps ($gray-*, $ink-*, $slate-*,
+// $mist-*/$paper-*) that between them held twenty-five variables, several of
+// them the same colour under two names ($slate-600 and $text-secondary were
+// both #46586a; $blue-pale and $light were both #c3e5f1).
+//
+// Cool by decision, not by accident: a breath of blue in every grey is the
+// colour of measurement, water and machine steel. Never warm, never pure
+// black — #000 on #fff is a contrast the eye has to work against.
+//
+// Contrast on white, measured, so the ramp itself says where each rung may be
+// used. This is the contract; nothing downstream is allowed to guess:
+//   950 17.4  900 15.9  800 12.6  700 9.9   600 7.6
+//   500  7.3 ✓AAA text        450 5.3 ✓AA text      400 4.6 ✓AA text (floor)
+//   300  2.8 ✗ non-text only  200 1.7  100 1.3  50 1.2  25 1.1
 $ink-950: #07151f;
 $ink-900: #0b1b2b;
 $ink-800: #102a3c;
 $ink-700: #1d3b4f;
 $ink-600: #2f5167;
+$ink-500: #46586a;
+$ink-450: #5b6e7f;
+$ink-400: #647889;
+$ink-300: #8a9cab;
+$ink-200: #b9c6d0;
+$ink-100: #d6e0e7;
+$ink-50: #e9eff3;
+$ink-25: #f6f9fb;
 
-// Slate / mist — text, labels, hairlines, dividers
-$slate-600: #46586a; // secondary text on light
-$slate-500: #647889; // tertiary text / captions / kicker labels
-$slate-400: #8a9cab;
-$mist-300: #b9c6d0; // hairlines, ticks
-$mist-200: #d6e0e7; // borders, dividers
-$mist-100: #e9eff3; // subtle fills / alt section background
-$paper-50: #f6f9fb; // page background, a hair cooler than white
+// DYE — the industry's own colour, earned honestly. Reserved for the moment
+// that matters; never a wash. Ordered by lightness so the interaction states
+// read off the ramp instead of being invented: rest 700 → hover 600 → press
+// 800 (a control warms when pointed at and deepens when pressed).
+//   300 2.4 ✗  400 3.1 ✗  500 3.8 ✗ (large text / marks only)
+//   600 4.9 ✓  700 5.8 ✓ (small accent text, CTA fill)  800 7.0 ✓
+$dye-300: #ff8f1c;
+$dye-400: #ff6a1a;
+$dye-500: #e35205; // the brand mark
+$dye-600: #c9420c;
+$dye-700: #b8390a;
+$dye-800: #a33208;
 
-// Dye accent — the signature, reserved for metrics + CTAs + key marks
-$dye: $primary; // #e35205 — large numerals, fills, decorative marks (never small text)
-$dye-bright: #ff6a1a; // hover / highlight
-$dye-deep: #b8390a; // AA-safe: small accent text on light; CTA bg with white text
-$dye-tint: #fdece2; // faint dye wash for callout backgrounds on light
+// BLUE — the cool counterpoint. Blue says "you can act on this"; dye says
+// "this is the point." Four blues went in here (#06c link, #0071e3 focus,
+// #004c97 icons, #004080 nav-active) that nobody could have told apart in a
+// line-up; what survives is one interactive blue plus the two deep marks that
+// are genuinely a different job.
+//   100 on ink-900 13.1 ✓   400 on ink-900 5.0 ✓
+//   600 on white 5.6 ✓      700 on white 8.5 ✓      800 on white 10.3 ✓
+$blue-100: #c3e5f1;
+$blue-400: #009cde;
+$blue-600: #0066cc; // links AND the focus ring — one interactive blue
+$blue-700: #004c97;
+$blue-800: #004080;
 
-// Secondary cool accent (kept from current brand)
-$blue: $secondary; // #004c97 — links, secondary marks
-$blue-bright: $secondary-dark; // #009cde
-$blue-pale: $light; // #c3e5f1
+// ────────────────────────────────────────────────────────────────────────────
+// 2. ROLES — what a colour is FOR. This is the layer _base.scss reads.
+// ────────────────────────────────────────────────────────────────────────────
 
-// Motion + fluid type are emitted as CSS custom properties in _base.scss :root.
+// — Surfaces
+$surface: $white; // the page. Uniform, and it stays uniform (design/07 §7.4)
+$surface-alt: $ink-50; // the one tinted band (Lợi ích); see the note in §3
+$surface-sunk: $ink-25; // menus, wells
+$surface-dark: $ink-900; // the CTA panel
+$surface-deep: $ink-950; // hero splash / deepest ground
 
-// -------------------------------------
-// Dark Theme Palette (Apple HIG §5 model · brand cool-ink character)
-// -------------------------------------
+// — Foreground on light. Three tiers, all clearing WCAG AA as normal text,
+//   because a "muted" tier that fails is not muted, it is missing.
+$fg: #0e1b27; // 17.4 — body, headings
+$fg-muted: $ink-500; // 7.3  — subtitles, supporting copy
+$fg-subtle: $ink-450; // 5.3  — captions, metadata, kickers, hints
+//   ($ink-400 4.6 is the floor; $ink-300 2.8 is NON-TEXT and named as such)
+
+// — Foreground on dark. White with alpha so one set works over the ink panel
+//   AND over the hero photograph. Measured on $surface-dark:
+$fg-on-dark: $white; // 17.4
+$fg-on-dark-muted: rgba(255, 255, 255, 0.72); //  9.4 ✓AAA
+$fg-on-dark-subtle: rgba(255, 255, 255, 0.56); //  6.2 ✓AA
+//   The old subtle tier was 0.42 → 4.03:1, which fails AA for normal text. It
+//   was a token that said "safe anywhere" and was not.
+
+// — Lines. Translucent so one value adapts to whatever sits behind it.
+$line: rgba(14, 27, 39, 0.14); // hairline separator
+$line-strong: rgba(14, 27, 39, 0.22); // the edge of a container
+$line-on-dark: rgba(255, 255, 255, 0.18);
+
+// — Interactive
+$link: $blue-600;
+$link-on-tint: $blue-700; // $blue-600 is 4.19 on $blue-100 — under AA
+$accent: $dye-500; // marks, large figures, the section markers
+$accent-strong: $dye-700; // small accent text and CTA fill (AA on white)
+$accent-on-dark: $dye-400; // brightened one step so it stays vivid on ink
+$focus: $blue-600; // on dark surfaces _base.scss redeclares --focus: white
+
+// — Icons
+$icon: $blue-700;
+$icon-quiet: $ink-500;
+$icon-on-dark: $ink-50;
+
+// ────────────────────────────────────────────────────────────────────────────
+// 3. BOOTSTRAP BRIDGE — the framework's own names, pointed at the roles above.
+//     Nothing here introduces a colour; it only translates.
+// ────────────────────────────────────────────────────────────────────────────
+
+$primary: $accent;
+$secondary: $blue-700;
+$light: $surface-alt;
+$dark: $surface-dark;
+$body-color: $fg;
+
+// Bootstrap's grey scale IS the ink ramp. Only the rungs it actually reads.
+$gray-100: $ink-50;
+$gray-200: $ink-100;
+$gray-300: $ink-200;
+$gray-400: $ink-300;
+$gray-500: $ink-400;
+$gray-600: $ink-500;
+$gray-700: $ink-600;
+$gray-800: $ink-800;
+$gray-900: $ink-900;
+
+$border-color: $line;
+
+// ── The one tinted band ──────────────────────────────────────────────────────
+// `<section class="bg-light">` (Lợi ích) is the only section on the page that
+// is not white. It predates the owner's "the calm white baseline is sacred"
+// rule (design/07 §7.4) and it is the single thing on the page that breaks it.
 //
-// A scalable, semantic dark palette: today it is the single source of truth for
-// the site's dark chrome (the navbar menus that open over the dark hero); it is
-// built to become the foundation of a full-site dark mode without retuning. It
-// follows the Apple design-language rules (apple-design-language-for-web.md §5):
+// Two changes, no third: the tint moves from #c3e5f1 — a saturated pale cyan
+// that belonged to no ramp and sat 1.33:1 off white — onto $ink-50, which is
+// the page's own neutral one step down and a quieter 1.16:1. So the band still
+// marks the section and no longer announces it, and the page now has exactly
+// one neutral family.
 //
-//  · NEUTRAL, not branded. Surfaces are low-chroma cool-ink grays — deliberately
-//    NOT the saturated $ink-900 CTA panel (section.bg-primary). The accent stays
-//    reserved for interactivity (§4.1); the dark UI itself stays quiet.
-//  · ELEVATION LIGHTENS (§5 / §9). Higher layers are lighter, not darker — the
-//    inverse of paper shadow. surface-1 is the page; each step floats above it.
-//  · COOL CAST to match the "precision ink" brand: at every rung the blue channel
-//    sits a hair above red/green, at low saturation so it never reads navy.
-//  · Foreground / separators / fills are WHITE-ALPHA (§4.2 / §4.4 / §9) so they
-//    adapt to whatever surface — or the hero photo — sits behind them.
-//
-// To take a section (or the whole site) dark later: set its background to a
-// surface token and its text to the $text-dark* labels; the translucent
-// separators, fills and brightened accents then read correctly on any surface.
-// (Shipping stays light-only until that migration — owner direction.)
+// Deleting the band entirely is one attribute in _includes/benefits.html and
+// is the owner's call, not this file's.
 
-// Surface ramp — page → raised → elevated → overlay (lighter = higher layer).
-$dark-surface-1: #0c1218; // base page (systemBackground): cool near-black
-$dark-surface-2: #151d25; // raised: sections lifted off the page, resting cards
-$dark-surface-3: #1f2932; // elevated: cards, popovers, DROPDOWN MENUS, nav chrome
-$dark-surface-4: #2a3540; // overlay: sheets / a menu stacked above an elevated layer
+// ────────────────────────────────────────────────────────────────────────────
+// 4. TYPE
+// ────────────────────────────────────────────────────────────────────────────
 
-// Foreground labels reuse the shipped dark-surface hierarchy (white + alpha):
-//   $text-dark #fff · $text-dark-secondary .66 · $text-dark-tertiary .42
-$text-dark-quaternary: rgba(255, 255, 255, 0.28); // quaternaryLabel — watermark level
+@function px($px) {
+  @return 1rem * $px / 16;
+}
 
-// Hairlines & borders — translucent white, adapting to the surface behind.
-//   ($separator-dark rgba(255,255,255,0.18) = the standard hairline, defined above)
-$dark-border: rgba(255, 255, 255, 0.10); // resting card / menu edge
-$dark-border-highlight: rgba(255, 255, 255, 0.14); // Liquid-Glass top-edge sheen (§6)
-
-// System fills — translucent WHITE for shapes/hover/press on dark (§4.4). White
-// (not a dark gray) so a fill LIFTS its surface — the correct direction for dark.
-$dark-fill-1: rgba(255, 255, 255, 0.14); // pressed / selected
-$dark-fill-2: rgba(255, 255, 255, 0.10); // hover / current
-$dark-fill-3: rgba(255, 255, 255, 0.06); // resting chip / track
-
-// Accents on dark — the brand marks, brightened a touch so they stay vibrant on
-// dark surfaces (§5). Reserved for interactivity + key marks, never plain chrome.
-$dark-accent: $dye-bright; // #ff6a1a — primary interactive dye
-$dark-accent-blue: $secondary-dark; // #009cde — secondary marks / links on dark
-
-// -------------------------------------
-// Typography Variables
-// -------------------------------------
-
-// Inter Variable is the single sans (self-hosted; @font-face in _sass/_fonts.scss).
-// The system stack behind it is the platform-native ordering Inter's own docs
-// recommend as a fallback — Inter was drawn to sit optically close to -apple-system
-// / Segoe UI, so the swap from the fallback is nearly invisible.
-//
-// Inter carries an opsz 14–32 axis, driven by `font-optical-sizing: auto` on the
-// body (the maker's own recommended usage; the reasoning is written out in full in
-// _base.scss). The top of that axis IS "Inter Display" — Rasmus ships it as a
-// separate static family, but in the variable file it is simply opsz 32, so one
-// file covers Text, Display AND every optical size between them. That is why no
-// second display family is loaded, and why nothing here pins the axis by hand.
+// Inter Variable is the single sans (self-hosted; @font-face in _fonts.scss).
+// Its opsz 14–32 axis is driven by `font-optical-sizing: auto` on the body —
+// the maker's own recommended usage — so every rung gets the drawing cut for
+// the size it really renders at. The reasoning is written out in _base.scss.
+// The fallback stack is the platform-native ordering Inter's docs recommend;
+// Inter was drawn to sit optically close to -apple-system / Segoe UI, so the
+// swap from the fallback is nearly invisible.
 $font-family-sans-serif:
   "Inter",
   -apple-system,
@@ -201,120 +202,43 @@ $font-family-monospace:
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 700;
 
-// Respect the user's text size (design doc §3.4 / §13): size everything in rem, never
-// cap font scaling. html = 100% = the browser's font size (16px default), so OS
-// large-text and browser zoom flow straight through. (Was a fluid min/max cap.)
+// Respect the reader's text size: everything is rem, nothing caps scaling.
+// html = 100% = the browser's font size, so OS large-text and browser zoom
+// flow straight through.
 $font-size-root: 100%;
 
-// -------------------------------------
-// Link Variables
-// -------------------------------------
+// Four sizes. Not five, not seven.
+//   14 metadata · 16 body · 17 lead (19 ≥md) · headings on the --fs-* ramp
+//
+// 14, not 13. The old footnote rung was 13px and it was carrying the
+// director's name in the footer, the copyright line, and the "read the
+// original in Vietnamese" LINK — a control, at 13px, on a phone. The users
+// this site is written for are named in the philosophy: "một người bị tật
+// khúc xạ, mù màu, cận thị, viễn thị, loạn", and "tuổi tác từ trẻ mới ra
+// trường đến già sắp về hưu". 13px of Vietnamese with stacked diacritics is
+// not written for them. One step up costs the layout nothing.
+$font-size-sm: px(14);
+$font-size-base: 1rem;
+$font-size-lg: px(17);
+$text-tab-width: 1.625em; // 13/4 of an en space — the list/quote indent
 
-$link-color: #06c;
-$link-hover-color: $link-color;
-$link-alt-color: $figure-primary;
-$link-alt-hover-color: $link-alt-color;
-$link-alt-hover-dark-color: $primary-dark;
-$link-decoration: none;
-$link-hover-decoration: underline;
-
-// -------------------------------------
-// Spacing Variables
-// -------------------------------------
-
-@function px($px) {
-  @return 1rem * $px / 16;
-}
-
-// Leading-ratio helper: returns a unitless line-height for a body of `$pt`
-// points plus `$add` points of leading (snapped to the 4/3 px grid). Distinct
-// from a length — produces a ratio, never a standalone size.
-@function line-height-for-pt($pt, $add: 6) {
-  @return round(($pt + $add)/ 3 * 4) / round($pt / 3 * 4);
-}
-
-@function line-height-for-px($px, $add: 6) {
-  @return line-height-for-pt($px / 4 * 3, $add);
-}
-
-@function line-height-for-rem($rem, $add: 6) {
-  @return line-height-for-pt($rem * 12, $add);
-}
-
-// Type / size scale (rem via the px() helper — no more point conversion).
-// Key 2.5 is an in-between step (17px) holding the h5 size, which sits between
-// the 16px and 24px rungs.
-$scales: (
-  -1: px(13),
-  0: 0rem,
-  1: px(15),
-  2: px(16),
-  2.5: px(17),
-  3: px(24),
-  4: px(32),
-  5: px(40),
-  6: px(48),
-  7: px(56),
-  8: px(64),
-  9: px(72),
-  10: px(80),
-  11: px(88),
-  12: px(96),
-  13: px(104),
-  14: px(112),
-  15: px(120),
-  16: px(128),
-  30: px(240),
-);
-
-$spacer: 1rem;
-
-// Spacing scale snapped to the standard 4px base grid (was an 11px point scale:
-// 5.5/11/22/27/33/37/44…). Each key keeps ~its previous value so the tuned layout
-// holds, but every value is now a clean grid step. Key landmarks match Bootstrap's
-// canonical scale: 2 = .5–.75rem, 3 = 1rem (16px), 4 = 1.5rem (24px).
-$spacers: (
-  -2: 0.125rem, // 2px
-  -1: 0.25rem,  // 4px
-  0: 0rem,
-  1: 0.25rem,   // 4px
-  2: 0.75rem,   // 12px
-  3: 1rem,      // 16px
-  4: 1.5rem,    // 24px
-  5: 1.75rem,   // 28px
-  6: 2rem,      // 32px
-  7: 2.5rem,    // 40px
-  8: 2.75rem,   // 44px
-  9: 3rem,      // 48px
-  10: 3.5rem,   // 56px
-  11: 3.75rem,  // 60px
-  12: 4rem,     // 64px
-  16: 5rem,     // 80px
-  22: 7.5rem,   // 120px
-  24: 8rem,     // 128px
-);
-
-// Type scale (design doc §3.2), capped at a 16px body per owner direction. Roles:
-//   body 16 (Callout/Body floor) · lead/large 17 (Body) ·
-//   small 13 (Footnote). Hierarchy is carried by weight + size + space,
-//   never by a second typeface. Line-heights are explicit tight ratios.
-$text-tab-width: 1.625em; // 13/4 of an en space
-$font-size-sm: px(13); // Footnote — metadata, captions
-$font-size-base: 1rem; // 16px — default body (design doc §3.2, owner cap)
-$font-size-lg: px(17); // Body — lead paragraphs, buttons, blockquote
 $input-btn-font-size: $font-size-lg;
 $blockquote-font-size: $font-size-lg;
 $blockquote-footer-font-size: $font-size-base;
-$blockquote-footer-color: $text;
+$blockquote-footer-color: $fg;
 
-$line-height-base: 1.5; // body — design doc §3.2 "1.3–1.5× for body"
-$line-height-sm: 1.38; // Footnote 13/18
-$line-height-lg: 1.47; // Body 17 ≈ comfortable web reading
+// Vietnamese stacks a tone mark above a vowel mark — "ế", "ộ", "ữ" are two
+// storeys tall above the x-height. The reading hub has always set 1.6–1.75 for
+// exactly this reason and said so; the main site was still at 1.5, the Latin
+// default, and had no reason to be. One language, one leading.
+$line-height-base: 1.6;
+$line-height-sm: 1.45;
+$line-height-lg: 1.55;
 $btn-line-height: 1;
 
 // SCSS heading sizes feed component sizing (accordion chevron, blockquote) and
-// the line-height ratios below. The *rendered* h1–h6 sizes are driven by the
-// breakpoint-stepped --fs-* custom properties in _base.scss (no clamp).
+// nothing else — the RENDERED h1–h6 come from the --fs-* custom properties in
+// _base.scss, stepped at breakpoints (no clamp, owner direction).
 $h1-font-size: px(48);
 $h2-font-size: px(34);
 $h3-font-size: px(22);
@@ -322,7 +246,7 @@ $h4-font-size: px(18);
 $h5-font-size: px(16);
 $h6-font-size: px(14);
 
-// Design doc §3.2: ~1.1–1.25 for headings (tighten as size grows).
+// Tighten as size grows — the standard heading ladder.
 $h1-line-height: 1.07;
 $h2-line-height: 1.14;
 $h3-line-height: 1.22;
@@ -330,12 +254,25 @@ $h4-line-height: 1.3;
 $h5-line-height: 1.35;
 $h6-line-height: 1.4;
 
-$grid-gutter-width: map-get($spacers, 4);
-$paragraph-margin-bottom: 0;
+$paragraph-margin-bottom: 0; // spacing is owned by the FOLLOWING element
 
-// -------------------------------------
-// Layout Variables
-// -------------------------------------
+// ────────────────────────────────────────────────────────────────────────────
+// 5. SPACE — the shared ladder from _quy-cu.scss, handed to Bootstrap
+// ────────────────────────────────────────────────────────────────────────────
+//
+// The old map was a retrofit: it carried two rungs holding the same 4px, no
+// 8px at all, and then 28 / 44 / 60 / 80 / 120px keys inherited from an 11px
+// point scale that had been abandoned. Keys 5, 8 and 11 were not steps of
+// anything. This is a ladder.
+$spacer: 1rem;
+$spacers: $step;
+
+$grid-gutter-width: step(5); // 24px
+$container-padding-x: step(5) * 2; // 48px — 24px of gutter each side
+
+// ────────────────────────────────────────────────────────────────────────────
+// 6. LAYOUT
+// ────────────────────────────────────────────────────────────────────────────
 
 $grid-breakpoints: (
   xs: 0,
@@ -346,145 +283,150 @@ $grid-breakpoints: (
   2xl: 96rem,
 );
 
-// Fixed navbar height — the visible chrome region below the safe-area inset.
-// Phones (<md) run shorter to match the scaled-down brand; ≥md is taller.
-// Single source of truth: the bar itself, the hero's top offset, and the
-// scroll insets all read these, so changing them here reflows the whole page
-// without touching any other number.
-$navbar-height: 64px; // ≥md
-$navbar-height-sm: 56px; // <md (phones)
-
-$container-padding-x: map-get($spacers, 4) * 2;
-
-// Narrower content column (~1140px, the conventional max) for generous, calm
-// left/right margins on large screens — the standard, "natural" feel.
+// ~1140px, the conventional maximum — generous left/right margins on a large
+// screen, which is the standard, unremarkable, correct answer.
 $container-max-widths: (
   lg: 69rem + $container-padding-x,
 );
 
-// -------------------------------------
-// Border Variables
-// -------------------------------------
+// Fixed navbar height: the visible chrome region below the safe-area inset.
+// Single source of truth — the bar, the hero's top offset and the scroll
+// insets all read these, so changing one number reflows the page.
+$navbar-height: 64px; // ≥md
+$navbar-height-sm: 56px; // phones
 
-$border-radius-xs: 2px;
-$border-radius-sm: 4px;
-$border-radius: 6px;
-$border-radius-lg: 8px;
-$border-radius-xl: 12px;
-$border-radius-2xl: 16px;
-$border-radius-3xl: 24px;
-$border-radius-4xl: 32px;
-$border-radius-svg: 4px;
+// ────────────────────────────────────────────────────────────────────────────
+// 7. SHAPE — five radii, each with a job
+// ────────────────────────────────────────────────────────────────────────────
+//
+// The old set had nine rungs (2/4/6/8/12/16/24/32 plus a separate "svg" 4) of
+// which four were used, alongside a hardcoded 1.25rem. The scale itself — five
+// rungs, $r-1…$r-5 — lives in _quy-cu.scss §2 with the corner geometry, because
+// the reading hub draws its corners from the same five.
 
+// Bootstrap's own names, pointed at the scale.
+$border-radius-sm: $r-1;
+$border-radius: $r-2;
+$border-radius-lg: $r-2;
+$border-radius-xl: $r-3;
+$border-radius-2xl: $r-4;
 $border-width: 1px;
-
-// Design doc §7 continuous-corner radii: controls 8–14, cards 12–20, sheets 16–28.
-// Controls land at 12 (xl); squircle.js layers superellipse smoothing on top for
-// the few hero/CTA/card shapes that carry [data-squircle-radius].
-$btn-border-radius: $border-radius-xl;
+$btn-border-radius: $r-3;
 
 $card-border-width: $border-width;
 $card-border-color: $border-color;
-$card-border-radius: $border-radius-2xl;
+$card-border-radius: $r-4;
 
 $hr-border-width: 2px;
 
-// -------------------------------------
-// Focus Ring Variables
-// -------------------------------------
-
-$focus-ring-width: px(3);
+// ────────────────────────────────────────────────────────────────────────────
+// 8. FOCUS
+// ────────────────────────────────────────────────────────────────────────────
+//
+// The ring itself is the shared `focus-ring` mixin (quy-cu §5) and its colour
+// is the --focus custom property, which dark surfaces redeclare. These exist
+// only so Bootstrap's own focus styles land on the same values.
+$focus-ring-width: 3px;
 $focus-ring-opacity: 1;
-$focus-ring-color: #0071e3;
+$focus-ring-color: $focus;
 $focus-ring-blur: 0;
-
-$focus-ring-outline: $focus-ring-width solid $focus-ring-color;
 $focus-ring-box-shadow: 0 0 0 $focus-ring-width $focus-ring-color;
 
-// -------------------------------------
-// Component Variables
-// -------------------------------------
+// ────────────────────────────────────────────────────────────────────────────
+// 9. LINKS
+// ────────────────────────────────────────────────────────────────────────────
+
+$link-color: $link;
+$link-hover-color: $link;
+$link-alt-color: $accent-strong;
+$link-alt-hover-dark-color: $dye-300;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+// ────────────────────────────────────────────────────────────────────────────
+// 10. COMPONENTS
+// ────────────────────────────────────────────────────────────────────────────
 
 $navbar-padding-y: 0;
-$navbar-light-color: $text;
+$navbar-light-color: $fg;
 $navbar-light-hover-color: $navbar-light-color;
 $navbar-light-active-color: $link-alt-color;
 $nav-link-padding-y: 0;
-$navbar-nav-link-padding-x: map-get($spacers, 2);
+$navbar-nav-link-padding-x: step(3);
 $nav-link-font-weight: 600;
 $nav-link-transition: none;
-$nav-link-line-height: 48px;
-$navbar-dark-color: $text-dark;
+$nav-link-line-height: $tap; // 44px — the bar's links are thumb targets too
+$navbar-dark-color: $fg-on-dark;
 $navbar-dark-hover-color: $link-alt-hover-dark-color;
 $navbar-dark-active-color: $link-alt-hover-dark-color;
 
 $dropdown-spacer: 0;
 $dropdown-padding-y: 0;
-$dropdown-bg: $gray-50;
-$dropdown-link-color: $text;
+$dropdown-bg: $surface-sunk;
+$dropdown-link-color: $fg;
 $dropdown-link-hover-color: $dropdown-link-color;
-$dropdown-link-hover-bg: $gray-100;
-$dropdown-link-active-bg: $dropdown-bg; // Deactivated attribute
+$dropdown-link-hover-bg: $ink-50;
+$dropdown-link-active-bg: $dropdown-bg; // deactivated: we own the active state
 $dropdown-link-active-color: $dropdown-link-color;
-$dropdown-link-active-state-bg: $gray-200;
+$dropdown-link-active-state-bg: $ink-100;
 $dropdown-border-width: $border-width;
 $dropdown-border-color: $border-color;
-$dropdown-border-radius: $border-radius;
+$dropdown-border-radius: $r-2;
 $dropdown-toggler-icon: url("../img/svg/ui_icons/dropdown-toggler-icon.svg");
 $dropdown-toggler-icon-dark: url("../img/svg/ui_icons/dropdown-toggler-icon-dark.svg");
 
-$dropdown-item-padding-y: map-get($spacers, 1);
-$dropdown-item-padding-x: map-get($spacers, 2);
+// A menu row is a control, so it gets the control's target. 12px above and
+// below a 16px/1.6 line = 44px exactly. It used to be 4px, giving 32px.
+$dropdown-item-padding-y: step(3);
+$dropdown-item-padding-x: step(4);
 
-// Primary CTA rides the dye ramp (design/04 §1.2): white text on $dye-deep
-// clears WCAG AA (~5:1); hover warms one step toward $dye, active presses one
-// step deeper. (Replaces the legacy #c63527 red, which sat outside the ramp.)
-$btn-primary-color: $dye-deep;
-$btn-primary-hover: #c9420c;
-$btn-primary-active: #a33208;
+// The primary CTA rides the dye ramp: white on $dye-700 clears AA (5.8:1),
+// hover warms one rung, press deepens one rung. Interaction states are read
+// off the ramp, never invented.
+$btn-primary-color: $accent-strong;
+$btn-primary-hover: $dye-600;
+$btn-primary-active: $dye-800;
 
-$input-btn-padding-y: map-get($spacers, 2);
-$input-btn-padding-x: map-get($spacers, 4);
+$input-btn-padding-y: step(3);
+$input-btn-padding-x: step(5);
 
-$btn-transition:
-  background 100ms linear,
-  color 100ms linear,
-  opacity 100ms linear;
-
-$accordion-padding-y: map-get($spacers, 2);
-$accordion-padding-x: map-get($spacers, 4);
-$accordion-border-radius: $border-radius-2xl;
-
+$accordion-padding-y: step(3);
+$accordion-padding-x: step(5);
+$accordion-border-radius: $r-4;
 $accordion-button-bg: $dropdown-bg;
-$accordion-button-color: $text;
-$accordion-button-active-bg: $accordion-button-bg; // Deactivated attribute
+$accordion-button-color: $fg;
+$accordion-button-active-bg: $accordion-button-bg;
 $accordion-button-active-color: $accordion-button-color;
 $accordion-button-focus-box-shadow: $focus-ring-box-shadow;
-
 $accordion-icon-transform: rotate(180deg);
-$accordion-icon-transition: transform 320ms cubic-bezier(0.12, 0, 0.38, 0);
 $accordion-button-icon: url("../img/svg/ui_icons/accordion-button-icon.svg");
 $accordion-button-active-icon: url("../img/svg/ui_icons/accordion-button-icon.svg");
-$transition-collapse: height 400ms ease-in-out;
+$accordion-icon-width: $h3-font-size;
+$accordion-body-padding-y: step(5);
+
+// Every duration and curve on the site is one of the three motion tokens.
+// These SCSS values are the same numbers, written out because Bootstrap
+// interpolates them into its own transition shorthands at build time and
+// cannot read a custom property here.
+$btn-transition:
+  background 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+  color 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+  opacity 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+$accordion-icon-transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+$transition-collapse: height 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 $accordion-transition:
   $btn-transition,
-  border-radius 400ms ease-in-out;
+  border-radius 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 
-$accordion-icon-width: $h3-font-size;
-
-$accordion-body-padding-y: map-get($spacers, 4);
-
-// -------------------------------------
-// Feature Flags
-// -------------------------------------
+// ────────────────────────────────────────────────────────────────────────────
+// 11. FEATURE FLAGS
+// ────────────────────────────────────────────────────────────────────────────
 
 $enable-negative-margins: true;
 $enable-transitions: true;
 $enable-rfs: false;
 
-// -------------------------------------
-// Import Bootstrap and Custom Styles
-// -------------------------------------
+// ────────────────────────────────────────────────────────────────────────────
 
 @import "bootstrap/variables";
 @import "bootstrap/bootstrap";

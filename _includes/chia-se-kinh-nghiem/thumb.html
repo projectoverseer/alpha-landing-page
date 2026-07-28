@@ -15,7 +15,7 @@
 {%- assign kt_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: include.name -%}
 {%- capture kt_srcset_avif %}{% if kt_img.sm %}{{ kt_base }}-672.avif 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.avif {{ kt_img.w }}w{% endcapture -%}
 {%- capture kt_srcset_jpg %}{% if kt_img.sm %}{{ kt_base }}-672.jpg 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.jpg {{ kt_img.w }}w{% endcapture -%}
-{%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 2.5rem), 632px" -%}
+{%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 3rem), 624px" -%}
 <span class="kt-feed-thumb">
   <picture>
     <source

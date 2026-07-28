@@ -1,0 +1,225 @@
+// ════════════════════════════════════════════════════════════════════════════
+// QUY CỦ — the rules both Alpha products obey
+// Full reasoning: design/08-quy-cu.md
+// ════════════════════════════════════════════════════════════════════════════
+//
+// The site is two products with two design languages: the marketing site
+// («Đúng» — cool ink, Inter, dye accent) and the reading room (Chia sẻ kinh
+// nghiệm — warm paper, Literata, indigo accent). They must NOT look the same.
+//
+// But they must BEHAVE the same. A corner is cut the same way, a press answers
+// in the same time, a focus ring is the same shape, a tap target is the same
+// size — because those are not taste, they are physics, and a reader who
+// crosses from one to the other should never feel the ground change under
+// them. "Consistency is beauty": the beauty is in what does not vary.
+//
+// So: this file holds the invariants. Colour, type and voice stay with each
+// product. Anything in here that a product needs to override must be a written
+// exception, not a quiet local value.
+//
+// Imported by BOTH css/main.scss and css/chiasekinhnghiem.scss.
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 1. SPACE — one 4px grid, one ladder
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Every margin, padding and gap on either product is a rung of this ladder.
+// The rungs are named by what they separate, not by a number, because a number
+// invites "well, 30 is between 24 and 32":
+//
+//   1  4px   hairline gaps — an icon from its label
+//   2  8px   inside a control
+//   3  12px  between two lines of one object (title → meta)
+//   4  16px  between two objects in a group (card → card)
+//   5  24px  between two groups
+//   6  32px  a component's own padding
+//   7  40px  ·
+//   8  48px  between blocks in a page
+//   9  64px  between page regions
+//   10 96px  section rhythm, comfortable
+//   11 128px section rhythm, generous
+//
+// 4/8/12/16 are the fine steps; 24/32/40/48 the component steps; 64/96/128 the
+// page steps. Nothing between rungs. If a value needs to sit between two rungs
+// the layout is wrong, not the ladder.
+$step: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 2rem,
+  7: 2.5rem,
+  8: 3rem,
+  9: 4rem,
+  10: 6rem,
+  11: 8rem,
+);
+
+@function step($k) {
+  @return map-get($step, $k);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 2. SHAPE — the corner, and why it is CSS now
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// A circular border-radius joins the straight edge with a curvature jump (0 to
+// 1/r at the tangent point) and the eye reads that point as "here the corner
+// starts". A superellipse with n > 2 meets the edge at zero curvature, so the
+// bend fades in and nothing marks where it begins. That is the whole argument,
+// and it is Absolute Neutrality in one shape: 98% of readers never see it, and
+// they would feel the page get harder if it went.
+//
+// DEPTH IS THE INVARIANT. What registers as "how rounded" is the 45° depth of
+// the corner cut:
+//
+//     depth(r, n) = r · √2 · (1 − 2^(−1/n))
+//
+// so a superellipse needs its radius grown by
+//
+//     s(n) = (1 − 2^(−1/2)) / (1 − 2^(−1/n))
+//
+// to sit at the same depth as the circle of radius r. At n = 4 — the squircle
+// proper, x⁴ + y⁴ = r⁴, and what `corner-shape: superellipse(2)` means, since
+// the argument is log₂(n) — that scale is 1.8409.
+//
+// THIS USED TO BE A SCRIPT (js/squircle.js, deleted 2026-07-28). It swept the
+// whole document with getComputedStyle, kept a MutationObserver on
+// documentElement, a ResizeObserver on constrained elements, and wrote inline
+// !important styles over the stylesheet — 16 KB of main-thread work on every
+// page, on phones, to produce values that were knowable at authoring time.
+// Four fifths of our readers are on a phone. A design detail that costs them
+// scroll frames is not neutral, whatever it looks like.
+//
+// The one thing the script did that CSS cannot is fit the exponent to elements
+// with no room for the full curve (a 44px-tall button cannot hold a 22px
+// corner). That case is handled here by knowing the sizes: every call site
+// below has been checked, and where the depth-matched radius would pass half
+// the shorter side the browser's own proportional shrink (CSS Backgrounds
+// §5.5) lands within a fraction of a pixel of what the script computed. The
+// script was solving at runtime a problem with eleven known answers.
+//
+// Browsers without `corner-shape` (everything before Chromium 139, all of iOS
+// today) get the authored circular radius and nothing else changes — which is
+// exactly what they got before.
+$squircle-scale: 1.8409;
+
+// Five radii, and each one is bound to a KIND of object rather than a size, so
+// the question "which radius?" is answered by "what is it?" and never by taste.
+// The main site had nine rungs of which four were used; the hub had one value
+// written out four times. This is the whole vocabulary for both.
+$r-1: 4px; // flags, code, tiny chips
+$r-2: 8px; // inputs, menus, small controls, the hub's cards and buttons
+$r-3: 12px; // buttons
+$r-4: 16px; // cards, images, accordion
+$r-5: 24px; // portraits, large panels
+
+@mixin squircle($r) {
+  border-radius: $r;
+
+  @supports (corner-shape: superellipse(2)) {
+    border-radius: $r * $squircle-scale;
+    corner-shape: superellipse(2);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 3. TOUCH — one tap target
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// 44px. Not "roughly 44" and not "44 unless it looks big": the size a thumb
+// actually hits, on both products, for every control. Where the visible shape
+// must be smaller than that (a quiet text link acting as a button), the target
+// is grown with padding and pulled back with equal negative margin, so the
+// rhythm is untouched and the thumb still wins.
+//
+// This is accessibility-first read literally: the user "có thể là một người
+// công nhân" — someone whose hands are not clean, not steady, and not free.
+$tap: 2.75rem;
+
+@mixin tap-target($visible-h: null) {
+  min-height: $tap;
+
+  @if $visible-h {
+    // The shape stays $visible-h; the target grows around it and the extra is
+    // pulled back so nothing below moves.
+    $pad: ($tap - $visible-h) * 0.5;
+    padding-top: $pad;
+    padding-bottom: $pad;
+    margin-top: -$pad;
+    margin-bottom: -$pad;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 4. MOTION — one curve, three durations
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Before this file the site carried ten easing curves between the two
+// stylesheets: cubic-bezier(.2,.8,.2,1), (.2,.6,.2,1), (.4,0,.6,1),
+// (.28,.11,.32,1), (.12,0,.38,0), ease, ease-in-out, linear, and durations of
+// 100/120/160/180/200/240/280/300/320/400/1100ms. No reader could name one of
+// them, and every one of them was somebody's afternoon.
+//
+// One curve. It is a plain decelerate — fast to leave, slow to arrive, the way
+// a real object with mass behaves — and deliberately not a signature. Three
+// durations, chosen by what the motion is FOR:
+//
+//   --t-1  120ms  the answer to a finger: press, tap, colour flip
+//   --t-2  200ms  a state changing: hover, fade, a mark swapping
+//   --t-3  320ms  a surface arriving: menu, collapse, sheet
+//
+// Nothing moves that a reader did not ask for. Nothing loops. Nothing plays on
+// load. Every transition here is a REPLY.
+@mixin motion-tokens {
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-1: 120ms;
+  --t-2: 200ms;
+  --t-3: 320ms;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 5. FOCUS — one ring, and it adapts to its surface
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Measured, because this was a real failure. The old ring was #0071e3 at every
+// scroll position, and against the hero scrim it lands at 2.89:1 — under the
+// 3:1 that WCAG 2.2 SC 1.4.11 requires of a focus indicator. The control it
+// was failing on is the hero's primary call to action: the single most
+// important button on a site whose entire job is to be contacted. A keyboard
+// user could not see where they were.
+//
+// No single colour clears 3:1 on both a white page and an ink photograph — the
+// brand blue is 5.57:1 on white and 2.43:1 on the scrim; white is 13.55:1 on
+// the scrim and invisible on the page. So the ring is a custom property and
+// dark surfaces re-declare it. One rule, one token, correct everywhere,
+// nothing to remember at the call site.
+//
+//   light surfaces  → the product's interactive colour (blue / indigo)
+//   dark surfaces   → white
+//
+// 3px, offset 2px: thick enough to see at arm's length, offset so it reads as
+// a ring around the shape rather than a new border on it.
+@mixin focus-ring {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 6. REDUCED MOTION — the same answer on both products
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// A reader who asks for less motion is asking about MOVEMENT, not about
+// feedback. So travel and scale go; colour and opacity changes stay, because
+// a control that answers nothing reads as broken, and "broken" is the one
+// thing this site cannot afford to feel like.
+//
+// Applied by each product to its own scope.
+@mixin reduced-motion-reset {
+  scroll-behavior: auto;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}

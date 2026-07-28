@@ -50,7 +50,6 @@ const hashed = (dir, stem, ext) =>
 if (!hashed('css', 'main', 'css')) errors.push('missing fingerprinted css/main.<hash>.css');
 if (!hashed('css', 'chiasekinhnghiem', 'css')) errors.push('missing fingerprinted css/chiasekinhnghiem.<hash>.css');
 if (!hashed('js', 'bundle', 'js')) errors.push('missing fingerprinted js/bundle.<hash>.js');
-if (!hashed('js', 'squircle', 'js')) errors.push('missing fingerprinted js/squircle.<hash>.js');
 if (!hashed('js', 'kt-lightbox', 'js')) errors.push('missing fingerprinted js/kt-lightbox.<hash>.js');
 if (!hashed('js', 'kt-topbar', 'js')) errors.push('missing fingerprinted js/kt-topbar.<hash>.js');
 
@@ -159,6 +158,42 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
   if (!css.includes('font-variant-alternates')) {
     errors.push(`css/${file}: @font-feature-values present but nothing uses it`);
+  }
+}
+
+// ---- the superellipse corner survived minification ----
+//
+// Same shape of failure as the @font-feature-values bug above, and the same
+// reason it needs a gate: js/squircle.js was deleted 2026-07-28 and the corner
+// is now four lines of CSS inside `@supports (corner-shape: superellipse(2))`.
+// If a future minifier does not understand that at-rule and drops it, or drops
+// the unknown `corner-shape` property, every corner on both products quietly
+// reverts to a circular arc. No console error, no layout shift, no broken page
+// — just the design detail the whole thing was for, gone. So assert the block
+// is there AND that a scaled radius came with it (the depth match is the point;
+// `corner-shape` alone with the authored radius would be a shallower corner).
+for (const stem of ['main', 'chiasekinhnghiem']) {
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith(`${stem}.`) && f.endsWith('.css'),
+  );
+  if (!file) continue;
+  const css = readFileSync(join(SITE, 'css', file), 'utf8');
+
+  // The condition holds a function call, so its own parentheses nest:
+  // `@supports (corner-shape:superellipse(2)){`. Match up to the block's brace
+  // rather than to the first `)`, which lands inside superellipse().
+  const blocks = css.match(/@supports\s*\([^{]*corner-shape[^{]*\{/g) || [];
+  if (!blocks.length) {
+    errors.push(`css/${file}: no @supports (corner-shape) block — the squircle corner was dropped`);
+    continue;
+  }
+  if (!/corner-shape\s*:\s*superellipse\(2\)/.test(css)) {
+    errors.push(`css/${file}: @supports (corner-shape) present but nothing sets superellipse(2)`);
+  }
+  // 8 × 1.8409 = 14.7272, 12 × = 22.0908, 16 × = 29.4544. A whole-pixel radius
+  // inside the block means the depth match was lost somewhere.
+  if (!/border-radius:\s*\d+\.\d+px/.test(css)) {
+    errors.push(`css/${file}: no depth-matched radius (n.nnnn px) — squircle() lost its scale`);
   }
 }
 

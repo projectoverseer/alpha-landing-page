@@ -20,7 +20,7 @@
 {%- capture kt_srcset_avif %}{% if kt_img.sm %}{{ kt_base }}-672.avif 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.avif {{ kt_img.w }}w{% endcapture -%}
 {%- capture kt_srcset_jpg %}{% if kt_img.sm %}{{ kt_base }}-672.jpg 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.jpg {{ kt_img.w }}w{% endcapture -%}
 {%- comment -%} The reading column is 42rem wide with 1.25rem of padding each side. {%- endcomment -%}
-{%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 2.5rem), 632px" -%}
+{%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 3rem), 624px" -%}
 {%- comment -%}
   The data-zoom-* attributes carry the LARGEST derivative for the picture
   viewer (kt-lightbox.js): the reader who taps a figure gets the full-size

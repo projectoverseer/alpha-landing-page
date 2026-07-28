@@ -389,7 +389,7 @@
   as="image"
   fetchpriority="high"
   href="{{ kt_lcp_base }}-{{ kt_lcp_img.w }}.avif"
-  imagesizes="(max-width: 42rem) calc(100vw - 2.5rem), 632px"
+  imagesizes="(max-width: 42rem) calc(100vw - 3rem), 624px"
   imagesrcset="{% if kt_lcp_img.sm %}{{ kt_lcp_base }}-672.avif 672w, {% endif %}{{ kt_lcp_base }}-{{ kt_lcp_img.w }}.avif {{ kt_lcp_img.w }}w"
   rel="preload"
   type="image/avif"
@@ -406,17 +406,13 @@
 <link href="{{ site.url }}/css/chiasekinhnghiem.css" rel="stylesheet" />
 
 {%- comment -%}
-  The corner engine, the one piece of the main site's design language the hub
-  shares (design/07-alpha-design-language.md): it re-cuts every authored
-  border-radius as a superellipse. Deferred, and it touches nothing but the
-  corners of boxes that were already rounded — with JS off, or on a browser
-  without CSS `corner-shape`, the page is simply the same page with plain round
-  corners. That is why it is allowed on the reading pages at all (philosophy §2.6).
-
-  Same path in dev and in prod: the dev build serves the raw file, and
-  optimize-js.mjs minifies it in place, then fingerprint.mjs hashes the URL.
-{%- endcomment %}
-<script defer src="{{ site.url }}/js/squircle.js"></script>
+  js/squircle.js used to load here — 16 KB that swept every element on the page
+  with getComputedStyle, held a MutationObserver on the document and wrote
+  inline !important styles, all to compute corner radii that were knowable at
+  authoring time. It is gone (2026-07-28); the same superellipse is now four
+  lines of CSS in _sass/_quy-cu.scss §2. A reading page that loads no script to
+  draw a corner is a reading page, which is what philosophy §2.6 was asking for.
+{%- endcomment -%}
 {%- if kt_kind == "topic" or kt_kind == "series" or kt_kind == "author" %}
 {%- comment -%}
   The scroll title (philosophy §2.6): once the page's h1 scrolls under the

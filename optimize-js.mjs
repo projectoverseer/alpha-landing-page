@@ -15,7 +15,6 @@
  * Everything is concatenated in load order so that:
  *   1. bootstrap runs first  (defines window.bootstrap)
  *   2. custom.js runs second (uses bootstrap APIs)
- *   3. squircle.js runs last (independent; kept last as before)
  *
  * The output is a plain IIFE-compatible concatenation, not an ES module,
  * matching the original defer-loaded browser scripts. The dev build (non-prod)
@@ -53,21 +52,14 @@ const bootstrap = outputFiles[0].text;
 
 // 2. The site's own scripts (already in _site after the Jekyll build), minified.
 const { code: custom }   = transformSync(readFileSync(SITE_JS + 'custom.js',   'utf8'), { minify: true });
-const { code: squircle } = transformSync(readFileSync(SITE_JS + 'squircle.js', 'utf8'), { minify: true });
 
 // Separate blocks with a newline so one block's last token can't collide with
 // the next block's first token.
-writeFileSync(DEST, bootstrap + '\n' + custom + '\n' + squircle);
+writeFileSync(DEST, bootstrap + '\n' + custom);
 
-// squircle.js survives as a file of its own, minified in place: the Chia sẻ kinh
-// nghiêm hub carries none of the main site's Bootstrap or custom.js, so it loads
-// the corner engine on its own (see _includes/chia-se-kinh-nghiem/head.html) and
-// the path is the same one the dev build already serves. The main site never
-// requests it — its copy is inlined in the bundle above.
-writeFileSync(SITE_JS + 'squircle.js', squircle);
 
-// kt-lightbox.js is the hub's picture viewer, loaded on article pages only —
-// same treatment as squircle: minified in place, fingerprinted afterwards.
+// kt-lightbox.js is the hub's picture viewer, loaded on article pages only:
+// minified in place, fingerprinted afterwards.
 const { code: lightbox } = transformSync(readFileSync(SITE_JS + 'kt-lightbox.js', 'utf8'), { minify: true });
 writeFileSync(SITE_JS + 'kt-lightbox.js', lightbox);
 
@@ -83,7 +75,6 @@ for (const f of ['bootstrap.bundle.min.js', 'custom.js']) {
 }
 
 const kb = (readFileSync(DEST).length / 1024).toFixed(1);
-const sq = (readFileSync(SITE_JS + 'squircle.js').length / 1024).toFixed(1);
 const lb = (readFileSync(SITE_JS + 'kt-lightbox.js').length / 1024).toFixed(1);
 const tb = (readFileSync(SITE_JS + 'kt-topbar.js').length / 1024).toFixed(1);
-console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + squircle.js (${sq} KB, hub) + kt-lightbox.js (${lb} KB, hub articles) + kt-topbar.js (${tb} KB, hub subpages)`);
+console.log(`  optimize:js  → _site/js/bundle.js  (${kb} KB, slim Bootstrap) + kt-lightbox.js (${lb} KB, hub articles) + kt-topbar.js (${tb} KB, hub subpages)`);
