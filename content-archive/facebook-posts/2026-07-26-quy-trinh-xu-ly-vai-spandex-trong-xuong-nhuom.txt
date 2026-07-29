@@ -1,0 +1,38 @@
+Phan Đức Tuấn Anh 26/7/2026
+QUY TRÌNH XỬ LÝ VẢI SPANDEX TRONG XƯỞNG NHUỘM
+Bài viết này dành cho những người trong ngành nhưng không là kỹ thuật nhuộm hoặc chưa có dịp tham gia làm hàng có spandex. Anh chị em đã làm tốt mặt hàng này xin bỏ qua.
+Vải chứa Spandex là phân khúc lợi nhuận cao nhưng rủi ro xảy ra lỗi trong quá trình gia công là rất lớn.
+Dưới đây là 5 bước xử lý chuẩn áp dụng cho cả dệt thoi và dệt kim.
+BƯỚC 1 - XẢ ỨNG SUẤT VÀ PHÁ GÃY NẾP (RELAXATION)
+Sợi Spandex sau khi dệt luôn ở trạng thái bị kéo căng cưỡng bức. Bắt buộc phải giải phóng ứng suất trước khi lên nhiệt.
+Vải sau khi dệt nên qua công đoạn này càng sớm càng tốt.
+Dệt thoi:
+Xả cuộn vải mộc, thả lỏng tự nhiên 12-24 giờ rồi đưa qua công đoạn rũ hồ.
+Dệt kim tròn dạng ống:
+Cho vải chạy qua máy phá gãy (Tubular Anti Creasing. Hình đính kèm là máy phá gãy do công ty Đại Phước của Việt Nam sản xuất). Nước nóng 70-90°C làm mềm sợi Spandex để vải co rút tự nhiên. Quả phao nổi bên trong lòng ống nong tròn 360°, phá gãy và xóa hoàn toàn các nếp gấp biên dọc hông ống vải, tránh lằn gãy vĩnh viễn.
+BƯỚC 2 - RŨ HỒ VÀ TẨY DẦU SILICONE (SCOURING)
+Sợi Spandex bắt buộc mang theo 2-5% dầu Silicone bôi trơn từ nhà máy kéo sợi. Lớp dầu này nếu không làm sạch sẽ cản trở thuốc nhuộm, gây đốm màu và sọc vải.
+Dệt thoi:
+Rũ sạch hồ dệt (Acrylic/PVA/tinh bột) kết hợp tẩy dầu bằng hóa chất nhũ hóa mạnh ở môi trường kiềm nhẹ pH 8-9.
+Nếu rũ hồ trên máy liên tục cần kiểm tra lượng dầu silicone còn lại trên vải. Nếu không có điều kiện kiểm tra hàm lượng dầu silicone còn lại thì có thể tẩy dầu nhẹ lại trên máy nhuộm trước khi nhuộm để đảm bảo không còn tồn dư trên vài.
+Dệt kim:
+Tẩy dầu trực tiếp trong bể ngâm hoặc trên máy nhuộm Jet hoặc Overflow  bằng chất hoạt động bề mặt chuyên dụng cho Silicone ở 80-90°C.
+BƯỚC 3 - ĐỊNH HÌNH SƠ BỘ (PRESETTING) - KHÂU QUAN TRỌNG
+Mục đích: Đinh kích thước khổ vải, trọng lượng (g/m²) và chống tạo nếp gãy khi vải chịu áp lực trong máy nhuộm.
+Thông số: 180-190°C trong 45-60 giây trên máy Stenter.
+KHÔNG vượt quá 195°C hoặc quá 60 giây. Vượt ngưỡng này sợi Spandex bị lão hóa, giòn và mất hẳn độ co giãn. Vải cũng có nguy cơ ố vàng do dầu Silicone và phụ gia bị phân hủy một phần, tạo vết bẩn bên trong sợi không thể loại bỏ ở các bước sau.
+BƯỚC 4 - NHUỘM (DYEING)
+Lực căng: Điều tiết ấp lực bơm, tốc độ guồng và sử dụng cỡ chén phù hợp để giảm thiểu sức căng.
+Hạ nhiệt: Bắt buộc hạ nhiệt từ từ, tốc độ không quá 1.5°C/phút từ nhiệt độ nhuộm xuống dưới 80°C. Không xả nước lạnh đột ngột vì sốc nhiệt làm Spandex co rút đột ngột tạo nếp gãy không thể phục hồi.
+BƯỚC 5 - ĐỊNH HÌNH HOÀN TẤT (FINAL SETTING)
+Nhiệt độ: 160-170°C trong 30 giây, luôn thấp hơn nhiệt độ căng sơ bộ 10-15°C.
+Mục đích: Giữ độ mềm mại (handfeel), bảo toàn độ co giãn còn lại và kiểm soát độ co sau giặt đạt tiêu chuẩn xuất xưởng.
+CÁC ĐIỂM QUAN TRỌNG CẦN LÀM KỸ
+1) Nhiệt độ làm giảm tính đàn hồi của spandex nên cần tránh nhiệt độ cao và thời gian dài.
+2) Không nên lưu kho lâu dạng cuộn vải mới dệt ra. Cần phối hợp tốt kế hoạch dệt và nhuộm để giảm thiểu thời gian lưu kho.
+3) Thông số căng sơ bộ cần thử nghiệm kỹ để khi căng thành phẩm không phải kéo khổ quá gây đứt spandex.
+4) Sử dụng chất tẩy dầu có chức năng tẩy dầu silicone hiệu quả trong công đoạn .
+Trên đây là quy trình cơ bản, nhiều nhà máy có những vận dụng khác nhau tùy điều kiện máy móc, kiểu dệt, tỉ lệ spandex ... Ví dụ: Vải dệt kim có spandex dệt ra đem xẻ khổ và căng sơ bộ ngay rồi vào máy nhuộm...
+Phan Đức Tuấn Anh - Founder
+Công ty TNHH Phát Triển Phần Mềm Alpha: phát triển phần mềm chuyên cho ngành Dệt - Nhuộm.
+Website: https://www.alphasoftwaregroup.com/

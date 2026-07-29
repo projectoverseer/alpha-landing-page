@@ -66,12 +66,25 @@ permalink: /sitemap.xml
     <url>
         <loc>{{ site.url }}{{ post.url }}</loc>
         <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
-{%- if post.image %}
-{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[post.image] %}
+{%- comment -%}
+  The hero; a hero-less post lists its card thumbnail(s) instead, so every
+  post's picture is findable in Google Images.
+{%- endcomment -%}
+{%- if post.image -%}
+{%- assign kt_simgs = post.image | split: "|" -%}
+{%- elsif post.thumb.first -%}
+{%- assign kt_simgs = post.thumb -%}
+{%- elsif post.thumb -%}
+{%- assign kt_simgs = post.thumb | split: "|" -%}
+{%- else -%}
+{%- assign kt_simgs = "" | split: "|" -%}
+{%- endif -%}
+{%- for kt_sim in kt_simgs %}
+{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[kt_sim] %}
         <image:image>
-            <image:loc>{{ site.url }}/img/chia-se-kinh-nghiem/{{ post.image }}-{{ kt_img.w }}.jpg</image:loc>
+            <image:loc>{{ site.url }}/img/chia-se-kinh-nghiem/{{ kt_sim }}-{{ kt_img.w }}.jpg</image:loc>
         </image:image>
-{%- endif %}
+{%- endfor %}
     </url>
 {%- endfor %}
 </urlset>

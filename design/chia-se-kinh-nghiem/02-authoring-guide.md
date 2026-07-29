@@ -77,23 +77,36 @@ caption) is ever repeated in a post.
    diacritics, describing the picture (`cua-do-aperture-may-quang-pho`), not
    `IMG_2027`.
 3. **Register it** in the data file with `w`/`h` (the largest derivative), `sm`
-   (is there a 672 variant?), `alt` and `caption`. Alt = what the picture *says*
-   to someone who cannot see it. Never keyword stuffing — Google demotes it and
-   it fails the reader anyway.
+   (is there a 672 variant?), `fx`/`fy`, `alt` and `caption`. Alt = what the
+   picture *says* to someone who cannot see it. Never keyword stuffing — Google
+   demotes it and it fails the reader anyway. `fx`/`fy` are the image's
+   attention centre: run `node image-focus.mjs` (needs `npm i --no-save sharp`)
+   and paste the two numbers it prints — every cropped rendering of the picture
+   centres on that point (add `--previews <dir>` to eyeball the crops first).
 
 Then use it:
 
-- **Thumbnail** — `image: <slug>` in front matter. It becomes the feed card
-  image (16:9 crop, above the description), the article hero (uncropped, between
-  the standfirst and the byline), the `og:image`, the schema `image`, the
-  preloaded LCP element, and an entry in the image sitemap. A post with no
-  `image:` degrades cleanly: no card image, and `og:image` falls back to the
-  company card.
+- **Hero** — `image: <slug>` in front matter: the article hero (uncropped,
+  between the standfirst and the byline), the `og:image`, the schema `image`,
+  the preloaded LCP element, the image-sitemap entry — and, unless `thumb:`
+  says otherwise, the feed card image.
+- **Card face** — `thumb: <slug>` when the card picture and the hero differ,
+  or when a post has a card-worthy photo but nothing hero-sized (then `thumb:`
+  alone, no `image:` — the card, share preview and image sitemap use it; the
+  article top stays clean). A YAML **list of 2–3 slugs** tiles the card the
+  way Facebook does: two squares side by side, or one wide over two squares.
 - **In the body** — `{% include chia-se-kinh-nghiem/figure.html name="<slug>" %}`
   at the paragraph the picture teaches, never as decoration.
 
-A picture used as the thumbnail is **not** repeated in the body — the hero
-already showed it.
+The feed shows the card picture at its **own aspect ratio** inside Facebook's
+display window (1.91:1 … 4:5); outside the window it is cropped to the nearest
+bound, centred on `fx`/`fy`. A post with neither `image:` nor `thumb:` degrades
+cleanly — but a photo on every card is the house preference: the reader should
+know what a post is about before reading a word of it.
+
+A picture used as the **hero** is not repeated in the body — the hero already
+showed it. A `thumb:`-only picture MAY be a body figure: the card showed a
+crop, the body shows the picture where it teaches.
 
 ## 2c. Author avatars — how to crop one
 

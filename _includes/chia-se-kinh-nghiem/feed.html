@@ -22,8 +22,14 @@
   <li class="kt-feed-item{% if include.defer and forloop.index > 6 %} is-deferred{% endif %}">
     <a class="kt-feed-link" href="{{ site.url }}{{ post.url }}">
       <span class="kt-feed-title">{{ post.title }}</span>
-      {%- if post.image %}
-      {% include chia-se-kinh-nghiem/thumb.html name=post.image eager=forloop.first %}
+      {%- comment -%}
+        The card face: `thumb` (a slug, or a list for the tiled card) wins over
+        the hero, so a post whose hero-worthy picture and card-worthy picture
+        differ — or that has no hero at all — still fronts the feed with a photo.
+      {%- endcomment -%}
+      {%- assign kt_thumb = post.thumb | default: post.image -%}
+      {%- if kt_thumb %}
+      {% include chia-se-kinh-nghiem/thumb.html name=kt_thumb eager=forloop.first %}
       {%- endif %}
       <span class="kt-feed-desc">{{ post.description }}</span>
     </a>

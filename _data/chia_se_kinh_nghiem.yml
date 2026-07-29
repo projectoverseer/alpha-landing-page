@@ -36,6 +36,9 @@ series:
   ly-thuyet-mau-sac:
     label: "Lý thuyết màu sắc trong ngành nhuộm"
     desc: "Ánh sáng, nguyên lý máy quang phổ, các giá trị L*a*b* và quy trình hiệu chuẩn – nền tảng để so màu chuẩn giữa nhà máy và khách hàng."
+  spandex:
+    label: "Spandex trong dệt nhuộm"
+    desc: "Từ công nghệ chế tạo sợi spandex, cách đưa sợi vào dệt thoi và dệt kim, đến quy trình 5 bước xử lý trong xưởng nhuộm – mặt hàng lợi nhuận cao nhưng rủi ro lỗi gia công rất lớn."
 
 # Image library for the hub. One entry per picture, keyed by its file slug in
 # img/chia-se-kinh-nghiem/ — the alt text, caption and intrinsic size live here
@@ -45,6 +48,10 @@ series:
 #
 #   w/h  = the LARGEST derivative that ships (also what <img> width/height say)
 #   sm   = a 672px derivative exists too, so the srcset has something to choose
+#   fx/fy = the image's attention centre, as percent of width/height — computed
+#          by image-focus.mjs (sharp's saliency strategy, the static-site
+#          analog of how Facebook centres a crop). Every cropped rendering
+#          (feed clamp, split cell, read-next row) keeps this point in frame.
 #   alt  = what the picture says, for a reader who cannot see it (never keyword
 #          stuffing — Google penalises that, and it fails the reader anyway)
 images:
@@ -52,89 +59,135 @@ images:
     w: 940
     h: 788
     sm: true
+    fx: 62
+    fy: 78
     alt: "Sơ đồ OEE của nhà máy nhuộm bằng 60%, tách theo ba thành phần sẵn sàng, hiệu suất và chất lượng: 80 mẻ lý thuyết chỉ còn 48 mẻ thực tế"
     caption: "Xưởng 20 máy: 80 mẻ lý thuyết mỗi ngày, 48 mẻ đạt chuẩn thực tế – OEE 60%."
   cho-may-nhuom-khoi-dong-mat-thoi-gian:
     w: 1264
     h: 843
     sm: true
+    fx: 28
+    fy: 13
     alt: "Quản lý xưởng nhuộm ôm đầu sốt ruột đứng chờ máy nhuộm khởi động, với lời thoại “Ôi! Máy bao giờ mới chạy được!”"
     caption: "Thời gian chờ lò hơi và lò dầu đạt nhiệt không nằm trong sổ sách nào – nhưng nó ăn hàng trăm giờ máy mỗi năm."
   so-hoa-thoi-gian-ngung-may-4-buoc:
     w: 1024
     h: 1536
     sm: true
+    fx: 10
+    fy: 13
     alt: "Infographic bốn bước số hóa thời gian ngưng máy để cải thiện OEE: lập danh mục lý do ngưng, tạo bảng ghi nhận bốn thông tin, đo ba tuần đầu lấy mức nền, rồi đặt mục tiêu cải thiện"
     caption: "Bốn bước số hóa thời gian ngưng máy, kèm công thức chỉ số sẵn sàng."
   so-hoa-hieu-suat-toc-do-oee:
     w: 1023
     h: 1537
     sm: true
+    fx: 19
+    fy: 22
     alt: "Infographic hiệu suất tốc độ – thành phần thứ hai của OEE: công thức, ví dụ 100 giờ chuẩn trên 120 giờ thực tế bằng 83%, các nguyên nhân khiến mẻ chạy chậm và hai bảng Excel để đo"
     caption: "Hiệu suất tốc độ = tổng thời gian chuẩn của các mẻ đã hoàn thành ÷ tổng thời gian máy chạy thực tế."
   rft-nhuom-dat-tu-lan-dau:
     w: 1264
     h: 843
     sm: true
+    fx: 81
+    fy: 59
     alt: "Hai công nhân xưởng nhuộm vỗ tay trước bảng chỉ số RFT – nhuộm đạt từ lần đầu: mục tiêu 80%, đạt được 81%"
     caption: "RFT – tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu – là con số đáng treo lên tường xưởng."
   pho-anh-sang-nhin-thay-380-700nm:
     w: 846
     h: 342
     sm: true
+    fx: 90
+    fy: 25
     alt: "Phổ ánh sáng nhìn thấy trải từ 380nm đến 700nm: tím, chàm, lam, lục, vàng, cam, đỏ – bước sóng ngắn mang năng lượng cao, bước sóng dài mang năng lượng thấp"
     caption: "Ánh sáng trắng là tập hợp các bước sóng từ 380nm đến 700nm."
   bang-nguon-sang-chuan-cie:
     w: 1117
     h: 770
     sm: true
+    fx: 53
+    fy: 69
     alt: "Bảng các nguồn sáng chuẩn CIE thường dùng trong ngành nhuộm và nhiệt độ màu của chúng: D65 6500K, D50 5000K, D55 5500K, D75 7500K, A 2856K, TL84/F11 4000K, CWF/F2 4200K, TL83/F12 3000K và UV-A"
     caption: "Một số nguồn sáng chuẩn CIE mà khách hàng thường chỉ định để so màu."
   bo-kit-munsell-hue-test:
     w: 766
     h: 369
     sm: false
+    fx: 12
+    fy: 53
     alt: "Bộ kit Munsell Hue Test: 85 nắp màu xếp thành bốn dãy chuyển sắc liên tục, dùng để kiểm tra khả năng phân biệt sắc màu của mắt người so màu"
     caption: "Bộ kit Munsell Hue Test – dùng để kiểm tra mắt của người làm công tác so màu."
   so-do-nguyen-ly-may-quang-pho-do-mau:
     w: 1344
     h: 1028
     sm: true
+    fx: 28
+    fy: 50
     alt: "Sơ đồ nguyên lý máy quang phổ đo màu: nguồn sáng chiếu qua cửa đo vào mẫu vải, các tia phản xạ đi vào cảm biến quang, dòng điện phát sinh được tính thành các giá trị L, a, b, c, h"
     caption: "Ánh sáng chiếu vào mẫu, cảm biến quang đo tia phản xạ, phần mềm tính ra L*a*b*."
   cong-thuc-do-lech-mau-delta-e-cmc:
     w: 1344
     h: 733
     sm: true
+    fx: 25
+    fy: 37
     alt: "So sánh các công thức độ lệch màu trong ngành nhuộm: ΔE* theo hệ L*a*b* và hệ L*C*h*, đặt cạnh công thức ΔE CMC có hàm trọng số – ngành dệt may nên chọn ΔE CMC tỷ lệ 2:1"
     caption: "ΔE* coi ba thành phần lệch màu quan trọng như nhau; ΔE CMC (2:1) mới bám sát cảm nhận của mắt người."
   cua-do-aperture-may-quang-pho:
     w: 1312
     h: 425
     sm: true
+    fx: 41
+    fy: 10
     alt: "Bốn cửa đo (aperture) của máy quang phổ đo màu xếp cạnh nhau: USAV 6,6mm, SAV 9mm, MAV 20mm và LAV 30mm"
     caption: "Hiệu chuẩn ở cửa đo nào thì phải đo mẫu ở đúng cửa đo đó."
   man-hinh-hieu-chuan-may-do-mau:
     w: 1038
     h: 850
     sm: true
+    fx: 53
+    fy: 90
     alt: "Màn hình hiệu chuẩn của phần mềm đo màu với các nhóm thiết lập Specular, Aperture, UV-Filter, nút Calibrate và chu kỳ hiệu chuẩn 8 giờ"
     caption: "Specular, Aperture và UV Filter đều được chốt ngay trên màn hình hiệu chuẩn – chọn sai ở đây là sai toàn bộ kết quả đo về sau."
   nhuom-phan-tan-den-bac-mau-lignosulfonate:
     w: 1344
     h: 733
     sm: true
+    fx: 38
+    fy: 12
     alt: "So sánh nhuộm phân tán màu đen ở lab và trên máy lớn: cốc lab hở có oxy kìm hãm phản ứng khử nên ra màu chuẩn, còn máy lớn thiếu oxy khiến lignosulfonate phá hủy thuốc nhuộm azo làm bạc màu"
     caption: "Cùng một công thức: cốc lab có oxy nên màu chuẩn; máy lớn thiếu oxy nên lignosulfonate khử phá thuốc nhuộm."
   test-dich-chuyen-mau-leveling:
     w: 1024
     h: 1536
     sm: true
+    fx: 10
+    fy: 59
     alt: "Báo cáo thử nghiệm khả năng làm dịch chuyển màu (leveling) của hai chất đều màu: mẫu vải gốc màu đậm đặt cạnh hai miếng vải trắng dây màu từ cốc 1 và cốc 2"
     caption: "Test leveling: vải trắng dây màu càng đậm thì chất đều màu càng mạnh về cơ chế dịch chuyển màu."
   test-retarding-chat-deu-mau:
     w: 1024
     h: 1024
     sm: true
+    fx: 90
+    fy: 63
     alt: "Báo cáo thử nghiệm mức độ làm chậm (retarding) của hai chất đều màu: mẫu đối chứng đậm màu nhất, mẫu A và mẫu B nhạt dần"
     caption: "Test retarding: lấy mẫu ở 115°C – mẫu nào nhạt hơn thì chất đều màu đó làm chậm tốc độ ăn màu tốt hơn."
+  cau-truc-phan-tu-soi-spandex-co-gian:
+    w: 963
+    h: 426
+    sm: true
+    fx: 38
+    fy: 81
+    alt: "Sơ đồ ba trạng thái của sợi spandex: lúc nghỉ, đoạn mềm uốn lượn xen kẽ các đoạn cứng; khi vải bị kéo, đoạn mềm duỗi thẳng ra cho sợi giãn 500–700% so với chiều dài ban đầu; khi thả ra, đoạn cứng kéo sợi về lại hình dạng cũ"
+    caption: "Đoạn mềm giãn ra, đoạn cứng kéo sợi trở về – cấu trúc xen kẽ đó là toàn bộ tính đàn hồi của spandex."
+  may-pha-gay-vai-det-kim-dang-ong:
+    w: 400
+    h: 394
+    sm: false
+    fx: 47
+    fy: 16
+    alt: "Máy phá gãy vải dệt kim dạng ống: buồng nước nóng bằng thép, giàn trục dẫn vải phía trên và tủ điều khiển phía trước"
+    caption: "Máy phá gãy (tubular anti-creasing) do công ty Đại Phước của Việt Nam sản xuất."

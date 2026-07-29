@@ -54,14 +54,20 @@
 {%- assign kt_desc = kt_desc | strip_newlines | strip -%}
 
 {%- comment -%}
-  Social/preview picture. Articles show their own; the hub and the topic pages
-  fall back to the company card. Always the JPEG, never the AVIF — Facebook and
-  Zalo, where these posts actually get shared, cannot decode AVIF.
+  Social/preview picture. An article shows its own — the hero, or failing that
+  its card thumbnail (first of a tiled list), so a share always previews the
+  post's actual picture; the hub and the topic pages fall back to the company
+  card. Always the JPEG, never the AVIF — Facebook and Zalo, where these posts
+  actually get shared, cannot decode AVIF.
 {%- endcomment -%}
+{%- assign kt_img_name = page.image -%}
+{%- if kt_img_name == nil and page.thumb -%}
+  {%- if page.thumb.first -%}{%- assign kt_img_name = page.thumb.first -%}{%- else -%}{%- assign kt_img_name = page.thumb -%}{%- endif -%}
+{%- endif -%}
 {%- assign kt_img = nil -%}
-{%- if page.image -%}{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[page.image] -%}{%- endif -%}
+{%- if kt_img_name -%}{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[kt_img_name] -%}{%- endif -%}
 {%- if kt_img -%}
-  {%- assign kt_img_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: page.image -%}
+  {%- assign kt_img_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_img_name -%}
   {%- capture kt_og_image %}{{ kt_img_base }}-{{ kt_img.w }}.jpg{% endcapture -%}
 {%- else -%}
   {%- capture kt_og_image %}{{ site.url }}/img/logo/alpha-open-graph.png{% endcapture -%}
@@ -348,13 +354,17 @@
   },
   "blogPost": [
     {%- for post in site.posts %}
+    {%- assign kt_bp_img = post.image -%}
+    {%- if kt_bp_img == nil and post.thumb -%}
+      {%- if post.thumb.first -%}{%- assign kt_bp_img = post.thumb.first -%}{%- else -%}{%- assign kt_bp_img = post.thumb -%}{%- endif -%}
+    {%- endif %}
     {
       "@type": "BlogPosting",
       "headline": {{ post.title | jsonify }},
       "description": {{ post.description | strip_newlines | strip | jsonify }},
       "datePublished": "{{ post.date | date_to_xmlschema }}",
-      "url": "{{ site.url }}{{ post.url }}"{% if post.image %},
-      "image": "{{ site.url }}/img/chia-se-kinh-nghiem/{{ post.image }}-{{ site.data.chia_se_kinh_nghiem.images[post.image].w }}.jpg"{% endif %},
+      "url": "{{ site.url }}{{ post.url }}"{% if kt_bp_img %},
+      "image": "{{ site.url }}/img/chia-se-kinh-nghiem/{{ kt_bp_img }}-{{ site.data.chia_se_kinh_nghiem.images[kt_bp_img].w }}.jpg"{% endif %},
       "author": { "@type": "Person", "name": {{ site.data.chia_se_kinh_nghiem.author.name | jsonify }} }
     }{% unless forloop.last %},{% endunless %}
     {%- endfor %}
@@ -382,11 +392,17 @@
 {%- endcomment -%}
 {%- assign kt_lcp = nil -%}
 {%- if kt_kind == "article" -%}
+  {%- comment -%} The hero only — a thumb-only post renders no image up top. {%- endcomment -%}
   {%- assign kt_lcp = page.image -%}
-{%- elsif kt_kind == "topic" or kt_kind == "series" -%}
-  {%- assign kt_lcp = kt_posts.first.image -%}
 {%- else -%}
-  {%- assign kt_lcp = site.posts.first.image -%}
+  {%- if kt_kind == "topic" or kt_kind == "series" -%}
+    {%- assign kt_lcp_post = kt_posts.first -%}
+  {%- else -%}
+    {%- assign kt_lcp_post = site.posts.first -%}
+  {%- endif -%}
+  {%- comment -%} The feed's card face: thumb over hero, first of a tiled list. {%- endcomment -%}
+  {%- assign kt_lcp = kt_lcp_post.thumb | default: kt_lcp_post.image -%}
+  {%- if kt_lcp.first -%}{%- assign kt_lcp = kt_lcp.first -%}{%- endif -%}
 {%- endif -%}
 {%- if kt_lcp -%}
 {%- assign kt_lcp_img = site.data.chia_se_kinh_nghiem.images[kt_lcp] -%}

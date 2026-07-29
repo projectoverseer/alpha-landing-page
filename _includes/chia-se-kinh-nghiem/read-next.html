@@ -31,11 +31,17 @@
     {%- assign kt_rn_topic = site.data.chia_se_kinh_nghiem.topics[kt_rn_post.topic] -%}
   <li>
     <a class="kt-readnext-link" href="{{ site.url }}{{ kt_rn_post.url }}">
-      {%- if kt_rn_post.image -%}
-      {%- assign kt_rn_img = site.data.chia_se_kinh_nghiem.images[kt_rn_post.image] -%}
-      {%- assign kt_rn_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_rn_post.image -%}
+      {%- comment -%}
+        Same card face as the feed: thumb over hero (first of a tiled list) —
+        the row's crop centres on the picture's attention point via --kt-focus.
+      {%- endcomment -%}
+      {%- assign kt_rn_name = kt_rn_post.thumb | default: kt_rn_post.image -%}
+      {%- if kt_rn_name.first -%}{%- assign kt_rn_name = kt_rn_name.first -%}{%- endif -%}
+      {%- if kt_rn_name -%}
+      {%- assign kt_rn_img = site.data.chia_se_kinh_nghiem.images[kt_rn_name] -%}
+      {%- assign kt_rn_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_rn_name -%}
       {%- if kt_rn_img.sm -%}{%- assign kt_rn_wpx = 672 -%}{%- else -%}{%- assign kt_rn_wpx = kt_rn_img.w -%}{%- endif %}
-      <span class="kt-readnext-thumb">
+      <span class="kt-readnext-thumb"{% if kt_rn_img.fx %} style="--kt-focus: {{ kt_rn_img.fx }}% {{ kt_rn_img.fy }}%"{% endif %}>
         <picture>
           <source type="image/avif" srcset="{{ kt_rn_base }}-{{ kt_rn_wpx }}.avif" />
           <img

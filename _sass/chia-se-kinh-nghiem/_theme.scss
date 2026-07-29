@@ -727,10 +727,17 @@ body.kt {
 }
 
 // The post's picture, as a card image: below the title, above the description.
-// Cropped to 16:9 — a feed is for scanning, and the portrait infographics are
-// 1.5× taller than they are wide, so uncropped they would each eat a whole
-// screen. Anchored to the top so an infographic's headline (the part that earns
-// the click) survives the crop.
+// Shown Facebook's way (owner's call, 2026-07-29, replacing the uniform 16:9
+// crop): the picture keeps its OWN aspect ratio inside the 1.91:1 … 4:5
+// window — a feed of pictures in their own shapes reads as photographs, and
+// the reader knows what the post is about before the title. Outside the
+// window the template sets a clamp class and the picture is cropped to the
+// nearest bound, so a panorama cannot flatten into a slit and a tall
+// infographic cannot swallow a screen. Every crop centres on the image's
+// attention point — --kt-focus, fx/fy from the data file (image-focus.mjs,
+// sharp's saliency measure: the static-site analog of Facebook centring its
+// crops on a saliency model) — so the part of the picture that earns the
+// click survives the cut at any box ratio.
 // The border and background live on the SPAN, not the image, and the frame
 // clips the image so the crop stays inside its border.
 .kt-feed-thumb {
@@ -743,10 +750,45 @@ body.kt {
   img {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: auto;
     object-fit: cover;
-    object-position: center top;
+    object-position: var(--kt-focus, 50% 50%);
     transition: transform var(--t-3) var(--ease);
+  }
+
+  &.is-clamp-wide img {
+    aspect-ratio: 191 / 100;
+  }
+
+  &.is-clamp-tall img {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+// Two or three pictures share one card the way Facebook tiles them: 2 = two
+// squares side by side, 3 = one wide on top and two squares beneath. Each
+// tile crops to its cell around its own focus point; the 2px seams show the
+// frame's own ground, same as the border system's hairlines.
+.kt-thumb-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.kt-thumb-cell {
+  display: block;
+  overflow: hidden;
+
+  img {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.kt-thumb-split-3 .kt-thumb-cell:first-child {
+  grid-column: 1 / -1;
+
+  img {
+    aspect-ratio: 191 / 100;
   }
 }
 
@@ -1707,7 +1749,9 @@ body.kt-lightbox-open {
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
-    object-position: center top; // an infographic's headline survives the crop
+    // The row's crop centres on the picture's attention point, same fx/fy the
+    // feed uses (image-focus.mjs) — what earns the click survives the cut.
+    object-position: var(--kt-focus, 50% 50%);
     transition: transform var(--t-3) var(--ease);
   }
 }

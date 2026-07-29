@@ -1,22 +1,50 @@
 {%- comment -%}
-  The feed thumbnail — the same picture as the article's hero, but cropped to a
-  16:9 card (CSS does the crop) so a tall infographic cannot swallow the feed.
+  The feed thumbnail — the card face of a post, shown Facebook's way (owner's
+  call, 2026-07-29): the picture keeps its OWN aspect ratio as long as it falls
+  inside Facebook's display window, 1.91:1 (landscape) … 4:5 (portrait).
+  Outside the window it is cropped to the nearest bound — a panorama cannot
+  flatten into a slit, a tall infographic cannot swallow a screen — and the
+  crop is centred on the image's attention point (fx/fy in the data file,
+  measured by image-focus.mjs the way Facebook centres crops on saliency),
+  handed to CSS as --kt-focus → object-position. The CSS does the actual
+  cutting, so one pair of numbers serves every box the picture ever lands in.
+
+  Called with one name, or a list of up to three for a Facebook-style tiled
+  card (2 = two squares side by side; 3 = one wide on top, two squares below):
+
+    {% include chia-se-kinh-nghiem/thumb.html name="..." eager=true %}
+    {% include chia-se-kinh-nghiem/thumb.html name=post.thumb %}
 
   It sits INSIDE the feed item's <a>, so: no <figure>/<figcaption> here (a
   caption inside a link would be read out as part of the link text) and no alt
   text either — the link already carries the title and description, and an alt
   that repeats them is noise for a screen-reader user. Decorative-in-context,
   so alt="".
-
-    {% include chia-se-kinh-nghiem/thumb.html name="..." eager=true %}
 {%- endcomment -%}
-{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[include.name] -%}
+{%- if include.name.first -%}
+  {%- assign kt_names = include.name -%}
+{%- else -%}
+  {%- assign kt_names = include.name | split: "|" -%}
+{%- endif -%}
+{%- assign kt_count = kt_names.size | at_most: 3 -%}
+{%- if kt_count == 1 -%}
+{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[kt_names.first] -%}
 {%- if kt_img -%}
-{%- assign kt_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: include.name -%}
+{%- assign kt_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_names.first -%}
 {%- capture kt_srcset_avif %}{% if kt_img.sm %}{{ kt_base }}-672.avif 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.avif {{ kt_img.w }}w{% endcapture -%}
 {%- capture kt_srcset_jpg %}{% if kt_img.sm %}{{ kt_base }}-672.jpg 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.jpg {{ kt_img.w }}w{% endcapture -%}
 {%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 3rem), 624px" -%}
-<span class="kt-feed-thumb">
+{%- comment -%}
+  Integer window test: wider than 1.91:1 when 100w > 191h; taller than 4:5
+  when 100h > 125w. Inside the window the class stays off and the natural
+  width/height attributes below are the ratio the browser renders.
+{%- endcomment -%}
+{%- assign kt_clamp = "" -%}
+{%- assign kt_w100 = kt_img.w | times: 100 -%}{%- assign kt_h191 = kt_img.h | times: 191 -%}
+{%- assign kt_h100 = kt_img.h | times: 100 -%}{%- assign kt_w125 = kt_img.w | times: 125 -%}
+{%- if kt_w100 > kt_h191 -%}{%- assign kt_clamp = " is-clamp-wide" -%}{%- endif -%}
+{%- if kt_h100 > kt_w125 -%}{%- assign kt_clamp = " is-clamp-tall" -%}{%- endif -%}
+<span class="kt-feed-thumb{{ kt_clamp }}"{% if kt_img.fx %} style="--kt-focus: {{ kt_img.fx }}% {{ kt_img.fy }}%"{% endif %}>
   <picture>
     <source
       type="image/avif"
@@ -34,5 +62,46 @@
       {% if include.eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
     />
   </picture>
+</span>
+{%- endif -%}
+{%- else -%}
+<span class="kt-feed-thumb kt-thumb-split kt-thumb-split-{{ kt_count }}">
+  {%- for kt_name in kt_names limit: 3 -%}
+  {%- assign kt_img = site.data.chia_se_kinh_nghiem.images[kt_name] -%}
+  {%- if kt_img -%}
+  {%- assign kt_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_name -%}
+  {%- comment -%}
+    A half-width tile never renders wider than ~312px, so the 672 derivative
+    (when one exists) is always the winning candidate; the 3-up's full-width
+    top tile uses the same sizes as a single thumbnail.
+  {%- endcomment -%}
+  {%- if kt_count == 3 and forloop.first -%}
+    {%- assign kt_sizes = "(max-width: 42rem) calc(100vw - 3rem), 624px" -%}
+  {%- else -%}
+    {%- assign kt_sizes = "(max-width: 42rem) calc(50vw - 1.5rem), 311px" -%}
+  {%- endif -%}
+  {%- capture kt_srcset_avif %}{% if kt_img.sm %}{{ kt_base }}-672.avif 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.avif {{ kt_img.w }}w{% endcapture -%}
+  {%- capture kt_srcset_jpg %}{% if kt_img.sm %}{{ kt_base }}-672.jpg 672w, {% endif %}{{ kt_base }}-{{ kt_img.w }}.jpg {{ kt_img.w }}w{% endcapture -%}
+  <span class="kt-thumb-cell"{% if kt_img.fx %} style="--kt-focus: {{ kt_img.fx }}% {{ kt_img.fy }}%"{% endif %}>
+    <picture>
+      <source
+        type="image/avif"
+        srcset="{{ kt_srcset_avif }}"
+        sizes="{{ kt_sizes }}"
+      />
+      <img
+        src="{{ kt_base }}-{{ kt_img.w }}.jpg"
+        srcset="{{ kt_srcset_jpg }}"
+        sizes="{{ kt_sizes }}"
+        alt=""
+        width="{{ kt_img.w }}"
+        height="{{ kt_img.h }}"
+        decoding="async"
+        {% if include.eager and forloop.first %}fetchpriority="high"{% elsif include.eager %}{% else %}loading="lazy"{% endif %}
+      />
+    </picture>
+  </span>
+  {%- endif -%}
+  {%- endfor -%}
 </span>
 {%- endif -%}

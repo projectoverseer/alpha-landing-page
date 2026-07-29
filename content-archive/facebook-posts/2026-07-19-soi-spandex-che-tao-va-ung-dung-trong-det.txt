@@ -1,0 +1,29 @@
+Phan Đức Tuấn Anh 19/7/2026
+CÔNG NGHỆ CHẾ TẠO SỢI SPANDEX VÀ ỨNG DỤNG TRONG DỆT
+PHẦN 1 - QUY TRÌNH CHẾ TẠO SỢI SPANDEX
+Spandex được tạo ra qua 4 bước chính:
+BƯỚC 1 - PHẢN ỨNG TẠO POLYMER NỀN:
+Polyether (hoặc Polyester) chuỗi dài mềm mại phản ứng với Diisocyanate đoạn ngắn cứng cáp tạo thành hợp chất dạng keo (prepolymer). Cấu trúc xen kẽ "đoạn cứng, đoạn mềm" này chính là lý do Spandex có thể co giãn 500-700% mà không đứt.
+BƯỚC 2 - HÒA TAN:
+Keo polymer được hòa tan vào dung môi (thường là DMF) tạo thành dung dịch kéo sợi lỏng, đồng nhất.
+BƯỚC 3 - ĐÙN SỢI VÀ HÓA RẮN:
+Dung dịch được bơm qua các lỗ phun cực nhỏ (Spinneret). Các tia dung dịch đi qua tháp kéo sợi gặp khí nóng, dung môi bay hơi hoàn toàn, để lại lõi sợi rắn co giãn. Đây là phương pháp Dry Spinning, chiếm trên 95% sản lượng Spandex toàn cầu.
+BƯỚC 4 - PHỦ DẦU SILICONE (Finish Oil):
+Ngay sau khi sợi hóa rắn, trước khi cuộn vào ống, sợi Spandex được phun phủ lớp dầu bôi trơn (thành phần chính là dầu Silicone) với tỷ lệ khoảng 2-5% trọng lượng sợi.
+Vì sao cần phủ dầu silicone? Spandex rất dính. Không có lớp dầu này, các sợi dính chặt vào nhau, không thể xả sợi. Đồng thời ma sát ở tốc độ cao sẽ sinh nhiệt làm đứt sợi ngay lập tức khi chạy qua cọc dẫn.
+Khâu nhuộm cần để ý: dầu Silicone còn bám lại trên sợi sau khi dệt là một trong những nguyên nhân hàng đầu gây bệch màu, đốm màu khi nhuộm với thuốc nhuộm phân tán. Tiền xử lý (pre-treatment) kỹ với chất nhũ hóa có khả năng nhủ hóa dầu silicone là bắt buộc.
+PHẦN 2 - ỨNG DỤNG SỢI SPANDEX VÀO CÔNG NGHỆ DỆT
+ĐỐI VỚI DỆT THOI (Kaki thun, Denim co giãn):
+Khung dệt thoi có lực căng lớn, sợi Spandex trần không chịu nổi. Cần bảo vệ Spandex trước khi đưa vào dệt bằng một trong hai cách:
+Sợi bọc lõi (Core-spun):
+Spandex kéo căng ở lõi trung tâm, xơ ngắn (Cotton) quấn bao bọc bên ngoài. Nhìn bề ngoài như Cotton 100% nhưng bên trong có lõi co giãn.
+Sợi xoắn bao phủ (Covered yarn):
+Sợi xơ dài (Poly/Nylon) quấn xoắn xung quanh lõi Spandex.
+ĐỐI VỚI DỆT KIM (Thun Cotton 4 chiều, Interlock, Rib...):
+Lực căng thấp hơn, cấu trúc vòng sợi thông thoáng hơn nên dùng công nghệ dệt ghép sợi (Plating/Vanisé):
+Sợi chính (Cotton, Poly...) và sợi Spandex trần được đưa song song vào chung một miệng dẫn sợi (feeder) đến kim đan.
+Kim dệt đan cài hai sợi đi kèm nhau, đẩy sợi Spandex vào mặt trái (mặt trong) và đưa sợi chính ra mặt phải vải.
+Kỳ tới mình sẽ viết về các vấn đề liên quan đến nhuộm và hoàn tất vải có spandex
+Phan Đức Tuấn Anh - Founder
+Công ty TNHH Phát Triển Phần Mềm Alpha: phát triển phần mềm chuyên cho ngành Dệt - Nhuộm.
+Website: https://www.alphasoftwaregroup.com/

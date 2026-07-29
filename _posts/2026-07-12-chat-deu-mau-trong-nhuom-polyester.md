@@ -3,6 +3,12 @@ title: "Chất đều màu trong nhuộm polyester – vai trò và cách sử d
 description: "Vì sao nhuộm không đều màu, hai cơ chế retarding – leveling của chất đều màu, khi nào ưu tiên cơ chế nào, và cách test nhanh cả hai tính chất tại phòng lab."
 topic: ky-thuat-nhuom
 image: test-dich-chuyen-mau-leveling
+# Tiled card: the post teaches TWO lab tests, so the card shows both reports
+# side by side — what it's about, readable before the title. The hero (and
+# og:image) stays the leveling report alone.
+thumb:
+  - test-dich-chuyen-mau-leveling
+  - test-retarding-chat-deu-mau
 ---
 
 ## Vì sao nhuộm không đều màu?
