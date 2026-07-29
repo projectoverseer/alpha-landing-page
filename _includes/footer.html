@@ -44,6 +44,36 @@
       <dd>13:00 &ndash; 16:00 ({{ t.footer_hours_afternoon }})</dd> -->
     </dl>
   </address>
+  {%- if t.toc_knowledge %}
+  {%- comment -%}
+    THE READING HUB'S ONLY ENTRANCE ON A PHONE, AND THAT IS WHY IT IS HERE.
+
+    The bar carries a `Chia sẻ kinh nghiệm` link, but `.navbar-collapse` is a
+    plain `.collapse` with no toggler, so under lg it is `display: none` — the
+    link exists at exactly the widths that do not need it and is missing for
+    four out of five readers. The hub was reachable from a phone only by typing
+    the URL: a whole library of the founder's own writing, cut off from the page
+    it belongs to (owner, 2026-07-29: "bị cắt đứt kết nối … Không ideal").
+
+    The footer is where a site's secondary destinations live — it is the one
+    place a link can be added without touching the reading order of the page
+    above it, which was the owner's condition ("không làm interrupt flow").
+    There is a second route in the prose of Về chúng tôi, where the founder's 28
+    years are introduced; between them the hub is reachable from the middle of
+    the page and from its end, at every width.
+
+    Gated on `t.toc_knowledge` because the hub is Vietnamese-only — the key does
+    not exist in en.yml, so the English page renders no dead link. Same gate the
+    navbar item uses.
+  {%- endcomment %}
+  <nav aria-label="{{ t.footer_more_title }}" class="footer-more">
+    <p class="h5">{{ t.footer_more_title }}</p>
+    <p class="big footer-more-item">
+      <a href="{{ site.url }}/chia-se-kinh-nghiem/">{{ t.toc_knowledge }}</a>
+      <small class="text-secondary">{{ t.footer_knowledge_blurb }}</small>
+    </p>
+  </nav>
+  {%- endif %}
 </div>
 <div class="container-fluid px-0 pt-3 pb-3 footer-strip">
   <div class="container">

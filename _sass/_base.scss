@@ -928,20 +928,68 @@ figure {
   width: fit-content;
 }
 
+// ─── A description list is a two-column table only where there is room ───
+//
+// This layout put a horizontal scrollbar on the landing page, on every phone,
+// and the reason is a rule of grid sizing that no amount of `overflow-wrap`
+// answers.
+//
+// The label column is `max-content` — as wide as "Số điện thoại:" — and the
+// value column takes what is left, which on a 393px phone is about 250px. Into
+// it goes `anh.phan@alphasoftwaregroup.com`: one token, no spaces, wider than
+// that. A grid item's AUTOMATIC MINIMUM SIZE is its min-content size, and
+// `overflow-wrap: break-word` (which the `dd` has, further down) deliberately
+// does NOT reduce min-content — that is `anywhere`, a different keyword with a
+// different job. So the track simply refused to shrink, the grid grew wider
+// than its container, and the whole document scrolled sideways.
+//
+// The fix is the owner's own (2026-07-29, "bỏ tính năng chia bảng (dl) … trên
+// mobile") and it is also the right typography: under md there is no table at
+// all. The label sits on its own line above its value, nothing has a width to
+// fight over, and `break-word` works normally because the value is in ordinary
+// block flow again.
+//
+// The list stays a `<dl>` throughout. It IS a description list — three labels,
+// three values — and the markup should say so at every width; only the drawing
+// changes. (Note that `min-width: 0` on the `dd` would ALSO have fixed the
+// overflow, by lifting the automatic minimum. It is kept below the breakpoint
+// as a second lock, so the table can never overflow at the widths it survives
+// at either — e.g. a tablet at 200% text zoom.)
 dl {
-  display: grid;
-  grid-template-columns: max-content auto;
   margin: 0;
 }
 
 dt {
   font-weight: normal;
-  grid-column-start: 1;
 }
 
 dd {
-  grid-column-start: 2;
-  margin: 0 0 0 $text-tab-width * 0.25;
+  margin: 0;
+}
+
+// Stacked: a gap between one pair and the next, so the list still reads as
+// pairs rather than as six loose lines.
+@include media-breakpoint-down(md) {
+  dd + dt {
+    margin-top: step(3);
+  }
+}
+
+@include media-breakpoint-up(md) {
+  dl {
+    display: grid;
+    grid-template-columns: max-content auto;
+  }
+
+  dt {
+    grid-column-start: 1;
+  }
+
+  dd {
+    grid-column-start: 2;
+    min-width: 0; // lift the automatic minimum — see the note above
+    margin-left: $text-tab-width * 0.25;
+  }
 }
 
 // shift Bootstrap's spacers by specified values
@@ -957,6 +1005,20 @@ dd {
 // the page it is.)
 .footer-strip {
   background: $surface-footer;
+}
+
+// The route to the reading hub, under the contact block. A page region, so it
+// takes the page-region rung (step 8) off the address above it — the same
+// distance the address itself sits from the company name, one rung up.
+.footer-more {
+  margin-top: step(8);
+}
+
+// The blurb explains the destination, so it belongs to the link rather than
+// standing beside it: own line, hairline gap, metadata grey.
+.footer-more-item small {
+  display: block;
+  margin-top: step(1);
 }
 
 .hr {
@@ -999,6 +1061,25 @@ a {
       color: $white;
     }
   }
+}
+
+// A LINK INSIDE DARK PROSE HAS TO LOOK LIKE A LINK.
+//
+// On the two dark panels an anchor takes `color: inherit` (the rule above),
+// because the blue link colour is unreadable over ink — so what distinguishes a
+// link there is its weight, and nothing else. That is enough in the support
+// section, where the sentence itself says "Hãy gọi" and the thing linked is a
+// phone number: the reader knows what it is before they see how it is drawn.
+//
+// It is not enough for a phrase in the middle of a paragraph, which is what Về
+// chúng tôi carries now (the route into the reading hub). A weight change alone
+// is a visual-only cue at 600 vs 400 — most readers will not see it, and SC
+// 1.4.1 asks for something that is not colour. So dark prose underlines, which
+// is what body text has done since the first hyperlink.
+.bg-dark .prose a,
+.bg-primary .prose a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 // ─── The mark on a link that leaves ───
@@ -1314,6 +1395,20 @@ blockquote> :last-child:after {
    Remove it so the header fills its parent at any viewport width. */
 .accordion-header {
   max-width: none;
+}
+
+// A product header is a DEEP-LINK LANDING now — /#alpha-smart-dyehouse arrives
+// here from the reading hub's CTAs, and custom.js opens the panel it controls on
+// the way in. So it needs the same scroll inset the review cards have: the bar is
+// fixed, and the `section[id]` rule above only covers whole sections, so without
+// this the heading a reader was sent to lands underneath the chrome.
+// Same two values as `.service-box[id]`, for the same reason.
+.accordion-header[id] {
+  scroll-margin-top: calc(#{$navbar-height-sm} + #{step(5)});
+
+  @include media-breakpoint-up(md) {
+    scroll-margin-top: calc(#{$navbar-height} + #{step(6)});
+  }
 }
 
 /* The item's own corner and the button's inside it are DIFFERENT NUMBERS on
@@ -1943,17 +2038,42 @@ header {
   // centered at every viewport with no per-size margin tuning.
   justify-content: center;
 
+  // `svh` is the SMALL viewport — the height with the browser's toolbars fully
+  // extended — so it is the one viewport unit that does not change while the
+  // reader scrolls. `vh` above it is the fallback for engines that predate the
+  // unit; `dvh` would be the opposite of what is wanted here, a height that
+  // re-resolves on every toolbar frame.
   min-height: 100vh;
   min-height: 100svh;
 
   // Design doc §2 "Safe areas / edges": offset the centered block so it clears the fixed
-  // navbar at the top ($navbar-height-sm phone / $navbar-height ≥md) and the home
-  // indicator at the bottom on notched iPhones. padding-top = bar height keeps the
-  // optical center inside the region the visitor actually sees *below* the bar; the
-  // env() insets add the device's own safe gaps and resolve to 0 where there are none,
+  // navbar at the top ($navbar-height-sm phone / $navbar-height ≥md). padding-top = bar
+  // height keeps the optical center inside the region the visitor actually sees *below*
+  // the bar; env() adds the device's own safe gap and resolves to 0 where there is none,
   // so this is inert on plain screens.
   padding-top: calc(#{$navbar-height-sm} + env(safe-area-inset-top));
-  padding-bottom: calc(#{step(6)} + env(safe-area-inset-bottom));
+
+  // ─── NO BOTTOM SAFE-AREA INSET HERE. IT IS THE LAYOUT SHIFT. ───
+  //
+  // Reported on Chrome for iOS (owner, 2026-07-29): the hero jumps mid-scroll.
+  // The viewport unit was not the cause — `100svh` had been in place since June
+  // and is already the stable one. `env(safe-area-inset-bottom)` was.
+  //
+  // With `viewport-fit=cover` (meta.html) iOS reports the bottom inset as the
+  // room the HOME INDICATOR needs that the page is not already clear of — so
+  // while the browser's bottom toolbar is up, covering the indicator, it is 0,
+  // and the moment that toolbar retracts on a downward scroll it becomes 34px.
+  // A live value, changing under the reader, composed into the padding of a
+  // `justify-content: center` box: the content box loses 34px off its bottom and
+  // everything in it re-centers 17px higher, in one frame, while they scroll.
+  //
+  // And it was never needed. `100svh` already reserves the toolbars' space, so
+  // the hero's bottom edge sits at least a toolbar's height above the screen's,
+  // which is more than the indicator's 34px — the inset was paying a second time
+  // for room the unit had already bought. The page's real bottom edge, the
+  // copyright strip, still carries it (see `footer > .container-fluid`), because
+  // there it is load-bearing and there nothing re-centers when it changes.
+  padding-bottom: step(6);
 
   background-position: center;
 

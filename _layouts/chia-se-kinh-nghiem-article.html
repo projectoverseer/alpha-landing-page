@@ -37,7 +37,26 @@
               {% include chia-se-kinh-nghiem/avatar.html size=40 class="kt-byline-avatar" %}
               <span class="kt-author-name">{{ kt_author.name }}</span>
             </a>
-            <span class="kt-byline-meta">· <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time> · {{ kt_minutes }} phút đọc</span>
+            {% comment %}
+              A duration is one word made of three. On a phone this line wraps
+              (see .kt-byline in the theme) and it was breaking as "4 phút /
+              đọc", which reads as a typo — so the reading time is wrapped in an
+              element that CSS holds together.
+
+              It is a class and not `&nbsp;`, and that is worth knowing before
+              anyone reaches for the entity again: `optimize:html` runs
+              html-minifier-terser with `--decode-entities` AND
+              `--collapse-whitespace`, so an `&nbsp;` is first decoded to U+00A0
+              and then collapsed to an ordinary space by a regex that counts
+              U+00A0 as whitespace. Every non-breaking space written into this
+              site's markup is silently flattened in the production build.
+              Measured on the built page, not assumed. A CSS rule survives.
+
+              The date needs nothing — it is already one token. Neither does the
+              name: it sits inside an inline-flex box, and an inline-level box is
+              atomic to line breaking.
+            {% endcomment %}
+            <span class="kt-byline-meta">· <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d/%-m/%Y" }}</time> · <span class="kt-byline-read">{{ kt_minutes }} phút đọc</span></span>
           </div>
           {%- comment -%}
             A series used to reveal itself only at the bottom of the piece, in

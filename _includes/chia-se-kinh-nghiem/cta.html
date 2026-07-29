@@ -54,7 +54,25 @@
       mà không cần ghi chép tay.
     {%- endif -%}
   </p>
-  {%- capture kt_card_href -%}{{ site.url }}/#san-pham{%- endcapture -%}
+  {%- comment -%}
+    THE BUTTON NAMES A PRODUCT, SO THE LINK LANDS ON THAT PRODUCT.
+
+    This was `/#san-pham` — the products SECTION — while the label said "Tìm hiểu
+    Alpha Smart Dyehouse". The reader arrived in front of two closed accordion
+    headers and had to work out which one the button had meant (owner,
+    2026-07-29). `#alpha-smart-dyehouse` is that product's own header: the
+    browser jumps to the heading that names it, and the main site's custom.js
+    opens the panel on the way in, so the details are already on screen.
+
+    The id is language-neutral and lives in _includes/products.html, not in the
+    i18n files — it is the same fragment on /vi and /en.
+
+    A post that is really about the weighing product can point at
+    `#alpha-dyes-weighing` instead, by passing `href=` (and a matching `button=`)
+    to this include. Both halves have to move together: a button that names one
+    product and opens the other is the bug this comment exists to prevent.
+  {%- endcomment -%}
+  {%- capture kt_card_href -%}{{ site.url }}/#alpha-smart-dyehouse{%- endcapture -%}
   <p class="kt-cta-actions">
     <a class="kt-button" href="{{ include.href | default: kt_card_href }}" rel="noopener" target="_blank">{{ include.button | default: "Tìm hiểu Alpha Smart Dyehouse" }}</a>
   </p>

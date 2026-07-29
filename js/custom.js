@@ -2,6 +2,60 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+// ─── A LINK THAT NAMES A PRODUCT MUST ARRIVE AT THAT PRODUCT, OPEN ───
+//
+// The reading hub's card CTA says "Tìm hiểu Alpha Smart Dyehouse" and used to
+// land on /#san-pham — the section — which put the reader in front of two closed
+// headers and left them to guess which one the button had meant (owner,
+// 2026-07-29). The fragment names the product's own header now, and the panel it
+// controls opens as the page arrives.
+//
+// The fragment is the HEADER's id, never the panel's, and that is what makes the
+// no-JS behaviour right on its own: the browser jumps to the heading that names
+// the product, which is where the reader wanted to be — the panel is simply
+// still closed, one tap away. JS adds the opening, not the address. (A panel id
+// is accepted too; it is a reasonable thing for someone to link to and there is
+// no reason to punish it.)
+//
+// These two live at file scope because there are TWO ways to ask for a product —
+// a deep link and the navbar's Các sản phẩm menu — and both must land the reader
+// in the same place. They used to be two separate pieces of code with two
+// different landings: the menu scrolled the PANEL into view behind a 6.8125rem
+// magic number computed in JS, a deep link scrolled the HEADER behind its CSS
+// scroll-margin. Now the offset is stated once, in CSS, where every other anchor
+// landing on the site already states it.
+function accordionFor(el) {
+  if (!el) return null;
+
+  // The header, or anything inside it — the <h3>, the <button>, a <span>.
+  const header = el.closest(".accordion-header");
+  if (header) {
+    const button = header.querySelector('[data-bs-toggle="collapse"]');
+    const panel = button && document.querySelector(button.getAttribute("data-bs-target"));
+    return panel ? { panel, header } : null;
+  }
+
+  // The panel itself. Its `aria-labelledby` points back at the header, which is
+  // where the scroll should land — landing on the panel would park the heading
+  // that names it just above the top of the viewport.
+  if (el.classList.contains("accordion-collapse")) {
+    const owner = document.getElementById(el.getAttribute("aria-labelledby"));
+    return { panel: el, header: owner || el };
+  }
+
+  return null;
+}
+
+// `toggle: false` so constructing the instance does not itself flip the panel;
+// getOrCreateInstance so a panel the reader has already touched keeps its own.
+// Bootstrap updates the trigger's .collapsed / aria-expanded from here, so the
+// chevron and the accessibility tree follow without being told twice.
+function openAccordion(entry) {
+  if (entry && !entry.panel.classList.contains("show")) {
+    bootstrap.Collapse.getOrCreateInstance(entry.panel, { toggle: false }).show();
+  }
+}
+
 (function () {
   const navbar = document.getElementById("navbar");
 
@@ -152,33 +206,42 @@ function prefersReducedMotion() {
       return;
     }
 
+    // If the fragment names a product, open it BEFORE anything scrolls. The panel
+    // grows downward, below the header we are landing on, so opening first costs
+    // the glide nothing and spares the reader a second movement on arrival.
+    const accordion = accordionFor(target);
+    const landing = accordion ? accordion.header : target;
+
     // Defer the jump until the tab is actually on screen (these links open BACKGROUNDED).
     // Smooth-glide when motion is allowed, instant when Reduce Motion is on — matching the
     // CSS scroll-behavior so deep links behave like every other in-page anchor.
     whenVisible(function () {
       const smooth = !prefersReducedMotion();
+      openAccordion(accordion);
 
       // If media above the card finishes loading after the jump and shifts layout, re-align
       // to the true position once everything's loaded. Re-issue with the SAME behavior so a
       // smooth glide is retargeted smoothly (an "instant" correction here would snap the page
       // mid-glide — exactly the jolt this used to cause).
       function correctForLayoutShift() {
-        target.scrollIntoView({
+        landing.scrollIntoView({
           behavior: smooth ? "smooth" : "instant",
           block: "start",
         });
       }
       window.addEventListener("load", correctForLayoutShift, { once: true });
 
-      target.scrollIntoView({
+      landing.scrollIntoView({
         behavior: smooth ? "smooth" : "instant",
         block: "start",
       });
       removeHash();
 
       // Light the highlight up front and hold it through the glide; it fades out once the
-      // scroll settles (onSettled also drops the load-correction listener).
-      flashReview(target, function () {
+      // scroll settles (onSettled also drops the load-correction listener). The cue itself
+      // is a review-card style, so on a product header this only carries the timing — the
+      // panel opening IS that landing's "here it is".
+      flashReview(landing, function () {
         window.removeEventListener("load", correctForLayoutShift);
       });
     });
@@ -242,11 +305,6 @@ function fallbackCopyTextToClipboard(text, element, feedbackMessage) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const navbar = document.getElementById("navbar");
-  const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 64;
-  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-  const scrollOffset = 6.8125 * rootFontSize; // rem offset below the navbar
-
   // Dropdown hover — open on mouseenter, close on mouseleave
   document.querySelectorAll(".nav-item.dropdown").forEach((dropdownEl) => {
     const dropdownToggle = dropdownEl.querySelector(".dropdown-toggle");
@@ -274,24 +332,37 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdownEl.addEventListener("mouseleave", () => getDropdown().hide());
   });
 
-  // Accordion expansion via dropdown item — expand & smooth-scroll
+  // Accordion expansion via dropdown item — expand & smooth-scroll.
+  //
+  // Exactly the two steps a /#alpha-smart-dyehouse deep link takes, in the same
+  // order, landing on the same element: open the panel, scroll to the HEADER
+  // that names it. It used to scroll to the panel behind an offset assembled
+  // here from the measured bar height plus 6.8125rem — a number nothing else on
+  // the site knew about — so the menu and a link from the reading hub put the
+  // reader in two different places for the same destination. scrollIntoView
+  // honours `.accordion-header[id] { scroll-margin-top }` instead, which is
+  // where every other anchor landing on this site states its offset.
   document.querySelectorAll(".dropdown-item[data-target-accordion]").forEach((item) => {
     item.addEventListener("click", function (event) {
       event.preventDefault();
 
-      const targetId = this.getAttribute("data-target-accordion");
-      const targetEl = document.querySelector(targetId);
+      const entry = accordionFor(
+        document.querySelector(this.getAttribute("data-target-accordion")),
+      );
 
-      if (!targetEl) return;
+      if (!entry) return;
 
-      if (!targetEl.classList.contains("show")) {
-        new bootstrap.Collapse(targetEl, { toggle: false }).show();
-      }
-
-      const top =
-        window.scrollY + targetEl.getBoundingClientRect().top - navbarHeight - scrollOffset;
-
-      window.scrollTo({ top, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+      openAccordion(entry);
+      entry.header.scrollIntoView({
+        // "instant", not "auto": `auto` defers to the element's computed
+        // scroll-behavior, which Bootstrap's reboot sets to `smooth`. It happens
+        // to resolve correctly today — reboot scopes that rule to
+        // `prefers-reduced-motion: no-preference` — but it means a reader who
+        // asked for no motion is relying on a media query in someone else's
+        // stylesheet. Say what is meant, as jumpToInitialHash already does.
+        behavior: prefersReducedMotion() ? "instant" : "smooth",
+        block: "start",
+      });
 
       const parentDropdownToggle = this.closest(".nav-item.dropdown")
         ?.querySelector(".dropdown-toggle");

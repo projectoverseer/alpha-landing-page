@@ -333,3 +333,9 @@ footer_label_hours: "Thời gian hoạt động"
 footer_hours_morning: "sáng"
 footer_hours_afternoon: "chiều"
 copied_email_message: "Đã copy địa chỉ email!"
+
+# The footer's route to the reading hub. Vietnamese-only, like `toc_knowledge`
+# itself — footer.html renders the whole block only when that key is present, so
+# these two never need an English twin.
+footer_more_title: "Xem thêm"
+footer_knowledge_blurb: "Thư viện bài viết về kỹ thuật nhuộm, đo màu và vận hành xưởng, viết bởi Ông Phan Đức Tuấn Anh."

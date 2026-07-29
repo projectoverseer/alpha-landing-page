@@ -910,13 +910,51 @@ body.kt {
 
 // Directly under the title, above the standfirst: the line that says "article".
 // The author's portrait sits at the left of it, tying the piece to a face.
+//
+// IT IS A LINE OF TEXT, NOT A ROW OF BOXES, and that is the fix for what the
+// owner saw on a phone (2026-07-29): "Phan Đức Tuấn / Anh · 21/6/2026 · 4 phút /
+// đọc" — a name broken in half beside a reading time broken in half.
+//
+// It had been `display: flex` with no `flex-wrap`, which is a row that cannot
+// become two rows: at 393px the name and the metadata together want a few pixels
+// more than the shell has, so neither child moves down and BOTH are squeezed and
+// wrap internally. Two ragged half-columns, and the worst break of the three is
+// through a person's name.
+//
+// Plain inline flow is what a byline actually is. The whole line reflows as one
+// piece of text — "Phan Đức Tuấn Anh ·" then "21/6/2026 · 4 phút đọc" — breaking
+// at the spaces the sentence already has. The name cannot break, because the
+// author link is an inline-FLEX box (portrait + name are one object, one target)
+// and an inline-level box is atomic to line breaking; the reading time cannot
+// break either, because the markup joins it with a no-break space. So the only
+// break points left are the ones a typesetter would have chosen.
 .kt-byline {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
   margin: 1rem 0 0;
   font-size: var(--fs-meta);
   color: var(--ink-3);
+  line-height: 1.5; // two lines of metadata should not touch
+}
+
+// The portrait rides the metadata's line rather than sitting on its baseline —
+// a 40px circle hanging off a 14px baseline drops the whole line box.
+.kt-byline .kt-author-link {
+  vertical-align: middle;
+}
+
+// The gap between the name and the metadata that follows it. It is stated here
+// rather than left to the space in the markup because there is no space in the
+// markup: Liquid's whitespace-stripping tags and html-minifier's
+// `--collapse-whitespace` between them decide what survives into the built page,
+// and neither of them is a typographer. A margin is not theirs to remove.
+.kt-byline-meta {
+  margin-left: 0.35em;
+}
+
+// "4 phút đọc" is one fact and breaks as one. (`&nbsp;` cannot do this job on
+// this site — the production build decodes and then collapses it. The layout
+// comment carries the measurement.)
+.kt-byline-read {
+  white-space: nowrap;
 }
 
 // ---- Author avatar + link ---------------------------------------------------
