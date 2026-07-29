@@ -5,6 +5,13 @@ topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 2
 image: bo-kit-munsell-hue-test
+# Tiled card (design 04 §4): the machine-with-light-path picture is the
+# title's promise and leads; the Munsell kit is the right cell because the
+# pair IS the post's argument — subjective eye test vs objective machine.
+# The hero stays the kit alone: the prose points at it ("ở đầu bài").
+thumb:
+  - so-do-nguyen-ly-may-quang-pho-do-mau
+  - bo-kit-munsell-hue-test
 ---
 
 Mắt người đánh giá màu sắc chủ quan và khác nhau giữa từng người. Chưa kể khả năng không nhỏ là một người có thể kém nhạy cảm với một sắc màu nào đó. Chính vì vậy mà có một bộ kit chuẩn để test xem mắt một người có "chuẩn" không – bộ kit Munsell ở đầu bài.

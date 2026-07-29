@@ -82,7 +82,8 @@ caption) is ever repeated in a post.
    demotes it and it fails the reader anyway. `fx`/`fy` are the image's
    attention centre: run `node image-focus.mjs` (needs `npm i --no-save sharp`)
    and paste the two numbers it prints — every cropped rendering of the picture
-   centres on that point (add `--previews <dir>` to eyeball the crops first).
+   centres on that point (add `--previews <dir>` to eyeball the crops first,
+   `--audit` for the measured signals the cover-selection scoring reads).
 
 Then use it:
 
@@ -101,8 +102,14 @@ Then use it:
 The feed shows the card picture at its **own aspect ratio** inside Facebook's
 display window (1.91:1 … 4:5); outside the window it is cropped to the nearest
 bound, centred on `fx`/`fy`. A post with neither `image:` nor `thumb:` degrades
-cleanly — but a photo on every card is the house preference: the reader should
+cleanly — but a photo on every card is the house rule: the reader should
 know what a post is about before reading a word of it.
+
+**Which picture, how many, what layout** — `04-chon-anh-bia.md` is the
+selection algorithm (scoring, tile grammar, feed-diversity check, the og
+gate, video posters). The quick path covers most posts: one on-subject
+picture → it is the cover, single, natural ratio. Open 04 only when there are
+several candidates, a tiled card is tempting, or the post brings a video.
 
 A picture used as the **hero** is not repeated in the body — the hero already
 showed it. A `thumb:`-only picture MAY be a body figure: the card showed a

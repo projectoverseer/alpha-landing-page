@@ -54,15 +54,23 @@
 {%- assign kt_desc = kt_desc | strip_newlines | strip -%}
 
 {%- comment -%}
-  Social/preview picture. An article shows its own — the hero, or failing that
-  its card thumbnail (first of a tiled list), so a share always previews the
-  post's actual picture; the hub and the topic pages fall back to the company
-  card. Always the JPEG, never the AVIF — Facebook and Zalo, where these posts
-  actually get shared, cannot decode AVIF.
+  Social/preview picture — the card face (thumb over hero, first of a tiled
+  list), because a share on Zalo or Facebook does the card's job in someone
+  else's feed: say what the post is about before the click. One gate
+  (design/chia-se-kinh-nghiem/04-chon-anh-bia.md §6): both platforms render
+  the large link card only from pictures ≥600px wide, so a smaller card face
+  yields to a hero that clears the bar; a small face with no alternative
+  ships anyway as the small side-thumb card. The hub and the topic pages fall
+  back to the company card. Always the JPEG, never the AVIF — Facebook and
+  Zalo, where these posts actually get shared, cannot decode AVIF.
 {%- endcomment -%}
-{%- assign kt_img_name = page.image -%}
-{%- if kt_img_name == nil and page.thumb -%}
-  {%- if page.thumb.first -%}{%- assign kt_img_name = page.thumb.first -%}{%- else -%}{%- assign kt_img_name = page.thumb -%}{%- endif -%}
+{%- if page.thumb.first -%}{%- assign kt_img_name = page.thumb.first -%}
+{%- elsif page.thumb -%}{%- assign kt_img_name = page.thumb -%}
+{%- else -%}{%- assign kt_img_name = page.image -%}{%- endif -%}
+{%- if kt_img_name and page.image and kt_img_name != page.image -%}
+  {%- assign kt_face = site.data.chia_se_kinh_nghiem.images[kt_img_name] -%}
+  {%- assign kt_hero = site.data.chia_se_kinh_nghiem.images[page.image] -%}
+  {%- if kt_face.w < 600 and kt_hero.w >= 600 -%}{%- assign kt_img_name = page.image -%}{%- endif -%}
 {%- endif -%}
 {%- assign kt_img = nil -%}
 {%- if kt_img_name -%}{%- assign kt_img = site.data.chia_se_kinh_nghiem.images[kt_img_name] -%}{%- endif -%}
@@ -354,10 +362,10 @@
   },
   "blogPost": [
     {%- for post in site.posts %}
-    {%- assign kt_bp_img = post.image -%}
-    {%- if kt_bp_img == nil and post.thumb -%}
-      {%- if post.thumb.first -%}{%- assign kt_bp_img = post.thumb.first -%}{%- else -%}{%- assign kt_bp_img = post.thumb -%}{%- endif -%}
-    {%- endif %}
+    {%- comment -%} The card face, same resolution as the feed markup below it. {%- endcomment -%}
+    {%- if post.thumb.first -%}{%- assign kt_bp_img = post.thumb.first -%}
+    {%- elsif post.thumb -%}{%- assign kt_bp_img = post.thumb -%}
+    {%- else -%}{%- assign kt_bp_img = post.image -%}{%- endif %}
     {
       "@type": "BlogPosting",
       "headline": {{ post.title | jsonify }},

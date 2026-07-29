@@ -52,6 +52,9 @@ series:
 #          by image-focus.mjs (sharp's saliency strategy, the static-site
 #          analog of how Facebook centres a crop). Every cropped rendering
 #          (feed clamp, split cell, read-next row) keeps this point in frame.
+#          Overridable by hand for symmetric continua — spectra, gradients,
+#          timelines — where the whole run is the story (design 04 §3);
+#          always say so in a comment next to the value.
 #   alt  = what the picture says, for a reader who cannot see it (never keyword
 #          stuffing — Google penalises that, and it fails the reader anyway)
 images:
@@ -99,7 +102,10 @@ images:
     w: 846
     h: 342
     sm: true
-    fx: 90
+    # fx overridden 90 → 50 (design 04 §3): saliency chased the saturated red
+    # end and the clamp cut violet off — a spectrum is a symmetric continuum,
+    # the whole run is the story, so the crop centres.
+    fx: 50
     fy: 25
     alt: "Phổ ánh sáng nhìn thấy trải từ 380nm đến 700nm: tím, chàm, lam, lục, vàng, cam, đỏ – bước sóng ngắn mang năng lượng cao, bước sóng dài mang năng lượng thấp"
     caption: "Ánh sáng trắng là tập hợp các bước sóng từ 380nm đến 700nm."

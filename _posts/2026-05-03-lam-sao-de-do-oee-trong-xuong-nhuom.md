@@ -5,6 +5,14 @@ topic: van-hanh
 series: so-hoa-oee
 series_part: 2
 image: cho-may-nhuom-khoi-dong-mat-thoi-gian
+# Tiled card (design 04 §4–§5): the cartoon is part 3's face, and the feed
+# must never show the identical image on two cards. This post is the umbrella
+# over OEE = A × P × Q, so the card says so: the equation poster wide on top,
+# two of the series' measuring infographics beneath. Hero unchanged.
+thumb:
+  - oee-nha-may-nhuom-60-phan-tram
+  - so-hoa-thoi-gian-ngung-may-4-buoc
+  - so-hoa-hieu-suat-toc-do-oee
 ---
 
 Bài trước mình nói OEE của phần lớn xưởng nhuộm đang ở mức trung bình thế giới 55–60%, và gợi ý cách đo sơ bộ nhanh nhất: tổng mẻ thực tế ÷ tổng mẻ lý thuyết.
