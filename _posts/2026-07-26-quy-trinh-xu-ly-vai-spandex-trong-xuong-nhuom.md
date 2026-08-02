@@ -21,7 +21,7 @@ Sợi spandex sau khi dệt luôn ở trạng thái bị kéo căng cưỡng b�
 
 **Dệt thoi:** xả cuộn vải mộc, thả lỏng tự nhiên 12–24 giờ rồi đưa qua công đoạn rũ hồ.
 
-**Dệt kim tròn dạng ống:** cho vải chạy qua máy phá gãy (tubular anti-creasing). Nước nóng 70–90°C làm mềm sợi spandex để vải co rút tự nhiên. Quả phao nổi bên trong lòng ống nong tròn 360°, phá gãy và xóa hoàn toàn các nếp gấp biên dọc hông ống vải, tránh lằn gãy vĩnh viễn.
+**Dệt kim tròn dạng ống:** cho vải chạy qua máy phá gãy (tubular anti-creasing). Nước nóng 70–90 °C làm mềm sợi spandex để vải co rút tự nhiên. Quả phao nổi bên trong lòng ống nong tròn 360°, phá gãy và xóa hoàn toàn các nếp gấp biên dọc hông ống vải, tránh lằn gãy vĩnh viễn.
 
 {% include chia-se-kinh-nghiem/figure.html name="may-pha-gay-vai-det-kim-dang-ong" %}
 
@@ -31,25 +31,25 @@ Sợi spandex bắt buộc mang theo 2–5% dầu silicone bôi trơn từ nhà 
 
 **Dệt thoi:** rũ sạch hồ dệt (acrylic/PVA/tinh bột) kết hợp tẩy dầu bằng hóa chất nhũ hóa mạnh ở môi trường kiềm nhẹ pH 8–9. Nếu rũ hồ trên máy liên tục, cần kiểm tra lượng dầu silicone còn lại trên vải. Nếu không có điều kiện kiểm tra hàm lượng dầu silicone còn lại thì có thể tẩy dầu nhẹ lại trên máy nhuộm trước khi nhuộm, để đảm bảo không còn tồn dư trên vải.
 
-**Dệt kim:** tẩy dầu trực tiếp trong bể ngâm hoặc trên máy nhuộm jet hoặc overflow bằng chất hoạt động bề mặt chuyên dụng cho silicone ở 80–90°C.
+**Dệt kim:** tẩy dầu trực tiếp trong bể ngâm hoặc trên máy nhuộm jet hoặc overflow bằng chất hoạt động bề mặt chuyên dụng cho silicone ở 80–90 °C.
 
 ## Bước 3 – định hình sơ bộ (presetting), khâu quan trọng
 
 **Mục đích:** định kích thước khổ vải, trọng lượng (g/m²) và chống tạo nếp gãy khi vải chịu áp lực trong máy nhuộm.
 
-**Thông số:** 180–190°C trong 45–60 giây trên máy stenter.
+**Thông số:** 180–190 °C trong 45–60 giây trên máy stenter.
 
-**Không vượt quá 195°C hoặc quá 60 giây.** Vượt ngưỡng này sợi spandex bị lão hóa, giòn và mất hẳn độ co giãn. Vải cũng có nguy cơ ố vàng do dầu silicone và phụ gia bị phân hủy một phần, tạo vết bẩn bên trong sợi không thể loại bỏ ở các bước sau.
+**Không vượt quá 195 °C hoặc quá 60 giây.** Vượt ngưỡng này sợi spandex bị lão hóa, giòn và mất hẳn độ co giãn. Vải cũng có nguy cơ ố vàng do dầu silicone và phụ gia bị phân hủy một phần, tạo vết bẩn bên trong sợi không thể loại bỏ ở các bước sau.
 
 ## Bước 4 – nhuộm (dyeing)
 
 **Lực căng:** điều tiết áp lực bơm, tốc độ guồng và sử dụng cỡ chén phù hợp để giảm thiểu sức căng.
 
-**Hạ nhiệt:** bắt buộc hạ nhiệt từ từ, tốc độ không quá 1,5°C/phút từ nhiệt độ nhuộm xuống dưới 80°C. Không xả nước lạnh đột ngột, vì sốc nhiệt làm spandex co rút đột ngột tạo nếp gãy không thể phục hồi.
+**Hạ nhiệt:** bắt buộc hạ nhiệt từ từ, tốc độ không quá 1,5 °C/phút từ nhiệt độ nhuộm xuống dưới 80 °C. Không xả nước lạnh đột ngột, vì sốc nhiệt làm spandex co rút đột ngột tạo nếp gãy không thể phục hồi.
 
 ## Bước 5 – định hình hoàn tất (final setting)
 
-**Nhiệt độ:** 160–170°C trong 30 giây, luôn thấp hơn nhiệt độ căng sơ bộ 10–15°C.
+**Nhiệt độ:** 160–170 °C trong 30 giây, luôn thấp hơn nhiệt độ căng sơ bộ 10–15 °C.
 
 **Mục đích:** giữ độ mềm mại (handfeel), bảo toàn độ co giãn còn lại và kiểm soát độ co sau giặt đạt tiêu chuẩn xuất xưởng.
 

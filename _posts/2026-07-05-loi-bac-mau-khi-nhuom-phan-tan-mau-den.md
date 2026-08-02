@@ -13,13 +13,13 @@ Nguyên nhân không phải do kỹ thuật nhuộm hay quy trình. Nguyên nhâ
 
 Thuốc nhuộm thương phẩm không phải là thuốc nhuộm nguyên chất 100%. Trong thuốc nhuộm bột, phần thuốc nhuộm thật sự thường chỉ chiếm một phần nhỏ. Phần còn lại là các chất độn và chất phân tán, giúp thuốc nhuộm dễ phân tán trong nước và ổn định trong quá trình nhuộm.
 
-Chất phân tán phổ biến nhất thuộc nhóm lignosulfonate, dẫn xuất từ lignin trong quá trình sản xuất bột giấy. Nhóm hydroxyl phenolic trong lignosulfonate có tính khử. Ở nhiệt độ cao (trên 120–130°C trong máy nhuộm cao áp), tính khử này có thể phá hủy liên kết azo trong thuốc nhuộm phân tán màu đen, làm mất màu và khiến vải bàng bạc.
+Chất phân tán phổ biến nhất thuộc nhóm lignosulfonate, dẫn xuất từ lignin trong quá trình sản xuất bột giấy. Nhóm hydroxyl phenolic trong lignosulfonate có tính khử. Ở nhiệt độ cao (trên 120–130 °C trong máy nhuộm cao áp), tính khử này có thể phá hủy liên kết azo trong thuốc nhuộm phân tán màu đen, làm mất màu và khiến vải bàng bạc.
 
 ## Tại sao trong lab không bị?
 
 Lab nhuộm mẫu nhỏ trong cốc, thể tích dung dịch thuốc nhuộm chỉ chiếm một phần nhỏ không gian bên trong cốc. Phần còn lại là không khí, chứa đủ lượng oxy để kìm hãm phản ứng khử. Trước khi cốc vào máy thì cốc đã được đậy nắp, vì thế toàn bộ lượng không khí bị nhốt vào bên trong.
 
-Máy lớn thì tỷ lệ phần không khí so với dung dịch không bằng trong cốc. Hơn nữa máy thường chỉ đóng van xả áp khi nhiệt độ đạt đến 80–85°C. Trong suốt quá trình lên độ đó, một lượng không khí thoát ra do giãn nở và có thể đã có một lượng ít hơi nước sinh ra đẩy thêm oxy ra. Không có oxy để kìm hãm, phản ứng khử với thuốc nhuộm xảy ra mạnh hơn nhiều, thuốc nhuộm bị phá hủy một phần dẫn đến sai màu.
+Máy lớn thì tỷ lệ phần không khí so với dung dịch không bằng trong cốc. Hơn nữa máy thường chỉ đóng van xả áp khi nhiệt độ đạt đến 80–85 °C. Trong suốt quá trình lên độ đó, một lượng không khí thoát ra do giãn nở và có thể đã có một lượng ít hơi nước sinh ra đẩy thêm oxy ra. Không có oxy để kìm hãm, phản ứng khử với thuốc nhuộm xảy ra mạnh hơn nhiều, thuốc nhuộm bị phá hủy một phần dẫn đến sai màu.
 
 ## Cách khắc phục
 

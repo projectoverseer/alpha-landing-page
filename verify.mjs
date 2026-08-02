@@ -11,7 +11,8 @@
  *   3. No page leaked template syntax ({{ … }} / {% … %}) or localhost URLs.
  *   4. No hub page still carries raw LaTeX delimiters — i.e. optimize:math ran
  *      and every equation became MathML. Unrendered math is invisible-ish rather
- *      than loud, so it needs a gate of its own.
+ *      than loud, so it needs a gate of its own. Nor any hand-typed Unicode
+ *      subscript, which is a chemical formula that skipped `\ce{…}` (design 05).
  *
  * Zero dependencies — Node built-ins only.
  */
@@ -73,6 +74,63 @@ for (const name of htmlFiles) {
   // turn into MathML. If a delimiter survives, the equation never rendered.
   if (name.startsWith('chia-se-kinh-nghiem') && /\\\[|\\\(/.test(html)) {
     errors.push(`${name}: unrendered LaTeX left in the page — did optimize:math run?`);
+  }
+
+  // Hub only: a dangling bond written as a bare `-`. mhchem reads a trailing
+  // `+`/`-` as an IONIC CHARGE and raises it into a superscript, so `\ce{-CO-NH-}`
+  // renders as an amide ANION — chemically false, and near-invisible: the dash is
+  // there, just 6px too high. It shipped that way on 2026-08-02 and only the
+  // owner's eye caught it. design 05 §2 makes both halves explicit — a dangling
+  // bond is `\bond{-}`, a real charge is `^-` — which is what makes the mistake
+  // mechanically detectable: after those rules, a bare sign before a closing
+  // `}`/`]`/`)` is always wrong. The `[^{^]` guard exempts `\bond{-}` itself
+  // (preceded by `{`) and a properly written charge (preceded by `^`).
+  if (name.startsWith('chia-se-kinh-nghiem')) {
+    for (const m of html.matchAll(/<annotation encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)) {
+      const tex = m[1];
+      if (!tex.includes('\\ce{')) continue;
+      const bad = tex.match(/[^{^][-+][}\])]/);
+      if (bad) {
+        errors.push(
+          `${name}: bare "${bad[0]}" in ${tex.trim()} — mhchem reads a trailing sign as an ionic charge. ` +
+            `A dangling bond is \\bond{-}; a real charge is ^- or ^+ (design 05 §2).`,
+        );
+      }
+    }
+  }
+
+  // Hub only: ISO 80000-1 §7.2 — a space separates a value from its unit symbol,
+  // and it is a NO-BREAK space so the two never land on different lines. Two
+  // exceptions, both deliberate and both recorded in design 05 §3: `%` (owner's
+  // call, 2026-08-02 — "4,5 %" reads foreign in Vietnamese trade prose) and the
+  // plane-angle ° ′ ″, which is SI's own exception (0°, 90°, 10° observer).
+  //
+  // Text only: image slugs legitimately contain "380-700nm", so tags, scripts
+  // and styles come out before the test or every page would fail on its own
+  // filenames.
+  if (name.startsWith('chia-se-kinh-nghiem')) {
+    const text = html
+      .replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')
+      .replace(/<[^>]*>/g, ' ');
+    const tight = text.match(/\d(?:°C|nm|mm|cm|kg|K)(?![A-Za-zÀ-ỹ])/);
+    if (tight) {
+      errors.push(
+        `${name}: "${tight[0]}" — ISO 80000-1 puts a no-break space between a value ` +
+          `and its unit (design 05 §3). The exceptions are % and plane-angle °.`,
+      );
+    }
+  }
+
+  // Hub only: a hand-typed formula. Unicode subscripts (CH₂, SO₄) are how a
+  // chemical formula gets pasted in from a Facebook post, and they are wrong on
+  // every count the MathML pipeline exists for — they break line-height, most of
+  // the block has no glyph in Literata so it falls back to a stranger font, a
+  // screen reader spells them as decoration, and the formula is unsearchable.
+  // The notation standard (design 05) says every one of these is `\ce{…}`.
+  // Superscripts are deliberately NOT gated: `g/m²` in prose is a unit.
+  if (name.startsWith('chia-se-kinh-nghiem') && /[₀-ₜ]/.test(html)) {
+    const hit = html.match(/.{0,24}[₀-ₜ].{0,24}/)[0].replace(/\s+/g, ' ');
+    errors.push(`${name}: hand-typed Unicode subscript in "…${hit}…" — write it as $$\\ce{…}$$ (design 05 §2)`);
   }
 
   // <math> is not on html-minifier's list of inline elements, so a <strong> (or

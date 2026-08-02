@@ -99,10 +99,14 @@ preferences on top of that, for candidates that otherwise tie:
 - **Extreme panoramas lose the most** in the clamp (a 3:1 strip keeps only
   64% of itself at 1.91:1) – prefer a squarer sibling when one passes G1.
 - **`fx`/`fy` override.** Saliency puts the attention centre where colour and
-  texture peak – correct for photos, wrong for symmetric continua (spectra,
-  gradients, timelines) where the *whole run* is the story. There, set the
-  axis to 50 by hand and say so in a comment in the data file (first use:
-  `pho-anh-sang-nhin-thay-380-700nm`, 2026-07-29).
+  texture peak – correct for photos, wrong twice over. Wrong for symmetric
+  continua (spectra, gradients, timelines) where the *whole run* is the story
+  (`pho-anh-sang-nhin-thay-380-700nm`, fx 90 → 50, 2026-07-29). And wrong for a
+  **stacked pair or set** – two formulas, two samples, before/after in one
+  frame – where saliency commits to whichever member has the most texture and
+  the crop then shows one of two, which is the opposite of the post's promise
+  (`cau-truc-phan-tu-nylon-6-va-nylon-66`, fy 81 → 50, 2026-08-02). In both
+  cases set the axis to 50 by hand and say so in a comment in the data file.
 
 ## 4. Layout grammar – when to tile
 

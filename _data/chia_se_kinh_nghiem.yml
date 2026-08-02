@@ -107,15 +107,15 @@ images:
     # the whole run is the story, so the crop centres.
     fx: 50
     fy: 25
-    alt: "Phổ ánh sáng nhìn thấy trải từ 380nm đến 700nm: tím, chàm, lam, lục, vàng, cam, đỏ – bước sóng ngắn mang năng lượng cao, bước sóng dài mang năng lượng thấp"
-    caption: "Ánh sáng trắng là tập hợp các bước sóng từ 380nm đến 700nm."
+    alt: "Phổ ánh sáng nhìn thấy trải từ 380 nm đến 700 nm: tím, chàm, lam, lục, vàng, cam, đỏ – bước sóng ngắn mang năng lượng cao, bước sóng dài mang năng lượng thấp"
+    caption: "Ánh sáng trắng là tập hợp các bước sóng từ 380 nm đến 700 nm."
   bang-nguon-sang-chuan-cie:
     w: 1117
     h: 770
     sm: true
     fx: 53
     fy: 69
-    alt: "Bảng các nguồn sáng chuẩn CIE thường dùng trong ngành nhuộm và nhiệt độ màu của chúng: D65 6500K, D50 5000K, D55 5500K, D75 7500K, A 2856K, TL84/F11 4000K, CWF/F2 4200K, TL83/F12 3000K và UV-A"
+    alt: "Bảng các nguồn sáng chuẩn CIE thường dùng trong ngành nhuộm và nhiệt độ màu của chúng: D65 6500 K, D50 5000 K, D55 5500 K, D75 7500 K, A 2856 K, TL84/F11 4000 K, CWF/F2 4200 K, TL83/F12 3000 K và UV-A"
     caption: "Một số nguồn sáng chuẩn CIE mà khách hàng thường chỉ định để so màu."
   bo-kit-munsell-hue-test:
     w: 766
@@ -147,7 +147,7 @@ images:
     sm: true
     fx: 41
     fy: 10
-    alt: "Bốn cửa đo (aperture) của máy quang phổ đo màu xếp cạnh nhau: USAV 6,6mm, SAV 9mm, MAV 20mm và LAV 30mm"
+    alt: "Bốn cửa đo (aperture) của máy quang phổ đo màu xếp cạnh nhau: USAV 6,6 mm, SAV 9 mm, MAV 20 mm và LAV 30 mm"
     caption: "Hiệu chuẩn ở cửa đo nào thì phải đo mẫu ở đúng cửa đo đó."
   man-hinh-hieu-chuan-may-do-mau:
     w: 1038
@@ -180,7 +180,7 @@ images:
     fx: 90
     fy: 63
     alt: "Báo cáo thử nghiệm mức độ làm chậm (retarding) của hai chất đều màu: mẫu đối chứng đậm màu nhất, mẫu A và mẫu B nhạt dần"
-    caption: "Test retarding: lấy mẫu ở 115°C – mẫu nào nhạt hơn thì chất đều màu đó làm chậm tốc độ ăn màu tốt hơn."
+    caption: "Test retarding: lấy mẫu ở 115 °C – mẫu nào nhạt hơn thì chất đều màu đó làm chậm tốc độ ăn màu tốt hơn."
   cau-truc-phan-tu-soi-spandex-co-gian:
     w: 963
     h: 426
@@ -197,3 +197,14 @@ images:
     fy: 16
     alt: "Máy phá gãy vải dệt kim dạng ống: buồng nước nóng bằng thép, giàn trục dẫn vải phía trên và tủ điều khiển phía trước"
     caption: "Máy phá gãy (tubular anti-creasing) do công ty Đại Phước của Việt Nam sản xuất."
+  cau-truc-phan-tu-nylon-6-va-nylon-66:
+    w: 609
+    h: 552
+    sm: false
+    fx: 47
+    # fy overridden 81 → 50 (design 04 §3): the picture is a stacked PAIR, and
+    # saliency landed on the lower formula alone — a crop that shows one nylon
+    # cannot tell a post about two. Centred, both chains stay in frame.
+    fy: 50
+    alt: "Sơ đồ cấu tạo phân tử của hai loại nylon: chuỗi Nylon 6 lặp lại một mắt xích duy nhất gồm nhóm N-H, năm nhóm CH2 và một nhóm C=O; chuỗi Nylon 66 lặp lại một mắt xích dài hơn, ghép từ hai phân đoạn sáu carbon"
+    caption: "Cùng một liên kết amide, nhưng Nylon 6 lặp lại một đoạn 6 carbon, còn Nylon 6.6 lặp lại hai đoạn 6 carbon ghép với nhau."

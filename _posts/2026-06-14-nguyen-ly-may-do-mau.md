@@ -20,7 +20,7 @@ Máy đo màu (spectrophotometer) giải quyết vấn đề đó bằng cách �
 
 ## Nguyên lý hoạt động
 
-Máy chiếu lần lượt từng tia sáng đơn sắc vào mẫu vải, từ 380nm đến 700nm. Mỗi bước sóng, cảm biến đo lại bao nhiêu phần trăm ánh sáng được phản xạ trở lại. Kết quả có được là một đường phổ phản xạ gồm hàng chục điểm dữ liệu.
+Máy chiếu lần lượt từng tia sáng đơn sắc vào mẫu vải, từ 380 nm đến 700 nm. Mỗi bước sóng, cảm biến đo lại bao nhiêu phần trăm ánh sáng được phản xạ trở lại. Kết quả có được là một đường phổ phản xạ gồm hàng chục điểm dữ liệu.
 
 {% include chia-se-kinh-nghiem/figure.html name="so-do-nguyen-ly-may-quang-pho-do-mau" %}
 

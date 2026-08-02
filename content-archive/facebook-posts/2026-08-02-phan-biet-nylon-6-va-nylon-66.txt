@@ -1,0 +1,33 @@
+Phan Đức Tuấn Anh 2/8/2026
+NYLON 6 VÀ NYLON 6.6
+CẤU TẠO HÓA HỌC
+Cả Nylon 6 và Nylon 6.6 đều thuộc họ Polyamide, chuỗi polymer chứa nhiều liên kết amide (-CO-NH-).
+Nylon 6: Tổng hợp từ một monomer duy nhất là Caprolactam (vòng 6 carbon) qua phản ứng trùng hợp mở vòng.
+Chuỗi polymer gồm những đoạn có 6 nguyên tử Carbon nên người ta gọi tên Nylon 6:
+                     -[NH-(CH₂)₅-CO]ₙ-
+Nylon 6.6: Trùng ngưng từ hai monomer 6 carbon: Hexamethylenediamine và Acid Adipic.
+Chuỗi polymer cấu tạo từ 2 phân đoạn 6 nguyên tử Carbon nên người ta gọi Nylon 6.6 để phân biệt:
+                   -[NH-(CH₂)₆-NH-CO-(CH₂)₄-CO]ₙ-
+ĐIỂM MẤU CHỐT TRONG CẤU TẠO PHÂN TỬ:
+Nhóm -CO-NH- tạo ra liên kết hydrogen liên phân tử chặt chẽ giữa các chuỗi polymer. Đây là yếu tố quyết định mọi tính chất cơ lý của sợi Nylon. Và quan trọng hơn với xưởng nhuộm, nhóm N-H này còn là cơ sở hóa học để thuốc nhuộm acid liên kết vào sợi.
+TÍNH CHẤT LÝ HÓA
+LÝ TÍNH:
+Độ bền cơ học cao, chịu mài mòn rất cao nhờ liên kết hydrogen dày đặc và cấu trúc kết tinh cao.
+Độ đàn hồi tốt, ít nhăn sau giặt nhờ các phân đoạn methylene -(CH₂)ₙ- linh hoạt.
+Độ hút ẩm ~4-4.5%, mau khô nhưng dễ tích điện tĩnh điện.
+Điểm nóng chảy: Nylon 6 khoảng 215-220°C. Nylon 6.6 khoảng 260-265°C vì cấu trúc đối xứng hơn, độ kết tinh cao hơn.
+HÓA TÍNH:
+Kém bền với acid và kiềm đậm đặc: Liên kết amide dễ bị thủy phân, làm mục và mất độ bền.
+Kháng tốt dầu mỡ, cồn và hóa chất giặt thông thường.
+Kém bền với tia UV: Tia cực tím làm gãy chuỗi polymer, vải lão hóa, ngả vàng và giòn xơ nếu phơi nắng gắt kéo dài.
+ỨNG DỤNG THỰC TẾ
+Trong dệt may:
+Nylon 6: Trang phục thể thao, đồ lót, tất, áo gió, lót balo. Mềm mại và chi phí sản xuất tối ưu hơn.
+Nylon 6.6: Quần áo bảo hộ, trang phục dã ngoại cao cấp, thảm trải sàn. Chịu ma sát và nhiệt tốt hơn.
+Trong công nghiệp:
+Dây thừng, lưới đánh cá, chỉ may công nghiệp, túi khí ô tô, vỏ lốp xe. Nhựa kỹ thuật: Bánh răng, linh kiện máy móc thay thế kim loại.
+Mình sẽ có các bài sau về nhuộm Nylon và các nhóm thuốc nhuộm acid sử dụng để nhuộm Nylon.
+Phan Đức Tuấn Anh - Founder
+Công ty TNHH Phát Triển Phần Mềm Alpha: phát triển phần mềm chuyên cho ngành Dệt - Nhuộm.
+Website: https://www.alphasoftwaregroup.com/
+[Hình] Cấu tạo phân tử của hai loại nylon

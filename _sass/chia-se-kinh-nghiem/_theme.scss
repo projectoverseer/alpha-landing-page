@@ -1362,6 +1362,21 @@ body.kt-lightbox-open {
     @include opsz(20.19);
   }
 
+  // ISO 80000-2: a quantity symbol is italic — E, L, a, b, S, the polymer index
+  // n — while operators (Δ), function names, element symbols, units and
+  // abbreviations stay upright. optimize-math.mjs tags exactly the quantities
+  // with .kt-var (see the long note there for why they keep
+  // mathvariant="normal" and get their slant from here instead).
+  //
+  // This is a REAL italic: the Literata italic face is loaded (_fonts.scss), so
+  // the letter slants without leaving the reading face. Latin covers every
+  // variable in use; there is no Literata italic Greek subset, so a lowercase
+  // Greek quantity would be synthesised — write it \mathrm and say so, or load
+  // the subset, before shipping one.
+  mi.kt-var {
+    font-style: italic;
+  }
+
   // A display equation gets the same quiet slab as the rule-of-thumb blockquotes
   // it sits among (they are formulas in Vietnamese words, and stay prose), so a
   // reader scanning the page sees one kind of object, not two. It scrolls inside

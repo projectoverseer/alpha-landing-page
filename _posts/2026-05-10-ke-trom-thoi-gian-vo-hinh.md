@@ -41,11 +41,11 @@ Mỗi tuần một xưởng 20 máy mất:
 
 Quy ra mẻ (mỗi mẻ ~6 tiếng): khoảng 17 mẻ mất mỗi tuần.
 
-Nếu giá gia công 40.000đ/kg, mỗi mẻ 200kg:
+Nếu giá gia công 40.000đ/kg, mỗi mẻ 200 kg:
 
 > 17 mẻ × 8.000.000đ × 52 tuần = **gần 7 tỷ đồng/năm**
 
-(200kg/mẻ chỉ là ví dụ để có con số tham khảo. Bạn tự điền khối lượng mẻ thực tế của xưởng mình để có con số sát hơn.)
+(200 kg/mẻ chỉ là ví dụ để có con số tham khảo. Bạn tự điền khối lượng mẻ thực tế của xưởng mình để có con số sát hơn.)
 
 Nhìn theo cách khác: 17 mẻ mất mỗi tuần tương đương năng lực của gần 1 máy nhuộm chạy cả tuần. Chỉ bằng cách tối ưu quy trình khởi động và tắt máy – xưởng có thêm năng lực tương đương 1 máy nhuộm mà không cần bỏ một đồng vốn nào.
 

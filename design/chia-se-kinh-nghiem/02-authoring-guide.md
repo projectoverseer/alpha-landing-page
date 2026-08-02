@@ -177,6 +177,10 @@ at the base name (without `-vuong-*`); `avatar.html` appends the rest.
 - Enumerations → Markdown lists; Excel column specs → header-only tables.
 - Fix only unambiguous typos; never rewrite the author's voice. When unsure,
   check the archive file.
+- **Units take a no-break space** (ISO 80000-1): `215–220 °C`, `380 nm`,
+  `6500 K`, `20 mm`. The exceptions are `%` (stays closed up — owner's call) and
+  plane angle `0°`, `90°`. Full rule and reasoning: `05-ky-hieu-khoa-hoc.md` §3.
+  The build fails on a missed one, so you cannot forget.
 - **Remove** Facebook-only lines: the company/website footer, "comment chia
   sẻ kinh nghiệm nhé", attachment references.
 - **Keep** the authorial series teasers ("Bài tới mình sẽ chia sẻ…").
@@ -206,9 +210,24 @@ library. A malformed formula fails the build, loudly.
 So: **never type an equation by hand as Unicode with `<sub>` tags again.** That
 is what `ΔEcmc = √[(ΔL*/lS<sub>L</sub>)²…]` was, and it was wrong on every count.
 
-The letters come out **upright and in Literata**, matching the prose around them
-— that is deliberate and automatic; you do not write `\mathrm{}` around your
-variables to get it. Write `S_L`, not `\mathrm{S}_\mathrm{L}`.
+The letters come out **in Literata**, matching the prose around them, and they
+are slanted or not according to **ISO 80000-2** — the owner's standing decision
+(2026-08-02): this site follows the international standards for scientific
+notation, ISO 80000-2 for maths and physics and IUPAC for chemistry. It replaces
+the earlier house rule that set everything upright.
+
+In one line: **a quantity is italic, everything else is upright** — *E*, *L*\*,
+*S*, the polymer index *n* slant; Δ, sin, CMC, g, °C, C, H and every number stand
+up. The full table, the subscript test and the reasoning are §1 of
+`05-ky-hieu-khoa-hoc.md`, which is the normative file — do not restate it here,
+one of the two copies would rot.
+
+**It is automatic — do not hand-tune it.** So write `S_L` and `\Delta E^*`
+plainly and you get *S*<sub>*L*</sub> and Δ*E*\*, correct first time. You only
+reach for `\mathrm{}` when a subscript is an **abbreviation rather than a
+quantity**: `\Delta E_{\mathrm{CMC}}` (a committee), `E_{\mathrm{kin}}` (a word).
+A subscript that names a quantity stays bare — `S_L`, because L there is
+lightness, the same L as in *L*\*.
 
 Four rules:
 
@@ -229,6 +248,26 @@ Four rules:
 
 An acronym in a subscript is set in **capitals** (`\Delta E_{\mathrm{CMC}}`,
 `ΔE<sub>CMC</sub>`) — CMC is a committee, not a word.
+
+## 3c. Write the chemistry in `\ce{}`
+
+Chemistry takes the same rail and the same `$$…$$`, wrapped in `\ce{…}` — the
+mhchem notation, loaded into KaTeX in `optimize-math.mjs`:
+
+```markdown
+Liên kết amide $$\ce{\bond{-}CO-NH\bond{-}}$$ giữ các chuỗi lại với nhau.
+
+$$\ce{\bond{-}[NH-(CH2)5-CO]_n\bond{-}}$$
+$$\ce{R-N=N-R' + 4[H] ->[\text{Na2S2O4}] R-NH2 + R'-NH2}$$
+```
+
+Bonds between atoms are `-` `=` `#`, arrows are `->` `<=>`, subscripts and
+spacing are automatic. A **dangling** bond is `\bond{-}`, never a bare `-` — a
+trailing `-` is read as an ionic charge and silently raises into a superscript.
+**`05-ky-hieu-khoa-hoc.md` is the standard** — the full cookbook, that trap, the
+rule for what stays plain prose, and what to do when a post needs a ring
+structure instead of a line. Read it before typing a formula; never hand-type
+`CH₂` or `<sub>2</sub>` (the build fails on it).
 
 ## 4. Insert CTAs
 

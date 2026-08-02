@@ -32,11 +32,24 @@
  * A malformed formula throws and fails the build, which is the point: a silently
  * broken equation on a page about measuring colour deviation is worse than no
  * page at all.
+ *
+ * CHEMISTRY RIDES THE SAME RAIL
+ * `\ce{…}` (mhchem) is loaded below, so a formula, a functional group, a polymer
+ * repeat unit or a whole reaction equation is written in the same `$$…$$` an
+ * equation uses, and comes out as the same MathML — indexable text, spoken
+ * correctly, no extra bytes. The notation standard is
+ * design/chia-se-kinh-nghiem/05-ky-hieu-khoa-hoc.md; this file only has to load the
+ * extension. mhchem is what Wikipedia and every chemistry journal template use,
+ * which is the point: bonds, arrows, charges and states get ONE spelling that
+ * post 1000 still resolves the same way as post 15.
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import katex from 'katex';
+// Registers \ce and \pu on the KaTeX macro table. Import for side effect only,
+// and BEFORE the first render call.
+import 'katex/dist/contrib/mhchem.mjs';
 
 const HUB = '_site/chia-se-kinh-nghiem';
 
@@ -53,29 +66,42 @@ const decode = (s) =>
 // ourselves, so unwrap it and keep the markup to the <math> element alone.
 const unwrap = (html) => html.replace(/^<span class="katex">/, '').replace(/<\/span>$/, '');
 
-// Variables are set UPRIGHT here — no italic L, C, S. Two reasons, and the
-// second is the one that matters.
+// ISO 80000-2 typography: a QUANTITY symbol is italic, everything else upright.
+// (Owner's standing decision, 2026-08-02: the site follows the international
+// standards — ISO 80000-2 for maths and physics, IUPAC for chemistry — in place
+// of the earlier blanket "everything upright" house rule.)
 //
-// It is the owner's call: in a Vietnamese dyehouse, ΔE* and S_L are written
-// upright on the spec sheet and on the machine, and the article should look like
-// the trade it is written for, not like a physics paper.
+// So: E, L, a, b, S, l, c, and the polymer index n are italic; Δ (a difference
+// OPERATOR), CMC (an abbreviation), sin/log/exp (function names), element
+// symbols, unit symbols and state labels are upright.
 //
-// And it is the only way to keep the letters in Literata. A bare <mi> has no
-// font-style — the browser instead applies `text-transform: math-auto`, which
-// SWAPS THE CHARACTER: L (U+004C) becomes 𝐿 (U+1D43F, Mathematical Italic
-// Capital L). No reading face has glyphs in that block, so every variable fell
-// out of Literata and into whatever maths font the OS shipped — which is exactly
-// what made the equations look foreign. `mathvariant="normal"` (the one
-// mathvariant value MathML Core kept) turns the substitution off, and the plain
-// ASCII letter renders in the body face like the rest of the sentence.
+// KaTeX has already drawn most of that line for us. It writes
+// mathvariant="normal" on everything it knows is not a variable — \mathrm{},
+// mhchem's element symbols, uppercase Greek — and leaves a BARE <mi> for an
+// identifier. One correction is needed on top: a bare <mi> holding more than one
+// character is a function name (sin, log, exp, lim), which ISO sets upright. So
+// the rule is "bare AND single character ⇒ variable".
 //
-// KaTeX already writes it on multi-letter identifiers (\mathrm{CMC}) and on Δ;
-// the regex only matches an <mi> that carries no attribute at all.
-const upright = (html) => html.replaceAll('<mi>', '<mi mathvariant="normal">');
+// Both branches still get mathvariant="normal", and that is the subtle part.
+// The attribute is not about slant here — it is the only thing stopping the
+// browser's `text-transform: math-auto` from SWAPPING THE CHARACTER: L (U+004C)
+// would become 𝐿 (U+1D43F, Mathematical Italic Capital L), a codepoint no
+// reading face has a glyph for, so the letter drops out of Literata into
+// whatever maths font the OS ships. Keeping the plain ASCII letter and slanting
+// it with CSS (`.kt-var { font-style: italic }`, against the real Literata
+// italic face) gives a true italic that is still the body face — which is what
+// the standard actually asks for, and what a swapped codepoint never was.
+const SINGLE = (s) => [...s].length === 1;
+const iso = (html) =>
+  html.replace(
+    /<mi>([^<]*)<\/mi>/g,
+    (_, sym) =>
+      `<mi mathvariant="normal"${SINGLE(sym) ? ' class="kt-var"' : ''}>${sym}</mi>`,
+  );
 
 const render = (tex, displayMode, file) => {
   try {
-    return upright(unwrap(katex.renderToString(decode(tex), { output: 'mathml', displayMode })));
+    return iso(unwrap(katex.renderToString(decode(tex), { output: 'mathml', displayMode })));
   } catch (err) {
     throw new Error(`optimize:math  ✗ ${file}\n      ${tex.trim()}\n      ${err.message}`);
   }

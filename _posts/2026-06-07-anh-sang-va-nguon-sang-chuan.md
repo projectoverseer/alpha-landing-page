@@ -11,7 +11,7 @@ Tuần trước có bạn "đặt hàng" mình viết về so màu và đo màu 
 
 ## Phần 1 – ánh sáng là gì?
 
-Ánh sáng trắng không phải một màu duy nhất. Nó là tập hợp của nhiều tia sáng có bước sóng khác nhau, trải dài từ 380nm đến 700nm. Mỗi bước sóng tương ứng với một màu sắc mà mắt người nhận biết được.
+Ánh sáng trắng không phải một màu duy nhất. Nó là tập hợp của nhiều tia sáng có bước sóng khác nhau, trải dài từ 380 nm đến 700 nm. Mỗi bước sóng tương ứng với một màu sắc mà mắt người nhận biết được.
 
 Hiện tượng cầu vồng chính là minh họa rõ nhất: ánh sáng mặt trời bị các hạt nước phân tách thành từng dải màu riêng theo bước sóng.
 
