@@ -44,3 +44,4 @@ exclude:
   - Gemfile.lock
   - skills-lock.json   # agent-skill manifest; dev tooling, must not ship
   - .claude/           # ditto (dotdirs are skipped by default, listed to be explicit)
+  - .agents/           # ditto
