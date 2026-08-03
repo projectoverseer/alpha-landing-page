@@ -59,37 +59,45 @@ function openAccordion(entry) {
 (function () {
   const navbar = document.getElementById("navbar");
 
-  function throttle(func, wait) {
-    let timeout;
-    let previous = 0;
+  // ─── THE BAR'S SURFACE MUST NOT LAG THE SCROLL ───
+  //
+  // This ran behind a 200 ms leading+trailing throttle. Scrolling DOWN was
+  // instant (the leading edge fires on the first event), but arriving back at
+  // the top landed on the trailing edge: the white bar and the colour logo went
+  // on sitting over the hero for up to 200 ms before yielding to transparent.
+  // 200 ms is well past the threshold where a delay stops being invisible and
+  // becomes a thing you watch happen — which is the one failure the design
+  // philosophy names outright. (Only ≥ md ever showed it; below that the bar is
+  // opaque in both states, so the two states look identical on a phone.)
+  //
+  // requestAnimationFrame instead of a timer: the browser hands us the frame it
+  // is about to paint, so the class is always set for the position being drawn —
+  // never early, never stale — and coalescing on `frame` means a burst of scroll
+  // events does the work once per frame rather than once per event.
+  let frame = 0;
 
-    return function executedFunction(...args) {
-      const now = Date.now();
-      const remaining = wait - (now - previous);
-
-      if (remaining <= 0 || remaining > wait) {
-        clearTimeout(timeout);
-        timeout = null;
-        previous = now;
-        func(...args);
-      } else if (!timeout) {
-        timeout = setTimeout(() => {
-          previous = Date.now();
-          timeout = null;
-          func(...args);
-        }, remaining);
-      }
-    };
+  function onScroll() {
+    if (frame) return;
+    frame = requestAnimationFrame(function () {
+      frame = 0;
+      updateNavState();
+    });
   }
 
+  // `null` rather than false so the first call always writes: on load we must
+  // establish the state, not compare against a guess about it.
+  let navIsActive = null;
+
   function updateNavState() {
-    if (window.scrollY > 0) {
-      navbar.classList.add("nav-active");
-      navbar.setAttribute("data-bs-theme", "light");
-    } else {
-      navbar.classList.remove("nav-active");
-      navbar.setAttribute("data-bs-theme", "dark");
-    }
+    const active = window.scrollY > 0;
+
+    // A scroll almost never crosses the boundary, so the common case is to do
+    // nothing at all — no class write, no attribute write, no style recalc.
+    if (active === navIsActive) return;
+    navIsActive = active;
+
+    navbar.classList.toggle("nav-active", active);
+    navbar.setAttribute("data-bs-theme", active ? "light" : "dark");
   }
 
   function removeHash() {
@@ -249,7 +257,7 @@ function openAccordion(entry) {
 
   // Set correct state on page load, then track on scroll
   updateNavState();
-  window.addEventListener("scroll", throttle(updateNavState, 200), { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("hashchange", removeHash, false);
 
   cleanUrl();

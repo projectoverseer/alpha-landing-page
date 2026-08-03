@@ -1,8 +1,19 @@
-<!-- Preload LCP hero image so the browser discovers it before CSS is parsed -->
+<!-- Preload LCP hero image so the browser discovers it before CSS is parsed.
+     The candidates MUST mirror the `image-set()` in _sass/_base.scss exactly —
+     1920 at 1x, 3840 at 2x — or the preload fetches an image the CSS then
+     declines to use. With a bare `href` to the 1x file this preloaded 1920.avif
+     on every device while a 2dppx screen (i.e. every phone and every retina
+     laptop) went on to paint 3840.avif: one wasted download, and the image that
+     actually IS the LCP never preloaded at all — the exact failure this tag was
+     added to prevent. `href` stays as the fallback for engines that don't
+     support imagesrcset; where both are understood, imagesrcset wins.
+     Same rule the reading hub already states in chia-se-kinh-nghiem/head.html:
+     start the winning candidate, "and never a second, wasted one". -->
 <link
   as="image"
   fetchpriority="high"
   href="{{ site.url }}/img/hero/hero-1920.avif"
+  imagesrcset="{{ site.url }}/img/hero/hero-1920.avif 1x, {{ site.url }}/img/hero/hero-3840.avif 2x"
   rel="preload"
   type="image/avif"
 />

@@ -2398,8 +2398,36 @@ header.hero-precision {
   color: $icon;
 }
 
+// ─── Client portraits ──────────────────────────────────────────────────────────
+// These carried a corner radius and NOTHING else — no max-width, no height rule,
+// still `display: inline`. The `max-width: 100%` that covers every other picture
+// on the site is scoped to `.prose`/`.big`, and neither a review card nor the
+// story column is either, so all three portraits rendered at their fixed
+// attribute width and could not shrink.
+//
+// The review card is where that bites. Its inner box is the card minus 24px of
+// padding and a hairline on each side, and in the single-column band the card is
+// just the container: inner = viewport − 98. The portrait is 224 wide, so it
+// stops fitting below a 322px viewport — it already overhangs by 2px on a 320px
+// phone, and on a 280px foldable it overruns by 42px, past the padding and out
+// through the card's own border.
+//
+// `height: auto` is not optional next to `max-width`: the tags carry width AND
+// height, so a capped width with a held height squashes the face. The pair also
+// keeps the aspect ratio known before the JPEG lands, so nothing shifts on load.
+//
+// Centred rather than flush left. The portrait is a fixed 224 in a box that runs
+// to 669 just under `md` and sits at 490 on every desktop, so left-aligned it
+// left a permanent empty rectangle beside it — up to 445×336 — that read as a
+// gap rather than as composition. Centred, the same space becomes symmetric
+// margin. `display: block` + `auto` also states the centring the story column was
+// only getting by accident, from `text-center` acting on an inline image.
 .client-portrait {
   @include corner($card-border-radius);
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
 }
 
 .partner-logo-card {
@@ -2421,6 +2449,41 @@ header.hero-precision {
 .partner-logo {
   object-fit: contain;
   margin: auto;
+  // Let the height follow the width/height attributes' ratio. Without this a
+  // mark capped by max-width below would keep its attribute height and sit
+  // letterboxed inside a box taller than the artwork.
+  height: auto;
+}
+
+// ─── Partner-logo sizing ───────────────────────────────────────────────────
+// The three marks are shaped very differently — Tuấn Hồng is square, the other
+// two are ~3.2:1 strips — so matching them on width, or on height, always
+// leaves one of them dominating the row. They are matched on OPTICAL AREA
+// instead: each mark's ink covers the same ~23 700px², which is what actually
+// reads as "the same size" across a row of cards.
+//
+// The geometry: inset the card by a uniform 2.5rem to get a 276 × 160 well
+// (measured on the 356px card the xl 3-column grid produces, against the card's
+// fixed 15rem height). Solving for equal ink area inside that well puts both
+// extremes on its edges at once — the widest mark fills the width exactly, the
+// tallest lands within 4px of the height — so the well is a real boundary
+// rather than an arbitrary cap. The boxes it yields are the width/height
+// attributes in _includes/projects.html.
+//
+// Each percentage below is that mark's box width ÷ 356. On a card wider than
+// 356px every mark sits at its design size; on a narrower one they are all
+// capped to the same fraction of the card, so they shrink together and the
+// optical match survives every width the grid produces (272px phone → 516px sm).
+.partner-logo-tuan-hong {
+  max-width: 46.9%;
+}
+
+.partner-logo-dung-dong {
+  max-width: 77.5%;
+}
+
+.partner-logo-spica {
+  max-width: 77.8%;
 }
 
 // Section index marker — a measured "calibration" marker: a large figure in the

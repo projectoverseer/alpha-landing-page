@@ -16,6 +16,49 @@
 
     {% include meta.html %}
     {% include meta-assets.html %}
+
+    {%- comment -%}
+      Without the bundle, the two product descriptions are unreachable. They are
+      in the DOM, but Bootstrap ships `.collapse:not(.show) { display: none }`
+      and it is the script that adds `.show` — so a blocked, failed or slow-
+      404'd bundle.js takes the products section's entire content with it. That
+      is the realistic case here, far more than a reader who has turned JS off.
+
+      So the closed state is the ENHANCEMENT, not the default: no script, no
+      collapsing, everything simply open and readable. The chevron and the
+      pointer cursor come off with it, because both promise an expander that
+      cannot expand, and the header takes the divider hairline that Bootstrap
+      only gives `:not(.collapsed)` — the buttons keep their `.collapsed` class
+      with nothing running to remove it, so without this the open body would run
+      into its own header with no line between them.
+
+      `!important` rather than a more specific selector: this has to beat
+      `.collapse:not(.show)` (0,2,0) no matter where the stylesheet ends up in
+      the head, and the one a11y regression this file has already had came from
+      an override that silently stopped applying when source order moved.
+
+      What this cannot fix: the buttons keep `aria-expanded="false"` while their
+      panels are visibly open, and no stylesheet can rewrite an ARIA attribute.
+      A screen reader with scripting disabled would hear "collapsed" about
+      content that is right there. Wrong, but strictly better than the content
+      being absent — and the fix for it is native <details>, not more CSS.
+    {%- endcomment -%}
+    <noscript>
+      <style>
+        .accordion-collapse {
+          display: block !important;
+        }
+
+        .accordion-button::after {
+          display: none;
+        }
+
+        .accordion-button {
+          box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+          cursor: default;
+        }
+      </style>
+    </noscript>
   </head>
   <body
     data-bs-smooth-scroll="true"
