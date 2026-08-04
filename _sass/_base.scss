@@ -220,8 +220,11 @@ a {
 // class rule — .btn-xl, .navbar-call, .skip-link, .locale-flag, the accordion's
 // first and last headers — and a class rule beats zero at any source position.
 // So this needs no exception list and cannot go stale.
+//
+// The floor is a plain radius on purpose, not `corner()` — see quy-cu §5 for
+// why this is the one rung that must not carry a `corner-shape` with it.
 :where(:focus-visible) {
-  border-radius: $focus-radius;
+  @include focus-ring-corner;
 }
 
 // Rows flush with a container's edge turn the same ring INWARD (quy-cu §5).
@@ -239,6 +242,16 @@ a {
 // ...and both keep the square corner the :where() floor would otherwise give
 // them, because a flush strip has no corner of its own. Bootstrap already says
 // so for `.accordion-button`; the menu row does not.
+//
+// AND THIS RULE DID NOT ACTUALLY WIN for the first and last row, which
+// measurement caught on 2026-08-04: they were carrying a 7px framework radius
+// from `.dropdown-menu > li:first-child .dropdown-item` (0,3,1). It was
+// invisible — `.dropdown-menu { overflow: hidden }` clips those rows to the
+// menu's own curve anyway — until the focus floor started stating a
+// `corner-shape`, at which point the row held a radius from Bootstrap and a
+// shape from us and changed corner geometry the moment it took focus. Switched
+// off at `$dropdown-inner-border-radius` in main.scss §8, where the framework
+// listens; this rule keeps saying it for every row in between.
 .dropdown-item {
   border-radius: 0;
 }
@@ -457,6 +470,26 @@ header[id] {
 
 // The skip link paints itself onto the focus blue, so it is a dark surface of
 // its own and takes the dark pair — the same two tokens, not a second rule.
+//
+// ITS TEXT USED TO VANISH ON HOVER (owner, 2026-08-04) and the cause is worth
+// naming, because it is a shape this file keeps producing. The prose-link rule
+// near the middle of this file reads
+//
+//     a:not(.nav-link, .btn-xl, .dropdown-item, .navbar-call):hover
+//
+// which scores 0,2,1 — `:not()` takes the specificity of its heaviest argument —
+// against `.skip-link` at 0,1,0. So it won, and repainted this link's white text
+// with `$link-hover-color`: #0066cc text on a #0066cc ground. 1:1. The label was
+// still there and still read out; you simply could not see it.
+//
+// The exclusion list is an ENUMERATION of "anchors that are controls, not
+// prose", and the skip link is the fifth control that belongs on it — so it is
+// named there, in the one place that decides that question. It cannot be fixed
+// from here: `a:not(...):hover` is 0,2,1 and sits 600 lines further down, so a
+// `.skip-link:hover` at 0,2,0 loses on specificity and an `a.skip-link:hover`
+// at 0,2,1 loses on source order. Below is only the hover this control should
+// have had all along — one step darker on the ramp, the same gesture every
+// other button on the site makes.
 .skip-link {
   --focus: #{$fg-on-dark};
   --focus-halo: #{$ink-950};
@@ -470,6 +503,18 @@ header[id] {
   color: $white;
   @include corner($r-2);
   font-weight: 600;
+  text-decoration: none;
+  transition: background var(--t-1) var(--ease);
+}
+
+// $blue-700 is the ramp's next rung down from the link blue; white on it
+// measures 8.59:1, so the label is as readable held as it is at rest.
+//
+// `text-decoration` is restated because the framework's own `a:hover` (0,1,1)
+// still outranks `.skip-link`'s `none` (0,1,0) — this is a button, and no other
+// button on the site underlines itself when a pointer arrives.
+.skip-link:hover {
+  background: $blue-700;
   text-decoration: none;
 }
 
@@ -1051,7 +1096,11 @@ a {
     color: inherit;
   }
 
-  &:not(.nav-link, .btn-xl, .dropdown-item, .navbar-call):hover,
+  // The list is "anchors that are CONTROLS, not prose". `.skip-link` joined it
+  // on 2026-08-04: without it this rule repainted the skip link's white label
+  // with the link blue it is already sitting on, and the text disappeared at
+  // 1:1 while remaining perfectly readable to a screen reader.
+  &:not(.nav-link, .btn-xl, .dropdown-item, .navbar-call, .skip-link):hover,
   .partner-logo-card:has(a.stretched-link:hover)+div & {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
@@ -1538,12 +1587,13 @@ $accordion-r: depth-match($accordion-border-radius); // 16px → 22.8665px
 
 .dropdown-toggle {
 
-  /* Hide focus ring on mouse/pointer interaction, but preserve it for keyboard navigation */
-  &:focus:not(:focus-visible) {
-    outline: 0 !important;
-    box-shadow: none !important;
-  }
-
+  // (A `&:focus:not(:focus-visible) { outline: 0 !important; box-shadow: none
+  // !important }` lived here, from the era when the ring was an outline and
+  // Bootstrap still drew one of its own. Both halves are now unreachable: our
+  // ring is keyed to `:focus-visible` and never paints on a pointer press, and
+  // the framework's four focus shadows are nulled at the variable in main.scss
+  // §8. It was two `!important`s defending a state nothing draws in.)
+  //
   // The caret — `arrow_drop_down`, the mark for "a menu opens here" (see the
   // mask-icon note at the top of this file). It replaces Bootstrap's own
   // border-triangle with the Material drawing of the same object, so the one
@@ -2046,6 +2096,12 @@ section.bg-primary {
 }
 
 // Ghost button — secondary action, reads on dark and light
+//
+// ONE SIGNAL PER STATE (quy-cu §5). The pressed fill used to be shared with
+// `:focus-visible`, so arriving by keyboard made a button look held down —
+// three buttons on the site did this and each had picked its own pressed
+// colour, which is a second focus indicator competing with the ring and
+// disagreeing with it. Focus draws the ring. Press changes the fill.
 :is(a, button).btn-ghost {
   color: $fg-on-dark;
   background: transparent;
@@ -2056,8 +2112,7 @@ section.bg-primary {
     background: rgba(255, 255, 255, 0.12);
   }
 
-  &:active,
-  &:focus-visible {
+  &:active {
     background: rgba(255, 255, 255, 0.2);
   }
 }
@@ -2369,8 +2424,7 @@ header.hero-precision {
     background: $white;
   }
 
-  &:active,
-  &:focus-visible {
+  &:active {
     background: $ink-100;
   }
 }
@@ -2383,8 +2437,7 @@ header.hero-precision {
     background: $btn-primary-hover;
   }
 
-  &:active,
-  &:focus-visible {
+  &:active {
     background: $btn-primary-active;
   }
 }
@@ -2729,8 +2782,7 @@ header.hero-precision {
       background: $ink-700;
     }
 
-    &:active,
-    &:focus-visible {
+    &:active {
       background: $ink-600;
     }
   }

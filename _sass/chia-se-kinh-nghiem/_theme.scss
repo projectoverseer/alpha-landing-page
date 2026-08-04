@@ -317,9 +317,9 @@ body.kt {
 
 // The ring's own corner, at zero specificity so every shaped thing on the hub —
 // .kt-button, .kt-series-card, the round .kt-lightbox-close, the avatar — keeps
-// its own. Same rule, same reasoning, same number as the main site (quy-cu §5).
+// its own. Same rule, same reasoning, same rung as the main site (quy-cu §5).
 :where(.kt :focus-visible) {
-  border-radius: $focus-radius;
+  @include focus-ring-corner;
 }
 
 .kt a {
@@ -392,17 +392,55 @@ body.kt {
   scroll-margin-top: 4.75rem;
 }
 
-.kt-skip-link {
-  position: absolute;
+// The hub's skip link, rebuilt 2026-08-04 to be the same OBJECT as the main
+// site's (_base.scss `.skip-link`) rather than a loose scrap of styling.
+//
+// Three things were wrong with it and the owner caught all three:
+//
+//  1. `position: absolute` — so once revealed it scrolled away with the page.
+//     A skip link is chrome, not content: it belongs to the viewport. `fixed`,
+//     like the main site's, which had it right.
+//  2. It painted `--paper` on `--paper` with no edge of its own, so the only
+//     thing separating it from the page underneath was the focus ring. Now it
+//     is a control: the hub's own indigo ground, paper text, the $r-2 corner
+//     every hub button wears.
+//  3. Its `z-index: 10` sat under nothing in particular. The topbar is z-index
+//     5 and sticky; the skip link has to clear it, so it takes a number that
+//     says "above the chrome" rather than one that happens to work.
+//
+// `left: -999rem` (not `display: none`) is deliberate and stays: the link must
+// remain focusable to be reachable at all — see design/08 §"tab order".
+// SCOPED `.kt ...`, not a bare class, and that is not decoration: `.kt a` sets
+// the link colour at 0,2,0 and lands later in this file, so a bare
+// `.kt-skip-link { color: … }` at 0,1,0 loses and the label comes out INDIGO ON
+// INDIGO — invisible, and exactly the failure this rewrite was fixing on the
+// main site. (Caught here by measuring the rendered colours rather than by
+// reading the rule, 2026-08-04, having just written the bug.)
+.kt .kt-skip-link {
+  position: fixed;
   left: -999rem;
+  z-index: 50;
+  padding: 0.5rem 1rem;
+  background: var(--indigo);
+  color: var(--paper);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-decoration: none;
+  @include corner($r-2);
+  transition: background var(--t-1) var(--ease);
 
   &:focus {
     left: 1rem;
     top: 1rem;
-    z-index: 10;
-    padding: 0.5rem 1rem;
-    background: var(--paper);
-    outline-offset: 0;
+  }
+
+  // One step along the hub's own indigo ramp. In dark mode both tokens are
+  // already flipped — --indigo is the pale globe stop and --indigo-deep is
+  // paler still — so "stronger" reads as LIGHTER at night, which is the rule
+  // the theme states for itself (§ dark tokens).
+  &:hover {
+    background: var(--indigo-deep);
+    color: var(--paper);
   }
 }
 
@@ -799,8 +837,20 @@ body.kt {
 // the thing it is pointing at, without the picture performing. Under
 // prefers-reduced-motion the blanket transition kill makes the same 2% land
 // instantly — feedback stays, motion goes.
-.kt-feed-link:hover .kt-feed-thumb img,
-.kt-feed-link:focus-visible .kt-feed-thumb img {
+// HOVER ONLY. It used to fire on `:focus-visible` too, and that was wrong for a
+// reason worth keeping (owner's question, 2026-08-04: "nếu không activate hover
+// effect cho tất cả element khi tab navigate tới thì sẽ ra sao?").
+//
+// A hover state answers "your pointer is on this". A focus state answers "the
+// keyboard is here", and the ring already says that — identically, on every
+// control, which is the entire point of the ring. Firing hover as well gives a
+// keyboard reader a SECOND signal that is different on every component.
+//
+// On this card it was worse than redundant: the picture scaled 2% inside a ring
+// that did not move, so the ring visibly detached from the thing it was marking
+// — motion nobody asked for, at the exact moment the reader is trying to read
+// where they are. Pointer gets the lean-in; keyboard gets the ring.
+.kt-feed-link:hover .kt-feed-thumb img {
   transform: scale(1.02);
 }
 
@@ -1476,6 +1526,24 @@ body.kt-lightbox-open {
   }
 }
 
+// THIS BUTTON HAD NO FOCUS RING AT ALL, and the reason is the one hazard the
+// box-shadow ring carries: a control that draws its OWN edge with box-shadow is
+// competing with the ring for a single property. `.kt .kt-button-quiet` scores
+// 0,2,0 — the same as `.kt :focus-visible` — and it is written 1150 lines
+// later, so it won on source order and replaced the ring with its own hairline.
+// Found 2026-08-04 by focusing every focusable element on the hub and reading
+// the computed box-shadow back: the author page's "Xem tất cả bài viết" and the
+// share block's copy button were invisible to a keyboard.
+//
+// `focus-ring($under:)` is exactly this case: the border stays, underneath, so
+// the button keeps its edge while focused instead of the ring erasing it.
+//
+// ANY new control that draws itself with box-shadow needs this line too. That
+// is the whole cost of the property choice in quy-cu §5, and it is one line.
+.kt .kt-button-quiet:focus-visible {
+  @include focus-ring(inset 0 0 0 1px var(--line));
+}
+
 // ---- Share block (overhaul, 2026-07-15; spec: 03-element-spec.md) ------------
 //
 // After the signature, before the series nav: the reader who just finished is
@@ -1547,8 +1615,11 @@ body.kt-lightbox-open {
   @include corner($r-2);
   text-decoration: none;
 
-  &:hover,
-  &:focus-visible {
+  // Hover only. On focus this was the clearest case of the two signals fighting:
+  // the card's border went indigo, and the ring is ALSO indigo, so a focused
+  // card wore indigo border + paper halo + indigo ring — three concentric bands
+  // reading as one smeared edge instead of a ring around a card.
+  &:hover {
     border-color: var(--indigo);
   }
 
@@ -1773,8 +1844,8 @@ body.kt-lightbox-open {
 
 // The same 2% lean-in as the feed thumbs — one gesture, everywhere a card
 // answers a pointer.
-.kt-readnext-link:hover .kt-readnext-thumb img,
-.kt-readnext-link:focus-visible .kt-readnext-thumb img {
+// Hover only, same gesture and the same reasoning as the feed thumb above.
+.kt-readnext-link:hover .kt-readnext-thumb img {
   transform: scale(1.02);
 }
 

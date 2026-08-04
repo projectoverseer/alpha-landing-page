@@ -271,9 +271,44 @@ and a control that answers nothing reads as broken.
 ## 5. Focus — our own ring, drawn by us, on every control
 
 ```scss
-@include focus-ring;   // box-shadow: 0 0 0 2px var(--focus-halo),
-                       //             0 0 0 5px var(--focus)
+@include focus-ring;   // box-shadow: 0 0 0 2px var(--focus-halo)   ← the halo
+                       // outline: 3px solid var(--focus)           ← the ring
+                       // outline-offset: 2px
 ```
+
+**The halo is painted and the ring is an outline, and the split is the point.**
+Both were box-shadows until 2026-08-04, when the owner caught what that costs:
+*"khoảng 1px viền `--focus` bị loang vào bên trong của `--focus-halo`, đặc biệt
+là ở phần corner."* Reproduced in isolation — a 4px-radius control with a
+transparent background, focused, sampled along the 45° ray through its corner:
+
+```text
+page #ffffff ×90 │ ring #0066cc ×34 │ halo #ffffff ×22 │ #deebf8 ×1 │ page
+                                                        ^^^^^^^^^^
+```
+
+That stray pixel is a **13% tint of the ring colour, inside the halo**, sitting
+on the element's own border-box curve. An outer `box-shadow` is clipped to the
+border box, so *both* shadows are clipped by the same antialiased curve: the
+ring's clipped edge paints first, the halo's clipped edge composites over it,
+neither reaches full coverage, and the ring shows through the seam. Drawing the
+halo two or three times cleans up the circular case and **does not** fix the
+superellipse one.
+
+An `outline` is not clipped to the border box. `outline-offset` starts it where
+the halo ends, so the only boundary left at the border box is halo-against-
+control, which is a boundary that is supposed to be there:
+
+```text
+page #ffffff ×90 │ #0b6dce ×1 │ ring #0066cc ×33 │ #ffffff ×228
+```
+
+One antialiasing pixel, on the outside, where any two adjacent shapes must have
+one. **This does not reopen reason 1 below.** That argument was never "box-shadow
+is magic" — it was "whoever writes the property last at equal specificity wins",
+and we now write `outline` ourselves, from a selector list that names every
+framework component, placed after the framework. It is the same reason
+`outline: none` worked when it replaced Chrome's UA ring.
 
 **It is a `box-shadow`, not an `outline`, and that is the whole design.** Two
 reasons, in order of how certain we are of them:
@@ -289,6 +324,30 @@ reasons, in order of how certain we are of them:
    property entirely. The framework's rings are now switched off at the
    variable (`main.scss` §8) and our rule names every component that would
    otherwise take itself back.
+
+   **"Stop contesting `outline`" was then read as "never write `outline`", and
+   that was a bug that shipped.** A property you decline does not sit empty —
+   the UA stylesheet fills it. Chrome ships
+   `:focus-visible { outline: auto 1px -webkit-focus-ring-color }`, so every
+   control the framework did not happen to zero drew **Chrome's near-black ring
+   on top of ours**. Measured in the browser on 2026-08-04, by focusing every
+   focusable element and reading the computed style back:
+
+   | control | what actually rendered |
+   |---|---|
+   | `.nav-link`, `.accordion-button` | our ring alone (Bootstrap had zeroed it) |
+   | everything else | **ours + Chrome's** — two rings, two colours, two radii |
+
+   "Everything else" was the skip link, the brand lockup, the call pill, both
+   CTA buttons, every menu row, every footer link, and every card, tag and title
+   on the hub. On the **menu row** it was more than cosmetic: that row's ring
+   turns inward precisely so nothing spills past the menu's corner, and Chrome's
+   outline spilled past it anyway, because it was never ours to begin with.
+
+   The mixin now states `outline: none` itself. That is not a return to
+   contesting the property — it is taken **once**, in the same declaration as
+   the ring, at the same specificity, and handed straight back inside
+   `forced-colors`. One ring is drawn and we are the ones drawing it.
 2. **It rendered wrong.** Observed, back when the ring was an `outline` and the
    corner was a superellipse: the ring drew as a shape that did not match the
    button it surrounded, and fragments survived after focus moved on. **Per spec
@@ -313,7 +372,7 @@ rather than merely inconsistent.
 ### The ring has a shape of its own
 
 ```scss
-:where(:focus-visible) { border-radius: $r-1; }
+:where(:focus-visible) { @include corner($r-1); }   // radius AND shape
 ```
 
 A box-shadow copies the silhouette of whatever it surrounds. That is right for a
@@ -334,6 +393,33 @@ round close button, and any component nobody has written yet. **There is no
 exception list to keep up to date.** `verify.mjs` gates the rule, because
 `:where()` is exactly the kind of selector a minifier mangles and losing it
 fails silently — the ring is still there, just two shapes again.
+
+**It brings the rung whole — the radius *and* the corner** (owner, 2026-08-04:
+*"tất cả focus ring đều là squircle hết rồi phải không? mọi thứ phải khít với
+nhau hoàn hảo"*). So a text link's ring is cut by the same superellipse as the
+button beside it, and the site has one corner geometry rather than two.
+
+That carries a hazard worth naming, because it is subtle: **the cascade resolves
+per declaration, not per rule.** An element that states `border-radius` in a
+class rule but takes its `corner-shape` from nowhere keeps its own radius and
+picks up *our* superellipse — and at equal radius a superellipse sits ~30%
+shallower than a circle (§2), so such a corner would visibly change shape on
+focus and change back on blur. A corner that moves when you tab to it is worse
+than the inconsistency it was meant to fix.
+
+It is safe here because it was **checked, not assumed**: every focusable element
+on both products was focused in Chrome and its computed corner read back before
+and after — 440 elements, 9 pages, both colour schemes, **zero** elements with a
+shape of their own changed. Every radius on this site is written with `corner()`,
+which states both properties together, so a class rule always brings its own
+shape and always wins. The one exception was the **menu row**, carrying a bare
+7px from `.dropdown-menu > li:first-child .dropdown-item` (0,3,1) that
+`overflow: hidden` had been clipping away invisibly for months; it is now zeroed
+at `$dropdown-inner-border-radius` in `main.scss` §8, where the framework
+listens.
+
+> Add a component that sets `border-radius` without `corner()` and it *will*
+> change shape on focus. Re-run the corner check before shipping it.
 
 ### Two tones, because one colour cannot do this job
 
@@ -370,12 +456,48 @@ fill. Both keep a square corner, because a flush strip has none of its own —
 which also means the accordion's ring is rounded at the top of the stack, square
 in the middle and rounded at the bottom, exactly like the item it sits in.
 
-### Two things that will bite
+### Focus draws the ring. Press changes the fill. Hover is for pointers
+
+**One signal per state**, and the ring is the only one focus gets.
+
+A **hover** state answers *"your pointer is on this"*. A **focus** state answers
+*"the keyboard is here"* — and the ring already says that, identically, on every
+control, which is the whole reason the ring exists. Firing hover styling on
+`:focus-visible` as well hands a keyboard reader a second signal that is
+different on every component, and the site had it in five places:
+
+| what fired on focus | why it was wrong |
+|---|---|
+| `.btn-primary`, `.btn-secondary`, `.btn-ghost` — the pressed fill | arriving by keyboard made the button look *held down*, in three different colours |
+| `.kt-feed-link` / `.kt-readnext-link` — the 2% thumbnail lean-in | the picture scaled inside a ring that did not move, so the ring visibly detached from what it was marking — motion nobody asked for, at the moment the reader is working out where they are |
+| `.kt-series-card` — `border-color: var(--indigo)` | the ring is *also* indigo, so a focused card wore indigo border + paper halo + indigo ring: three concentric bands reading as one smeared edge |
+
+All five now belong to `:hover` (and `:active`) alone. The platform works this
+way too — no browser applies hover styling on keyboard focus, which is precisely
+why `:focus-visible` was specified in the first place.
+
+The exception to keep in mind: if hover reveals **information** a keyboard reader
+would otherwise miss, that is not decoration and it should fire on focus as well.
+Nothing on this site currently does — the feed title's underline is already
+hover-only and the ring carries the rest.
+
+### Three things that will bite
 
 - **`forced-colors` throws box-shadow away.** The mixin carries a
   `@media (forced-colors: active)` branch that redraws the ring as
   `outline: 3px solid Highlight`. Without it the ring vanishes for exactly the
-  readers least able to lose it.
+  readers least able to lose it. It sits *after* the `outline: none` above and
+  at the same specificity, so it wins on source order.
+- **A control that draws its own edge with `box-shadow` will erase the ring.**
+  This is the whole cost of choosing the property, and it is the one thing a new
+  component has to remember. `.kt .kt-button-quiet` scores 0,2,0 — the same as
+  `.kt :focus-visible` — and is written 1150 lines later, so its own
+  `inset 0 0 0 1px var(--line)` border won on source order and the button
+  shipped with **no focus indicator at all** (found 2026-08-04; it was the
+  author page's "Xem tất cả bài viết" and the share block's copy button, both
+  invisible to a keyboard — a WCAG 2.2 SC 2.4.7 failure). `focus-ring($under:)`
+  is built for exactly this: the border stays underneath, so the control keeps
+  its edge while focused instead of the ring replacing it. One line per control.
 - **PurgeCSS eats the bare `:focus-visible`.** It has no class or element to
   match a bare pseudo-class against, so it removed it — in production only,
   silently — and shipped a build with a ring on buttons and *nothing* on the

@@ -406,6 +406,50 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   if (!/forced-colors/.test(css) || !/[Hh]ighlight/.test(css)) {
     errors.push(`css/${file}: no forced-colors focus fallback — the ring vanishes in High Contrast`);
   }
+  // The UA's own ring is taken, not merely ignored (quy-cu §5). Declining to
+  // write `outline` does not leave the property empty — Chrome's UA sheet fills
+  // it with `outline: auto 1px`, in near-black, at its own radius, painted on
+  // top of ours. That shipped: measured 2026-08-04, every control the framework
+  // had not zeroed wore two rings, and on the menu row Chrome's outline spilled
+  // past the very edge the inset ring exists to stay inside.
+  //
+  // THE HALO IS PAINTED AND THE RING IS AN OUTLINE, and the two must travel
+  // together in one block (quy-cu §5). Keying off the halo — the only thing
+  // that reads var(--focus-halo) — is what makes this minifier-proof: clean-css
+  // rewrites and reorders the selector list, but a declaration block stays a
+  // declaration block.
+  //
+  // This gate covers two separate regressions at once:
+  //
+  //  1. The ring going back to a box-shadow. Both bands as outer shadows are
+  //     clipped by the same antialiased border-box curve, and the ring bleeds
+  //     ~1px through the halo's seam — a 13% tint of the ring colour sitting
+  //     inside the halo, worst at the corners. The owner reported it by eye
+  //     before it was ever measured.
+  //  2. `outline` going unwritten again, which hands the property straight back
+  //     to Chrome's UA sheet and draws its near-black ring on top of ours.
+  //
+  // Both are invisible in source review and obvious in a browser, which is
+  // exactly the class of failure the gates in this file exist for.
+  const haloBlocks = [...css.matchAll(/\{([^}]*var\(--focus-halo\)[^}]*)\}/g)];
+  if (!haloBlocks.length) {
+    errors.push(`css/${file}: no block paints the halo — the focus-ring gate is blind`);
+  }
+  for (const [, body] of haloBlocks) {
+    if (!/outline:[^;}]*var\(--focus\)/.test(body)) {
+      errors.push(
+        `css/${file}: a focus block paints the halo but does not draw the ring as ` +
+          `\`outline: … var(--focus)\` — either the ring regressed to a box-shadow (it ` +
+          `then bleeds through the halo seam) or \`outline\` was left to Chrome (quy-cu §5)`,
+      );
+    }
+    if (!/outline-offset:/.test(body)) {
+      errors.push(
+        `css/${file}: a focus block has no \`outline-offset\` — the ring would sit on the ` +
+          `control's edge instead of outside the halo (quy-cu §5)`,
+      );
+    }
+  }
 }
 
 // ---- no map key may start with a digit unless it is quoted ----

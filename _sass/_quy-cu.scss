@@ -279,6 +279,29 @@ $tap: 2.75rem;
 //     the `outline` property at all; we out-specify their box-shadow once, in
 //     one rule in _base.scss, and never again at a call site.
 //
+//     AND THAT LAST SENTENCE WAS THE BUG, for as long as this section has
+//     existed. "Stop contesting `outline`" was read as "never write `outline`",
+//     and the property does not sit empty when we decline it — the UA
+//     stylesheet fills it. Chrome ships `:focus-visible { outline: auto 1px
+//     -webkit-focus-ring-color }`, so every control the framework did NOT
+//     happen to zero drew Chrome's own near-black ring ON TOP of ours. Measured
+//     in the browser on 2026-08-04, `outline: 1px auto rgb(16,16,16)` was live
+//     on the skip link, the brand lockup, the call pill, both CTA buttons,
+//     every menu row, every link in the footer, and every card, tag and title
+//     on the hub. Two rings, two colours, two corner radii, one control:
+//
+//         .nav-link, .accordion-button   our ring alone   (Bootstrap zeroed it)
+//         everything else                ours + Chrome's  (a black band on top)
+//
+//     On the menu row it was worse than cosmetic: the row's ring turns INWARD
+//     precisely so nothing spills past the menu's corner, and Chrome's outline
+//     spilled past it anyway, because it was never ours to begin with.
+//
+//     So the mixin now states `outline: none` itself. That is not a return to
+//     contesting the property — we take it once, at the same specificity as the
+//     ring, in the same declaration, and hand it straight back inside
+//     `forced-colors`. One ring is drawn, and we are the ones drawing it.
+//
 //  2. HOW IT RENDERED. Observed, on the owner's screen, back when the ring was
 //     an `outline` and the corner was a superellipse: the ring drew as a shape
 //     that did not match the button it surrounded, and fragments of it survived
@@ -315,7 +338,39 @@ $tap: 2.75rem;
 // zero specificity (`:where`) so that anything with a shape of its own wins
 // automatically and forever, and it means a reader never sees two shapes of
 // ring on one page.
-$focus-radius: $r-1;
+//
+// AND IT BRINGS THE RUNG WHOLE — the radius AND the corner (owner, 2026-08-04:
+// "tất cả focus ring đều là squircle hết rồi phải không? mọi thứ phải khít với
+// nhau hoàn hảo"). So the ring on a text link is cut by the same superellipse
+// as the button beside it, and the site has ONE corner geometry, not two.
+//
+// THE HAZARD THIS CARRIES, NAMED, BECAUSE IT IS SUBTLE. The cascade resolves
+// per DECLARATION, not per rule. This rule is 0,0,0 so that anything with a
+// shape of its own outranks it — but an element that states `border-radius` in
+// a class rule and takes its `corner-shape` from nowhere would keep its own
+// radius and pick up OUR superellipse. At equal radius a superellipse sits ~30%
+// shallower than a circle (§2), so such a corner would visibly change shape on
+// focus and change back on blur. A corner that moves when you tab to it is
+// worse than the inconsistency it was meant to fix.
+//
+// That is safe here because it was CHECKED rather than assumed: every focusable
+// element on both products was focused in Chrome and its computed corner read
+// back before and after. 440 elements, 9 pages, both colour schemes — zero
+// elements with a shape of their own changed. Every radius on this site is
+// written with `corner()`, which states both properties together, so a class
+// rule always brings its own shape and always wins. The one exception was the
+// menu row, which was carrying a bare 7px from Bootstrap; it is now zeroed at
+// the framework's own specificity (_base.scss, next to the inset ring).
+//
+// HEADROOM (§2) is why this is safe to state unconditionally: $r-1 needs an
+// 11.44px minimum side, and the smallest focus target on either product is a
+// 16px-tall feed tag. Everything clears it.
+//
+// IF YOU ADD A COMPONENT that sets `border-radius` without `corner()`, it will
+// change shape on focus. Re-run the corner check before shipping it.
+@mixin focus-ring-corner {
+  @include corner($r-1);
+}
 //
 // TWO TONES, because one colour cannot do this job. The ring has to be visible
 // against BOTH the thing it surrounds and the ground that thing sits on, and
@@ -351,29 +406,65 @@ $focus-ring-thickness: 3px;
 // The ring's own corner is applied by each product in ONE rule, written at
 // zero specificity so anything with a shape of its own wins automatically:
 //
-//     :where(:focus-visible) { border-radius: $focus-radius; }
+//     :where(:focus-visible) { @include focus-ring-corner; }
 //
 // It is not folded into the mixin below on purpose. `focus-ring` is included
 // inside selectors that DO have a silhouette (`.btn:focus-visible`), and a
 // radius in there would overwrite theirs.
 
+// THE HALO IS PAINTED, THE RING IS AN OUTLINE, AND THE SPLIT IS THE POINT.
+//
+// Both bands used to be box-shadows. The owner caught what that costs, on
+// 2026-08-04: "khoảng 1px viền --focus bị loang vào bên trong của --focus-halo,
+// đặc biệt là ở phần corner." Reproduced in isolation and measured — a plain
+// 4px-radius control with a transparent background, focused, sampled along the
+// 45° ray through its corner:
+//
+//     page #ffffff ×90 │ ring #0066cc ×34 │ halo #ffffff ×22 │ #deebf8 ×1 │ page
+//                                                             ^^^^^^^^^^
+//
+// That stray pixel is a 13% tint of the RING colour, sitting INSIDE the halo, on
+// the element's own border-box curve. An outer box-shadow is clipped to the
+// border box, so BOTH shadows are clipped by the same antialiased curve: the
+// ring's clipped edge is drawn first, the halo's clipped edge composites over
+// it, and neither reaches full coverage, so the ring shows through the seam.
+// On a superellipse corner it is worse — the pinch appears at the ring/halo
+// boundary too, and drawing the halo two or three times (which does clean up
+// the circular case) does not remove it.
+//
+// An OUTLINE is not clipped to the border box. `outline-offset` starts it where
+// the halo ends, so the only boundary at the border box is the halo's, halo
+// against the control — a boundary that is supposed to be there. Same sample,
+// same control, ring moved to an outline:
+//
+//     page #ffffff ×90 │ #0b6dce ×1 │ ring #0066cc ×33 │ #ffffff ×228
+//
+// One antialiasing pixel, on the outside, where any two adjacent shapes must
+// have one. The stray is gone. Verified on the squircle corner as well.
+//
+// AND THIS DOES NOT REOPEN REASON 1. The cascade argument was never "box-shadow
+// is magic"; it was "whoever writes the property last at equal specificity
+// wins". We now write `outline` ourselves, in this mixin, from a selector list
+// that names every framework component, placed after the framework — which is
+// exactly why `outline: none` worked when it replaced Chrome's UA ring. The
+// same rule that took the property now uses it.
 @mixin focus-ring($under: null) {
   $halo: 0 0 0 $focus-halo-width var(--focus-halo);
-  $ring: 0 0 0 ($focus-halo-width + $focus-ring-thickness) var(--focus);
 
   @if $under {
-    box-shadow: $under, $halo, $ring;
+    box-shadow: $under, $halo;
   } @else {
-    box-shadow: $halo, $ring;
+    box-shadow: $halo;
   }
 
-  // Windows High Contrast and friends throw box-shadow away entirely, so the
-  // ring would disappear for exactly the readers least able to afford losing
-  // it. `Highlight` is the system's own focus colour and is guaranteed to
-  // contrast with `Canvas`; this branch never renders anywhere else.
+  outline: $focus-ring-thickness solid var(--focus);
+  outline-offset: $focus-halo-width;
+
+  // Windows High Contrast throws both box-shadow AND author outline colours
+  // away, so the ring is redrawn in the system's own focus colour. `Highlight`
+  // is guaranteed to contrast with `Canvas`; this branch renders nowhere else.
   @media (forced-colors: active) {
-    outline: $focus-ring-thickness solid Highlight;
-    outline-offset: $focus-halo-width;
+    outline-color: Highlight;
   }
 }
 
@@ -381,14 +472,20 @@ $focus-ring-thickness: 3px;
 // spill past the menu's own corner. This one turns inward and keeps its
 // thickness, its colours and its order — ring outermost, against the menu edge;
 // halo inside it, against the row's hover fill.
+// Same split as the outward ring, turned inward: the halo is the painted inset
+// shadow, the ring is an outline pulled inside by its own thickness. An outline
+// with a negative offset is drawn INSIDE the border box, so it cannot spill past
+// the menu's corner — which is the whole reason this variant exists — and the
+// halo shadow underneath fills the two pixels between the ring and the row's
+// hover fill.
 @mixin focus-ring-inset {
-  box-shadow:
-    inset 0 0 0 $focus-ring-thickness var(--focus),
-    inset 0 0 0 ($focus-halo-width + $focus-ring-thickness) var(--focus-halo);
+  box-shadow: inset 0 0 0 ($focus-halo-width + $focus-ring-thickness) var(--focus-halo);
+
+  outline: $focus-ring-thickness solid var(--focus);
+  outline-offset: -$focus-ring-thickness;
 
   @media (forced-colors: active) {
-    outline: $focus-ring-thickness solid Highlight;
-    outline-offset: -$focus-ring-thickness;
+    outline-color: Highlight;
   }
 }
 
