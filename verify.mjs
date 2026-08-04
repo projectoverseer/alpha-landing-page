@@ -151,6 +151,32 @@ for (const name of htmlFiles) {
     errors.push(`${name}: an <mi> lost its mathvariant="normal" — the variable will render italic, in the wrong font`);
   }
 
+  // KaTeX writes MathML the way TeX writes boxes, and mhchem leans on that: a
+  // chemical subscript came out as a script hung on a zero-width PHANTOM, with
+  // the digit itself smashed to zero height. Blink plays along. WebKit does not
+  // — it gives an `<mpadded height="0px">` a layout box and then never paints
+  // its contents — so on 2026-08-04 every CH₂ on the Nylon post was a HOLE on
+  // iPadOS and iOS while Windows and Android looked perfect:
+  //
+  //     −[NH−(CH )₆−NH−CO−(CH ) −CO]ₙ−
+  //
+  // optimize:math now hangs each script on its real base and drops the smash,
+  // so nothing on the page depends on either construct. These two tripwires say
+  // so out loud: a formula that renders on the machine doing the build is not
+  // evidence, because that machine is not the one the owner reads on.
+  if (/<mpadded[^>]*\bheight="0px"/.test(html)) {
+    errors.push(
+      `${name}: a zero-height <mpadded> reached the page — WebKit (Safari, every iPhone and iPad) ` +
+        `lays it out and then paints nothing, so the character inside it vanishes. optimize:math should have unwrapped it.`,
+    );
+  }
+  if (/<(?:msub|msup|msubsup)><mpadded[^>]*\bwidth="0px"[^>]*><mphantom>/.test(html)) {
+    errors.push(
+      `${name}: a subscript or charge is hung on an <mphantom> base — mhchem's TeX layout hack, not MathML. ` +
+        `optimize:math should have attached it to the atom it belongs to.`,
+    );
+  }
+
   const refs = new Set();
   for (const m of html.matchAll(refPattern)) {
     // srcset holds comma-separated "url descriptor" pairs; href/src hold one URL.

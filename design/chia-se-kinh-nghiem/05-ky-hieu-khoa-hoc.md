@@ -30,6 +30,7 @@ Read this table before re-litigating anything.
 | 2026-08-02 | ISO 80000-1 no-break space between value and unit | Applied to all 15 live posts, not just new ones |
 | 2026-08-02 | **`%` stays closed up** (`4,5%`) | Owner's exception: "4,5 %" reads foreign in Vietnamese trade prose |
 | 2026-08-02 | Structural diagrams stay pictures; no SMILES auto-renderer | Skeletal output is not how this author teaches (§5) |
+| 2026-08-04 | The build **rewrites** KaTeX's MathML before shipping it (§2, "What the browser actually gets") | KaTeX writes TeX's box model, not MathML. WebKit dropped every chemical subscript on iPhone and iPad |
 
 ## 1. Italic or upright — ISO 80000-2
 
@@ -92,6 +93,63 @@ Inside `\ce{}` you do not type subscripts or spacing: **mhchem knows chemistry.*
 `CH2` becomes CH₂, `SO4^2-` becomes SO₄²⁻, `2Na+` spaces its coefficient.
 Element symbols come out upright and the repeat index *n* italic, per §1,
 automatically. Never write `\mathrm{}` around an element symbol — mhchem did it.
+
+### What the browser actually gets (and why it is not KaTeX's MathML)
+
+**Nothing here changes what you write.** It changes what ships, and it is written
+down because a formula got it wrong on half the readers' devices for two days.
+
+KaTeX does not really emit MathML; it emits a MathML transcription of TeX's box
+model, and mhchem leans on that hard. Every chemical subscript came out as a
+script hung on an **empty** box, with the digit itself smashed to zero height:
+
+```html
+<mrow><mi>C</mi><mi>H</mi></mrow>
+<msub>
+  <mpadded width="0px"><mphantom><mi>X</mi></mphantom></mpadded>   <!-- no base -->
+  <mpadded height="0px"><mn>2</mn></mpadded>                       <!-- \smash -->
+</msub>
+```
+
+The zero-width phantom puts the script beside the atom instead of on top of it;
+the zero-height box levels every subscript in a formula to one depth. Both are
+TeX habits, and Blink plays along. **WebKit does not:** it gives an
+`<mpadded height="0px">` a layout box and then paints nothing inside it. On
+2026-08-04 the owner opened the Nylon post on iPadOS and read
+
+```
+−[NH−(CH )₆−NH−CO−(CH ) −CO]ₙ−
+```
+
+a hole where each CH₂ belongs, while the same page on Windows was perfect. The
+digit *measures* non-zero, so no automated size check would ever have caught it.
+Every iPhone and iPad is WebKit, whatever the browser's name, so this was most of
+the audience.
+
+`optimize-math.mjs` therefore rewrites the MathML before it ships: it throws the
+phantom away and hangs each script on the atom it belongs to.
+
+```html
+<msub><mrow><mi>C</mi><mi>H</mi></mrow><mn>2</mn></msub>
+```
+
+Nothing on a page now uses `<mpadded>` with a zero height or `<mphantom>` as a
+base. What is left is msub/msup/msubsup/mmultiscripts/mrow/mi/mn/mo — the oldest
+and most widely implemented corner of MathML. Three consequences worth knowing:
+
+- **It is also the correct markup.** A subscript belongs to the thing it
+  subscripts. A screen reader now says "C H sub 2" instead of announcing an empty
+  base, and the formula is one node to anything parsing the page.
+- **Subscript depth now comes from the real base**, not from mhchem's levelling.
+  This is what browsers do natively and what the Nylon chains look right with.
+- **A charge that opens a formula** (`\ce{^+H3N-F}`) becomes a real prescript via
+  `<mmultiscripts>`. It used to be drawn on top of the following letter in Blink
+  and dropped entirely in WebKit — it was broken everywhere, just quietly.
+
+Verified 2026-08-04 against real WebKit, Blink and Gecko (Playwright, WebKit 26.5)
+on all 21 constructs in this file, plus the 30 expressions live on the hub. §6
+gates both broken shapes so the next mhchem construct that smuggles one back in
+fails the build instead of a reader's iPad.
 
 ### Bonds
 
@@ -283,6 +341,8 @@ these, loudly, before `docs/` is replaced:
 | Bare `-`/`+` before `}` `]` `)` inside `\ce{}` | a dangling bond written as a charge (§2) |
 | A digit touching `°C nm mm cm kg K` | missing ISO 80000-1 unit space (§3) |
 | Unicode subscript `₀–ₜ` | a formula hand-typed instead of `\ce{}` |
+| `<mpadded>` with `height="0px"` | the smash WebKit refuses to paint — the character vanishes on every iPhone and iPad (§2) |
+| A script hung on an `<mphantom>` base | mhchem's TeX layout hack survived the rewrite (§2) |
 
 A malformed `\ce{}` or equation throws inside KaTeX and fails the build on its
 own. That is the feature.
