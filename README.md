@@ -95,10 +95,11 @@ _data/i18n/       en.yml + vi.yml — every piece of copy, both languages
 _includes/        page skeleton + one file per section + SVG icons
 _sass/_base.scss  all component styles (imported last from css/main.scss)
 css/main.scss     design tokens (color/type/space) + Bootstrap variable layer
-js/               custom.js (nav/reviews/email) · squircle.js (φ³ corners)
-fonts/            self-hosted woff2 subsets — Public Sans (site) · Literata +
-                  Inter (hub) · Alpha Math (hub equations; see fonts/math/README.md)
-design/           strategy, principles, design system, build notes (00–07)
+js/               custom.js (nav/reviews/email) · kt-topbar.js + kt-lightbox.js (hub)
+                  (squircle.js is gone — the corner is CSS, _sass/_quy-cu.scss §2)
+fonts/            self-hosted woff2 subsets — Inter (site + hub chrome) · Literata
+                  (hub body) · Alpha Math (hub equations; see fonts/math/README.md)
+design/           strategy, principles, design system, build notes (00–08)
 performance-audits/  Lighthouse history + Cloudflare change log
 docs/             BUILT OUTPUT — never edit by hand, always via npm run build
 ```

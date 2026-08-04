@@ -70,6 +70,50 @@ for (const name of htmlFiles) {
   if (html.includes('localhost')) errors.push(`${name}: contains a localhost URL`);
   if (/{{\s|{%\s/.test(html)) errors.push(`${name}: contains unrendered template syntax`);
 
+  // Speculation rules survived, and still say what they were written to say.
+  //
+  // This one fails SILENTLY in every direction, which is why it is gated rather
+  // than eyeballed. Malformed JSON is ignored by the browser with no console
+  // error; a dropped exclusion is invisible until the analytics look wrong; and
+  // html-minifier-terser runs with `--minify-js true`, so if it ever decides a
+  // `type="speculationrules"` block is JavaScript it will rewrite the JSON into
+  // something that parses as neither. Nothing downstream would notice — the
+  // only symptom is that the site quietly stops being fast.
+  // 404.html is deliberately out: it is a standalone page whose one link is
+  // "go home", and it is a page nobody should be on long enough to hover.
+  const spec = /<script type="speculationrules">([\s\S]*?)<\/script>/.exec(html);
+  if (!spec) {
+    if (name !== '404.html') errors.push(`${name}: the speculation rules block is gone`);
+  } else {
+    let rules = null;
+    try {
+      rules = JSON.parse(spec[1]);
+    } catch (e) {
+      errors.push(`${name}: speculation rules are not valid JSON (${e.message})`);
+    }
+    if (rules) {
+      const rule = rules.prerender && rules.prerender[0];
+      const clauses = (rule && rule.where && rule.where.and) || [];
+      const sel = clauses.map((c) => c.not && c.not.selector_matches).find(Boolean) || '';
+      if (!rule || rule.eagerness !== 'moderate') {
+        // `eager` would prerender every link on load — ten pages of other
+        // people's work on a reader's mobile data, most of it never opened.
+        errors.push(`${name}: speculation eagerness is not "moderate" (see the include)`);
+      }
+      if (!clauses.some((c) => c.href_matches === '/*')) {
+        // Without it, a credentialed prerender can leave this origin.
+        errors.push(`${name}: speculation rules lost the same-origin constraint`);
+      }
+      // The main page is one long anchored document; `#lien-he` has a pathname
+      // of `/` and matches `/*`, so losing this speculates the current page.
+      for (const needle of ["[href^='#']", "[href*='?']", '[download]', '[target]']) {
+        if (!sel.includes(needle)) {
+          errors.push(`${name}: speculation rules no longer exclude ${needle}`);
+        }
+      }
+    }
+  }
+
   // Hub only: kramdown hands LaTeX through as \[…\] / \(…\) for optimize:math to
   // turn into MathML. If a delimiter survives, the equation never rendered.
   if (name.startsWith('chia-se-kinh-nghiem') && /\\\[|\\\(/.test(html)) {
@@ -247,16 +291,19 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
-// ---- the squircle stays off ----
+// ---- the superellipse, and the exact geometry of it ----
 //
-// This gate used to assert the OPPOSITE: that `@supports (corner-shape:
-// superellipse(2))` had survived minification. The squircle was switched off
-// 2026-07-28 (owner: "hơi unconventional" — quy-cu §2), so the check flips.
-// It is kept rather than deleted because the failure it guards is the same
-// either way: a corner geometry that changes without anyone noticing. A stray
-// `corner-shape` reintroduced by a copied snippet would give one browser a
-// different silhouette from every other, which is exactly the split the
-// deactivation was for.
+// This gate has now asserted three different things, and the failure it guards
+// has been the same every time: a corner geometry that changes without anyone
+// noticing. It required the n = 4 squircle, then (2026-07-28, owner: "hơi
+// unconventional") required its absence, and now requires the n = 3.0224 corner
+// that replaced it on 2026-08-04 — ported from the Squircle extension, quy-cu
+// §2. What each version really checks is that what shipped is what was decided.
+//
+// Three separate assertions, because there are three separate ways to lose it:
+// the shape can be minified away, the depth match can be dropped (leaving the
+// corner reading a third less round than the design), and the OLD ×1.8409
+// geometry can come back from a copied snippet or an old commit.
 for (const stem of ['main', 'chiasekinhnghiem']) {
   const file = readdirSync(join(SITE, 'css')).find(
     (f) => f.startsWith(`${stem}.`) && f.endsWith('.css'),
@@ -264,16 +311,43 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   if (!file) continue;
   const css = readFileSync(join(SITE, 'css', file), 'utf8');
 
-  if (/corner-shape/.test(css)) {
+  // 1. The shape survived clean-css. `corner-shape` is a 2025 property; a
+  //    minifier that does not know it could drop it as invalid, and the page
+  //    would then draw plain circles at a radius grown 43% for a superellipse
+  //    that is not there — visibly over-rounded, and silent.
+  if (!/corner-shape:\s*superellipse\(1\.5957\)/.test(css)) {
     errors.push(
-      `css/${file}: corner-shape is back — the squircle is meant to be off (quy-cu §2)`,
+      `css/${file}: corner-shape: superellipse(1.5957) is gone — the corner lost its shape (quy-cu §2)`,
     );
   }
-  // The depth-matched radii the squircle needed: 8 × 1.8409 = 14.7272,
-  // 12 × = 22.0908, 16 × = 29.4544. Any of those surviving means a call site is
-  // still scaling by hand.
-  if (/border-radius:\s*(?:14\.7|22\.09|29\.45)/.test(css)) {
-    errors.push(`css/${file}: a depth-matched radius survived — a call site is still × 1.8409`);
+
+  // 2. It is still gated. The growth compensates for the superellipse, so it
+  //    must never reach an engine that ignores the shape — that is the exact
+  //    bug that made a 12px button a 22.09px circle on iOS in the first
+  //    version. Both must live inside `@supports`.
+  if (!/@supports\s*\(corner-shape:/.test(css)) {
+    errors.push(
+      `css/${file}: the corner is no longer behind @supports — Safari/Firefox would get the grown radius on a circle`,
+    );
+  }
+
+  // 3. The depth match is intact. depth-match() = r × 1.4291572676, rounded to
+  //    4dp: 4 → 5.7166, 8 → 11.4333, 12 → 17.1499, 16 → 22.8665, 24 → 34.2998.
+  //    At least one has to be in the file or the growth was silently dropped.
+  if (!/border-radius:\s*(?:5\.7166|11\.4333|17\.1499|22\.8665|34\.2998)px/.test(css)) {
+    errors.push(
+      `css/${file}: no depth-matched radius survived — the superellipse is drawing shallower than the design`,
+    );
+  }
+
+  // 4. The OLD n = 4 geometry stays dead: superellipse(2) with radii × 1.8409
+  //    (8 → 14.7272, 12 → 22.0908, 16 → 29.4544). Nothing should reintroduce it,
+  //    and a half-migrated file carrying both would round two objects on the
+  //    same page by different amounts.
+  if (/superellipse\(2\)/.test(css) || /border-radius:\s*(?:14\.7|22\.09|29\.45)/.test(css)) {
+    errors.push(
+      `css/${file}: the old n = 4 corner is back (× 1.8409) — the shipped one is n = 3.0224, × 1.4292`,
+    );
   }
 
   // ---- the focus ring has ONE shape ----

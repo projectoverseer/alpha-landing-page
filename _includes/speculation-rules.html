@@ -1,0 +1,82 @@
+{%- comment -%}
+  SPECULATION RULES — the next page is already finished when the tap lands.
+
+  Ported from the "Speculate" browser extension (backups/System Settings/
+  Extensions/speculate) and cut down to what this origin actually is.
+
+  WHY PRERENDER AND NOT PREFETCH. `<link rel=prefetch>` fetches bytes; parse,
+  script execution, layout and paint all still happen after the tap, and on a
+  page carrying Bootstrap + Inter that is most of the wait. A prerender moves
+  the whole pipeline in front of it. On a hit the navigation is not fast — it is
+  already over.
+
+  THIS COSTS NO JAVASCRIPT. The rules are declarative JSON; the hover-dwell and
+  pointerdown heuristics run inside the browser, so there is no content script
+  listening to `mousemove`. Measured payload: under 400 bytes, and not one byte
+  of it executes. That is the whole reason this is allowed here when
+  js/squircle.js was not.
+
+  `moderate` IS THE PHONE-FRIENDLY SETTING, and that is why it is the one.
+  Four out of five of our readers are on a phone, on data they pay for. Hover
+  does not exist on a touchscreen, so `moderate` there fires on POINTERDOWN —
+  the instant the finger touches, before it lifts. That wins the ~100ms between
+  touch and click and wastes NOTHING, because nobody puts a finger down on a
+  link they are not about to open. `eager` would prerender ten pages the reader
+  never asked for; it is not worth their data on our say-so. Chrome also
+  suppresses speculation entirely under Data Saver and battery saver, so the
+  reader who most needs us to stay out of the way is already out of scope.
+
+  WHAT IS EXCLUDED, AND WHAT IS DELIBERATELY NOT.
+
+    `href_matches: "/*"` is a relative pattern resolved against this document,
+    so it constrains everything to THIS origin on its own. Facebook, Zalo, the
+    phone links and the mail links all fall outside it by protocol or host and
+    need no rule of their own — stating them again would only look like it was
+    doing something.
+
+    `[href^="#"]` is the one that matters here. The main page is a single long
+    document navigated by anchors, and `#lien-he` resolves to a pathname of `/`
+    — which matches `/*`. Without this we would speculate the page the reader
+    is already standing on, dozens of times per visit.
+
+    `[href*="?"]` — Cloudflare answers a query string with a 301 to the stripped
+    URL (see performance-audits/README). A prerender of one is a round trip
+    spent to be told to go somewhere else.
+
+    `[download]`, `[target]` — not a navigation in this tab.
+    `[rel~=nofollow]`, `[rel~=external]` — the author already said not to follow.
+
+    NOT CARRIED ACROSS: the extension's exclusion list of state-changing verbs
+    (`logout`, `delete`, `checkout`, `unsubscribe`, `action=` …). That list is
+    the whole point of the extension, because it runs on the open web where a
+    GET that destroys a session is still everywhere. This origin is a Jekyll
+    build on static hosting: there is no endpoint here that a GET can change,
+    so the list would guard nothing and read as caution we had not actually
+    exercised. IF A FORM, AN APP ROUTE OR ANY SERVER-SIDE ENDPOINT IS EVER
+    ADDED UNDER THIS DOMAIN, GO AND GET THAT LIST — a prerender is a real,
+    credentialed request, and `Sec-Purpose: prefetch;prerender` is a header
+    almost nothing checks.
+
+  ANALYTICS. A prerendered page runs its own scripts, so a tag that counts a
+  pageview on load counts one the reader never made. Checked, not assumed:
+  analytics.html loads gtag.js DIRECTLY (no GTM), and gtag defers its
+  `page_view` until `prerenderingchange` fires on activation. It is GTM
+  containers and hand-rolled tags that phantom-count, and we have neither.
+
+  CSP. An inline speculation-rules script is governed by `script-src`. The
+  Cloudflare policy carries `'unsafe-inline'` (needed by the consent bootstrap),
+  which covers this. If that is ever tightened to a nonce or hash, `unsafe-
+  inline` stops applying to everything and this needs `'inline-speculation-
+  rules'` added by name — the rules fail SILENTLY otherwise, and the only
+  symptom is that nothing is fast any more.
+
+  Verify: DevTools → Application → Speculative loads. Hover a nav link for a
+  second and it should be listed as ready.
+{%- endcomment -%}
+{%- comment -%}
+  Written on one line because html-minifier-terser leaves a non-JavaScript
+  script type alone — correctly, it is not JS to minify — so whatever is typed
+  here is what ships, on all 25 pages. Pretty-printed it was 408 bytes; this is
+  the same rules at 250.
+{%- endcomment -%}
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[href^='#'], [href*='?'], [download], [target], [rel~='nofollow'], [rel~='external']"}}]},"eagerness":"moderate"}]}</script>

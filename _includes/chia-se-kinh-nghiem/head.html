@@ -439,10 +439,12 @@
   js/squircle.js used to load here — 16 KB that swept every element on the page
   with getComputedStyle, held a MutationObserver on the document and wrote
   inline !important styles, all to compute corner radii that were knowable at
-  authoring time. It is gone (2026-07-28); the same superellipse is now four
-  lines of CSS in _sass/_quy-cu.scss §2. A reading page that loads no script to
-  draw a corner is a reading page, which is what philosophy §2.6 was asking for.
+  authoring time. It is gone (2026-07-28) and stays gone. The superellipse
+  itself came back on 2026-08-04, as CSS in _sass/_quy-cu.scss §2 — same corner,
+  no script. A reading page that loads nothing to draw a corner is a reading
+  page, which is what philosophy §2.6 was asking for.
 {%- endcomment -%}
+{% include speculation-rules.html %}
 {%- if kt_kind == "topic" or kt_kind == "series" or kt_kind == "author" %}
 {%- comment -%}
   The scroll title (philosophy §2.6): once the page's h1 scrolls under the

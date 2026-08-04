@@ -92,46 +92,102 @@ radius?" is answered by "what is it?":
 @include corner($r-3);   // 12px. That is the whole of it.
 ```
 
-### 2.1 The squircle is off (2026-07-28)
+### 2.1 The corner is a superellipse again — n = 3.0224 (2026-08-04)
 
-It was a superellipse — `corner-shape: superellipse(2)`, radius grown ×1.8409
-to sit at the same 45° depth as the circle it replaced. The argument was that a
-circular radius meets the straight edge with a curvature jump, so the eye reads
-the tangent point as *here the corner starts*, while an n > 2 superellipse meets
-it at zero curvature and the bend fades in.
+**History first, because the same section has now said three things.** From the
+start the corner was `corner-shape: superellipse(2)` — exponent n = 4 — with the
+radius grown ×1.8409 to hold the 45° depth. On 2026-07-28 the owner switched it
+off: *"hơi unconventional."* On 2026-08-04 the owner asked for it back, ported
+from the **Squircle browser extension** they had tuned in the meantime. The
+corner that came back is not the corner that left.
 
-The owner switched it off: *"hơi unconventional."* That is the decision, and
-three things say it was the right one.
+**What the argument always was.** A circular `border-radius` joins the straight
+edge with a curvature *jump* — 0 on the edge, 1/r the instant the arc starts —
+and the eye reads that discontinuity as *here the corner begins*. A superellipse
+with n > 2 meets the edge with zero curvature, so the bend fades in and nothing
+marks where it started. That is Absolute Neutrality applied to a corner.
 
-**A corner that has to be explained is no longer neutral.** Absolute Neutrality
-asks whether a detail disappears. This one had started asking to be discussed —
-in the stylesheet, in this document, and finally in a message. The version that
-survives only because it is argued for has already failed its own test.
+**Which superellipse: n = 3.0223665663, and it is derived.** Not n = 4 ("the
+squircle", what shipped before), not Piet Hein's 5/2, not a fit to Apple. It is
+the exponent minimising the *variation* of curvature around the corner —
+Moreton & Séquin's fairness functional `E = ∫(dκ/ds)² ds`, the standard measure
+of a fair curve in geometric design, evaluated at equal 45° depth so every
+candidate is the same roundness. Expanding the corner near the join sorts every
+exponent into a continuity class:
 
-**It was two silhouettes, not one.** `corner-shape` is a 2025 property with one
-engine behind it. Chromium 139+ drew the superellipse; every iPhone in the
-country drew the circle. And because the depth match grows the radius, the
-fallback rounded by a visibly different amount — a 12px button was a 22.09px
-circle on iOS. "Consistency is beauty" cannot mean two shapes depending on the
-reader's phone.
+| | at the join with the straight edge |
+| --- | --- |
+| n = 2 | curvature **jumps** 0 → 1/S — the corner visibly "starts" |
+| 2 < n < 3 | κ continuous, but **dκ/ds → ∞** |
+| n = 3 | dκ/ds finite — the threshold |
+| **n > 3** | **dκ/ds → 0** — G3, nothing marks the join |
 
-**It broke two things that were reported as bugs.** The accordion's outer border
-curved where its inner one ran straight (16 × 1.8409 = 29.45 against 15 × 1.8409
-= 27.61 — a 1.84px gap held apart by a 1px line, so the two curves were no
-longer parallel), and the focus ring drew a shape that did not match the button
-and left fragments behind after focus moved. That second one is a young
-implementation rather than a wrong property — per MDN, `outline` and `box-shadow`
-are both supposed to follow `corner-shape` — but it is what shipped and what a
-reader saw.
+So n = 4 was never wrong in kind. It was simply further past the threshold than
+the fairest corner is, and cost 29% more room to draw. *The decimals are not
+load-bearing:* n ± 0.1 costs 0.55% of E, and three independent criteria —
+minimum bending energy 2.8747, minimum peak |dκ/ds| exactly 3, closest fit to
+Apple's measured corner 2.9139 — land in the same neighbourhood. The honest
+claim is "a little over 3"; the digits exist so the constant is reproducible.
 
-Kept for anyone who revisits this: the depth of a 45° corner cut is
-`depth(r, n) = r·√2·(1 − 2^(−1/n))`, so an n = 4 superellipse needs
-`s(4) = 1.8409`. Recorded, used nowhere.
+**The three objections that switched it off, and what answers each one now.**
 
-`verify.mjs` now fails the build if `corner-shape` reappears, or if a
-depth-matched radius (14.7272 / 22.0908 / 29.4544px) survives anywhere. The
-gate used to assert the opposite; it guards the same failure either way, which
-is a corner geometry changing without anyone noticing.
+*"It was two silhouettes, not one."* This was correct, and it was **our bug, not
+the property's**. The grown radius was written unconditionally and only
+`corner-shape` sat inside the `@supports` — so a 12px button was a 22.09px
+**circle** on iOS and a 22.09px superellipse in Chrome. The fallback rounded by
+84% more than the design asked for. Now the growth lives *inside* the `@supports`
+with the shape it exists to compensate for:
+
+| | Chromium 139+ | Safari / Firefox |
+| --- | --- | --- |
+| declaration | `superellipse(1.5957)` | dropped whole |
+| radius | r × 1.4292 | r |
+| **45° depth** | **r·√2·(1 − 2^(−1/n))** | **the same number** |
+
+Both engines now agree on *how round* the corner is and differ only in how the
+bend is distributed across it. That is sub-perceptual, and nobody can compare it
+anyway — nobody holds two phones up to look at a button.
+
+*"It broke the accordion."* Also correct, and also an ordering bug. Two curves
+separated by a border are parallel only when the inner radius is the outer minus
+that border. Scaling **both** numbers gave 29.45 outside against 27.61 inside —
+a 1.84px gap held apart by a 1px line. The subtraction has to happen *after* the
+growth: `inner = (outer × s) − border`, never `(outer − border) × s`. That is
+what `corner-inner()` does, and what the two `--bs-accordion-*` tokens in
+`_base.scss` do for Bootstrap's own rules.
+
+*"A corner that has to be explained is no longer neutral."* This one is not
+answered, and should not be pretended away. It is the reason the section is
+written as geometry a reader can check rather than taste a reader must accept,
+and the reason nothing here is adjustable. The owner reversed the call; the
+argument stands on the record.
+
+**The headroom rule — the one thing a call site must respect.** The corner box
+grows to 1.4292 × the authored radius, so an element rounded on all four corners
+needs `min box side ≥ 2 × 1.4292 × r` on **both** axes, or the browser clamps
+every radius proportionally and the corner comes out shallow and pill-ish:
+
+| rung | px | depth-matched | needs a box of |
+| --- | --- | --- | --- |
+| `$r-1` | 4 | 5.7166 | 11.44px |
+| `$r-2` | 8 | 11.4333 | 22.87px |
+| `$r-3` | 12 | 17.1499 | 34.30px |
+| `$r-4` | 16 | 22.8665 | 45.74px |
+| `$r-5` | 24 | 34.2998 | 68.60px |
+
+(An element rounded on only *two* corners — the accordion's first and last items
+— is constrained by one radius per side, not two, so the vertical requirement
+halves. That is why a 48px accordion header clears a 22.87px corner.)
+
+The extension solves this by fitting a gentler exponent per element from a
+`ResizeObserver`. **We do not need to, because at authoring time we know every
+box.** All 19 shaped selectors were audited on 2026-08-04 and every one clears
+its rung. Audit yours before adding one.
+
+`verify.mjs` gates four things, because there are four ways to lose this
+silently: the shape being minified away, the `@supports` gate disappearing (the
+iOS bug), the depth match being dropped, and the old ×1.8409 geometry coming
+back from a copied snippet.
 
 ### 2.2 Why the script is gone (and stays gone)
 
@@ -145,8 +201,16 @@ produce values that were knowable at authoring time.
 them scroll frames is not neutral, whatever it looks like. Measured: **−1.4 KB
 gz** from the main bundle and **−1.7 KB gz** from every hub page.
 
-With the superellipse itself now gone there is nothing left for a script to do.
-Do not bring either back together.
+**The superellipse coming back on 2026-08-04 does not bring the script with it,
+and this is the distinction that matters.** A runtime engine exists to answer a
+question the author cannot: *what size is this element right now.* The extension
+it was ported from genuinely needs that — it runs on the open web, against pages
+it has never seen. A stylesheet we wrote does not have that problem. Every box
+on this site is known at build time, so the entire cost of the corner here is
+one extra `@supports` rule per call site and **zero bytes of JavaScript**.
+
+If a future corner ever seems to need measuring at runtime, that is the signal
+the corner is wrong for the element, not that the page needs an observer.
 
 ---
 
@@ -225,16 +289,23 @@ reasons, in order of how certain we are of them:
    property entirely. The framework's rings are now switched off at the
    variable (`main.scss` §8) and our rule names every component that would
    otherwise take itself back.
-2. **It rendered wrong.** Observed: the ring drew as a shape that did not match
-   the button it surrounded, and fragments survived after focus moved on.
-   **Per spec this should not happen** — MDN lists `outline` among the
-   properties that follow `corner-shape`, alongside `background`, `border` and
-   `box-shadow` — so it was a young implementation rather than a property-level
-   gap. The squircle has since been switched off (§2), which removes the cause;
-   the ring stays a box-shadow because reason 1 is untouched by that and is on
-   its own decisive. A box-shadow is painted with the element's own border-box
-   decoration instead of in a separate outline pass, so it composites and
-   repaints with the element and leaves nothing behind.
+2. **It rendered wrong.** Observed, back when the ring was an `outline` and the
+   corner was a superellipse: the ring drew as a shape that did not match the
+   button it surrounded, and fragments survived after focus moved on. **Per spec
+   this should not happen** — MDN lists `outline` among the properties that
+   follow `corner-shape`, alongside `background`, `border` and `box-shadow` — so
+   it was a young implementation rather than a property-level gap.
+
+   This entry used to end "the squircle has since been switched off, which
+   removes the cause." **As of 2026-08-04 that is no longer true** — the
+   superellipse is back (§2). What changed instead is the other half: a
+   box-shadow is painted with the element's own border-box decoration rather
+   than in a separate outline pass, so it composites and repaints with the
+   element and cannot strand a fragment. The shape mismatch cannot recur either,
+   because a box-shadow copies the silhouette it surrounds and that silhouette
+   now *is* the superellipse. That is fixed-by-construction rather than
+   fixed-by-avoidance — but it is worth a keyboard pass on Chromium 139+ after
+   any change here, and reason 1 is decisive on its own regardless.
 
 Reason 1 alone would justify the change. Reason 2 is why it looked *broken*
 rather than merely inconsistent.

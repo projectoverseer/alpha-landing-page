@@ -1412,18 +1412,40 @@ blockquote> :last-child:after {
 }
 
 /* The item's own corner and the button's inside it are DIFFERENT NUMBERS on
-   purpose, and that is the second half of what looked wrong: 16px outside,
+   purpose, and that is the second half of what once looked wrong: 16px outside,
    15px inside. Two curves separated by a 1px border are parallel only when the
    inner radius is the outer minus that border — Bootstrap's own
    `$accordion-inner-border-radius: subtract($accordion-border-radius, $border-width)`.
-   What broke it was scaling both by 1.8409 for the superellipse: 29.45 against
-   27.61, a 1.84px gap held apart by a 1px line, so the inner curve ran visibly
-   tight inside the outer one. With the squircle off the two are concentric
-   again and nothing here has to say so.
 
-   Bootstrap already rounds the first item's header and the last item's
-   collapsed header; the rules that used to live here were re-stating that in
-   order to re-cut the shape, and there is no shape left to re-cut. */
+   What broke it in the first superellipse was scaling BOTH numbers: 29.45
+   outside against 27.61 inside, a 1.84px gap held apart by a 1px line, so the
+   inner curve ran visibly tight inside the outer one and the owner reported it
+   as "viền ngoài bị cong khi viền trong thẳng".
+
+   The order was the bug, not the shape. Subtract the border AFTER the growth
+   and the two curves are concentric again — which is what `corner-inner()` is
+   for (quy-cu §2), and what these two tokens do here. Bootstrap reads both
+   through `var()`, so redefining them on `.accordion` reaches every rule it
+   ships without restating one of them; the shape then goes on the three
+   elements it actually rounds. Middle items carry a 0 radius, so `corner-shape`
+   on them draws nothing — a join between two items stays square, which is
+   Bootstrap being right and is not ours to re-cut. */
+$accordion-r: depth-match($accordion-border-radius); // 16px → 22.8665px
+
+@supports (corner-shape: superellipse(1)) {
+  .accordion {
+    --bs-accordion-border-radius: #{$accordion-r};
+    // stylelint-disable-next-line -- one line on purpose: a wrapped calc() ships
+    // its own newlines, and clean-css does not collapse whitespace inside calc.
+    --bs-accordion-inner-border-radius: calc(#{$accordion-r} - var(--bs-border-width));
+  }
+
+  .accordion-item,
+  .accordion-button,
+  .accordion-collapse {
+    corner-shape: superellipse(#{$corner-k});
+  }
+}
 
 // The accordion's chevron, on the same terms as the dropdown's: a masked shape
 // in the header's own colour, not a picture with a grey baked into it. Bootstrap
@@ -1449,6 +1471,15 @@ blockquote> :last-child:after {
 .dropdown-menu {
   border: $border-width solid $border-color;
   background-clip: border-box;
+  // A menu row is a FLUSH STRIP: `border-radius: 0`, deliberately (see the
+  // focus-ring section — a strip has no corner of its own). The menu's own
+  // padding-y is 0, so the first and last rows sit exactly on its padding-box
+  // corner and their hover fill paints a square over the menu's curve. The row
+  // must not be given a corner to fix that — it would then need to be the
+  // menu's corner minus the border, restated in two places and re-derived every
+  // time either changes. Clipping says it once, and the clip follows
+  // `corner-shape`, so the superellipse gets it for free (quy-cu §2).
+  overflow: hidden;
   /* Keep its default Bootstrap styles, but override display */
   display: block !important;
   visibility: hidden;

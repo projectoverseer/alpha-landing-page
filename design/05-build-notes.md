@@ -219,8 +219,44 @@ fix, and should not be mistaken for one again.
   - Deprecated‑class sweep: the section‑as‑slide experiment's `bg-tint` / hairline
     `.heading-number` were already fully reverted (only design‑doc references remain) — **no
     orphaned rules to remove**.
-- ⚠️ Working‑tree note: a prior `squircle.js` standards‑rewrite (drop φ³ → standard
-  `corner-shape: squircle`) was reverted out of the tree; `js/squircle.js` is currently the
-  φ³ `superellipse(log₂ φ³)` + depth‑match‑SCALE version again. Re‑apply only on owner steer.
-- Next (pending owner steer): re‑apply the squircle standards rewrite; push layout further;
-  resume the content rebuild (Stakes → Proof → Method …); or re‑enable the precision hero.
+- ⚠️ Working‑tree note (superseded — see 2026‑08‑04 below): a prior `squircle.js`
+  standards‑rewrite was reverted out of the tree. `js/squircle.js` has since been deleted
+  outright and the corner lives in CSS.
+
+### 2026‑08‑04 — ported from the owner's browser extensions
+
+The owner asked what could be brought over from their four personal Chrome extensions
+(`backups/System Settings/Extensions`, tuned for a Dell XPS 15 7590) and re‑implemented for
+everyone. Audited all four; **two** had anything left to give.
+
+- **Squircle → CSS.** The superellipse is back, at the extension's derived exponent
+  **n = 3.0224** (`superellipse(1.5957)`, radius ×1.4292) instead of the n = 4 that was
+  switched off on 2026‑07‑28. Full reasoning and the three answered objections in
+  **design/08 §2.1**. The two implementation bugs that got it killed are fixed: the growth
+  now lives *inside* the `@supports` (so Safari keeps the authored radius and both engines
+  land on the same 45° depth), and the accordion's inner radius subtracts the border *after*
+  the growth. New `corner-inner()` mixin; `.dropdown-menu` gained `overflow: hidden` so its
+  flush rows are clipped to its corner instead of poking a square through it. **19 shaped
+  selectors, zero JavaScript.** `verify.mjs` gates four separate failure modes.
+- **Speculate → Speculation Rules.** `_includes/speculation-rules.html`, on both products.
+  250 bytes of declarative JSON, no script execution, `eagerness: moderate` — which on a
+  touchscreen means *pointerdown*, so it wastes no mobile data. Checked before shipping:
+  the CSP's `'unsafe-inline'` covers it, and gtag.js (direct, not GTM) already defers
+  `page_view` to `prerenderingchange`, so there is no phantom‑visit problem. Gated in
+  `verify.mjs` — malformed rules are ignored by the browser *silently*, so nothing else
+  would ever notice.
+- **XPS15 Tuned → nothing to do.** Its `typography.css` and `reading.css` groups
+  (`font-synthesis: none`, `font-optical-sizing: auto`, `text-wrap: pretty`,
+  `overflow-wrap: break-word`) are already shipped on both products. Deliberately **not**
+  taken: `scrollbar-width: thin` (a smaller pointer target, and the site's reader "có thể là
+  một người công nhân" — accessibility‑first says no) and `interpolate-size: allow-keywords`
+  (no `<details>` on the site and Bootstrap Collapse sets pixel heights, so it would do
+  nothing today while arming a transition that could switch on later). `@view-transition` was
+  offered and declined for now — it delays the readable paint, which is the one thing this
+  site does not spend.
+- **Neutral Fonts → not applicable.** It aliases the web's neutral sans families to a live
+  variable Inter; this site self‑hosts Inter with the `opsz` axis already live, and the
+  extension explicitly blacklists `alphasoftwaregroup.com` so our own typography wins.
+
+- Next (pending owner steer): push layout further; resume the content rebuild
+  (Stakes → Proof → Method …); or re‑enable the precision hero.

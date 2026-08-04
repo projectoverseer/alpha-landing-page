@@ -115,9 +115,18 @@ would miss). The numbered principles below are applications of this one.
 
    **The script budget is three files, and all of them are optional to the
    page.** It was four until 2026-07-28, when `squircle.js` was deleted: the
-   superellipse corner it computed at runtime moved into CSS and was then
-   switched off entirely later the same day (design/08 §2.1), so the hub loads
-   no script at all to draw a corner and no longer draws a special one.
+   superellipse corner it computed at runtime moved into CSS. It was then
+   switched off entirely later the same day and brought back on 2026-08-04 at a
+   different exponent (design/08 §2.1) — through all of which the budget stayed
+   at three, which is the point. The hub loads no script to draw a corner.
+
+   The one thing added since is `<script type="speculationrules">` (2026-08-04),
+   and it is counted honestly rather than waved through on a technicality: it is
+   a `<script>` element, so it belongs in this paragraph. It is **not a fourth
+   file and not a fourth execution** — 250 bytes of inline JSON that the browser
+   reads as configuration, with no code path of its own. It tells the browser to
+   prerender the same-origin link the reader is about to open. With JS off it is
+   inert; with JS on it runs nothing.
    `kt-lightbox.js`
    (~3 KB min, article pages only, July 2026) is the picture viewer: tapping a
    figure opens it full-screen at its largest shipped size — these are
