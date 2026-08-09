@@ -39,6 +39,9 @@ series:
   spandex:
     label: "Spandex trong dệt nhuộm"
     desc: "Từ công nghệ chế tạo sợi spandex, cách đưa sợi vào dệt thoi và dệt kim, đến quy trình 5 bước xử lý trong xưởng nhuộm – mặt hàng lợi nhuận cao nhưng rủi ro lỗi gia công rất lớn."
+  nylon:
+    label: "Nylon trong xưởng nhuộm"
+    desc: "Từ cấu tạo phân tử của Nylon 6 và Nylon 6.6, đến bốn nhóm thuốc nhuộm acid và cách từng nhóm gắn vào xơ – nền tảng để chọn đúng thuốc nhuộm và chạy đúng quy trình cho mặt hàng Nylon."
 
 # Image library for the hub. One entry per picture, keyed by its file slug in
 # img/chia-se-kinh-nghiem/ — the alt text, caption and intrinsic size live here
@@ -208,3 +211,31 @@ images:
     fy: 50
     alt: "Sơ đồ cấu tạo phân tử của hai loại nylon: chuỗi Nylon 6 lặp lại một mắt xích duy nhất gồm nhóm N-H, năm nhóm CH2 và một nhóm C=O; chuỗi Nylon 66 lặp lại một mắt xích dài hơn, ghép từ hai phân đoạn sáu carbon"
     caption: "Cùng một liên kết amide, nhưng Nylon 6 lặp lại một đoạn 6 carbon, còn Nylon 6.6 lặp lại hai đoạn 6 carbon ghép với nhau."
+  bon-nhom-thuoc-nhuom-acid-cho-nylon:
+    w: 1344
+    h: 867
+    sm: true
+    # fx/fy set to 50/50 by hand (design 04 §3): the picture is a SET of four
+    # units and saliency commits to one dye drop, so every crop would show one
+    # nhóm out of four — the opposite of what the post promises.
+    fx: 50
+    fy: 50
+    alt: "Bốn nhóm thuốc nhuộm acid cho Nylon vẽ thành bốn giọt thuốc nhuộm nằm trên sợi xơ, mỗi giọt được giữ lại bằng một số mối níu khác nhau: acid leveling một mối, nhuộm ở acid mạnh pH 3–4; phức kim loại 1:1 hai mối, acid rất mạnh pH 1,5–2,5; acid milling ba mối, acid nhẹ pH 5,5–6,5; phức kim loại 1:2 ba mối chắc cộng một mối phụ, acid nhẹ pH 4,5–6,5. Càng nhiều mối níu thì màu càng bền nhưng càng khó nhuộm đều"
+    caption: "Càng nhiều mối níu giữ thuốc nhuộm lại trên xơ thì màu càng bền, nhưng càng khó chạy cho đều."
+  lien-ket-ion-thuoc-nhuom-acid-va-xo-nylon:
+    w: 1344
+    h: 659
+    sm: true
+    # 50/50 by hand for the same reason: a three-panel sequence, not one subject.
+    fx: 50
+    fy: 50
+    alt: "Ba bước giải thích vì sao thuốc nhuộm acid bám được vào xơ Nylon: đầu tiên là sợi Nylon với đầu mạch chưa mang điện; cho acid vào thì đầu sợi mang dấu cộng; giọt thuốc nhuộm mang dấu trừ bị hút vào và bám chặt lấy đầu sợi"
+    caption: "Acid làm đầu sợi mang điện dương, thuốc nhuộm mang điện âm – trái dấu thì hút nhau. Đó là mối níu chung của cả bốn nhóm."
+  so-sanh-4-nhom-thuoc-nhuom-acid-cho-nylon:
+    w: 1344
+    h: 952
+    sm: true
+    fx: 34
+    fy: 13
+    alt: "Bảng so sánh bốn nhóm thuốc nhuộm acid cho xơ Nylon theo tám chỉ tiêu: acid leveling có phân tử nhỏ nhất, tan tốt nhất, nhuộm ở pH 3–4, dễ đều màu và chữa loang nhất nhưng bền giặt kém nhất; acid milling và phức kim loại 1:1 nằm giữa; phức kim loại 1:2 có phân tử lớn nhất, nhuộm ở pH 4,5–6,5, bền giặt và bền ánh sáng cao nhất nhưng khó đều màu nhất"
+    caption: "Bốn nhóm xếp cạnh nhau: nhóm càng dễ nhuộm đều màu thì càng kém bền màu, và ngược lại."
