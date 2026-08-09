@@ -12,7 +12,7 @@ learn:
       - "Theo số mét, vì khách đặt theo mét"
       - "Theo số mẻ"
       - "Theo giá trị đơn hàng"
-    promise: "Câu trả lời nằm ngay dưới công thức RFT, và lý do của nó quan trọng hơn bản thân đáp án."
+    promise: "Câu trả lời nằm ngay dưới công thức RFT ở bên dưới. Đọc tới đó rồi quay lại đối chiếu: lý do của nó đáng nhớ hơn bản thân đáp án."
   quiz:
     - q: "Vì sao nên thống kê RFT theo số mẻ chứ không theo số kg?"
       options:
@@ -25,17 +25,6 @@ learn:
           why: "Khách hàng tính theo đơn hàng. Đây là chỉ số nội bộ để tìm nguyên nhân, không phải chỉ số đối ngoại."
         - t: "Vì phần mềm chỉ đếm được theo mẻ"
           why: "Cách đo không nên do công cụ quyết định, và Excel đếm được cả hai."
-    - q: "Sau khi có số liệu một tháng, bước tiếp theo là gì?"
-      options:
-        - t: "Đặt mục tiêu RFT chung cho cả xưởng"
-          why: "Quá sớm và quá rộng. Một mục tiêu chung không chỉ ra ai phải làm gì."
-        - t: "Chọn 20% nhóm có RFT thấp nhất làm trọng tâm và giao cho người phụ trách"
-          correct: true
-          why: "Đúng. Phân tích theo tổ hợp màu, theo mặt hàng và theo máy nhuộm để tìm 20% thấp nhất ở mỗi góc nhìn, rồi mỗi trọng tâm giao cho một người hoặc một team kèm KPI. Tập trung một trọng tâm trước, không dàn trải."
-        - t: "Thay thuốc nhuộm ở những mẻ hay lỗi"
-          why: "Đó có thể là biện pháp, nhưng nó thuộc bước 3, sau khi đã xác định được trọng tâm và phân tích nguyên nhân."
-        - t: "Họp toàn xưởng để nhắc nhở"
-          why: "Không có trong bốn bước, và không có dữ liệu nào chỉ ra nhắc nhở là biện pháp."
     - q: "Vì sao RFT được gọi là chỉ số quan trọng nhất trong xưởng nhuộm?"
       options:
         - t: "Vì nó là chỉ số khách hàng hay hỏi nhất"

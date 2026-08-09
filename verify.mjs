@@ -887,6 +887,24 @@ for (const name of articlePages) {
     }
   }
 
+  // 2b. A HOOK opener must tell the reader that no verdict is coming: without
+  //     that line, tapping an option and getting nothing back reads as a broken
+  //     control rather than as the point (owner, 2026-08-09). A RECALL opener
+  //     must not carry it — that one does answer, on the spot, in a <details>.
+  const isHookOpener = html.includes('name="kt-open"');
+  if (isHookOpener && !html.includes('kt-hoc-guess')) {
+    errors.push(`${name}: the opening question lost its "bạn thử đoán" line — a silent option row reads as broken`);
+  }
+  if (!isHookOpener && html.includes('kt-hoc-guess')) {
+    errors.push(`${name}: a recall block carries the "no answer here" line, but it does answer on the spot`);
+  }
+
+  // 2c. Đọc tiếp is a rail now, and the peek is what says "swipe". A card list
+  //     that renders without the rail container is a plain stack again.
+  if (html.includes('kt-readnext') && !html.includes('kt-readnext-rail')) {
+    errors.push(`${name}: Đọc tiếp rendered without its rail container`);
+  }
+
   // 3. The structured data must parse and must not out-run the page. Answers
   //    described to a crawler that a reader cannot see is the one way this
   //    markup becomes a liability.
@@ -936,6 +954,15 @@ for (const file of readdirSync(join(SITE, 'css')).filter((n) => /^chiasekinhnghi
   ]) {
     if (!css.includes(needed)) {
       errors.push(`css/${file}: lost the rule "${needed}" — the quiz cannot work without it (design/09 §A3, PurgeCSS)`);
+    }
+  }
+
+  // The verdict pair must exist in BOTH themes. A missing dark value would
+  // leave the lit green and red on the near-black paper, where the red drops
+  // to roughly 3:1 — readable enough to ship unnoticed, under the floor.
+  for (const token of ['--ok:', '--no:']) {
+    if ((css.match(new RegExp(token.replace('-', '\\-'), 'g')) || []).length < 2) {
+      errors.push(`css/${file}: ${token} is declared for only one theme — right/wrong must be re-derived on the dark paper`);
     }
   }
 }

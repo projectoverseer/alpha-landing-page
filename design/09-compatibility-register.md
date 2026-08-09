@@ -310,6 +310,31 @@ Ordered by what it would cost a reader if it silently stopped working.
 - **`forced-colors`:** all three revert to system pairs (`Highlight`/`Mark`), on
   both surfaces. In that mode the system keyword *is* the distinction.
 
+### A14 · The Đọc tiếp rail's arrow buttons — capability-revealed
+
+- **Where:** `_includes/chia-se-kinh-nghiem/read-next.html` (markup + a ~20-line
+  inline script) · `_sass/chia-se-kinh-nghiem/_theme.scss` (`.kt-rail-btn`).
+  Hub article pages only. Shipped 2026-08-09.
+- **Without it:** the arrows never appear. The rail is still a `scroll-snap`
+  overflow container, so it swipes on a phone, scrolls on a trackpad, and every
+  card is a real link reachable by Tab. All six posts stay in the HTML for a crawler.
+  Nothing degrades except two buttons that were never the mechanism.
+- **Why the buttons are not CSS.** `::scroll-button()` does exactly this with no
+  script, and it is Chromium-only as of 2026-08-09. The rail's arrows matter
+  most on a desktop pointer, but this hub's readers arrive from Facebook on
+  iOS as often as Android, and shipping a control that exists for half of them
+  is worse than shipping the same enhancement for all of them at the cost of
+  twenty lines. **Trigger to revisit:** `::scroll-button()` in Safari and
+  Firefox stable, at which point the script deletes itself.
+- **The pattern, not a new one.** Ship the control `hidden`, reveal it only
+  where it works — the same rule the share block's copy-link button follows, and
+  the reason philosophy §2.6 can still say no script the page depends on.
+- **The end-state slop is measured, not assumed.** The rail carries 4px of
+  padding so a focused card's ring is not clipped, and the snap engine settles a
+  few pixels inside it: `scrollLeft` reads 4–6 at rest, not 0. The disabled
+  test reads that padding out of the computed style rather than hard-coding a
+  tolerance, so a "back" arrow is never live at the start.
+
 ### A13 · Smaller enhancements, no drama
 
 | Feature | Without it | Note |
@@ -476,3 +501,4 @@ expand. This is a legal item, not a technical one.
 | 2026-08-09 | File created. Inventory taken from source, not from memory: every `@supports`, every unguarded modern selector, every prefixed property, and both stylesheets' media queries. | A1 measured at 0.75px worst case and 18.8px tightest diacritic clearance; `main.scss` comment on `text-box-edge: text alphabetic` corrected (it has shipped). |
 | 2026-08-09 | B1 + B2 built and shipped → A12. Colours derived by measurement (contrast + ΔE2000 against everything that can share the page), verified by paint in Chrome 151 against a same-scroll control, and gated four ways in `verify.mjs` — each assertion proven to fire by breaking the built CSS on purpose. | The one-pseudo-per-rule decision was confirmed live: a grouped rule containing an unknown pseudo was discarded whole. Two measurement traps recorded in A12 (word-boundary text fragments; headless Chrome defaults to dark). |
 | 2026-08-09 | B3's trigger fired: `<details>` shipped with the hub's active-learning blocks. Re-examined and declined again for the hub, on new grounds (an animation between a recalled question and its answer draws the eye at the worst instant); the main site's accordion case stays open. A3 extended with four load-bearing `:has()` rules and gated in `verify.mjs`, each assertion proven to fire by deleting the rule from the built CSS. | The quiz's `:has()` pair is written backwards so a missing `:has()` degrades to a plain Q&A block rather than to four dead options. Verified in Chrome 151 in both schemes and at 390px, including a real Shift+Tab to confirm the focus ring — the first version of that check used a scripted `.focus()`, which does not match `:focus-visible` on a radio and passed while showing nothing. |
+| 2026-08-09 | Owner review of the active-learning pass. Green/red verdict colours added (philosophy §3) and measured on all four grounds; the Đọc tiếp rail's arrow buttons entered table A as A14, with `::scroll-button()` recorded as the CSS-only successor and its trigger. | Two checks in the browser harness were passing while showing nothing, both for the same reason: they read a computed value in the same tick as the click that changed it, sampling the START of a `transition`. The focus check had the same class of bug earlier in the day (scripted `.focus()` does not match `:focus-visible` on a radio). Rule for this harness: after any interaction that changes a transitioned property, wait, then read. |

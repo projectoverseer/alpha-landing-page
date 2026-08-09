@@ -148,7 +148,8 @@ would miss). The numbered principles below are applications of this one.
    — Absolute Neutrality's flagship (§2). The title is always a link back to the
    top of its collection (a collection name is a destination); articles and the
    hub feed name a single thing, not a collection, so they get no scroll title. The hub additionally carries a small inline script for feed
-   paging (§5), and articles one for the share block's copy-link button
+   paging (§5), articles one for the Đọc tiếp rail's arrows (2026-08-09) and
+   one for the share block's copy-link button
    (2026-07-15 overhaul): the button ships `hidden` and is revealed only where
    the Clipboard API actually works, so nobody is shown a dead control. None may ever be load-bearing: with JS off the corners are
    simply round, a figure is simply a picture, the bar simply keeps the
@@ -252,8 +253,39 @@ object would change shape as the reader walked toward it. The boxes a reader
 `.kt-cta-note` — because those are controls, and a control is a screen object.
 The avatar stays a circle, which is a face, not a plate.
 
+### Right and wrong — the second and third hue (owner, 2026-08-09)
+
+The quiz needed a way to say "correct" and "incorrect". The first cut did it
+with words alone plus the `mark` amber, precisely to keep one accent; the owner
+looked at it and asked for green and red. Recorded here rather than buried,
+because it is the first time this palette has held more than one accent.
+
+It is a narrower exception than it looks. These are not actions, they are a
+**verdict on something the reader already did**, they appear on one element in
+one block, and they never appear on a page where nobody has answered anything.
+Indigo keeps its meaning intact: nothing green is clickable.
+
+| Token | Light | Dark | |
+|---|---|---|---|
+| `--ok` | `#2C6A43` | `#7FC195` | L\* 40 / 73 |
+| `--no` | `#A83227` | `#F09A8E` | L\* 39 / 72 |
+
+**Matched in lightness, separated only by hue** — so neither shouts louder than
+the other, and both sit in the same tonal band as the warm ink around them
+rather than reading as framework alerts. Measured on the two grounds they land
+on: as text on `--paper-deep`, 5.52 and 5.70 lit / 7.27 and 7.09 dark; as a
+border on `--paper`, 6.08 and 6.28 / 8.28 and 8.07.
+
+**The colour is never the signal, only its echo.** Roughly one man in twelve
+cannot separate red from green, and this hub's readers are mostly men in a
+Vietnamese dyehouse. Every explanation opens with the verdict in words — "Đúng."
+/ "Chưa đúng." — and the hue agrees with the words. A state distinguished by hue
+alone would fail SC 1.4.1 and, more to the point, would fail those readers.
+
 Rules:
 - Indigo means "you can act on this." Never use it decoratively.
+- Green and red mean "this answer was right / wrong", nowhere else on the hub,
+  and never without the word beside them.
 - **The one bend in that rule (owner's call, July 2026): the topic tags in
   metadata** — the article kicker, the tag under a feed card — are links, but
   they stay `--ink-3` grey and reveal themselves with an underline on hover.
@@ -578,13 +610,18 @@ whole point.
    the button's own label swapping to "Đã sao chép liên kết" for two seconds.
 7. Series footer: "Bài trước / Bài sau" within the same series — continuity
    offered, never a syllabus imposed.
-8. **Đọc tiếp** (owner's engagement pass, July 2026): up to three more
-   articles in compact thumb-and-title rows — same topic first, then the
-   newest of the rest of the hub; posts from the article's own series are
-   excluded because the series footer above already offers them. Reading time
-   shown on every row. The reader who reached the end of a post just proved
-   they read to the end — they are offered the next piece *before* the contact
-   strip asks anything of them. Plain HTML, crawler-visible, no script.
+8. **Đọc tiếp** (engagement pass July 2026; rebuilt as a rail 2026-08-09):
+   **six** more articles in the feed's own card face — picture on top, title
+   under it, large — laid out as a horizontal rail the reader swipes, with
+   arrow buttons in the section header. Same topic first, then the newest of
+   the rest; posts from the article's own series are excluded because the
+   series footer above already offers them. Reading time on every card.
+   The card width is set so the next card is **visibly cut by the right edge**:
+   a row that ends flush reads as finished, and nobody swipes a finished row.
+   The rail stays inside the reading measure (§4) — it is the one horizontally
+   scrolling region on an article page, and it does not bleed past the column.
+   The arrows ship `hidden` and a small inline script reveals them; with no
+   script the rail still swipes and all six posts are still in the HTML.
 9. Contact strip (site-level, uniform): one sentence + phone / email actions.
 10. Minimal footer: legal name, © , link to main site.
 

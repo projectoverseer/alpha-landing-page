@@ -14,7 +14,7 @@ learn:
       - "Cuối tuần, lúc tắt máy"
       - "Đầu mỗi mẻ"
       - "Giờ nghỉ trưa"
-    promise: "Phần \"Nhưng còn một đầu nữa bị bỏ quên\" trả lời."
+    promise: "Phần \"Nhưng còn một đầu nữa bị bỏ quên\" ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu với lựa chọn vừa rồi."
   quiz:
     - q: "Vì sao cuối ca thứ Bảy các máy phải ngưng nhuộm sớm ít nhất 1 tiếng?"
       options:

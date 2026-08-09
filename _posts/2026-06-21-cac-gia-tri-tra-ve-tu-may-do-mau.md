@@ -14,7 +14,7 @@ learn:
       - "Cặp màu đen lệch rõ hơn"
       - "Cặp màu vàng tươi lệch rõ hơn"
       - "Không cặp nào lệch, vì ΔE* nhỏ"
-    promise: "Phần \"Vấn đề của ΔE*\" trả lời, và đó chính là lý do ngành dệt may không dùng ΔE* thuần túy."
+    promise: "Phần \"Vấn đề của ΔE*\" ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: đó cũng là lý do ngành dệt may không dùng ΔE* thuần túy."
   quiz:
     - q: "Vì sao ngành dệt may dùng ΔE CMC thay cho ΔE* thuần túy?"
       options:
@@ -27,17 +27,6 @@ learn:
           why: "ΔE* cũng viết được trong hệ tọa độ cực. Khác biệt nằm ở trọng số, không ở hệ tọa độ."
         - t: "Vì ΔE CMC mới hơn"
           why: "Ra đời năm 1984 nên mới hơn thật, nhưng tuổi không phải lý do."
-    - q: "Tỷ lệ 2:1 trong ΔE CMC (2:1) nghĩa là gì?"
-      options:
-        - t: "Dung sai được nhân đôi so với ΔE*"
-          why: "Không. Hai hệ số l và c không nhân chung một hằng số vào kết quả."
-        - t: "Dung sai cho độ sáng tối được nới gấp đôi so với dung sai của ánh màu"
-          correct: true
-          why: "Đúng, và nó khớp với cách mắt người làm việc: lệch sáng tối dễ tha thứ hơn lệch ánh màu."
-        - t: "Đo hai lần rồi lấy trung bình"
-          why: "Không có bước nào như vậy."
-        - t: "Hai mẫu so với một mẫu chuẩn"
-          why: "Không liên quan đến ý nghĩa của hai hệ số l và c."
     - q: "Câu nào sau đây là phát biểu SAI?"
       options:
         - t: "ΔE CMC là một công thức tính độ lệch màu"

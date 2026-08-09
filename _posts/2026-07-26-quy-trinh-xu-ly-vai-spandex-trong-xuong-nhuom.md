@@ -18,7 +18,7 @@ learn:
       - "Sợi spandex lão hóa, giòn và mất hẳn độ co giãn"
       - "Khổ vải bị lệch, căng lại được"
       - "Không sao, vì bước sau còn định hình lại"
-    promise: "Bước 3 trả lời, và đây là ngưỡng không sửa được ở bất kỳ bước nào phía sau."
+    promise: "Bước 3 ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: đây là ngưỡng không sửa được ở bất kỳ bước nào phía sau."
   quiz:
     - q: "Tốc độ hạ nhiệt tối đa sau khi nhuộm vải có spandex là bao nhiêu?"
       options:
@@ -42,17 +42,6 @@ learn:
           why: "Không còn biên an toàn nào, và mọi dao động của máy đều thành rủi ro."
         - t: "Không liên quan đến nhau"
           why: "Hai bước này liên quan trực tiếp, và quan hệ giữa hai nhiệt độ là một quy tắc cứng."
-    - q: "Vải dệt kim tròn dạng ống phải chạy qua máy phá gãy trước khi lên nhiệt. Quả phao nổi bên trong lòng ống làm nhiệm vụ gì?"
-      options:
-        - t: "Giữ cho vải không bị xoắn"
-          why: "Không phải nhiệm vụ chính của nó."
-        - t: "Nong tròn ống vải 360° để phá và xóa hoàn toàn nếp gấp dọc hông ống"
-          correct: true
-          why: "Đúng. Nếu không, những lằn gấp đó thành lằn gãy vĩnh viễn khi vải lên nhiệt. Nước nóng 70–90 °C làm mềm sợi spandex để vải co rút tự nhiên trong lúc đó."
-        - t: "Ép nước ra khỏi vải"
-          why: "Đó là việc của máy vắt, ở công đoạn khác."
-        - t: "Đo khổ vải tự động"
-          why: "Không phải chức năng của quả phao."
   action: "Kiểm tra hai con số trên máy stenter ngay hôm nay: nhiệt độ và thời gian đang cài cho định hình sơ bộ vải có spandex. Nếu nhiệt vượt 195 °C hoặc thời gian vượt 60 giây, mọi mẻ chạy qua đó đang mất độ co giãn mà không bước nào phía sau lấy lại được."
 ---
 

@@ -23,17 +23,6 @@ learn:
           why: "Đây là phần tổn thất, không phải chỉ số."
         - t: "Chưa tính được vì chưa biết thời gian kế hoạch"
           why: "Thời gian kế hoạch thuộc về chỉ số sẵn sàng. Hiệu suất tốc độ chỉ so thời gian chuẩn với thời gian máy thực sự chạy."
-    - q: "Một mẻ chạy đúng bằng thời gian chuẩn. Công nhân có phải ghi gì vào bảng phân tích nguyên nhân chậm không?"
-      options:
-        - t: "Có, ghi \"đúng chuẩn\" cho đủ dữ liệu"
-          why: "Bài nói ngược lại, và có lý do: mỗi dòng thừa là một lần công nhân phải điền mà không thu được thông tin nào."
-        - t: "Không, chỉ ghi khi thời gian thực tế vượt thời gian chuẩn"
-          correct: true
-          why: "Đúng. Bảng 2 chỉ tồn tại để tìm ra ba nguyên nhân chính gây chậm. Mẻ chạy đúng hoặc nhanh hơn chuẩn không cần ghi."
-        - t: "Có, nếu mẻ đó chạy nhanh hơn chuẩn"
-          why: "Cũng không. Bảng này chỉ phục vụ việc tìm nguyên nhân chậm."
-        - t: "Tùy quản đốc quyết định"
-          why: "Để tùy thì mỗi máy một kiểu, và số liệu giữa các máy không so được với nhau."
     - q: "Vì sao xây thói quen ghi bảng hiệu suất tốc độ khó hơn ghi bảng ngưng máy?"
       options:
         - t: "Vì bảng này nhiều cột hơn"

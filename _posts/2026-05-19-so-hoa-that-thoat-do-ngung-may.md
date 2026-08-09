@@ -34,17 +34,6 @@ learn:
           why: "Bài nói rõ điều ngược lại: chỉ số sẵn sàng thấp không phải lỗi của công nhân, nó phản ánh hệ thống vận hành. Phạt trong giai đoạn này là cách nhanh nhất để mất số liệu."
         - t: "Lắp cảm biến tự động cho tất cả các máy"
           why: "Không cần. Bảng giấy kẹp tại máy, cuối tuần thu lại và nhập Excel, vẫn đủ dùng để bắt đầu."
-    - q: "Danh mục phân loại lý do ngưng máy nên có khoảng bao nhiêu loại?"
-      options:
-        - t: "3–4 loại cho gọn"
-          why: "Quá ít thì không phân biệt được nguyên nhân, và phân tích sau đó không chỉ ra được hành động nào."
-        - t: "8–12 loại"
-          correct: true
-          why: "Đúng. Đủ chi tiết để phân biệt nguyên nhân, đủ đơn giản để công nhân điền nhanh mà không nhầm."
-        - t: "Khoảng 30 loại, càng chi tiết càng tốt"
-          why: "Quá nhiều thì công nhân điền đại, và số liệu mất ý nghĩa."
-        - t: "Dùng danh mục chuẩn của ngành"
-          why: "Không có danh mục chuẩn cho tất cả. Mỗi xưởng có đặc thù riêng nên phải tự tạo danh mục phù hợp."
   action: "In một bảng giấy bốn cột (giờ ngưng, giờ chạy lại, số phút, lý do) và kẹp ngay tại một máy duy nhất. Một máy, ba tuần, không đặt mục tiêu. Đó là toàn bộ bước một."
 ---
 

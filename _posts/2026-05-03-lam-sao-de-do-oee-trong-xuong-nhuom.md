@@ -22,7 +22,7 @@ learn:
       - "Khoảng 46%"
       - "70%, lấy số thấp nhất"
       - "Khoảng 86%"
-    promise: "Phần \"OEE thật của ví dụ trên\" trả lời. Khoảng cách giữa hai cách tính phổ biến nhất là hơn 30 điểm phần trăm."
+    promise: "Phần \"OEE thật của ví dụ trên\" ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: khoảng cách giữa hai cách tính phổ biến nhất là hơn 30 điểm phần trăm."
   quiz:
     - q: "Ca 8 tiếng. Lò hơi cần 45 phút mới có áp, máy hỏng 30 phút, chờ hóa chất 20 phút. Availability là bao nhiêu?"
       options:

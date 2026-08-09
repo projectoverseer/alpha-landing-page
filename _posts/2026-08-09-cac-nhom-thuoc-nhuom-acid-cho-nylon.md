@@ -14,7 +14,7 @@ learn:
       - "Bền màu kém nhất"
       - "Đắt nhất"
       - "Chạy ở pH cao nhất"
-    promise: "Phần về thuốc nhuộm acid leveling trả lời, và cùng một nguyên nhân tạo ra cả hai đặc tính đó."
+    promise: "Phần về thuốc nhuộm acid leveling ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: cùng một nguyên nhân tạo ra cả hai đặc tính đó."
   quiz:
     - q: "Vải Nylon pha Spandex, màu đen đậm, khách yêu cầu bền giặt cao. Nhóm thuốc nhuộm nào phải loại đầu tiên?"
       options:
@@ -38,17 +38,6 @@ learn:
           why: "Cả hai đều dùng Cr, riêng nhóm 1:2 có thêm lựa chọn Co. Đó không phải nguyên nhân của chênh lệch pH."
         - t: "Vì 1:2 dùng cho màu đậm hơn"
           why: "Nó hợp màu đậm thật, nhưng đó là hệ quả của độ bền và độ tươi, không phải nguyên nhân của pH."
-    - q: "Nhóm nào có độ bền màu cao nhất trong bốn nhóm thuốc nhuộm acid?"
-      options:
-        - t: "Acid leveling"
-          why: "Thấp nhất. Phân tử nhỏ, chủ yếu bám bằng liên kết ion, lực giữ yếu."
-        - t: "Acid milling"
-          why: "Cao, nhờ lực kỵ nước giữ chặt phân tử lớn trong xơ, nhưng chưa phải cao nhất."
-        - t: "Phức kim loại 1:2"
-          correct: true
-          why: "Đúng. Bền ánh sáng, bền giặt và bền hóa chất đều vượt trội, nhờ khối phức rất lớn và tương tác kỵ nước rất mạnh. Cái giá là khó đều màu nhất và màu kém tươi."
-        - t: "Phức kim loại 1:1"
-          why: "Cao, đặc biệt bền ánh sáng nhờ có thêm liên kết phức, nhưng vẫn dưới nhóm 1:2."
   action: "Mở đơn công nghệ của ba mã hàng Nylon màu đậm đang chạy. Với mỗi mã ghi lại hai thứ: nhóm thuốc nhuộm, và pH bể ở giai đoạn bắt màu. Nếu có mã nào là phức 1:1 chạy dưới pH 3 trên vải có Spandex, đó là mã cần xem lại trước tiên."
 ---
 

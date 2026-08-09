@@ -21,7 +21,7 @@ learn:
       - "Đường phổ phản xạ"
       - "Ảnh chụp mẫu vải"
       - "Tên thuốc nhuộm đã dùng"
-    promise: "Phần \"Nguyên lý hoạt động\" trả lời. Khác biệt giữa hai đáp án đầu chính là lý do máy phát hiện được metamerism còn mắt người thì không."
+    promise: "Phần \"Nguyên lý hoạt động\" ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: khác biệt giữa hai đáp án đầu chính là lý do máy phát hiện được metamerism còn mắt người thì không."
   quiz:
     - q: "Vì sao kết quả đo màu lưu được vĩnh viễn còn mẫu chuẩn vật lý thì không?"
       options:

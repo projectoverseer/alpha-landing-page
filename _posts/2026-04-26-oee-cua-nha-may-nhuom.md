@@ -14,7 +14,7 @@ learn:
       - "Khoảng 15–20%"
       - "Dưới 5%, vì chi phí cũng tăng theo"
       - "Không tăng, vì phải thuê thêm người"
-    promise: "Câu trả lời nằm ở phần \"Cải thiện OEE\", cùng với phép tính dẫn tới nó."
+    promise: "Phần \"Cải thiện OEE\" ở bên dưới có câu trả lời, kèm phép tính dẫn tới nó. Đọc tới đó rồi quay lại đối chiếu với lựa chọn vừa rồi."
   quiz:
     - q: "Xưởng 20 máy, mỗi máy chạy bình quân 4 mẻ/ngày. Cuối ngày đếm được 48 mẻ đạt chuẩn. OEE sơ bộ là bao nhiêu?"
       options:

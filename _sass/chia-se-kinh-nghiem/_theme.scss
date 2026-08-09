@@ -119,6 +119,29 @@
   --mark-ink: #292319; // the lit theme's ink, pinned: it rides the mark, not the page
   --mark-selected-bg: #f8a862;
 
+  // RIGHT AND WRONG — the one place a second and third hue are allowed
+  // (owner's decision, 2026-08-09, overruling the words-only first cut).
+  //
+  // §3 says indigo is the only accent and it means "you can act on this".
+  // These two do not break that: they are not actions, they are a verdict on
+  // something the reader already did, and they appear on exactly one element.
+  //
+  // Chosen by measurement, not by picking from a framework palette. The pair
+  // is matched in LIGHTNESS and separated only by hue — L* 40 / L* 39 in the
+  // lit theme, L* 73 / L* 72 in the dark — so neither shouts louder than the
+  // other and both sit in the same tonal band as the warm ink around them.
+  // Measured on the two grounds they land on: as text on --paper-deep, 5.52
+  // and 5.70 (lit) / 7.27 and 7.09 (dark); as a border on --paper, 6.08 and
+  // 6.28 / 8.28 and 8.07. Floors are 4.5 and 3.
+  //
+  // RED AND GREEN ARE NOT THE SIGNAL, THEY REINFORCE IT. Roughly one man in
+  // twelve cannot separate this pair, and this hub's readers are mostly men in
+  // a Vietnamese dyehouse. The verdict is carried by the words that open every
+  // explanation — "Đúng." / "Chưa đúng." — and the colour agrees with them.
+  // Never ship a state here that only the hue distinguishes (SC 1.4.1).
+  --ok: #2c6a43;
+  --no: #a83227;
+
   // FOUND TEXT — the third gesture, and the only one that is not ours.
   //
   // Selection is the reader's hand; a mark is the author's pen. `::target-text`
@@ -211,6 +234,12 @@
     // it is pinned lit, argued in the light block above.
     --find-bg: #293235; // accent @ 16% on the dark paper
     --target-bg: #354e5a; // accent @ 34%
+
+    // Right and wrong climb the ramp the other way at night, exactly as indigo
+    // does: at L* 73 and 72 they stay a lightness-matched pair. Contrast on the
+    // dark grounds is in the light block's note.
+    --ok: #7fc195;
+    --no: #f09a8e;
   }
 
   .kt-figure img,
@@ -1872,32 +1901,118 @@ body.kt-lightbox-open {
 // Compact thumb-and-title rows — the "up next" anatomy every feed has taught —
 // offering up to three more posts: same topic first, the rest of the hub after.
 
+// ---- Đọc tiếp — the rail (owner, 2026-08-09) --------------------------------
+//
+// Was three stacked rows with a 8.5rem thumbnail beside the title. It is now
+// the feed's own card face — picture on top, title under it, large — in a rail
+// the reader swipes. Six cards; the count is argued in read-next.html.
+//
+// THE CARD WIDTH IS THE WHOLE DESIGN. It is set so the next card is visibly
+// cut by the rail's right edge: a row that ends flush reads as finished, and
+// nobody swipes a finished row. 76% on a phone leaves roughly a quarter of the
+// next card showing; 44% on the reading column shows two whole cards and about
+// 60px of a third.
+//
+// The rail is the only horizontally scrolling region on an article page, and
+// it stays INSIDE the reading measure — philosophy §4 protects that column,
+// and a rail bleeding past it would be the first thing on the hub to sit
+// beside the text rather than in it.
 .kt-readnext {
   margin: 3rem 0 0;
   padding-top: 2rem;
   border-top: 1px solid var(--line);
+}
 
-  ol {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 1.25rem;
-  }
+.kt-readnext-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .kt-readnext-title {
-  margin: 0 0 1.25rem;
+  margin: 0;
   font-family: var(--font-read);
   @include read(21);
   font-weight: 620;
   line-height: 1.35;
 }
 
-.kt-readnext-link {
+// The arrows. They ship `hidden` and read-next.html reveals them, so a reader
+// with no script never meets a control that does nothing.
+.kt-readnext-nav {
+  display: flex;
+  gap: step(2);
+  flex: none;
+}
+
+.kt-rail-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // 44px, the same floor the quiz options hold. An arrow is a small mark but
+  // it is not a small target.
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line);
+  @include corner($r-2);
+  color: var(--indigo);
+  cursor: pointer;
+  transition:
+    border-color var(--t-2) var(--ease),
+    color var(--t-2) var(--ease),
+    opacity var(--t-2) var(--ease);
+
+  &:hover:not(:disabled) {
+    border-color: var(--indigo);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  // At either end the button stays in place and stops being an affordance —
+  // it does not vanish, because a control that disappears takes the layout
+  // with it and shifts the other arrow under the reader's finger.
+  &:disabled {
+    color: var(--ink-3);
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.kt-readnext-rail {
+  list-style: none;
+  margin: 0;
+  // Room for the focus ring, which would otherwise be clipped by the scroll
+  // container on the first and last card.
+  padding: 4px;
+  margin-inline: -4px;
   display: flex;
   gap: 1rem;
-  align-items: flex-start;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.kt-readnext-card {
+  flex: 0 0 44%;
+  scroll-snap-align: start;
+  margin: 0;
+}
+
+.kt-readnext-link {
+  display: flex;
+  flex-direction: column;
+  gap: step(3);
   text-decoration: none;
 
   &:hover .kt-readnext-item-title {
@@ -1907,7 +2022,7 @@ body.kt-lightbox-open {
 }
 
 .kt-readnext-thumb {
-  flex: 0 0 8.5rem;
+  display: block;
   overflow: hidden;
   background: var(--paper-deep);
   border: 1px solid var(--line);
@@ -1917,16 +2032,15 @@ body.kt-lightbox-open {
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
-    // The row's crop centres on the picture's attention point, same fx/fy the
-    // feed uses (image-focus.mjs) — what earns the click survives the cut.
+    // The crop centres on the picture's attention point, same fx/fy the feed
+    // uses (image-focus.mjs) — what earns the click survives the cut.
     object-position: var(--kt-focus, 50% 50%);
     transition: transform var(--t-3) var(--ease);
   }
 }
 
 // The same 2% lean-in as the feed thumbs — one gesture, everywhere a card
-// answers a pointer.
-// Hover only, same gesture and the same reasoning as the feed thumb above.
+// answers a pointer. Hover only.
 .kt-readnext-link:hover .kt-readnext-thumb img {
   transform: scale(1.02);
 }
@@ -1936,13 +2050,13 @@ body.kt-lightbox-open {
   font-family: var(--font-read);
   @include read(17);
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.4;
   color: var(--indigo); // indigo = actionable, §3
 }
 
 .kt-readnext-meta {
   display: block;
-  margin-top: 0.375rem;
+  margin-top: 0.25rem;
   font-size: var(--fs-meta);
   color: var(--ink-3);
 }
@@ -2067,8 +2181,9 @@ body.kt-lightbox-open {
     @include read(19);
   }
 
-  .kt-readnext-thumb {
-    flex-basis: 6.5rem; // the title keeps at least half the phone's width
+  // One whole card plus a quarter of the next — the peek that says "swipe".
+  .kt-readnext-card {
+    flex-basis: 76%;
   }
 
   .kt-readnext-item-title {
@@ -2105,24 +2220,48 @@ body.kt-lightbox-open {
 // Not written as `:not(:has(...))` at the end of a selector: PurgeCSS drops
 // those silently (design/09 §A3). Every exclusion here is expressed positively.
 
+// COMPACT IS A REQUIREMENT HERE, NOT A PREFERENCE (owner, 2026-08-09).
+// Everything below this block — the signature, and above all the share buttons
+// — is worth more than another 200px of quiz. The quiz's job is to leave a
+// reader feeling they got something worth passing on; the passing on happens
+// underneath it. So the space this section spends is spent against the thing
+// it exists to serve, and it is kept tight.
+//
+// THE ONE DIMENSION THAT DOES NOT SHRINK IS THE TAP TARGET. An option row
+// holds ≥44px of height (measured: 46px desktop, 45px phone). The register
+// already refused a thinner scrollbar for this exact reader — "một người công
+// nhân" with unsteady hands, design/09 §B5 — and a quiz row is a far more
+// common target than a scrollbar. Everything else gave ground instead: the
+// gaps, the padding around them, the removed lead sentence and the removed
+// reset button.
 .kt-hoc {
-  --kt-opt-gap: #{step(2)};
+  --kt-opt-gap: #{step(1)};
 }
 
 // The opener. `--paper-deep` and a hairline, the same separated surface an
 // aside gets — it is not prose, and it should not pretend to be.
 .kt-hoc-open {
-  margin: 0 0 step(7);
-  padding: step(5) step(6);
+  margin: 0 0 step(6);
+  padding: step(4) step(5);
   background: var(--paper-deep);
   border: 1px solid var(--line);
   @include corner($r-2);
 }
 
+// The invitation, and the warning that no verdict is coming (owner,
+// 2026-08-09). It sits ABOVE the options, because a reader who learns the
+// rule after tapping has already read the silence as a bug.
+.kt-hoc-guess {
+  margin: step(2) 0 step(4);
+  font-family: var(--font-read);
+  @include read(16);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
 .kt-hoc-promise {
   margin: step(4) 0 0;
   font-family: var(--font-read);
-  font-style: italic;
   @include read(16);
   line-height: 1.6;
   color: var(--ink-2);
@@ -2130,35 +2269,30 @@ body.kt-lightbox-open {
 
 // The closer: a seam, because the piece has ended and what follows is offered
 // (§0 of the element spec). Same device as the signature and Đọc tiếp.
+//
+// Its h2 is read(19), one step under the body's read(21) h2. The block is a
+// closing device, not another chapter of the article, and the smaller heading
+// is what says so before a word is read.
 .kt-hoc-end {
-  margin: 3rem 0 0;
-  padding-top: 1.5rem;
+  margin: 2.5rem 0 0;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--line);
 
   h2 {
     margin: 0;
     font-family: var(--font-read);
-    @include read(21);
+    @include read(19);
     font-weight: 620;
     line-height: 1.3;
     color: var(--ink);
   }
 }
 
-.kt-hoc-lead {
-  margin: step(3) 0 0;
-  font-family: var(--font-read);
-  font-style: italic;
-  @include read(16);
-  line-height: 1.65;
-  color: var(--ink-2);
-}
-
 .kt-quiz {
-  margin: step(6) 0 0;
+  margin: step(4) 0 0;
   display: flex;
   flex-direction: column;
-  gap: step(7);
+  gap: step(5);
 }
 
 // `fieldset` + `legend` is the markup a grouped set of radios is supposed to
@@ -2175,14 +2309,14 @@ body.kt-lightbox-open {
 .kt-q-stem {
   padding: 0;
   font-family: var(--font-read);
-  @include read(18);
+  @include read(17);
   font-weight: 620;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--ink);
 }
 
 .kt-q-opts {
-  margin: step(4) 0 0;
+  margin: step(3) 0 0;
   padding: 0;
   list-style: none;
   display: flex;
@@ -2197,13 +2331,16 @@ body.kt-lightbox-open {
     display: flex;
     align-items: center;
     gap: step(3);
-    padding: step(3) step(4);
+    // Vertical padding is the tap target's floor, not a spacing choice: with
+    // read(16)'s 24px line box this lands the row at 46px, over the 44 minimum.
+    padding: step(2) step(4);
+    min-height: 2.75rem;
     border: 1px solid var(--line);
     @include corner($r-2);
     background: var(--paper);
     font-family: var(--font-read);
-    @include read(17);
-    line-height: 1.5;
+    @include read(16);
+    line-height: 1.45;
     color: var(--ink);
     cursor: pointer;
     transition:
@@ -2231,12 +2368,12 @@ body.kt-lightbox-open {
 // the same reply, so nothing leaks.
 .kt-fb {
   margin: step(2) 0 0;
-  padding: step(4) step(5);
+  padding: step(3) step(4);
   background: var(--paper-deep);
   border-left: 3px solid var(--line);
   font-family: var(--font-read);
   @include read(16);
-  line-height: 1.65;
+  line-height: 1.6;
   color: var(--ink-2);
 
   strong,
@@ -2269,37 +2406,38 @@ body.kt-lightbox-open {
   display: block;
 }
 
-// The one lit object: `mark`'s amber, which on this hub means the author's own
-// pen laid on the page. Correctness itself is carried by the WORDS ("Đúng." /
-// "Chưa đúng.") — colour never carries it alone, both because SC 1.4.1 says so
-// and because indigo is the only action colour this design has (philosophy §3).
-// Adding a green and a red here would have been two new hues for one moment.
+// ---- The verdict ------------------------------------------------------------
+//
+// Green and red, on the owner's decision (2026-08-09). The pair is derived and
+// measured at the --ok / --no tokens; the short version is that they are
+// matched in lightness and separated only by hue, so the page gains a verdict
+// without gaining a loud object.
+//
+// Three surfaces carry it, and no more: the chosen row's border, the
+// explanation's left edge, and the word that opens the explanation. The word
+// is the part that is not optional — see the token comment on why hue alone
+// can never be the signal here.
+.kt-opt.is-right:has(input:checked) > label {
+  border-color: var(--ok);
+}
+
 .kt-opt.is-right:has(input:checked) .kt-fb {
-  border-left-color: var(--mark-bg);
-}
+  border-left-color: var(--ok);
 
-.kt-quiz-foot {
-  margin: 0;
-}
-
-.kt-quiz button[type="reset"] {
-  font-family: var(--font-ui);
-  font-size: var(--fs-meta);
-  font-weight: 600;
-  color: var(--indigo);
-  background: transparent;
-  border: 1px solid var(--line);
-  @include corner($r-2);
-  padding: step(2) step(4);
-  cursor: pointer;
-  transition: border-color var(--t-2) var(--ease);
-
-  &:hover {
-    border-color: var(--indigo);
+  b {
+    color: var(--ok);
   }
+}
 
-  &:active {
-    transform: scale(0.98);
+.kt-opt:not(.is-right):has(input:checked) > label {
+  border-color: var(--no);
+}
+
+.kt-opt:not(.is-right):has(input:checked) .kt-fb {
+  border-left-color: var(--no);
+
+  b {
+    color: var(--no);
   }
 }
 
@@ -2348,8 +2486,8 @@ body.kt-lightbox-open {
 // "Việc mang về xưởng" — the last thing read before the signature, and the
 // reason a reader who skipped the questions still leaves with something.
 .kt-mang-ve {
-  margin: step(7) 0 0;
-  padding: step(5) step(6);
+  margin: step(5) 0 0;
+  padding: step(4) step(5);
   background: var(--paper-deep);
   border: 1px solid var(--line);
   @include corner($r-2);

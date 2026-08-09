@@ -14,7 +14,7 @@ learn:
       - "Lỗi hiệu chuẩn tủ đèn"
       - "Hiện tượng metamerism"
       - "Vải bạc màu do ánh nắng"
-    promise: "Phần cuối bài trả lời, kèm cách phòng tránh ngay từ lúc thương thảo hợp đồng."
+    promise: "Phần cuối bài ở bên dưới có câu trả lời, kèm cách phòng tránh ngay từ lúc thương thảo hợp đồng. Đọc tới đó rồi quay lại đối chiếu với lựa chọn vừa rồi."
   quiz:
     - q: "Vì sao phòng so màu phải tắt hết đèn trong lúc so?"
       options:
@@ -27,17 +27,6 @@ learn:
           why: "Không có bước này trong quy trình so màu."
         - t: "Vì đèn phòng làm nóng mẫu vải"
           why: "Nhiệt không phải vấn đề ở đây. Thành phần bước sóng mới là vấn đề."
-    - q: "Vì sao không được lót giấy hoặc vải phía dưới mẫu khi so màu?"
-      options:
-        - t: "Vì làm mẫu bị nhăn"
-          why: "Không phải lý do trong bài."
-        - t: "Vì vật liệu lót có thể chứa chất tăng trắng quang học, phản xạ thêm ánh sáng và làm nhiễu kết quả"
-          correct: true
-          why: "Đúng. Mẫu phải đặt trực tiếp lên mặt nghiêng của tủ, vốn đã sơn màu xám trung tính không bóng đúng chuẩn."
-        - t: "Vì tủ đèn chỉ đo được một lớp"
-          why: "Tủ đèn không đo gì cả, nó chỉ chiếu sáng. Mắt người mới là thứ đánh giá."
-        - t: "Vì mẫu phải nằm nghiêng đúng góc"
-          why: "Mặt nghiêng có lý do riêng, nhưng vật liệu lót bị cấm vì lý do quang học chứ không phải hình học."
     - q: "Đưa mẫu ra ngoài trời nắng có tương đương nguồn sáng chuẩn D65 không?"
       options:
         - t: "Có, D65 chính là ánh sáng ban ngày"

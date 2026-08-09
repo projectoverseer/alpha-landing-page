@@ -2,25 +2,50 @@
   "Đọc tiếp" — the end of one article offers the next one (philosophy §5).
 
   The reader who reaches the bottom of a post is the reader most worth keeping:
-  they just proved they read to the end. This block hands them up to three more
-  articles in the compact thumb-and-title rows every feed has taught them to
-  binge on. Order of preference:
+  they just proved they read to the end. Order of preference:
 
     1. other posts on the SAME TOPIC, newest first — "more like what you just
        finished" is the strongest next read;
-    2. then the newest posts from the rest of the hub, to fill up to three.
+    2. then the newest posts from the rest of the hub, to fill the rail.
 
   Posts in the SAME SERIES are excluded: the series nav directly above already
   offers those, and offering a post twice on one screen reads as machinery.
-  Plain HTML, no script — it renders for every reader, crawler included.
+
+  ── A HORIZONTAL RAIL, SIX CARDS (owner, 2026-08-09) ──────────────────────
+  It was three stacked thumb-and-title rows with small pictures. It is now the
+  same card face the hub feed uses — picture on top, title under it, large —
+  laid out as a rail the reader swipes.
+
+  SIX, and the number is a judgement rather than a measurement. The rail shows
+  one card on a phone and two on a laptop, so this is not a choice-overload
+  question (nobody sees six at once); it is a question of how deep the tail
+  should run. Attention in a rail falls off steeply by position, so the last
+  cards earn little — but each one costs a picture in the HTML. Six is two to
+  three swipes, it outlasts the same-topic pool on most posts, and against a
+  16-post archive it still reads as a selection rather than as the whole
+  library. Revisit when the archive is large enough that six same-topic posts
+  are always available.
+
+  THE PEEK IS THE AFFORDANCE. Card width is set so the next card is visibly
+  cut off at the right edge (§ .kt-readnext-rail in _theme.scss). A rail whose
+  content ends flush with its container looks like a finished row, and nobody
+  swipes a finished row.
+
+  THE ARROWS ARE AN ENHANCEMENT, NEVER THE MECHANISM. They ship `hidden` and a
+  small inline script reveals them — the same pattern the share block's
+  copy-link button already uses. With no script the rail is still swipeable,
+  trackpad-scrollable and keyboard-reachable (each card holds a real link), and
+  every one of the six posts is still in the HTML for a crawler. That keeps
+  philosophy §2.6: no script the page depends on.
 {%- endcomment -%}
+{%- assign kt_rn_max = 6 -%}
 {%- assign kt_rn_same = site.posts | where: "topic", page.topic -%}
 {%- assign kt_rn_pool = kt_rn_same | concat: site.posts -%}
 {%- assign kt_rn_seen = "" -%}
 {%- assign kt_rn_shown = 0 -%}
 {%- capture kt_rn_items -%}
   {%- for kt_rn_post in kt_rn_pool -%}
-    {%- if kt_rn_shown >= 3 -%}{%- break -%}{%- endif -%}
+    {%- if kt_rn_shown >= kt_rn_max -%}{%- break -%}{%- endif -%}
     {%- if kt_rn_post.url == page.url -%}{%- continue -%}{%- endif -%}
     {%- if page.series and kt_rn_post.series == page.series -%}{%- continue -%}{%- endif -%}
     {%- if kt_rn_seen contains kt_rn_post.url -%}{%- continue -%}{%- endif -%}
@@ -29,23 +54,41 @@
     {%- assign kt_rn_words = kt_rn_post.content | strip_html | number_of_words -%}
     {%- assign kt_rn_minutes = kt_rn_words | divided_by: 200.0 | ceil -%}
     {%- assign kt_rn_topic = site.data.chia_se_kinh_nghiem.topics[kt_rn_post.topic] -%}
-  <li>
+  <li class="kt-readnext-card">
     <a class="kt-readnext-link" href="{{ site.url }}{{ kt_rn_post.url }}">
       {%- comment -%}
-        Same card face as the feed: thumb over hero (first of a tiled list) —
-        the row's crop centres on the picture's attention point via --kt-focus.
+        Same card face as the feed: thumb over hero (first of a tiled list),
+        cropped on the picture's attention point via --kt-focus.
+
+        The rail fixes the ratio at 16:10 where the feed lets each picture keep
+        its own. That is not an inconsistency to tidy away: the feed stacks
+        cards vertically, so a tall picture costs nothing, while in a rail the
+        titles sit on one line and a ragged set of image heights would stagger
+        every one of them.
       {%- endcomment -%}
       {%- assign kt_rn_name = kt_rn_post.thumb | default: kt_rn_post.image -%}
       {%- if kt_rn_name.first -%}{%- assign kt_rn_name = kt_rn_name.first -%}{%- endif -%}
       {%- if kt_rn_name -%}
       {%- assign kt_rn_img = site.data.chia_se_kinh_nghiem.images[kt_rn_name] -%}
       {%- assign kt_rn_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kt_rn_name -%}
-      {%- if kt_rn_img.sm -%}{%- assign kt_rn_wpx = 672 -%}{%- else -%}{%- assign kt_rn_wpx = kt_rn_img.w -%}{%- endif %}
+      {%- comment -%}
+        Width descriptors, not a single URL: a rail card is ~275px on the
+        reading column and ~260px on a phone, so on a 2× screen the 672
+        derivative is the right candidate and on a 1× screen it is twice the
+        bytes needed. `sizes` is what lets the browser tell them apart — and
+        `sizes` without w-descriptors in the srcset is inert, which is what
+        this was for one build.
+      {%- endcomment -%}
+      {%- capture kt_rn_avif %}{% if kt_rn_img.sm %}{{ kt_rn_base }}-672.avif 672w, {% endif %}{{ kt_rn_base }}-{{ kt_rn_img.w }}.avif {{ kt_rn_img.w }}w{% endcapture -%}
+      {%- capture kt_rn_jpg %}{% if kt_rn_img.sm %}{{ kt_rn_base }}-672.jpg 672w, {% endif %}{{ kt_rn_base }}-{{ kt_rn_img.w }}.jpg {{ kt_rn_img.w }}w{% endcapture -%}
+      {%- assign kt_rn_sizes = "(max-width: 40rem) 76vw, 296px" -%}
       <span class="kt-readnext-thumb"{% if kt_rn_img.fx %} style="--kt-focus: {{ kt_rn_img.fx }}% {{ kt_rn_img.fy }}%"{% endif %}>
         <picture>
-          <source type="image/avif" srcset="{{ kt_rn_base }}-{{ kt_rn_wpx }}.avif" />
+          <source type="image/avif" srcset="{{ kt_rn_avif }}" sizes="{{ kt_rn_sizes }}" />
           <img
-            src="{{ kt_rn_base }}-{{ kt_rn_wpx }}.jpg"
+            src="{{ kt_rn_base }}-{{ kt_rn_img.w }}.jpg"
+            srcset="{{ kt_rn_jpg }}"
+            sizes="{{ kt_rn_sizes }}"
             alt=""
             width="{{ kt_rn_img.w }}"
             height="{{ kt_rn_img.h }}"
@@ -65,9 +108,61 @@
 {%- endcapture -%}
 {%- if kt_rn_items contains "<li" %}
 <nav aria-label="Bài viết nên đọc tiếp" class="kt-readnext">
-  <h2 class="kt-readnext-title">Đọc tiếp</h2>
-  <ol>
+  <div class="kt-readnext-head">
+    <h2 class="kt-readnext-title">Đọc tiếp</h2>
+    <div class="kt-readnext-nav" hidden id="kt-readnext-nav">
+      <button aria-label="Lùi lại" class="kt-rail-btn" data-kt-rail="-1" type="button">
+        <svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M15 5l-7 7 7 7" /></svg>
+      </button>
+      <button aria-label="Xem thêm" class="kt-rail-btn" data-kt-rail="1" type="button">
+        <svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+    </div>
+  </div>
+  <ol class="kt-readnext-rail" id="kt-readnext-rail">
     {{ kt_rn_items }}
   </ol>
 </nav>
+{%- comment -%}
+  Reveal the arrows only where they can work, and keep their disabled state
+  honest so neither one is ever a control that does nothing. Everything this
+  script does, a swipe or a trackpad already does without it.
+{%- endcomment %}
+<script>
+  (function () {
+    var rail = document.getElementById("kt-readnext-rail");
+    var nav = document.getElementById("kt-readnext-nav");
+    if (!rail || !nav || typeof rail.scrollBy !== "function") return;
+    var btns = nav.querySelectorAll("[data-kt-rail]");
+    // One card plus its gap, read off the DOM so the CSS stays the one place
+    // the card width is decided.
+    var step = function () {
+      var card = rail.firstElementChild;
+      if (!card) return rail.clientWidth;
+      var gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+      return card.getBoundingClientRect().width + gap;
+    };
+    var sync = function () {
+      var max = rail.scrollWidth - rail.clientWidth;
+      // The rail carries a few pixels of padding so a focused card's ring is
+      // not clipped by the scroll container, and the snap engine settles a
+      // little inside that padding rather than at exactly 0. Measured at rest:
+      // scrollLeft 4–6 on a rail that has not been touched. So "at the start"
+      // is the padding, not zero, and the slop is read from the CSS rather
+      // than guessed — change the padding and this follows it.
+      var slop = (parseFloat(getComputedStyle(rail).paddingInlineStart) || 0) + 2;
+      btns[0].disabled = rail.scrollLeft <= slop;
+      btns[1].disabled = rail.scrollLeft >= max - slop;
+    };
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function () {
+        rail.scrollBy({ left: step() * Number(this.getAttribute("data-kt-rail")), behavior: "smooth" });
+      });
+    }
+    rail.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync, { passive: true });
+    nav.hidden = false;
+    sync();
+  })();
+</script>
 {%- endif -%}

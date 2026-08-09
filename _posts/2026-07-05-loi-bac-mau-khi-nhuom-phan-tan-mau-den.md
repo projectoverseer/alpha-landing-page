@@ -12,7 +12,7 @@ learn:
       - "Ở lượng oxy trong máy"
       - "Ở chất lượng nước"
       - "Ở dung tỷ"
-    promise: "Phần \"Tại sao trong lab không bị?\" trả lời, và nguyên nhân gốc nằm trong chính lọ thuốc nhuộm."
+    promise: "Phần \"Tại sao trong lab không bị?\" ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: nguyên nhân gốc nằm trong chính lọ thuốc nhuộm."
   quiz:
     - q: "Thành phần nào trong thuốc nhuộm bột gây ra lỗi bạc màu này?"
       options:
@@ -25,17 +25,6 @@ learn:
           why: "Chất độn có trong thuốc nhuộm thương phẩm nhưng không có tính khử."
         - t: "Nước cứng trong bể nhuộm"
           why: "Nước cứng gây vấn đề khác, không gây phản ứng khử ở nhiệt độ cao."
-    - q: "Vì sao mẫu nhuộm trong cốc ở lab lại không bị bạc màu?"
-      options:
-        - t: "Vì nhiệt độ trong cốc thấp hơn"
-          why: "Không. Cốc chạy đúng chương trình nhiệt của máy lab và vẫn lên vùng cao áp."
-        - t: "Vì cốc được đậy nắp nên nhốt đủ không khí, và oxy kìm hãm phản ứng khử"
-          correct: true
-          why: "Đúng. Thể tích dung dịch chỉ chiếm một phần nhỏ trong cốc, phần còn lại là không khí. Máy lớn có tỷ lệ không khí trên dung dịch nhỏ hơn nhiều, và van xả áp thường chỉ đóng khi nhiệt độ đạt 80–85 °C nên một lượng oxy đã thoát ra trước đó."
-        - t: "Vì mẫu nhỏ nên lượng thuốc nhuộm ít"
-          why: "Nồng độ thuốc nhuộm ở lab được tính đúng bằng nồng độ chạy máy lớn."
-        - t: "Vì lab dùng nước cất"
-          why: "Không phải yếu tố quyết định ở đây."
     - q: "Cách xử lý triệt để nhất là gì?"
       options:
         - t: "Tăng liều chất chống khử"

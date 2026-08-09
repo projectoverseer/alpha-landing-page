@@ -14,7 +14,7 @@ learn:
       - "Khâu dệt"
       - "Nhà máy kéo sợi"
       - "Khâu hoàn tất"
-    promise: "Bước 4 của quy trình chế tạo sợi trả lời câu này."
+    promise: "Bước 4 của quy trình chế tạo sợi, ở bên dưới, có câu trả lời. Đọc tới đó rồi quay lại đối chiếu với lựa chọn vừa rồi."
   quiz:
     - q: "Vì sao sợi spandex bắt buộc phải phủ dầu silicone ngay sau khi hóa rắn?"
       options:

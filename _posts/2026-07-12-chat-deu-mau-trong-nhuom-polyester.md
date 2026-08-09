@@ -18,19 +18,8 @@ learn:
       - "Vì ít cạnh tranh nên thuốc vào xơ quá nhanh, chưa kịp phân bố đều"
       - "Vì màu nhạt lộ lỗi rõ hơn"
       - "Vì nhiệt độ nhuộm màu nhạt thấp hơn"
-    promise: "Bài trả lời ở phần thứ hai. Cơ chế đó cũng quyết định luôn việc nên chọn chất đều màu thiên về loại nào."
+    promise: "Phần thứ hai ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: cơ chế đó quyết định luôn việc nên chọn chất đều màu thiên về loại nào."
   quiz:
-    - q: "Chất đều màu có hai cơ chế, retarding và leveling. Cơ chế nào làm việc ở giai đoạn giữ nhiệt 130 °C?"
-      options:
-        - t: "Retarding"
-          why: "Retarding làm việc ở giai đoạn đầu gia nhiệt: chiếm chỗ trên sợi hoặc giữ hạt màu trong dung dịch để thuốc không vào sợi quá nhanh."
-        - t: "Leveling"
-          correct: true
-          why: "Đúng. Ở giai đoạn giữ nhiệt, leveling kéo thuốc nhuộm đã vào vùng đậm ra, hòa lại vào dung dịch rồi đưa sang vùng nhạt hơn. Nó sửa lỗi liên tục suốt 45–60 phút giữ nhiệt."
-        - t: "Cả hai đều chỉ hoạt động khi đang gia nhiệt"
-          why: "Nếu vậy thì 45–60 phút giữ nhiệt sẽ không sửa được gì, và những vết loang hình thành lúc đầu sẽ nằm nguyên trên vải."
-        - t: "Không cơ chế nào, giữ nhiệt chỉ để cố định màu"
-          why: "Giữ nhiệt chính là lúc leveling làm việc nhiều nhất."
     - q: "Máy nhuộm cũ, tốc độ tuần hoàn dịch chậm, đang nhuộm tông rất nhạt. Nên ưu tiên chất đều màu thiên về cơ chế nào?"
       options:
         - t: "Leveling"

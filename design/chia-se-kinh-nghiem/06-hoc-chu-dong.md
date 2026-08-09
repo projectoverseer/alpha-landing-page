@@ -78,6 +78,19 @@ four options, and **every option gets the same reply**: a single promise line
 naming where the answer lives. Nothing is scored, nothing is revealed. The
 answer is the reason to keep reading.
 
+**The block says so before the reader taps** (owner, 2026-08-09): a line under
+the label reads *"Bạn thử đoán trước. Đáp án không hiện ra ở đây mà nằm trong
+bài bên dưới."* Without it, tapping an option and getting no verdict reads as a
+broken control; with it, the same silence reads as the point. It sits above the
+options, not below them, because a rule learned after the tap is learned too
+late. `verify.mjs` fails the build if a hook loses it — or if a `recall` block
+carries it, since that one does answer on the spot.
+
+**The promise points down, and says to come back.** One shape on every post:
+name the section, say it is *ở bên dưới*, and say to compare afterwards. Not
+"here is a hint" but "the answer is further on, and you will want to check
+yourself against it" — the comparison is where the pretest pays off.
+
 > Hard rule: **the promise must be kept.** If the named section does not answer
 > the question, the block is clickbait and it costs the hub the one thing it has
 > (`philosophy §1`: the marketing value comes from being genuinely useful). This
@@ -103,15 +116,20 @@ common of the two.
 Written in the post's Markdown on the line directly above the signature include
 — the same convention every other editorial element on this hub follows.
 
-1. **`h2` "Kiểm lại vài điểm"** and a lead in the editorial-aside register that
-   states the mechanism plainly: *"Trả lời trong đầu trước, rồi hãy chọn. Nhớ
-   được sau sáu tháng hay không nằm ở chỗ này, chứ không nằm ở lần đọc vừa
-   rồi."* Levelling with the reader is what keeps the block credible with an
-   audience that runs factories.
-2. **Two or three questions**, four options each, **an explanation on every
-   option** including the wrong ones.
-3. **"Việc mang về xưởng"** — one concrete action, doable this week, with the
-   data they already have.
+1. **`h2` "Kiểm lại vài điểm", and nothing else.** It briefly carried a lead
+   sentence explaining what retrieval practice does for your memory; the owner
+   cut it on 2026-08-09 as arrogant, and he was right. A director with thirty
+   years on the floor does not need a website explaining how his own learning
+   works. **Keep every word in this block neutral.** If a sentence sounds like
+   it is teaching the reader about himself rather than about dyeing, it goes.
+2. **Two questions**, four options each, **an explanation on every option**
+   including the wrong ones. Two, not three: see §6.1.
+3. **"Áp dụng tại xưởng của bạn"** — one concrete action, doable this week,
+   with the data they already have. (Named "Việc mang về xưởng" for one day.)
+
+**There is no reset button.** It existed to lower the cost of guessing and was
+cut for the space; picking a different option in a group already replaces the
+answer, which is the only undo anyone reaches for.
 
 ## 4. How to write a question
 
@@ -182,11 +200,28 @@ and extension stripped. The title and URL are looked up, never repeated.
 
 ## 6. The three rules that keep this from spoiling the reading room
 
-**6.1 · Budget: one opening block, one closing block, and that is all.** The
-same restraint the CTA policy already imposes (`philosophy §6`), for the same
-reason. Zero mid-article learning elements ship today. A post may have a
-mid-article CTA *or* a mid-article learning element, never both, and never
-inside a numbered sequence or a worked example.
+**6.1 · Budget: one opening block, one closing block, two questions.** The same
+restraint the CTA policy already imposes (`philosophy §6`), for the same reason.
+Zero mid-article learning elements ship today. A post may have a mid-article CTA
+*or* a mid-article learning element, never both, and never inside a numbered
+sequence or a worked example.
+
+**Two questions, because of what sits underneath.** The owner's ranking is
+explicit (2026-08-09): *the share buttons below this block matter more than the
+block does.* The quiz exists to leave a reader feeling they got something worth
+passing on — and the passing on happens further down the page. Measured in
+Chrome, three questions made the closing section **1281px** tall, most of a
+phone screen and a half standing between the end of the article and the one
+thing we actually want tapped. Styling was squeezed first (the lead sentence,
+the reset button, tighter gaps, a smaller heading, a smaller option row), which
+got it to about 1050px; dropping the third question took it to **959px**. Which
+question goes is a judgement per post, recorded in the trim script: the weakest
+is almost always the one asking for a remembered fact rather than an inference.
+
+**The one dimension that never gives ground is the tap target.** An option row
+holds at least 44px. The register already refused a thinner scrollbar for this
+exact reader — *một người công nhân* with unsteady hands, `design/09 §B5` — and
+a quiz row is a far more common target than a scrollbar.
 
 **6.2 · No script may be load-bearing.** The quiz is radio inputs plus `:has()`;
 the reveals are `<details>`. The script budget is unchanged at three files
@@ -207,13 +242,21 @@ something is pedagogy; a "3/3" with a badge is a game. Nothing is remembered
 between visits, nothing is counted, nothing congratulates anybody. The output of
 the block is understanding, not a number.
 
-**Correctness is carried by words, not by colour.** There is no green and no
-red: indigo is the only action colour on this hub (`philosophy §3`), and adding
-two hues for one moment would have cost more than it bought. A wrong answer's
-explanation opens "Chưa đúng."; a right one opens "Đúng." The only visual mark is
-the **`mark` amber on the correct explanation's left edge** — the author's own
-pen laid on the page, which is exactly what that colour already means here. This
-also satisfies SC 1.4.1 without a special case.
+**Green and red, with the words still carrying the meaning** (owner's decision,
+2026-08-09; the first cut used words plus the `mark` amber, to protect the
+one-accent rule, and he asked for the two colours). Three surfaces take the
+verdict and no more: the chosen row's border, the explanation's left edge, and
+the word that opens the explanation. The pair, its derivation and its measured
+contrast live in `philosophy §3`; the short version is that they are matched in
+lightness and separated only by hue, so the page gains a verdict without gaining
+a loud object.
+
+**The colour is the echo, never the signal.** Every explanation opens with the
+verdict in words — "Đúng." / "Chưa đúng." / "Ngược lại." — and the include takes
+the coloured word *from that sentence* rather than generating one, so the two can
+never disagree. Roughly one man in twelve cannot separate this pair, and this
+hub's readers are mostly men in a Vietnamese dyehouse. Never add a state here
+that only the hue distinguishes.
 
 ## 7. What was considered and not shipped
 
@@ -271,12 +314,16 @@ page that looks perfectly fine:
 1. An article with no opening block, or no closing block.
 2. A question with zero or two correct answers.
 3. An opening block that marks a correct answer or carries per-option feedback
-   (either would give the answer away and kill the hook).
+   (either would give the answer away and kill the hook); a hook that lost its
+   "bạn thử đoán" line; or a recall block that carries it.
 4. `Quiz` JSON-LD that does not parse, that declares a different number of
    questions than the page renders, or that names an answer not on the page.
 5. The built hub CSS missing any of the four `:has()` rules the quiz needs —
    PurgeCSS has silently dropped a `:has()` rule on this site before
    (`design/09 §A3`).
+6. `--ok` or `--no` declared for only one theme. The lit red on the dark paper
+   measures about 3:1: readable enough to ship unnoticed, under the floor.
+7. Đọc tiếp rendering its cards without the rail container.
 
 ## 10. Evolution rules
 
@@ -286,11 +333,12 @@ type and spacing tuning.
 
 Must survive any redesign (owner decision only):
 
-- The opening block is **one** block, above the prose, and a `hook` never
-  reveals its answer.
+- The opening block is **one** block, above the prose, a `hook` never reveals
+  its answer, and it says so before the reader taps.
 - Every answer traceable to the article it sits in.
 - Every option carries an explanation, wrong ones included.
 - No script the page depends on; the `:has()` degradation stays written
   backwards.
 - No score, no streak, no badge, no stored state.
-- One accent colour; correctness carried by words.
+- Correctness carried by words first; green and red only ever agree with them.
+- Two questions, and a 44px option row.

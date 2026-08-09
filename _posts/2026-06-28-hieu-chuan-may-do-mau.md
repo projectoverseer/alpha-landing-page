@@ -14,19 +14,8 @@ learn:
       - "Có, phải hiệu chuẩn lại ngay"
       - "Chỉ cần đo lại miếng sứ trắng"
       - "Tùy máy, có máy tự bù"
-    promise: "Câu cuối bài trả lời, và đây là điểm nhiều người bỏ qua."
+    promise: "Câu cuối bài ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu với lựa chọn vừa rồi, đây là điểm nhiều người bỏ qua."
   quiz:
-    - q: "Ba mẫu chuẩn dùng khi hiệu chuẩn, theo đúng vai trò của chúng, là gì?"
-      options:
-        - t: "Sứ trắng, sứ đen, sứ xám"
-          why: "Không đúng bộ. Mẫu mô phỏng phản xạ 0% không phải miếng sứ đen mà là ống bẫy đen."
-        - t: "Ống bẫy đen mô phỏng 0%, miếng sứ xanh lá kiểm tra tính tuyến tính, miếng sứ trắng mô phỏng 100%"
-          correct: true
-          why: "Đúng, và theo đúng trình tự đó. Máy so phổ đo được của từng mẫu với bộ phổ chuẩn gốc rồi tính ra hệ số hiệu chỉnh cho từng bước sóng."
-        - t: "Ba miếng sứ đỏ, xanh lá và xanh dương"
-          why: "Chỉ có một mẫu màu trung gian, và nó là xanh lá."
-        - t: "Chỉ cần miếng sứ trắng"
-          why: "Thiếu cả hai đầu. Không có điểm 0% thì không dựng được thang đo."
     - q: "Vải màu thông thường, không có chất tăng trắng. Nên chọn UV Filter nào?"
       options:
         - t: "100% UV (Filter off)"

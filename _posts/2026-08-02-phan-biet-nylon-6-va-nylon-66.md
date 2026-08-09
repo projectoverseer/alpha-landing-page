@@ -14,7 +14,7 @@ learn:
       - "Vì cấu trúc đối xứng hơn nên độ kết tinh cao hơn"
       - "Vì Nylon 6.6 được kéo sợi ở nhiệt độ cao hơn"
       - "Vì Nylon 6.6 có thêm phụ gia chịu nhiệt"
-    promise: "Phần \"Tính chất lý hóa\" trả lời, và chênh lệch đó quyết định luôn nhiệt độ định hình được phép dùng."
+    promise: "Phần \"Tính chất lý hóa\" ở bên dưới có câu trả lời. Đọc tới đó rồi quay lại đối chiếu: chênh lệch đó quyết định luôn nhiệt độ định hình được phép dùng."
   quiz:
     - q: "Trong phân tử Nylon, nhóm nào là cơ sở hóa học để thuốc nhuộm acid liên kết vào sợi?"
       options:
@@ -38,17 +38,6 @@ learn:
           why: "Tĩnh điện là vấn đề vận hành, không phải vấn đề bền hóa."
         - t: "Vì Nylon là sợi tổng hợp"
           why: "Nhiều sợi tổng hợp khác lại rất bền acid. Nguyên nhân nằm ở nhóm chức cụ thể."
-    - q: "Vải Nylon phơi nắng gắt kéo dài bị ngả vàng và giòn xơ. Nguyên nhân là gì?"
-      options:
-        - t: "Thuốc nhuộm bị phai"
-          why: "Phai màu và giòn xơ là hai hiện tượng khác nhau. Giòn xơ là hỏng cơ lý của chính sợi."
-        - t: "Tia cực tím làm gãy chuỗi polymer"
-          correct: true
-          why: "Đúng. Nylon kém bền với tia UV, và hậu quả là vải lão hóa, ngả vàng và giòn xơ."
-        - t: "Nhiệt độ ngoài trời vượt điểm nóng chảy"
-          why: "Không có nơi nào ngoài trời đạt tới 215 °C."
-        - t: "Độ ẩm không khí"
-          why: "Nylon hút ẩm 4–4,5%, nhưng ẩm không gây gãy chuỗi polymer."
   action: "Kiểm tra trong kho xem vải Nylon đang chạy là loại 6 hay 6.6, rồi đối chiếu với nhiệt độ định hình đang cài trên máy. Chênh lệch điểm nóng chảy giữa hai loại là 45 °C, và một thông số cài cho loại này đem chạy trên loại kia là rủi ro không cần thiết."
 ---
 
