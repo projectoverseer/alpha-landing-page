@@ -273,21 +273,40 @@ a {
   @include focus-ring-inset;
 }
 
-// ...and both keep the square corner the :where() floor would otherwise give
-// them, because a flush strip has no corner of its own. Bootstrap already says
-// so for `.accordion-button`; the menu row does not.
-//
-// AND THIS RULE DID NOT ACTUALLY WIN for the first and last row, which
-// measurement caught on 2026-08-04: they were carrying a 7px framework radius
-// from `.dropdown-menu > li:first-child .dropdown-item` (0,3,1). It was
-// invisible — `.dropdown-menu { overflow: hidden }` clips those rows to the
-// menu's own curve anyway — until the focus floor started stating a
-// `corner-shape`, at which point the row held a radius from Bootstrap and a
-// shape from us and changed corner geometry the moment it took focus. Switched
-// off at `$dropdown-inner-border-radius` in main.scss §8, where the framework
-// listens; this rule keeps saying it for every row in between.
+// ...and a row in the MIDDLE of the stack keeps the square corner the :where()
+// floor would otherwise give it, because a join between two rows is not a
+// corner. Bootstrap already says so for `.accordion-button`; the menu row does
+// not, so this rule says it at 0,1,0 — under the framework's own 0,3,1 rule for
+// the two END rows, which is exactly the split we want.
 .dropdown-item {
   border-radius: 0;
+}
+
+// THE END ROWS DO HAVE A CORNER, and the ring is the only thing that ever sees
+// it. `.dropdown-menu { overflow: hidden }` clips the first and last row's hover
+// fill to the menu's own curve, so at rest a square row and a rounded one are
+// the same pixels — but the row's ring turns INWARD (quy-cu §5), and an outline
+// pulled 3px inside the border box is inside the clip too, where the clip can no
+// longer round it. So a square row drew a square ring in a squircle menu, which
+// is what the owner reported on 2026-08-09.
+//
+// The radius comes from `$dropdown-inner-border-radius` (main.scss §8) — the
+// menu's radius minus its border, so it lands exactly on the curve the clip has
+// been drawing. The SHAPE has to be stated here, on the row, because a variable
+// cannot carry an `@supports`, and both halves must move together or the row
+// takes our superellipse over the framework's circular radius and changes
+// geometry on focus — the 2026-08-04 hazard, named in quy-cu §5.
+//
+// Stated on every row, not just the two ends: a middle row's radius is 0 and a
+// `corner-shape` on a 0 radius draws nothing.
+@supports (corner-shape: superellipse(1)) {
+  .dropdown-menu {
+    --#{$prefix}dropdown-inner-border-radius: #{depth-match($r-2) - $border-width};
+  }
+
+  .dropdown-item {
+    corner-shape: superellipse(#{$corner-k});
+  }
 }
 
 // (No global `position: relative; z-index: 1` on :focus-visible. A box-shadow

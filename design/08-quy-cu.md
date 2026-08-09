@@ -414,9 +414,12 @@ shape of their own changed. Every radius on this site is written with `corner()`
 which states both properties together, so a class rule always brings its own
 shape and always wins. The one exception was the **menu row**, carrying a bare
 7px from `.dropdown-menu > li:first-child .dropdown-item` (0,3,1) that
-`overflow: hidden` had been clipping away invisibly for months; it is now zeroed
-at `$dropdown-inner-border-radius` in `main.scss` §8, where the framework
-listens.
+`overflow: hidden` had been clipping away invisibly for months — a radius from
+the framework under a shape from us, which is this hazard exactly. Both halves
+now travel together at that same selector: `$dropdown-inner-border-radius` in
+`main.scss` §8 carries the radius, and `_base.scss` states the matching
+`corner-shape` on `.dropdown-item` inside the same `@supports` (see the note on
+the end rows below).
 
 > Add a component that sets `border-radius` without `corner()` and it *will*
 > change shape on focus. Re-run the corner check before shipping it.
@@ -452,9 +455,22 @@ of a bordered box — the **dropdown menu row** and the **accordion header**. An
 outward ring on either spills past its container's own edge, over the menu's
 corner or over the accordion items above and below. Order reverses: ring
 outermost against the container's edge, halo inside it against the row's hover
-fill. Both keep a square corner, because a flush strip has none of its own —
-which also means the accordion's ring is rounded at the top of the stack, square
-in the middle and rounded at the bottom, exactly like the item it sits in.
+fill. A strip in the **middle** of a stack keeps a square corner, because a join
+between two rows is not a corner; the strip at either **end** carries its
+container's corner, so the ring is rounded at the top of the stack, square in the
+middle and rounded at the bottom, exactly like the item it sits in.
+
+The menu row got that end corner late — the owner caught it on 2026-08-09,
+"the focus rings in the dropdown still aren't rounded like the dropdown is."
+The row *looked* rounded at rest and was not: `.dropdown-menu { overflow: hidden }`
+clips the first and last row's hover fill to the menu's own curve, so a square
+row and a rounded one are the same pixels until something inside the clip needs
+a corner of its own. The inward ring is that something — an outline pulled 3px
+inside the border box is inside the clip too, where the clip can no longer round
+it, so it drew a square corner inside a squircle menu, and only while focused.
+The row now states the corner itself, at the menu's radius minus its border
+(`corner-inner()`, §2) — the same curve the clip was already drawing, so the
+fill is pixel-identical and only the ring changed. Gated in `verify.mjs`.
 
 ### Focus draws the ring. Press changes the fill. Hover is for pointers
 

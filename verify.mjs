@@ -517,6 +517,45 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
+// ---- a menu's END ROWS keep the menu's own corner ----
+//
+// The row's ring turns INWARD (quy-cu §5) so it cannot spill past the menu's
+// edge, and an inward ring is an outline drawn 3px inside the border box —
+// inside `.dropdown-menu { overflow: hidden }`, which is what rounds everything
+// else about that row. So the clip cannot help it: if the first and last row
+// carry `border-radius: 0`, the ring draws a SQUARE corner inside a squircle
+// menu, and it does it only while focused, which is why it survived a full
+// browser pass and was reported by eye instead (owner, 2026-08-09).
+//
+// Both halves are asserted because either alone is the 2026-08-04 hazard in
+// reverse: a radius with no shape draws a circle inside a superellipse, and a
+// shape with no radius draws nothing at all.
+{
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith('main.') && f.endsWith('.css'),
+  );
+  const css = file ? readFileSync(join(SITE, 'css', file), 'utf8') : '';
+
+  // 11.4333 (the menu, depth-matched $r-2) − 1px border, per corner-inner().
+  if (file && !/--bs-dropdown-inner-border-radius:\s*10\.4333px/.test(css)) {
+    errors.push(
+      `css/${file}: the dropdown's end rows lost the menu's inner corner — ` +
+        `their focus ring draws square inside a squircle menu (quy-cu §5)`,
+    );
+  }
+  // Selector-list-tolerant: clean-css merges blocks with identical bodies, so
+  // ask "is .dropdown-item in a block that states the shape?", not "is it alone".
+  const shaped = [...css.matchAll(/(?:^|[{}])([^{}]*)\{([^}]*corner-shape[^}]*)\}/g)].some(
+    ([, sel]) => /(?:^|,)\s*\.dropdown-item\s*(?:,|$)/.test(sel),
+  );
+  if (file && !shaped) {
+    errors.push(
+      `css/${file}: .dropdown-item has no corner-shape — the end rows would round ` +
+        `as circles inside the menu's superellipse (quy-cu §2)`,
+    );
+  }
+}
+
 // ---- the focus ring survived PurgeCSS ----
 // Third instance of the same failure shape, and the one that matters most: the
 // ring is declared once, and its FIRST selector is a bare `:focus-visible` so

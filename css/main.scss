@@ -668,18 +668,25 @@ $dropdown-link-active-state-bg: $ink-100;
 $dropdown-border-width: $border-width;
 $dropdown-border-color: $border-color;
 $dropdown-border-radius: $r-2;
-// The MENU has the corner; the ROWS inside it do not. Bootstrap rounds the
-// first and last row to an "inner radius" as well, from
-// `.dropdown-menu > li:first-child .dropdown-item` — 0,3,1, so no sane rule of
-// ours outranks it, and the same §8 answer applies: switch it off at the
-// variable. `.dropdown-menu { overflow: hidden }` has been clipping those rows
-// to the menu's own curve all along (_base.scss), so the framework's 7px was
-// invisible and inert — right up until the focus floor began stating a
-// `corner-shape` and the row, holding a radius from Bootstrap and a shape from
-// us, changed corner geometry the moment it took focus (measured 2026-08-04).
-// A flush strip has no corner of its own; this is that sentence, in the one
-// place the framework will listen to.
-$dropdown-inner-border-radius: 0;
+// The END ROWS carry the menu's corner, minus its border. The rows in BETWEEN
+// still do not — a join is not a corner — and that split is Bootstrap's own,
+// from `.dropdown-menu > li:first-child .dropdown-item` (0,3,1, so no sane rule
+// of ours outranks it; §8 says it at the variable, where the framework listens).
+//
+// THIS WAS 0, AND THE OWNER CAUGHT WHAT THAT COST (2026-08-09): the focus ring
+// on the first and last row drew a SQUARE corner inside a squircle menu. A
+// square row is invisible at rest, because `.dropdown-menu { overflow: hidden }`
+// clips its hover fill to the menu's own curve (_base.scss) — but the row's ring
+// turns INWARD (quy-cu §5), and an inward ring is drawn 3px inside the clip,
+// where the clip can no longer round it. The row has to state the corner itself
+// for the ring to have one to copy.
+//
+// The number is the menu's grown radius minus the border, in that order
+// (`corner-inner()`, quy-cu §2) — the same arithmetic as the accordion's inner
+// curve, and the same as what the clip has been drawing all along, so the fill
+// is pixel-identical and only the ring changes. This is the no-`corner-shape`
+// fallback; _base.scss states the grown pair inside its `@supports`.
+$dropdown-inner-border-radius: $r-2 - $border-width;
 // Two downward marks, because they are two different sentences — the chevron
 // for "this expands in place" (accordion, <details>) and the caret for "a menu
 // opens over the page" (the two dropdown toggles). The argument, including why
