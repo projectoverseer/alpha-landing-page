@@ -626,22 +626,79 @@ h6,
   max-width: 35ch;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  margin-bottom: 0; // spacing is owned by the following element's margin-top
+// ── Optical heading spacing ─────────────────────────────────────────────────
+//
+// The gap above a heading is stated ONCE, in $heading-gap, and it is stated the
+// way the eye measures it: from the cap line, not from the top of a line box the
+// reader cannot see. See the constants block in main.scss for the metrics and
+// the measurement this corrects.
+//
+// Two paths, one result. Where `text-box-trim` is supported the browser removes
+// the half-leading itself, from whatever font is actually painting, and the
+// margin is the whole gap. Where it is not, --tb-comp carries the same distance
+// as arithmetic and the margin is pre-shortened by it. Both land on
+// $heading-gap, so the rhythm does not fork.
+//
+// --tb-comp is the only switch. Every rule below is written once and reads it,
+// which is why there is no second copy of the spacing inside the @supports.
+//
+// Trim-START only, deliberately: a heading owns the space ABOVE it, and the
+// space below is owned by the following element's margin-top (see
+// $paragraph-margin-bottom). Trimming the bottom edge would delete space this
+// element does not own and force every "element after a heading" rule to add it
+// back.
+// PurgeCSS silently drops a rule whose selector ends in `:not(:has(...))` — the
+// exclusion this block first used. It kept the `.mt-*` variants of the very same
+// selector, so the loss was near-invisible: the arithmetic survived and only the
+// @supports half vanished, which looks exactly like a browser without the
+// property. Hence the shape below, which excludes nothing and instead sets the
+// trim everywhere it can act and puts the arithmetic BACK where it cannot.
+// `check` asserts the @supports block reaches docs/ (verify.mjs).
+$tb-heads: "h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6";
 
+#{$tb-heads} {
+  margin-bottom: 0; // spacing is owned by the following element's margin-top
+  --tb-comp: 0px;
+
+  // A first-child heading has no margin above to correct, and it sits against
+  // its container's padding rather than against other text — so it is left
+  // exactly as it renders today, on both paths.
   &:not(:first-child) {
-    margin-top: 1em;
+    --tb-comp: var(--tb, 0px);
+    margin-top: calc(#{$heading-gap} - var(--tb-comp));
+  }
+}
+
+@supports (text-box-trim: trim-start) and (text-box-edge: cap alphabetic) {
+  #{$tb-heads} {
+    &:not(:first-child) {
+      text-box-trim: trim-start;
+      text-box-edge: cap alphabetic;
+      --tb-comp: 0px; // the browser did it; charge nothing
+    }
+
+    // A heading holding a .mini-* is turned into a flex container further down
+    // this file, and a flex container has no line box of its own for the trim to
+    // act on — the property parses, applies, and does nothing. These have to
+    // keep paying the arithmetic. Equal specificity to the rule above, so source
+    // order is what settles it; keep this second.
+    &:has(.mini-h3),
+    &:has(.mini-h4, .h5) {
+      --tb-comp: var(--tb, 0px);
+    }
+  }
+}
+
+// Bootstrap's margin utilities are !important, and 17 of this site's 31 headings
+// carry one, so they are the common case rather than the exception — a
+// compensation that they overrode would leave most headings uncorrected. Each
+// utility value is restated at a specificity that outranks the generated one and
+// goes through the same switch, so `.mt-5` means 1.5rem of SEEN gap on both
+// paths. Generated from $spacers, so a rung added later is covered without
+// anyone remembering this block exists.
+@each $key, $val in $spacers {
+  :is(#{$tb-heads}):not(:first-child).mt-#{$key} {
+    margin-top: calc(#{if($val == 0, 0px, $val)} - var(--tb-comp)) !important;
   }
 }
 
@@ -654,18 +711,21 @@ h1,
 .h1 {
   font-size: var(--fs-h1);
   line-height: $h1-line-height;
+  --tb: #{tb-trim($h1-line-height)};
 }
 
 h2,
 .h2 {
   font-size: var(--fs-h2);
   line-height: $h2-line-height;
+  --tb: #{tb-trim($h2-line-height)};
 }
 
 h3,
 .h3 {
   font-size: var(--fs-h3);
   line-height: $h3-line-height;
+  --tb: #{tb-trim($h3-line-height)};
 
   &:has(.mini-h3) {
     display: flex;
@@ -707,6 +767,7 @@ h4,
 .h4 {
   font-size: var(--fs-h4);
   line-height: $h4-line-height;
+  --tb: #{tb-trim($h4-line-height)};
 
   &:has(.mini-h4, .h5) {
     display: flex;
@@ -720,6 +781,7 @@ h5,
   font-size: $h5-font-size;
   line-height: $h5-line-height;
   font-weight: 600;
+  --tb: #{tb-trim($h5-line-height)};
 }
 
 h6,
@@ -727,6 +789,7 @@ h6,
   font-size: $h6-font-size;
   line-height: $h6-line-height;
   font-weight: 600;
+  --tb: #{tb-trim($h6-line-height)};
 }
 
 big,
@@ -747,13 +810,18 @@ big,
     margin-top: 1em;
   }
 
+  // Long-form prose keeps its own, wider heading gap — a deliberate difference
+  // of context, not a rung of the type ladder. It goes through --tb-comp for the
+  // same reason every other heading margin does: this rule outranks the base one
+  // on specificity, so a value stated raw here would be the one place the two
+  // rendering paths could still disagree (they did, by ~5px, until this calc).
   h2,
   h3,
   h4,
   h5,
   h6 {
     &:not(:first-child) {
-      margin-top: 1.5em;
+      margin-top: calc(1.5em - var(--tb-comp));
     }
   }
 

@@ -297,6 +297,63 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
+// ── optical heading spacing ─────────────────────────────────────────────────
+//
+// The gap above a heading is stated optically and reached two different ways:
+// `text-box-trim` where the browser has it, arithmetic through --tb-comp where
+// it does not. Two things can silently break that, and both already have once.
+//
+// 1. PurgeCSS drops a rule whose selector ends in `:not(:has(...))`. When the
+//    @supports half went that way, nothing broke visibly — every browser simply
+//    took the fallback, which is a correct-looking page. The property was just
+//    gone.
+// 2. Any rule that sets a heading's top margin at a specificity above the base
+//    one, and states the value raw instead of through --tb-comp, forks the two
+//    paths. `.prose` did exactly this and the two disagreed by ~5px.
+//
+// Neither shows up as a broken page, so assert the invariant instead.
+{
+  const file = readdirSync(join(SITE, 'css')).find(
+    (f) => f.startsWith('main.') && f.endsWith('.css'),
+  );
+  const css = file ? readFileSync(join(SITE, 'css', file), 'utf8') : '';
+  if (css) {
+    if (!/@supports\s*\(text-box-trim:\s*trim-start\)/.test(css)) {
+      errors.push(`css/${file}: the @supports text-box-trim block is gone (PurgeCSS?)`);
+    }
+    if (!/text-box-edge:\s*cap alphabetic/.test(css)) {
+      errors.push(`css/${file}: text-box-edge lost — the trim would fall back to the ascender`);
+    }
+    // one --tb per rung; without it var(--tb, 0px) silently pays nothing
+    const rungs = new Set((css.match(/--tb:\s*[0-9.]+em/g) || []));
+    if (rungs.size < 6) {
+      errors.push(`css/${file}: only ${rungs.size} distinct --tb values, expected one per heading rung`);
+    }
+
+    // every heading top margin must go through the switch
+    const RULE = /([^{}]+)\{([^{}]*)\}/g;
+    const HEAD = /(^|[\s,>+~])(h[1-6]|\.h[1-6])(?![\w-])/;
+    let m;
+    while ((m = RULE.exec(css))) {
+      const sel = m[1].trim();
+      if (sel.startsWith('@')) continue;
+      if (!sel.split(',').some((s) => HEAD.test(s.trim()))) continue;
+      for (const decl of m[2].match(/(?:^|;)\s*margin(?:-top|-block-start)?\s*:\s*[^;]+/g) || []) {
+        const value = decl.slice(decl.indexOf(':') + 1).trim();
+        // `margin: a b c d` — only the first component is the top edge
+        const top = /^margin\s*:/.test(decl.replace(/^;/, '').trim())
+          ? value.split(/\s+/)[0]
+          : value;
+        if (/^0(px|em|rem)?$/.test(top) || top.includes('--tb-comp')) continue;
+        errors.push(
+          `css/${file}: heading top margin "${top}" bypasses var(--tb-comp) — ` +
+            `the trimmed and untrimmed paths will disagree (selector: ${sel.slice(0, 70)})`,
+        );
+      }
+    }
+  }
+}
+
 // ---- the superellipse, and the exact geometry of it ----
 //
 // This gate has now asserted three different things, and the failure it guards
