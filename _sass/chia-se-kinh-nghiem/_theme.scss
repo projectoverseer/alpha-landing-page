@@ -118,6 +118,38 @@
   --mark-bg: #fdbb76; // $dye-300 @ 58% on the LIT paper — theme-invariant, see below
   --mark-ink: #292319; // the lit theme's ink, pinned: it rides the mark, not the page
   --mark-selected-bg: #f8a862;
+
+  // FOUND TEXT — the third gesture, and the only one that is not ours.
+  //
+  // Selection is the reader's hand; a mark is the author's pen. `::target-text`
+  // and `::search-text` are neither: they are a machine OUTSIDE the page —
+  // Google's snippet link, the browser's find bar — pointing at words nobody
+  // here chose. Left alone, Chrome paints an arrival from search in its own
+  // highlighter yellow, on the first screen a new reader ever sees of this hub.
+  //
+  // So they are BLUE while both house gestures are dye, and the hue carries the
+  // meaning: warm is Alpha speaking, cool is the objective register (the same
+  // reason the main site's review cards are neutral). Two warm, one cool, and
+  // the reader never has to be told which is which.
+  //
+  // The blue is #62b5e5, the logo's own light globe stop — already the token
+  // this hub lights its links with after dark. One accent, three depths, loudest
+  // last. Measured, --ink #292319 on each:
+  //   #cce4ee  11.79:1 ✓  a match, one of many        (accent @ 30% on paper)
+  //   #9fd0ea   9.40:1 ✓  arrived from outside         (accent @ 60%)
+  //   #62b5e5   6.87:1 ✓  THE match                    (the accent itself)
+  // ΔE2000 8.7 and 9.8 between the rungs, so three depths read as three.
+  //
+  // The first two recompute on the dark paper, exactly like --selection-bg. The
+  // CURRENT one does not, and for the mark's own reason: after dark "louder"
+  // means lighter, and a light-enough blue stops holding light ink — measured,
+  // the 55% rung on dark paper falls to 4.33:1 and fails SC 1.4.3. So the
+  // current match is PINNED LIT, ink and all, like the mark: the one lit object
+  // on a dark page, which is what "you are standing here" should look like.
+  --find-bg: #cce4ee;
+  --target-bg: #9fd0ea;
+  --find-current-bg: #62b5e5; // theme-invariant, see above
+  --find-current-ink: var(--mark-ink); // rides the highlight, not the page
 }
 
 // ---- Dark: the same room with the lights off (owner asked, 2026-07-28) ------
@@ -173,6 +205,12 @@
     --indigo: #62b5e5;
     --indigo-deep: #8dc8e8;
     --selection-bg: #4d2710;
+    // Found text re-composites on the dark paper, same as the selection: the
+    // accent is unchanged, the ground under it is not. --ink #ede5d2 measures
+    // 10.45:1 and 7.01:1 on these. --find-current-bg is absent on purpose —
+    // it is pinned lit, argued in the light block above.
+    --find-bg: #293235; // accent @ 16% on the dark paper
+    --target-bg: #354e5a; // accent @ 34%
   }
 
   .kt-figure img,
@@ -309,6 +347,50 @@ body.kt {
 .kt mark::selection {
   background: var(--mark-selected-bg);
   color: var(--mark-ink);
+}
+
+// Found text. Values and the argument are at the tokens above.
+//
+// ONE PSEUDO PER RULE, deliberately: an unknown pseudo-element makes a selector
+// invalid, and an invalid selector anywhere in a list discards the whole rule.
+// Grouped with `::selection`, a browser that has not heard of `::search-text`
+// would lose its selection colour as well — a working feature deleted by an
+// unsupported one. Apart, every engine keeps precisely what it knows. That is
+// the whole compatibility story: no @supports, no JS, nothing to maintain.
+// Registered in design/09-compatibility-register.md §A12.
+.kt ::target-text {
+  background: var(--target-bg);
+  color: var(--ink);
+}
+
+.kt ::search-text {
+  background: var(--find-bg);
+  color: var(--ink);
+}
+
+.kt ::search-text:current {
+  background: var(--find-current-bg);
+  color: var(--find-current-ink);
+}
+
+// In forced-colors the reader has told the OS which colours it may use, and the
+// answer is not ours. The system keyword is itself the distinction, so the blue
+// ladder says nothing here.
+@media (forced-colors: active) {
+  .kt ::target-text {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .kt ::search-text {
+    background: Mark;
+    color: MarkText;
+  }
+
+  .kt ::search-text:current {
+    background: Highlight;
+    color: HighlightText;
+  }
 }
 
 .kt :focus-visible {

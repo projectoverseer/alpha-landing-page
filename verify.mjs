@@ -354,6 +354,95 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
   }
 }
 
+// ---- found text keeps ALPHA's colour, on both surfaces ----
+//
+// `::target-text` (a reader arriving from a Google snippet or a shared
+// #:~:text= link) and `::search-text` (find-in-page) are the fourth instance of
+// this project's favourite failure: a rule that vanishes without leaving a mark.
+// Here it is worse than usual, because the browser does not render *nothing* in
+// its place — it renders its OWN highlighter yellow, which looks deliberate. The
+// first screen a reader from search ever sees would carry someone else's colour
+// and nobody would file a bug.
+//
+// Three ways to lose it, all silent: PurgeCSS eats the bare pseudo-element
+// (see optimize-css.mjs); a refactor groups these into one selector list with
+// `::selection`, at which point one unsupported pseudo invalidates the whole
+// rule and takes the working ones down with it; or the hub's tokens go missing
+// so `var(--find-bg)` resolves to nothing and the declaration is dropped.
+//
+// Checked on BOTH stylesheets, because the hub skips PurgeCSS and the main site
+// does not — different pipelines, same requirement.
+{
+  const sheets = [
+    ['main.', ['::target-text', '::search-text', '::search-text:current']],
+    ['chiasekinhnghiem.', ['.kt ::target-text', '.kt ::search-text', '.kt ::search-text:current']],
+  ];
+  for (const [prefix, selectors] of sheets) {
+    const file = readdirSync(join(SITE, 'css')).find(
+      (f) => f.startsWith(prefix) && f.endsWith('.css'),
+    );
+    const css = file ? readFileSync(join(SITE, 'css', file), 'utf8') : '';
+    if (!css) continue;
+
+    // Presence is not enough, and the first draft of this gate learned that the
+    // hard way: every one of these selectors appears TWICE, once with Alpha's
+    // colour and once with a system keyword inside @media (forced-colors). Delete
+    // the branded rule and a bare substring check still finds the forced-colors
+    // twin and passes — while every ordinary reader gets the browser's yellow.
+    // So what is asserted is the BRANDED rule specifically: a background that is
+    // a hex or a custom property, not a system colour.
+    for (const sel of selectors) {
+      // escape first, then let any run of whitespace match any amount — the
+      // minifier keeps descendant combinators but may squeeze them
+      const pattern = sel
+        .split(/\s+/)
+        .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+        .join('\\s+');
+      // `::search-text` is a prefix of `::search-text:current`, so without this
+      // the plain rule could go missing and the gate would still find it inside
+      // the current-match rule
+      const strict = sel.endsWith('::search-text') ? pattern + '(?!:current)' : pattern;
+      const branded = new RegExp(
+        `(^|[},])[^{}]*${strict}[^{}]*\\{[^{}]*background:\\s*(#[0-9a-f]{3,8}|var\\()`,
+        'i',
+      );
+      if (!branded.test(css)) {
+        errors.push(
+          `css/${file}: ${sel} has no rule carrying Alpha's own colour — ` +
+            `found text would paint in the browser's highlight yellow ` +
+            `(a forced-colors rule alone does not count)`,
+        );
+      }
+    }
+
+    // The grouping hazard: these must never share a selector list with
+    // ::selection, or an engine without ::search-text throws the whole rule out
+    // and loses its selection colour too.
+    for (const m of css.match(/[^{}]*\{[^{}]*\}/g) || []) {
+      const sel = m.slice(0, m.indexOf('{'));
+      if (/::selection/.test(sel) && /::(search|target)-text/.test(sel)) {
+        errors.push(
+          `css/${file}: ::selection is grouped with a found-text pseudo (${sel.trim().slice(0, 60)}) — ` +
+            `one unsupported selector invalidates the entire rule`,
+        );
+      }
+    }
+
+    // Opaque pairs only. A background with no colour beside it re-opens the
+    // contrast question on every ground a found word can land on, which is the
+    // exact reasoning ::selection was rewritten for.
+    for (const m of css.match(/[^{}]*::(?:search|target)-text[^{}]*\{[^{}]*\}/g) || []) {
+      const body = m.slice(m.indexOf('{') + 1, -1);
+      if (/background/.test(body) && !/(^|;)\s*color\s*:/.test(body)) {
+        errors.push(
+          `css/${file}: a found-text rule sets a background with no colour (${m.slice(0, 60)}) — ` +
+            `the pair must be opaque so it is measured once, not per surface`,
+        );
+      }
+    }
+  }
+}
+
 // ---- the superellipse, and the exact geometry of it ----
 //
 // This gate has now asserted three different things, and the failure it guards

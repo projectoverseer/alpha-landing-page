@@ -186,6 +186,40 @@ a {
   color: $selection-fg;
 }
 
+// ─── Found text: the machine pointing, in blue (main.scss §2) ───
+//
+// `::target-text` is the run a scroll-to-text-fragment landed on — a reader
+// arriving from a Google featured snippet, or from a link someone shared with
+// `#:~:text=` on the end. Unstyled, Chrome paints it in ITS highlighter yellow,
+// which is a stranger's colour on the first screen a new reader ever sees.
+// `::search-text` is find-in-page, `:current` the match they are standing on.
+//
+// EACH PSEUDO GETS ITS OWN RULE, and that is not a formatting preference. An
+// unknown pseudo-element makes a selector invalid, and one invalid selector in a
+// list throws away the WHOLE rule. Group these with `::selection` and a browser
+// that has never heard of `::search-text` loses its selection colour too — a
+// working feature deleted by an unsupported one. Written apart, an engine keeps
+// exactly what it understands and silently ignores the rest, which is the entire
+// compatibility story here: no @supports, no JS, no fallback to maintain.
+// Registered in design/09-compatibility-register.md §A12.
+//
+// (These reach the built CSS only because optimize-css.mjs safelists them —
+// same hazard that ate the bare `:focus-visible`. verify.mjs gates it.)
+::target-text {
+  background: $target-bg;
+  color: $find-fg;
+}
+
+::search-text {
+  background: $find-bg;
+  color: $find-fg;
+}
+
+::search-text:current {
+  background: $find-current-bg;
+  color: $find-fg;
+}
+
 // ─── Focus: one ring, ours, stated once ───
 // Every focusable thing on the site — link, button, menu row, accordion header,
 // skip link, the language switcher, the call button — takes this and nothing
@@ -2777,6 +2811,28 @@ header.hero-precision {
   // sides of the pair). Say so rather than leaving two brand colours that the
   // OS is about to discard anyway.
   ::selection {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  // Found text, same argument. In this mode the reader has told the OS which
+  // colours it may use and the answer is not ours; the three-rung blue ladder
+  // says nothing here, because the system keyword IS the distinction. Mark and
+  // current-match take Highlight, the loud one; ordinary matches take the
+  // secondary system pair so a page full of them stays readable.
+  // (Separate rules for the same reason as above: one unknown pseudo must not
+  // take the others down with it.)
+  ::target-text {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  ::search-text {
+    background: Mark;
+    color: MarkText;
+  }
+
+  ::search-text:current {
     background: Highlight;
     color: HighlightText;
   }

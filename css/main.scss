@@ -232,6 +232,47 @@ $selection-fg: $fg;
 $mark-bg: #ffbe7b; // = $dye-300 at 58% on white
 $mark-fg: $fg;
 
+// — Found text. THE THIRD GESTURE, AND IT IS NOT OURS.
+//
+// Selection and mark are both voices inside the document: the reader's hand, the
+// author's pen. These three are something else entirely — a MACHINE OUTSIDE THE
+// PAGE pointing at a run of words. A search engine sends a reader to a sentence
+// with #:~:text=; the browser's find bar lights up every match of what was
+// typed. Nobody who wrote this page chose those words.
+//
+// So they are BLUE, and the hue is doing the semantic work. The site's own rule
+// is that warmth is the dye and only the dye — the moments Alpha is speaking —
+// and that blue is the temperature of everything neutral and objective (§1, and
+// the reason the review cards went grey: "trustworthy và khách quan hơn"). A
+// machine pointing is exactly that: objective, external, not the house voice.
+// The reader never has to be told; two warm gestures and one cool one means the
+// cool one came from somewhere else.
+//
+// ONE ACCENT, THREE DEPTHS, ordered by how loud each has earned the right to be:
+//
+//   a match, one of many   $blue-400 @  40%   quiet — a page can hold twenty
+//   arrived from outside   $blue-400 @  75%   findable on its own, nothing competing
+//   THE match             $blue-400 @ 100%   the loudest thing on the page, briefly
+//
+// Same construction as the pair above (one accent, composited on this ground,
+// then FROZEN opaque) and opaque for the same reason: naming the ink as well
+// means the pairing is measured once instead of re-measured on every surface a
+// found word can land on. Measured, $fg on each:
+//
+//   #99d7f2  11.09:1 ✓        ΔE2000 between the rungs: 11.5 and 8.4, so the
+//   #40b5e6   7.45:1 ✓        three read as three. Against what else can share
+//   #009cde   5.65:1 ✓        the page: selection ≥33.5, mark ≥39.3, the blue
+//                             band ≥13.7 — a match inside the tinted band is
+//                             still unmistakably a match.
+//
+// $blue-400 and not $blue-600: 600 is the LINK blue, and a saturated run of it
+// behind text would read as something to click. 400 is the logo's own globe
+// stop, 20.5 ΔE off the link, and it is not spent on anything else here.
+$find-bg: #99d7f2; // = $blue-400 at 40% on white
+$target-bg: #40b5e6; // = $blue-400 at 75% on white
+$find-current-bg: $blue-400; // the accent itself, undiluted
+$find-fg: $fg;
+
 // — Icons. The deepest logo blue, and a step below $link on purpose: a 48px
 //   glyph carries weight the way a line of text cannot, and keeping the two
 //   apart stops a feature icon reading as something you can click. It is also

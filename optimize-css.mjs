@@ -130,7 +130,15 @@ const [{ css }] = await new PurgeCSS().purge({
     //
     // This is the same hazard the `KT_CSS` note below describes for ::selection,
     // and it costs 621 bytes minified to close.
-    greedy: [/data-bs-popper/, /:focus-visible/],
+    //
+    // `::target-text` / `::search-text` — the same shape a third time, and this
+    // pair is the least likely to be noticed missing, because the browser
+    // helpfully substitutes its OWN highlight colour. A dropped rule does not
+    // leave a gap; it leaves Chrome's highlighter yellow, which looks like a
+    // decision somebody made. Bare `::selection` happens to survive the purge
+    // today, so these probably would too — "probably" is not a reason to leave
+    // a silent failure unguarded when the fix is one regex.
+    greedy: [/data-bs-popper/, /:focus-visible/, /::target-text/, /::search-text/],
   },
 });
 writeFileSync(CSS, css);
