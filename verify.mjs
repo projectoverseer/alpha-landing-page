@@ -129,11 +129,17 @@ for (const name of htmlFiles) {
   // mechanically detectable: after those rules, a bare sign before a closing
   // `}`/`]`/`)` is always wrong. The `[^{^]` guard exempts `\bond{-}` itself
   // (preceded by `{`) and a properly written charge (preceded by `^`).
+  //
+  // A MULTIPLE charge carries its number between the `^` and the sign — mhchem
+  // writes Cr³⁺ as `\ce{Cr^3+}` — so the `^` guard cannot see it and the digit
+  // reads as a bare sign. That is still a properly written charge (design 05
+  // §2), so charges are removed before the test rather than special-cased in
+  // it: `^-` `^+` `^3+` `^{2-}` all go, and every dangling bond stays.
   if (name.startsWith('chia-se-kinh-nghiem')) {
     for (const m of html.matchAll(/<annotation encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)) {
       const tex = m[1];
       if (!tex.includes('\\ce{')) continue;
-      const bad = tex.match(/[^{^][-+][}\])]/);
+      const bad = tex.replace(/\^\{?\d*[-+]\}?/g, '').match(/[^{^][-+][}\])]/);
       if (bad) {
         errors.push(
           `${name}: bare "${bad[0]}" in ${tex.trim()} — mhchem reads a trailing sign as an ionic charge. ` +

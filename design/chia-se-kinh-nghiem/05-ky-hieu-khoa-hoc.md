@@ -31,6 +31,7 @@ Read this table before re-litigating anything.
 | 2026-08-02 | **`%` stays closed up** (`4,5%`) | Owner's exception: "4,5 %" reads foreign in Vietnamese trade prose |
 | 2026-08-02 | Structural diagrams stay pictures; no SMILES auto-renderer | Skeletal output is not how this author teaches (§5) |
 | 2026-08-04 | The build **rewrites** KaTeX's MathML before shipping it (§2, "What the browser actually gets") | KaTeX writes TeX's box model, not MathML. WebKit dropped every chemical subscript on iPhone and iPad |
+| 2026-08-09 | The dangling-bond gate strips **every** properly written charge before testing, multiples included (`^3+`, `^{2-}`) | Its `^` guard only saw `^-`/`^+`; a multiple charge puts a digit between the `^` and the sign, so `\ce{Cr^3+}` — the standard form, and the same shape as the `\ce{SO4^2-}` already in §2 — failed the build the first time a post needed one |
 
 ## 1. Italic or upright — ISO 80000-2
 
