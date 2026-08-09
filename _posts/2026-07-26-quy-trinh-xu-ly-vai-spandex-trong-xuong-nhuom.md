@@ -9,6 +9,51 @@ series_part: 2
 # Bước 1 where the author attached it — and it fronts the card, the share
 # preview and the image sitemap from here.
 thumb: may-pha-gay-vai-det-kim-dang-ong
+learn:
+  open:
+    kind: hook
+    q: "Định hình sơ bộ vải spandex chạy ở 180–190 °C. Nếu lỡ để lên 200 °C trong 70 giây thì hỏng cái gì?"
+    options:
+      - "Chỉ hỏng màu, nhuộm lại được"
+      - "Sợi spandex lão hóa, giòn và mất hẳn độ co giãn"
+      - "Khổ vải bị lệch, căng lại được"
+      - "Không sao, vì bước sau còn định hình lại"
+    promise: "Bước 3 trả lời, và đây là ngưỡng không sửa được ở bất kỳ bước nào phía sau."
+  quiz:
+    - q: "Tốc độ hạ nhiệt tối đa sau khi nhuộm vải có spandex là bao nhiêu?"
+      options:
+        - t: "Không quá 3 °C/phút"
+          why: "Nhanh gấp đôi ngưỡng an toàn."
+        - t: "Không quá 1,5 °C/phút, cho tới khi xuống dưới 80 °C"
+          correct: true
+          why: "Đúng. Xả nước lạnh đột ngột gây sốc nhiệt, spandex co rút đột ngột và tạo nếp gãy không thể phục hồi."
+        - t: "Càng nhanh càng tốt để tiết kiệm thời gian máy"
+          why: "Đây chính là cách tạo ra nếp gãy vĩnh viễn, và mẻ đó không cứu được."
+        - t: "Không có ngưỡng, chỉ cần không xả nước lạnh"
+          why: "Có ngưỡng, và nó là một con số cụ thể trong quy trình."
+    - q: "Nhiệt độ định hình hoàn tất so với định hình sơ bộ phải như thế nào?"
+      options:
+        - t: "Cao hơn 10–15 °C, để cố định lần cuối"
+          why: "Ngược. Vượt qua nhiệt độ đã định hình lần đầu sẽ phá chính kết quả của bước đó."
+        - t: "Thấp hơn 10–15 °C"
+          correct: true
+          why: "Đúng. Định hình hoàn tất chạy 160–170 °C trong 30 giây, luôn thấp hơn nhiệt độ căng sơ bộ 10–15 °C, để giữ độ mềm mại, bảo toàn độ co giãn còn lại và kiểm soát độ co sau giặt."
+        - t: "Bằng nhau"
+          why: "Không còn biên an toàn nào, và mọi dao động của máy đều thành rủi ro."
+        - t: "Không liên quan đến nhau"
+          why: "Hai bước này liên quan trực tiếp, và quan hệ giữa hai nhiệt độ là một quy tắc cứng."
+    - q: "Vải dệt kim tròn dạng ống phải chạy qua máy phá gãy trước khi lên nhiệt. Quả phao nổi bên trong lòng ống làm nhiệm vụ gì?"
+      options:
+        - t: "Giữ cho vải không bị xoắn"
+          why: "Không phải nhiệm vụ chính của nó."
+        - t: "Nong tròn ống vải 360° để phá và xóa hoàn toàn nếp gấp dọc hông ống"
+          correct: true
+          why: "Đúng. Nếu không, những lằn gấp đó thành lằn gãy vĩnh viễn khi vải lên nhiệt. Nước nóng 70–90 °C làm mềm sợi spandex để vải co rút tự nhiên trong lúc đó."
+        - t: "Ép nước ra khỏi vải"
+          why: "Đó là việc của máy vắt, ở công đoạn khác."
+        - t: "Đo khổ vải tự động"
+          why: "Không phải chức năng của quả phao."
+  action: "Kiểm tra hai con số trên máy stenter ngay hôm nay: nhiệt độ và thời gian đang cài cho định hình sơ bộ vải có spandex. Nếu nhiệt vượt 195 °C hoặc thời gian vượt 60 giây, mọi mẻ chạy qua đó đang mất độ co giãn mà không bước nào phía sau lấy lại được."
 ---
 
 Bài viết này dành cho những người trong ngành nhưng không làm kỹ thuật nhuộm, hoặc chưa có dịp tham gia làm hàng có spandex. Anh chị em đã làm tốt mặt hàng này xin bỏ qua.
@@ -63,5 +108,7 @@ Sợi spandex bắt buộc mang theo 2–5% dầu silicone bôi trơn từ nhà 
 Trên đây là quy trình cơ bản, nhiều nhà máy có những vận dụng khác nhau tùy điều kiện máy móc, kiểu dệt, tỷ lệ spandex… Ví dụ: vải dệt kim có spandex dệt ra đem xẻ khổ và căng sơ bộ ngay rồi vào máy nhuộm…
 
 {% include chia-se-kinh-nghiem/cta.html variant="card" text="Quy trình 5 bước ở trên chỉ ổn định khi kế hoạch dệt – nhuộm khớp nhau và thông số từng mẻ được giữ đúng. Alpha Smart Dyehouse quản lý từ lập kế hoạch nhuộm, đơn công nghệ đến dữ liệu từng mẻ ngay trong sản xuất – để vải mộc không nằm kho quá lâu, và quy trình đã chốt là quy trình chạy thật trên máy." %}
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

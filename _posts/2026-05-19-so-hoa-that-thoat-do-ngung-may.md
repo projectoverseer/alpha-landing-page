@@ -5,6 +5,47 @@ topic: van-hanh
 series: so-hoa-oee
 series_part: 4
 image: so-hoa-thoi-gian-ngung-may-4-buoc
+learn:
+  open:
+    kind: recall
+    q: "Ba nguyên nhân chính làm mất OEE trong xưởng nhuộm là gì?"
+    a: "Khởi động đầu tuần, chuyển đổi mặt hàng, và máy chạy chậm hơn tiêu chuẩn. Hai cái đầu là thời gian máy ngưng hẳn, và đó chính là thứ bài hôm nay dạy cách ghi nhận. Cái thứ ba là máy vẫn chạy nhưng chậm, thuộc về hiệu suất tốc độ và được đo bằng cách khác."
+    from: "oee-cua-nha-may-nhuom"
+  quiz:
+    - q: "Máy có kế hoạch chạy 144 giờ một tuần. Trong tuần máy hỏng tổng cộng 14 giờ. Chỉ số sẵn sàng là bao nhiêu?"
+      options:
+        - t: "86%"
+          why: "Chưa đúng. Con số này ra từ việc lấy 14 chia cho 100 rồi trừ. Phép tính đúng là thời gian chạy thực chia thời gian kế hoạch."
+        - t: "90,3%"
+          correct: true
+          why: "Đúng. Thời gian chạy thực = 144 − 14 = 130 giờ, và 130 ÷ 144 = 0,903."
+        - t: "9,7%"
+          why: "Đây là tỷ lệ thời gian ngưng, tức phần bù. Chỉ số sẵn sàng là phần còn lại."
+        - t: "Chưa tính được vì chưa biết số mẻ"
+          why: "Chỉ số sẵn sàng chỉ hỏi về thời gian. Số mẻ thuộc về hai thành phần còn lại của OEE."
+    - q: "Ba tuần đầu triển khai bảng ghi nhận, mục tiêu duy nhất nên là gì?"
+      options:
+        - t: "Đạt chỉ số sẵn sàng trên 80%"
+          why: "Ngược với bài. Đặt mục tiêu ngay từ đầu khiến số liệu bị làm đẹp, và khi đó không còn mức nền thật nào để so về sau."
+        - t: "Ghi nhận trung thực"
+          correct: true
+          why: "Đúng. Ba tuần đầu chỉ có một mục tiêu là ghi nhận trung thực. Con số trung bình sau ba tuần, dù thấp đến đâu, chính là mức nền thật của xưởng."
+        - t: "Tìm ra công nhân hay để máy ngưng nhất"
+          why: "Bài nói rõ điều ngược lại: chỉ số sẵn sàng thấp không phải lỗi của công nhân, nó phản ánh hệ thống vận hành. Phạt trong giai đoạn này là cách nhanh nhất để mất số liệu."
+        - t: "Lắp cảm biến tự động cho tất cả các máy"
+          why: "Không cần. Bảng giấy kẹp tại máy, cuối tuần thu lại và nhập Excel, vẫn đủ dùng để bắt đầu."
+    - q: "Danh mục phân loại lý do ngưng máy nên có khoảng bao nhiêu loại?"
+      options:
+        - t: "3–4 loại cho gọn"
+          why: "Quá ít thì không phân biệt được nguyên nhân, và phân tích sau đó không chỉ ra được hành động nào."
+        - t: "8–12 loại"
+          correct: true
+          why: "Đúng. Đủ chi tiết để phân biệt nguyên nhân, đủ đơn giản để công nhân điền nhanh mà không nhầm."
+        - t: "Khoảng 30 loại, càng chi tiết càng tốt"
+          why: "Quá nhiều thì công nhân điền đại, và số liệu mất ý nghĩa."
+        - t: "Dùng danh mục chuẩn của ngành"
+          why: "Không có danh mục chuẩn cho tất cả. Mỗi xưởng có đặc thù riêng nên phải tự tạo danh mục phù hợp."
+  action: "In một bảng giấy bốn cột (giờ ngưng, giờ chạy lại, số phút, lý do) và kẹp ngay tại một máy duy nhất. Một máy, ba tuần, không đặt mục tiêu. Đó là toàn bộ bước một."
 ---
 
 Qua các bài trước, hầu hết mọi người đều đã nhận biết được các dạng tổn thất thời gian trong xưởng nhuộm. Tuy nhiên mình chưa biết anh chị đã "số hóa" được chúng chưa? Nếu chưa, tham khảo cách triển khai dưới đây nhé.
@@ -96,5 +137,7 @@ Chỉ số sẵn sàng thấp không phải lỗi của công nhân. Nó phản 
 {% include chia-se-kinh-nghiem/cta.html variant="card" %}
 
 Bài tới mình sẽ chia sẻ cách tính hiệu suất tốc độ, thành phần thứ hai của OEE, và cũng là thứ khó đo nhất trong ngành nhuộm.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

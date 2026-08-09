@@ -81,6 +81,16 @@
           {%- endif %}
         </header>
 
+        {%- comment -%}
+          The opening block sits between the title block and the first
+          paragraph — after the lead figure, so it never pushes the LCP image
+          down the page. It is the article's open loop and its pretest at the
+          same time (design/chia-se-kinh-nghiem/06 §2). Rendered here rather
+          than from the Markdown because Markdown content begins below this
+          point; the closing block IS a Markdown include, per the same doc.
+        {%- endcomment %}
+        {% include chia-se-kinh-nghiem/hoc.html variant="open" %}
+
         <div class="kt-body">
           {{ content }}
         </div>

@@ -5,6 +5,51 @@ topic: ky-thuat-nhuom
 series: nylon
 series_part: 1
 image: cau-truc-phan-tu-nylon-6-va-nylon-66
+learn:
+  open:
+    kind: hook
+    q: "Nylon 6 nóng chảy ở 215–220 °C, Nylon 6.6 ở 260–265 °C. Cùng họ polyamide, vì sao chênh nhau tới 45 °C?"
+    options:
+      - "Vì Nylon 6.6 có nhiều carbon hơn"
+      - "Vì cấu trúc đối xứng hơn nên độ kết tinh cao hơn"
+      - "Vì Nylon 6.6 được kéo sợi ở nhiệt độ cao hơn"
+      - "Vì Nylon 6.6 có thêm phụ gia chịu nhiệt"
+    promise: "Phần \"Tính chất lý hóa\" trả lời, và chênh lệch đó quyết định luôn nhiệt độ định hình được phép dùng."
+  quiz:
+    - q: "Trong phân tử Nylon, nhóm nào là cơ sở hóa học để thuốc nhuộm acid liên kết vào sợi?"
+      options:
+        - t: "Nhóm carbonyl C=O"
+          why: "Nó là một nửa của liên kết amide, nhưng không phải chỗ thuốc nhuộm acid bám vào."
+        - t: "Nhóm N–H của liên kết amide"
+          correct: true
+          why: "Đúng. Nhóm này vừa tạo liên kết hydrogen liên phân tử quyết định mọi tính chất cơ lý của sợi, vừa là cơ sở để thuốc nhuộm acid gắn vào. Một nhóm, hai vai trò."
+        - t: "Nhóm methylene của các phân đoạn hydrocarbon"
+          why: "Các phân đoạn methylene tạo độ đàn hồi và tính ít nhăn, nhưng không mang điện tích để giữ thuốc nhuộm."
+        - t: "Nhóm hydroxyl –OH"
+          why: "Đây là nhóm của cellulose, không phải của polyamide."
+    - q: "Vì sao Nylon kém bền với acid và kiềm đậm đặc?"
+      options:
+        - t: "Vì sợi có độ hút ẩm cao"
+          why: "Độ hút ẩm 4–4,5% là mức trung bình, và nó không phải nguyên nhân."
+        - t: "Vì liên kết amide dễ bị thủy phân, làm mục và mất độ bền"
+          correct: true
+          why: "Đúng. Chính liên kết làm nên sợi cũng là điểm yếu hóa học của nó, và đó là lý do bể acid rất mạnh trong một số quy trình nhuộm Nylon phải được cân nhắc rất kỹ."
+        - t: "Vì sợi tích điện tĩnh điện"
+          why: "Tĩnh điện là vấn đề vận hành, không phải vấn đề bền hóa."
+        - t: "Vì Nylon là sợi tổng hợp"
+          why: "Nhiều sợi tổng hợp khác lại rất bền acid. Nguyên nhân nằm ở nhóm chức cụ thể."
+    - q: "Vải Nylon phơi nắng gắt kéo dài bị ngả vàng và giòn xơ. Nguyên nhân là gì?"
+      options:
+        - t: "Thuốc nhuộm bị phai"
+          why: "Phai màu và giòn xơ là hai hiện tượng khác nhau. Giòn xơ là hỏng cơ lý của chính sợi."
+        - t: "Tia cực tím làm gãy chuỗi polymer"
+          correct: true
+          why: "Đúng. Nylon kém bền với tia UV, và hậu quả là vải lão hóa, ngả vàng và giòn xơ."
+        - t: "Nhiệt độ ngoài trời vượt điểm nóng chảy"
+          why: "Không có nơi nào ngoài trời đạt tới 215 °C."
+        - t: "Độ ẩm không khí"
+          why: "Nylon hút ẩm 4–4,5%, nhưng ẩm không gây gãy chuỗi polymer."
+  action: "Kiểm tra trong kho xem vải Nylon đang chạy là loại 6 hay 6.6, rồi đối chiếu với nhiệt độ định hình đang cài trên máy. Chênh lệch điểm nóng chảy giữa hai loại là 45 °C, và một thông số cài cho loại này đem chạy trên loại kia là rủi ro không cần thiết."
 ---
 
 ## Cấu tạo hóa học
@@ -53,5 +98,7 @@ Nhóm $$\ce{\bond{-}CO-NH\bond{-}}$$ tạo ra liên kết hydrogen liên phân t
 Dây thừng, lưới đánh cá, chỉ may công nghiệp, túi khí ô tô, vỏ lốp xe. Nhựa kỹ thuật: bánh răng, linh kiện máy móc thay thế kim loại.
 
 Mình sẽ có các bài sau về nhuộm Nylon và các nhóm thuốc nhuộm acid sử dụng để nhuộm Nylon.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

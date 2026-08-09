@@ -1,0 +1,133 @@
+{%- comment -%}
+  Active-learning blocks for Chia sẻ kinh nghiệm articles.
+  Spec and rationale: design/chia-se-kinh-nghiem/06-hoc-chu-dong.md
+
+  TWO CALL SITES, ON PURPOSE:
+
+    variant="open"  is rendered by the ARTICLE LAYOUT, between the title block
+                    and the body. It cannot be a Markdown include — Markdown
+                    content starts after the header, and this block belongs
+                    before the first paragraph.
+
+    variant="end"   is written in the post's Markdown, on the line directly
+                    above `cta.html variant="signature"`. Same convention as
+                    every other editorial element on this hub.
+
+  Both read their content from the post's front matter (`learn:`), never from
+  include parameters — the questions are part of the article, so they are
+  versioned with it and stay out of the prose. Schema in the design doc §5.
+
+  ZERO SCRIPT, AND THAT IS LOAD-BEARING (philosophy §2.6, §8). The quiz is
+  radio inputs plus `:has()`; the reveals are `<details>`. The per-option
+  feedback ships VISIBLE and is hidden only where `:has()` resolves, so an
+  engine without `:has()` degrades to a plain question-and-answer block with
+  every answer shown — plainer, never broken (design/09's rule).
+{%- endcomment -%}
+
+{%- assign kt_learn = page.learn -%}
+
+{%- case include.variant -%}
+
+{%- comment -%}
+  ── The opening block ─────────────────────────────────────────────────────
+  One per article, never two. It does two jobs at once, which is why it earns
+  the space at the top of the page: it is the open loop that keeps a Facebook
+  arrival scrolling, AND it is a pretest, which improves what the reader takes
+  from the prose that follows even when the guess is wrong (06 §2).
+
+  kind: hook   — a question THIS article answers. Every option gets the same
+                 reply, so nothing is given away; the answer is the reason to
+                 read on. Never write a promise the piece does not keep.
+  kind: recall — a question from an OLDER article whose answer is the ground
+                 today's piece stands on. Spacing, priming and an internal
+                 link in four lines.
+{%- endcomment -%}
+{%- when "open" -%}
+  {%- assign kt_open = kt_learn.open -%}
+  {%- if kt_open -%}
+    {%- if kt_open.kind == "recall" -%}
+      {%- assign kt_src = site.posts | where: "slug", kt_open.from | first -%}
+<aside class="kt-hoc kt-hoc-open">
+  <p class="kt-cta-label">Ôn lại</p>
+  <details class="kt-reveal">
+    <summary class="kt-reveal-q">{{ kt_open.q }}</summary>
+    <div class="kt-reveal-body">
+      <p>{{ kt_open.a }}</p>
+      {%- if kt_src %}
+      <p class="kt-reveal-src">Đọc lại: <a href="{{ site.url }}{{ kt_src.url }}">{{ kt_src.title }}</a></p>
+      {%- endif %}
+    </div>
+  </details>
+</aside>
+    {%- else -%}
+<aside class="kt-hoc kt-hoc-open">
+  <p class="kt-cta-label">Trước khi đọc</p>
+  <form class="kt-quiz">
+    <fieldset class="kt-q">
+      <legend class="kt-q-stem">{{ kt_open.q }}</legend>
+      <ul class="kt-q-opts">
+        {%- for kt_opt in kt_open.options %}
+        <li class="kt-opt">
+          <label><input name="kt-open" type="radio" /><span>{{ kt_opt }}</span></label>
+        </li>
+        {%- endfor %}
+      </ul>
+    </fieldset>
+    {%- comment -%}
+      One promise element for the whole block rather than one per option: the
+      reply is identical by design, and four copies would be four chances for
+      them to drift apart.
+    {%- endcomment %}
+    <p class="kt-hoc-promise">{{ kt_open.promise }}</p>
+  </form>
+</aside>
+    {%- endif -%}
+  {%- endif -%}
+
+{%- comment -%}
+  ── The closing block ─────────────────────────────────────────────────────
+  Retrieval practice, then one thing to do on Monday. The lead sentence states
+  the mechanism plainly instead of cheerleading: this audience is 35–60 and
+  runs factories, and being levelled with is what keeps the block credible
+  (06 §4). No score, no counter, no stored state — that line is what separates
+  retrieval practice from gamification, which stays banned (03 §7.6).
+{%- endcomment -%}
+{%- when "end" -%}
+  {%- if kt_learn.quiz or kt_learn.action %}
+<section aria-labelledby="kt-hoc-heading" class="kt-hoc kt-hoc-end">
+    {%- if kt_learn.quiz %}
+  <h2 id="kt-hoc-heading">Kiểm lại vài điểm</h2>
+  <p class="kt-hoc-lead">Trả lời trong đầu trước, rồi hãy chọn. Nhớ được sau sáu tháng hay không nằm ở chỗ này, chứ không nằm ở lần đọc vừa rồi.</p>
+  <form class="kt-quiz">
+      {%- for kt_item in kt_learn.quiz %}
+    <fieldset class="kt-q">
+      <legend class="kt-q-stem">{{ kt_item.q }}</legend>
+      <ul class="kt-q-opts">
+        {%- for kt_opt in kt_item.options %}
+        <li class="kt-opt{% if kt_opt.correct %} is-right{% endif %}">
+          <label><input name="kt-q{{ forloop.parentloop.index }}" type="radio" /><span>{{ kt_opt.t }}</span></label>
+          <p class="kt-fb">{{ kt_opt.why }}</p>
+        </li>
+        {%- endfor %}
+      </ul>
+    </fieldset>
+      {%- endfor %}
+    {%- comment -%}
+      A reset button is the only control here, and it exists to lower the cost
+      of guessing: a reader who knows they can clear the board answers more
+      honestly. It needs no script — a form owns its own reset. The form has no
+      submit button and no text field, so Enter cannot submit it either.
+    {%- endcomment %}
+    <p class="kt-quiz-foot"><button type="reset">Làm lại</button></p>
+  </form>
+    {%- endif -%}
+    {%- if kt_learn.action %}
+  <div class="kt-mang-ve">
+    <p class="kt-cta-label">Việc mang về xưởng</p>
+    <p>{{ kt_learn.action }}</p>
+  </div>
+    {%- endif %}
+</section>
+  {%- endif -%}
+
+{%- endcase -%}

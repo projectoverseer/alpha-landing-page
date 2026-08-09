@@ -290,6 +290,49 @@ list in the comment at the top of `_includes/chia-se-kinh-nghiem/cta.html`).
   numbers come from the customer review on the main page).
 - `banner` is used by the layouts (contact strip); don't put it in articles.
 
+## 4b. Write the questions
+
+Every post carries two active-learning blocks. The rules for writing a good
+question — and they are what decide whether this is worth anything — are in
+`06-hoc-chu-dong.md` §4. The mechanics are two things:
+
+**One line in the Markdown**, directly above the signature:
+
+```liquid
+{% raw %}{% include chia-se-kinh-nghiem/hoc.html variant="end" %}{% endraw %}
+
+{% raw %}{% include chia-se-kinh-nghiem/cta.html variant="signature" %}{% endraw %}
+```
+
+**The content in the front matter** (schema and every field: `06` §5):
+
+```yaml
+learn:
+  open:
+    kind: hook                    # or: recall
+    q: "Câu hỏi mở đầu"
+    options: ["…", "…", "…", "…"] # hook only
+    promise: "Phần \"…\" trả lời." # hook only — and the piece must keep it
+  quiz:
+    - q: "…"
+      options:
+        - { t: "…", why: "…" }
+        - { t: "…", correct: true, why: "…" }
+  action: "Việc làm được ngay tuần này, với dữ liệu đã có sẵn."
+```
+
+The opening block is rendered by the layout, so it needs no include line.
+
+Four things the build will reject, so they cannot be forgotten: a post with no
+`learn.open`, a post with no `end` include, a question with anything other than
+exactly one `correct: true`, and an opening block that carries `correct:` or
+per-option `why:` (either would give the answer away and kill the hook).
+
+Two rules worth knowing before writing rather than after the build fails:
+**every answer must be traceable to a sentence in the article itself**, and
+**every option needs a `why:`, wrong ones included** — a wrong option's
+explanation is the part that teaches.
+
 ## 5. Ship
 
 Nothing else to update: the hub index, series navigation, and sitemap entries

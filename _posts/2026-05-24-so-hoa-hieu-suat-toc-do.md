@@ -5,6 +5,47 @@ topic: van-hanh
 series: so-hoa-oee
 series_part: 5
 image: so-hoa-hieu-suat-toc-do-oee
+learn:
+  open:
+    kind: recall
+    q: "OEE có ba thành phần. Thành phần nào trả lời câu hỏi \"khi máy đang chạy, nó có chạy đúng tốc độ thiết kế không?\""
+    a: "Hiệu suất tốc độ, thành phần thứ hai. Availability hỏi máy có chạy hay không, Quality hỏi mẻ có đạt hay không, còn Performance hỏi máy chạy nhanh hay chậm so với công thức. Bài hôm nay là cách đo đúng thành phần đó."
+    from: "lam-sao-de-do-oee-trong-xuong-nhuom"
+  quiz:
+    - q: "Trong một tuần máy chạy thực tế 120 giờ và hoàn thành 22 mẻ. Tra bảng quy trình, tổng thời gian chuẩn của 22 mẻ đó là 100 giờ. Hiệu suất tốc độ là bao nhiêu?"
+      options:
+        - t: "120%"
+          why: "Đảo ngược tử số và mẫu số. Khi mẻ chạy chậm hơn chuẩn, hiệu suất tốc độ không thể vượt 100%."
+        - t: "83%"
+          correct: true
+          why: "Đúng, 100 ÷ 120. Còn lại 17% là thời gian máy đang chạy nhưng chậm hơn quy trình chuẩn."
+        - t: "17%"
+          why: "Đây là phần tổn thất, không phải chỉ số."
+        - t: "Chưa tính được vì chưa biết thời gian kế hoạch"
+          why: "Thời gian kế hoạch thuộc về chỉ số sẵn sàng. Hiệu suất tốc độ chỉ so thời gian chuẩn với thời gian máy thực sự chạy."
+    - q: "Một mẻ chạy đúng bằng thời gian chuẩn. Công nhân có phải ghi gì vào bảng phân tích nguyên nhân chậm không?"
+      options:
+        - t: "Có, ghi \"đúng chuẩn\" cho đủ dữ liệu"
+          why: "Bài nói ngược lại, và có lý do: mỗi dòng thừa là một lần công nhân phải điền mà không thu được thông tin nào."
+        - t: "Không, chỉ ghi khi thời gian thực tế vượt thời gian chuẩn"
+          correct: true
+          why: "Đúng. Bảng 2 chỉ tồn tại để tìm ra ba nguyên nhân chính gây chậm. Mẻ chạy đúng hoặc nhanh hơn chuẩn không cần ghi."
+        - t: "Có, nếu mẻ đó chạy nhanh hơn chuẩn"
+          why: "Cũng không. Bảng này chỉ phục vụ việc tìm nguyên nhân chậm."
+        - t: "Tùy quản đốc quyết định"
+          why: "Để tùy thì mỗi máy một kiểu, và số liệu giữa các máy không so được với nhau."
+    - q: "Vì sao xây thói quen ghi bảng hiệu suất tốc độ khó hơn ghi bảng ngưng máy?"
+      options:
+        - t: "Vì bảng này nhiều cột hơn"
+          why: "Không phải. Bảng phân tích nguyên nhân chậm chỉ có ba cột: mã mẻ, lý do chậm, số phút."
+        - t: "Vì mẻ đang chạy nên không có tín hiệu rõ ràng nào báo là đang chậm"
+          correct: true
+          why: "Đúng. Ngưng máy là sự kiện rõ ràng, công nhân dễ nhận biết để ghi. Còn khi mẻ chạy chậm hơn chuẩn thì máy vẫn quay, không có gì báo hiệu, nên công nhân phải được hướng dẫn ghi mỗi khi có tình huống phát sinh dù máy không dừng."
+        - t: "Vì phải tra thời gian chuẩn bằng tay"
+          why: "Không cần. File Excel nên có bảng tra riêng để tự điền thời gian chuẩn khi công nhân nhập mã quy trình."
+        - t: "Vì phải chờ kỹ thuật xác nhận"
+          why: "Không có bước xác nhận nào trong quy trình ghi nhận."
+  action: "Thêm một bảng tra mã quy trình vào file Excel đang dùng, để công nhân chỉ cần nhập mã là thời gian chuẩn tự điền. Một công thức tra cứu bỏ đi được cả một nguồn sai sót lẫn lý do phổ biến nhất để không ghi."
 ---
 
 Bài trước mình hướng dẫn cách ghi nhận thời gian ngưng máy để tính chỉ số sẵn sàng. Hôm nay đến thành phần thứ hai, hiệu suất tốc độ.
@@ -78,5 +119,7 @@ Khi đo ngưng máy, ngưng là rõ ràng, công nhân dễ nhận biết để 
 {% include chia-se-kinh-nghiem/cta.html variant="note" %}
 
 Bài tới mình sẽ chia sẻ thành phần cuối cùng của OEE, tỷ lệ chất lượng. Thành phần này liên quan trực tiếp đến mẻ lỗi, mẻ nhuộm lại và hạ phẩm. Những con số mà hầu hết xưởng đã có nhưng chưa đưa vào hệ thống đo lường.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

@@ -3,6 +3,51 @@ title: "Lỗi nhuộm phân tán màu đen: tại sao lab OK nhưng máy lớn l
 description: "Lab nhuộm đen ra màu đẹp, máy lớn lại bàng bạc như xám. Thủ phạm không nằm ở quy trình mà trong chính thuốc nhuộm: chất phân tán lignosulfonate và phản ứng khử ở nhiệt độ cao."
 topic: ky-thuat-nhuom
 image: nhuom-phan-tan-den-bac-mau-lignosulfonate
+learn:
+  open:
+    kind: hook
+    q: "Lab nhuộm đen ra màu đẹp. Máy lớn cùng công thức lại bàng bạc như xám. Khác biệt quyết định nằm ở đâu?"
+    options:
+      - "Ở tốc độ nâng nhiệt"
+      - "Ở lượng oxy trong máy"
+      - "Ở chất lượng nước"
+      - "Ở dung tỷ"
+    promise: "Phần \"Tại sao trong lab không bị?\" trả lời, và nguyên nhân gốc nằm trong chính lọ thuốc nhuộm."
+  quiz:
+    - q: "Thành phần nào trong thuốc nhuộm bột gây ra lỗi bạc màu này?"
+      options:
+        - t: "Thuốc nhuộm azo màu đen"
+          why: "Nó là nạn nhân chứ không phải thủ phạm: liên kết azo chính là thứ bị phá."
+        - t: "Chất phân tán nhóm lignosulfonate"
+          correct: true
+          why: "Đúng. Nhóm hydroxyl phenolic trong lignosulfonate có tính khử, và ở trên 120–130 °C trong máy nhuộm cao áp, tính khử đó phá hủy liên kết azo của thuốc nhuộm phân tán màu đen."
+        - t: "Chất độn vô cơ"
+          why: "Chất độn có trong thuốc nhuộm thương phẩm nhưng không có tính khử."
+        - t: "Nước cứng trong bể nhuộm"
+          why: "Nước cứng gây vấn đề khác, không gây phản ứng khử ở nhiệt độ cao."
+    - q: "Vì sao mẫu nhuộm trong cốc ở lab lại không bị bạc màu?"
+      options:
+        - t: "Vì nhiệt độ trong cốc thấp hơn"
+          why: "Không. Cốc chạy đúng chương trình nhiệt của máy lab và vẫn lên vùng cao áp."
+        - t: "Vì cốc được đậy nắp nên nhốt đủ không khí, và oxy kìm hãm phản ứng khử"
+          correct: true
+          why: "Đúng. Thể tích dung dịch chỉ chiếm một phần nhỏ trong cốc, phần còn lại là không khí. Máy lớn có tỷ lệ không khí trên dung dịch nhỏ hơn nhiều, và van xả áp thường chỉ đóng khi nhiệt độ đạt 80–85 °C nên một lượng oxy đã thoát ra trước đó."
+        - t: "Vì mẫu nhỏ nên lượng thuốc nhuộm ít"
+          why: "Nồng độ thuốc nhuộm ở lab được tính đúng bằng nồng độ chạy máy lớn."
+        - t: "Vì lab dùng nước cất"
+          why: "Không phải yếu tố quyết định ở đây."
+    - q: "Cách xử lý triệt để nhất là gì?"
+      options:
+        - t: "Tăng liều chất chống khử"
+          why: "Bài nói rõ cách này không phải lúc nào cũng xử lý được triệt để."
+        - t: "Đổi sang thuốc nhuộm dùng chất phân tán không có tính khử, ví dụ naphthalene sulfonate"
+          correct: true
+          why: "Đúng. Một số hãng ghi rõ dòng \"reduction stable\", hoặc nêu chất phân tán là naphthalene sulfonate (NNO) vốn không có tính khử."
+        - t: "Hạ nhiệt độ nhuộm xuống dưới 120 °C"
+          why: "Polyester cần vùng nhiệt cao để bắt màu. Hạ xuống dưới ngưỡng phản ứng cũng là hạ xuống dưới ngưỡng nhuộm được."
+        - t: "Nhuộm hai lần với nửa liều"
+          why: "Không giải quyết nguyên nhân, và nhân đôi thời gian máy."
+  action: "Lấy tài liệu kỹ thuật của loại thuốc nhuộm phân tán đen đang dùng và tìm tên chất phân tán trong đó. Nếu nhà cung cấp không trả lời được câu hỏi đó, bài viết nói thẳng: đó cũng là một dấu hiệu cần xem lại nguồn hàng."
 ---
 
 Đây là một lỗi khá phổ biến khi nhuộm polyester màu đen. Lab nhuộm ra màu đẹp, nhưng khi nhuộm máy lớn thì màu cứ bàng bạc, trông như màu xám.
@@ -34,5 +79,7 @@ Chọn loại thuốc nhuộm dùng chất phân tán không thuộc nhóm ligno
 Khi gặp lỗi bạc màu kiểu này, trước tiên nên kiểm tra tài liệu kỹ thuật của thuốc nhuộm hoặc hỏi rõ nhà cung cấp rằng chất phân tán đang dùng trong thuốc nhuộm bột là nhóm nào. Nếu nhà cung cấp không cung cấp được thông tin này thì đó cũng là một dấu hiệu cần xem lại chất lượng nguồn hàng.
 
 {% include chia-se-kinh-nghiem/cta.html variant="inline" %}
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

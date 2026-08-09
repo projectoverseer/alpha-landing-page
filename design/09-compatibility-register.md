@@ -111,10 +111,24 @@ Ordered by what it would cost a reader if it silently stopped working.
 
 ### A3 · `:has()` — used unguarded, on purpose
 
-- **Where:** `_sass/_base.scss` lines ~685, ~730, ~736, ~772, ~1172, ~2410.
+- **Where:** `_sass/_base.scss` lines ~685, ~730, ~736, ~772, ~1172, ~2410 ·
+  and since 2026-08-09, four rules in `_sass/chia-se-kinh-nghiem/_theme.scss`
+  that carry the hub's quiz.
 - **Without it:** the accordion's title/subtitle block degrades to an inline
   subtitle; the partner-logo hover pairing and one row-level layout hook go
   inert. All three are *quieter*, not broken.
+- **The hub's quiz is the first use where `:has()` carries meaning, so it is
+  written backwards.** `.kt-opt:has(input) .kt-fb{display:none}` is the feature
+  test *and* the hide: true wherever `:has()` resolves, false everywhere else.
+  So an engine without it shows every answer beside its option — a plain
+  question-and-answer block, which is plainer but not broken. Written the
+  obvious way round (hidden by default, revealed on `:checked`) those readers
+  would get four dead options and no answers, which would have been the first
+  row in this table to break its own rule. Same shape for the opening block's
+  promise line. Reasoning: `design/chia-se-kinh-nghiem/06` §6.2.
+- **Gated, because of the PurgeCSS hazard below.** `verify.mjs` asserts all four
+  selectors survive into the built hub CSS. Losing the hide makes the quiz
+  pointless and losing the reveal makes it unanswerable; neither looks broken.
 - **Deliberately not `@supports`-guarded.** Wrapping them would double the rule
   count for a degradation nobody would report. Exposure as of 2026-08-09 is
   Firefox < 121 (pre-Dec 2023) and Safari < 15.4.
@@ -327,13 +341,26 @@ Same. One caveat carried forward into A12: the *paint* is confirmed for
 `::target-text` only — find-in-page cannot be triggered from CDP, so
 `::search-text` is verified as far as parsing and no further.
 
-### B3 · `interpolate-size: allow-keywords` — declined 2026-08-04
+### B3 · `interpolate-size: allow-keywords` — declined 2026-08-04, **trigger fired 2026-08-09, still declined**
 
-Would animate to `height: auto`. Declined because there is no `<details>` on the
-site and **Bootstrap Collapse sets pixel heights in JS**, so it does nothing
+Would animate to `height: auto`. Declined because there was no `<details>` on the
+site and **Bootstrap Collapse sets pixel heights in JS**, so it did nothing
 today while arming a transition that could switch on later without anyone asking.
-**Trigger:** the accordion stops being Bootstrap Collapse (see B6), or a
-`<details>` ships.
+
+**The trigger fired.** `<details>` shipped on 2026-08-09 with the hub's
+active-learning blocks (`design/chia-se-kinh-nghiem/06`): the recall question at
+the top of an article, and the answer reveals inside it. Re-examined the same
+day and **declined again, on the hub's own grounds rather than the original
+ones**. Opening a disclosure is the reader asking to see an answer they have
+just tried to produce from memory; the useful moment is the answer *being there*,
+and an animation puts a curve between the question and the payoff. Philosophy §2
+is explicit that a detail which draws attention to itself has failed, and this
+one would draw attention at exactly the wrong instant. The native snap is also
+what a reader who has met `<details>` anywhere else already expects.
+
+**Trigger:** the accordion stops being Bootstrap Collapse (see B6) — the main
+site's case is unaffected by any of the above and remains open. Do not re-propose
+it for the hub's disclosures without an owner decision that they should animate.
 
 ### B4 · `@view-transition` — declined
 
@@ -448,3 +475,4 @@ expand. This is a legal item, not a technical one.
 |---|---|---|
 | 2026-08-09 | File created. Inventory taken from source, not from memory: every `@supports`, every unguarded modern selector, every prefixed property, and both stylesheets' media queries. | A1 measured at 0.75px worst case and 18.8px tightest diacritic clearance; `main.scss` comment on `text-box-edge: text alphabetic` corrected (it has shipped). |
 | 2026-08-09 | B1 + B2 built and shipped → A12. Colours derived by measurement (contrast + ΔE2000 against everything that can share the page), verified by paint in Chrome 151 against a same-scroll control, and gated four ways in `verify.mjs` — each assertion proven to fire by breaking the built CSS on purpose. | The one-pseudo-per-rule decision was confirmed live: a grouped rule containing an unknown pseudo was discarded whole. Two measurement traps recorded in A12 (word-boundary text fragments; headless Chrome defaults to dark). |
+| 2026-08-09 | B3's trigger fired: `<details>` shipped with the hub's active-learning blocks. Re-examined and declined again for the hub, on new grounds (an animation between a recalled question and its answer draws the eye at the worst instant); the main site's accordion case stays open. A3 extended with four load-bearing `:has()` rules and gated in `verify.mjs`, each assertion proven to fire by deleting the rule from the built CSS. | The quiz's `:has()` pair is written backwards so a missing `:has()` degrades to a plain Q&A block rather than to four dead options. Verified in Chrome 151 in both schemes and at 390px, including a real Shift+Tab to confirm the focus ring — the first version of that check used a scripted `.focus()`, which does not match `:focus-visible` on a radio and passed while showing nothing. |

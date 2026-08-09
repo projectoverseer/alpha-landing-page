@@ -5,6 +5,51 @@ topic: ky-thuat-nhuom
 series: nylon
 series_part: 2
 image: bon-nhom-thuoc-nhuom-acid-cho-nylon
+learn:
+  open:
+    kind: hook
+    q: "Trong bốn nhóm thuốc nhuộm acid, nhóm dễ nhuộm đều màu nhất cũng là nhóm nào?"
+    options:
+      - "Bền màu cao nhất"
+      - "Bền màu kém nhất"
+      - "Đắt nhất"
+      - "Chạy ở pH cao nhất"
+    promise: "Phần về thuốc nhuộm acid leveling trả lời, và cùng một nguyên nhân tạo ra cả hai đặc tính đó."
+  quiz:
+    - q: "Vải Nylon pha Spandex, màu đen đậm, khách yêu cầu bền giặt cao. Nhóm thuốc nhuộm nào phải loại đầu tiên?"
+      options:
+        - t: "Acid leveling"
+          why: "Chưa đúng, nhưng gần. Leveling đúng là bị loại vì bền màu thấp nhất trong khi màu đen đậm cần độ bền cao. Nhưng nó không phá vải, còn câu hỏi tìm nhóm phải loại đầu tiên."
+        - t: "Acid milling"
+          why: "Ngược lại. Milling chạy ở pH 5,5–6,5 nên an toàn cho Spandex, và bền giặt tốt. Đây là một lựa chọn dùng được."
+        - t: "Phức kim loại 1:1"
+          correct: true
+          why: "Đúng. Phức 1:1 nhuộm ở pH 1,5–2,5, thường bằng acid sulfuric. Acid mạnh đó làm giảm độ bền cơ lý của sợi và không hợp với vải pha Spandex. Độ bền màu cao không cứu nổi một tấm vải đã mất độ đàn hồi, và đây cũng là lý do nhóm 1:1 ngày nay ít dùng hơn nhóm 1:2."
+        - t: "Phức kim loại 1:2"
+          why: "Ngược lại hoàn toàn. Nhóm 1:2 chạy ở pH 4,5–6,5 và bền màu cao nhất trong bốn nhóm, nên nó là ứng viên số một cho ca này, dù sẽ phải nâng nhiệt rất tỉ mỉ."
+    - q: "Nhóm 1:1 và nhóm 1:2 cùng là phức kim loại. Vì sao một nhóm chạy ở pH 1,5–2,5 còn nhóm kia ở pH 4,5–6,5?"
+      options:
+        - t: "Vì phân tử 1:2 lớn hơn nên cần pH cao hơn"
+          why: "Kích thước không quyết định pH. Cách bám mới quyết định."
+        - t: "Vì 1:1 còn nhóm sulfonic tự do nên bám bằng liên kết ion, cần thật nhiều nhóm amine được proton hóa"
+          correct: true
+          why: "Đúng. Liên kết ion cần chỗ bám mang điện dương, mà chỗ bám đó chỉ có khi nhóm amine cuối mạch bị proton hóa, nên phải hạ pH thật thấp. Nhóm 1:2 hầu như không mang nhóm sulfonic và bám chủ yếu bằng lực van der Waals cùng tương tác kỵ nước, hai lực không cần điện tích."
+        - t: "Vì hai nhóm dùng ion kim loại khác nhau"
+          why: "Cả hai đều dùng Cr, riêng nhóm 1:2 có thêm lựa chọn Co. Đó không phải nguyên nhân của chênh lệch pH."
+        - t: "Vì 1:2 dùng cho màu đậm hơn"
+          why: "Nó hợp màu đậm thật, nhưng đó là hệ quả của độ bền và độ tươi, không phải nguyên nhân của pH."
+    - q: "Nhóm nào có độ bền màu cao nhất trong bốn nhóm thuốc nhuộm acid?"
+      options:
+        - t: "Acid leveling"
+          why: "Thấp nhất. Phân tử nhỏ, chủ yếu bám bằng liên kết ion, lực giữ yếu."
+        - t: "Acid milling"
+          why: "Cao, nhờ lực kỵ nước giữ chặt phân tử lớn trong xơ, nhưng chưa phải cao nhất."
+        - t: "Phức kim loại 1:2"
+          correct: true
+          why: "Đúng. Bền ánh sáng, bền giặt và bền hóa chất đều vượt trội, nhờ khối phức rất lớn và tương tác kỵ nước rất mạnh. Cái giá là khó đều màu nhất và màu kém tươi."
+        - t: "Phức kim loại 1:1"
+          why: "Cao, đặc biệt bền ánh sáng nhờ có thêm liên kết phức, nhưng vẫn dưới nhóm 1:2."
+  action: "Mở đơn công nghệ của ba mã hàng Nylon màu đậm đang chạy. Với mỗi mã ghi lại hai thứ: nhóm thuốc nhuộm, và pH bể ở giai đoạn bắt màu. Nếu có mã nào là phức 1:1 chạy dưới pH 3 trên vải có Spandex, đó là mã cần xem lại trước tiên."
 ---
 
 Cùng là thuốc nhuộm acid, nhưng các nhóm khác nhau có đặc điểm cấu tạo hóa học khác nhau, cách chúng gắn vào xơ Nylon cũng khác nhau, độ bền màu cũng khác nhau.
@@ -73,5 +118,7 @@ Nhuộm ở pH rất thấp (khoảng 1,5–2,5): acid mạnh proton hóa nhiề
 {% include chia-se-kinh-nghiem/figure.html name="so-sanh-4-nhom-thuoc-nhuom-acid-cho-nylon" %}
 
 Bài tới tôi sẽ chia sẻ về quy trình nhuộm Nylon với thuốc nhuộm acid.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

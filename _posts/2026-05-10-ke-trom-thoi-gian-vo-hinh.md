@@ -5,6 +5,40 @@ topic: van-hanh
 series: so-hoa-oee
 series_part: 3
 image: cho-may-nhuom-khoi-dong-mat-thoi-gian
+learn:
+  open:
+    kind: hook
+    q: "Sáng thứ Hai xưởng mất 3–4 tiếng hâm nóng hệ thống. Nhưng còn một đầu nữa cũng mất thời gian mà hầu như không ai tính. Đầu nào?"
+    options:
+      - "Giữa ca, lúc giao ca"
+      - "Cuối tuần, lúc tắt máy"
+      - "Đầu mỗi mẻ"
+      - "Giờ nghỉ trưa"
+    promise: "Phần \"Nhưng còn một đầu nữa bị bỏ quên\" trả lời."
+  quiz:
+    - q: "Vì sao cuối ca thứ Bảy các máy phải ngưng nhuộm sớm ít nhất 1 tiếng?"
+      options:
+        - t: "Để công nhân dọn vệ sinh"
+          why: "Chưa đúng. Vệ sinh làm được sau khi máy đã ngưng, không cần máy dừng sớm."
+        - t: "Vì máy dùng nhiệt phải làm nguội đến nhiệt độ an toàn trước khi ngưng"
+          correct: true
+          why: "Đúng. Các máy sử dụng nhiệt không thể tắt đột ngột, và lò dầu tải nhiệt cũng phải làm nguội dầu đến ngưỡng an toàn mới được ngưng lò. 1 tiếng đó máy đang dừng trong khi vẫn còn trong ca làm việc."
+        - t: "Để tiết kiệm điện cuối tuần"
+          why: "Chưa đúng, và nếu đúng thì cũng không giải thích được vì sao con số lại là 1 tiếng."
+        - t: "Vì hết đơn hàng"
+          why: "Đó là vấn đề kế hoạch. Tổn thất trong bài xảy ra cả khi đơn hàng đang đầy."
+    - q: "Xưởng 20 máy mất khoảng 100 giờ máy mỗi tuần cho khởi động và tắt máy. Con số đó tương đương với cái gì?"
+      options:
+        - t: "Khoảng 1 công nhân làm cả tuần"
+          why: "Nhầm đơn vị. Đây là giờ máy, không phải giờ người. Máy dừng thì công nhân vẫn có mặt."
+        - t: "Năng lực của gần 1 máy nhuộm chạy cả tuần"
+          correct: true
+          why: "Đúng. Quy ra mẻ, mỗi mẻ khoảng 6 tiếng, là khoảng 17 mẻ mỗi tuần. Nghĩa là tối ưu quy trình khởi động và tắt máy cho thêm năng lực gần một máy nhuộm mà không bỏ một đồng vốn nào."
+        - t: "Khoảng 2 ngày sản xuất của cả xưởng"
+          why: "Cao hơn thực tế. 100 giờ máy chia cho 20 máy là 5 giờ mỗi máy, chưa tới một ca."
+        - t: "Không đáng kể so với tổng thời gian"
+          why: "100 giờ máy mỗi tuần, nhân 52 tuần, là con số bài viết quy ra gần 7 tỷ đồng một năm với giả định 200 kg mỗi mẻ và giá gia công 40.000đ/kg."
+  action: "Tuần này ghi lại đúng hai mốc giờ: lúc công nhân vào ca thứ Hai, và lúc mẻ đầu tiên thực sự bắt đầu chạy. Khoảng cách giữa hai mốc đó, nhân với số máy, là con số đang tìm. Không cần thiết bị gì."
 ---
 
 Bài trước mình nói đến 3 nguyên nhân chính làm mất OEE trong xưởng nhuộm. Hôm nay đi sâu vào nguyên nhân đầu tiên và tính thử xem nó đang lấy đi bao nhiêu tiền của bạn mỗi năm.
@@ -56,5 +90,7 @@ Nhìn theo cách khác: 17 mẻ mất mỗi tuần tương đương năng lực 
 Hoàn toàn có, nhưng không phải bằng cách "cố gắng hơn". Cần thay đổi cách tổ chức vận hành.
 
 Bài tới mình sẽ chia sẻ cụ thể về kẻ trộm thứ hai: thời gian chuyển đổi mặt hàng – thứ mà mỗi lần xảy ra khác nhau tùy người đứng máy, và tại sao đó là dấu hiệu của một vấn đề lớn hơn.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

@@ -5,6 +5,51 @@ topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 4
 image: cua-do-aperture-may-quang-pho
+learn:
+  open:
+    kind: hook
+    q: "Máy vừa hiệu chuẩn tuần trước, chưa tới chu kỳ. Nhưng khách yêu cầu đổi cửa đo từ Medium sang Small. Có phải hiệu chuẩn lại không?"
+    options:
+      - "Không, vì chưa tới chu kỳ"
+      - "Có, phải hiệu chuẩn lại ngay"
+      - "Chỉ cần đo lại miếng sứ trắng"
+      - "Tùy máy, có máy tự bù"
+    promise: "Câu cuối bài trả lời, và đây là điểm nhiều người bỏ qua."
+  quiz:
+    - q: "Ba mẫu chuẩn dùng khi hiệu chuẩn, theo đúng vai trò của chúng, là gì?"
+      options:
+        - t: "Sứ trắng, sứ đen, sứ xám"
+          why: "Không đúng bộ. Mẫu mô phỏng phản xạ 0% không phải miếng sứ đen mà là ống bẫy đen."
+        - t: "Ống bẫy đen mô phỏng 0%, miếng sứ xanh lá kiểm tra tính tuyến tính, miếng sứ trắng mô phỏng 100%"
+          correct: true
+          why: "Đúng, và theo đúng trình tự đó. Máy so phổ đo được của từng mẫu với bộ phổ chuẩn gốc rồi tính ra hệ số hiệu chỉnh cho từng bước sóng."
+        - t: "Ba miếng sứ đỏ, xanh lá và xanh dương"
+          why: "Chỉ có một mẫu màu trung gian, và nó là xanh lá."
+        - t: "Chỉ cần miếng sứ trắng"
+          why: "Thiếu cả hai đầu. Không có điểm 0% thì không dựng được thang đo."
+    - q: "Vải màu thông thường, không có chất tăng trắng. Nên chọn UV Filter nào?"
+      options:
+        - t: "100% UV (Filter off)"
+          why: "Dùng khi đo vải CÓ chất tăng trắng, để thấy đúng hiệu ứng phát quang."
+        - t: "0% UV (Filter FL40)"
+          correct: true
+          why: "Đúng. Với vải nhuộm màu thông thường trong ngành nhuộm, đây là lựa chọn phổ biến nhất."
+        - t: "UV D65"
+          why: "Dùng khi cần kết quả chính xác cho vải trắng có chất tăng trắng."
+        - t: "Máy đo màu không có thông số này"
+          why: "Có, và nó là một trong bốn thông số phải chốt với khách trước khi đo."
+    - q: "Vì sao 10° Observer là lựa chọn chuẩn trong ngành nhuộm hiện đại?"
+      options:
+        - t: "Vì nó mới hơn 2° Observer"
+          why: "Năm 1964 so với 1931 nên mới hơn thật, nhưng đó không phải lý do."
+        - t: "Vì góc nhìn rộng hơn, phản ánh đúng hơn cách mắt người thực sự quan sát một tấm vải"
+          correct: true
+          why: "Đúng. 2° tương đương nhìn một đồng xu ở khoảng cách 50 cm, còn 10° tương đương nhìn lòng bàn tay khi duỗi thẳng tay. Không ai đánh giá màu một tấm vải qua một lỗ nhỏ bằng đồng xu."
+        - t: "Vì nó cho ΔE nhỏ hơn"
+          why: "Nó cho một bộ L*a*b* khác, không phải nhỏ hơn một cách hệ thống."
+        - t: "Vì máy đo màu chỉ hỗ trợ 10°"
+          why: "Máy hỗ trợ cả hai, và chính vì thế mà phải thống nhất với khách."
+  action: "Gửi cho khách hàng lớn nhất một tin nhắn bốn dòng, hỏi đúng bốn thông số: Specular, Aperture, UV Filter, Observer. Nếu số đo của hai bên đang lệch nhau mà không ai giải thích được, câu trả lời gần như chắc chắn nằm trong bốn dòng đó."
 ---
 
 ## Vì sao phải hiệu chuẩn?
@@ -78,5 +123,7 @@ Và một lưu ý quan trọng mà nhiều người bỏ qua:
 Đây là bài cuối của chuỗi lý thuyết màu sắc và đo màu.
 
 {% include chia-se-kinh-nghiem/cta.html variant="note" %}
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

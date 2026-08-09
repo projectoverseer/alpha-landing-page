@@ -5,6 +5,51 @@ topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 3
 image: cong-thuc-do-lech-mau-delta-e-cmc
+learn:
+  open:
+    kind: hook
+    q: "Hai cặp mẫu vải đo được ΔE* bằng nhau. Một cặp màu đen, một cặp màu vàng tươi. Mắt người nhìn thấy gì?"
+    options:
+      - "Lệch như nhau, vì ΔE* bằng nhau"
+      - "Cặp màu đen lệch rõ hơn"
+      - "Cặp màu vàng tươi lệch rõ hơn"
+      - "Không cặp nào lệch, vì ΔE* nhỏ"
+    promise: "Phần \"Vấn đề của ΔE*\" trả lời, và đó chính là lý do ngành dệt may không dùng ΔE* thuần túy."
+  quiz:
+    - q: "Vì sao ngành dệt may dùng ΔE CMC thay cho ΔE* thuần túy?"
+      options:
+        - t: "Vì ΔE CMC cho con số nhỏ hơn nên dễ đạt hơn"
+          why: "Không. Công thức không được chọn vì nó dễ dãi hơn, và ở nhiều vùng màu nó còn chặt hơn."
+        - t: "Vì ΔE* đối xử ba thành phần như nhau, còn mắt người thì không"
+          correct: true
+          why: "Đúng. Mắt ít nhạy với sai lệch độ sáng tối hơn là sai lệch sắc màu, và nhạy hơn ở vùng màu tối so với vùng màu tươi sáng. ΔE CMC gắn trọng số phụ thuộc vị trí màu để con số bám sát cảm nhận thật."
+        - t: "Vì ΔE CMC dùng hệ tọa độ cực còn ΔE* dùng tọa độ Descartes"
+          why: "ΔE* cũng viết được trong hệ tọa độ cực. Khác biệt nằm ở trọng số, không ở hệ tọa độ."
+        - t: "Vì ΔE CMC mới hơn"
+          why: "Ra đời năm 1984 nên mới hơn thật, nhưng tuổi không phải lý do."
+    - q: "Tỷ lệ 2:1 trong ΔE CMC (2:1) nghĩa là gì?"
+      options:
+        - t: "Dung sai được nhân đôi so với ΔE*"
+          why: "Không. Hai hệ số l và c không nhân chung một hằng số vào kết quả."
+        - t: "Dung sai cho độ sáng tối được nới gấp đôi so với dung sai của ánh màu"
+          correct: true
+          why: "Đúng, và nó khớp với cách mắt người làm việc: lệch sáng tối dễ tha thứ hơn lệch ánh màu."
+        - t: "Đo hai lần rồi lấy trung bình"
+          why: "Không có bước nào như vậy."
+        - t: "Hai mẫu so với một mẫu chuẩn"
+          why: "Không liên quan đến ý nghĩa của hai hệ số l và c."
+    - q: "Câu nào sau đây là phát biểu SAI?"
+      options:
+        - t: "ΔE CMC là một công thức tính độ lệch màu"
+          why: "Đây là phát biểu chính xác."
+        - t: "Không gian màu CMC"
+          correct: true
+          why: "Đúng, đây chính là phát biểu sai mà bài chỉ ra. Không có không gian màu nào tên CMC. Nó là công thức bóp méo có chủ đích không gian màu CIELAB: nén vùng màu tối lại và kéo giãn vùng màu tươi sáng ra."
+        - t: "CIELAB là một không gian màu"
+          why: "Đây là phát biểu đúng, và đó là không gian mà công thức CMC làm việc trên."
+        - t: "ΔE* càng nhỏ thì hai màu càng gần nhau"
+          why: "Đây là phát biểu đúng."
+  action: "Mở phần mềm máy đo màu của xưởng và xem chỉ số đang hiển thị mặc định. Nếu nó đang là ΔE* chứ không phải ΔE CMC (2:1), đó là một lần chỉnh cài đặt, và mọi con số báo cho khách từ hôm nay sẽ sát hơn với cái mắt họ thấy."
 ---
 
 Sau khi đo xong, máy trả về một bộ số. Bài này giải thích ý nghĩa các con số đó.
@@ -76,5 +121,7 @@ Một lưu ý khi đo độ lệch màu:
 Kết quả: $$\Delta E_{\mathrm{CMC}}$$ gần hơn với câu trả lời thực tế "mắt người có thấy lệch không?" so với $$\Delta E^*$$ thuần túy. Đây là lý do $$\Delta E_{\mathrm{CMC}}$$ được sử dụng rộng rãi trong kiểm soát màu ngành nhuộm hiện đại.
 
 {% include chia-se-kinh-nghiem/cta.html variant="inline" %}
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

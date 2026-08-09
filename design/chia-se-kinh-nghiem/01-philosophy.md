@@ -120,6 +120,14 @@ would miss). The numbered principles below are applications of this one.
    different exponent (design/08 §2.1) — through all of which the budget stayed
    at three, which is the point. The hub loads no script to draw a corner.
 
+   **The active-learning blocks (2026-08-09) added nothing to this paragraph,
+   and that was a design constraint rather than a happy result.** A quiz is the
+   obvious place for a script, and the budget above is the reason there is
+   none: the questions are radio inputs read by `:has()`, the reveals are
+   `<details>`. The degradation is written backwards on purpose so an engine
+   without `:has()` gets a plain question-and-answer block with the answers
+   shown rather than four dead options — `06-hoc-chu-dong.md` §6.2.
+
    The one thing added since is `<script type="speculationrules">` (2026-08-04),
    and it is counted honestly rather than waved through on a technicality: it is
    a `<script>` element, so it belongs in this paragraph. It is **not a fourth
@@ -540,8 +548,22 @@ whole point.
    name a quiet link (overhaul, 2026-07-15): the reader deciding whether to
    invest ten minutes learns at the top that this is one part of a path,
    instead of discovering it in the footer.
-3. Body (converted post, with editorial CTAs per §6).
-4. **Share block** (overhaul, 2026-07-15): directly after the signature — the
+3. **Opening block** (2026-08-09): one question, between the title block
+   and the first paragraph, after the lead figure so the preloaded LCP image
+   keeps its place. Either a question this article answers (nothing revealed;
+   one line names where the answer is) or a question from a post three or four
+   weeks back whose answer is the ground today's piece stands on. It is the
+   open loop and the pretest in a single element, which is the only reason it
+   earns space above the prose. Rules, and the one that matters most (a promise
+   made here must be kept by the piece): `06-hoc-chu-dong.md`.
+4. Body (converted post, with editorial CTAs per §6).
+5. **Closing block** (2026-08-09): two or three questions with an
+   explanation on every option, then one thing to do at the reader's own
+   factory. Retrieval is what makes a piece last, and the takeaway is what the
+   reader leaves with whether or not they answered. No score, no counter, no
+   stored state: `06-hoc-chu-dong.md` §6.3 draws that line, and the ban on
+   gamification is untouched.
+6. **Share block** (overhaul, 2026-07-15): directly after the signature — the
    reader who just finished is the one who knows whether it was worth a
    colleague's time, and passing a good article on outranks the next click.
    One editorial sentence in the author's voice (Literata italic, the
@@ -554,17 +576,17 @@ whole point.
    nothing floats (§2.1). The copy button ships `hidden` and a tiny inline
    script reveals it only where the Clipboard API works; the confirmation is
    the button's own label swapping to "Đã sao chép liên kết" for two seconds.
-5. Series footer: "Bài trước / Bài sau" within the same series — continuity
+7. Series footer: "Bài trước / Bài sau" within the same series — continuity
    offered, never a syllabus imposed.
-6. **Đọc tiếp** (owner's engagement pass, July 2026): up to three more
+8. **Đọc tiếp** (owner's engagement pass, July 2026): up to three more
    articles in compact thumb-and-title rows — same topic first, then the
    newest of the rest of the hub; posts from the article's own series are
    excluded because the series footer above already offers them. Reading time
    shown on every row. The reader who reached the end of a post just proved
    they read to the end — they are offered the next piece *before* the contact
    strip asks anything of them. Plain HTML, crawler-visible, no script.
-7. Contact strip (site-level, uniform): one sentence + phone / email actions.
-8. Minimal footer: legal name, © , link to main site.
+9. Contact strip (site-level, uniform): one sentence + phone / email actions.
+10. Minimal footer: legal name, © , link to main site.
 
 ## 6. CTA policy — editorial elements with a second job
 
@@ -604,15 +626,39 @@ Restraint rules (hard):
 
 ## 7. Performance, accessibility, SEO
 
-- **Budget** (article page, cold cache): HTML < 30 KB — the colour-deviation post,
-  with 50 equations in it, sits right on the line at 30.1 KB; MathML is verbose,
-  and that verbosity *is* the equation being real text — CSS < 25 KB min,
+- **Budget** (article page, cold cache): HTML < 30 KB — **breached, measured
+  2026-08-09, and left breached pending an owner decision (see below)** — CSS < 25 KB min,
   fonts ≤ ~200 KB (subset woff2, self-hosted), JS ≤ 6 KB — the picture viewer on
   articles, the scroll title on collection pages (+ GA4 deferred); a hub page
   that is neither carries **no** script of ours at all. Equations ship as MathML, so they cost **no JavaScript at
   all**; they do cost the 67 KB Alpha Math face, and only on the pages that have
   one — the `@font-face` has no `unicode-range`, so the file is fetched when a
   `<math>` element is on the page and never otherwise (§4).
+**The HTML budget, measured rather than asserted (2026-08-09).** The "30.1 KB,
+right on the line" note this section used to carry had gone stale some time
+before anyone noticed: the colour-deviation post was already **38.1 KB** and the
+acid-dye post **34.3 KB** before the active-learning blocks were written. Those
+blocks then added 8–11 KB more, taking four sampled articles to 31–48 KB. So the
+number in this budget has been wrong for a while, and is now wrong by a lot.
+
+Measured over the wire, which is what a reader on a phone actually pays, the
+same four pages moved **6.2 → 7.6, 6.3 → 7.9, 5.6 → 6.8 and 6.1 → 7.6 KB
+brotli**. The `Quiz` structured data is the sharpest example of the gap: 4.5 KB
+of raw HTML and **0.3 KB compressed**, because every word in it is already in
+the document body and the compressor sees that. Cloudflare has served this site
+compressed since day one.
+
+Two things follow, and only the first is decided:
+
+1. **A budget stated in raw bytes was measuring the wrong thing**, and it has
+   quietly failed for months without anyone being alerted, which is the more
+   serious half of this. Whatever number replaces it should be the compressed
+   one, and it should be gated in `verify.mjs` so it cannot rot again.
+2. **What that number should be is the owner's call, not this document's.** The
+   figure is not set here, and the budget above is deliberately left reading
+   "breached" rather than being quietly rewritten to fit the work that breached
+   it. Raised with the owner 2026-08-09.
+
 - Semantic HTML (`article`, `time`, `nav`, `figure`, `math`); skip link; visible
   focus styles; AA contrast minimum everywhere.
 - Each article: canonical URL, `og:type=article`, `article:published_time`,

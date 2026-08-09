@@ -170,6 +170,59 @@
 }
 </script>
 {%- comment -%}
+  The end-of-article questions, declared as what they are. Every question,
+  option and explanation below is rendered verbatim on the page — structured
+  data that describes content the reader cannot see is the one way this markup
+  turns into a liability, so the same front matter feeds both.
+
+  `Quiz` + `hasPart: Question` is the shape Google documents for practice
+  problems. Eligibility for that rich result is Google's call and not something
+  we can assert from here; the markup is worth carrying regardless, because it
+  states the page's question-and-answer structure in a form every crawler and
+  answer engine can read without inferring it from the prose.
+{%- endcomment -%}
+{%- if page.learn.quiz %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Quiz",
+  "name": {{ page.title | prepend: "Kiểm lại vài điểm – " | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}#kt-hoc-heading",
+  "inLanguage": "vi",
+  "educationalLevel": "Chuyên môn ngành dệt nhuộm",
+  {%- if kt_topic %}
+  "about": { "@type": "Thing", "name": {{ kt_topic.label | jsonify }} },
+  {%- endif %}
+  "isPartOf": { "@type": "Article", "@id": "{{ site.url }}{{ page.url }}" },
+  "hasPart": [
+    {%- for kt_item in page.learn.quiz %}
+    {
+      "@type": "Question",
+      "eduQuestionType": "Multiple choice",
+      "text": {{ kt_item.q | jsonify }},
+      "suggestedAnswer": [
+        {%- assign kt_wrong = kt_item.options | where_exp: "o", "o.correct != true" -%}
+        {%- for kt_opt in kt_wrong %}
+        {
+          "@type": "Answer",
+          "text": {{ kt_opt.t | jsonify }},
+          "comment": { "@type": "Comment", "text": {{ kt_opt.why | jsonify }} }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ],
+      {%- assign kt_right = kt_item.options | where: "correct", true | first %}
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ kt_right.t | jsonify }},
+        "comment": { "@type": "Comment", "text": {{ kt_right.why | jsonify }} }
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif -%}
+{%- comment -%}
   Breadcrumbs: Google renders these in place of the raw URL in the result, and
   they tie each article to its topic, and the topic to the hub.
 {%- endcomment %}

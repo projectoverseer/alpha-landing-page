@@ -153,8 +153,9 @@ authority.
 ## 6. Article (`/<slug>/`)
 
 Order and rationale (philosophy §5): kicker → h1 → byline → series line →
-standfirst → lead figure → body → signature → **share block** → series
-prev/next → Đọc tiếp → contact strip → footer.
+standfirst → lead figure → **opening block** → body → **closing block** →
+signature → **share block** → series prev/next → Đọc tiếp → contact strip →
+footer.
 
 | Element | Face & style | Why / wording |
 |---|---|---|
@@ -164,6 +165,8 @@ prev/next → Đọc tiếp → contact strip → footer.
 | **Series line** (new) | `.kt-series-line`, Inter 14px `--ink-3`, series name quiet link | "Bài viết trong series <tên>" — the path reveals itself at the top, not in the footer. No part number. |
 | Standfirst | Literata `read(20)`/(18) /1.6 `--ink-2` | The description, promising the piece. |
 | Lead figure | Full measure, hairline frame, caption Inter 14px `--ink-3`; tappable → lightbox (cursor zoom-in, frame warms, press registers 0.995) | Closes the title block. Figures are lessons, never decoration. |
+| **Opening block** (new) | `.kt-hoc-open`: `--paper-deep` slab, hairline, `corner($r-2)` — the separated-surface recipe an aside already uses. Label "TRƯỚC KHI ĐỌC" / "ÔN LẠI" in the `.kt-cta-label` register; stem Literata `read(18)`/(17) 620; options are `<label>`-wrapped radios, hairline, `corner($r-2)`, `read(17)`/(16), border warms to `--indigo` on hover, `--paper-deep` when chosen; the promise line is Literata italic `read(16)` `--ink-2`, revealed by `:has()` after any pick. Recall variant is a `<details>` instead | The open loop and the pretest in one element (06 §2). It sits after the lead figure so the preloaded LCP image keeps its place. **Every option replies the same** — a hook that leaks its answer is a hook that stops working, and `verify.mjs` fails the build on an opening block carrying `is-right` or per-option feedback. |
+| **Closing block** (new) | Seam; h2 "Kiểm lại vài điểm" Literata `read(21)`/(19) 620; lead Literata italic `read(16)` `--ink-2`; `fieldset`/`legend` per question so a screen reader announces the stem with every option; per-option explanation on `--paper-deep` with a 3px `--line` left edge, which turns `--mark-bg` amber on the correct one. Then `.kt-mang-ve`: label "VIỆC MANG VỀ XƯỞNG" + one action, in the same slab recipe as the opener | Retrieval, then something to do on Monday (06 §3). Wording of the lead states the mechanism instead of cheerleading: "Trả lời trong đầu trước, rồi hãy chọn." **Correctness is words first** — "Đúng." / "Chưa đúng." — with amber as the only mark, because indigo is the one action colour and a green/red pair would be two new hues for one moment. No score, ever (§7.6). |
 | Body | Literata `read(19)`/(17), 1.75/1.7; h2 `read(21)` 620, h3 `read(19)` 700; links underlined, indigo | The interface (§2.1). |
 | Blockquote / display equation | `--paper-deep` slab, 3px `--line` left edge | Vietnamese rules of thumb stay prose; real equations are build-time MathML — letters Literata, machinery Alpha Math, variables upright (§4). One kind of object to the scanning eye. |
 | Tables | Inter 15px, hairline grid, `--paper-deep` header, scrolls inside the column | Data is apparatus. |
@@ -196,3 +199,14 @@ prev/next → Đọc tiếp → contact strip → footer.
    incentive to learn is that the next piece is genuinely useful, easy to
    start (reading time everywhere), and ordered (series). Anything louder
    fails Absolute Neutrality and the audience's tolerance for being played.
+
+   **This survived the 2026-08-09 active-learning pass unchanged, and the line
+   it draws got sharper.** That pass put a question at the top of every article
+   and two or three at the bottom, which is the neighbourhood this rule
+   patrols. The distinction that lets both stand: *a question whose answer
+   teaches something is pedagogy; a score is a game.* So nothing is counted,
+   nothing is remembered between visits, nothing congratulates anybody, and
+   there is no "2/3" anywhere on the page. The evidence agrees with the taste
+   here — retrieval practice is the best-supported study technique there is,
+   while extrinsic rewards are the ones that crowd out a professional's own
+   reason for reading. `06-hoc-chu-dong.md` §6.3.

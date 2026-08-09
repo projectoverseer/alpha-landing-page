@@ -2086,6 +2086,309 @@ body.kt-lightbox-open {
   }
 }
 
+// ---- Active learning (design/chia-se-kinh-nghiem/06-hoc-chu-dong.md) --------
+//
+// Two blocks per article at most: one opener between the title block and the
+// prose, one closer above the signature. They are built from radio inputs,
+// `<details>` and `:has()` — no script, because "every post must read with JS
+// off" is protected (philosophy §8) and a question the reader cannot answer is
+// worse than no question at all.
+//
+// THE DEGRADATION IS WRITTEN BACKWARDS ON PURPOSE. `.kt-fb` ships visible and
+// is hidden only inside `.kt-opt:has(input)`, a selector that is true wherever
+// `:has()` resolves and false everywhere else. An engine without `:has()`
+// therefore shows every answer beside its option: a plain Q&A block, which is
+// plainer but never broken (design/09's rule for table A). Written the obvious
+// way round — hidden by default, revealed by `:has()` — those readers would
+// get four dead options and no answers.
+//
+// Not written as `:not(:has(...))` at the end of a selector: PurgeCSS drops
+// those silently (design/09 §A3). Every exclusion here is expressed positively.
+
+.kt-hoc {
+  --kt-opt-gap: #{step(2)};
+}
+
+// The opener. `--paper-deep` and a hairline, the same separated surface an
+// aside gets — it is not prose, and it should not pretend to be.
+.kt-hoc-open {
+  margin: 0 0 step(7);
+  padding: step(5) step(6);
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  @include corner($r-2);
+}
+
+.kt-hoc-promise {
+  margin: step(4) 0 0;
+  font-family: var(--font-read);
+  font-style: italic;
+  @include read(16);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+// The closer: a seam, because the piece has ended and what follows is offered
+// (§0 of the element spec). Same device as the signature and Đọc tiếp.
+.kt-hoc-end {
+  margin: 3rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-read);
+    @include read(21);
+    font-weight: 620;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+}
+
+.kt-hoc-lead {
+  margin: step(3) 0 0;
+  font-family: var(--font-read);
+  font-style: italic;
+  @include read(16);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.kt-quiz {
+  margin: step(6) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: step(7);
+}
+
+// `fieldset` + `legend` is the markup a grouped set of radios is supposed to
+// have, so a screen reader announces the question with every option. It needs
+// the UA's own border and padding removed, and `min-width: 0` because a
+// fieldset otherwise refuses to shrink below its content in a flex column.
+.kt-q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.kt-q-stem {
+  padding: 0;
+  font-family: var(--font-read);
+  @include read(18);
+  font-weight: 620;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.kt-q-opts {
+  margin: step(4) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--kt-opt-gap);
+}
+
+.kt-opt {
+  margin: 0;
+
+  > label {
+    display: flex;
+    align-items: center;
+    gap: step(3);
+    padding: step(3) step(4);
+    border: 1px solid var(--line);
+    @include corner($r-2);
+    background: var(--paper);
+    font-family: var(--font-read);
+    @include read(17);
+    line-height: 1.5;
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+      border-color var(--t-2) var(--ease),
+      background var(--t-2) var(--ease);
+  }
+
+  > label:hover {
+    border-color: var(--indigo);
+  }
+
+  input {
+    flex: none;
+    margin: 0;
+    accent-color: var(--indigo);
+  }
+}
+
+.kt-opt:has(input:checked) > label {
+  border-color: var(--ink-3);
+  background: var(--paper-deep);
+}
+
+// The explanation. Inside the opener there is none — every option there gets
+// the same reply, so nothing leaks.
+.kt-fb {
+  margin: step(2) 0 0;
+  padding: step(4) step(5);
+  background: var(--paper-deep);
+  border-left: 3px solid var(--line);
+  font-family: var(--font-read);
+  @include read(16);
+  line-height: 1.65;
+  color: var(--ink-2);
+
+  strong,
+  b {
+    color: var(--ink);
+    font-weight: 700;
+  }
+}
+
+// The backwards pair described at the top of this section. Rule 1 is true
+// wherever `:has()` resolves and false everywhere else, so it is the feature
+// test AND the hide. Rule 2 wins on specificity (`input:checked` outranks
+// `input` inside `:has()`), so it needs no `!important` to reveal.
+.kt-opt:has(input) .kt-fb {
+  display: none;
+}
+
+.kt-opt:has(input:checked) .kt-fb {
+  display: block;
+}
+
+// Same shape for the opener's single promise line: shown to an engine that
+// cannot do `:has()`, which is right — with no way to answer, the reader
+// should at least be told where the answer lives.
+.kt-hoc-open:has(input) .kt-hoc-promise {
+  display: none;
+}
+
+.kt-hoc-open:has(input:checked) .kt-hoc-promise {
+  display: block;
+}
+
+// The one lit object: `mark`'s amber, which on this hub means the author's own
+// pen laid on the page. Correctness itself is carried by the WORDS ("Đúng." /
+// "Chưa đúng.") — colour never carries it alone, both because SC 1.4.1 says so
+// and because indigo is the only action colour this design has (philosophy §3).
+// Adding a green and a red here would have been two new hues for one moment.
+.kt-opt.is-right:has(input:checked) .kt-fb {
+  border-left-color: var(--mark-bg);
+}
+
+.kt-quiz-foot {
+  margin: 0;
+}
+
+.kt-quiz button[type="reset"] {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--indigo);
+  background: transparent;
+  border: 1px solid var(--line);
+  @include corner($r-2);
+  padding: step(2) step(4);
+  cursor: pointer;
+  transition: border-color var(--t-2) var(--ease);
+
+  &:hover {
+    border-color: var(--indigo);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// A disclosure — the recall question at the top, and anywhere else an answer
+// should cost one deliberate tap. The tap IS the point: an answer already on
+// screen is read, not retrieved, and only retrieval builds the memory.
+.kt-reveal {
+  margin: step(3) 0 0;
+
+  > summary {
+    cursor: pointer;
+    font-family: var(--font-read);
+    @include read(18);
+    font-weight: 620;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  > summary:hover {
+    color: var(--indigo);
+  }
+}
+
+.kt-reveal-body {
+  padding-top: step(4);
+
+  p {
+    margin: 0;
+    font-family: var(--font-read);
+    @include read(17);
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+
+  p + p {
+    margin-top: step(3);
+  }
+}
+
+.kt-reveal-src {
+  font-family: var(--font-ui) !important;
+  font-size: var(--fs-meta);
+  color: var(--ink-3) !important;
+}
+
+// "Việc mang về xưởng" — the last thing read before the signature, and the
+// reason a reader who skipped the questions still leaves with something.
+.kt-mang-ve {
+  margin: step(7) 0 0;
+  padding: step(5) step(6);
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  @include corner($r-2);
+
+  p {
+    margin: 0;
+    font-family: var(--font-read);
+    @include read(17);
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+}
+
+// The small-screen step-down. It lives HERE, after the rules it overrides,
+// and not up in the shared breakpoint block near the top of this file: these
+// selectors are written later in the source, so at equal specificity they
+// would have won over the media query and the phone would have kept the
+// desktop sizes. Caught in the browser, not in the source, at 18px where 17
+// was intended.
+@media (max-width: 40rem) {
+  .kt-q-stem,
+  .kt-reveal > summary {
+    @include read(17);
+  }
+
+  .kt-opt > label {
+    @include read(16);
+  }
+
+  .kt-hoc-end h2 {
+    @include read(19);
+  }
+
+  .kt-hoc-open,
+  .kt-mang-ve {
+    padding: step(4) step(5);
+  }
+}
+
 // Nothing here moves on its own; kill the only implicit motion left. The
 // thumbnail lean-in survives as feedback — the blanket transition kill just
 // makes it land instantly instead of gliding (deliberate: the answer to the

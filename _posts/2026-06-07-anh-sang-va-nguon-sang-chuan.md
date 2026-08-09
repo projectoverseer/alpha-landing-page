@@ -5,6 +5,51 @@ topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 1
 image: pho-anh-sang-nhin-thay-380-700nm
+learn:
+  open:
+    kind: hook
+    q: "Hai tấm vải giống hệt nhau trong tủ đèn, nhưng mang ra ngoài trời lại lệch màu rõ ràng. Đây là lỗi gì?"
+    options:
+      - "Lỗi nhuộm không đều"
+      - "Lỗi hiệu chuẩn tủ đèn"
+      - "Hiện tượng metamerism"
+      - "Vải bạc màu do ánh nắng"
+    promise: "Phần cuối bài trả lời, kèm cách phòng tránh ngay từ lúc thương thảo hợp đồng."
+  quiz:
+    - q: "Vì sao phòng so màu phải tắt hết đèn trong lúc so?"
+      options:
+        - t: "Để tiết kiệm điện"
+          why: "Không phải, và nếu vậy thì cũng chẳng cần một phòng riêng."
+        - t: "Vì ánh sáng bên ngoài tán xạ vào tủ làm sai lệch nguồn sáng chuẩn bên trong"
+          correct: true
+          why: "Đúng. Cả cái tủ đèn tồn tại để hai người nhìn mẫu dưới cùng một nguồn sáng đã kiểm định, nên bất kỳ ánh sáng nào lọt thêm vào đều phá đúng điều kiện đó. Đây cũng là lý do không nên đặt tủ đèn ngay khu sản xuất."
+        - t: "Để mắt người quen với bóng tối trước khi so"
+          why: "Không có bước này trong quy trình so màu."
+        - t: "Vì đèn phòng làm nóng mẫu vải"
+          why: "Nhiệt không phải vấn đề ở đây. Thành phần bước sóng mới là vấn đề."
+    - q: "Vì sao không được lót giấy hoặc vải phía dưới mẫu khi so màu?"
+      options:
+        - t: "Vì làm mẫu bị nhăn"
+          why: "Không phải lý do trong bài."
+        - t: "Vì vật liệu lót có thể chứa chất tăng trắng quang học, phản xạ thêm ánh sáng và làm nhiễu kết quả"
+          correct: true
+          why: "Đúng. Mẫu phải đặt trực tiếp lên mặt nghiêng của tủ, vốn đã sơn màu xám trung tính không bóng đúng chuẩn."
+        - t: "Vì tủ đèn chỉ đo được một lớp"
+          why: "Tủ đèn không đo gì cả, nó chỉ chiếu sáng. Mắt người mới là thứ đánh giá."
+        - t: "Vì mẫu phải nằm nghiêng đúng góc"
+          why: "Mặt nghiêng có lý do riêng, nhưng vật liệu lót bị cấm vì lý do quang học chứ không phải hình học."
+    - q: "Đưa mẫu ra ngoài trời nắng có tương đương nguồn sáng chuẩn D65 không?"
+      options:
+        - t: "Có, D65 chính là ánh sáng ban ngày"
+          why: "Đây là hiểu lầm phổ biến nhất về D65. Nó mô phỏng ánh sáng ban ngày, nhưng là một nguồn đã được kiểm định."
+        - t: "Không, vì trời nhiều mây khác trời nắng và buổi sáng khác buổi chiều"
+          correct: true
+          why: "Đúng. D65 là nguồn sáng được kiểm định chính xác, không phải ánh sáng tự nhiên ngẫu nhiên."
+        - t: "Có, nếu so vào buổi trưa"
+          why: "Vẫn không. Buổi trưa ổn định hơn nhưng vẫn không phải một nguồn đã kiểm định, và vẫn thay đổi theo mây."
+        - t: "Không, vì ngoài trời quá sáng"
+          why: "Cường độ không phải vấn đề. Thành phần bước sóng mới là."
+  action: "Đứng ở chỗ đặt tủ đèn của xưởng và nhìn quanh: có cửa sổ nào, có đèn xưởng nào chiếu tới không? Nếu có, đó là một lý do khiến kết quả so màu của mình và của khách không khớp nhau, và nó không tốn tiền để sửa."
 ---
 
 Tuần trước có bạn "đặt hàng" mình viết về so màu và đo màu nên mình dành thời gian để tổng hợp lại các kiến thức lý thuyết liên quan. Đề tài này khá nhiều điểm nên phải qua nhiều kỳ mình mới trình bày xong. Bạn nào quan tâm thì theo dõi nhé.
@@ -55,5 +100,7 @@ Tình huống thường gặp: kỹ thuật nhuộm ra mẫu đối, so với m�
 Đây không phải lỗi nhuộm thông thường mà là hiện tượng metamerism, xảy ra khi hai mẫu được nhuộm bằng thuốc nhuộm có thành phần hóa học khác nhau dù màu nhìn bề ngoài là giống nhau.
 
 Cách phòng tránh: thống nhất với khách hàng khi thương thảo hợp đồng về nguồn sáng dùng so màu, và so trong điều kiện tủ đèn và phòng so màu chuẩn hoặc đo bằng máy đo màu.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

@@ -9,6 +9,51 @@ image: test-dich-chuyen-mau-leveling
 thumb:
   - test-dich-chuyen-mau-leveling
   - test-retarding-chat-deu-mau
+learn:
+  open:
+    kind: hook
+    q: "Cùng một máy, cùng một loại thuốc nhuộm. Vì sao màu nhạt lại khó nhuộm đều hơn màu đậm?"
+    options:
+      - "Vì thuốc nhuộm ít nên khó phân bố"
+      - "Vì ít cạnh tranh nên thuốc vào xơ quá nhanh, chưa kịp phân bố đều"
+      - "Vì màu nhạt lộ lỗi rõ hơn"
+      - "Vì nhiệt độ nhuộm màu nhạt thấp hơn"
+    promise: "Bài trả lời ở phần thứ hai. Cơ chế đó cũng quyết định luôn việc nên chọn chất đều màu thiên về loại nào."
+  quiz:
+    - q: "Chất đều màu có hai cơ chế, retarding và leveling. Cơ chế nào làm việc ở giai đoạn giữ nhiệt 130 °C?"
+      options:
+        - t: "Retarding"
+          why: "Retarding làm việc ở giai đoạn đầu gia nhiệt: chiếm chỗ trên sợi hoặc giữ hạt màu trong dung dịch để thuốc không vào sợi quá nhanh."
+        - t: "Leveling"
+          correct: true
+          why: "Đúng. Ở giai đoạn giữ nhiệt, leveling kéo thuốc nhuộm đã vào vùng đậm ra, hòa lại vào dung dịch rồi đưa sang vùng nhạt hơn. Nó sửa lỗi liên tục suốt 45–60 phút giữ nhiệt."
+        - t: "Cả hai đều chỉ hoạt động khi đang gia nhiệt"
+          why: "Nếu vậy thì 45–60 phút giữ nhiệt sẽ không sửa được gì, và những vết loang hình thành lúc đầu sẽ nằm nguyên trên vải."
+        - t: "Không cơ chế nào, giữ nhiệt chỉ để cố định màu"
+          why: "Giữ nhiệt chính là lúc leveling làm việc nhiều nhất."
+    - q: "Máy nhuộm cũ, tốc độ tuần hoàn dịch chậm, đang nhuộm tông rất nhạt. Nên ưu tiên chất đều màu thiên về cơ chế nào?"
+      options:
+        - t: "Leveling"
+          why: "Leveling được ưu tiên khi vải dày, dệt chặt, dòng chảy xuyên thấu kém khiến thuốc khó dịch chuyển từ chỗ đậm sang chỗ nhạt."
+        - t: "Retarding"
+          correct: true
+          why: "Đúng. Bài nêu ba tình huống ưu tiên retarding: thuốc nhuộm ăn màu nhanh và nhạy với tốc độ tăng nhiệt, máy cũ tuần hoàn chậm, và nhuộm tông rất nhạt. Ca này trúng hai trong ba."
+        - t: "Không cần chất đều màu"
+          why: "Có thể đúng ở nhiều ca khác, nhưng không phải ca này: cả hai yếu tố đều đẩy về phía dễ loang."
+        - t: "Dùng cả hai loại cùng lúc"
+          why: "Chất đều màu thương phẩm vốn đã kết hợp cả hai cơ chế. Việc của kỹ thuật là chọn dòng thiên về cơ chế nào, không phải cộng thêm một lọ nữa."
+    - q: "Test leveling tại lab: một miếng vải đã nhuộm đậm và một miếng vải trắng cùng trọng lượng, chạy 130 °C giữ 45 phút, không thêm thuốc nhuộm. Dấu hiệu nào cho thấy hiệu ứng leveling mạnh?"
+      options:
+        - t: "Miếng vải đậm giữ nguyên màu"
+          why: "Ngược lại. Nếu vải đậm giữ nguyên thì không có thuốc nào được kéo ra cả."
+        - t: "Miếng vải trắng dây màu càng đậm"
+          correct: true
+          why: "Đúng. Thuốc nhuộm bị kéo khỏi vải đậm, hòa vào dung dịch rồi bám sang vải trắng. Vải trắng càng đậm thì hiệu ứng dịch chuyển càng mạnh."
+        - t: "Cả hai miếng cùng nhạt đi"
+          why: "Thuốc nhuộm không biến mất, nó chỉ đổi chỗ."
+        - t: "Nước trong bể có màu đậm nhất"
+          why: "Thuốc trong dung dịch là dấu hiệu trung gian, nhưng phép so trong bài là độ đậm trên miếng vải trắng."
+  action: "Trước khi tăng liều chất đều màu ở mẻ tiếp theo, thử bỏ hẳn nó ra ở một mẻ màu đậm. Bài viết nói thẳng: nhiều trường hợp không cần chất đều màu, và có trường hợp dùng nó còn làm hỏng độ lặp lại màu và độ đậm màu."
 ---
 
 ## Vì sao nhuộm không đều màu?
@@ -54,5 +99,7 @@ Trong thực tế, chất đều màu kết hợp cả hai cơ chế nhưng có 
 Hiểu rõ cơ chế này bạn sẽ chọn đúng chất đều màu cho vấn đề gặp phải, và bạn sẽ thấy rằng nhiều trường hợp không cần chất đều màu. Thậm chí có nhiều trường hợp dùng chất đều màu sẽ cho kết quả không tốt về độ lặp lại màu, độ đậm màu.
 
 {% include chia-se-kinh-nghiem/cta.html variant="note" %}
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

@@ -5,6 +5,40 @@ topic: van-hanh
 series: so-hoa-oee
 series_part: 1
 image: oee-nha-may-nhuom-60-phan-tram
+learn:
+  open:
+    kind: hook
+    q: "Xưởng cải thiện OEE từ 60% lên 65%. Doanh thu tăng khoảng 8%. Còn lợi nhuận tăng bao nhiêu?"
+    options:
+      - "Cũng khoảng 8%"
+      - "Khoảng 15–20%"
+      - "Dưới 5%, vì chi phí cũng tăng theo"
+      - "Không tăng, vì phải thuê thêm người"
+    promise: "Câu trả lời nằm ở phần \"Cải thiện OEE\", cùng với phép tính dẫn tới nó."
+  quiz:
+    - q: "Xưởng 20 máy, mỗi máy chạy bình quân 4 mẻ/ngày. Cuối ngày đếm được 48 mẻ đạt chuẩn. OEE sơ bộ là bao nhiêu?"
+      options:
+        - t: "48%"
+          why: "Chưa đúng. 48 là số mẻ, không phải phần trăm. OEE là tỷ lệ giữa thực tế và lý thuyết."
+        - t: "60%"
+          correct: true
+          why: "Đúng. Lý thuyết là 20 × 4 = 80 mẻ, thực tế 48, nên 48 ÷ 80 = 60%. Và 60% không phải xấu bất thường: khảo sát của Evocon trên hơn 3.500 máy ở hơn 50 quốc gia cho mức trung bình thế giới 55–60%."
+        - t: "80%"
+          why: "Chưa đúng. 80 là số mẻ lý thuyết, tức mẫu số của phép tính, không phải kết quả."
+        - t: "Chưa đủ dữ liệu để tính"
+          why: "Đủ rồi. Cần đúng hai con số: mẻ thực tế đạt chuẩn, và mẻ lý thuyết nếu máy không dừng."
+    - q: "Trong ba nguyên nhân làm mất OEE mà bài nêu, nguyên nhân nào khó phát hiện nhất?"
+      options:
+        - t: "Khởi động đầu tuần"
+          why: "Chưa đúng. Nó lớn nhưng không hề giấu mặt: sáng thứ Hai ai cũng thấy máy chưa chạy được mẻ nào."
+        - t: "Chuyển đổi mặt hàng"
+          why: "Chưa đúng. Cũng nhìn thấy được: máy dừng, vệ sinh, chuẩn bị lại. Vấn đề của nó là mỗi lần một khác, không phải là vô hình."
+        - t: "Máy chạy chậm hơn tiêu chuẩn"
+          correct: true
+          why: "Đúng. Đây là tổn thất khó thấy nhất vì máy vẫn đang chạy, không ai nghĩ là đang mất thời gian. Mỗi thứ chỉ 10–20 phút, cộng lại một mẻ chạy lâu hơn chuẩn 30–60 phút mà không ai ghi nhận."
+        - t: "Mẻ nhuộm lại"
+          why: "Đây là tổn thất chất lượng, thuộc thành phần thứ ba của OEE. Bài này chưa nói tới nó."
+  action: "Lấy sổ ghi mẻ của tuần trước và đếm hai con số: tổng mẻ đạt chuẩn đã hoàn thành, và tổng mẻ lý thuyết nếu không máy nào dừng. Chia hai con số đó cho nhau là có OEE sơ bộ của xưởng mình, trong mười phút và không cần mua gì."
 ---
 
 Nếu xưởng bạn có 20 máy nhuộm, mỗi máy chạy bình quân 4 mẻ/ngày – lý thuyết là 80 mẻ mỗi ngày.
@@ -50,5 +84,7 @@ Cách đo đơn giản nhất để bắt đầu:
 > Lấy tổng số mẻ thực tế hoàn thành trong tuần ÷ tổng số mẻ lý thuyết có thể chạy nếu máy không dừng × 100. Đó là OEE sơ bộ của bạn.
 
 Bài tới mình sẽ chia sẻ cụ thể hơn về cách tính OEE đúng trong ngành nhuộm.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}

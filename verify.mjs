@@ -856,6 +856,90 @@ for (const name of htmlFiles) {
   }
 }
 
+// ---- Active-learning blocks (design/chia-se-kinh-nghiem/06) ----------------
+//
+// Three things here fail silently, which is the whole reason they are gated.
+const articlePages = htmlFiles.filter(
+  (n) => n.startsWith('chia-se-kinh-nghiem') &&
+    !/^chia-se-kinh-nghiem[\\/](index|chu-de|series|tac-gia)/.test(n),
+);
+for (const name of articlePages) {
+  const html = readFileSync(join(SITE, name), 'utf8');
+
+  // 1. Coverage. A post whose front matter lost its `learn:` block renders a
+  //    perfectly good article, so nothing downstream would ever complain.
+  if (!html.includes('kt-hoc-open')) errors.push(`${name}: no opening block — the post's learn.open is missing`);
+  if (!html.includes('kt-hoc-end')) errors.push(`${name}: no closing block — add the hoc.html variant="end" include above the signature`);
+
+  // 2. Exactly one correct answer per question. Zero means the reader can never
+  //    be told they were right; two means the piece contradicts itself. Both
+  //    render without a murmur, so count them.
+  const quizzes = html.match(/<fieldset class="kt-q">[\s\S]*?<\/fieldset>/g) || [];
+  for (const [i, fs] of quizzes.entries()) {
+    // The opener is deliberately answer-free: every option replies the same.
+    const isOpener = /name="kt-open"/.test(fs);
+    const right = (fs.match(/\bis-right\b/g) || []).length;
+    if (isOpener) {
+      if (right) errors.push(`${name}: the opening question marks a correct answer — it must not give one away`);
+      if (/kt-fb/.test(fs)) errors.push(`${name}: the opening question carries per-option feedback — that leaks the answer`);
+    } else if (right !== 1) {
+      errors.push(`${name}: question ${i + 1} has ${right} correct answers, expected exactly 1`);
+    }
+  }
+
+  // 3. The structured data must parse and must not out-run the page. Answers
+  //    described to a crawler that a reader cannot see is the one way this
+  //    markup becomes a liability.
+  const quizLd = (html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) || [])
+    .map((b) => b.replace(/^<script type="application\/ld\+json">|<\/script>$/g, ''))
+    .map((raw) => {
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        errors.push(`${name}: JSON-LD does not parse (${e.message})`);
+        return null;
+      }
+    })
+    .find((o) => o && o['@type'] === 'Quiz');
+
+  if (quizzes.some((fs) => !/name="kt-open"/.test(fs)) && !quizLd) {
+    errors.push(`${name}: the page has quiz questions but no Quiz JSON-LD`);
+  }
+  if (quizLd) {
+    const onPage = quizzes.filter((fs) => !/name="kt-open"/.test(fs)).length;
+    if (quizLd.hasPart.length !== onPage) {
+      errors.push(`${name}: Quiz JSON-LD declares ${quizLd.hasPart.length} questions, page renders ${onPage}`);
+    }
+    for (const q of quizLd.hasPart) {
+      if (!html.includes(q.acceptedAnswer.text)) {
+        errors.push(`${name}: Quiz JSON-LD names an answer that is not on the page ("${q.acceptedAnswer.text}")`);
+      }
+    }
+  }
+}
+
+// ---- The `:has()` pair that makes the quiz degrade instead of break ---------
+//
+// `.kt-opt:has(input) .kt-fb{display:none}` is the feature test AND the hide;
+// its partner reveals the chosen one. Lose the first and every answer is
+// visible from the start (the quiz stops being a quiz). Lose the second and no
+// answer can ever be reached. Neither shows up as a broken page, and PurgeCSS
+// has already been caught silently dropping a `:has()` rule on this site once
+// (design/09 §A3) — so assert both survived the pipeline.
+for (const file of readdirSync(join(SITE, 'css')).filter((n) => /^chiasekinhnghiem\./.test(n))) {
+  const css = readFileSync(join(SITE, 'css', file), 'utf8');
+  for (const needed of [
+    '.kt-opt:has(input) .kt-fb',
+    '.kt-opt:has(input:checked) .kt-fb',
+    '.kt-hoc-open:has(input) .kt-hoc-promise',
+    '.kt-hoc-open:has(input:checked) .kt-hoc-promise',
+  ]) {
+    if (!css.includes(needed)) {
+      errors.push(`css/${file}: lost the rule "${needed}" — the quiz cannot work without it (design/09 §A3, PurgeCSS)`);
+    }
+  }
+}
+
 if (errors.length) {
   console.error('  check        ✗ build verification FAILED:');
   for (const e of errors) console.error(`      - ${e}`);

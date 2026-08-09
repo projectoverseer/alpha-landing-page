@@ -5,6 +5,40 @@ topic: ky-thuat-nhuom
 series: spandex
 series_part: 1
 image: cau-truc-phan-tu-soi-spandex-co-gian
+learn:
+  open:
+    kind: hook
+    q: "Đốm màu và bệch màu trên vải có spandex. Gốc rễ của lỗi này nằm ở khâu nào?"
+    options:
+      - "Khâu nhuộm"
+      - "Khâu dệt"
+      - "Nhà máy kéo sợi"
+      - "Khâu hoàn tất"
+    promise: "Bước 4 của quy trình chế tạo sợi trả lời câu này."
+  quiz:
+    - q: "Vì sao sợi spandex bắt buộc phải phủ dầu silicone ngay sau khi hóa rắn?"
+      options:
+        - t: "Để sợi mềm hơn khi dệt"
+          why: "Không phải mục đích. Độ mềm đến từ cấu trúc đoạn cứng xen đoạn mềm của polymer."
+        - t: "Vì spandex rất dính: không có lớp dầu thì các sợi dính chặt vào nhau, không xả sợi được"
+          correct: true
+          why: "Đúng, và còn một lý do thứ hai: ma sát ở tốc độ cao sinh nhiệt làm đứt sợi ngay khi chạy qua cọc dẫn."
+        - t: "Để chống tia UV trong kho"
+          why: "Không liên quan."
+        - t: "Để nhuộm bắt màu tốt hơn"
+          why: "Ngược lại hoàn toàn. Chính lớp dầu này cản trở thuốc nhuộm và là nguyên nhân hàng đầu gây bệch màu, đốm màu."
+    - q: "Vì sao dệt thoi phải bọc hoặc xoắn bao phủ spandex, còn dệt kim đưa được sợi trần vào thẳng?"
+      options:
+        - t: "Vì dệt kim không cần độ co giãn cao"
+          why: "Ngược lại, thun bốn chiều cần co giãn nhiều."
+        - t: "Vì khung dệt thoi có lực căng lớn mà sợi spandex trần không chịu nổi"
+          correct: true
+          why: "Đúng. Dệt kim có lực căng thấp hơn và cấu trúc vòng sợi thông thoáng hơn, nên dùng được công nghệ dệt ghép sợi: sợi chính và spandex trần đi song song vào cùng một miệng dẫn sợi."
+        - t: "Vì sợi bọc lõi rẻ hơn"
+          why: "Sợi bọc lõi tốn thêm một công đoạn nên đắt hơn, không rẻ hơn."
+        - t: "Vì dệt thoi cần vải nhìn giống cotton 100%"
+          why: "Đó là hệ quả dễ chịu của sợi bọc lõi, không phải lý do kỹ thuật bắt buộc."
+  action: "Hỏi bộ phận dệt xem vải có spandex đang chạy dùng loại sợi nào: bọc lõi, xoắn bao phủ, hay spandex trần dệt ghép. Câu trả lời quyết định lượng dầu silicone phải tẩy, và tẩy dầu là bước quyết định có bị đốm màu hay không."
 ---
 
 ## Quy trình chế tạo sợi spandex
@@ -53,5 +87,7 @@ Lực căng thấp hơn, cấu trúc vòng sợi thông thoáng hơn nên dùng 
 - Kim dệt đan cài hai sợi đi kèm nhau, đẩy sợi spandex vào mặt trái (mặt trong) và đưa sợi chính ra mặt phải vải.
 
 Kỳ tới mình sẽ viết về các vấn đề liên quan đến nhuộm và hoàn tất vải có spandex.
+
+{% include chia-se-kinh-nghiem/hoc.html variant="end" %}
 
 {% include chia-se-kinh-nghiem/cta.html variant="signature" %}
