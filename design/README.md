@@ -22,6 +22,7 @@ deliberately kept in the repo (but excluded from the Jekyll build — see
 | 06 | `06-spacing-and-class-audit.md` | Measured spacing/class audit of the live page (the evidence behind passes 5–7). |
 | 07 | `07-alpha-design-language.md` | **«Đúng» — Alpha's own named design language.** The self-contained reference distilled from 01–04 as built; start here when styling anything new. |
 | 08 | `08-quy-cu.md` | **Quy củ — the rules BOTH products obey.** Space, corner geometry, tap target, motion, focus, the contrast contract, and what each site is trying to achieve. Implemented in `_sass/_quy-cu.scss`, which `main.scss` and `chiasekinhnghiem.scss` both import. 07 is how the main site *looks*; 08 is how everything *behaves*. |
+| 09 | `09-compatibility-register.md` | **Every forward-looking bet, and what it costs when the browser doesn't have it.** *(living doc)* What we use that not everyone supports and exactly how it degrades · what we want but can't have yet, each with the trigger to look again · what is a known limit and will not be fixed. Read it before adding any new platform feature, and re-read it when a browser ships a stable major. |
 
 Read them in order. 01 → 02 → 03 is the spine: **strategy decides principles,
 principles decide architecture, architecture decides the system.**
