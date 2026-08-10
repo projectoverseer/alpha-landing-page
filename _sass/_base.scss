@@ -1297,10 +1297,15 @@ figcaption,
 }
 
 // Line-breaking for body text.
-//   text-wrap: pretty     — no single-word last line. Blink only re-scores the
-//                           last few lines of a block, so it stays cheap even on
-//                           the long pages. Headings are left out on purpose:
-//                           `balance` there would restyle the type ramp.
+//   text-wrap: pretty     — no single-word last line. Blink re-scores only the
+//                           tail of a block (measured: never more than 5 lines
+//                           back, mean ~3), so it stays cheap even on the long
+//                           pages — layout cost is inside the noise, and it
+//                           never once added a line, so it costs no scroll.
+//                           It earns the most at PHONE widths and did nothing
+//                           at 768px. Numbers in design/09 §A15.
+//                           Headings are left out; §B10 measured what that
+//                           costs and it is an open owner decision.
 //   overflow-wrap: break-word — a long URL, part number or hash wraps instead of
 //                           pushing a horizontal scrollbar across the page. It
 //                           only engages when a token genuinely cannot fit, so

@@ -9,13 +9,14 @@ is a claim nobody can check, and "we'll revisit when it ships" is a promise
 nobody remembers.
 
 So this is the register. Every forward-looking decision on the site appears in
-exactly one of three tables:
+exactly one of these tables:
 
 | | | |
 |---|---|---|
 | **A** | **In force** | We use it. Some engines don't have it. Here is precisely what those readers get instead. |
 | **B** | **Wanted, blocked** | We would use it. The platform, a dependency, or an owner decision says not yet. Here is the trigger to look again. |
 | **C** | **Accepted limits** | Known, will not be fixed, and here is why — so it is not re-litigated blind every year. |
+| **D** | **Open defects** | Not a bet and not a limit. Simply wrong, with a fix. Rows get deleted, not archived. |
 
 **The rule that makes this doc worth keeping:** nothing lands on the site that
 degrades into something *broken*. It may degrade into something plainer, older,
@@ -335,11 +336,60 @@ Ordered by what it would cost a reader if it silently stopped working.
   test reads that padding out of the computed style rather than hard-coding a
   tolerance, so a "back" arrow is never live at the start.
 
+### A15 · `text-wrap: pretty` on a phone — the measurement, and what it cost
+
+Prompted by a direct question (2026-08-10): *is `pretty` ideal on small
+viewports?* It is, and it is a **better** bet on a phone than on a desktop. But
+the answer was measured, and one sentence of the old note was wrong.
+
+- **Where:** `_sass/_base.scss` (p, li, dd, blockquote, figcaption) ·
+  `_sass/chia-se-kinh-nghiem/_theme.scss` (same, under `.kt`). Headings excluded.
+- **Method:** word-level line boxes. A Range per word, rects clustered into lines
+  by vertical overlap, giving exact words-per-line; then `text-wrap: wrap` forced
+  over the built CSS and the same blocks re-measured. Leaf blocks only — the
+  first pass measured `blockquote`/`li` containing child `<p>`, so one element's
+  "lines" spanned several paragraphs and an inner paragraph's tail fix looked
+  like a change ten lines from the end. That artifact nearly produced a wrong
+  conclusion about Blink; **if you repeat this, filter to blocks with no
+  block-level descendant.**
+- **What it buys, per page per width:** 2–7 paragraphs rescued from a one-word
+  last line. 320px: main 4→1, post 6→0. 390px: main 3→1, post 4→0. At 768px on
+  the main page it fixed **nothing** — the win is a narrow-measure win.
+- **What it costs — and this is the number that settles it: nothing.** Line
+  count changed in **0 of ~90 blocks × 4 widths × 3 pages**, and
+  `document.scrollHeight` was identical to the byte in every single run. The
+  real fear with `pretty` on a narrow measure is that pulling a word down adds a
+  line and therefore adds scroll. It never did.
+- **The rag cost is real but small.** Shortest non-last line, as a fraction of
+  the measure, falls 0.5–1.9 percentage points on average (worst: main at 360px,
+  0.892 → 0.873). That is the designed trade — slightly less even rag in
+  exchange for no stranded word — and at 390px on the main page `pretty`
+  actually *improved* the worst hole.
+- **CORRECTION to the old note.** It read "Blink only re-scores the last few
+  lines". Measured: the furthest a re-break reached back from the last line is
+  **5 lines, mean ~3**. So the claim is true, but it was never verified before
+  and the first (confounded) pass appeared to refute it. It is now measured.
+- **Layout cost is inside the noise.** Root font-size perturbed by 0.01px to
+  invalidate all text layout, synchronous layout forced and timed, 30 iterations,
+  A/B/A/B interleaved: main 13.8/15.2 (pretty) vs 15.4/14.5 (plain); post
+  31.5/34.4 vs 32.0/33.0. `pretty` was faster in several runs. There is no
+  performance argument against it at this page size.
+- **Why Vietnamese makes this a safer bet than it would be in English.** Mean
+  **3.57 chars/word** on the main site, **3.99** on the hub, giving 6.5–9.8 words
+  per line at phone widths. Many more break opportunities per line than English
+  prose, so the natural rag is already tight — `pretty` has less to fix, and less
+  room to do damage when it acts. **No `hyphens` is set anywhere, and none is
+  wanted:** Vietnamese is written in short space-separated syllables and has no
+  hyphenation need.
+- **Re-check trigger:** any Blink release that changes the `pretty` algorithm
+  (it is UA-defined by design), or the day Safari/Firefox ship it — at which
+  point the *cost* numbers above must be re-taken there, since they are Blink's.
+
 ### A13 · Smaller enhancements, no drama
 
 | Feature | Without it | Note |
 |---|---|---|
-| `text-wrap: pretty` | ordinary last-line rag | Blink only re-scores a limited number of lines |
+| `text-wrap: pretty` | ordinary last-line rag | measured 2026-08-10, see §A15 |
 | `font-synthesis: none` | engine may fake a bold/oblique | prevents a synthetic weight that is not Inter |
 | `scroll-margin-top` | anchors land under the fixed bar | stated once in CSS so JS and CSS agree |
 | `aspect-ratio` | boxes size from content | used for logo and card slots |
@@ -439,6 +489,42 @@ A translucent wash with no `color` would preserve it.
 **Trigger:** owner decision, if equation selection ever matters more than the
 brand selection colour.
 
+### B10 · Line-breaking on headings — the stated objection does not survive measurement
+
+Body copy gets `text-wrap: pretty`; headings are excluded, and the reason on
+record is that *"`balance` there would restyle the type ramp"*. Measured on
+2026-08-10, at 320px and 390px, with the same word-level method as §A15:
+
+| | one-word last line | line-count changed | mean line-length spread |
+|---|---|---|---|
+| as shipped, 320px | **8 of 16** | — | 0.346 |
+| `pretty`, 320px | 5 | **0** | 0.279 |
+| `balance`, 320px | 3 | **0** | 0.120 |
+| as shipped, 390px | **4 of 13** | — | 0.320 |
+| `pretty`, 390px | 1 | **0** | 0.223 |
+| `balance`, 390px | 1 | **0** | 0.101 |
+
+**Neither value changed the line count of a single heading, at either width, on
+either page.** The type ramp is untouched; both options only redistribute words
+within the number of lines the heading already occupied. So the objection as
+written is refuted — though `balance` does restructure more visibly (one 4-line
+h2 went `[4,4,4,1]` → `[3,4,3,3]`, which `pretty` left alone).
+
+**What it costs today, stated plainly: the home page splits its own brand name.**
+At 390px, `Vì sao nhà máy cần Alpha Software` breaks `[6,1]`, stranding
+"Software" alone on line two. So do `Các sản phẩm của Alpha Software` and
+`Các dự án của Alpha Software`. Both `pretty` and `balance` give `[5,2]`, keeping
+"Alpha Software" whole. This is the largest type on the page, and the one string
+that should never break.
+
+Independently, Vercel's Web Interface Guidelines state the rule outright: *"Use
+`text-wrap: balance` or `text-pretty` on headings (prevents widows)."*
+
+**Trigger:** owner decision, and it is a design call, not a technical one.
+`pretty` is the conservative option (fixes most of it, disturbs least, and is
+already a shipped bet so it is no new feature). `balance` is the stronger
+typographic result. Recommendation on file: `pretty` on `h1–h4`, then re-measure.
+
 ---
 
 ## C. Accepted limits
@@ -494,6 +580,83 @@ expand. This is a legal item, not a technical one.
 
 ---
 
+## D. Open defects found by audit
+
+Not compatibility bets and not accepted limits — things that are simply wrong
+and have a fix. They live here so the table A rule ("never degrades into
+something *wrong*") keeps meaning something. Delete a row when it is fixed.
+
+### D1 · The hub scrolls sideways as soon as the reader enlarges text
+
+**Every hub page.** `.kt-brand` sets `white-space: nowrap` with `min-width: 0`,
+and the comment on that `min-width` says it exists to "let the scroll title
+truncate instead of pushing the bar wide". **It cannot.** `min-width: 0` only
+permits a flex item to shrink below its content; without `overflow: hidden` the
+content then spills visibly instead of truncating. Nothing between the brand and
+`<html>` clips, so the spill becomes document width.
+
+Measured at 390px (Chrome 151, 2026-08-10), `:root` font-size forced:
+
+| text size | `documentElement.scrollWidth` | viewport | over by |
+|---|---|---|---|
+| 1.0× (16px) | 390 | 390 | 0 |
+| 1.5× (24px) | 429 | 390 | **39px** |
+| 2.0× (32px) | 523 | 390 | **133px** |
+
+The single cause is the words `Chia sẻ kinh nghiệm` in `a.kt-brand-name`: at 2×
+they measure 344px inside a 163px box. No other element's border box passes the
+viewport edge — which is why a first pass looking only at element rects found
+nothing and blamed the Đọc tiếp rail, an `overflow-x: auto` scroller that
+*cannot* extend document width. **If you re-diagnose this, look at text ranges
+and at `el.scrollWidth > el.clientWidth`, not at bounding rects.**
+
+Two-dimensional scrolling for enlarged text is a WCAG failure (SC 1.4.4, and in
+spirit 1.4.10). It also breaks the site's own reading-first argument: at 1.5×,
+a very ordinary setting, every article drags horizontally.
+
+**Fix:** give `.kt-brand-swap` (or `.kt-brand-name`) `overflow: hidden` so the
+`min-width: 0` does the job it was written for, or let the name wrap above a
+threshold. Verify at 1.5× and 2×; the gate should assert `scrollWidth <=
+clientWidth` at 390px under a doubled root font-size.
+
+### D2 · The main site's fixed navbar overflows at 2× text
+
+Same measurement, main page: 448 vs 390 at 2× (58px over); **clean at 1.5×**, so
+this is the milder of the two. Offenders are `nav#navbar` itself (position
+fixed) and one `.service-box` link at 447.6. Fix alongside D1 and gate together.
+
+### D3 · Only 26% of number+unit pairs are non-breaking
+
+`design/chia-se-kinh-nghiem/05` adopts ISO 80000, which requires the numerical
+value and its unit to be separated by a space **and not divided across lines**.
+Across `_posts/*.md`: **26 pairs protected with U+00A0, 74 left with a plain
+space.** So `130 °C`, `265 °C`, `7 kg`, `20 phút` can all break with the number
+at the end of one line and the unit at the start of the next — most likely
+exactly where it hurts, on a phone.
+
+The habit exists (every post already contains 21–45 non-breaking spaces); it is
+applied unevenly. **Fix:** a build-time check, or a lint over `_posts`, is worth
+more here than hand-editing, because new posts will re-introduce it.
+
+### D4 · No `translate="no"` anywhere
+
+A Vietnamese-language technical site is going to be auto-translated by readers
+outside Vietnam, and machine translation mangles exactly the strings that must
+not change: product names (`Alpha Smart Dye`, `Alpha Dyes W`), colour-space
+tokens (`L*a*b*`, `ΔE`), and polymer names (`Nylon 6,6`). Vercel's guidelines
+call this out directly. Cheap, static, and it protects the brand in an
+environment we do not control — which is the definition of a timeless detail.
+
+### D5 · No print stylesheet on either surface
+
+No `@media print` and no `@page` in the repo. The hub is a technical reference
+that a factory reads; printing an article is a plausible thing to do, and today
+it prints the navbar, the Đọc tiếp rail and the share block. `print-color-adjust`
+is already set, so backgrounds *will* be honoured — which without a print sheet
+means dark scrims print as dark scrims. Low urgency, real.
+
+---
+
 ## Review log
 
 | Date | What was checked | Result |
@@ -502,3 +665,4 @@ expand. This is a legal item, not a technical one.
 | 2026-08-09 | B1 + B2 built and shipped → A12. Colours derived by measurement (contrast + ΔE2000 against everything that can share the page), verified by paint in Chrome 151 against a same-scroll control, and gated four ways in `verify.mjs` — each assertion proven to fire by breaking the built CSS on purpose. | The one-pseudo-per-rule decision was confirmed live: a grouped rule containing an unknown pseudo was discarded whole. Two measurement traps recorded in A12 (word-boundary text fragments; headless Chrome defaults to dark). |
 | 2026-08-09 | B3's trigger fired: `<details>` shipped with the hub's active-learning blocks. Re-examined and declined again for the hub, on new grounds (an animation between a recalled question and its answer draws the eye at the worst instant); the main site's accordion case stays open. A3 extended with four load-bearing `:has()` rules and gated in `verify.mjs`, each assertion proven to fire by deleting the rule from the built CSS. | The quiz's `:has()` pair is written backwards so a missing `:has()` degrades to a plain Q&A block rather than to four dead options. Verified in Chrome 151 in both schemes and at 390px, including a real Shift+Tab to confirm the focus ring — the first version of that check used a scripted `.focus()`, which does not match `:focus-visible` on a radio and passed while showing nothing. |
 | 2026-08-09 | Owner review of the active-learning pass. Green/red verdict colours added (philosophy §3) and measured on all four grounds; the Đọc tiếp rail's arrow buttons entered table A as A14, with `::scroll-button()` recorded as the CSS-only successor and its trigger. | Two checks in the browser harness were passing while showing nothing, both for the same reason: they read a computed value in the same tick as the click that changed it, sampling the START of a `transition`. The focus check had the same class of bug earlier in the day (scripted `.focus()` does not match `:focus-visible` on a radio). Rule for this harness: after any interaction that changes a transitioned property, wait, then read. |
+| 2026-08-10 | Owner asked whether `text-wrap: pretty` is right on phones, and for every forward-looking feature to be re-tested against "every device and browser, old or new". Line-breaking measured at word level across 3 pages × 6 widths (§A15, §B10). Conditions swept in Chrome 151: 320px reflow, text at 1.5×/2×, the WCAG text-spacing override, `forced-colors`, `prefers-contrast: more`, scripting disabled. Checked against Vercel's Web Interface Guidelines as an outside standard. | `pretty` confirmed: fixes 2–7 orphans a page, **never** added a line, layout cost inside the noise. Old "only re-scores the last few lines" note verified (max reach 5) after a nested-block artifact nearly refuted it falsely. Five real defects opened as **table D** — the hub scrolls sideways at 1.5× text (D1), navbar at 2× (D2), 74% of number+unit pairs breakable (D3), no `translate="no"` (D4), no print sheet (D5). Passing and worth keeping passing: 320px reflow, SC 1.4.12 text-spacing, all `<img>` dimensioned, `font-display: swap`, no `user-scalable=no`, and body text that **does** honour the reader's own default-font setting. `forced-colors` emulation confirms the media query fires and our block applies, but Chrome does not perform Windows' colour substitution — **A10 stays open**. |

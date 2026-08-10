@@ -445,8 +445,11 @@ body.kt {
 //
 // This is a reading room, so it gets the two rules that only matter over long
 // stretches of prose. `pretty` stops a paragraph ending on a single stranded word
-// — Blink only re-scores the last few lines, so it stays cheap on the longest
-// posts. `break-word` sends a long URL or part number onto the next line instead
+// — Blink re-scores only the tail (measured: ≤5 lines back), so it stays cheap on
+// the longest posts, and it never added a line at any phone width, so it costs no
+// extra scroll. Vietnamese helps: ~4 chars a word means many break opportunities,
+// so the natural rag is already tight. Numbers in design/09 §A15.
+// `break-word` sends a long URL or part number onto the next line instead
 // of pushing a horizontal scrollbar across the page, and only engages when a token
 // genuinely cannot fit. Headings are left out: `balance` there would restyle the
 // measure the type ramp was built on.
