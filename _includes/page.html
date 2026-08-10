@@ -85,8 +85,15 @@
       {% include projects.html %}
       {% include reviews.html %}
       {% include our-story.html %}
-      {% include support.html %}
+      {%- comment -%}
+        `knowledge` before `support`, not after (owner, 2026-08-10). The
+        library is the last piece of evidence — the people you just met,
+        giving the trade away for free every week — and the ask has to be the
+        thing that follows evidence, not the thing that precedes a door out of
+        the page. Full reasoning in knowledge.html.
+      {%- endcomment %}
       {% include knowledge.html %}
+      {% include support.html %}
     </main>
 
     <footer id="{{ t.toc_footer_id }}">

@@ -369,11 +369,17 @@ warm `#f3f0e9` into the built CSS and confirming the build fails on it.**
 ### 6. Vietnamese headings — rewritten for register, not for keywords
 
 The owner flagged "Áp dụng tại xưởng của bạn" as reading wrong. It does: "của
-bạn" is a calque of English "your", "Áp dụng" as a bare heading is
-administrative, and the phrase instructs the reader about his own factory —
-the exact tone `design/chia-se-kinh-nghiem/06` §1 says to keep out of that
-block. It is now **"Mang về xưởng"**, the natural takeaway idiom, and what the
-CSS class `.kt-mang-ve` shows was somebody's first instinct anyway.
+bạn" is a calque of English "your", and the possessive turns the heading into
+an instruction to the reader about his own factory — the exact tone
+`design/chia-se-kinh-nghiem/06` §1 says to keep out of that block.
+
+It was rewritten to **"Mang về xưởng"**, the takeaway idiom, on the argument
+that "Áp dụng" is administrative besides. **The owner overruled the second
+half of that and kept "Áp dụng tại xưởng"** (working tree, same day), which
+settles what was actually wrong with the line: the calque, not the verb. Only
+"của bạn" had to go. Recorded here because the same instinct — treating a
+plain administrative verb as a fault to be fixed — is what produced "Xem Alpha
+làm được gì" below, and that one was a real mistake.
 
 | where | was | now | why |
 |---|---|---|---|
@@ -413,3 +419,294 @@ topic and "loạt bài" = series, consistently, including on the homepage sectio
 - The `opsz` axis (42.8 KB) and gtag.js (39% of homepage bytes), both unchanged
   and both owner decisions — see the first pass above.
 - No `address` on any rendered page, by decision. No FAQ content or `FAQPage`.
+
+---
+
+## 2026-08-10 (third pass) — the owner reads it back, and three of the day's own answers turn out to be wrong
+
+Everything below started as the owner's reaction to the pass above. Three of
+the changes made that morning are reversed here, which is the point of writing
+these down: the register mistakes were not visible to the person who made them.
+
+### 1. Three headings that read as boasting
+
+| where | was | now |
+|---|---|---|
+| hero CTA | Xem Alpha làm được gì | **Xem Alpha giúp được gì** |
+| our-story h2 | Người đứng sau Alpha Software | **Alpha Software bắt đầu từ đâu** |
+| support h2 | Gọi trực tiếp cho người sáng lập | **Gọi cho chúng tôi để được tư vấn miễn phí** |
+| hub CTA banner | Gọi **thẳng** cho tác giả | **Gọi cho tác giả** |
+
+**"làm được gì" is a boast.** It is the phrasing of "watch what I can do".
+"giúp được gì" is one word away and lands in the opposite register: "Tôi giúp
+được gì cho anh?" is the ordinary courteous offer of service in Vietnamese. The
+button offers help instead of announcing capability, and points at the same
+place it always did.
+
+**"Người đứng sau Alpha Software" is not a matter of taste, it is false.**
+Alpha is a two-member company and intends to grow (owner). The plural fix
+would be wrong the other way — the section carries one portrait and tells one
+founding story, and inventing a second bio for a person nobody has described
+to me is not an option. So the heading counts nobody: it asks where the
+company came from, which is the question the body already answers ("thành lập
+vào năm 2021 bởi…"), and it stays true on the day a third name is added.
+
+> Still owner-side: the section is one portrait and one founder's biography.
+> If the second member should appear, that needs their name, role and a
+> portrait — it cannot be written from here.
+
+**"Gọi trực tiếp cho người sáng lập" was meant as an offer and worked as a
+barrier.** It asks the reader to disturb an important person; the owner's read
+was that a reader would hesitate rather than dial. The heading now says what
+the call costs, which is nothing, and the reassurance moved into the sentence
+below with its polarity flipped: not "you get someone important" but "you do
+not get a script" — *"Hãy gọi 0983 505 002 – người nghe máy đã 28 năm trong
+nghề nhuộm, không phải nhân viên tổng đài."* Same fact, no pressure. ("câu hỏi
+**của bạn**" lost its possessive in the same edit, for the reason above.)
+
+The hub's CTA banner kept its author framing and lost only the intensifier.
+The two contexts are genuinely different: on the landing page a reader has no
+idea who the founder is, so naming him is a claim about rank; at the foot of an
+article the reader has just spent six minutes with this person's writing, and
+"the author" is simply who he would be calling.
+
+### 2. The footer's spacing was broken by the ground it was given
+
+The contact block carried `mt-9 mb-9`. A top margin on the first child of a box
+with no padding, no border and no formatting context **collapses through that
+box** — so once `footer { background }` shipped that morning, the 64px came out
+as white space *above* the grey and the band began flush against the company
+name. The bottom 64px did not collapse, because `.footer-strip` follows it.
+
+Measured in Chrome rather than reasoned about, because the numbers are the
+whole diagnosis:
+
+| | before | after |
+|---|---|---|
+| ground above the first line (phone) | **0px** | 48px |
+| ground below the last line (phone) | 64px | 48px |
+| ground above / below (desktop) | 0 / 64px | 64 / 64px |
+
+`.footer-contact` carries padding instead. Padding cannot collapse; the ground
+opens and closes on the same number; and the footer's air is now stated in the
+same place that owns its colour. One rung quieter than the section rhythm
+around it, because furniture should breathe a little less than content.
+
+### 3. Names do not break in half
+
+"Ông Phan / Đức Tuấn Anh" (owner) — and the hub's byline had drawn the same
+complaint on 2026-07-29, which should have generalised the rule then. A
+personal name is one object: it may move to the next line whole, it may not be
+cut. `.name` (main site) and `.kt-nobr` (hub) are `white-space: nowrap`, on
+every rendered name: both reviewers, the founder's figcaption, the footer's
+director line, the author page's h1.
+
+It has to be a class. **`&nbsp;` cannot do this job anywhere on this site** —
+`optimize:html` runs html-minifier-terser with `--decode-entities` *and*
+`--collapse-whitespace`, so every non-breaking space written into the markup is
+decoded to U+00A0 and then collapsed to an ordinary space by a regex that
+counts U+00A0 as whitespace.
+
+Verified at 320 / 412 / 1440px on the homepage, an article and the author page:
+no guarded run occupies two line boxes, and none is wider than its own column
+(the one risk `nowrap` carries).
+
+*Measurement note:* `getClientRects().length > 1` is **not** the test for "this
+broke across a line". An inline box returns one rect per fragment, and a nested
+`<span lang="vi">` makes a fragment without any line break — that check called
+every name broken at 1440px. The test is the number of **distinct tops**.
+
+### 4. The hub's subheading was intimidating, and the fix was to say less
+
+It read: *"Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm –
+đo và cải thiện OEE, RFT, kỹ thuật nhuộm và đo màu. Viết bởi Ông Phan Đức Tuấn
+Anh, 13 năm kỹ thuật viên nhuộm và 15 năm giám đốc nhà máy."* The owner called
+it overwhelming. It was, in three separate ways: it opened with four pieces of
+jargon before the reader knew what kind of place he had landed in — a reader
+who does not already know what OEE stands for has just been told the library is
+not for him, which is the exact opposite of true; it then stacked three
+credentials, which reads as rank rather than as welcome; and it broke the
+author's name across a line.
+
+Now: **"28 năm trong xưởng nhuộm, viết lại cho dễ hiểu và dùng được ngay. Miễn
+phí, bài mới mỗi Chủ nhật."** One number instead of three, comprehension
+instead of coverage, and the two facts that actually bring somebody back.
+
+Deleting it outright was the other option the owner offered and it would have
+cost real things: the page's only prose, and the E-E-A-T answer to "who is
+telling me this?". So the credentials did not disappear, they changed form —
+**the byline every article carries is now repeated at the top of the library it
+belongs to**: portrait, name, role, one link to the author page. It says more
+than the clause did, in one line instead of two, and it cannot break a name in
+half because `.kt-author-link` is an inline-flex box.
+
+### 5. "Bài mới mỗi Chủ nhật" — the only subscription mechanism this library has
+
+The owner mentioned the cadence in passing. It is the most under-used asset on
+the site: **sixteen posts across sixteen consecutive weeks from 2026-04-26,
+every one on a Sunday except a single Tuesday in May.** A reader who knows when
+the next one lands has a reason to come back without being asked; with no
+mailing list and no RSS button, a known publishing day is the whole mechanism.
+
+It is printed in three places, each chosen for the moment it is read:
+
+* the hub lead — the library's front door;
+* `knowledge_lead` on the homepage — the moment a buyer discovers the library
+  exists;
+* the head of **Đọc tiếp** at the foot of every article — the moment a reader
+  has just proved he will finish one.
+
+**If the cadence ever breaks, all three come out together.** A broken promise
+on the page a returning reader checks is worse than never having made one.
+
+### 6. The homepage section moved UP, and the page closes on the ask again
+
+The morning's placement — last block of `<main>`, after the contact section —
+honoured "không làm interrupt flow" literally and put the section ~10,000px
+down a phone page. The owner lifted that condition and replaced it with a
+sharper one: **the gap between the moment a reader starts to trust us and the
+moment he can act on it must be as small as possible.**
+
+Moving it up serves both. The argument now runs proof (đánh giá) → the people
+(về chúng tôi) → the proof that those people know the trade, given away free →
+the ask. And the page **ends on the phone number again**, which was the worse of
+the two errors: the last thing on the page was an invitation to leave it.
+
+On the structural half of that gap, the honest finding is that it was already
+solved and did not need anything: **the fixed bar carries a call button at
+every scroll position** — measured on screen at 60% scroll depth at 320, 412 and
+1440px, 44px tall. A reader convinced at the reviews section is one tap from a
+phone call without scrolling anywhere.
+
+### 7. The feed, rebuilt for the click
+
+The owner asked for the articles to be as attractive as possible and for the
+feed to be built the way feeds that get clicked are built. Four things do that
+work, and each is ordinary practice on every surface that lives by CTR:
+
+1. **The picture is big.** It was 96px beside two lines of text — a link with a
+   stamp on it. On this hub the picture usually *is* the substance (how acid dye
+   bonds to nylon, the OEE breakdown, a four-step chart), and 96px says "a
+   picture exists" without saying what it is a picture of.
+2. **The cost is on the label** — *"Kỹ thuật nhuộm · 6 phút đọc"*. Yes to the
+   owner's question: reading time belongs here. A reader weighs interest against
+   cost and assumes an unseen cost is high; ours are mostly five to seven
+   minutes, which is an argument *for* clicking. Same reason every video
+   platform stamps a duration on the thumbnail. The number comes from the same
+   words-÷-200 as the hub, deliberately — one article must never show two
+   different times on two pages.
+3. **It peeks.** The second card is cut off at the container edge on a phone,
+   which is the only thing that tells a thumb there is more to the right.
+4. **It costs almost nothing vertically** — one row (~340px) instead of three
+   stacked ones. That is what made it affordable to put the section *above* the
+   contact block. Net: the phone page got **310px shorter** while gaining the
+   bigger cards.
+
+Rail under lg, plain three-column grid at lg and up. No JS: a scroll container
+with `scroll-snap-type: x mandatory`, and `overscroll-behavior-x: contain` so a
+swipe running off the end never becomes the browser's back gesture.
+
+Three things the browser caught that source-reading would not have:
+
+* **`scroll-padding-inline` is not optional on a bled rail.** A snap area
+  aligns to the snapport, which is the scroll box's *padding* box only if you
+  say so — so mandatory snapping scrolled the rail 24px on arrival to put card
+  one against the border edge, and the first card sat hard against the glass
+  while the heading above it sat at the gutter. Measured at rest: `scrollLeft
+  24` on a rail nobody had touched.
+* **Card titles had to come off link blue.** Three blue headlines in a row read
+  as a list of references, not as three articles. Blue is this site's mark for a
+  link *inside a sentence*, where the reader needs telling which words are the
+  link; here the whole card is the target, so nothing needs marking and the
+  title is free to be a headline. It earns the underline back on hover.
+* **`a { font-weight: 600 }` is global in this stylesheet**, so the reading time
+  inherited the headline's semibold and the two lines argued. Metadata takes the
+  smaller size, the grey *and* the lighter weight, or it is not metadata.
+
+The three topic pages kept their links, demoted to one line under the rail.
+(Shipped once as "Đọc theo chủ đề:Vận hành & hiệu suất" — Liquid's stripping
+delimiters remove the space the markup carried and html-minifier collapses what
+survives, so a space between two inline elements has to be written as content.)
+
+### Where the numbers stand
+
+| | before today | now |
+|---|---|---|
+| Phone page height | 11,636px | 11,326px |
+| Depth of the hub section on a phone | ~10,200px | ~6,700px |
+| Vertical space it occupies (phone) | 979px | ~570px |
+| Ground above the footer's first line | 0px | 48 / 64px |
+| Structural defects across 27 built pages | 0 | 0 |
+| Descriptions over ~160 chars | 0 | 0 |
+| Personal names broken across a line (320/412/1440) | 4 | 0 |
+
+### Still open
+
+* **The second member of the company is nowhere on the site.** The our-story
+  heading no longer contradicts that, but the section is still one portrait and
+  one biography.
+* Whether ink card titles on the homepage should match the hub's blue ones. The
+  two surfaces are deliberately different design systems (Inter/white against
+  Literata/cream) and the card architectures differ too — title-over-picture on
+  the hub, picture-over-title here — so this is a considered divergence rather
+  than drift. Worth a second opinion from the owner all the same.
+* No table of contents on the two long articles (22 and 30 minutes). It is the
+  one remaining lever on read-through that this pass did not pull, and it would
+  also make the pages eligible for "jump to" sitelinks.
+* The `opsz` axis (42.8 KB) and gtag.js, both unchanged and both owner
+  decisions — see the first pass.
+
+
+---
+
+## 2026-08-10 (fourth pass) — the same day's own fixes, re-examined
+
+The owner was still not satisfied with three of the lines from the pass above,
+and a second read found the same fault in all three: each swapped the *wrong*
+word for the right reason, or fixed a false claim but landed in the wrong
+register. Presented as options; the owner chose one per line.
+
+| where | pass 3 | pass 4 |
+|---|---|---|
+| hero CTA | Xem Alpha giúp được gì | **Tìm hiểu giải pháp Alpha** |
+| our-story h2 | Alpha Software bắt đầu từ đâu | **Alpha Software ra đời như thế nào** |
+| support body | …không phải nhân viên tổng đài | **…người trực tiếp trả lời có 28 năm kinh nghiệm nhuộm, hiểu ngay vấn đề của bạn** |
+
+**Hero CTA.** "Giúp được gì" fixed the boast but kept the shape of a question
+with no object — it wants a "cho ai" to land on, and a bare button label never
+supplies one, so it read unfinished. Worth recording precisely because of a
+mistake it nearly repeated: the earlier rule (from "tại xưởng của bạn") was
+mis-generalised as "delete của bạn everywhere", when the actual fault was a
+postposed possessive doing English "your"'s job. "Giúp được gì cho bạn" is not
+that construction — it is the textbook idiom ("Tôi giúp được gì cho bạn?") —
+so stripping "cho bạn" from this button was collateral damage from a
+correctly-diagnosed problem applied one line too broadly. The owner picked the
+plainest option instead: state what the destination *is* rather than ask what
+Alpha does.
+
+**Our-story h2.** "…bắt đầu từ đâu" (where did it begin) fixed the false
+plural/singular claim but reads like an interview question rather than a story
+opener — and the section's own nav label is "Về chúng tôi" (About us), a
+narrative frame. "…ra đời như thế nào" (how it came to be) keeps counting
+nobody and reads as the start of the story the body then tells.
+
+**Support body.** "…không phải nhân viên tổng đài" defines the person by what
+they are *not*, which reads as arguing down an expectation the reader hadn't
+voiced — a shape that is itself faintly defensive, the same family of problem
+as the line it replaced. The new sentence states what the person *is* and does
+for the reader instead, and gets to the reader's actual problem one clause
+sooner.
+
+**The "của bạn" rule, corrected for the record**, since it was misapplied once
+already: the fault was never the words "của bạn". It was "của bạn" doing
+double duty as a postposed *location* modifier ("tại xưởng của bạn", "câu hỏi
+của bạn" as a generic aside) — a calque of how English trails "your" onto
+anything. "của bạn" as the direct object of an action the reader benefits from
+("hiểu vấn đề của bạn" — understand your problem) is the ordinary, idiomatic
+construction and was never the problem. Both English twins carry the matching
+revision; `learn_more` in English was left alone because "See how Alpha can
+help" never had either fault to begin with.
+
+Verified in Chrome at 412×915: no overflow, no broken lines, both new
+Vietnamese strings and both new English strings present in the built pages,
+the three old strings absent.

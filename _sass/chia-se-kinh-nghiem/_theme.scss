@@ -1098,6 +1098,38 @@ body.kt {
   color: var(--ink-2);
 }
 
+// The author's face under the lead — the same portrait, name and role every
+// article's byline carries, repeated once at the top of the library they all
+// belong to. It replaces the "Viết bởi Ông Phan Đức Tuấn Anh, 13 năm…, 15
+// năm…" clause that used to close the lead: a face and a link say who is
+// telling you this faster than a sentence can, they carry the same E-E-A-T
+// signal, and a name inside an inline-flex box cannot be broken in half by a
+// line ending, which the clause was (owner, 2026-08-10).
+//
+// .kt-author-link supplies the flex row, the inherited ink and the name-only
+// hover underline; only the spacing is local.
+.kt-hub-by {
+  margin-top: 1.25rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kt-hub-by-name {
+  display: block;
+  font-family: var(--font-read);
+  @include read(16);
+  font-weight: 620;
+  color: var(--ink); // hold ink under .kt-author-link's inherited link colour
+}
+
+.kt-hub-by-role {
+  display: block;
+  margin-top: 0.125rem;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  color: var(--ink-3);
+}
+
 // "Bài viết mới nhất", now an h2 sitting directly on the feed rather than
 // being the page's h1 (see the note in the hub layout). It labels a list, so
 // it is drawn at the rail title's weight, not the h1's — the reader should
@@ -1185,6 +1217,13 @@ body.kt {
 // this site — the production build decodes and then collapses it. The layout
 // comment carries the measurement.)
 .kt-byline-read {
+  white-space: nowrap;
+}
+
+// The same guard for a run that is not a reading time: the author page's h1,
+// where "Tác giả: Phan Đức Tuấn Anh" is too wide for a phone line and would
+// otherwise break inside the name. Twin of `.name` on the main site.
+.kt-nobr {
   white-space: nowrap;
 }
 
@@ -1961,12 +2000,28 @@ body.kt-lightbox-open {
   margin-bottom: 1rem;
 }
 
+// The title and the cadence line are one block so the arrows stay opposite
+// the pair, not opposite the title with the cadence pushed under them.
+.kt-readnext-headings {
+  min-width: 0;
+}
+
 .kt-readnext-title {
   margin: 0;
   font-family: var(--font-read);
   @include read(21);
   font-weight: 620;
   line-height: 1.35;
+}
+
+// "Bài mới mỗi Chủ nhật" — metadata grey and metadata sized. It is a standing
+// fact about the library, not a heading and not an ask, and it must not read
+// as either.
+.kt-readnext-cadence {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  color: var(--ink-3);
 }
 
 // The arrows. They ship `hidden` and read-next.html reveals them, so a reader
@@ -2513,7 +2568,7 @@ body.kt-lightbox-open {
   color: var(--ink-3) !important;
 }
 
-// "Mang về xưởng" — the last thing read before the signature, and the
+// "Áp dụng tại xưởng" — the last thing read before the signature, and the
 // reason a reader who skipped the questions still leaves with something.
 .kt-mang-ve {
   margin: step(5) 0 0;

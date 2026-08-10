@@ -1191,120 +1191,236 @@ footer {
   background: $surface-footer;
 }
 
+// The footer's own air, and it is PADDING for a reason that cost a shipped
+// build to learn. The contact block used to carry `mt-9 mb-9`. A top margin on
+// the first child of a box with no padding, no border and no formatting
+// context collapses straight through that box — so the 64px landed as white
+// space ABOVE the grey, and the grey then began flush against the company
+// name. The bottom 64px did not collapse, because `.footer-strip` follows it.
+// A footer with no ground over its first line and two thirds of an inch under
+// its last is what the owner saw and called strange (2026-08-10); the numbers
+// are in the note in footer.html, measured in Chrome.
+//
+// Padding cannot collapse. One value, top and bottom, off the same ladder the
+// sections use — step 8 under md, step 9 above it, which is one rung quieter
+// than the section rhythm around it. Furniture should breathe a little less
+// than content does.
+.footer-contact {
+  padding-top: step(8);
+  padding-bottom: step(8);
+
+  @include media-breakpoint-up(md) {
+    padding-top: step(9);
+    padding-bottom: step(9);
+  }
+}
+
 .footer-strip {
   border-top: 1px solid $surface-footer-line;
+}
+
+// ─── Names do not break in half ───
+//
+// "Ông Phan / Đức Tuấn Anh" (owner, 2026-08-10 — and the same complaint,
+// almost word for word, about the hub's byline on 2026-07-29). A personal name
+// is one object. It may move to the next line whole; it may not be cut.
+//
+// It has to be a class. `&nbsp;` cannot do this job anywhere on this site:
+// `optimize:html` runs html-minifier-terser with `--decode-entities` AND
+// `--collapse-whitespace`, so every non-breaking space written into the markup
+// is decoded to U+00A0 and then collapsed to an ordinary space by a regex that
+// counts U+00A0 as whitespace. Measured on the built page. A CSS rule survives.
+//
+// The risk `white-space: nowrap` carries is overflow when the unbreakable run
+// is wider than its column. It is not a risk here: the longest name on the
+// site is "Ông Phan Đức Tuấn Anh" at roughly 170px, and the narrowest column
+// it appears in is 280px on a 320px phone.
+.name {
+  white-space: nowrap;
 }
 
 // ─── The Chia sẻ kinh nghiệm section on the homepage ───
 //
 // (`.footer-more` / `.footer-more-item` used to sit here, styling the footer's
-// single link to the hub. That block was removed on 2026-08-10 — the section
-// below renders directly above the footer and superseded it. The one rule
-// worth keeping from it is the relationship between a link and the line under
-// it, which is reused here rather than reinvented.)
+// single link to the hub. Removed 2026-08-10 — _includes/knowledge.html
+// superseded it. `.knowledge-topic-list` / `.knowledge-post` / `-thumb` /
+// `-text` / `-title`, the small stacked thumbnail rows this section shipped
+// with that same morning, are gone with the same change: the owner asked for
+// the articles to be as attractive as they can be, and a 96px picture beside
+// two lines of text is a link with a stamp on it, not a card.)
 //
-// _includes/knowledge.html — two short lists of links, and nothing else. There
-// is no card, no tint, no rule and no shadow here on purpose: the owner has
-// twice rejected added section-separation, and a list of links needs none of
-// it to read as a list of links. What it does need is for each link to be
-// unmistakably the target and the line under it to be unmistakably not.
-.knowledge-topic-list,
-.knowledge-post-list {
+// What is here now is a RAIL of three card faces — picture, title, cost — and
+// nothing else on the section is allowed to compete with it. No tint, no rule,
+// no shadow (the owner has twice rejected added section-separation); the cards
+// are legible as cards because a picture with a title under it is legible as a
+// card, which is the whole argument of every feed on the internet.
+.knowledge-rail {
   list-style: none;
-  padding-left: 0;
-  margin-top: step(4);
-  margin-bottom: 0;
+  margin: step(6) 0 0;
+  display: grid;
+  gap: step(5);
 
-  li + li {
-    margin-top: step(5);
+  // ── Under lg: a swipeable shelf ────────────────────────────────────────────
+  //
+  // One row, ~340px tall, at every width a phone or tablet has. That is what
+  // makes this section affordable ABOVE the contact block rather than below
+  // it: three stacked cards would be a thousand pixels and would push the
+  // page's only ask that much further down.
+  //
+  // `min(78%, 320px)` — 78% of the rail on a phone leaves the next card visibly
+  // cut off at the right edge, which is the only thing that tells a thumb there
+  // is more to the right. A rail whose content ends flush with its container
+  // looks like a finished row, and nobody swipes a finished row. The 320px
+  // ceiling stops the cards inflating into slabs on a tablet.
+  grid-auto-flow: column;
+  grid-auto-columns: min(78%, 320px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  // Keeps a horizontal swipe that runs off the end of the rail from becoming
+  // the browser's back gesture — the one interaction bug this pattern always
+  // has on iOS.
+  overscroll-behavior-x: contain;
+
+  // The shelf runs to the page edges, not to the container's text column: a
+  // peek that stops 24px short of the glass reads as a mistake rather than as
+  // an invitation. Padding restores the gutter inside the scroller so the first
+  // card still lines up with the heading above it.
+  //
+  // The vertical padding is not decoration either — `overflow-x: auto` computes
+  // `overflow-y` to `auto` as well, so without it a focused card's ring is
+  // clipped top and bottom by the scroll box.
+  margin-inline: calc(-1 * #{step(5)});
+  padding: step(1) step(5) step(3);
+  // …and `scroll-padding` is what stops the snap engine from undoing that
+  // padding the instant the page loads. A snap area aligns to the SNAPPORT,
+  // which is the scroll box's padding box unless this says otherwise — so with
+  // `mandatory` snapping the browser scrolled the rail 24px on arrival to put
+  // card one flush against the left border edge, and the first card sat hard
+  // against the glass while the heading above it sat at the gutter. Measured
+  // at rest: scrollLeft 24 on a rail nobody had touched.
+  scroll-padding-inline: step(5);
+
+  > li {
+    scroll-snap-align: start;
   }
 
-  // The link carries the weight because it is the thing being offered; the
-  // title is also the anchor text a crawler reads, so it is never abbreviated.
-  > li > a {
-    font-weight: 600;
-  }
-
-  small {
-    display: block;
-    margin-top: step(1);
+  // ── lg and up: no scrolling, because all three already fit ─────────────────
+  @include media-breakpoint-up(lg) {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    margin-inline: 0;
+    padding: 0;
   }
 }
 
-// A date is metadata about the link above it, not a second link, and at body
-// size it competes. `font-variant-numeric: tabular-nums` because three dates
-// stacked in a column should line up on the separator — the one detail here
-// that anybody would notice only if it were missing.
-.knowledge-post-list small {
-  font-variant-numeric: tabular-nums;
-}
-
-// ─── An article's row: its picture, its title, its date, one link ───
-//
-// The whole row is inside the <a>, not just the title. On a phone the title
-// alone is a two-line target beside an 80px square of dead pixels; wrapping
-// the row makes the square part of the target and roughly doubles it. It also
-// means there is exactly one link per article — a picture link and a title
-// link pointing at the same URL is a duplicate for a screen reader and two
-// tab stops for a keyboard.
-.knowledge-post {
+// One link per card — picture, title and meta are all inside it. Three
+// separate links to one URL is a duplicate for a screen reader and three tab
+// stops for a keyboard, and on a phone the title alone is a small target
+// sitting beside a large inert picture.
+.knowledge-card {
   display: flex;
-  align-items: flex-start;
-  gap: step(4);
+  flex-direction: column;
+  height: 100%;
   text-decoration: none;
 }
 
-// A fixed square, cropped on the picture's own attention point (the inline
-// `object-position` each <img> carries). Square rather than the feed's
-// natural-ratio card: this is a row in a list, and rows whose left edge is a
-// different height each time read as debris.
+// 16:10, cropped on the picture's own attention point (the inline
+// `object-position` each <img> carries, measured by image-focus.mjs) — so a
+// diagram is never cut through the part that carries the meaning. Landscape
+// rather than the square this section shipped with in the morning: the hub's
+// illustrations are wide technical drawings on white, and a square crop of one
+// is a box of whitespace with a band of content across the middle.
 //
-// `flex-shrink: 0` or a long title squeezes the picture into a sliver — the
-// default `min-width: auto` on a flex item does not protect an <img> whose
-// width is set in CSS.
-// 4:3, not the square this started as. Square was wrong for what these
-// pictures ARE: the hub's illustrations are wide technical diagrams drawn on
-// white, and a square crop of one is a box of whitespace with a band of
-// content across the middle — it says "there is a picture here" without saying
-// anything about the picture. Landscape keeps enough of the diagram to be
-// recognisable at thumbnail size. (The hub itself solves the same problem
-// harder, with Facebook's 1.91:1…4:5 window; that machinery is not worth
-// porting for three rows.)
-//
-// THE HAIRLINE IS LOAD-BEARING, not decoration. These illustrations have white
-// grounds and the page is white, so without it the picture has no edge and
-// bleeds into the row — the reader sees a floating diagram rather than a
-// thumbnail. It is the coolest of the greys and one pixel; you would not
-// notice it, you would only notice its absence.
-.knowledge-post-thumb {
-  flex-shrink: 0;
-  width: step(10);
-  aspect-ratio: 4 / 3;
+// THE HAIRLINE IS LOAD-BEARING, not decoration. These pictures have white
+// grounds and the page is white, so without an edge the picture bleeds into
+// the card and the reader sees a floating diagram rather than a thumbnail. It
+// is the coolest of the greys and one pixel; you would not notice it, you
+// would only notice its absence.
+.knowledge-card-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
   height: auto;
   object-fit: cover;
   border: 1px solid $ink-100;
-  border-radius: $r-1;
+  border-radius: $r-4;
+}
 
-  @include media-breakpoint-up(md) {
-    width: step(11);
+// The title is the offer, so it is the loudest thing in the card and it is
+// never truncated — it is also the anchor text a crawler reads.
+//
+// INK, NOT LINK BLUE, and that is the one thing the browser had to tell me:
+// three blue headlines in a row read as a list of references, not as three
+// articles. Blue is this site's mark for a link inside a sentence, where a
+// reader needs to be told which words are the link. Here the whole card is the
+// link — picture, title and meta are one target — so nothing needs marking
+// out, and the title is free to be a headline. It earns the underline back on
+// hover, which is where the question "is this clickable?" is actually asked.
+.knowledge-card-title {
+  display: block;
+  margin-top: step(4);
+  color: $fg;
+  font-weight: 600;
+  line-height: 1.35;
+  // Balanced wrapping only on the short runs a card title is: it stops the
+  // last line coming down as one orphaned word, and `text-wrap: balance` is
+  // ignored past a handful of lines, so a long title simply sets normally.
+  text-wrap: balance;
+}
+
+.knowledge-card:hover .knowledge-card-title,
+.knowledge-card:focus-visible .knowledge-card-title {
+  text-decoration: underline;
+}
+
+// "Kỹ thuật nhuộm · 6 phút đọc". Metadata about the link above it, not a
+// second link, so it carries neither the colour nor the underline.
+//
+// `margin-top: auto` pins it to the foot of the card, and the cards are all
+// the same height (the grid stretches them, `.knowledge-card` fills). So the
+// three meta lines sit on one line across the row even where one title runs to
+// two lines and its neighbour to one — a row of cards whose bottom lines are
+// each a few pixels out looks like a rendering fault, and nobody can say why.
+.knowledge-card-meta {
+  display: block;
+  margin-top: auto;
+  padding-top: step(3);
+  margin-bottom: 0;
+  font-size: $font-size-sm;
+  // Back to book weight. The whole card is an <a>, and this stylesheet sets
+  // `a { font-weight: 600 }` globally, so the reading time inherited the same
+  // semibold as the headline above it and the two lines argued. Metadata is
+  // the quietest thing in a card; it takes the smaller size, the grey AND the
+  // lighter weight, or it is not metadata.
+  font-weight: normal;
+  color: $fg-subtle;
+  text-decoration: none;
+}
+
+// ─── The one line of topic links under the rail ───
+//
+// A second way in for the reader who already knows what they came for. It is a
+// line of prose with links in it, not a nav and not a row of chips: three
+// links do not make a navigation landmark, and a chip is a shape this site
+// does not otherwise own.
+.knowledge-topics {
+  margin-top: step(6);
+  margin-bottom: 0;
+
+  a {
+    font-weight: 600;
   }
 }
 
-.knowledge-post-text {
-  min-width: 0; // let the title wrap instead of forcing the row wider
+.knowledge-topics-label {
+  color: $fg-subtle;
 }
 
-// The title carries the link's colour and underline; the date under it must
-// not, or the row reads as two links.
-.knowledge-post-title {
-  display: block;
-  font-weight: 600;
-}
-
-.knowledge-post small {
-  display: block;
-  margin-top: step(1);
-  text-decoration: none;
+.knowledge-all {
+  margin-top: step(5);
+  margin-bottom: 0;
 }
 
 .hr {

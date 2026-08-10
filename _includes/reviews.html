@@ -70,7 +70,15 @@
             {{ t.review_nguyen_thi_nga_body }}
           </blockquote>
           <figcaption class="blockquote-footer">
-            {{ t.female_title }} <span lang="vi">Nguyễn Thị Nga</span>,
+            {%- comment -%}
+              `.name` holds the honorific and the name together on one line —
+              a person's name is one object and may move to the next line
+              whole, but may not be cut ("Ông Phan / Đức Tuấn Anh", owner
+              2026-08-10). The rule and why it cannot be `&nbsp;` are in
+              _base.scss. `lang="vi"` still wraps only the Vietnamese, since
+              the honorific is "Mrs."/"Bà" depending on the page.
+            {%- endcomment -%}
+            <span class="name">{{ t.female_title }} <span lang="vi">Nguyễn Thị Nga</span></span>,
             {{ t.reviewer_1_job_title }}
             {{ t.of }}
             {{ t.project_spica_company_name }}
@@ -112,7 +120,7 @@
             {{ t.review_dinh_van_hiep_body }}
           </blockquote>
           <figcaption class="blockquote-footer">
-            {{ t.male_title }} <span lang="vi">Đinh Văn Hiệp</span>,
+            <span class="name">{{ t.male_title }} <span lang="vi">Đinh Văn Hiệp</span></span>,
             {{ t.reviewer_2_job_title }}
             {{ t.of }}
             {{ t.project_tuan_hong_company_name }}

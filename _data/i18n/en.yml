@@ -15,8 +15,14 @@ to_homepage: "Go to Alpha Software homepage"
 skip_to_content: "Skip to main content"
 slogan: "Digital Transformation for Textile Dyeing"
 description: "Alpha Software is redefining production management for Vietnam's textile industry with advanced automation software designed around each factory's own processes. Our systems reduce manual errors, make planning visual, connect production equipment, and optimize efficiency. We work alongside textile mills to raise quality, increase output, and shorten delivery times – doing our part to make Vietnam a world-class textile manufacturing nation."
-learn_more: "See what Alpha does"
-learn_more_aria: "See what Alpha Software does"
+# The Vietnamese twin went through two revisions the same day (see vi.yml):
+# "làm được gì" read as a boast, and the first fix, "giúp được gì", read as an
+# unfinished question with no object. English never had either problem —
+# "See how Alpha can help" is a complete, ordinary sentence on its own — so
+# this key was left as it was rather than forced to mirror vi.yml's second
+# revision word for word. Same destination, each locale's own natural phrasing.
+learn_more: "See how Alpha can help"
+learn_more_aria: "See how Alpha Software can help a textile dyeing mill"
 
 # The call affordance in the fixed bar and in the hero. The short label shows
 # under md, where the bar has no room for eleven digits; the aria-label always
@@ -247,16 +253,32 @@ review_dinh_van_hiep_body: '<p>Alpha Software has been a great help to our compa
 
 # --- Our Story Section ---
 
-our_story_title: "The person behind Alpha Software"
+# Alpha is a two-member company and intends to grow (owner, 2026-08-10), so
+# "the person behind" is factually wrong; the plural would be wrong the other
+# way, since the section carries one portrait and one founding story. The
+# heading counts nobody and asks the question the body answers.
+#
+# "Where Alpha Software began" read like a trivia-question header rather than
+# a story opener; the section's own nav label is "About us", a narrative
+# frame. "How Alpha Software began" reads as the start of the story the body
+# then tells, matching the Vietnamese key's second revision.
+our_story_title: "How Alpha Software began"
 founder_title: "Founder"
 
 our_story_body: '<p class="mt-md-0">Alpha Software was founded in 2021 by Mr. Phan Đức Tuấn Anh, who brings more than 28 years of hands-on experience in the textile industry – 13 as a dyeing technician and 15 as a factory director. With a strong foundation in organic chemistry and a deep command of factory management and software development, Mr. Tuấn Anh leads Alpha in delivering practical technology that meets the real needs of modern textile manufacturers.</p>'
 
 # --- Support Section ---
 
-support_title: "Talk to the founder directly"
+# "Talk to the founder directly" reads as an offer and works as a barrier —
+# it asks the reader to disturb someone important. The heading now names what
+# the call costs.
+#
+# The reassurance clause went through two revisions. The first — "not a call
+# center script" — defined the person by what they are NOT, which reads a
+# little defensive. This one states what they ARE and do for you instead.
+support_title: "Call us for a free consultation"
 support_call_prompt: "Call us at"
-support_email_prompt: "for a free consultation, or email your questions to"
+support_email_prompt: "– the person who answers has 28 years of hands-on dyeing experience and will understand your problem right away. Or send your questions to"
 support_cta: "Email Alpha Software"
 
 # --- Footer ---

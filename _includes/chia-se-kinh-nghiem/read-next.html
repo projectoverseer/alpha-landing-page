@@ -109,7 +109,29 @@
 {%- if kt_rn_items contains "<li" %}
 <nav aria-label="Bài viết nên đọc tiếp" class="kt-readnext">
   <div class="kt-readnext-head">
-    <h2 class="kt-readnext-title">Đọc tiếp</h2>
+    {%- comment -%}
+      THE CADENCE LINE — the one thing on the page that asks for a second
+      visit. The reader who has reached this point finished the article; that
+      is the moment he is most likely to come back, and until now nothing here
+      gave him a date to come back ON. With no mailing list and no RSS button,
+      a known publishing day is the whole subscription mechanism this library
+      has ("bài mới mỗi Chủ nhật", owner 2026-08-10).
+
+      It is checkable, which is why it can be printed: sixteen posts across
+      sixteen consecutive weeks from 2026-04-26, every one on a Sunday except
+      a single Tuesday in May. THE DAY THIS STOPS BEING TRUE, THIS LINE AND
+      THE TWO LEADS THAT REPEAT IT (the hub header and `knowledge_lead` on the
+      homepage) HAVE TO COME OUT TOGETHER — a broken promise on the page a
+      returning reader checks is worse than never having made one.
+
+      It rides in the head rather than under the rail because the rail is
+      already the offer; this is the reason to come back if none of the six
+      cards is the one he wants.
+    {%- endcomment -%}
+    <div class="kt-readnext-headings">
+      <h2 class="kt-readnext-title">Đọc tiếp</h2>
+      <p class="kt-readnext-cadence">Bài mới mỗi Chủ nhật</p>
+    </div>
     <div class="kt-readnext-nav" hidden id="kt-readnext-nav">
       <button aria-label="Lùi lại" class="kt-rail-btn" data-kt-rail="-1" type="button">
         <svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M15 5l-7 7 7 7" /></svg>

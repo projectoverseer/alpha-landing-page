@@ -1,4 +1,16 @@
-<div class="container mt-9 mb-9">
+{%- comment -%}
+  `mt-9 mb-9` used to be here and it was quietly broken from the moment the
+  footer got a ground of its own. A top MARGIN on the first child of a box that
+  has no padding, no border and no formatting context collapses THROUGH that
+  box: the 64px came out as white space above the grey, and the grey band then
+  started flush against the company name with nothing over it. Measured in
+  Chrome, not guessed — 0px of ground above the first line and 64px below it.
+
+  The class carries padding instead. Padding cannot collapse, the ground opens
+  and closes on the same number, and the footer's air is now stated in the one
+  place that also owns its colour.
+{%- endcomment -%}
+<div class="container footer-contact">
   <p class="h5">{{ t.legal_name }}</p>
   <address class="big">
     <dl>
@@ -21,7 +33,7 @@
       <dd>
         <a href="tel:+84983505002">{{ t.display_phone }}</a>
         <small class="text-secondary">
-          {{ t.male_title }} <span lang="vi">Tuấn Anh</span>, {{ t.director_title }} {{ t.of }} Alpha
+          <span class="name">{{ t.male_title }} <span lang="vi">Tuấn Anh</span></span>, {{ t.director_title }} {{ t.of }} Alpha
         </small>
       </dd>
       <dt>{{ t.footer_label_email }}:</dt>

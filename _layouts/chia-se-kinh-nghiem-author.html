@@ -23,7 +23,13 @@
         and signature carry.
       {%- endcomment -%}
       <header class="kt-author-head">
-        <h1><span class="kt-head-prefix">Tác giả:</span> {{ kt_author.name }}</h1>
+        {%- comment -%}
+          `.kt-nobr` on the name: at the h1's size "Tác giả: Phan Đức Tuấn Anh"
+          cannot fit one phone line, so it wraps — and left alone it wraps
+          wherever the box runs out, which is usually inside the name. A name
+          is one object; it moves to the next line whole (owner, 2026-08-10).
+        {%- endcomment -%}
+        <h1><span class="kt-head-prefix">Tác giả:</span> <span class="kt-nobr">{{ kt_author.name }}</span></h1>
         <div class="kt-author-card">
           {% include chia-se-kinh-nghiem/avatar.html size=96 class="kt-author-card-avatar" %}
           <div class="kt-author-card-body">

@@ -15,8 +15,16 @@ to_homepage: "Đi đến trang chủ Alpha Software"
 skip_to_content: "Chuyển đến nội dung chính"
 slogan: "Chuyển đổi số ngành dệt nhuộm"
 description: "Alpha Software đang tái định nghĩa cách quản lý sản xuất trong ngành dệt may tại Việt Nam bằng hệ thống phần mềm tự động hoá tiên tiến, thiết kế riêng cho từng quy trình. Phần mềm giúp giảm thiểu lỗi thủ công, lập kế hoạch trực quan, kết nối thiết bị sản xuất và tối ưu hoá hiệu quả. Chúng tôi đồng hành cùng nhà máy dệt may nâng cao chất lượng, gia tăng sản lượng và rút ngắn thời gian giao hàng, góp phần đưa Việt Nam trở thành cường quốc sản xuất dệt may."
-learn_more: "Xem Alpha làm được gì"
-learn_more_aria: "Xem Alpha Software làm được gì"
+# "làm được gì" is a boast — it is the phrasing of "watch what I can do", and
+# the owner heard it as arrogant on sight (2026-08-10). The first fix,
+# "Xem Alpha giúp được gì", swapped the verb but kept the shape of a question
+# with no object — "giúp được gì" wants a "cho ai" to land on, and a bare
+# button label never supplies one, so it read unfinished. The owner picked the
+# plainest option instead on a second pass the same day: state what the
+# destination IS rather than ask what Alpha does. Nothing to misread either
+# way, and the anchor still lands on #gioi-thieu.
+learn_more: "Tìm hiểu giải pháp Alpha"
+learn_more_aria: "Tìm hiểu giải pháp phần mềm của Alpha Software cho xưởng dệt nhuộm"
 
 # The call affordance in the fixed bar and in the hero. The short label shows
 # under md, where the bar has no room for eleven digits; the aria-label always
@@ -309,7 +317,22 @@ review_dinh_van_hiep_body: '<p>Phần mềm Alpha Software hỗ trợ rất tố
 
 # --- Our Story Section ---
 
-our_story_title: "Người đứng sau Alpha Software"
+# NOT "Người đứng sau Alpha Software", and the reason is a fact about the
+# company rather than a matter of taste: Alpha is a two-member company and
+# intends to grow (owner, 2026-08-10). A heading that says "the person behind"
+# is simply false, and the plural fix — "Những người đứng sau" — would be just
+# as wrong the other way, because the section shows one portrait and tells one
+# founding story. So the heading counts nobody. It asks where the company came
+# from, which is the question the body below actually answers ("thành lập vào
+# năm 2021 bởi…"), and it stays true on the day a third name is added.
+#
+# "…bắt đầu từ đâu" (where did it begin) fixed the false claim but reads like
+# an interview question rather than the opening of a story — and the section's
+# own toc entry is "Về chúng tôi" (About us), a narrative frame, not an
+# interrogative one. "…ra đời như thế nào" (how it came to be) keeps counting
+# nobody and reads as the start of the story the body then tells (owner's
+# choice on a second pass, 2026-08-10).
+our_story_title: "Alpha Software ra đời như thế nào"
 founder_title: "Nhà sáng lập"
 
 our_story_body: '<p class="mt-md-0">
@@ -324,9 +347,35 @@ our_story_body: '<p class="mt-md-0">
 
 # --- Support Section ---
 
-support_title: "Gọi trực tiếp cho người sáng lập"
+# "Gọi trực tiếp cho người sáng lập" was meant as an offer and worked as a
+# barrier: it asks the reader to disturb an important person, and the owner
+# read the whole line as arrogant besides (2026-08-10). The reader hesitates
+# for a reason no button label can argue away.
+#
+# So the heading no longer says WHO answers; it says what the call costs, which
+# is nothing. The reassurance that made "the founder" worth mentioning has
+# moved into the sentence below and been turned the other way round: the point
+# is not that you get someone important, it is that you do not get a script.
+# Same fact, no pressure.
+support_title: "Gọi cho chúng tôi để được tư vấn miễn phí"
 support_call_prompt: "Hãy gọi"
-support_email_prompt: "để được tư vấn miễn phí, hoặc gửi câu hỏi của bạn qua địa chỉ"
+# Reads as one sentence with the number between the two halves.
+#
+# The first version of the reassurance clause — "không phải nhân viên tổng
+# đài" — defined the person by what they are NOT, which reads a little
+# defensive (as if a call center were the expectation to argue down). This
+# version states what they ARE and does for you instead: 28 years of hands-on
+# dyeing experience, so the reader's actual problem gets understood on the
+# first sentence rather than after a disclaimer.
+#
+# "vấn đề của bạn" keeps its "của bạn" on purpose — this is not the calque
+# that got "tại xưởng của bạn" and "câu hỏi của bạn" rewritten elsewhere.
+# Those were a postposed possessive doing the job English "your" does and
+# Vietnamese normally does not; "của bạn" as the object of "hiểu vấn đề" is
+# the ordinary, idiomatic construction ("hiểu vấn đề của bạn" is how anyone
+# would say "understand your problem"). The rule was never "delete của bạn",
+# it was "don't let của bạn do double duty as a location marker".
+support_email_prompt: "– người trực tiếp trả lời có 28 năm kinh nghiệm nhuộm, hiểu ngay vấn đề của bạn. Hoặc gửi câu hỏi qua"
 support_cta: "Gửi email đến Alpha Software"
 
 # --- Footer ---
@@ -350,9 +399,29 @@ copied_email_message: "Đã copy địa chỉ email!"
 # they meant /chia-se-kinh-nghiem/ or /#chia-se-kinh-nghiem.
 toc_knowledge_id: "kien-thuc"
 knowledge_title: "Chia sẻ kinh nghiệm"
-knowledge_lead: "Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm, viết bởi Ông Phan Đức Tuấn Anh từ 28 năm trong nghề: 13 năm kỹ thuật viên nhuộm, 15 năm giám đốc nhà máy."
+# The lead was a credential stack — the founder's name, 28 years, 13 years, 15
+# years — which is the library's justification, not its offer. It also broke
+# the name across a line, which is the thing the owner will not have anywhere
+# on the site.
+#
+# What it says now is what makes a reader open one: these are mistakes we made
+# and fixed on the floor, they cost nothing, and there is a new one every week.
+# "đã đo, đã sai và đã sửa" is the author's own line from his bio — admitting
+# the mistakes is what makes 28 years read as generosity rather than as rank.
+# The credentials still exist, on the hub and on the author page, where a
+# reader who wants them goes looking.
+knowledge_lead: "Những gì chúng tôi đã đo, đã sai và đã sửa ngay trên sàn xưởng, viết lại để bạn dùng được ngay. Miễn phí, bài mới mỗi Chủ nhật."
 knowledge_topics_label: "Đọc theo chủ đề"
+# The rail's accessible name. It used to be a visible <h3> over the list; the
+# three cards say "articles" without being told, and on a page this long a
+# heading that adds nothing costs a line the contact section below it needs.
 knowledge_latest_label: "Bài viết mới nhất"
+# The card's second line: topic · reading time. The minutes are here for the
+# same reason YouTube stamps a duration on every thumbnail — a reader decides
+# whether to click by weighing interest against cost, and a cost they cannot
+# see is assumed to be high. Ours are mostly five to seven minutes, which is
+# an argument FOR clicking, so it is stated.
+knowledge_minutes: "%d phút đọc"
 # %d is the live post count, substituted in knowledge.html.
 knowledge_all: "Xem tất cả %d bài viết"
 

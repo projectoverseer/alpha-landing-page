@@ -20,7 +20,12 @@
             width="252"
           />
           <figcaption>
-            {{ t.male_title }} <span lang="vi">Phan Đức Tuấn Anh</span>,<br />
+            {%- comment -%}
+              The name that started the rule: "Ông Phan / Đức Tuấn Anh" is the
+              break the owner will not have (2026-08-10). `.name` is nowrap —
+              see _base.scss for why a CSS class and not `&nbsp;`.
+            {%- endcomment -%}
+            <span class="name">{{ t.male_title }} <span lang="vi">Phan Đức Tuấn Anh</span></span>,<br />
             {{ t.founder_title }} {{ t.of }} Alpha Software
           </figcaption>
         </figure>
