@@ -1,6 +1,7 @@
 ---
 title: "OEE của nhà máy nhuộm – yếu tố thất thoát doanh thu và lợi nhuận"
 description: "Xưởng 20 máy lý thuyết chạy 80 mẻ/ngày nhưng chỉ hoàn thành 48 mẻ đạt chuẩn – 60% đó chính là OEE. Nó mất đi ở đâu, và cải thiện 5 điểm phần trăm đáng giá bao nhiêu?"
+meta_desc: "Xưởng 20 máy chạy 80 mẻ/ngày trên lý thuyết, thực tế chỉ 48 mẻ đạt chuẩn – đó là OEE 60%. Nó mất ở đâu, và 5 điểm phần trăm đáng giá bao nhiêu?"
 topic: van-hanh
 series: so-hoa-oee
 series_part: 1

@@ -1,6 +1,7 @@
 ---
 title: "Ánh sáng và nguồn sáng chuẩn"
 description: "Ánh sáng trắng là gì, vì sao phải so màu dưới nguồn sáng chuẩn, tủ đèn và phòng so màu đạt chuẩn cần những gì – và metamerism, hiện tượng đánh lừa cả nhà máy lẫn khách hàng."
+meta_desc: "Vì sao phải so màu dưới nguồn sáng chuẩn, tủ đèn và phòng so màu cần những gì – và metamerism, hiện tượng đánh lừa cả nhà máy lẫn khách hàng."
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 1

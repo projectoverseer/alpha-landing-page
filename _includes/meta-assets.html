@@ -1,4 +1,23 @@
-<!-- Preload LCP hero image so the browser discovers it before CSS is parsed.
+<!-- Preload the hero image so the browser discovers it before CSS is parsed.
+
+     IT IS NOT THE LCP, WHATEVER THIS COMMENT USED TO SAY. Measured in Chrome
+     under mobile throttling, on both /vi and /en, the Largest Contentful Paint
+     element is `P.big` — the hero's own description paragraph. The photograph
+     is a CSS `background-image` on a header that fills the viewport, and
+     Chrome does not report it as the LCP candidate. FCP and LCP land on the
+     same millisecond, which is the signature of a text LCP.
+
+     The consequence is that the fonts, not this image, are what gate the LCP:
+     the paragraph cannot reach its final paint until Inter arrives. So
+     inter-latin.woff2 (105 KB) and inter-vietnamese.woff2 (18 KB) below KEEP
+     their default High preload priority, and this image keeps
+     `fetchpriority="high"` too — deliberately, and not because it is the LCP.
+     Demoting it would put a 31 KB photograph behind 123 KB of font on a
+     ~200 KB/s pipe and leave the first screen showing the ink splash colour
+     for roughly half a second longer. The metric would improve and the page
+     would look worse. If that trade is ever revisited, revisit it with a
+     screenshot, not with a number.
+
      The candidates MUST mirror the `image-set()` in _sass/_base.scss exactly —
      1920 at 1x, 3840 at 2x — or the preload fetches an image the CSS then
      declines to use. With a bare `href` to the 1x file this preloaded 1920.avif

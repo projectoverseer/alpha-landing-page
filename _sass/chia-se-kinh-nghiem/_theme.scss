@@ -1086,6 +1086,31 @@ body.kt {
   line-height: 1.25;
 }
 
+// The hub's opening line, under its h1. Same job and same drawing as
+// `.kt-rail-lead` further down — say what the thing below is, quietly — but at
+// the standfirst's size, because this one opens the whole page rather than one
+// block inside it.
+.kt-hub-lead {
+  margin: 1rem 0 0;
+  font-family: var(--font-read);
+  @include read(18);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+// "Bài viết mới nhất", now an h2 sitting directly on the feed rather than
+// being the page's h1 (see the note in the hub layout). It labels a list, so
+// it is drawn at the rail title's weight, not the h1's — the reader should
+// read it as furniture for the list, which is what the owner asked the label
+// to be in the first place.
+.kt-feed-heading {
+  margin: 2.5rem 0 0;
+  font-family: var(--font-read);
+  @include read(21);
+  font-weight: 620;
+  line-height: 1.35;
+}
+
 .kt-standfirst {
   margin: 1.25rem 0 0;
   font-family: var(--font-read);
@@ -1275,7 +1300,9 @@ body.kt {
   -webkit-tap-highlight-color: transparent;
 
   img {
-    transition: transform var(--t-2) var(--ease), border-color var(--t-2) var(--ease);
+    transition:
+      transform var(--t-2) var(--ease),
+      border-color var(--t-2) var(--ease);
   }
 
   &:hover img {
@@ -2486,7 +2513,7 @@ body.kt-lightbox-open {
   color: var(--ink-3) !important;
 }
 
-// "Việc mang về xưởng" — the last thing read before the signature, and the
+// "Mang về xưởng" — the last thing read before the signature, and the
 // reason a reader who skipped the questions still leaves with something.
 .kt-mang-ve {
   margin: step(5) 0 0;

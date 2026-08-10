@@ -1,6 +1,7 @@
 ---
 title: "Phân biệt Nylon 6 và Nylon 6.6 trong dệt nhuộm"
 description: "Cùng họ polyamide, nhưng một loại đi từ caprolactam còn loại kia trùng ngưng từ hai monomer – khác biệt đó đẩy điểm nóng chảy từ 215 °C lên 265 °C. Và nhóm N-H có trong cả hai chính là chỗ thuốc nhuộm acid bám vào sợi."
+meta_desc: "Nylon 6 đi từ caprolactam, Nylon 6.6 trùng ngưng từ hai monomer – khác biệt đó đẩy điểm nóng chảy từ 215 °C lên 265 °C. Nhóm N-H là chỗ thuốc nhuộm bám."
 topic: ky-thuat-nhuom
 series: nylon
 series_part: 1

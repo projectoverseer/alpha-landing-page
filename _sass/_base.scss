@@ -1165,26 +1165,146 @@ dd {
   }
 }
 
-// The strip that closes the page. It is furniture, not content, so it takes
-// the quiet cool grey — the reader has reached the building's back wall. (It
-// used to be `.bg-gray-100`, a utility name; the name now says which part of
-// the page it is.)
-.footer-strip {
+// ─── The footer is furniture, and now it looks like furniture ───
+//
+// The grey used to stop at `.footer-strip`, the thin copyright bar. Everything
+// above it — company name, phone, email, socials — sat on the same white as
+// the page, so the contact block read as one more SECTION of the argument
+// rather than as the end of it (owner, 2026-08-10). On a page that now closes
+// with a content section, that ambiguity got worse: two white blocks in a row,
+// one of them content and one of them furniture, with nothing saying which.
+//
+// So the ground goes on the whole <footer>, at the grey the strip already
+// used. The strip then keeps its own edge with a hairline instead of a second
+// tint — a footer divided into two greys reads as two more sections, which is
+// the opposite of the point. One ground, one line.
+//
+// COOL, not warm. Every neutral surface on this site is blue-leaning — warmth
+// on this site means dye, and a beige footer would read as a different brand
+// (owner rejected warm neutrals on sight, 2026-07-28).
+//
+// This is a tint used to separate FURNITURE from CONTENT, which is not the
+// thing the calm-baseline rule forbids. That rule is about not tinting content
+// sections away from each other to manufacture rhythm; the page above still
+// runs on one uniform white.
+footer {
   background: $surface-footer;
 }
 
-// The route to the reading hub, under the contact block. A page region, so it
-// takes the page-region rung (step 8) off the address above it — the same
-// distance the address itself sits from the company name, one rung up.
-.footer-more {
-  margin-top: step(8);
+.footer-strip {
+  border-top: 1px solid $surface-footer-line;
 }
 
-// The blurb explains the destination, so it belongs to the link rather than
-// standing beside it: own line, hairline gap, metadata grey.
-.footer-more-item small {
+// ─── The Chia sẻ kinh nghiệm section on the homepage ───
+//
+// (`.footer-more` / `.footer-more-item` used to sit here, styling the footer's
+// single link to the hub. That block was removed on 2026-08-10 — the section
+// below renders directly above the footer and superseded it. The one rule
+// worth keeping from it is the relationship between a link and the line under
+// it, which is reused here rather than reinvented.)
+//
+// _includes/knowledge.html — two short lists of links, and nothing else. There
+// is no card, no tint, no rule and no shadow here on purpose: the owner has
+// twice rejected added section-separation, and a list of links needs none of
+// it to read as a list of links. What it does need is for each link to be
+// unmistakably the target and the line under it to be unmistakably not.
+.knowledge-topic-list,
+.knowledge-post-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: step(4);
+  margin-bottom: 0;
+
+  li + li {
+    margin-top: step(5);
+  }
+
+  // The link carries the weight because it is the thing being offered; the
+  // title is also the anchor text a crawler reads, so it is never abbreviated.
+  > li > a {
+    font-weight: 600;
+  }
+
+  small {
+    display: block;
+    margin-top: step(1);
+  }
+}
+
+// A date is metadata about the link above it, not a second link, and at body
+// size it competes. `font-variant-numeric: tabular-nums` because three dates
+// stacked in a column should line up on the separator — the one detail here
+// that anybody would notice only if it were missing.
+.knowledge-post-list small {
+  font-variant-numeric: tabular-nums;
+}
+
+// ─── An article's row: its picture, its title, its date, one link ───
+//
+// The whole row is inside the <a>, not just the title. On a phone the title
+// alone is a two-line target beside an 80px square of dead pixels; wrapping
+// the row makes the square part of the target and roughly doubles it. It also
+// means there is exactly one link per article — a picture link and a title
+// link pointing at the same URL is a duplicate for a screen reader and two
+// tab stops for a keyboard.
+.knowledge-post {
+  display: flex;
+  align-items: flex-start;
+  gap: step(4);
+  text-decoration: none;
+}
+
+// A fixed square, cropped on the picture's own attention point (the inline
+// `object-position` each <img> carries). Square rather than the feed's
+// natural-ratio card: this is a row in a list, and rows whose left edge is a
+// different height each time read as debris.
+//
+// `flex-shrink: 0` or a long title squeezes the picture into a sliver — the
+// default `min-width: auto` on a flex item does not protect an <img> whose
+// width is set in CSS.
+// 4:3, not the square this started as. Square was wrong for what these
+// pictures ARE: the hub's illustrations are wide technical diagrams drawn on
+// white, and a square crop of one is a box of whitespace with a band of
+// content across the middle — it says "there is a picture here" without saying
+// anything about the picture. Landscape keeps enough of the diagram to be
+// recognisable at thumbnail size. (The hub itself solves the same problem
+// harder, with Facebook's 1.91:1…4:5 window; that machinery is not worth
+// porting for three rows.)
+//
+// THE HAIRLINE IS LOAD-BEARING, not decoration. These illustrations have white
+// grounds and the page is white, so without it the picture has no edge and
+// bleeds into the row — the reader sees a floating diagram rather than a
+// thumbnail. It is the coolest of the greys and one pixel; you would not
+// notice it, you would only notice its absence.
+.knowledge-post-thumb {
+  flex-shrink: 0;
+  width: step(10);
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+  border: 1px solid $ink-100;
+  border-radius: $r-1;
+
+  @include media-breakpoint-up(md) {
+    width: step(11);
+  }
+}
+
+.knowledge-post-text {
+  min-width: 0; // let the title wrap instead of forcing the row wider
+}
+
+// The title carries the link's colour and underline; the date under it must
+// not, or the row reads as two links.
+.knowledge-post-title {
+  display: block;
+  font-weight: 600;
+}
+
+.knowledge-post small {
   display: block;
   margin-top: step(1);
+  text-decoration: none;
 }
 
 .hr {

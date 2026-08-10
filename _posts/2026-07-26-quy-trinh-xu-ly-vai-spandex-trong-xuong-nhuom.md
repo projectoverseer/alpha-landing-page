@@ -1,6 +1,7 @@
 ---
 title: "Quy trình xử lý vải spandex trong xưởng nhuộm"
 description: "Vải có spandex lợi nhuận cao nhưng rủi ro lỗi gia công rất lớn. 5 bước xử lý chuẩn cho cả dệt thoi và dệt kim, kèm những ngưỡng nhiệt độ và thời gian tuyệt đối không được vượt."
+meta_desc: "5 bước xử lý chuẩn vải spandex cho cả dệt thoi và dệt kim, kèm những ngưỡng nhiệt độ và thời gian tuyệt đối không được vượt."
 topic: ky-thuat-nhuom
 series: spandex
 series_part: 2

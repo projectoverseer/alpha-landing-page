@@ -752,7 +752,11 @@ for (const stem of ['main', 'chiasekinhnghiem']) {
     const css = readFileSync(join(SITE, 'css', file), 'utf8');
     const surfaces = [
       ['the one tinted band', /--bs-light:\s*(#[0-9a-f]{6})/i],
-      ['the footer strip', /\.footer-strip\{background:(#[0-9a-f]{6})/i],
+      // The footer's ground moved from `.footer-strip` to the whole `<footer>`
+      // on 2026-08-10 (the contact block was reading as a page section, not as
+      // furniture). Anchored on a rule boundary so `.blockquote-footer` and the
+      // hub's `.kt-footer` cannot satisfy it by accident.
+      ['the footer ground', /(?:^|[},])footer\{background:(#[0-9a-f]{6})/i],
       ['the review card', /\.review-card\{[^}]*background:(#[0-9a-f]{6})/i],
     ];
     for (const [name, re] of surfaces) {

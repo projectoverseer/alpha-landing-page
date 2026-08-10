@@ -44,36 +44,31 @@
       <dd>13:00 &ndash; 16:00 ({{ t.footer_hours_afternoon }})</dd> -->
     </dl>
   </address>
-  {%- if t.toc_knowledge %}
   {%- comment -%}
-    THE READING HUB'S ONLY ENTRANCE ON A PHONE, AND THAT IS WHY IT IS HERE.
+    THE "XEM THÊM → CHIA SẺ KINH NGHIỆM" BLOCK THAT USED TO BE HERE IS GONE,
+    AND THE THING IT WAS SOLVING IS SOLVED PROPERLY NOW.
 
-    The bar carries a `Chia sẻ kinh nghiệm` link, but `.navbar-collapse` is a
-    plain `.collapse` with no toggler, so under lg it is `display: none` — the
-    link exists at exactly the widths that do not need it and is missing for
-    four out of five readers. The hub was reachable from a phone only by typing
-    the URL: a whole library of the founder's own writing, cut off from the page
-    it belongs to (owner, 2026-07-29: "bị cắt đứt kết nối … Không ideal").
+    It was added on 2026-07-29 because the hub had no entrance on a phone: the
+    bar's link lives in `.navbar-collapse`, which is a plain `.collapse` with no
+    toggler and therefore `display: none` under lg, so for four readers in five
+    a whole library of the founder's writing hung off nothing at all ("bị cắt
+    đứt kết nối … Không ideal"). The footer was the one place a link could go
+    without touching the reading order above it, which was the condition
+    ("không làm interrupt flow").
 
-    The footer is where a site's secondary destinations live — it is the one
-    place a link can be added without touching the reading order of the page
-    above it, which was the owner's condition ("không làm interrupt flow").
-    There is a second route in the prose of Về chúng tôi, where the founder's 28
-    years are introduced; between them the hub is reachable from the middle of
-    the page and from its end, at every width.
+    _includes/knowledge.html now does that job, in the same position — last,
+    after the contact section, interrupting nothing — and does it far better:
+    three topic pages and the three newest articles by name, instead of one
+    link and a blurb. It renders immediately above this footer. Keeping both
+    put the same destination twice within about 150px of vertical scroll, the
+    second time in weaker words.
 
-    Gated on `t.toc_knowledge` because the hub is Vietnamese-only — the key does
-    not exist in en.yml, so the English page renders no dead link. Same gate the
-    navbar item uses.
-  {%- endcomment %}
-  <nav aria-label="{{ t.footer_more_title }}" class="footer-more">
-    <p class="h5">{{ t.footer_more_title }}</p>
-    <p class="big footer-more-item">
-      <a href="{{ site.url }}/chia-se-kinh-nghiem/">{{ t.toc_knowledge }}</a>
-      <small class="text-secondary">{{ t.footer_knowledge_blurb }}</small>
-    </p>
-  </nav>
-  {%- endif %}
+    (The old comment here also claimed "a second route in the prose of Về chúng
+    tôi". There was never such a link in our-story.html. It is not restored:
+    the section below the prose is the route.)
+
+    `footer_more_title` and `footer_knowledge_blurb` went with it.
+  {%- endcomment -%}
 </div>
 <div class="container-fluid px-0 pt-3 pb-3 footer-strip">
   <div class="container">

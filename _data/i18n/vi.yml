@@ -15,8 +15,8 @@ to_homepage: "Đi đến trang chủ Alpha Software"
 skip_to_content: "Chuyển đến nội dung chính"
 slogan: "Chuyển đổi số ngành dệt nhuộm"
 description: "Alpha Software đang tái định nghĩa cách quản lý sản xuất trong ngành dệt may tại Việt Nam bằng hệ thống phần mềm tự động hoá tiên tiến, thiết kế riêng cho từng quy trình. Phần mềm giúp giảm thiểu lỗi thủ công, lập kế hoạch trực quan, kết nối thiết bị sản xuất và tối ưu hoá hiệu quả. Chúng tôi đồng hành cùng nhà máy dệt may nâng cao chất lượng, gia tăng sản lượng và rút ngắn thời gian giao hàng, góp phần đưa Việt Nam trở thành cường quốc sản xuất dệt may."
-learn_more: "Tìm hiểu thêm"
-learn_more_aria: "Tìm hiểu thêm về Alpha Software"
+learn_more: "Xem Alpha làm được gì"
+learn_more_aria: "Xem Alpha Software làm được gì"
 
 # The call affordance in the fixed bar and in the hero. The short label shows
 # under md, where the bar has no room for eleven digits; the aria-label always
@@ -78,7 +78,7 @@ language_switcher_label: "Đổi ngôn ngữ"
 
 # --- Overview Section ---
 
-overview_title: "Giới thiệu phần mềm quản lý nhà máy thông minh của Alpha Software"
+overview_title: "Phần mềm quản lý nhà máy thông minh cho xưởng dệt nhuộm"
 
 feature_tech_mgmt_title: "Quản lý công nghệ thông minh"
 feature_tech_mgmt_point_1: "Có công cụ để người kỹ thuật trưởng lưu trữ tri thức công nghệ của công ty vào phần mềm."
@@ -120,6 +120,11 @@ benefit_equipment_retrofit_desc: "Chúng tôi có trình độ và kinh nghiệm
 
 products_title: "Các sản phẩm của Alpha Software"
 product_1: "Hệ thống quản lý nhà máy Alpha Smart Dyehouse"
+# One sentence per product, for the SoftwareApplication / Product structured
+# data in meta.html. Not rendered anywhere on the page — the accordion carries
+# the full copy. Keep it factual and self-contained: this is the sentence an
+# answer engine quotes when someone asks what the product does.
+product_1_intro_short: "Phần mềm quản lý toàn diện cho nhà máy nhuộm: đơn hàng, lập kế hoạch nhuộm, tự động tạo công thức màu, cân thuốc, điều hành quy trình, kiểm tra chất lượng và đóng gói – kết nối trực tiếp với thiết bị trong xưởng."
 alpha_smart_dyehouse: '<span class="mini-h3">Hệ thống quản lý nhà máy </span>Alpha Smart Dyehouse'
 alpha_smart_dyehouse_content: '<h4>1. Giới thiệu</h4>
             <p>
@@ -176,6 +181,7 @@ alpha_smart_dyehouse_content: '<h4>1. Giới thiệu</h4>
               quả cao trong toàn bộ hệ thống.
             </p>'
 product_2: "Cân thuốc nhuộm bán-tự-động Alpha Dyes Weighing"
+product_2_intro_short: "Trạm cân thuốc nhuộm bán-tự-động với đèn LED chỉ vị trí hộp thuốc và quét mã QR xác nhận đúng thuốc – bảo đảm độ chính xác và an toàn khi chuẩn bị thuốc nhuộm."
 alpha_dyes_weighing: '<span class="mini-h3">Cân thuốc nhuộm bán-tự-động </span>Alpha Dyes Weighing'
 alpha_dyes_weighing_content: '<h4>1. Giới thiệu</h4>
             <p>
@@ -224,7 +230,7 @@ alpha_dyes_weighing_content: '<h4>1. Giới thiệu</h4>
 
 # --- Projects Section ---
 
-projects_title: "Các dự án của Alpha Software"
+projects_title: "Những nhà máy đã triển khai Alpha Software"
 
 project_tuan_hong_company_name: "Công ty TNHH Chỉ may Tuấn Hồng"
 project_tuan_hong_short_name: 'Tuấn Hồng'
@@ -303,7 +309,7 @@ review_dinh_van_hiep_body: '<p>Phần mềm Alpha Software hỗ trợ rất tố
 
 # --- Our Story Section ---
 
-our_story_title: "Về Alpha Software"
+our_story_title: "Người đứng sau Alpha Software"
 founder_title: "Nhà sáng lập"
 
 our_story_body: '<p class="mt-md-0">
@@ -318,9 +324,9 @@ our_story_body: '<p class="mt-md-0">
 
 # --- Support Section ---
 
-support_title: "Chúng tôi rất hân hạnh được hỗ trợ bạn!"
+support_title: "Gọi trực tiếp cho người sáng lập"
 support_call_prompt: "Hãy gọi"
-support_email_prompt: "để cho phép chúng tôi tư vấn bạn miễn phí hoặc gửi các câu hỏi của bạn qua địa chỉ"
+support_email_prompt: "để được tư vấn miễn phí, hoặc gửi câu hỏi của bạn qua địa chỉ"
 support_cta: "Gửi email đến Alpha Software"
 
 # --- Footer ---
@@ -334,8 +340,22 @@ footer_hours_morning: "sáng"
 footer_hours_afternoon: "chiều"
 copied_email_message: "Đã copy địa chỉ email!"
 
-# The footer's route to the reading hub. Vietnamese-only, like `toc_knowledge`
-# itself — footer.html renders the whole block only when that key is present, so
-# these two never need an English twin.
-footer_more_title: "Xem thêm"
-footer_knowledge_blurb: "Thư viện bài viết về kỹ thuật nhuộm, đo màu và vận hành xưởng, viết bởi Ông Phan Đức Tuấn Anh."
+# The homepage's Chia sẻ kinh nghiệm section (_includes/knowledge.html), the
+# last block of <main>. Vietnamese-only for the same reason as the keys below:
+# the include renders nothing at all unless `toc_knowledge` exists, so /en/
+# never reaches these and they need no English twin.
+# Deliberately NOT "chia-se-kinh-nghiem": that string is already the hub's URL
+# path, and a section id that reads identically to a path on the same site is a
+# trap for whoever next writes a link and cannot tell from the text whether
+# they meant /chia-se-kinh-nghiem/ or /#chia-se-kinh-nghiem.
+toc_knowledge_id: "kien-thuc"
+knowledge_title: "Chia sẻ kinh nghiệm"
+knowledge_lead: "Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm, viết bởi Ông Phan Đức Tuấn Anh từ 28 năm trong nghề: 13 năm kỹ thuật viên nhuộm, 15 năm giám đốc nhà máy."
+knowledge_topics_label: "Đọc theo chủ đề"
+knowledge_latest_label: "Bài viết mới nhất"
+# %d is the live post count, substituted in knowledge.html.
+knowledge_all: "Xem tất cả %d bài viết"
+
+# (`footer_more_title` and `footer_knowledge_blurb` were removed on 2026-08-10
+# with the footer block they fed — the homepage's Chia sẻ kinh nghiệm section
+# above replaces it. See the note in _includes/footer.html.)

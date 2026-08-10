@@ -1,6 +1,7 @@
 ---
 title: "RFT – chỉ số quan trọng nhất trong xưởng nhuộm"
 description: "Right First Time: tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu – chỉ số chi phối tiến độ giao hàng, chi phí, sản lượng lẫn chất lượng. Cách đo và chu trình 4 bước để cải thiện."
+meta_desc: "Right First Time – tỷ lệ mẻ nhuộm đạt chuẩn ngay lần đầu, chỉ số chi phối cả tiến độ, chi phí lẫn chất lượng. Cách đo và chu trình 4 bước để cải thiện."
 topic: van-hanh
 image: rft-nhuom-dat-tu-lan-dau
 learn:

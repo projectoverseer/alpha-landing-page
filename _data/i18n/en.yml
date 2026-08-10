@@ -15,8 +15,8 @@ to_homepage: "Go to Alpha Software homepage"
 skip_to_content: "Skip to main content"
 slogan: "Digital Transformation for Textile Dyeing"
 description: "Alpha Software is redefining production management for Vietnam's textile industry with advanced automation software designed around each factory's own processes. Our systems reduce manual errors, make planning visual, connect production equipment, and optimize efficiency. We work alongside textile mills to raise quality, increase output, and shorten delivery times – doing our part to make Vietnam a world-class textile manufacturing nation."
-learn_more: "Learn more"
-learn_more_aria: "Learn more about Alpha Software"
+learn_more: "See what Alpha does"
+learn_more_aria: "See what Alpha Software does"
 
 # The call affordance in the fixed bar and in the hero. The short label shows
 # under md, where the bar has no room for eleven digits; the aria-label always
@@ -69,7 +69,7 @@ language_switcher_label: "Change language"
 
 # --- Overview Section ---
 
-overview_title: "Introducing the Alpha Smart Dyehouse Factory Management System"
+overview_title: "Factory management software built for textile dyehouses"
 
 feature_tech_mgmt_title: "Smart technology management"
 feature_tech_mgmt_point_1: "The software gives your chief engineer the tools to capture the company's technological know-how and store it in the system."
@@ -111,6 +111,11 @@ benefit_equipment_retrofit_desc: "We have the expertise to connect automated equ
 
 products_title: "Alpha Software Products"
 product_1: "Alpha Smart Dyehouse"
+# One sentence per product, for the SoftwareApplication / Product structured
+# data in meta.html. Not rendered anywhere on the page — the accordion carries
+# the full copy. Keep it factual and self-contained: this is the sentence an
+# answer engine quotes when someone asks what the product does.
+product_1_intro_short: "Comprehensive dyehouse management software covering orders, dye planning, automatic colour-recipe generation, weighing, process control, quality control and packing – integrated directly with the equipment on the factory floor."
 alpha_smart_dyehouse: 'Alpha Smart Dyehouse <span class="mini-h3">Factory Management System</span>'
 alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
             <p>
@@ -146,6 +151,7 @@ alpha_smart_dyehouse_content: '<h4>1. Introduction</h4>
               <strong>Alpha Smart Dyehouse</strong> integrates deeply with the equipment in your dyehouse. The solution communicates with devices such as dye scales, lab dispensers, bulk dispensers, and lab spectrophotometers. Alpha has also developed two specialized hardware devices of its own – <strong>Alpha Dyes Weighing</strong> and the Alpha Dyeing Controller – ensuring tight synchronization and high efficiency across the entire system.
             </p>'
 product_2: "Alpha Dyes Weighing"
+product_2_intro_short: "Semi-automatic dye weighing station with LED position indicators and QR-code dye verification, for accurate and safe dye preparation."
 alpha_dyes_weighing: 'Alpha Dyes Weighing <span class="mini-h3">Semi-Automatic Dye Scale</span>'
 alpha_dyes_weighing_content: '<h4>1. Introduction</h4>
             <p>
@@ -175,7 +181,7 @@ alpha_dyes_weighing_content: '<h4>1. Introduction</h4>
 
 # --- Projects Section ---
 
-projects_title: "Alpha Software Projects Showcase"
+projects_title: "Dyehouses already running Alpha Software"
 
 project_tuan_hong_company_name: "Tuan Hong Sewing Thread Company Limited"
 project_tuan_hong_short_name: 'Tuấn Hồng'
@@ -241,14 +247,14 @@ review_dinh_van_hiep_body: '<p>Alpha Software has been a great help to our compa
 
 # --- Our Story Section ---
 
-our_story_title: "About Alpha Software"
+our_story_title: "The person behind Alpha Software"
 founder_title: "Founder"
 
 our_story_body: '<p class="mt-md-0">Alpha Software was founded in 2021 by Mr. Phan Đức Tuấn Anh, who brings more than 28 years of hands-on experience in the textile industry – 13 as a dyeing technician and 15 as a factory director. With a strong foundation in organic chemistry and a deep command of factory management and software development, Mr. Tuấn Anh leads Alpha in delivering practical technology that meets the real needs of modern textile manufacturers.</p>'
 
 # --- Support Section ---
 
-support_title: "We're happy to help!"
+support_title: "Talk to the founder directly"
 support_call_prompt: "Call us at"
 support_email_prompt: "for a free consultation, or email your questions to"
 support_cta: "Email Alpha Software"

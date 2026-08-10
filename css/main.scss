@@ -170,7 +170,8 @@ $surface-chrome: $white; // the bar — white, an owner decision (see the ramp n
 $surface-alt: $blue-50; // the one tinted band (Lợi ích); see the note in §3
 $surface-quote: $ink-25; // a person speaking in their own words — neutral, objective
 $surface-sunk: $ink-25; // menus, wells
-$surface-footer: $ink-50; // the strip that closes the page
+$surface-footer: $ink-50; // the whole footer — the page's back wall
+$surface-footer-line: $ink-100; // the hairline above the copyright bar
 $surface-dark: $ink-900; // the CTA panel
 $surface-deep: $ink-950; // hero splash / deepest ground
 

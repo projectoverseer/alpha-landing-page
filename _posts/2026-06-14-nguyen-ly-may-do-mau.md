@@ -1,6 +1,7 @@
 ---
 title: "Nguyên lý máy đo màu"
 description: "Máy quang phổ biến màu sắc thành con số khách quan như thế nào: phổ phản xạ – \"dấu vân tay\" của tấm vải – và cách phần mềm tính ra L*a*b* dưới từng nguồn sáng."
+meta_desc: "Máy quang phổ biến màu sắc thành con số khách quan thế nào: phổ phản xạ – dấu vân tay của tấm vải – và cách tính ra L*a*b* dưới từng nguồn sáng."
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 2

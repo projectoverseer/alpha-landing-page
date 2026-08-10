@@ -8,11 +8,14 @@ author:
   # slug of the portrait in img/portraits/ (a -2x.jpg sibling exists too).
   slug: "phan-duc-tuan-anh"
   portrait: "chan-dung-ong-phan-duc-tuan-anh"
-  # Shown on the author page's intro card and used as its meta description.
+  # Shown on the author page's intro card. `meta_desc` below is what the search
+  # result gets; without it this whole bio would be the meta description and
+  # Google would cut it mid-sentence at ~160 characters.
   bio: >-
     Nhà sáng lập Alpha Software, với hơn 28 năm gắn bó với ngành dệt nhuộm –
     13 năm làm kỹ thuật viên nhuộm và 15 năm làm giám đốc nhà máy. Anh viết
     loạt bài này từ chính những gì đã đo, đã sai và đã sửa ngay trên sàn xưởng.
+  meta_desc: "Nhà sáng lập Alpha Software: 13 năm kỹ thuật viên nhuộm, 15 năm giám đốc nhà máy. Anh viết từ chính những gì đã đo, đã sai và đã sửa trên sàn xưởng."
 
 # Hub sections, in display order. Posts declare `topic: <key>` in front matter.
 topics:
@@ -39,9 +42,11 @@ series:
   spandex:
     label: "Spandex trong dệt nhuộm"
     desc: "Từ công nghệ chế tạo sợi spandex, cách đưa sợi vào dệt thoi và dệt kim, đến quy trình 5 bước xử lý trong xưởng nhuộm – mặt hàng lợi nhuận cao nhưng rủi ro lỗi gia công rất lớn."
+    meta_desc: "Từ công nghệ chế tạo sợi spandex đến quy trình 5 bước xử lý trong xưởng nhuộm – mặt hàng lợi nhuận cao nhưng rủi ro lỗi gia công rất lớn."
   nylon:
     label: "Nylon trong xưởng nhuộm"
     desc: "Từ cấu tạo phân tử của Nylon 6 và Nylon 6.6, đến bốn nhóm thuốc nhuộm acid và cách từng nhóm gắn vào xơ – nền tảng để chọn đúng thuốc nhuộm và chạy đúng quy trình cho mặt hàng Nylon."
+    meta_desc: "Từ cấu tạo phân tử Nylon 6 và Nylon 6.6 đến bốn nhóm thuốc nhuộm acid – nền tảng để chọn đúng thuốc nhuộm cho mặt hàng Nylon."
 
 # Image library for the hub. One entry per picture, keyed by its file slug in
 # img/chia-se-kinh-nghiem/ — the alt text, caption and intrinsic size live here

@@ -154,3 +154,262 @@ They need a **deploy (commit + push `docs/`)** to go live, then a re-audit.
 
 Realistic ceiling after deploy: Best-Practices **1.00**, desktop Perf **~0.98–1.0**,
 mobile Perf **~0.90–0.94**. Re-run audits **plugged in** (not Battery Saver).
+
+---
+
+## 2026-08-10 — full performance + SEO audit of all 27 indexable pages
+
+Measured in real Chrome over CDP under Lighthouse-like mobile throttling
+(412×915 @2.625dppx, 1.6 Mbps / 150 ms RTT, 4× CPU), against the **live** site.
+Not inferred from source.
+
+### What the measurement actually said
+
+| | homepage `/` | hub `/chia-se-kinh-nghiem/` |
+|---|---|---|
+| Transferred | 434 KB, 19 req | 532 KB, 15 req |
+| CLS | **0.000** | **0.000** |
+| LCP element | `P.big` — **text** | the card AVIF |
+| gtag.js | 168 KB (**39%** of the page) | 168 KB (32%) |
+| Fonts | 123 KB | **227 KB** |
+| Everything else first-party | 80 KB | ~53 KB |
+
+Two things fell out of the waterfall that source reading had not shown.
+
+**1. The homepage's LCP is the hero PARAGRAPH, not the hero photograph.** FCP and
+LCP land on the same millisecond, which is the signature of a text LCP. The photo
+is a CSS `background-image` on a viewport-filling header and Chrome does not
+report it as the candidate. `meta-assets.html` had asserted the opposite in a
+comment since the preload was added, so the reasoning downstream of it — that
+this image is what to protect — was aimed at the wrong element. The comment is
+corrected in place. The preload itself is **kept at `fetchpriority="high"`
+deliberately**: demoting it puts a 31 KB photograph behind 123 KB of font on a
+~200 KB/s pipe, which improves the metric and makes the first screen worse.
+
+**2. On the hub, 227 KB of font was tied with the 31 KB LCP image.** All four
+`rel=preload as=font` tags default to High priority and were issued within 5 ms
+of the image, at +233 ms. The image cannot win a race it is tied in.
+
+**Fixed:** the four hub font preloads now carry `fetchpriority="low"`. Verified
+in the browser — the image is now alone in the High band at +242 ms and all four
+fonts are Low at +247–256 ms. `fetchpriority` rather than deleting the tags,
+because a preload buys early discovery *and* high priority and only the second
+was the problem; deleting them would delay the swap and risk a byline reflow on
+pages that measure CLS 0.000 today.
+
+### The two remaining levers, both owner decisions
+
+- **The `opsz` axis costs 42.8 KB of the homepage's critical path.** Measured with
+  fontTools by pinning `opsz` at its Text default and re-compressing: `inter-latin`
+  105,872 → 68,740 bytes and `inter-vietnamese` 17,332 → 11,680 — **35% of the
+  preloaded Inter payload is the optical-size axis**. `inter-latin.woff2` alone
+  (105 KB) outweighs the homepage's HTML + CSS + JS + hero combined (80 KB). The
+  axis is a deliberate choice with a written rationale (`_sass/_fonts.scss`) and
+  is **not** changed here; this is the price tag for that choice, now known.
+- **gtag.js is 39% of the homepage.** Already idle-deferred and cannot be shrunk
+  without dropping GA4. See the standing Zaraz note above — same conclusion.
+
+Beyond those, there is very little headroom left: CLS is 0 on every page, the
+hub ships zero first-party JS, assets are content-hashed and immutably cached,
+images are AVIF with JPEG fallback and correct `srcset`/`sizes`, and HTML is
+8–13 KB over the wire.
+
+### SEO — what was wrong, and what changed
+
+| | before | after |
+|---|---|---|
+| Titles over the ~60-char SERP budget | 12 of 27 | **5** (all long headlines — editorial) |
+| Descriptions over ~160 chars | 15 of 27 | **0** |
+| Distinct hub URLs linked from the homepage | **1** | **7** |
+| JSON-LD types on the homepage | 3 | 5 |
+
+- **Titles.** The `· Chia sẻ kinh nghiệm Alpha` suffix was 28 characters of a
+  pixel budget that gets cut from the END — so on a long piece the reader lost
+  the headline to keep a brand tag that was never at risk. Articles now carry
+  the bare title; Google supplies the site name from the homepage `WebSite`
+  schema. Collection pages keep a short ` · Chia sẻ kinh nghiệm`.
+- **Descriptions.** `description` doubles as the on-page standfirst, so trimming
+  it would have shortened visible prose. Instead an optional `meta_desc` was
+  added (post front matter + taxonomy sibling key) used **only** for the meta
+  and og/twitter tags. **No visible copy changed on any page.**
+- **The reading hub had one entrance from the homepage on a phone.** The navbar
+  link lives in `.navbar-collapse`, `display: none` under lg with no toggler, so
+  for four readers in five it does not exist; the footer link was the whole
+  route. `_includes/knowledge.html` now closes the page with the three topic
+  pages and the three newest articles by name. The footer's duplicate block was
+  removed with it.
+- **`meta name="keywords"` removed** (ignored since 2009; published our targeting
+  to competitors). `robots` now carries `max-image-preview:large, max-snippet:-1`
+  — the hub already had these; the pages that have to sell did not.
+- **Products declared as products.** `SoftwareApplication` (Smart Dyehouse) and
+  `Product` (Dyes Weighing), plus `contactPoint` on the Organization. No `offers`
+  and no ratings attached — see below.
+
+### Known and deliberately not fixed
+
+- **The customer reviews earn no rich result and cannot.** `AggregateRating` and
+  `Review` hang off the `Organization`, and Google's policy excludes reviews
+  about the publishing entity. The workaround — reattaching them to the
+  `SoftwareApplication` — was **refused**: the reviewers are describing working
+  with Alpha, not rating a SKU. The honest route to stars is third-party.
+- **`Organization` has no `address`.** No postal address exists anywhere in the
+  repo and one must not be invented. Real gap; owner has the data.
+- **The hub's `h1` is "Bài viết mới nhất"** on the page best placed to rank for
+  "chia sẻ kinh nghiệm … dệt nhuộm". Left alone — it is a recorded owner call
+  (2026-07-15). Worth revisiting knowingly.
+- **Three article titles still exceed the budget** (82, 69, 64 chars). Editorial.
+- **No FAQ content or `FAQPage` anywhere**, and no `llms.txt`. Both are options,
+  neither is shipped unasked.
+
+---
+
+## 2026-08-10 (same day, second pass) — owner corrections and a heading rewrite
+
+Six things the owner supplied or asked for after reading the audit above. Two
+of them reverse conclusions it reached, which is recorded here rather than
+quietly edited out.
+
+### 1. The reviews DO belong to a product — reversed
+
+The audit concluded the customer reviews were about the company, and therefore
+permanently ineligible for a review rich result under Google's self-serving
+policy. **They are about Alpha Smart Dyehouse** (owner), and the text bears it
+out: Spectro machines, dispensers, dye-machine controllers, the QR flow, RFT
+80% → 90%. Those are one product's features and one product's outcome.
+
+So `AggregateRating` and both `Review`s moved off the `Organization` and onto
+the `SoftwareApplication`, as JSON-LD, where first-party reviews are eligible.
+The microdata came out of `reviews.html` entirely rather than being left to
+name a second owner for the same reviews — including `reviewBody`, `author`,
+`jobTitle`, `worksFor` and the portraits' `image`, which with the `Review`
+scope gone would have attached to the `<html>` element's `Organization` and
+asserted `Organization.image` = a photograph of a customer.
+
+The bodies are quoted from the same `t.review_*_body` strings the page prints,
+through `strip_html`, so the structured data cannot drift from the visible
+words. **Google requires reviewed content to be visible: if the reviews section
+is ever removed from the page, the `review` array in `meta.html` goes too.**
+
+### 2. Address — supplied, and in the schema only
+
+`67/15 Đường số 3, Phường Thông Tây Hội, TPHCM`. The owner does not want it
+displayed: Alpha has no premises a customer would visit, and a footer address
+would advertise an office that does not exist in that sense. It is a mailing
+address.
+
+It is therefore in the `Organization` JSON-LD and on no rendered page. That is
+not a leak — the same address is published against tax code 0316685078 in the
+national business registry. **But JSON-LD is public and Google may surface it
+in a knowledge panel**, which was flagged to the owner; it comes out in one
+edit if that is unwanted.
+
+The registry page is now also a `sameAs`, which is the strongest entity
+disambiguation available to a site this size: it ties this domain to a record
+naming the same founder, tax code and founding date, against a much larger
+unrelated `alphasoftware.com`. `legalName` and the registry's international
+name were added at the same time.
+
+### 3. The hub's h1 — split into two jobs
+
+Was "Bài viết mới nhất". A good label for a list and a poor h1 for the
+library's highest-authority page: it names neither the subject nor the place,
+and it left the hub with no prose at all — an h1, a grid of cards, a rail, and
+nothing telling a cold visitor from a search result what they had found.
+
+Both jobs are now served, which costs nothing:
+
+- **h1** — Chia sẻ kinh nghiệm vận hành xưởng nhuộm
+- **lead** — who writes it and on what authority, one line
+- **h2** — Bài viết mới nhất, still directly on the list it labels
+- **h2** — Đọc theo loạt bài
+
+The 2026-07-15 instinct is kept; only its placement changed.
+
+### 4. Thumbnails on the homepage section — yes, and the first attempt was wrong
+
+Square, 96px, was built first and looked bad in the browser for a reason worth
+recording: **the hub's illustrations are wide technical diagrams drawn on
+white**, so a square crop of one is a box of whitespace with a band of content
+across the middle. It announces that a picture exists without saying anything
+about it.
+
+Landscape 4:3 at 96px/128px fixed it — enough of the diagram survives to be
+recognisable at that size. They also carry a 1px `$ink-100` hairline, which is
+load-bearing rather than decorative: white-ground illustrations on a white page
+have no edge without one and read as floating debris.
+
+Cost is nil on the critical path. The section renders ~10,000px down a phone
+page, so every thumbnail is `loading="lazy"` and outside any viewport the
+browser fetches; they are the same 672px derivatives the hub's feed already
+uses, so a reader continuing to the hub finds them cached.
+
+*Harness note, because it cost time twice:* `Page.captureScreenshot` with
+`captureBeyondViewport: true` lays the whole page out but never puts the lower
+part IN a viewport, so lazy images below the fold are unfetched at capture time
+and shoot as blank boxes — indistinguishable from a broken image. Scroll the
+element through a real viewport, await `img.decode()`, then capture.
+
+### 5. The footer is furniture and now looks like it
+
+The grey stopped at `.footer-strip`; everything above it sat on page white, so
+the contact block read as one more section of the argument. Worse once the page
+gained a content section — two white blocks in a row, one content, one
+furniture, nothing saying which.
+
+The ground now covers the whole `footer` at `$ink-50`, and the copyright bar
+keeps its edge with a hairline instead of a second tint. Cool, not warm.
+
+**`verify.mjs` caught this**, correctly: the cool-surface gate was anchored on
+`.footer-strip{background:…}` and the rule had moved, so the build failed with
+"cannot find the footer strip". The gate was re-pointed at `footer{background:}`
+— anchored on a rule boundary so `.blockquote-footer` and the hub's
+`.kt-footer` cannot satisfy it by accident — and **re-proved by injecting a
+warm `#f3f0e9` into the built CSS and confirming the build fails on it.**
+
+### 6. Vietnamese headings — rewritten for register, not for keywords
+
+The owner flagged "Áp dụng tại xưởng của bạn" as reading wrong. It does: "của
+bạn" is a calque of English "your", "Áp dụng" as a bare heading is
+administrative, and the phrase instructs the reader about his own factory —
+the exact tone `design/chia-se-kinh-nghiem/06` §1 says to keep out of that
+block. It is now **"Mang về xưởng"**, the natural takeaway idiom, and what the
+CSS class `.kt-mang-ve` shows was somebody's first instinct anyway.
+
+| where | was | now | why |
+|---|---|---|---|
+| hero CTA | Tìm hiểu thêm | Xem Alpha làm được gì | "Learn more" is the weakest CTA in existence |
+| overview h2 | Giới thiệu phần mềm quản lý nhà máy thông minh của Alpha Software | Phần mềm quản lý nhà máy thông minh cho xưởng dệt nhuộm | "Giới thiệu" is a dead word; aims at the industry, not at ourselves |
+| projects h2 | Các dự án của Alpha Software | Những nhà máy đã triển khai Alpha Software | it is the proof section, labelled as admin |
+| our-story h2 | Về Alpha Software | Người đứng sau Alpha Software | the section is a portrait and 28 years on the floor |
+| support h2 | Chúng tôi rất hân hạnh được hỗ trợ bạn! | Gọi trực tiếp cho người sáng lập | the closing ask said nothing; this is the actual differentiator |
+| support body | …để cho phép chúng tôi tư vấn bạn miễn phí… | …để được tư vấn miễn phí… | "to allow us to consult you" is not how anyone speaks |
+| hub rail h2 | Đọc theo chuyên đề | Đọc theo loạt bài | see below |
+
+Kept as-is: `slogan`, `benefits_title`, `products_title`, `reviews_title` —
+already natural and already carrying their keyword.
+
+**A vocabulary collision was fixed on the way.** The hub had "chuyên đề"
+labelling the SERIES rail while the topic pages call themselves "Chủ đề" — two
+near-synonyms for two different taxonomies on the same surface. Now "chủ đề" =
+topic and "loạt bài" = series, consistently, including on the homepage section.
+
+### Where the numbers stand after both passes
+
+| | before the audit | now |
+|---|---|---|
+| Titles over the ~60-char budget | 12 of 27 | 5 (long headlines, editorial) |
+| Descriptions over ~160 | 15 of 27 | 0 |
+| Distinct hub URLs linked from the homepage | 1 | 7 |
+| JSON-LD types on the homepage | 3 | 5, with the reviews on the product |
+| Structural defects (h1 count, canonical, heading jumps) | not measured | 0 across 28 pages |
+| CLS | 0.000 | 0.000 |
+
+### Still open
+
+- **The hub section sits ~10,000px down the phone homepage.** Everything above
+  it is unchanged and the owner's "do not interrupt the flow" condition is
+  honoured, but almost nobody scrolls that far. If engagement with it is low in
+  GA4, the question is placement, not the section.
+- The `opsz` axis (42.8 KB) and gtag.js (39% of homepage bytes), both unchanged
+  and both owner decisions — see the first pass above.
+- No `address` on any rendered page, by decision. No FAQ content or `FAQPage`.

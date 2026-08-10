@@ -1,6 +1,7 @@
 ---
 title: "Các nhóm thuốc nhuộm acid dùng cho Nylon"
 description: "Bốn nhóm thuốc nhuộm acid gắn vào xơ Nylon theo bốn cách khác nhau, và chính cách gắn đó quyết định pH bể nhuộm, độ đều màu và độ bền màu. Nhóm dễ chữa loang nhất lại là nhóm bền màu kém nhất."
+meta_desc: "Bốn nhóm thuốc nhuộm acid gắn vào xơ Nylon theo bốn cách khác nhau – quyết định pH bể nhuộm, độ đều màu và độ bền màu. Nhóm dễ chữa loang nhất lại kém bền nhất."
 topic: ky-thuat-nhuom
 series: nylon
 series_part: 2

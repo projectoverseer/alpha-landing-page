@@ -15,15 +15,38 @@
 
     <main class="kt-shell" id="main-content">
       {%- comment -%}
-        The feed opens with its heading — "Bài viết mới nhất" (Latest posts).
-        The hub used to hide its h1 and let the title-bar lockup speak for the
-        page; the owner now wants the reader met by a plain, honest label for
-        the list below it (owner's call, 2026-07-15). It is still the real page
-        h1, and the lockup still names the place.
+        THE H1 NAMES THE PLACE; "BÀI VIẾT MỚI NHẤT" STILL LABELS THE LIST.
+
+        History, because this reverses half of a decision and keeps the other
+        half. The hub originally hid its h1 and let the title-bar lockup speak
+        for the page. On 2026-07-15 the owner replaced that with a plain,
+        honest label for the list below it — "Bài viết mới nhất" — as the h1.
+        The instinct was right and is kept: the reader arriving at a list
+        should be met by a label for that list, not by a slogan.
+
+        What was wrong is that the label was doing it as the H1. This is the
+        highest-authority page of the whole library, the one page trying to
+        rank for "chia sẻ kinh nghiệm … xưởng nhuộm", and its single strongest
+        on-page signal said "Latest posts" — a phrase that describes any feed
+        on the internet and names neither the subject nor the place. It also
+        left the page with no prose at all: an h1, a list of cards, a rail.
+        Nothing told a first-time visitor arriving cold from a search result
+        what they had found or why the person writing it would know.
+
+        So the two jobs are split, which costs nothing and settles both:
+
+          h1  — what this place is
+          lead — who writes it and on what authority, in one line
+          h2  — "Bài viết mới nhất", still directly above the list it labels
+
+        "xưởng nhuộm" rather than "nhà máy dệt nhuộm" in the h1 because it is
+        what people in the trade actually say, and it is shorter.
       {%- endcomment -%}
       <header class="kt-hub-head">
-        <h1>Bài viết mới nhất</h1>
+        <h1>Chia sẻ kinh nghiệm vận hành xưởng nhuộm</h1>
+        <p class="kt-hub-lead">Thư viện kiến thức miễn phí cho chủ và quản lý nhà máy dệt nhuộm – đo và cải thiện OEE, RFT, kỹ thuật nhuộm và đo màu. Viết bởi Ông Phan Đức Tuấn Anh, 13 năm kỹ thuật viên nhuộm và 15 năm giám đốc nhà máy.</p>
       </header>
+      <h2 class="kt-feed-heading">Bài viết mới nhất</h2>
       {{ content }}
       {% include chia-se-kinh-nghiem/series-rail.html %}
     </main>

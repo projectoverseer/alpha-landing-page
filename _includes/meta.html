@@ -3,8 +3,20 @@
 <meta content="light" name="color-scheme" />
 <meta content="#e35205" name="theme-color" />
 <meta content="{{ t.social_description }}" name="description" />
-<meta content="{{ t.keywords }}, Alpha Software" name="keywords" />
-<meta content="index, follow" name="robots" />
+{%- comment -%}
+  `meta name="keywords"` is gone. Google has ignored it since 2009 and said so
+  publicly; Bing treats stuffing it as a negative signal. All it did here was
+  publish our keyword targeting to competitors in the page source. The strings
+  themselves are kept in the i18n files (`keywords:`) because they are a useful
+  record of what each page is FOR — they just no longer ship in the markup.
+
+  `index, follow` is the default a crawler already assumes, so the value now
+  spends itself on the two directives that actually change the result: show the
+  large image preview rather than a thumbnail, and do not clip the snippet.
+  The reading hub has carried these since it launched; the pages that have to
+  sell were the ones still on the restrictive default.
+{%- endcomment -%}
+<meta content="index, follow, max-image-preview:large, max-snippet:-1" name="robots" />
 
 <!-- Open Graph & Organization Microdata -->
 <meta content="website" property="og:type" />
@@ -104,7 +116,8 @@
     "@type": "Organization",
     "@id": "https://www.alphasoftwaregroup.com/#organization",
     "name": "Alpha Software",
-    "alternateName": ["Alpha Software Group", "Công ty TNHH Phát triển Phần mềm Alpha"],
+    "legalName": "Công ty TNHH Phát triển Phần mềm Alpha",
+    "alternateName": ["Alpha Software Group", "Công ty TNHH Phát triển Phần mềm Alpha", "Alpha Software Development Company Limited"],
     "url": "https://www.alphasoftwaregroup.com",
     "logo": {
       "@type": "ImageObject",
@@ -120,18 +133,195 @@
     "taxID": "0316685078",
     "telephone": "+84983505002",
     "email": "{{ site.email }}",
+    {%- comment -%}
+      THE ADDRESS IS HERE AND ON NO RENDERED PAGE, ON PURPOSE.
+
+      Alpha has no premises a customer would visit — it is a software company
+      whose people are in customers' factories — so putting an address in the
+      footer would advertise an office that does not exist in any useful sense
+      (owner, 2026-08-10). But post does need somewhere to go, and more to the
+      point, a company with no address at all is a weaker entity to a search
+      engine than one whose address matches its public business registration.
+
+      READ THIS BEFORE ASSUMING IT IS PRIVATE: it is not, and that is why it is
+      safe here. The same address is published against tax code 0316685078 in
+      the national business registry, mirrored at the masothue.com URL in
+      `sameAs` below. JSON-LD is public, machine-readable, and Google may show
+      it in a knowledge panel. Nothing here is being leaked; it is being stated
+      consistently with a record that already exists.
+
+      Ward note: the registry lists the pre-merger ward ("Phường 9, Quận Gò
+      Vấp") on the business-registration line and the current one ("Phường
+      Thông Tây Hội") on the tax line, after the 2025 administrative
+      reorganisation. The current name is used, as the owner gave it.
+    {%- endcomment -%}
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "67/15 Đường số 3",
+      "addressLocality": "Phường Thông Tây Hội",
+      "addressRegion": "Thành phố Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    {%- comment -%}
+      The registry listing is a `sameAs` because that is exactly what `sameAs`
+      is for: a second, independent page about THIS entity, which lets a search
+      engine tie the domain to tax code 0316685078 rather than to whichever
+      other "Alpha Software" it happens to know about. That collision is real
+      and is the whole reason og:site_name says "Alpha Software Group"
+      (alphasoftware.com is a different, larger company). An authoritative
+      registry record naming the same founder, tax code and founding date is
+      the strongest disambiguation available to a site this size.
+    {%- endcomment -%}
     "sameAs": [
-      "{{ site.facebook_page }}"
+      "{{ site.facebook_page }}",
+      "https://masothue.com/0316685078-cong-ty-tnhh-phat-trien-phan-mem-alpha"
     ],
     "areaServed": {
       "@type": "Country",
       "name": "Vietnam"
     },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "telephone": "+84983505002",
+      "email": "{{ site.email }}",
+      "areaServed": "VN",
+      "availableLanguage": ["vi", "en"]
+    },
     "knowsAbout": [
       "textile manufacturing automation",
       "dyeing factory management software",
       "production management systems",
-      "digital transformation for textile factories"
+      "digital transformation for textile factories",
+      "Right First Time dyeing",
+      "Overall Equipment Effectiveness",
+      "colour measurement and spectrophotometry"
     ]
+  }
+</script>
+
+{%- comment -%}
+  THE TWO PRODUCTS, DECLARED AS PRODUCTS.
+
+  Until now the only things this site named to a crawler were an Organization
+  and a WebSite. The products existed as <h3> headings inside a Bootstrap
+  accordion and nowhere else — so "Alpha Smart Dyehouse" was a string on a page
+  rather than a thing with a maker, a category and an audience. That matters
+  twice over: for entity understanding in ordinary search, and for the answer
+  engines, which are now a real share of how a factory owner finds software and
+  which lean much harder on explicit types than Google's index does.
+
+  `applicationCategory` is BusinessApplication with an industry-specific
+  subcategory in `applicationSubCategory`; `audience` names who it is for,
+  which is the question a comparison answer is actually trying to settle.
+
+  WHAT IS DELIBERATELY ABSENT: `offers`. Pricing is not public and a
+  placeholder price to chase a rich result would be a lie. `aggregateRating`
+  is present instead, which satisfies the same requirement honestly.
+
+  THE REVIEWS LIVE HERE NOW, AND THE REASONING THAT PUT THEM ELSEWHERE WAS
+  WRONG. They used to hang off the Organization as microdata in reviews.html,
+  where Google's self-serving-review policy makes them permanently ineligible
+  for a rich result — a review of the publishing entity, by definition. The
+  audit concluded that was nonetheless the honest home for them, on the
+  assumption that the reviewers were describing the company rather than a
+  product. The owner corrected that on 2026-08-10: both reviews are about
+  Alpha Smart Dyehouse specifically, and the text bears it out — the first
+  names the Spectro machines, the dispensers, the dye-machine controllers, the
+  QR flow and an RFT move from 80% to 90%, which are this product's features
+  and this product's outcome.
+
+  So they are attached to the product, where first-party reviews ARE eligible,
+  and the microdata on the Organization was removed rather than left to state
+  a second, contradicting owner for the same two reviews.
+
+  Both are rendered verbatim on the page — that is a policy requirement, not a
+  nicety. If the reviews section is ever removed from the page, this block must
+  go with it.
+
+
+  Alpha Dyes Weighing is typed `Product`, not `SoftwareApplication`, and the
+  page's own copy is genuinely of two minds about that: section 1 calls it
+  "phần mềm chuyên dụng" / "specialized software", while section 3 of the
+  Smart Dyehouse copy lists it among "two specialized hardware devices of its
+  own". The heading settles it — "Cân thuốc nhuộm bán-tự-động" / "Semi-Automatic
+  Dye Scale" — and so does what the customer buys: a weighing station with LED
+  indicators and a QR scanner. `Product` covers software-bearing equipment;
+  `SoftwareApplication` would claim you can install it, which you cannot. If
+  the product copy is ever made consistent, revisit this line with it.
+{%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://www.alphasoftwaregroup.com/#alpha-smart-dyehouse",
+    "name": "Alpha Smart Dyehouse",
+    "applicationCategory": "BusinessApplication",
+    "applicationSubCategory": "Textile dyehouse production management",
+    "operatingSystem": "Web",
+    "description": "{{ t.product_1_intro_short }}",
+    "url": "https://www.alphasoftwaregroup.com/#alpha-smart-dyehouse",
+    "inLanguage": ["vi", "en"],
+    "publisher": { "@id": "https://www.alphasoftwaregroup.com/#organization" },
+    "provider": { "@id": "https://www.alphasoftwaregroup.com/#organization" },
+    "audience": {
+      "@type": "BusinessAudience",
+      "name": "Textile dyeing factories",
+      "audienceType": "Textile dyehouse owners and production managers"
+    },
+    {%- comment -%}
+      reviewCount MUST equal the number of Review blocks rendered by
+      reviews.html. Two reviews, two entries, and the aggregate says two.
+      The bodies are the same i18n strings the page prints, run through
+      `strip_html` because reviewBody is plain text — never re-typed here,
+      so the structured data cannot drift from what the reader sees.
+    {%- endcomment -%}
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "2"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "datePublished": "2025-04-28",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" },
+        "reviewBody": {{ t.review_nguyen_thi_nga_body | strip_html | strip_newlines | strip | jsonify }},
+        "author": {
+          "@type": "Person",
+          "name": "Nguyễn Thị Nga",
+          "jobTitle": {{ t.reviewer_1_job_title | jsonify }},
+          "worksFor": { "@type": "Organization", "name": {{ t.project_spica_company_name | jsonify }} }
+        }
+      },
+      {
+        "@type": "Review",
+        "datePublished": "2024-10-17",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" },
+        "reviewBody": {{ t.review_dinh_van_hiep_body | strip_html | strip_newlines | strip | jsonify }},
+        "author": {
+          "@type": "Person",
+          "name": "Đinh Văn Hiệp",
+          "jobTitle": {{ t.reviewer_2_job_title | jsonify }},
+          "worksFor": { "@type": "Organization", "name": {{ t.project_tuan_hong_company_name | jsonify }} }
+        }
+      }
+    ]
+  }
+</script>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "https://www.alphasoftwaregroup.com/#alpha-dyes-weighing",
+    "name": "Alpha Dyes Weighing",
+    "category": "Semi-automatic dye weighing system",
+    "description": "{{ t.product_2_intro_short }}",
+    "url": "https://www.alphasoftwaregroup.com/#alpha-dyes-weighing",
+    "brand": { "@id": "https://www.alphasoftwaregroup.com/#organization" },
+    "manufacturer": { "@id": "https://www.alphasoftwaregroup.com/#organization" }
   }
 </script>

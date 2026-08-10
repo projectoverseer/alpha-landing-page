@@ -1,6 +1,7 @@
 ---
 title: "Hiệu chuẩn máy đo màu"
 description: "Vì sao máy đo màu phải hiệu chuẩn định kỳ, quy trình ba mẫu chuẩn, và bốn thông số phải chốt với khách hàng trước khi đo: Specular, Aperture, UV Filter, Observer."
+meta_desc: "Vì sao máy đo màu phải hiệu chuẩn định kỳ, quy trình ba mẫu chuẩn, và bốn thông số phải chốt với khách hàng: Specular, Aperture, UV Filter, Observer."
 topic: do-mau
 series: ly-thuyet-mau-sac
 series_part: 4

@@ -1,0 +1,170 @@
+{%- comment -%}
+  THE READING HUB, ON THE PAGE THAT SELLS.
+
+  Why this section exists. Before it, /chia-se-kinh-nghiem/ — sixteen articles,
+  three topic pages, four series pages, all of it the founder's own writing —
+  was reachable from this page by exactly two links: one in `.navbar-collapse`,
+  which is `display: none` under lg with no toggler and therefore does not
+  exist for four readers in five, and one in the footer. On a phone the entire
+  library hung off a single footer link. That is a poor deal twice over:
+
+    for the READER, because a visitor who is interested but not ready to phone
+    had nothing else to do on this page, and
+
+    for the SITE, because the homepage is where whatever authority this domain
+    has actually lands, and almost none of it was flowing to the twenty pages
+    that are trying to rank for the questions a dyehouse owner types.
+
+  WHERE IT SITS, AND WHY IT IS LAST. After `support`, as the final block of
+  <main>. The owner's standing condition on adding a hub route to this page was
+  "không làm interrupt flow" — do not interrupt the flow (2026-07-29, recorded
+  in footer.html). Last in the reading order is the one position that satisfies
+  that literally: the page's argument runs to its close and its contact ask
+  exactly as it did before, and this opens afterwards for the reader who got to
+  the bottom without picking up the phone. It is a second offer, not an
+  interruption of the first.
+
+  WHAT IT DELIBERATELY IS NOT. No tint, no divider, no oversized heading, no
+  card shadows — the calm white baseline, like every other unnumbered section
+  (owner has twice rejected added section-separation). It is also outside the
+  01–05 `data-number` sequence on purpose: those number the argument, and this
+  is not part of the argument.
+
+  THE LINKS ARE THE POINT. Three topic pages and the three newest articles, by
+  their real titles. Article titles here are the anchor text — "Các nhóm thuốc
+  nhuộm acid dùng cho Nylon" is what someone searches, and a link that says it
+  is worth more to both the reader and the crawler than one more "Xem thêm".
+  Three articles rather than six: the rail is a doorway, not a second feed, and
+  six titles under a contact section starts to read as a sitemap.
+
+  VIETNAMESE ONLY. Gated on `t.toc_knowledge`, the same key the navbar item
+  gates on — the hub is Vietnamese-only, so /en/ renders nothing here and no
+  dead link. That gate is also why the `knowledge_*` keys below it live in
+  vi.yml with no English twin, which is a deliberate exception to the bilingual
+  parity rule in README (`toc_knowledge` itself is the precedent).
+{%- endcomment -%}
+{%- if t.toc_knowledge -%}
+<section id="{{ t.toc_knowledge_id }}">
+  <div class="container">
+    <h2 class="mt-0">{{ t.knowledge_title }}</h2>
+    <p class="big">{{ t.knowledge_lead }}</p>
+
+    {%- comment -%}
+      The topics first: three doors, each one a page that already indexes
+      everything written on its subject. A reader who knows they came for
+      colour measurement should not have to scan a chronological feed for it.
+    {%- endcomment -%}
+    {%- comment -%}
+      Real <h3>s carrying the .h5 size. They are subsection headings under this
+      section's h2 and the document outline should say so; the class is only
+      how big they are drawn.
+    {%- endcomment -%}
+    <nav aria-label="{{ t.knowledge_topics_label }}" class="knowledge-topics mt-5">
+      <h3 class="h5">{{ t.knowledge_topics_label }}</h3>
+      <ul class="knowledge-topic-list">
+        {%- for kt_pair in site.data.chia_se_kinh_nghiem.topics %}
+        {%- assign kt_count = site.posts | where: "topic", kt_pair[0] | size %}
+        {%- if kt_count > 0 %}
+        <li>
+          <a href="{{ site.url }}/chia-se-kinh-nghiem/chu-de/{{ kt_pair[0] }}/">{{ kt_pair[1].label }}</a>
+          <small class="text-secondary">{{ kt_pair[1].desc }}</small>
+        </li>
+        {%- endif %}
+        {%- endfor %}
+      </ul>
+    </nav>
+
+    {%- comment -%}
+      Then the three newest pieces, with the date each was published. The date
+      is here because a library that is obviously still being written is worth
+      coming back to, and a reader cannot tell that from titles alone.
+    {%- endcomment -%}
+    {%- comment -%}
+      Then the three newest pieces, each with its picture.
+
+      WHY THUMBNAILS HERE WHEN THE TOPIC LIST ABOVE HAS NONE. A topic is an
+      abstraction — "Kỹ thuật nhuộm" has no picture, and inventing one would be
+      decoration. An article does have one, and on this hub the picture is
+      usually the substance: a diagram of how acid dye bonds to nylon, a
+      four-step chart, the OEE breakdown. Showing it is not ornament, it is a
+      second sentence about what the article contains, and it is the single
+      biggest thing that makes a list of links get clicked.
+
+      They cost nothing on the critical path. This section renders at roughly
+      10,000px down a phone page, so every one of these is `loading="lazy"` and
+      far outside any viewport the browser fetches for; and they are the SAME
+      files, at the same 672px derivative, that the hub's feed cards use — a
+      reader who goes on to the hub finds them already cached.
+
+      The crop is square and centred on the picture's own attention point
+      (`fx`/`fy` from the data file, measured by image-focus.mjs) — the same
+      point every other cropped rendering of that picture uses, so a diagram is
+      never cut through the part that carries the meaning.
+
+      `alt=""`: the picture sits INSIDE the link, whose text already is the
+      article title. An alt repeating it would make a screen reader say the
+      title twice. Decorative in this context, described properly on the
+      article itself.
+    {%- endcomment -%}
+    <div class="knowledge-latest mt-7">
+      <h3 class="h5">{{ t.knowledge_latest_label }}</h3>
+      <ul class="knowledge-post-list">
+        {%- for post in site.posts limit: 3 %}
+        {%- comment -%} Card face: the thumb (first, if it is a tiled list), else the hero. {%- endcomment -%}
+        {%- if post.thumb.first -%}{%- assign kn_name = post.thumb.first -%}
+        {%- elsif post.thumb -%}{%- assign kn_name = post.thumb -%}
+        {%- else -%}{%- assign kn_name = post.image -%}{%- endif -%}
+        {%- assign kn_img = site.data.chia_se_kinh_nghiem.images[kn_name] -%}
+        <li>
+          <a class="knowledge-post" href="{{ site.url }}{{ post.url }}">
+            {%- if kn_img -%}
+            {%- assign kn_base = site.url | append: "/img/chia-se-kinh-nghiem/" | append: kn_name -%}
+            {%- if kn_img.sm -%}{%- assign kn_w = 672 -%}{%- else -%}{%- assign kn_w = kn_img.w -%}{%- endif -%}
+            <picture>
+              <source srcset="{{ kn_base }}-{{ kn_w }}.avif" type="image/avif" />
+              <img
+                alt=""
+                class="knowledge-post-thumb"
+                decoding="async"
+                height="{{ kn_img.h }}"
+                loading="lazy"
+                src="{{ kn_base }}-{{ kn_w }}.jpg"
+                style="object-position: {{ kn_img.fx | default: 50 }}% {{ kn_img.fy | default: 50 }}%"
+                width="{{ kn_img.w }}"
+              />
+            </picture>
+            {%- endif -%}
+            <span class="knowledge-post-text">
+              <span class="knowledge-post-title">{{ post.title }}</span>
+              <small class="text-secondary"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d/%-m/%Y" }}</time></small>
+            </span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+
+    {%- comment -%}
+      A PLAIN LINK, NOT A BUTTON, AND FOR TWO REASONS.
+
+      The mechanical one: `.btn-ghost` is white text on a translucent white
+      border — `$fg-on-dark`, built for the hero photograph and the two
+      coloured panels. On this white section it renders invisible. Checked in
+      the browser, which is the only way that class of mistake gets caught.
+
+      The one that would matter even if it were legible: the page's ask is the
+      phone number in the section directly above. A second filled control
+      immediately under it would be two calls to action arguing, and this is
+      not a call to action — it is a door to a library. A link is what a door
+      to a library looks like.
+
+      The count is in the label because "all 16 articles" is a different
+      proposition from "all articles", and it stays honest by itself as posts
+      are added.
+    {%- endcomment -%}
+    <p class="big mt-6">
+      <a href="{{ site.url }}/chia-se-kinh-nghiem/">{{ t.knowledge_all | replace: "%d", site.posts.size }}</a>
+    </p>
+  </div>
+</section>
+{%- endif -%}

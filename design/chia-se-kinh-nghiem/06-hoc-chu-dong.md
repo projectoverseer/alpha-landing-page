@@ -125,7 +125,7 @@ Written in the post's Markdown on the line directly above the signature include
 2. **Two questions**, four options each, **an explanation on every option**
    including the wrong ones. Two, not three: see §6.1.
 3. **"Áp dụng tại xưởng của bạn"** — one concrete action, doable this week,
-   with the data they already have. (Named "Việc mang về xưởng" for one day.)
+   with the data they already have. (Named "Mang về xưởng" for one day.)
 
 **There is no reset button.** It existed to lower the cost of guessing and was
 cut for the space; picking a different option in a group already replaces the

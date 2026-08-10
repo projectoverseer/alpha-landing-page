@@ -1,6 +1,7 @@
 ---
 title: "Công nghệ chế tạo sợi spandex và ứng dụng trong dệt"
 description: "Bốn bước tạo ra sợi spandex, vì sao sợi bắt buộc phải phủ dầu silicone – và vì sao chính lớp dầu đó là nguyên nhân hàng đầu gây bệch màu, đốm màu khi nhuộm vải có spandex."
+meta_desc: "Bốn bước tạo ra sợi spandex, vì sao sợi bắt buộc phải phủ dầu silicone – và vì sao lớp dầu đó gây bệch màu, đốm màu khi nhuộm vải có spandex."
 topic: ky-thuat-nhuom
 series: spandex
 series_part: 1

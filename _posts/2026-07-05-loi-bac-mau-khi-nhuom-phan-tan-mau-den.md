@@ -1,6 +1,7 @@
 ---
 title: "Lỗi nhuộm phân tán màu đen: tại sao lab OK nhưng máy lớn lại bạc màu?"
 description: "Lab nhuộm đen ra màu đẹp, máy lớn lại bàng bạc như xám. Thủ phạm không nằm ở quy trình mà trong chính thuốc nhuộm: chất phân tán lignosulfonate và phản ứng khử ở nhiệt độ cao."
+meta_desc: "Lab nhuộm đen ra màu đẹp, máy lớn lại bàng bạc như xám. Thủ phạm nằm trong chính thuốc nhuộm: chất phân tán lignosulfonate và phản ứng khử ở nhiệt độ cao."
 topic: ky-thuat-nhuom
 image: nhuom-phan-tan-den-bac-mau-lignosulfonate
 learn:

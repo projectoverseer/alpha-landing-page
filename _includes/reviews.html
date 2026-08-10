@@ -7,44 +7,56 @@
     ></div>
     <h2 class="mt-0">{{ t.reviews_title }}</h2>
 
-    <!-- Aggregate Rating for the Organization -->
-    <div
-      itemprop="aggregateRating"
-      itemscope
-      itemtype="https://schema.org/AggregateRating"
-    >
-      <meta content="5" itemprop="ratingValue" />
-      <meta content="5" itemprop="bestRating" />
-      <meta content="1" itemprop="worstRating" />
-      <meta content="2" itemprop="reviewCount" />
-    </div>
+    {%- comment -%}
+      THE REVIEW MICRODATA THAT WAS IN THIS FILE HAS MOVED. It was not deleted:
+      it is in meta.html now, as JSON-LD on the Alpha Smart Dyehouse
+      SoftwareApplication.
 
+      Why it had to move. These `itemprop`s hung off the <html> element in
+      page.html, which is `itemscope itemtype="schema.org/Organization"`. That
+      made each of them a review OF ALPHA THE COMPANY, and Google's
+      review-snippet policy permanently excludes reviews of the publishing
+      entity as self-serving. The markup was doing nothing and could never do
+      anything.
+
+      An earlier note here argued that was nonetheless the honest home, on the
+      reading that the reviewers were describing working with Alpha rather than
+      rating a product. That reading was wrong, and the owner corrected it on
+      2026-08-10: both reviews are about Alpha Smart Dyehouse. The text agrees —
+      the first names the Spectro machines, the dispensers, the dye-machine
+      controllers, the QR flow, and an RFT move from 80% to 90%, which are this
+      product's features and this product's outcome. Attached to a product,
+      first-party reviews ARE eligible for the rich result.
+
+      Keeping these attributes while the JSON-LD claims the same two reviews for
+      the product would declare two different subjects for one review, so they
+      came out rather than being duplicated.
+
+      WHAT MUST STAY TRUE. The JSON-LD quotes `t.review_*_body` through
+      `strip_html`, so the structured data cannot drift from the words below.
+      But Google requires reviewed content to be VISIBLE on the page: if this
+      section is ever removed, the `review` array in meta.html goes with it.
+
+      EVERY `itemprop` IN THE CARDS WENT, NOT JUST THE FOUR ON THE WRAPPERS.
+      `reviewBody`, `author`, `jobTitle`, `worksFor` and the portraits' `image`
+      were all properties of the Review scope. With that scope gone they would
+      not have become inert — an orphaned `itemprop` attaches to the nearest
+      enclosing `itemscope`, which here is the <html> element. The page would
+      have ended up asserting `Organization.reviewBody`, `Organization.author`
+      and, worst of the three, `Organization.image` pointing at a photograph of
+      a customer. Every one of those facts is now stated correctly in the
+      JSON-LD instead.
+    {%- endcomment -%}
     <div class="row row-cols-xl-2 row-cols-md-2 row-cols-1 mt-8">
       <div
         class="col service-box"
         id="review-nguyen-thi-nga"
-        itemprop="review"
-        itemscope
-        itemtype="https://schema.org/Review"
       >
-        <meta content="2025-04-28" itemprop="datePublished" />
-
-        <div
-          itemprop="reviewRating"
-          itemscope
-          itemtype="https://schema.org/Rating"
-        >
-          <meta content="5" itemprop="ratingValue" />
-          <meta content="5" itemprop="bestRating" />
-          <meta content="1" itemprop="worstRating" />
-        </div>
-
         <div class="review-card">
         <img
           alt="{{ t.female_title }} Nguyễn Thị Nga"
           class="client-portrait"
           height="336"
-          itemprop="image"
           loading="lazy"
           src="{{ site.url }}/img/portraits/chan-dung-ba-nguyen-thi-nga.jpg"
           srcset="
@@ -54,23 +66,14 @@
           width="224"
         />
         <figure class="mt-5 mb-0 w-100">
-          <blockquote class="blockquote" itemprop="reviewBody">
+          <blockquote class="blockquote">
             {{ t.review_nguyen_thi_nga_body }}
           </blockquote>
-          <figcaption
-            class="blockquote-footer"
-            itemprop="author"
-            itemscope
-            itemtype="https://schema.org/Person"
-          >
-            {{ t.female_title }} <span itemprop="name" lang="vi">Nguyễn Thị Nga</span>,
-            <span itemprop="jobTitle">{{ t.reviewer_1_job_title }}</span>
+          <figcaption class="blockquote-footer">
+            {{ t.female_title }} <span lang="vi">Nguyễn Thị Nga</span>,
+            {{ t.reviewer_1_job_title }}
             {{ t.of }}
-            <span
-              itemprop="worksFor"
-              itemscope
-              itemtype="https://schema.org/Organization"
-            ><span itemprop="name">{{ t.project_spica_company_name }}</span></span>
+            {{ t.project_spica_company_name }}
           </figcaption>
         </figure>
         {% if t.show_original_review %}
@@ -90,28 +93,12 @@
       <div
         class="col service-box"
         id="review-dinh-van-hiep"
-        itemprop="review"
-        itemscope
-        itemtype="https://schema.org/Review"
       >
-        <meta content="2024-10-17" itemprop="datePublished" />
-
-        <div
-          itemprop="reviewRating"
-          itemscope
-          itemtype="https://schema.org/Rating"
-        >
-          <meta content="5" itemprop="ratingValue" />
-          <meta content="5" itemprop="bestRating" />
-          <meta content="1" itemprop="worstRating" />
-        </div>
-
         <div class="review-card">
         <img
           alt="{{ t.male_title }} Đinh Văn Hiệp"
           class="client-portrait"
           height="336"
-          itemprop="image"
           loading="lazy"
           src="{{ site.url }}/img/portraits/chan-dung-ong-dinh-van-hiep.jpg"
           srcset="
@@ -121,23 +108,14 @@
           width="224"
         />
         <figure class="mt-5 mb-0 w-100">
-          <blockquote class="blockquote" itemprop="reviewBody">
+          <blockquote class="blockquote">
             {{ t.review_dinh_van_hiep_body }}
           </blockquote>
-          <figcaption
-            class="blockquote-footer"
-            itemprop="author"
-            itemscope
-            itemtype="https://schema.org/Person"
-          >
-            {{ t.male_title }} <span itemprop="name" lang="vi">Đinh Văn Hiệp</span>,
-            <span itemprop="jobTitle">{{ t.reviewer_2_job_title }}</span>
+          <figcaption class="blockquote-footer">
+            {{ t.male_title }} <span lang="vi">Đinh Văn Hiệp</span>,
+            {{ t.reviewer_2_job_title }}
             {{ t.of }}
-            <span
-              itemprop="worksFor"
-              itemscope
-              itemtype="https://schema.org/Organization"
-            ><span itemprop="name">{{ t.project_tuan_hong_company_name }}</span></span>
+            {{ t.project_tuan_hong_company_name }}
           </figcaption>
         </figure>
         {% if t.show_original_review %}

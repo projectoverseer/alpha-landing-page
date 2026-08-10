@@ -1,6 +1,7 @@
 ---
 title: "Số hóa hiệu suất tốc độ – thành phần thứ hai của OEE"
 description: "Máy vẫn chạy, nhìn có vẻ bình thường – nhưng chậm hơn quy trình chuẩn. Đây là tổn thất khó nắm bắt nhất, và cách đo nó bằng 2 bảng theo dõi song song trong một file Excel."
+meta_desc: "Máy vẫn chạy nhưng chậm hơn quy trình chuẩn – tổn thất khó nắm bắt nhất của OEE. Cách đo bằng 2 bảng theo dõi song song trong một file Excel."
 topic: van-hanh
 series: so-hoa-oee
 series_part: 5

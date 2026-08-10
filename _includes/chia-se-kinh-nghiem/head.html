@@ -35,21 +35,66 @@
   description are the ones already written in the data file, so the taxonomy
   stays a single source of truth and a new topic needs no SEO copy invented for it.
 {%- endcomment -%}
+{%- comment -%}
+  TITLE LENGTH IS A PIXEL BUDGET, AND THE BRAND USED TO EAT IT.
+
+  Google renders about 580 px of <title> in a result and cuts the rest with an
+  ellipsis — call it 60 characters for mixed-case Vietnamese, whose diacritics
+  cost no extra width. Measured across the 27 built pages, twelve were over
+  that line and the worst was 110 characters. The suffix was doing most of the
+  damage: " · Chia sẻ kinh nghiệm Alpha" is 28 characters of the budget spent
+  on words no one searches for, and it is the END of a title that gets cut —
+  so on a long piece the reader lost the end of the HEADLINE to keep a brand
+  tag that was never at risk.
+
+  An ARTICLE therefore gets its bare title, nothing appended. That is not the
+  brand going missing: Google derives a site name from the WebSite schema on
+  the homepage and prints it above the title on mobile, so "Alpha Software
+  Group" still appears in the result — we just stop paying for it twice. Thirteen
+  of the sixteen articles now fit inside the budget; the three that do not are
+  long HEADLINES, which is an editorial call and not this file's to make.
+
+  A COLLECTION page keeps a short " · Chia sẻ kinh nghiệm", because its own
+  label ("Màu sắc & đo màu") is a fragment that means little alone, and its
+  bare labels are short enough to afford the context.
+{%- endcomment -%}
+{%- comment -%}
+  ONE LINE DOES TWO JOBS, AND THEY WANT DIFFERENT LENGTHS.
+
+  `description` (and `desc` / `bio` in the data file) is rendered on the page
+  as the standfirst — the sentence under the byline that decides whether the
+  reader keeps going. It is written to do that, and several run past 200
+  characters because that is what the sentence needed.
+
+  Google cuts a meta description at roughly 155–160 characters. Fifteen of the
+  27 pages were over it, so the SERP snippet was ending mid-clause on an
+  ellipsis: the standfirst's own hook, cut off exactly where it got interesting.
+
+  Trimming `description` would have fixed the snippet by shortening the visible
+  prose, which is the wrong trade — so it is not what this does. `meta_desc`
+  (front matter on a post, a sibling key in the taxonomy) is an OPTIONAL short
+  form used ONLY for <meta name=description> and the og/twitter pair. Where it
+  is absent, the standfirst is used exactly as before. Nothing visible on any
+  page changes either way; the standfirst stays whatever length it wants to be.
+
+  If you add one: write it to stand alone as a search result, keep it under
+  160 characters, and lead with the answer rather than the setup.
+{%- endcomment -%}
 {%- if kt_kind == "article" -%}
-  {%- capture kt_title %}{{ page.title }} · Chia sẻ kinh nghiệm Alpha{% endcapture -%}
-  {%- assign kt_desc = page.description -%}
+  {%- capture kt_title %}{{ page.title }}{% endcapture -%}
+  {%- assign kt_desc = page.meta_desc | default: page.description -%}
 {%- elsif kt_kind == "topic" -%}
-  {%- capture kt_title %}{{ kt_topic.label }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
-  {%- assign kt_desc = kt_topic.desc -%}
+  {%- capture kt_title %}{{ kt_topic.label }} · Chia sẻ kinh nghiệm{% endcapture -%}
+  {%- assign kt_desc = kt_topic.meta_desc | default: kt_topic.desc -%}
 {%- elsif kt_kind == "series" -%}
-  {%- capture kt_title %}Series {{ kt_series.label }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
-  {%- assign kt_desc = kt_series.desc -%}
+  {%- capture kt_title %}Series {{ kt_series.label }} · Chia sẻ kinh nghiệm{% endcapture -%}
+  {%- assign kt_desc = kt_series.meta_desc | default: kt_series.desc -%}
 {%- elsif kt_kind == "author" -%}
-  {%- capture kt_title %}Tác giả: {{ kt_author.name }} – Chia sẻ kinh nghiệm | Alpha Software{% endcapture -%}
-  {%- assign kt_desc = kt_author.bio -%}
+  {%- capture kt_title %}{{ kt_author.name }} · Chia sẻ kinh nghiệm{% endcapture -%}
+  {%- assign kt_desc = kt_author.meta_desc | default: kt_author.bio -%}
 {%- else -%}
   {%- capture kt_title %}{{ page.title }}{% endcapture -%}
-  {%- assign kt_desc = page.description -%}
+  {%- assign kt_desc = page.meta_desc | default: page.description -%}
 {%- endif -%}
 {%- assign kt_desc = kt_desc | strip_newlines | strip -%}
 
@@ -480,11 +525,35 @@
 {%- endif %}
 
 <!-- Self-hosted subset fonts (see _sass/chia-se-kinh-nghiem/_fonts.scss). Preload the
-     two most-used subsets per family; latin-ext and italics load on demand. -->
-<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/literata/literata-latin.woff2" rel="preload" type="font/woff2" />
-<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/literata/literata-vietnamese.woff2" rel="preload" type="font/woff2" />
-<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/inter/inter-latin.woff2" rel="preload" type="font/woff2" />
-<link as="font" crossorigin="anonymous" href="{{ site.url }}/fonts/inter/inter-vietnamese.woff2" rel="preload" type="font/woff2" />
+     two most-used subsets per family; latin-ext and italics load on demand.
+
+     WHY THESE ARE fetchpriority="low" WHEN THE LCP IMAGE ABOVE IS "high".
+
+     A `rel=preload as=font` is High priority by default, and these four are
+     226 KB together — Literata latin 85 KB + vietnamese 18 KB, Inter latin
+     105 KB + vietnamese 18 KB. Measured on the live hub over a throttled
+     mobile pipe (1.6 Mbps), all four were issued inside 5 ms of each other at
+     +233 ms, in the same High band as the LCP card image — which is 31 KB. So
+     226 KB of font sat in front of a 31 KB image that IS the Largest
+     Contentful Paint, on a link that can move about 200 KB per second. The
+     image cannot win a race it is tied in.
+
+     `fetchpriority="low"` is the fix rather than deleting the preloads,
+     because the two things a preload buys are separable: EARLY DISCOVERY and
+     HIGH PRIORITY. Only the second one is the problem. Deleting the tags would
+     also delay discovery until the CSSOM is built and layout has asked for the
+     face, which lands the swap later and risks a visible reflow of the byline
+     and topbar — a new CLS source on pages that measure 0.000 today. Demoting
+     keeps the request starting at +233 ms and only yields bandwidth to the
+     image ahead of it.
+
+     Literata is the reading face (--font-read: card titles, standfirst, body).
+     Inter is chrome only here (--font-ui: topbar, kicker, byline, buttons).
+     Both stay preloaded; the ordering between them is the browser's. -->
+<link as="font" crossorigin="anonymous" fetchpriority="low" href="{{ site.url }}/fonts/literata/literata-latin.woff2" rel="preload" type="font/woff2" />
+<link as="font" crossorigin="anonymous" fetchpriority="low" href="{{ site.url }}/fonts/literata/literata-vietnamese.woff2" rel="preload" type="font/woff2" />
+<link as="font" crossorigin="anonymous" fetchpriority="low" href="{{ site.url }}/fonts/inter/inter-latin.woff2" rel="preload" type="font/woff2" />
+<link as="font" crossorigin="anonymous" fetchpriority="low" href="{{ site.url }}/fonts/inter/inter-vietnamese.woff2" rel="preload" type="font/woff2" />
 
 <link href="{{ site.url }}/css/chiasekinhnghiem.css" rel="stylesheet" />
 
