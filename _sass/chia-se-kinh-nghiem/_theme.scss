@@ -575,7 +575,69 @@ body.kt {
 .kt-topbar .kt-shell {
   display: flex;
   align-items: center;
+  // The call button holds the right edge; the lockup (min-width: 0) is what
+  // gives way when the bar runs out of room — a 44px target is a measurement,
+  // not a preference (same rule as the main site's .navbar-actions).
+  justify-content: space-between;
+  gap: step(3);
   min-height: 3.75rem;
+}
+
+// The bar's call button — the hub twin of the main site's .navbar-call, in the
+// hub's own materials: the indigo every actionable thing here wears, the $r-2
+// corner every hub button wears, --fs-ui like .kt-button. Bar-compact padding
+// (16px a side, not 24) because the bar is the tightest row on the surface;
+// the 44px height, which is the part a thumb cares about, is untouched.
+// Scoped `.kt` for the same reason .kt-button is: this is an <a>, and `.kt a`
+// would otherwise paint the label indigo-on-indigo.
+// Dark mode needs no second rule: --indigo flips to the pale stop and --paper
+// to the night ground, so "filled control" survives the flip by construction.
+// No box-shadow edge, so the global `.kt :focus-visible` ring arrives intact.
+.kt .kt-topbar-call {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  min-height: $tap;
+  padding: 0 step(4);
+  background: var(--indigo);
+  @include corner($r-2);
+  color: var(--paper);
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent; // the press below already answers the tap
+  transition:
+    background var(--t-1) var(--ease),
+    transform var(--t-1) var(--ease);
+
+  &:hover {
+    background: var(--indigo-deep);
+    color: var(--paper);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  // The icon include carries the main site's .phone-icon class; sized here the
+  // same way the navbar sizes it, so the glyph means "call" identically on
+  // both surfaces.
+  .phone-icon {
+    font-size: 1.1em;
+    flex: none;
+  }
+}
+
+// From 40rem the number itself shows; under it, the verb (the split the main
+// site's bar already makes, for the same reason: eleven digits do not fit
+// beside the lockup on a phone).
+.kt-topbar-call-short {
+  display: none;
 }
 
 // Logo and word are ONE mark — treat "Chia sẻ kinh nghiệm" as part of the logo artwork,
@@ -2183,23 +2245,75 @@ body.kt-lightbox-open {
     }
   }
 
-  // The lockup scales as one piece: the logo steps to the mobile article H1
-  // (1.75rem) and the word re-derives from --logo-h (size ratio, em-based
-  // gap and optical offset all follow). Only the optical size cannot follow on
-  // its own — the word lands at 16.69px here, so it is cut for 12.5.
+  // The lockup scales as one piece: the logo steps down and the word
+  // re-derives from --logo-h (size ratio, em-based gap and optical offset all
+  // follow). Only the optical size cannot follow on its own.
+  //
+  // 1.625rem, NOT the 1.75 that matched the mobile article H1: the bar now
+  // carries the call button, and when the bar runs out of room it is the mark
+  // that gives way, never the 44px target (the main site's .navbar-actions
+  // states the same rule). Measured before the step: at 412px the words'
+  // painted text ended ONE pixel left of the button — the name's box shrinks
+  // (min-width: 0) but its ink does not (overflow: visible), so any tighter
+  // viewport slid "kinh nghiệm" under the button. At 1.625 the lockup wants
+  // ~232px against ~236px of room on a 375px screen — thin, but measured, and
+  // every wider phone has real slack. The H1 relationship survives in the only
+  // direction the rule ever bound it: never LARGER than the page's largest type.
   .kt-brand {
-    --logo-h: 1.75rem;
+    --logo-h: 1.625rem;
+  }
+
+  // Word lands at 1.625rem × 0.595 ≈ 15.5px (the 16.69 of the old 1.75 step,
+  // rescaled); the scroll title's own ratio puts it at 13.
+  .kt .kt-brand-name {
+    @include opsz(15.5);
+  }
+
+  .kt .kt-bar-title {
+    @include opsz(13);
+  }
+
+  // The bar's call button: verb in, digits out (see the base rule).
+  .kt-topbar-call-short {
+    display: inline;
+  }
+
+  .kt-topbar-call-number {
+    display: none;
+  }
+}
+
+// The narrowest tier (≤360px): even the verb costs more than the bar has. The
+// button folds to the glyph alone — a filled phone glyph is the one icon that
+// needs no caption, and the aria-label still speaks the full number — and the
+// lockup takes one more step. Measured at 320px: lockup ~214px against ~216px
+// of room. Nothing overlaps, nothing paints under the button; checked in
+// Chrome at 320, not derived.
+@media (max-width: 22.5rem) {
+  .kt-brand {
+    --logo-h: 1.5rem;
   }
 
   .kt .kt-brand-name {
-    @include opsz(16.69);
+    @include opsz(14.3);
   }
 
-  // The scroll title re-derives from --logo-h too; it lands at 14px here.
   .kt .kt-bar-title {
-    @include opsz(14);
+    @include opsz(12);
   }
 
+  .kt .kt-topbar-call {
+    width: $tap;
+    padding: 0;
+  }
+
+  .kt-topbar-call-short {
+    display: none;
+  }
+}
+
+// The phone block continues: everything from here down is the ≤40rem step.
+@media (max-width: 40rem) {
   .kt-feed {
     margin-top: 1.75rem;
   }

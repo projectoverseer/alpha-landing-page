@@ -56,5 +56,26 @@
         <a class="kt-brand-name" href="{{ site.url }}/chia-se-kinh-nghiem/">Chia sẻ kinh nghiệm</a>
       </span>
     </div>
+    {%- comment -%}
+      The call button — the same object the main site's navbar carries
+      (navbar.html .navbar-call), finally on the hub (2026-08-10). The reasoning
+      transfers whole: this library exists to be trusted and then contacted, and
+      until now the phone number's first appearance on ANY hub page was the
+      contact strip below the footer's horizon — on the hub root that is below
+      sixteen posts and the series rail. The reader the articles persuade is
+      standing in the middle of an article when it happens; the bar is sticky,
+      so this is the one place a number can be at that moment.
+
+      Same anatomy as the main site's: under 40rem the label is the verb, from
+      40rem the number itself shows, because a number a reader can read before
+      tapping is a number they can also write down. The aria-label always
+      carries the full number. Hardcoded Vietnamese: the hub has no i18n layer,
+      by design.
+
+      It wears the hub's own indigo, not the main site's dye — each surface's
+      buttons are that surface's (quy-củ: the palette is semantic, and warmth
+      on the hub is reserved for dye sparks in content, never chrome).
+    {%- endcomment -%}
+    <a aria-label="Gọi Alpha Software: 0983 505 002 – tư vấn miễn phí" class="kt-topbar-call" href="tel:+84983505002">{% include icon-phone.html %}<span aria-hidden="true" class="kt-topbar-call-short">Gọi</span><span aria-hidden="true" class="kt-topbar-call-number">0983 505 002</span></a>
   </div>
 </div>
